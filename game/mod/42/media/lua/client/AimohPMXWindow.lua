@@ -56,6 +56,19 @@ function W:createChildren()
     ISCollapsableWindow.createChildren(self)
     self.closeButton:setX(self.width-30);self.closeButton:setY(10);self.closeButton:setWidth(20);self.closeButton:setHeight(20)
     self.collapseButton:setVisible(false);self.pinButton:setVisible(false);self.infoButton:setVisible(false)
+    self.preview=ISPanel:new(math.floor(self.width*.5-390),50,780,self.height-100);self.preview:initialise();self.preview.background=false
+    self.preview.render=function(p)
+        local w=p.parent;local ok=false
+        if AimohPMXReadyRoom then ok=AimohPMXReadyRoom.draw(w.player,math.floor(p:getAbsoluteX()),math.floor(p:getAbsoluteY()),math.floor(p.width),math.floor(p.height),w.yaw,w.zoom) end
+        if not ok then label(p,tr("NoPreview"),18,p.height/2,21,p.width-30) end
+    end
+    self.preview.onMouseDown=function(p) p.dragging=true;p:setCapture(true);return true end
+    self.preview.onMouseMove=function(p,dx,dy)if p.dragging then p.parent.yaw=p.parent.yaw+dx*.008 end;return true end
+    self.preview.onMouseMoveOutside=self.preview.onMouseMove
+    self.preview.onMouseUp=function(p)p.dragging=false;p:setCapture(false);return true end
+    self.preview.onMouseUpOutside=self.preview.onMouseUp
+    self.preview.onMouseWheel=function(p,d)p.parent.zoom=math.max(.7,math.min(1.5,p.parent.zoom-d*.08));return true end
+    self:addChild(self.preview)
     self.railWidth=104;self.rightWidth=math.max(270,math.floor(self.width*.30));self.rightX=self.width-self.rightWidth-16
     self.sidebar=ISScrollingListBox:new(14,58,self.railWidth,self.height-124);self.sidebar:initialise()
     self.sidebar.itemheight=98;self.sidebar.backgroundColor={r=.025,g=.045,b=.055,a=0};self.sidebar.borderColor.a=0
@@ -92,21 +105,6 @@ function W:createChildren()
     self.reloadButton=button(self,self.rightX+(self.rightWidth+8)/2,64,(self.rightWidth-8)/2,tr("Reload"),self,self.onReload)
     self.eyeOpenButton=button(self,self.rightX,64,(self.rightWidth-8)/2,tr("EyeOpen"),self,function(w)w:onEyes(0)end)
     self.eyeClosedButton=button(self,self.rightX+(self.rightWidth+8)/2,64,(self.rightWidth-8)/2,tr("EyeClosed"),self,function(w)w:onEyes(1)end)
-    self.preview=ISPanel:new(math.floor(self.width*.5-390),50,780,self.height-100);self.preview:initialise();self.preview.background=false
-    self.preview.render=function(p)
-        local w=p.parent;local ok=false
-        if AimohPMXReadyRoom then ok=AimohPMXReadyRoom.draw(w.player,math.floor(p:getAbsoluteX()),math.floor(p:getAbsoluteY()),math.floor(p.width),math.floor(p.height),w.yaw,w.zoom) end
-        if not ok then label(p,tr("NoPreview"),18,p.height/2,21,p.width-30) end
-    end
-    self.preview.onMouseDown=function(p) p.dragging=true;p:setCapture(true);return true end
-    self.preview.onMouseMove=function(p,dx,dy)if p.dragging then p.parent.yaw=p.parent.yaw+dx*.008 end;return true end
-    self.preview.onMouseMoveOutside=self.preview.onMouseMove
-    self.preview.onMouseUp=function(p)p.dragging=false;p:setCapture(false);return true end
-    self.preview.onMouseUpOutside=self.preview.onMouseUp
-    self.preview.onMouseWheel=function(p,d)p.parent.zoom=math.max(.7,math.min(1.5,p.parent.zoom-d*.08));return true end
-    self:addChild(self.preview)
-    self.preview:backMost()
-    self:removeChild(self.content);self:addChild(self.content)
     self.widgets={};self.tab="skins";self:refresh()
 end
 function W:drawCharacter(y,item,alt)

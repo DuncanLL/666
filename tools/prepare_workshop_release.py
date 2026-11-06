@@ -73,10 +73,13 @@ if __name__=='__main__':
     assert not json.loads((BUILD/'render-support/checks/release-defaults.json').read_text('utf8'))['differences_from_live']
     roots=list(map(Path,cfg['workshop_targets']));ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in roots if (r/'workshop.txt').exists()};ids.discard(None)
     assert len(ids)<=1,'Existing character projects point to different Workshop items'
-    character_id=next(iter(ids),None);reports=[]
+    character_id=next(iter(ids),None)
+    support_roots=[r.parent/'R116RenderSupport'for r in roots];support_ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in support_roots if (r/'workshop.txt').exists()};support_ids.discard(None)
+    assert len(support_ids)<=1,'Existing rendering projects point to different Workshop items'
+    support_id=next(iter(support_ids),None);reports=[]
     for root in roots:
         for source,target in [(character,root),(support,root.parent/'R116RenderSupport')]:
-            row=promote(source,target,out,len(reports),args.apply,character_id if source==character else None);reports.append(row)
+            row=promote(source,target,out,len(reports),args.apply,character_id if source==character else support_id);reports.append(row)
             print(json.dumps({k:v for k,v in row.items()if k!='changed_files'},ensure_ascii=False),flush=True)
     commit=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True,check=True).stdout.strip()
     save(out/('workshop-preparation.json'if args.apply else'workshop-plan.json'),dict(source_commit=commit,projects=reports,

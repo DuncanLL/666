@@ -20,8 +20,7 @@ function UI:getHeight()return self.height end
 function UI:getYScroll()return 0 end
 function UI:bringToTop()end
 function UI:backMost()
- local parent=self.parent
- if parent then parent:removeChild(self);table.insert(parent.children,1,self)end
+ self.alwaysBack=true
 end
 function UI:addScrollBars()end
 function UI:setScrollChildren(value)self.scrollChildren=value end

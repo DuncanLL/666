@@ -117,5 +117,15 @@
   "official_host_sha256": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f",
   "baseline_runtime_classes": 46,
   "baseline_normalized_class_differences": 0,
-  "original_host_classes_imported": false
+  "original_host_classes_imported": false,
+  "owned_revisions": {
+    "0.1.0": [
+      "Main embeds and installs the unchanged shader payload for Workshop"
+    ],
+    "0.1.1": [
+      "Main logs the installed renderer revision",
+      "AimohGf2Rc2Vertex keeps host scratch values local and assigns an explicit bridge varying after original outputs",
+      "AimohGf2OriginalProgram applies the shared vertex/fragment interface adaptation"
+    ]
+  }
 }

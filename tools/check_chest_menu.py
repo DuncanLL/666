@@ -27,6 +27,12 @@ def table(value):
  if isinstance(value,(int,float)):return J('java.lang.Double')(value)
  return value
 try:
+ if args.hit_test:
+  element=J('zombie.ui.UIElement');parent=element();button=element();preview=element()
+  parent.AddChild(button);parent.AddChild(preview);preview.backMost()
+  assert parent.getControls().get(1)==preview,'Recheck native backMost semantics before changing the fixture'
+  parent.RemoveChild(preview);parent.RemoveChild(button);parent.AddChild(preview);parent.AddChild(button)
+  assert parent.getControls().get(1)==button,'Native child insertion order changed'
  load(ROOT/'tools/tests/ui_fixture.lua');load(ROOT/'tools/tests/room_fixture.lua')
  catalog=json.loads((ROOT/'game/mod/42/media/ui/AimohPMXReadyRoom/catalog.json').read_text('utf8'));env.rawset('roomData',table(catalog))
  assets=Path(c['asset_root'])/'42/media/aimoh_pmx';registry=json.loads((assets/'registry.json').read_text('utf8'))['models']

@@ -29,7 +29,7 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
     }
     /** PackSource supplies already verified UTF-8 programs; no runtime files. */
     public AimohGf2OriginalProgram(String vertex,String fragment,String vertexHash,String fragmentHash) {
-        vertex=AimohGf2Rc2Vertex.adapt(vertex);
+        var stages=AimohGf2Rc2Vertex.adapt(vertex,fragment);vertex=stages.vertex();fragment=stages.fragment();
         this.vertexHash=vertexHash;this.fragmentHash=fragmentHash;
         gl=GlProgram.fromSources("GF2 original "+vertexHash.substring(0,12)+"/"+fragmentHash.substring(0,12),
             new GlProgram.Sources(vertex,null,null,null,fragment),Map.of(),Map.of(),List.of());
