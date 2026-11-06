@@ -1,0 +1,4 @@
+require "AimohPMXLaiyaVoice/NativeData"
+require "AimohPMXVoice/NativeVoice"
+AimohPMXLaiyaNativeVoice=AimohPMXNativeVoice.create(AimohPMXLaiyaNativeVoiceData,"AimohPMXLaiyaOriginalVoicePrefix")
+return AimohPMXLaiyaNativeVoice

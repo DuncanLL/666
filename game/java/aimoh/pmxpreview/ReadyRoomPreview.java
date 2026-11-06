@@ -1,0 +1,181 @@
+package aimoh.pmxpreview;
+
+import aimoh.motion.PmxDrawMesh;
+import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.IdentityHashMap;
+import me.zed_0xff.zombie_buddy.Exposer;
+import org.joml.Matrix4f;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import se.krka.kahlua.vm.KahluaTable;
+import se.krka.kahlua.j2se.J2SEPlatform;
+import zombie.ZomboidFileSystem;
+import org.lwjgl.opengl.*;
+import viewpoint.render.Retirement;
+import zombie.characters.IsoGameCharacter;
+import zombie.core.Core;
+import zombie.core.SpriteRenderer;
+import zombie.core.textures.Texture;
+import zombie.core.textures.TextureDraw;
+
+/** Display the world's immutable PMX snapshot. Never advances animation or physics. */
+public class ReadyRoomPreview {
+    private static KahluaTable catalog;
+    public static synchronized KahluaTable data() throws Exception {
+        if(catalog==null){
+            Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
+            Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
+            Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
+            catalog=(KahluaTable)lua(new JSONObject(Files.readString(path)));
+        }
+        return catalog;
+    }
+    private static Object lua(Object value){
+        if(value instanceof JSONObject object){KahluaTable t=J2SEPlatform.getInstance().newTable();for(String key:object.keySet())t.rawset(key,lua(object.get(key)));return t;}
+        if(value instanceof JSONArray array){KahluaTable t=J2SEPlatform.getInstance().newTable();for(int i=0;i<array.length();i++)t.rawset((double)i+1,lua(array.get(i)));return t;}
+        if(value instanceof Number n)return n.doubleValue();return value==JSONObject.NULL?null:value;
+    }
+    private static final IdentityHashMap<IsoGameCharacter,Mesh> previews=new IdentityHashMap<>();
+    private static final Field SNAPSHOT;
+    static {
+        try { SNAPSHOT=ModelSession.class.getDeclaredField("frozen");SNAPSHOT.setAccessible(true); }
+        catch(ReflectiveOperationException e){throw new ExceptionInInitializerError(e);}
+    }
+    public static synchronized boolean draw(IsoGameCharacter actor,int x,int y,int width,int height,float yaw,float zoom) {
+        ModelSession session=Main.session(actor);
+        if(session==null||!session.ready||session.retired||session.failed||width<16||height<16)return false;
+        try {
+            synchronized(session) {
+                PmxDrawMesh.FrameData frame=(PmxDrawMesh.FrameData)SNAPSHOT.get(session);
+                if(frame==null)return false;
+                Mesh mesh=previews.get(actor);
+                if(mesh==null||mesh.session!=session){release(actor);mesh=new Mesh(session,frame);previews.put(actor,mesh);}
+                SpriteRenderer.instance.drawGeneric(new Draw(mesh,frame,session.materials,x,y,width,height,Core.height,yaw,zoom));
+                return true;
+            }
+        }catch(Exception e){System.err.println("[AimohPMXReadyRoom] Preview unavailable: "+e);return false;}
+    }
+    public static synchronized void release(IsoGameCharacter actor) {
+        Mesh mesh=previews.remove(actor);if(mesh!=null)Retirement.retire(mesh::close);
+    }
+    private static ByteBuffer buffer(int bytes){return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());}
+    static final class Mesh {
+        final ModelSession session;
+        final float[] uv;
+        final int[] indices,materials,firsts,counts;
+        final ByteBuffer upload;
+        final float centerX,centerY,centerZ,span;
+        int program,vao,vbo,ibo;
+        boolean closed,failed;
+        Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
+            session=s;int count=frame.positions().length/3;
+            ByteBuffer bytes=buffer(count*8);s.api.CopyDataToByteBuffer(bytes,s.api.GetUVs(s.model.handle()),bytes.capacity());
+            uv=new float[count*2];bytes.asFloatBuffer().get(uv);upload=buffer(count*32);
+            int size=Math.toIntExact(s.api.GetIndexElementSize(s.model.handle()));
+            if(size!=1&&size!=2&&size!=4)throw new IllegalArgumentException("PMX index size");
+            indices=new int[Math.toIntExact(s.api.GetIndexCount(s.model.handle()))];bytes=buffer(indices.length*size);
+            s.api.CopyDataToByteBuffer(bytes,s.api.GetIndices(s.model.handle()),bytes.capacity());
+            for(int i=0;i<indices.length;i++)indices[i]=size==1?Byte.toUnsignedInt(bytes.get(i)):size==2?Short.toUnsignedInt(bytes.getShort(i*2)):bytes.getInt(i*4);
+            int parts=Math.toIntExact(s.api.GetSubMeshCount(s.model.handle()));materials=new int[parts];firsts=new int[parts];counts=new int[parts];
+            for(int i=0;i<parts;i++){materials[i]=s.api.GetSubMeshMaterialID(s.model.handle(),i);firsts[i]=s.api.GetSubMeshBeginIndex(s.model.handle(),i);counts[i]=s.api.GetSubMeshVertexCount(s.model.handle(),i);}
+            float[] p=frame.positions();float minX=Float.POSITIVE_INFINITY,minY=minX,minZ=minX,maxX=-minX,maxY=-minX,maxZ=-minX;
+            for(int i=0;i<p.length;i+=3){minX=Math.min(minX,p[i]);maxX=Math.max(maxX,p[i]);minY=Math.min(minY,p[i+1]);maxY=Math.max(maxY,p[i+1]);minZ=Math.min(minZ,p[i+2]);maxZ=Math.max(maxZ,p[i+2]);}
+            centerX=(minX+maxX)/2;centerY=(minY+maxY)/2;centerZ=(minZ+maxZ)/2;span=Math.max(1,maxY-minY)*1.14f;
+        }
+        private static int shader(int kind,String source){
+            int id=GL20.glCreateShader(kind);GL20.glShaderSource(id,source);GL20.glCompileShader(id);
+            if(GL20.glGetShaderi(id,GL20.GL_COMPILE_STATUS)==0){String error=GL20.glGetShaderInfoLog(id);GL20.glDeleteShader(id);throw new IllegalStateException(error);}return id;
+        }
+        void initialize(){
+            int vertex=shader(GL20.GL_VERTEX_SHADER,"""
+                #version 330
+                layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
+                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
+                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
+                """);
+            int fragment=0;
+            try {
+                // Same restrained preview light as the workbench; the world shader pack is untouched.
+                fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
+                    #version 330
+                    in vec3 n;in vec2 uv;uniform sampler2D image;out vec4 color;
+                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
+                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
+                    color=vec4(c.rgb*light,c.a);}
+                    """);
+                program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
+                if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
+            }finally{GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
+            vao=GL30.glGenVertexArrays();GL30.glBindVertexArray(vao);vbo=GL15.glGenBuffers();ibo=GL15.glGenBuffers();
+            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);GL15.glBufferData(GL15.GL_ARRAY_BUFFER,upload.capacity(),GL15.GL_STREAM_DRAW);
+            for(int i=0;i<3;i++){GL20.glEnableVertexAttribArray(i);GL20.glVertexAttribPointer(i,i==2?2:3,GL11.GL_FLOAT,false,32,i==0?0L:i==1?12L:24L);}
+            GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER,ibo);GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER,indices,GL15.GL_STATIC_DRAW);
+        }
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom)throws Exception {
+            if(program==0)initialize();
+            GL30.glBindVertexArray(vao);GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);upload.clear();
+            float[] p=frame.positions(),n=frame.normals();
+            for(int i=0;i<p.length/3;i++)upload.putFloat(p[i*3]).putFloat(p[i*3+1]).putFloat(p[i*3+2]).putFloat(n[i*3]).putFloat(n[i*3+1]).putFloat(n[i*3+2]).putFloat(uv[i*2]).putFloat(uv[i*2+1]);
+            upload.flip();GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER,0,upload);
+            float extent=span/Math.clamp(zoom,.7f,1.5f),aspect=(float)width/height;
+            Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
+                .lookAt(centerX,centerY,centerZ+span*3,centerX,centerY,centerZ,0,1,0);
+            Matrix4f turn=new Matrix4f().translate(centerX,0,centerZ).rotateY(yaw).translate(-centerX,0,-centerZ);
+            GL20.glUseProgram(program);GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"vp"),false,vp.get(new float[16]));
+            GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"turn"),false,turn.get(new float[16]));GL20.glUniform1i(GL20.glGetUniformLocation(program,"image"),0);
+            Texture[] textures=session.prepareMaterials(state);
+            GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_BLEND);GL14.glBlendEquation(GL14.GL_FUNC_ADD);GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_ONE,GL11.GL_ONE_MINUS_SRC_ALPHA);
+            for(int i=0;i<materials.length;i++){
+                int material=materials[i];if(frame.materials()[material*12+3]<=0)continue;
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[material].getID());
+                GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
+            }
+        }
+        void close(){if(closed)return;closed=true;if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
+    }
+    static final class Draw extends TextureDraw.GenericDrawer {
+        final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
+        final int x,y,width,height,screenHeight;final float yaw,zoom;
+        Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom){
+            this.mesh=mesh;this.frame=frame;this.materials=materials;this.x=x;this.y=y;width=w;height=h;screenHeight=sh;this.yaw=yaw;this.zoom=zoom;
+        }
+        public void render(){
+            if(mesh.closed||mesh.failed||mesh.session.retired)return;
+            State saved=new State();
+            try {
+                GL11.glEnable(GL11.GL_SCISSOR_TEST);GL11.glScissor(x,screenHeight-y-height,width,height);GL11.glViewport(x,screenHeight-y-height,width,height);
+                GL11.glDepthMask(true);GL11.glClearDepth(1);GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+                mesh.paint(frame,materials,width,height,yaw,zoom);
+            }catch(Exception e){mesh.failed=true;System.err.println("[AimohPMXReadyRoom] Preview draw failed: "+e);}
+            finally {
+                saved.restore();
+                SpriteRenderer.ringBuffer.restoreVbos=true;SpriteRenderer.ringBuffer.restoreBoundTextures=true;
+            }
+        }
+    }
+    // Core-profile-safe state scope; legacy glPushAttrib is unavailable on some hosts.
+    static final class State {
+        final int program=GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM),vao=GL11.glGetInteger(GL30.GL_VERTEX_ARRAY_BINDING),vbo=GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING);
+        final int unit=GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE),depthFunc=GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
+        final int srcRGB=GL11.glGetInteger(GL14.GL_BLEND_SRC_RGB),dstRGB=GL11.glGetInteger(GL14.GL_BLEND_DST_RGB),srcAlpha=GL11.glGetInteger(GL14.GL_BLEND_SRC_ALPHA),dstAlpha=GL11.glGetInteger(GL14.GL_BLEND_DST_ALPHA);
+        final int equationRGB=GL11.glGetInteger(GL20.GL_BLEND_EQUATION_RGB),equationAlpha=GL11.glGetInteger(GL20.GL_BLEND_EQUATION_ALPHA);
+        final boolean blend=GL11.glIsEnabled(GL11.GL_BLEND),depth=GL11.glIsEnabled(GL11.GL_DEPTH_TEST),cull=GL11.glIsEnabled(GL11.GL_CULL_FACE),scissor=GL11.glIsEnabled(GL11.GL_SCISSOR_TEST),depthMask=GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
+        final double clearDepth=GL11.glGetDouble(GL11.GL_DEPTH_CLEAR_VALUE);
+        final int[] viewport=new int[4],box=new int[4];final int texture,sampler;
+        State(){GL11.glGetIntegerv(GL11.GL_VIEWPORT,viewport);GL11.glGetIntegerv(GL11.GL_SCISSOR_BOX,box);GL13.glActiveTexture(GL13.GL_TEXTURE0);texture=GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);sampler=GL30.glGetIntegeri(GL33.GL_SAMPLER_BINDING,0);}
+        static void enabled(int flag,boolean value){if(value)GL11.glEnable(flag);else GL11.glDisable(flag);}
+        void restore(){
+            GL11.glViewport(viewport[0],viewport[1],viewport[2],viewport[3]);GL11.glScissor(box[0],box[1],box[2],box[3]);
+            enabled(GL11.GL_BLEND,blend);enabled(GL11.GL_DEPTH_TEST,depth);enabled(GL11.GL_CULL_FACE,cull);enabled(GL11.GL_SCISSOR_TEST,scissor);
+            GL14.glBlendFuncSeparate(srcRGB,dstRGB,srcAlpha,dstAlpha);GL20.glBlendEquationSeparate(equationRGB,equationAlpha);GL11.glDepthMask(depthMask);GL11.glDepthFunc(depthFunc);GL11.glClearDepth(clearDepth);
+            GL20.glUseProgram(program);GL30.glBindVertexArray(vao);GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);
+            GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL11.GL_TEXTURE_2D,texture);GL33.glBindSampler(0,sampler);GL13.glActiveTexture(unit);
+        }
+    }
+}

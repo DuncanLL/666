@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-06",
+  "release": "R116",
+  "mod_version": "0.2.6",
+  "mod_id": "AimohPmxPreview",
+  "reference_jar_sha256": "1693f71a68f9d7a52ad74fd7d4d9e32ef7be6a85b0b3478ce52cb5529f1c4107",
+  "native_hashes": {
+    "AimohGripOzz.dll": "a41be04aae5f62f0b5c599ec50993428bc2afd39b104227db4142b3b437ebe1c",
+    "AimohMmdUpstream.dll": "723056ebe922c85e4c58a76a2bec61362aa7cf54cd512d8d5980c77ff2b96266",
+    "libgcc_s_seh-1.dll": "368488a9089e3d89b32a3609816fa40dd02fa4cdf480a2bc86e19c7bebdc8bda",
+    "libstdc++-6.dll": "ba2f2acaa48011aff3f14a9806cc69db1e78c12c9a87ad3f7f88b965fce7fb1d",
+    "libwinpthread-1.dll": "1b801c9280f6cad8cb2a026bfa48be8c4bea07a0dc78a820d1591f900ee76f0b"
+  },
+  "native_version": "Aimoh-Upstream-1/skeleton-eval1",
+  "workbench_included": false,
+  "source_compile_parity_verified": true,
+  "gameplay_after_import_tested": false,
+  "known_issues": [
+    "Nikketa entry hidden; resources retained.",
+    "Character-switch native crash not confirmed fixed.",
+    "Real multiplayer and Workshop subscription cold start not tested."
+  ],
+  "java_sources": 31,
+  "normalized_runtime_classes": 48,
+  "rebuilt_jar_sha256": "3b7da4f422c8c51e582cb39483846a11aa0c1767cc32ba70e474041433d41a84",
+  "source_runtime_and_gameplay_verified": false,
+  "native_rebuilt_during_import": false
+}

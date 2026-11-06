@@ -1,0 +1,12 @@
+{
+  "game_root": "D:/SteamLibrary/steamapps/common/ProjectZomboid",
+  "viewpoint_jar": "D:/path/to/Viewpoint/42/media/java/client/Viewpoint.jar",
+  "zombiebuddy_jar": "D:/path/to/ZombieBuddy/libs/ZombieBuddy.jar",
+  "ecj_jar": "D:/private-tools/ecj-4.38.jar",
+  "reference_jar": "D:/current-R116/42/media/java/client/AimohPMXPreview.jar",
+  "asset_root": "D:/current-R116",
+  "native_source": "D:/verified-native-libraries",
+  "native_toolchain_root": "D:/private-tools/mmd",
+  "zig": "D:/private-tools/zig/zig.exe",
+  "python_dependencies": "D:/private-python-dependencies"
+}

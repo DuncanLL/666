@@ -1,0 +1,4 @@
+require "AimohPMXAsteriaVoice/NativeData"
+require "AimohPMXVoice/NativeVoice"
+AimohPMXAsteriaNativeVoice=AimohPMXNativeVoice.create(AimohPMXAsteriaNativeVoiceData,"AimohPMXAsteriaOriginalVoicePrefix")
+return AimohPMXAsteriaNativeVoice

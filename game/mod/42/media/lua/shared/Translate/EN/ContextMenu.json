@@ -1,0 +1,19 @@
+{
+    "ContextMenu_AimohPMX_Menu": "Ready room",
+    "ContextMenu_AimohPMX_JavaUnavailable": "Java unavailable: approve and restart",
+    "ContextMenu_AimohPMX_Refresh": "Refresh list",
+    "ContextMenu_AimohPMX_Unavailable": "Model unavailable: see console.txt",
+    "ContextMenu_AimohPMX_Presets": "Material presets",
+    "ContextMenu_AimohPMX_Reload": "Reapply configuration",
+    "ContextMenu_AimohPMX_Disable": "Restore original character",
+    "ContextMenu_AimohPMX_Error": "PMX operation failed; see console.txt",
+    "ContextMenu_AimohPMX_Simple": "Outfits",
+    "ContextMenu_AimohPMX_Detail": "Parts",
+    "ContextMenu_AimohPMX_NoGroups": "No outfit choices; use Parts for available meshes.",
+    "ContextMenu_AimohPMX_ChooseCharacter": "Choose a character",
+    "ContextMenu_AimohPMX_Reset": "Reset appearance",
+    "ContextMenu_AimohPMX_Saved": "Changes saved",
+    "ContextMenu_AimohPMX_OriginalActive": "Original character active",
+    "ContextMenu_AimohPMX_InactivePart": "(inactive in this outfit)",
+    "ContextMenu_AimohPMX_ChoosePreset": "Choose material preset"
+}

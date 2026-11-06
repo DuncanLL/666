@@ -1,0 +1,19 @@
+{
+    "ContextMenu_AimohPMX_Menu": "整备室",
+    "ContextMenu_AimohPMX_JavaUnavailable": "Java 未加载，请授权并重启",
+    "ContextMenu_AimohPMX_Refresh": "刷新列表",
+    "ContextMenu_AimohPMX_Unavailable": "模型不可用，见 console.txt",
+    "ContextMenu_AimohPMX_Presets": "材质预设",
+    "ContextMenu_AimohPMX_Reload": "重新应用配置",
+    "ContextMenu_AimohPMX_Disable": "恢复原角色",
+    "ContextMenu_AimohPMX_Error": "PMX 操作未应用，详见 console.txt",
+    "ContextMenu_AimohPMX_Simple": "简单调节",
+    "ContextMenu_AimohPMX_Detail": "详细调节",
+    "ContextMenu_AimohPMX_NoGroups": "暂无整套配件选项；可切换到详细调节。",
+    "ContextMenu_AimohPMX_ChooseCharacter": "选择一个角色",
+    "ContextMenu_AimohPMX_Reset": "恢复默认",
+    "ContextMenu_AimohPMX_Saved": "修改已保存",
+    "ContextMenu_AimohPMX_OriginalActive": "当前使用原角色",
+    "ContextMenu_AimohPMX_InactivePart": "（当前款式未启用）",
+    "ContextMenu_AimohPMX_ChoosePreset": "选择材质预设"
+}

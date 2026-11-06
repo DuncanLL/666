@@ -1,0 +1,12 @@
+Aimoh independent PMX integration candidate 1
+Native engine base: shiroha-233/MC-MMD-rust, commit 1d3e12b40f5990cf7b8a1a1e8d94ff6bfea2687b (MIT).
+Bullet: bulletphysics/bullet3, gitlink 63c4d67e337017f9d8b298c900e9aabdb69296e7 (zlib).
+PMX parser: aankor/mmd-rs, version pinned by the upstream tree (BSD-2-Clause).
+Ozz animation: separate existing AimohGripOzz.dll integration (MIT).
+GCC runtime and MinGW-w64: official WinLibs distribution recorded in provenance/winlibs.json; accompanying runtime exception and copyright texts retained.
+Rust dependency versions and source checksums: accompanying RUST-DEPENDENCIES.json and Cargo.lock.
+Only default runtime features are built. The dependency notice file is intentionally inclusive of locally resolved tool/build packages too.
+Aimoh additions: external pose input, explicit joint ownership, physical hierarchy commit and reset/motion lifecycle; independent finger bend formulation and own game-loader changes.
+PZMMD author's modified fork is not a build input. Its prebuilt native DLL is excluded from this candidate. The frozen old DLL remains local solely for rollback/comparison, outside this package.
+Existing PMX model author names remain in each unchanged model header. Game, ZombieBuddy and Viewpoint are separately supplied.
+Same upstream code and public interface names are retained with attribution. This manifest is an engineering provenance record, not a legal or absolute originality certification.

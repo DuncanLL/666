@@ -1,0 +1,420 @@
+{
+  "pmx_sha256": "b5013baf4dc16c9b394ddd25568ac58d23aeec5835683bbf42d185763a8d7960",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              23,
+              24
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "上衣",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              11,
+              12,
+              13
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "legs",
+        "label": "下衣",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              22
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "footwear",
+        "label": "鞋子",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              14,
+              15
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "equipment",
+        "label": "随身装具",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              16,
+              17
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "gloves",
+        "label": "手套",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              18
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "hairband",
+        "label": "发带",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              21
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "inner",
+        "label": "内搭",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              25
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      }
+    ],
+    "rules": []
+  },
+  "appearance": {
+    "texture_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "alpha_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "colour_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "format": 2,
+    "double_sided": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "morph_weights": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "groups": [],
+    "material_visibility": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "choices": {
+      "head": "on",
+      "footwear": "on",
+      "gloves": "on",
+      "top": "on",
+      "legs": "on",
+      "equipment": "on",
+      "inner": "on",
+      "hairband": "on"
+    }
+  },
+  "material_presets": []
+}

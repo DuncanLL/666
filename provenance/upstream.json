@@ -1,0 +1,24 @@
+{
+  "mmd": {
+    "repository": "https://github.com/shiroha-233/MC-MMD-rust",
+    "commit": "1d3e12b40f5990cf7b8a1a1e8d94ff6bfea2687b",
+    "license": "MIT"
+  },
+  "bullet": {
+    "repository": "https://github.com/bulletphysics/bullet3",
+    "commit": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+    "license": "zlib"
+  },
+  "ozz": {
+    "repository": "https://github.com/guillaumeblanc/ozz-animation",
+    "commit": "744eb9d99f606eda849acb0b1204f7a3dc20bca1",
+    "license": "MIT"
+  },
+  "mmd_parser": {
+    "repository": "https://github.com/aankor/mmd-rs",
+    "license": "BSD-2-Clause",
+    "source": "MC-MMD pinned source tree"
+  },
+  "pz_mmd_author_fork_imported": false,
+  "scope": "Current game runtime sources only; no workbench, models, textures, voices, logs or shader addon."
+}

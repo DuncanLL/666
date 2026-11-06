@@ -1,0 +1,2449 @@
+{
+  "text": {
+    "Menu": "整备室",
+    "Skins": "皮肤",
+    "Parts": "部件预览",
+    "Back": "返回皮肤",
+    "Default": "默认",
+    "Saved": "修改已保存",
+    "Restore": "恢复原角色",
+    "Reset": "恢复默认",
+    "Reload": "重新应用",
+    "Refresh": "刷新",
+    "Advanced": "详细部件",
+    "Presets": "材质预设",
+    "NoGroups": "这套皮肤没有可切换部件",
+    "Choose": "请选择角色",
+    "Loading": "正在准备人物…",
+    "PreviewHint": "拖动旋转 · 滚轮缩放",
+    "Original": "当前使用原角色",
+    "Error": "操作未应用，请查看日志",
+    "Close": "关闭",
+    "NoImage": "暂无图片",
+    "NoPreview": "等待人物画面",
+    "Current": "当前穿着",
+    "Inactive": "未启用",
+    "Head": "头饰",
+    "Top": "上衣",
+    "Bottom": "下衣",
+    "NoCategory": "这套皮肤没有此类部件",
+    "Wear": "穿着",
+    "Wearing": "当前穿着",
+    "Other": "其他配件",
+    "BackParts": "返回三栏配件",
+    "Swipe": "左右拖动选择皮肤",
+    "EyeOpen": "睁眼",
+    "EyeClosed": "闭眼",
+    "PhysicsReset": "重置物理解算"
+  },
+  "models": {
+    "pmx-abe3eaaaa9d04264": {
+      "character": "莱娅",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "头饰"
+        },
+        "equipment": {
+          "label": "随身装备",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "随身装备"
+        },
+        "stockings": {
+          "label": "袜装",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "袜装"
+        }
+      },
+      "officialSkin": "理性凝望",
+      "partImages": {}
+    },
+    "pmx-48650a04a35b40e0": {
+      "character": "夏安",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "头饰"
+        },
+        "jacket": {
+          "label": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "外套"
+        },
+        "equipment": {
+          "label": "背包与装具",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "背包与装具"
+        }
+      },
+      "officialSkin": "听风狩影",
+      "partImages": {}
+    },
+    "pmx-0af216265749a22d": {
+      "character": "莱娅",
+      "skin": "热力运动",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0af216265749a22d.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR02.png",
+      "groups": {
+        "head": {
+          "label": "头部配件",
+          "options": [
+            "P1 发饰",
+            "P2 耳饰",
+            "P3 耳饰"
+          ],
+          "display": "头饰"
+        },
+        "top": {
+          "label": "上装",
+          "options": [
+            "P1 上装",
+            "P2 上装",
+            "P3 上装"
+          ],
+          "display": "上衣"
+        },
+        "legs": {
+          "label": "腿部款式",
+          "options": [
+            "P1 腿装",
+            "P2 丝袜",
+            "P3 丝袜"
+          ],
+          "display": "下衣"
+        },
+        "footwear": {
+          "label": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ],
+          "display": "鞋子"
+        }
+      },
+      "officialSkin": "热力运动",
+      "partImages": {
+        "上装": {
+          "P1 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Cloth.png",
+          "P2 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Cloth.png",
+          "P3 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Cloth.png"
+        },
+        "腿部款式": {
+          "P1 腿装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Body.png",
+          "P2 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Body.png",
+          "P3 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Body.png"
+        },
+        "头部配件": {
+          "P2 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Head.png",
+          "P3 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png"
+        }
+      }
+    },
+    "pmx-293917f24c2bd387": {
+      "character": "芙铃",
+      "skin": "忻跃阳炎",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-293917f24c2bd387.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR01.png",
+      "groups": {
+        "top": {
+          "label": "上装",
+          "options": [
+            "原始",
+            "上着P2",
+            "上着P3"
+          ],
+          "display": "上衣"
+        },
+        "bottom": {
+          "label": "下装",
+          "options": [
+            "原始",
+            "下着p2-1",
+            "下着p2-2",
+            "下着p3"
+          ],
+          "display": "下衣"
+        },
+        "socks": {
+          "label": "袜装",
+          "options": [
+            "原始",
+            "Sock-P2",
+            "Sock-P3"
+          ],
+          "display": "袜装"
+        }
+      },
+      "officialSkin": "忻跃阳炎",
+      "partImages": {
+        "上装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Cloth.png",
+          "上着P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Cloth.png",
+          "上着P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Cloth.png"
+        },
+        "袜装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Body.png",
+          "Sock-P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Body.png",
+          "Sock-P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Body.png"
+        },
+        "下装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Hip.png",
+          "下着p3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
+        }
+      }
+    },
+    "pmx-225af1a054faefb0": {
+      "character": "春田",
+      "skin": "睡醒的人鱼",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png",
+      "groups": {
+        "m91": {
+          "label": "Hide1",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide1"
+        },
+        "m92": {
+          "label": "Hide2",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide2"
+        },
+        "m93": {
+          "label": "Hide3",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide3"
+        },
+        "m94": {
+          "label": "Hide4",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide4"
+        },
+        "m95": {
+          "label": "Hide5",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide5"
+        }
+      },
+      "officialSkin": "睡醒的人鱼",
+      "partImages": {}
+    },
+    "pmx-412bd037301ebe18": {
+      "character": "阿斯缇亚",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png",
+      "groups": {},
+      "officialSkin": "追寻者",
+      "partImages": {}
+    },
+    "pmx-b0dd2e3cfd1ab80c": {
+      "character": "阿斯缇亚",
+      "skin": "冬夜星途",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b0dd2e3cfd1ab80c.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR01.png",
+      "groups": {
+        "head": {
+          "label": "头部配件",
+          "options": [
+            "无附加头饰",
+            "眼镜",
+            "猫耳"
+          ],
+          "display": "头饰"
+        },
+        "top": {
+          "label": "内搭",
+          "options": [
+            "P1 内搭",
+            "P2 内搭",
+            "P3 内搭"
+          ],
+          "display": "上衣"
+        },
+        "legs": {
+          "label": "下装",
+          "options": [
+            "P1 下装",
+            "P2 下装",
+            "P3 下装"
+          ],
+          "display": "下衣"
+        },
+        "footwear": {
+          "label": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ],
+          "display": "鞋子"
+        },
+        "coat": {
+          "label": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "外套"
+        },
+        "scarf": {
+          "label": "围巾",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "围巾"
+        },
+        "backpack": {
+          "label": "背包与背带",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "背包与背带"
+        }
+      },
+      "officialSkin": "冬夜星途",
+      "partImages": {
+        "内搭": {
+          "P1 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Cloth.png",
+          "P2 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Cloth.png",
+          "P3 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Cloth.png"
+        },
+        "下装": {
+          "P1 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Body.png",
+          "P2 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Body.png",
+          "P3 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Body.png"
+        },
+        "头部配件": {
+          "眼镜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Head.png",
+          "猫耳": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Head.png"
+        }
+      }
+    },
+    "pmx-c7270af966e8aaf8": {
+      "character": "克莱妲",
+      "skin": "濯浪焦点",
+      "officialSkin": "濯浪焦点",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-c7270af966e8aaf8.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR01.png",
+      "groups": {
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "穿外套",
+            "脱外套"
+          ]
+        },
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "watch": {
+          "label": "手表",
+          "display": "手表",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hairband": {
+          "label": "发带",
+          "display": "发带",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "knife": {
+          "label": "随身刀具",
+          "display": "随身刀具",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带消音器",
+          "display": "模型自带消音器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {
+        "上衣": {
+          "穿外套": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_KoledaSSR01_P1_Coat.png"
+        }
+      }
+    },
+    "pmx-782f06826adb1307": {
+      "character": "OTs-14",
+      "skin": "默认",
+      "officialSkin": "暗昼冽影",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "equipment": {
+          "label": "随身装具",
+          "display": "随身装具",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "gloves": {
+          "label": "手套",
+          "display": "手套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hairband": {
+          "label": "发带",
+          "display": "发带",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "inner": {
+          "label": "内搭",
+          "display": "内搭",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "partImages": {}
+    },
+    "pmx-f5b2807685b18a60": {
+      "character": "妮基塔",
+      "skin": "无垢契约",
+      "officialSkin": "无垢契约",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f5b2807685b18a60.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR03.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "shoes": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        }
+      },
+      "partImages": {
+        "头饰": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Head.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Head.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Head.png"
+        },
+        "上衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Cloth.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Cloth.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Cloth.png"
+        },
+        "下衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Body.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Body.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Body.png"
+        }
+      }
+    }
+  },
+  "labels": {
+    "莱娅": {
+      "path": "media/ui/AimohPMXReadyRoom/label-46a70d65e3a568.png",
+      "width": 84,
+      "height": 43
+    },
+    "默认": {
+      "path": "media/ui/AimohPMXReadyRoom/label-844b8cc8dff7c1.png",
+      "width": 78,
+      "height": 44
+    },
+    "帽子": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f045b9ca8f63f3.png",
+      "width": 84,
+      "height": 43
+    },
+    "随身装备": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fb9a24249dcf2b.png",
+      "width": 164,
+      "height": 44
+    },
+    "袜装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c93e047ab6cdb4.png",
+      "width": 84,
+      "height": 43
+    },
+    "显示": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4e1449e7d5e505.png",
+      "width": 84,
+      "height": 41
+    },
+    "隐藏": {
+      "path": "media/ui/AimohPMXReadyRoom/label-145219e726b877.png",
+      "width": 84,
+      "height": 44
+    },
+    "脸部": {
+      "path": "media/ui/AimohPMXReadyRoom/label-992b34fef2fdd7.png",
+      "width": 84,
+      "height": 44
+    },
+    "口腔": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ac25e51b02c464.png",
+      "width": 84,
+      "height": 43
+    },
+    "牙齿 1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-721fb22f820972.png",
+      "width": 117,
+      "height": 43
+    },
+    "牙齿 2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c53f568e889cef.png",
+      "width": 117,
+      "height": 43
+    },
+    "舌头": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4212f8433fbd4d.png",
+      "width": 84,
+      "height": 42
+    },
+    "眼白": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e554b8aaeff284.png",
+      "width": 84,
+      "height": 44
+    },
+    "睫毛": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f514d7062ea1ae.png",
+      "width": 84,
+      "height": 43
+    },
+    "眉毛": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a25ee7adaa1188.png",
+      "width": 84,
+      "height": 43
+    },
+    "眼睛": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9069cc8f2c62b4.png",
+      "width": 84,
+      "height": 42
+    },
+    "眼部细节": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a5dd415f862a76.png",
+      "width": 164,
+      "height": 44
+    },
+    "眼影（源模型隐藏）": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d98e43d28f74c9.png",
+      "width": 364,
+      "height": 44
+    },
+    "身体": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4729deedde2a07.png",
+      "width": 84,
+      "height": 44
+    },
+    "衣装 A": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6c5a5307491fa9.png",
+      "width": 120,
+      "height": 43
+    },
+    "衣装主体": {
+      "path": "media/ui/AimohPMXReadyRoom/label-edd24b7d74a46d.png",
+      "width": 164,
+      "height": 43
+    },
+    "衣装备用（源模型隐藏）": {
+      "path": "media/ui/AimohPMXReadyRoom/label-62576bc8712415.png",
+      "width": 444,
+      "height": 44
+    },
+    "头发": {
+      "path": "media/ui/AimohPMXReadyRoom/label-476627a8c1b835.png",
+      "width": 84,
+      "height": 43
+    },
+    "袜装 1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-eeb2e6e47ba623.png",
+      "width": 117,
+      "height": 43
+    },
+    "袜装 2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-442ac46fdea039.png",
+      "width": 117,
+      "height": 43
+    },
+    "表情贴片 1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-27dc399c8f3a4b.png",
+      "width": 197,
+      "height": 44
+    },
+    "表情贴片 2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-efd2600cbfdb29.png",
+      "width": 197,
+      "height": 44
+    },
+    "头饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d125891654451c.png",
+      "width": 84,
+      "height": 43
+    },
+    "夏安": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e379a80b2da60d.png",
+      "width": 84,
+      "height": 44
+    },
+    "外套": {
+      "path": "media/ui/AimohPMXReadyRoom/label-17191e6e186317.png",
+      "width": 84,
+      "height": 43
+    },
+    "背包与装具": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07381e0a79468b.png",
+      "width": 204,
+      "height": 44
+    },
+    "Face": {
+      "path": "media/ui/AimohPMXReadyRoom/label-304afc32b7ff2e.png",
+      "width": 96,
+      "height": 35
+    },
+    "Mouth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-169541e5585e20.png",
+      "width": 134,
+      "height": 37
+    },
+    "UpperTeeth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-45afb2f25c8f14.png",
+      "width": 241,
+      "height": 44
+    },
+    "LowerTeeth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7cd036b3295eab.png",
+      "width": 244,
+      "height": 37
+    },
+    "Tongue": {
+      "path": "media/ui/AimohPMXReadyRoom/label-583338262d3729.png",
+      "width": 155,
+      "height": 43
+    },
+    "EyeWhite": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f5754285ffc985.png",
+      "width": 191,
+      "height": 46
+    },
+    "Brows": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4c1eb4c71ad11e.png",
+      "width": 130,
+      "height": 35
+    },
+    "EyeLid": {
+      "path": "media/ui/AimohPMXReadyRoom/label-083f8e75c7c319.png",
+      "width": 138,
+      "height": 46
+    },
+    "Lashes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-aaf4228035983b.png",
+      "width": 139,
+      "height": 37
+    },
+    "Eyes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a39e9d9816a99f.png",
+      "width": 94,
+      "height": 43
+    },
+    "Eyes+": {
+      "path": "media/ui/AimohPMXReadyRoom/label-32b589d8eafd81.png",
+      "width": 119,
+      "height": 43
+    },
+    "BodySkin": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2d515884844bf1.png",
+      "width": 196,
+      "height": 46
+    },
+    "Cloth1-Top-Shirt": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c6cb87165c5c61.png",
+      "width": 342,
+      "height": 45
+    },
+    "Cloth1-Hardness": {
+      "path": "media/ui/AimohPMXReadyRoom/label-20a0f47fbce309.png",
+      "width": 337,
+      "height": 37
+    },
+    "Cloth1-NameTag": {
+      "path": "media/ui/AimohPMXReadyRoom/label-89067058db79e3.png",
+      "width": 341,
+      "height": 45
+    },
+    "Cloth1-Skirt": {
+      "path": "media/ui/AimohPMXReadyRoom/label-12b0873828e632.png",
+      "width": 249,
+      "height": 38
+    },
+    "Cloth1-Skirt-Belt": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d360f24f070db6.png",
+      "width": 345,
+      "height": 38
+    },
+    "Cloth1-Underpants": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ae646be6ab2015.png",
+      "width": 386,
+      "height": 44
+    },
+    "Cloth1-Hat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5b836f939971bd.png",
+      "width": 223,
+      "height": 37
+    },
+    "Cloth1-Tie": {
+      "path": "media/ui/AimohPMXReadyRoom/label-194f1da7841dfc.png",
+      "width": 212,
+      "height": 38
+    },
+    "Cloth1-Glove": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e784b9ffc530bc.png",
+      "width": 265,
+      "height": 37
+    },
+    "Cloth2-Jacket": {
+      "path": "media/ui/AimohPMXReadyRoom/label-afdd72e574c849.png",
+      "width": 284,
+      "height": 37
+    },
+    "Cloth3-Jacket-Strips": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fb40654082ed79.png",
+      "width": 417,
+      "height": 45
+    },
+    "Cloth2-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0afb23fcc11af0.png",
+      "width": 270,
+      "height": 37
+    },
+    "Cloth2-CottonSocks": {
+      "path": "media/ui/AimohPMXReadyRoom/label-dcb21d4cbcc156.png",
+      "width": 405,
+      "height": 37
+    },
+    "Cloth3-Batteries": {
+      "path": "media/ui/AimohPMXReadyRoom/label-36a63f907d6b41.png",
+      "width": 333,
+      "height": 38
+    },
+    "Cloth3-Bags": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d0cbe882555ab8.png",
+      "width": 247,
+      "height": 45
+    },
+    "Cloth5-Bags-Stickers": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d625e285fa95d0.png",
+      "width": 423,
+      "height": 46
+    },
+    "EyeShadow": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1c43ffb0ab089f.png",
+      "width": 237,
+      "height": 45
+    },
+    "HairA": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a81ccce2e81adf.png",
+      "width": 117,
+      "height": 38
+    },
+    "HairB": {
+      "path": "media/ui/AimohPMXReadyRoom/label-988db46c05dd44.png",
+      "width": 118,
+      "height": 38
+    },
+    "Cloth4-Jacket'sZips": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bc2231f1d66633.png",
+      "width": 400,
+      "height": 45
+    },
+    "Cloth3-Tranparent-Cover": {
+      "path": "media/ui/AimohPMXReadyRoom/label-65f1c72ec9e109.png",
+      "width": 509,
+      "height": 44
+    },
+    "EmotionsA": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c689e2358db20c.png",
+      "width": 221,
+      "height": 38
+    },
+    "EmotionsB": {
+      "path": "media/ui/AimohPMXReadyRoom/label-794f8ed4607241.png",
+      "width": 222,
+      "height": 38
+    },
+    "热力运动": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba197e34f6eac8.png",
+      "width": 154,
+      "height": 44
+    },
+    "头部配件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9e91a6218cfbc0.png",
+      "width": 164,
+      "height": 44
+    },
+    "上装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fd6709d36e5116.png",
+      "width": 84,
+      "height": 43
+    },
+    "腿部款式": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3aeffe4a86f4c2.png",
+      "width": 164,
+      "height": 44
+    },
+    "鞋子": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a00b97bbc47f09.png",
+      "width": 84,
+      "height": 43
+    },
+    "P1 发饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-403032f423ce45.png",
+      "width": 145,
+      "height": 44
+    },
+    "P2 耳饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-250dfc32ce844c.png",
+      "width": 145,
+      "height": 43
+    },
+    "P3 耳饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-af161f93496d2a.png",
+      "width": 145,
+      "height": 43
+    },
+    "P1 上装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fd3bc0b0115439.png",
+      "width": 145,
+      "height": 43
+    },
+    "P2 上装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7d1f7fe33d452a.png",
+      "width": 145,
+      "height": 43
+    },
+    "P3 上装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a461a003a051d1.png",
+      "width": 145,
+      "height": 43
+    },
+    "P1 腿装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8baf879bdf219a.png",
+      "width": 145,
+      "height": 44
+    },
+    "P2 丝袜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2c8c354579488a.png",
+      "width": 145,
+      "height": 43
+    },
+    "P3 丝袜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4fa8add2c49c6e.png",
+      "width": 145,
+      "height": 43
+    },
+    "穿鞋": {
+      "path": "media/ui/AimohPMXReadyRoom/label-270abfcd73b46a.png",
+      "width": 84,
+      "height": 43
+    },
+    "脱鞋": {
+      "path": "media/ui/AimohPMXReadyRoom/label-eb33a5b3264c7d.png",
+      "width": 84,
+      "height": 44
+    },
+    "Teeth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-12eed1fcb47cea.png",
+      "width": 118,
+      "height": 37
+    },
+    "Teeth.001": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3c4c9fb1991142.png",
+      "width": 204,
+      "height": 37
+    },
+    "Hair": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ababed4823ab79.png",
+      "width": 90,
+      "height": 38
+    },
+    "part|00E_Hat|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-59387069b36dc4.png",
+      "width": 306,
+      "height": 49
+    },
+    "Weapon": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1710782c5d15b9.png",
+      "width": 166,
+      "height": 42
+    },
+    "Cloth2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e034ebe47d8b19.png",
+      "width": 136,
+      "height": 37
+    },
+    "Emotions1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c823364754eba7.png",
+      "width": 218,
+      "height": 38
+    },
+    "Emotions2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e075d4d0ad6a5c.png",
+      "width": 218,
+      "height": 38
+    },
+    "part|P1-发饰|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c9295125a1a023.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-服装|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-549591d8916bcc.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-服装|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2e905a7d3d43aa.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-腿部|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-97287ba35ff73f.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-袜足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-34ef20442b9f54.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-鞋足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-057c3bd2ec5642.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-丝袜|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4e451ace931c84.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-丝足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ab0979d9c7b598.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P2-服装|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-33bf2d199b16e0.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-服装|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a708ffce60f7c8.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-耳朵|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-924c6e52dbe36a.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P2-腿部|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-12fa5dcca05208.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-鞋足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d0ea01e7bb2c75.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-丝袜|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4ef37cf81a017e.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-丝足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7945f26fab146e.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P3-服装|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-13b746036eb17f.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-服装|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-740b64a2d3cc51.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-耳朵|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-44116d69874e80.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P3-腿部|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b5a56ac29ad67e.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-鞋足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e6239842e2d40c.png",
+      "width": 284,
+      "height": 50
+    },
+    "Cloth1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-122bd52d7e9a48.png",
+      "width": 136,
+      "height": 37
+    },
+    "part|鞋子|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-dc0616b8f62b50.png",
+      "width": 217,
+      "height": 50
+    },
+    "原始材质": {
+      "path": "media/ui/AimohPMXReadyRoom/label-379a112c917051.png",
+      "width": 164,
+      "height": 44
+    },
+    "上衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f0ed5fbca37997.png",
+      "width": 84,
+      "height": 43
+    },
+    "下衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3c2161a3eb17c0.png",
+      "width": 84,
+      "height": 43
+    },
+    "芙玲": {
+      "path": "media/ui/AimohPMXReadyRoom/label-095295d4e30d2e.png",
+      "width": 84,
+      "height": 43
+    },
+    "体操服": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d9922b14af61c5.png",
+      "width": 124,
+      "height": 44
+    },
+    "下装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-baf1039ba4cb31.png",
+      "width": 84,
+      "height": 43
+    },
+    "原始": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8cb7c0a54b21bb.png",
+      "width": 84,
+      "height": 43
+    },
+    "上着P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7eb61f6d3d487c.png",
+      "width": 136,
+      "height": 43
+    },
+    "上着P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-25b42213917edb.png",
+      "width": 136,
+      "height": 43
+    },
+    "下着p2-1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e5455e535ef36d.png",
+      "width": 173,
+      "height": 47
+    },
+    "下着p2-2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8f485e8b3eea96.png",
+      "width": 173,
+      "height": 47
+    },
+    "下着p3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-939495cee99fe8.png",
+      "width": 134,
+      "height": 47
+    },
+    "Sock-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7a9cee4ade3fc6.png",
+      "width": 168,
+      "height": 37
+    },
+    "Sock-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d4f80f79dcd6c1.png",
+      "width": 168,
+      "height": 37
+    },
+    "EyeRed(Left)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-02b1a4bf80b7e5.png",
+      "width": 261,
+      "height": 47
+    },
+    "HairC(Ears)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-20e91e6e8f7fcb.png",
+      "width": 232,
+      "height": 47
+    },
+    "发饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bd96d06cc43d7c.png",
+      "width": 84,
+      "height": 44
+    },
+    "皮肤-首": {
+      "path": "media/ui/AimohPMXReadyRoom/label-58a8d361f37ed3.png",
+      "width": 139,
+      "height": 44
+    },
+    "皮肤-身体P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f7824bc32d01c5.png",
+      "width": 231,
+      "height": 44
+    },
+    "皮肤-身体P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1ef3cb14e8391d.png",
+      "width": 231,
+      "height": 44
+    },
+    "皮肤-上身P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b3a0644acb73f6.png",
+      "width": 231,
+      "height": 44
+    },
+    "皮肤-上身P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3581aa99c6b5a9.png",
+      "width": 231,
+      "height": 44
+    },
+    "皮肤-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8d271e2d5d4d63.png",
+      "width": 151,
+      "height": 43
+    },
+    "皮肤-下身P1-1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a867725e6fc2ce.png",
+      "width": 270,
+      "height": 44
+    },
+    "皮肤-下身P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f2780bb0e662b5.png",
+      "width": 231,
+      "height": 44
+    },
+    "皮肤-下身P3-1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0a5e6001e46a7b.png",
+      "width": 270,
+      "height": 44
+    },
+    "皮肤-腿P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ff6541abfda72a.png",
+      "width": 191,
+      "height": 43
+    },
+    "皮肤-腿P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-edbe1f60f2a774.png",
+      "width": 191,
+      "height": 43
+    },
+    "皮肤-腿P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b70ab698475ab5.png",
+      "width": 191,
+      "height": 43
+    },
+    "皮肤-手臂": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6ea9c01cccf80c.png",
+      "width": 179,
+      "height": 44
+    },
+    "皮肤-脚P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-810195d506ae9a.png",
+      "width": 191,
+      "height": 43
+    },
+    "皮肤-脚P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cecd85c6afcc3b.png",
+      "width": 191,
+      "height": 43
+    },
+    "脚趾甲-P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-99722b0dec0fed.png",
+      "width": 191,
+      "height": 42
+    },
+    "脚趾甲-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3bb62cf3a78049.png",
+      "width": 191,
+      "height": 42
+    },
+    "脚指甲-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9c7cb558714f10.png",
+      "width": 191,
+      "height": 44
+    },
+    "小裤裤-P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-28652e061d5860.png",
+      "width": 191,
+      "height": 44
+    },
+    "小裤裤-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f2d4424c45f708.png",
+      "width": 191,
+      "height": 44
+    },
+    "小裤裤-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-27e855e3609bf1.png",
+      "width": 191,
+      "height": 44
+    },
+    "口哨": {
+      "path": "media/ui/AimohPMXReadyRoom/label-306fc716a38aef.png",
+      "width": 84,
+      "height": 42
+    },
+    "上衣-P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-74e3ca21347da0.png",
+      "width": 151,
+      "height": 43
+    },
+    "上衣-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2ca5bac0775a48.png",
+      "width": 151,
+      "height": 43
+    },
+    "上衣-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cf69afd2c36484.png",
+      "width": 151,
+      "height": 43
+    },
+    "上衣-P3领巾": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba2201ee5e842e.png",
+      "width": 231,
+      "height": 44
+    },
+    "丝袜-P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d318a745084bbe.png",
+      "width": 151,
+      "height": 43
+    },
+    "袜子-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b4388d67730d75.png",
+      "width": 151,
+      "height": 43
+    },
+    "丝袜-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5cbbc15d4a47e6.png",
+      "width": 151,
+      "height": 43
+    },
+    "创可贴-P1-1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-82088f070ee1f1.png",
+      "width": 230,
+      "height": 43
+    },
+    "创可贴-P1-2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-18665c568d5214.png",
+      "width": 230,
+      "height": 43
+    },
+    "手套": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d3db5e56061937.png",
+      "width": 84,
+      "height": 43
+    },
+    "Emotions(Blush)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-72edb43031bb67.png",
+      "width": 336,
+      "height": 47
+    },
+    "Emotions": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8a1f7f6d8f31ce.png",
+      "width": 194,
+      "height": 38
+    },
+    "春田": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6c49881b21ac71.png",
+      "width": 84,
+      "height": 43
+    },
+    "长裙": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5ce7d3b5425ceb.png",
+      "width": 84,
+      "height": 44
+    },
+    "Hide1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-62266505291a90.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c005b05d6d0210.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-34624794e62888.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide4": {
+      "path": "media/ui/AimohPMXReadyRoom/label-010f45b7da775f.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide5": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fab23fdaa48782.png",
+      "width": 121,
+      "height": 38
+    },
+    "启用": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f4f0ead1116b5b.png",
+      "width": 84,
+      "height": 44
+    },
+    "Lashers": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2f58f3f45a4996.png",
+      "width": 157,
+      "height": 37
+    },
+    "FingersNail": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4dfc5b8ac13066.png",
+      "width": 233,
+      "height": 46
+    },
+    "BodySkin(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9f82b7568fe1cf.png",
+      "width": 345,
+      "height": 47
+    },
+    "ToeNails(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e632cf561ab56b.png",
+      "width": 327,
+      "height": 47
+    },
+    "BodySkin(NoShoes/Hide)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3bb41d6675462f.png",
+      "width": 510,
+      "height": 47
+    },
+    "ToeNails(NoShoes/Hide)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f1584f24e62860.png",
+      "width": 492,
+      "height": 47
+    },
+    "P1-Cth1-Bra": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6bd02e9adcc6c2.png",
+      "width": 249,
+      "height": 37
+    },
+    "P1-Body1-Panties": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6144eb8f67c72e.png",
+      "width": 363,
+      "height": 46
+    },
+    "P1-Head1-Hat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f97d82d9b64d9e.png",
+      "width": 286,
+      "height": 37
+    },
+    "P1-Head2-Hat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2944b201b9751d.png",
+      "width": 286,
+      "height": 37
+    },
+    "Cth1-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-72f9d744cf8be4.png",
+      "width": 231,
+      "height": 37
+    },
+    "P1-Head2-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4ed1ab88fd09fd.png",
+      "width": 333,
+      "height": 37
+    },
+    "P1-Head1-HairBand": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7b0fd8be600cbc.png",
+      "width": 404,
+      "height": 38
+    },
+    "P1-Cth1-SunglassesFrame": {
+      "path": "media/ui/AimohPMXReadyRoom/label-abfa8c1b569774.png",
+      "width": 525,
+      "height": 45
+    },
+    "P1-Cth1-OutterwearButton": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3a44afb8ef87ad.png",
+      "width": 550,
+      "height": 37
+    },
+    "TopOutWear": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3cae86ee7496b8.png",
+      "width": 256,
+      "height": 43
+    },
+    "P1-Cth-Glasses": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4f5ac75f557095.png",
+      "width": 301,
+      "height": 37
+    },
+    "SkirtOutWear": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cf5d31f5881e26.png",
+      "width": 277,
+      "height": 38
+    },
+    "阿斯缇亚": {
+      "path": "media/ui/AimohPMXReadyRoom/label-28735023ef1b96.png",
+      "width": 164,
+      "height": 44
+    },
+    "Cth1-Panties": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fed021c33ef293.png",
+      "width": 262,
+      "height": 38
+    },
+    "Cth1-Panties(Hide)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c78a11b0d8bd44.png",
+      "width": 385,
+      "height": 47
+    },
+    "Cth1-TopCloth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d33fd70acd7d9f.png",
+      "width": 297,
+      "height": 44
+    },
+    "Cth1-Skirt": {
+      "path": "media/ui/AimohPMXReadyRoom/label-45ab8b1f2fde28.png",
+      "width": 210,
+      "height": 38
+    },
+    "Cth1-Goggles": {
+      "path": "media/ui/AimohPMXReadyRoom/label-af3ba32b358568.png",
+      "width": 272,
+      "height": 45
+    },
+    "Cth2-Socks": {
+      "path": "media/ui/AimohPMXReadyRoom/label-46b2b2b4b93bbf.png",
+      "width": 228,
+      "height": 37
+    },
+    "Cth2-Chocker": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba24e80ada4dfa.png",
+      "width": 277,
+      "height": 37
+    },
+    "Cth2-Glove": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a56f3b39afc042.png",
+      "width": 226,
+      "height": 37
+    },
+    "Cth2-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d212e4b3655bfb.png",
+      "width": 231,
+      "height": 37
+    },
+    "Cth3-Jacket": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9561d653f906b3.png",
+      "width": 245,
+      "height": 37
+    },
+    "Cth5-JacketZip": {
+      "path": "media/ui/AimohPMXReadyRoom/label-54b34925e48f00.png",
+      "width": 309,
+      "height": 45
+    },
+    "Cth4-Knife": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3d084a5120019f.png",
+      "width": 217,
+      "height": 38
+    },
+    "Cth1-Hairpin": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07be5cbfa8bfd0.png",
+      "width": 263,
+      "height": 45
+    },
+    "Bracket": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f790334e80c3b6.png",
+      "width": 160,
+      "height": 37
+    },
+    "Gun": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bb8b4c33ff1d1e.png",
+      "width": 85,
+      "height": 36
+    },
+    "冬夜星途（JK）": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a86b0a6f9033fc.png",
+      "width": 295,
+      "height": 44
+    },
+    "内搭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a389c65e990800.png",
+      "width": 84,
+      "height": 42
+    },
+    "围巾": {
+      "path": "media/ui/AimohPMXReadyRoom/label-47462640e72be9.png",
+      "width": 84,
+      "height": 42
+    },
+    "背包与背带": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9f17a7a0673763.png",
+      "width": 204,
+      "height": 44
+    },
+    "无附加头饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b38db64b72f32a.png",
+      "width": 204,
+      "height": 44
+    },
+    "眼镜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e4919ea342ea18.png",
+      "width": 84,
+      "height": 43
+    },
+    "猫耳": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4e9885e9c8ffcf.png",
+      "width": 84,
+      "height": 44
+    },
+    "P1 内搭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-327feb770b8434.png",
+      "width": 145,
+      "height": 42
+    },
+    "P2 内搭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c9f4bc7129d517.png",
+      "width": 145,
+      "height": 42
+    },
+    "P3 内搭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a7764404762007.png",
+      "width": 145,
+      "height": 42
+    },
+    "P1 下装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8e6a3afd9290e1.png",
+      "width": 145,
+      "height": 43
+    },
+    "P2 下装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8ea51b628547ff.png",
+      "width": 145,
+      "height": 43
+    },
+    "P3 下装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6325032e6aef17.png",
+      "width": 145,
+      "height": 43
+    },
+    "Cth1-Scarf": {
+      "path": "media/ui/AimohPMXReadyRoom/label-aa9b59c9c04e37.png",
+      "width": 217,
+      "height": 38
+    },
+    "part|00R_Cth2-Hardness|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-829ff793689f0a.png",
+      "width": 531,
+      "height": 49
+    },
+    "part|P1-丝带|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e166d615c57e6c.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P1-丝足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9896b08dda564d.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P1-丝足|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bdf5d7bced99b0.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P1-丝足|2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2c784e62dc3d5a.png",
+      "width": 284,
+      "height": 49
+    },
+    "part|P1-腿部|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1fffe54e4969c7.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-腿部|2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4414e22fd896de.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-裙子|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8ee8ad0a905cb4.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-身体|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5c9a57850b87e8.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-身体|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3c46209f58b14d.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P1-鞋子|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e83cf5e672d86e.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-眼镜|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bc513fe75c277c.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-眼镜|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3bfc6de85c04ce.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-腿部|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a1c4e43e3d1102.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-身体|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e9587bdba7d80b.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-身体|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a52cf9eac327f5.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P2-鞋子|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3712db777d0cab.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-猫耳|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-70e2820963b0c8.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-裸足|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-092630f617d30f.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-身体|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7035b01183227d.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-身体|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-74c0ece5a0053e.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|P3-鞋子|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-67eefb4a6ee8c1.png",
+      "width": 284,
+      "height": 50
+    },
+    "part|围巾|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6f2363b87a5aa8.png",
+      "width": 217,
+      "height": 49
+    },
+    "part|外套|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-739345d4064c30.png",
+      "width": 217,
+      "height": 50
+    },
+    "part|外套|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cbba343837b0e6.png",
+      "width": 217,
+      "height": 50
+    },
+    "part|背包|0": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b454abbd7da8d0.png",
+      "width": 217,
+      "height": 50
+    },
+    "part|背包|1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-72ae350476a868.png",
+      "width": 217,
+      "height": 50
+    },
+    "整备室": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0d2a720dfcff48.png",
+      "width": 116,
+      "height": 43
+    },
+    "皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fc0d7cf23b5483.png",
+      "width": 84,
+      "height": 43
+    },
+    "部件预览": {
+      "path": "media/ui/AimohPMXReadyRoom/label-919a24cae78c70.png",
+      "width": 164,
+      "height": 44
+    },
+    "返回皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2ceb66df6c4b2e.png",
+      "width": 164,
+      "height": 43
+    },
+    "修改已保存": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1601f9aa9ef9b5.png",
+      "width": 204,
+      "height": 44
+    },
+    "恢复原角色": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fb1b7bb9e69850.png",
+      "width": 204,
+      "height": 44
+    },
+    "恢复默认": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba2e93e73037c7.png",
+      "width": 164,
+      "height": 44
+    },
+    "重新应用": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3b030116db3e18.png",
+      "width": 164,
+      "height": 44
+    },
+    "刷新": {
+      "path": "media/ui/AimohPMXReadyRoom/label-aee88743413144.png",
+      "width": 84,
+      "height": 44
+    },
+    "详细部件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8d2ff81f46a4fe.png",
+      "width": 164,
+      "height": 44
+    },
+    "材质预设": {
+      "path": "media/ui/AimohPMXReadyRoom/label-af609d0d009ac1.png",
+      "width": 164,
+      "height": 44
+    },
+    "这套皮肤没有可切换部件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-99e8332bc08923.png",
+      "width": 444,
+      "height": 44
+    },
+    "请选择角色": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7126b41410038a.png",
+      "width": 204,
+      "height": 44
+    },
+    "正在准备人物…": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1fb45bc7d3619c.png",
+      "width": 284,
+      "height": 44
+    },
+    "拖动旋转 · 滚轮缩放": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1ec95dff1bb767.png",
+      "width": 382,
+      "height": 44
+    },
+    "当前使用原角色": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4c9256d447a411.png",
+      "width": 284,
+      "height": 44
+    },
+    "操作未应用，请查看日志": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b0e7a4f1ca53bd.png",
+      "width": 444,
+      "height": 45
+    },
+    "关闭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3fd47edce45b36.png",
+      "width": 84,
+      "height": 43
+    },
+    "暂无图片": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b86852571f0cd8.png",
+      "width": 164,
+      "height": 44
+    },
+    "等待人物画面": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d798a77f9adbbc.png",
+      "width": 244,
+      "height": 44
+    },
+    "当前穿着": {
+      "path": "media/ui/AimohPMXReadyRoom/label-787058b4bd1987.png",
+      "width": 164,
+      "height": 43
+    },
+    "未启用": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f95ea7f4c063ee.png",
+      "width": 124,
+      "height": 44
+    },
+    "这套皮肤没有此类部件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-df852bdc2e519c.png",
+      "width": 404,
+      "height": 44
+    },
+    "芙铃": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d1aa7db7058283.png",
+      "width": 84,
+      "height": 42
+    },
+    "忻跃阳炎": {
+      "path": "media/ui/AimohPMXReadyRoom/label-60bbfe30fc7155.png",
+      "width": 154,
+      "height": 44
+    },
+    "睡醒的人鱼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f14c171bb75283.png",
+      "width": 191,
+      "height": 43
+    },
+    "冬夜星途": {
+      "path": "media/ui/AimohPMXReadyRoom/label-62478a473391b7.png",
+      "width": 154,
+      "height": 44
+    },
+    "穿着": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6dc08584169a2d.png",
+      "width": 84,
+      "height": 43
+    },
+    "其他配件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0cd4d37949c5d7.png",
+      "width": 164,
+      "height": 42
+    },
+    "返回三栏配件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2a853c6749ca0c.png",
+      "width": 244,
+      "height": 43
+    },
+    "左右拖动选择皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/label-783a1919c6cc7e.png",
+      "width": 324,
+      "height": 44
+    },
+    "穿外套": {
+      "path": "media/ui/AimohPMXReadyRoom/label-002c56e7bf5829.png",
+      "width": 124,
+      "height": 43
+    },
+    "脱外套": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b08dba7d5f569c.png",
+      "width": 124,
+      "height": 44
+    },
+    "手表": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b727ee62fc58ed.png",
+      "width": 84,
+      "height": 43
+    },
+    "发带": {
+      "path": "media/ui/AimohPMXReadyRoom/label-73f7855d1a0c34.png",
+      "width": 84,
+      "height": 43
+    },
+    "随身刀具": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2790726ea936c6.png",
+      "width": 164,
+      "height": 44
+    },
+    "模型自带手枪": {
+      "path": "media/ui/AimohPMXReadyRoom/label-96762a74302aa8.png",
+      "width": 244,
+      "height": 44
+    },
+    "模型自带消音器": {
+      "path": "media/ui/AimohPMXReadyRoom/label-23b96771cebde3.png",
+      "width": 284,
+      "height": 44
+    },
+    "FingerNails": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7fc899eac6eabe.png",
+      "width": 233,
+      "height": 46
+    },
+    "P1-Cth1-Bikini": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cc909eca30b984.png",
+      "width": 297,
+      "height": 38
+    },
+    "P1-Cth1-Coat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-350af19390da8e.png",
+      "width": 272,
+      "height": 37
+    },
+    "Cth-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-52f234849d3613.png",
+      "width": 207,
+      "height": 37
+    },
+    "Cth-Watch": {
+      "path": "media/ui/AimohPMXReadyRoom/label-92d95eac265a3c.png",
+      "width": 213,
+      "height": 37
+    },
+    "Cth-Hairband": {
+      "path": "media/ui/AimohPMXReadyRoom/label-167d1242c89064.png",
+      "width": 276,
+      "height": 38
+    },
+    "Cth-Sunglasses": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ece174be4cee5a.png",
+      "width": 307,
+      "height": 45
+    },
+    "Glock(Hide)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-877c7e204845ff.png",
+      "width": 241,
+      "height": 47
+    },
+    "Gunsilencer(Hide)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f8023cc3b5f63e.png",
+      "width": 364,
+      "height": 47
+    },
+    "克莱妲": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6f7dcf22c0e449.png",
+      "width": 124,
+      "height": 44
+    },
+    "濯浪焦点": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9334c97c942fba.png",
+      "width": 154,
+      "height": 44
+    },
+    "随身装具": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e79f3e5197ec38.png",
+      "width": 164,
+      "height": 44
+    },
+    "Cth2-TopCloth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-da43b3192cbcf1.png",
+      "width": 297,
+      "height": 44
+    },
+    "Cth4-TopCloth": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3d92ee700c9d7e.png",
+      "width": 297,
+      "height": 44
+    },
+    "Cth4-Shoes": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5bdce475f5b7f8.png",
+      "width": 231,
+      "height": 37
+    },
+    "Cth1-Weapon": {
+      "path": "media/ui/AimohPMXReadyRoom/label-82d001346a05c4.png",
+      "width": 274,
+      "height": 44
+    },
+    "Cth4-Weapon": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6f22e3cb2ace63.png",
+      "width": 274,
+      "height": 44
+    },
+    "Cth4-Glove": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b90dc7e898d5ee.png",
+      "width": 226,
+      "height": 37
+    },
+    "Cth1-Hairband": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2183a43818daa7.png",
+      "width": 300,
+      "height": 38
+    },
+    "Cth3-Socks": {
+      "path": "media/ui/AimohPMXReadyRoom/label-08084482c21a6d.png",
+      "width": 228,
+      "height": 37
+    },
+    "Cth3-Hat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-473b35d8870a5b.png",
+      "width": 184,
+      "height": 37
+    },
+    "Cth4-Hat": {
+      "path": "media/ui/AimohPMXReadyRoom/label-63596f0df2445a.png",
+      "width": 184,
+      "height": 37
+    },
+    "Cth3-BrasTop": {
+      "path": "media/ui/AimohPMXReadyRoom/label-902edc5c721801.png",
+      "width": 278,
+      "height": 44
+    },
+    "OTs-14": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9ac0dc47628fe4.png",
+      "width": 141,
+      "height": 36
+    },
+    "睁眼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d24ee71f42e151.png",
+      "width": 84,
+      "height": 43
+    },
+    "闭眼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a4214edae5fc68.png",
+      "width": 84,
+      "height": 42
+    },
+    "重置物理": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c634e2455775c3.png",
+      "width": 144,
+      "height": 44
+    },
+    "重置物理解算": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1b04916422066c.png",
+      "width": 284,
+      "height": 58
+    },
+    "妮基塔": {
+      "path": "media/ui/AimohPMXReadyRoom/label-56d27c8e35cfd2.png",
+      "width": 124,
+      "height": 44
+    },
+    "无垢契约": {
+      "path": "media/ui/AimohPMXReadyRoom/label-53a6b049ab3fac.png",
+      "width": 154,
+      "height": 44
+    },
+    "P1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fbeae7c18667b6.png",
+      "width": 56,
+      "height": 34
+    },
+    "P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-acbbb742c7524c.png",
+      "width": 56,
+      "height": 35
+    },
+    "P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9f9853b3f13444.png",
+      "width": 56,
+      "height": 36
+    },
+    "赤脚": {
+      "path": "media/ui/AimohPMXReadyRoom/label-577c8e14293b64.png",
+      "width": 84,
+      "height": 43
+    },
+    "P1-Skin-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ff27ddaac3f39d.png",
+      "width": 264,
+      "height": 38
+    },
+    "P2-Skin-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0eb50070d42635.png",
+      "width": 264,
+      "height": 38
+    },
+    "P3-Skin-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fe808dbbd430de.png",
+      "width": 264,
+      "height": 38
+    },
+    "P2-Skin-Foot(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-39b3828d342d1b.png",
+      "width": 417,
+      "height": 47
+    },
+    "P3-Skin-Foot(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-75537149082eca.png",
+      "width": 417,
+      "height": 47
+    },
+    "P1-Skin-Lage": {
+      "path": "media/ui/AimohPMXReadyRoom/label-31e72856b1e28a.png",
+      "width": 271,
+      "height": 46
+    },
+    "P2-Skin-Lage": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d24ebcc187d1c9.png",
+      "width": 271,
+      "height": 46
+    },
+    "P3-Skin-Lage": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c6bcca60e8bb14.png",
+      "width": 271,
+      "height": 46
+    },
+    "P1-Skin-Foot(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-06ceabba401425.png",
+      "width": 525,
+      "height": 47
+    },
+    "P2-Skin-Foot(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-924c97c7385568.png",
+      "width": 525,
+      "height": 47
+    },
+    "P3-Skin-Foot(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1abda6adea5e5f.png",
+      "width": 525,
+      "height": 47
+    },
+    "P1-ToeNails(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a0f0fe94ed5141.png",
+      "width": 502,
+      "height": 47
+    },
+    "P2-ToeNails(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9d9c88afe25c7d.png",
+      "width": 502,
+      "height": 47
+    },
+    "P3-ToeNails(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-83e5b7384ed792.png",
+      "width": 502,
+      "height": 47
+    },
+    "BodySkin(Mole)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-082e1ee389f57e.png",
+      "width": 323,
+      "height": 47
+    },
+    "P1-Cth1-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b45a47029f2394.png",
+      "width": 268,
+      "height": 37
+    },
+    "P2-Cth1-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-be63cf6a51472a.png",
+      "width": 268,
+      "height": 37
+    },
+    "P3-Cth1-Bras": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0ed59f729bf310.png",
+      "width": 268,
+      "height": 37
+    },
+    "Cth2-Wings": {
+      "path": "media/ui/AimohPMXReadyRoom/label-69d5b168c01d99.png",
+      "width": 232,
+      "height": 46
+    },
+    "Cth2-ShoesRibbon": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e4406cd2f4db44.png",
+      "width": 376,
+      "height": 38
+    },
+    "Cth2-ShoesGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3d4b7fda509b26.png",
+      "width": 325,
+      "height": 37
+    },
+    "Cth2-Panties": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4999ab58cf9b3c.png",
+      "width": 262,
+      "height": 38
+    },
+    "Cth2-PantiesGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c5a47b92b353aa.png",
+      "width": 356,
+      "height": 38
+    },
+    "Cth2-SocksGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d988d4bd93ca1a.png",
+      "width": 322,
+      "height": 37
+    },
+    "P1-Socks": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4b7f111dce84f8.png",
+      "width": 187,
+      "height": 37
+    },
+    "P1-Socks(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1639f85be2b73d.png",
+      "width": 336,
+      "height": 47
+    },
+    "P1-Socks(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ec7b942d7630f4.png",
+      "width": 444,
+      "height": 47
+    },
+    "P2-Socks": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e64737b9fc1e52.png",
+      "width": 187,
+      "height": 37
+    },
+    "P2-Socks(Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bc6307febd924c.png",
+      "width": 336,
+      "height": 47
+    },
+    "P2-Socks(Hide/Shoes)": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c2140a89cbaa1e.png",
+      "width": 444,
+      "height": 47
+    },
+    "P1-Bod2-SocksLeisure": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4254ce586e38be.png",
+      "width": 452,
+      "height": 38
+    },
+    "Cth2-SocksStrap": {
+      "path": "media/ui/AimohPMXReadyRoom/label-863565931e5fe7.png",
+      "width": 338,
+      "height": 44
+    },
+    "Cth1-Coller": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e6ec08fc0e6fee.png",
+      "width": 231,
+      "height": 37
+    },
+    "Cth1-CollerGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-322631368f2d4f.png",
+      "width": 325,
+      "height": 37
+    },
+    "Cth2-BodyGold2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b77fce4200531b.png",
+      "width": 333,
+      "height": 45
+    },
+    "Cth1-BarGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-396ed62a8e74e1.png",
+      "width": 276,
+      "height": 37
+    },
+    "Cth2-BraGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-956c3a3ebbd241.png",
+      "width": 276,
+      "height": 37
+    },
+    "Cth2-BraStrap": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f3e674ca89846c.png",
+      "width": 292,
+      "height": 44
+    },
+    "Cth3-BraGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e0f4ae49f60694.png",
+      "width": 276,
+      "height": 37
+    },
+    "Jewels": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5e771087fd018d.png",
+      "width": 140,
+      "height": 37
+    },
+    "P1-Cth2-BrasLeisures": {
+      "path": "media/ui/AimohPMXReadyRoom/label-386da5097c7e17.png",
+      "width": 433,
+      "height": 38
+    },
+    "P2-Cth2-BrasLeisures": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5daab560a5b18b.png",
+      "width": 433,
+      "height": 38
+    },
+    "Cth1-Horns": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b1581e91c24f54.png",
+      "width": 232,
+      "height": 37
+    },
+    "c_NikketaSSR0103_slg_P1_head": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fa152b6e4aa635.png",
+      "width": 661,
+      "height": 46
+    },
+    "c_NikketaSSR0103_slg_P2_head": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cf1e1904f84c58.png",
+      "width": 661,
+      "height": 46
+    },
+    "c_NikketaSSR0103_slg_P3_head": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b59053d080f3ea.png",
+      "width": 661,
+      "height": 46
+    },
+    "Cth1-HornsGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9c9941e716e443.png",
+      "width": 326,
+      "height": 37
+    },
+    "Cth1-Earings": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0fc19d402ed130.png",
+      "width": 262,
+      "height": 46
+    },
+    "Cth1-Sleeve": {
+      "path": "media/ui/AimohPMXReadyRoom/label-060ca6bfbf1782.png",
+      "width": 242,
+      "height": 37
+    },
+    "Cth1-SleeveGold": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d414a73efd2df3.png",
+      "width": 336,
+      "height": 37
+    },
+    "Cth3-SleeveLeisures": {
+      "path": "media/ui/AimohPMXReadyRoom/label-176b797ae78ff4.png",
+      "width": 407,
+      "height": 38
+    }
+  },
+  "categories": {
+    "头部配件": "头饰",
+    "帽子": "头饰",
+    "上装": "上衣",
+    "内搭": "上衣",
+    "下装": "下衣",
+    "腿部款式": "下衣"
+  },
+  "skinNames": {
+    "原皮": "默认"
+  },
+  "excluded": {
+    "pmx-d99ea684060e1c76": true
+  },
+  "background": "media/ui/AimohPMXReadyRoom/room.png",
+  "portraitRing": "media/ui/AimohPMXReadyRoom/portrait-ring.png"
+}
