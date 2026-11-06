@@ -6,7 +6,7 @@ from common import ROOT,BUILD,settings,sha,save,inventory
 def properties(text):
     return {line.split('=',1)[0]:line.split('=',1)[1]for line in text.splitlines()if '='in line}
 
-def promote(source,target,out,index,apply):
+def promote(source,target,out,index,apply,item_id=None):
     source=source.resolve();target=target.resolve()
     assert target.parent.name=='Workshop' and target.name in {'R116','R116RenderSupport'}
     assert not source.is_relative_to(target)and not target.is_relative_to(source)
@@ -20,12 +20,15 @@ def promote(source,target,out,index,apply):
         for key in ['title','description']:
             lines=[line for line in lines if not line.startswith(key+'=')];lines.append(key+'='+selected[key])
         info='\n'.join(lines)+'\n'
-    assert properties(info).get('id')==previous.get('id')
+    if item_id:
+        assert previous.get('id')in (None,item_id),'Different Workshop item IDs; inspect before changing metadata'
+        if not properties(info).get('id'):info+='id='+item_id+'\n'
+    assert properties(info).get('id')==(previous.get('id')or item_id)
     meta=out/'metadata'/f'{index}.txt';meta.parent.mkdir(parents=True,exist_ok=True);meta.write_text(info,'utf8')
     files={name:source/name for name in wanted};files['workshop.txt']=meta
     wanted['workshop.txt']={'bytes':meta.stat().st_size,'sha256':sha(meta)}
     changed=[name for name in sorted(wanted)if old.get(name)!=wanted[name]]
-    result=dict(project=target.name,target=str(target),workshop_id=previous.get('id'),
+    result=dict(project=target.name,target=str(target),workshop_id=properties(info).get('id'),
                 bytes=sum(row['bytes']for row in wanted.values()),files=len(wanted),
                 changed_files=changed,changed_bytes=sum(wanted[n]['bytes']for n in changed),uploaded=False)
     if not apply:return dict(result,status='PLANNED')
@@ -68,10 +71,12 @@ if __name__=='__main__':
     assert body['jar_sha256']==sha(character/'Contents/mods/AimohPmxPreview/42/media/java/client/AimohPMXPreview.jar')
     assert render['jar_sha256']==sha(support/'Contents/mods/AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar')
     assert not json.loads((BUILD/'render-support/checks/release-defaults.json').read_text('utf8'))['differences_from_live']
-    reports=[]
-    for root in map(Path,cfg['workshop_targets']):
+    roots=list(map(Path,cfg['workshop_targets']));ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in roots if (r/'workshop.txt').exists()};ids.discard(None)
+    assert len(ids)<=1,'Existing character projects point to different Workshop items'
+    character_id=next(iter(ids),None);reports=[]
+    for root in roots:
         for source,target in [(character,root),(support,root.parent/'R116RenderSupport')]:
-            row=promote(source,target,out,len(reports),args.apply);reports.append(row)
+            row=promote(source,target,out,len(reports),args.apply,character_id if source==character else None);reports.append(row)
             print(json.dumps({k:v for k,v in row.items()if k!='changed_files'},ensure_ascii=False),flush=True)
     commit=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True,check=True).stdout.strip()
     save(out/('workshop-preparation.json'if args.apply else'workshop-plan.json'),dict(source_commit=commit,projects=reports,

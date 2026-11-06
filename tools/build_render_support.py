@@ -17,7 +17,8 @@ if __name__=='__main__':
     for source in sources:
         relative=source.relative_to(ROOT).as_posix()
         if relative!='render-support/java/aimoh/gf2/bridge/Main.java':
-            assert sha(source)==origin['imported_sources'][relative]['sha256'],'Unreviewed renderer change: '+relative
+            actual=hashlib.sha256(source.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+            assert actual==origin['imported_sources'][relative]['canonical_sha256'],'Unreviewed renderer change: '+relative
     game=Path(cfg['game_root']);out=BUILD/'render-support';classes=out/'classes'
     compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],BUILD/'AimohPMXPreview.jar',*game.glob('*.jar')])
     jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')

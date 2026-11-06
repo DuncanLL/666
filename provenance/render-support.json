@@ -10,87 +10,108 @@
   "imported_sources": {
     "render-support/java/viewpoint/render/AimohGf2DepthStencil.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2DepthStencil.java",
-      "sha256": "f5f7811c7730d45c691865c2a983e40ce1b472023fe536805fb2027dd721f2a7"
+      "sha256": "f5f7811c7730d45c691865c2a983e40ce1b472023fe536805fb2027dd721f2a7",
+      "canonical_sha256": "157e331f28f4c9b15f104b4c00a8a316fcff9205374c1556ba2758862693a772"
     },
     "render-support/java/viewpoint/render/AimohGf2EclipseEnvironment.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2EclipseEnvironment.java",
-      "sha256": "c89e3062ade3cd26e6ebf8dae33df910fe61d299ef21754933b3ba9c20f817ea"
+      "sha256": "c89e3062ade3cd26e6ebf8dae33df910fe61d299ef21754933b3ba9c20f817ea",
+      "canonical_sha256": "1619399eb521ca8fd2807517acea99754f4ec0a52d69f6582686c44c548d2675"
     },
     "render-support/java/viewpoint/render/AimohGf2FrameInputs.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2FrameInputs.java",
-      "sha256": "f32db47a08ed53045bcd37a77a54f11f93c6838d5e63be1e327642e4e5a7a4e2"
+      "sha256": "f32db47a08ed53045bcd37a77a54f11f93c6838d5e63be1e327642e4e5a7a4e2",
+      "canonical_sha256": "ff6e054c5d189363b75769c7be42d776b9262ff770ce54183eb4279c45f458fa"
     },
     "render-support/java/viewpoint/render/AimohGf2GlScope.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2GlScope.java",
-      "sha256": "52c90ecdf4e1f0563558eaadf72357745376954b90a68ede188c63af69051c98"
+      "sha256": "52c90ecdf4e1f0563558eaadf72357745376954b90a68ede188c63af69051c98",
+      "canonical_sha256": "ceb05433827b03fda2b67e8df4c118ec1e2e277403700fff77cacf37856a4552"
     },
     "render-support/java/viewpoint/render/AimohGf2IrisGlass.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2IrisGlass.java",
-      "sha256": "1b5c7123a3fcc38990faacdb99f97475ec600d734d511240532baa9366d23104"
+      "sha256": "1b5c7123a3fcc38990faacdb99f97475ec600d734d511240532baa9366d23104",
+      "canonical_sha256": "7e108d29241be4807a2a01e4bd20a0782e4bd193aeb3ae9e46af12c6fefa62b4"
     },
     "render-support/java/viewpoint/render/AimohGf2OriginalProgram.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2OriginalProgram.java",
-      "sha256": "282aa8f275c3edb4ed9f09818d489926d93187e95757a9c65b05558e7e0d0dbf"
+      "sha256": "282aa8f275c3edb4ed9f09818d489926d93187e95757a9c65b05558e7e0d0dbf",
+      "canonical_sha256": "4459d1ee54eb90defdcc3d8fedf71e81f40d08a5cf675cbac7cf42b5f0e4a897"
     },
     "render-support/java/viewpoint/render/AimohGf2OriginalTexture.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2OriginalTexture.java",
-      "sha256": "73a6ad900a437320580b880df4cc52dd9c225e76807b6679aa7bdf2a6f86a6dd"
+      "sha256": "73a6ad900a437320580b880df4cc52dd9c225e76807b6679aa7bdf2a6f86a6dd",
+      "canonical_sha256": "d0409041853b35b6ada60e3ef6541e60e8710fece418045259d8588eec11d13e"
     },
     "render-support/java/viewpoint/render/AimohGf2PackData.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2PackData.java",
-      "sha256": "50f4550e6bcf7b6609ad36abf3d7c3f2fc6e356790cfb30712137135168a5aa9"
+      "sha256": "50f4550e6bcf7b6609ad36abf3d7c3f2fc6e356790cfb30712137135168a5aa9",
+      "canonical_sha256": "33340aeb26432dd3c5f8f7ac93935a0002e018c5298e1c91270d5b1a7d9023a4"
     },
     "render-support/java/viewpoint/render/AimohGf2PackMaterials.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2PackMaterials.java",
-      "sha256": "8914d1f22c73eb9af8087c24a7b83a7efda6f78dfc820c05d0624efff058abe7"
+      "sha256": "8914d1f22c73eb9af8087c24a7b83a7efda6f78dfc820c05d0624efff058abe7",
+      "canonical_sha256": "02e40cc30ebc612b5edb6d28466322b8cbecf9224b4aea71a916bb9c64b8b623"
     },
     "render-support/java/viewpoint/render/AimohGf2Rc2Vertex.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2Rc2Vertex.java",
-      "sha256": "1647c1acde2b078c43b193f8e5d4d3671994becbea224bdeb5e0977eba31938d"
+      "sha256": "1647c1acde2b078c43b193f8e5d4d3671994becbea224bdeb5e0977eba31938d",
+      "canonical_sha256": "2f53d566505a419d1cc1d013c61429cd46d4afeaae329c7bbe40c4751988e625"
     },
     "render-support/java/viewpoint/render/AimohGf2RegisterBank.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2RegisterBank.java",
-      "sha256": "08de959c1c2e71cdfcf38a9c28021ee713796719317f0c06b82ba2d7238ab40b"
+      "sha256": "08de959c1c2e71cdfcf38a9c28021ee713796719317f0c06b82ba2d7238ab40b",
+      "canonical_sha256": "f9e297dae66e4f4f66c7c0d6ef76be1570a401d637e6563696b49378253bd8fa"
     },
     "render-support/java/viewpoint/render/AimohGf2Runtime.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2Runtime.java",
-      "sha256": "66a77d0f2df0ced3bca2f7dc10390e3031f9b0762f99134c0f9cd11794a36c75"
+      "sha256": "66a77d0f2df0ced3bca2f7dc10390e3031f9b0762f99134c0f9cd11794a36c75",
+      "canonical_sha256": "ff9106308aa9a554bd914c6e05f3f581b027dc1685d61e6dffab9d607e73a489"
     },
     "render-support/java/viewpoint/render/AimohGf2RuntimeQueue.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2RuntimeQueue.java",
-      "sha256": "a7594f66a228ce1abe4088155d6bb7d1b3a30e2b6f16b0f78d09f1fb246d158a"
+      "sha256": "a7594f66a228ce1abe4088155d6bb7d1b3a30e2b6f16b0f78d09f1fb246d158a",
+      "canonical_sha256": "598007c023dff4407a89a156a9b3fbe17509bf5b1e96d659a5702e3f55fb001a"
     },
     "render-support/java/viewpoint/render/AimohGF2Services.java": {
       "origin": "candidate/src/viewpoint/render/AimohGF2Services.java",
-      "sha256": "4dfc6c76899f30e8ab7a68c7b8521479ed1243c29d765ed6357bbf9b60e5879e"
+      "sha256": "4dfc6c76899f30e8ab7a68c7b8521479ed1243c29d765ed6357bbf9b60e5879e",
+      "canonical_sha256": "cbc2c6cca4caae583a7b1e05e26ee250a856a312e7df8c5ac0755f57932a5abd"
     },
     "render-support/java/viewpoint/render/AimohGf2SourceHost.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2SourceHost.java",
-      "sha256": "324f2db6ad7df1ce74dd7f1c203407b002573ee2f2efad91cd3d26b0641774c3"
+      "sha256": "324f2db6ad7df1ce74dd7f1c203407b002573ee2f2efad91cd3d26b0641774c3",
+      "canonical_sha256": "04034cc767d2dfd2ad609a91f56e2d509949714e6bafd229a755bdf6bc321e25"
     },
     "render-support/java/viewpoint/render/AimohGf2WorldShadow.java": {
       "origin": "candidate/src/viewpoint/render/AimohGf2WorldShadow.java",
-      "sha256": "edd0af7aaebee37487eabfa80a955940e7bf64fdc00b19a63aed691a3501df86"
+      "sha256": "edd0af7aaebee37487eabfa80a955940e7bf64fdc00b19a63aed691a3501df86",
+      "canonical_sha256": "6562b3b7b6afdc1eb0ad98cbf6eb857188606efdaac2a24d0d4187efd65d632d"
     },
     "render-support/java/aimoh/gf2/bridge/Main.java": {
       "origin": "runtime-src/aimoh/gf2/bridge/Main.java",
-      "sha256": "8389c1e81db34cb651a3bea3e56fbcd51bcedb7776d7cd7a66d6fe052daded8c"
+      "sha256": "8389c1e81db34cb651a3bea3e56fbcd51bcedb7776d7cd7a66d6fe052daded8c",
+      "canonical_sha256": "8389c1e81db34cb651a3bea3e56fbcd51bcedb7776d7cd7a66d6fe052daded8c"
     },
     "render-support/java/aimoh/gf2/bridge/ManagedShaderPack.java": {
       "origin": "runtime-src/aimoh/gf2/bridge/ManagedShaderPack.java",
-      "sha256": "4d5422419a841cb414ab27120043d985a5aa1a4046ec43a4d3ea8b6bcd8bb2d2"
+      "sha256": "4d5422419a841cb414ab27120043d985a5aa1a4046ec43a4d3ea8b6bcd8bb2d2",
+      "canonical_sha256": "4d5422419a841cb414ab27120043d985a5aa1a4046ec43a4d3ea8b6bcd8bb2d2"
     },
     "render-support/java/aimoh/gf2/bridge/RuntimeHooks.java": {
       "origin": "runtime-src/aimoh/gf2/bridge/RuntimeHooks.java",
-      "sha256": "b361e898161d9c588a3d7d59fbc66e947d50e8969283997fa6ce82ed90d7fba7"
+      "sha256": "b361e898161d9c588a3d7d59fbc66e947d50e8969283997fa6ce82ed90d7fba7",
+      "canonical_sha256": "0a36048942207e5b7978c51293036dd5c335c55c2d9f7f3c8d65a708a70acf7d"
     },
     "render-support/java/viewpoint/render/AimohGf2AddonContext.java": {
       "origin": "runtime-src/viewpoint/render/AimohGf2AddonContext.java",
-      "sha256": "2f2a1f89f05a2e9b8621529904cc14b440daea086dcf2a3f9f0baaa38d9b1368"
+      "sha256": "2f2a1f89f05a2e9b8621529904cc14b440daea086dcf2a3f9f0baaa38d9b1368",
+      "canonical_sha256": "2f2a1f89f05a2e9b8621529904cc14b440daea086dcf2a3f9f0baaa38d9b1368"
     },
     "render-support/java/viewpoint/render/AimohGf2NativeShaders.java": {
       "origin": "runtime-src/viewpoint/render/AimohGf2NativeShaders.java",
-      "sha256": "f656cbde34ccdf0848055072c493572582e40c88fe952227d8d232a018b6bfff"
+      "sha256": "f656cbde34ccdf0848055072c493572582e40c88fe952227d8d232a018b6bfff",
+      "canonical_sha256": "f656cbde34ccdf0848055072c493572582e40c88fe952227d8d232a018b6bfff"
     }
   },
   "official_host_sha256": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f",
