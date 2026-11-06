@@ -10,6 +10,7 @@ Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建�
 | `game/mod` | 模组信息、Lua、整备室资料、声音定义和人物配置 |
 | `native/mmd-engine` | 当前 MC-MMD 上游派生的原生引擎，包含固定的 PMX parser/Bullet 源码 |
 | `native/ozz` | 现用 Ozz 握持求解与薄 C 接口 |
+| `render-support` | 冻结的 Eclipse 渲染接入、自动分发入口及发布默认值 |
 | `tools` | 构建、工坊候选生成与组件检查 |
 | `resources/manifest.json` | 仓库外人物素材的相对路径、大小、SHA-256 |
 | `provenance`、`licenses` | 来源、上游版本、导入记录和第三方许可 |
@@ -24,6 +25,16 @@ python tools/build.py
 python tools/package_workshop.py
 python tools/check_runtime.py
 ```
+
+Eclipse 配套工坊项目独立生成，名称为 `R116 渲染支持 光影分发`，内部 ID 保留 `AimohGF2Eclipse`：
+
+```powershell
+python tools/build_render_support.py
+python tools/package_render_support.py
+python tools/check_render_support.py
+```
+
+光影和原有完整渲染代码来自 `provenance/render-support.json` 冻结输入。ZIP 封装于 JAR，正常 Java MOD 启动后安装到真实玩家目录，再由玩家在 VP 选择；无需修改 VP 文件或写作者配置。两份发布记录见 `docs/RELEASE-2026-11-06.md`。
 
 默认工坊候选在 `build/workshop/R116`。脚本不自动覆盖已有输出或安装目录，也不会启动游戏或执行 Steam 上传。输出包含完整人物资料；人物文件从本机资源目录读回，不需要下载 GitHub 仓库的玩家参与构建。
 
@@ -44,7 +55,7 @@ python tools/check_runtime.py
 
 ## 当前验收边界
 
-迁移基准的实际结果见 `docs/BASELINE.md`。游戏程序和已装 MOD 没有因整理仓库而修改。组件检查不代表游戏实测或多人验收；切人物原生崩溃尚未确认根治。妮基塔入口隐藏，原资源保留。
+迁移基准的历史结果见 `docs/BASELINE.md`。当前妮基塔入口已恢复，用户已认可新胸部物理的实际游戏效果；0.3.1 修复了已复现的 STB 图片末尾地址误释放，见 `docs/texture-release-fix.md`。受控回归、安装和用户认可分别记录，不能外推所有历史崩溃、多人或真实订阅冷启动均已通过。
 
 第三方许可分别保留，本仓库没有把游戏人物素材或全部第三方代码声明为我们原创；根目录未擅自选择覆盖全部内容的新许可证。
 

@@ -9,5 +9,8 @@
   "native_toolchain_root": "D:/private-tools/mmd",
   "zig": "D:/private-tools/zig/zig.exe",
   "python_dependencies": "D:/private-python-dependencies",
-  "pmx_reader_scripts": "D:/existing-pmx-reader/scripts"
+  "pmx_reader_scripts": "D:/existing-pmx-reader/scripts",
+  "render_support_shader_pack": "D:/current-AimohGF2Eclipse/42/media/shaderpacks/Aimoh-Eclipse-GF2.zip",
+  "render_support_reference_jar": "D:/current-AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar",
+  "render_support_test_agent": "D:/existing-private-test-tools/check-agent.jar"
 }
