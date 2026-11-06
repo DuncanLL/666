@@ -17,6 +17,13 @@ def install(project,target,index):
     for p in generated.rglob('*.png'):files[p.relative_to(generated)]=p
     stage=BUILD/'game-softbody/install-delta'/str(index);stage.mkdir(parents=True,exist_ok=True)
     catalog_file=stage/'catalog.json';catalog_file.write_text(json.dumps(next_catalog,ensure_ascii=False,indent=2)+'\n','utf8');files[catalog_path]=catalog_file
+    registry_path=Path('42/media/aimoh_pmx/registry.json')
+    registry=json.loads((target/registry_path).read_text('utf8'));listed={r['id']:r for r in json.loads((source/registry_path).read_text('utf8'))['models']}
+    for row in registry['models']:
+        if row['id'] in listed:
+            if listed[row['id']].get('hidden',False):row['hidden']=True
+            else:row.pop('hidden',None)
+    registry_file=stage/'registry.json';registry_file.write_text(json.dumps(registry,ensure_ascii=False,indent=2)+'\n','utf8');files[registry_path]=registry_file
     backup=BUILD/'game-softbody/rollback'/str(index);backup.mkdir(parents=True,exist_ok=True)
     assert not (backup/'manifest.json').exists(),'Do not replace the retained rollback'
     records=[];replaced=[]

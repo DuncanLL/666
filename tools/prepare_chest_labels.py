@@ -10,10 +10,13 @@ def prepare(update=False):
     root=ROOT/'game/mod/42/media/ui/AimohPMXReadyRoom';catalog=json.loads((root/'catalog.json').read_text('utf8'))
     target=BUILD/'generated-mod/42/media/ui/AimohPMXReadyRoom';target.mkdir(parents=True,exist_ok=True)
     font=ImageFont.truetype(c.get('ui_font','C:/Windows/Fonts/msyh.ttc'),28)
+    bold=ImageFont.truetype(c.get('ui_font_bold','C:/Windows/Fonts/msyhbd.ttc'),32)
     for key,value in TEXT.items():
-        box=font.getbbox(value);image=Image.new('RGBA',(box[2]-box[0]+4,40))
-        ImageDraw.Draw(image).text((2-box[0],3-box[1]),value,font=font,fill='white')
-        name='label-'+hashlib.sha256(value.encode()).hexdigest()[:14]+'.png';image.save(target/name)
+        strong=key in {'ChestSoftness','ChestDamping','ChestInertia','ChestStrength'}
+        selected=bold if strong else font
+        box=selected.getbbox(value);image=Image.new('RGBA',(box[2]-box[0]+4,44 if strong else 40))
+        ImageDraw.Draw(image).text((2-box[0],3-box[1]),value,font=selected,fill='white')
+        name='label-'+hashlib.sha256(value.encode()).hexdigest()[:14]+('-bold' if strong else '')+'.png';image.save(target/name)
         row=dict(path='media/ui/AimohPMXReadyRoom/'+name,width=image.width,height=image.height)
         if update:catalog['text'][key]=value;catalog['labels'][value]=row
         else:assert catalog['text'].get(key)==value and catalog['labels'].get(value)==row,'Run prepare_chest_labels.py --update-catalog'

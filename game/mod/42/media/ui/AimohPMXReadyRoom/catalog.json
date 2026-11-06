@@ -2441,24 +2441,24 @@
       "height": 40
     },
     "柔软程度": {
-      "path": "media/ui/AimohPMXReadyRoom/label-c8ccd85d3753c4.png",
-      "width": 116,
-      "height": 40
+      "path": "media/ui/AimohPMXReadyRoom/label-c8ccd85d3753c4-bold.png",
+      "width": 132,
+      "height": 44
     },
     "回弹阻尼": {
-      "path": "media/ui/AimohPMXReadyRoom/label-101a46dd17f22d.png",
-      "width": 116,
-      "height": 40
+      "path": "media/ui/AimohPMXReadyRoom/label-101a46dd17f22d-bold.png",
+      "width": 132,
+      "height": 44
     },
     "惯性重量": {
-      "path": "media/ui/AimohPMXReadyRoom/label-6c077352a443d3.png",
-      "width": 116,
-      "height": 40
+      "path": "media/ui/AimohPMXReadyRoom/label-6c077352a443d3-bold.png",
+      "width": 132,
+      "height": 44
     },
     "效果幅度": {
-      "path": "media/ui/AimohPMXReadyRoom/label-74b090ee65e2f7.png",
-      "width": 116,
-      "height": 40
+      "path": "media/ui/AimohPMXReadyRoom/label-74b090ee65e2f7-bold.png",
+      "width": 132,
+      "height": 44
     },
     "已暂停，请重置物理解算": {
       "path": "media/ui/AimohPMXReadyRoom/label-e4ce66fa4c79ba.png",

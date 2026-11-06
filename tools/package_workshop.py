@@ -75,7 +75,7 @@ def package(output, verify_existing=False):
     assert not [p for p in stage.rglob('*') if p.is_file() and p.suffix.lower() in forbidden]
     with zipfile.ZipFile(runtime) as archive: assert archive.testzip() is None
     registry = json.loads((mod / '42/media/aimoh_pmx/registry.json').read_text('utf8'))['models']
-    assert next(row for row in registry if row['id'] == 'pmx-f5b2807685b18a60')['hidden']
+    assert not next(row for row in registry if row['id'] == 'pmx-f5b2807685b18a60').get('hidden',False)
     output.parent.mkdir(parents=True, exist_ok=True)
     os.replace(stage, output)
     runtime = output / 'Contents/mods/AimohPmxPreview/42/media/java/client/AimohPMXPreview.jar'

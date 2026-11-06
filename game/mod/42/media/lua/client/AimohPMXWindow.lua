@@ -125,9 +125,10 @@ function W:clearContent()
     end
     self.widgets={};self.content:setYScroll(0)
 end
-function W:addLabel(value,y)
-    local p=ISPanel:new(0,y,self.rightWidth-18,25);p:initialise();p.background=false
-    p.prerender=function(s)s:drawRect(0,6,3,13,1,.24,.66,.69);label(s,value,10,3,20,s.width-14)end
+function W:addLabel(value,y,textHeight)
+    textHeight=textHeight or 20
+    local p=ISPanel:new(0,y,self.rightWidth-18,math.max(25,textHeight+6));p:initialise();p.background=false
+    p.prerender=function(s)s:drawRect(0,6,3,13,1,.24,.66,.69);label(s,value,10,3,textHeight,s.width-14)end
     self.content:addChild(p);table.insert(self.widgets,p)
 end
 function W:addTile(x,y,width,height,title,path,active,callback)
@@ -271,14 +272,14 @@ function W:refreshControls()
         if self.tab=="chest" then
             self:addLabel(tr("ChestPhysics"),y);y=y+38
             for index,key in ipairs({"ChestSoftness","ChestDamping","ChestInertia","ChestStrength"})do
-                local field=index-1;self:addLabel(tr(key),y);y=y+28
+                local field=index-1;self:addLabel(tr(key),y,24);y=y+32
                 local slider=ISSliderPanel:new(4,y,width-12,24,self,function(w,value,s)
                     if not w.actions.chestPhysics(w.player,field,value)then w.status=tr("Error")end
                 end)
                 slider:initialise();slider:instantiate();slider:setValues(0,100,1,10,true)
                 slider:setCurrentValue(AimohPMXPreview.chestPhysicsSlider(self.player,field),true)
                 local base=slider.render
-                slider.render=function(s)base(s);s:drawTextRight(tostring(math.floor(s.currentValue+.5)),s.width,-25,.95,.95,.95,1,UIFont.Small)end
+                slider.render=function(s)base(s);s:drawTextRight(tostring(math.floor(s.currentValue+.5)),s.width,-28,1,1,1,1,UIFont.Medium)end
                 self.content:addChild(slider);table.insert(self.widgets,slider);y=y+46
             end
             local b=button(self.content,0,y,width,tr("Reset"),self,function(w)if w.actions.chestDefaults(w.player)then w:refreshControls()end end)
