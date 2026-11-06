@@ -33,7 +33,8 @@ final class TextureFactory implements AutoCloseable {
             IntBuffer w=stack.mallocInt(1),h=stack.mallocInt(1),c=stack.mallocInt(1);
             pixels=STBImage.stbi_load_from_memory(encoded,w,h,c,4);
             if(pixels==null)throw new IllegalArgumentException("贴图无法读取："+file+" "+STBImage.stbi_failure_reason());
-            byte[] rgba=new byte[Math.multiplyExact(Math.multiplyExact(w.get(0),h.get(0)),4)];pixels.get(rgba);
+            // STB frees memAddress(buffer), so copying must preserve its base position.
+            byte[] rgba=new byte[Math.multiplyExact(Math.multiplyExact(w.get(0),h.get(0)),4)];pixels.get(0,rgba);
             return new Pixels(w.get(0),h.get(0),rgba);
         } finally {if(pixels!=null)STBImage.stbi_image_free(pixels);if(encoded!=null)MemoryUtil.memFree(encoded);}
     }

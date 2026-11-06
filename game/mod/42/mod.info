@@ -1,7 +1,7 @@
 name=R116
 id=AimohPmxPreview
 require=\ZombieBuddy,\Viewpoint
-modversion=0.3.0
+modversion=0.3.1
 versionMin=42.21
 versionMax=42.21
 javaJarFile=media/java/client/AimohPMXPreview.jar
