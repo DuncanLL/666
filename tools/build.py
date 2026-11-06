@@ -47,10 +47,17 @@ def build(compare_baseline=False):
     jar = BUILD / 'AimohPMXPreview.jar'
     temporary = jar.with_suffix('.jar.writing')
     with zipfile.ZipFile(temporary, 'w', zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(classes.rglob('*.class')): archive.write(path, path.relative_to(classes).as_posix())
+        def write(name, data):
+            # Build timestamps must not change the identity of unchanged runtime inputs.
+            entry = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            entry.compress_type = zipfile.ZIP_DEFLATED
+            entry.create_system = 3
+            entry.external_attr = 0o100644 << 16
+            archive.writestr(entry, data)
+        for path in sorted(classes.rglob('*.class')): write(path.relative_to(classes).as_posix(), path.read_bytes())
         prefix = 'aimoh/pmxpreview/native/windows-x64/'
-        archive.writestr(prefix + 'index.properties', index)
-        for name in sorted(natives): archive.write(natives[name], prefix + name)
+        write(prefix + 'index.properties', index)
+        for name in sorted(natives): write(prefix + name, natives[name].read_bytes())
     with zipfile.ZipFile(temporary) as archive: assert archive.testzip() is None
     os.replace(temporary, jar)
     save(BUILD / 'build.json', {'status': 'PASS_FULL_SOURCE_BUILD_AND_RUNTIME_CLASS_PARITY' if compare_baseline else 'PASS_FULL_SOURCE_BUILD',
