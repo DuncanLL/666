@@ -33,7 +33,11 @@ public final class AimohGf2Runtime implements AutoCloseable {
     static AimohGf2Runtime frame(IrisPipeline p){
         Assets a=PACKS.get(p.programs);if(a==null)return null;
         AimohGf2Runtime current=FRAMES.get(p.targets);if(current!=null&&current.assets==a)return current;
-        if(current!=null)current.close();try{current=new AimohGf2Runtime(a);FRAMES.put(p.targets,current);return current;}catch(IOException e){throw new IllegalStateException("GF2 source runtime initialization",e);}
+        if(current!=null)current.close();try{
+            current=new AimohGf2Runtime(a);FRAMES.put(p.targets,current);
+            System.out.println("[AimohGF2] Screen mapping: TAA="+p.configured.values().get("TAA")+", TAA_UPSCALING="+p.configured.values().get("TAA_UPSCALING")+", effective scale="+AimohGf2Screen.scale(p.configured.values()));
+            return current;
+        }catch(IOException e){throw new IllegalStateException("GF2 source runtime initialization",e);}
     }
     private final Assets assets;
     private final AimohGf2DepthStencil target;
@@ -112,7 +116,9 @@ public final class AimohGf2Runtime implements AutoCloseable {
         // fixture fallback when that native value is not exported.
         float[] time=AimohGf2SourceHost.values.get("frameTimeCounter");double seconds=time==null?frame/60d:time[0];
         AimohGf2FrameInputs.Inputs packet=builder.build(AimohGf2SourceHost.values,placement,eye,previous,previousEye,width,height,seconds,history,AimohGf2SourceHost.pointLightData(),AimohGf2SourceHost.torchLightData(),AimohGf2SourceHost.spotLightData());
-        Map<String,float[]> inputs=new LinkedHashMap<>(packet.values());float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);Matrix4d vp=matrix(Arrays.copyOfRange(shadowCamera,32,48));
+        Map<String,float[]> inputs=new LinkedHashMap<>(packet.values());float renderScale=AimohGf2Screen.scale(AimohGf2SourceHost.pipeline.configured.values());
+        AimohGf2Screen.inputs(inputs,width,height,renderScale);
+        float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);Matrix4d vp=matrix(Arrays.copyOfRange(shadowCamera,32,48));
         Matrix4d worldToShadow=new Matrix4d().translation(.5,.5,.5).scale(.5).mul(vp);float[] matrices=new float[80];System.arraycopy(flat(worldToShadow),0,matrices,0,16);int size=AimohGf2SourceHost.shadowSize();
         inputs.put("_MainLightWorldToShadow",matrices);inputs.put("_MainLightShadowParams",new float[]{1,1,0,0});inputs.put("_MainLightShadowmapSize",new float[]{1f/size,1f/size,size,size});inputs.put("_CascadeDepthBiasArray",new float[4]);inputs.put("_CascadeNormalBiasArray",new float[4]);
         int attributes=assets.materials.attributeTexture(model);float[] clipJitter=jitter(width,height);Matrix4d object=matrix(inputs.get("unity_ObjectToWorld"));
@@ -127,7 +133,7 @@ public final class AimohGf2Runtime implements AutoCloseable {
             List<AimohGf2RuntimeQueue.Job> queued=new ArrayList<>();for(Job job:jobs){JSONObject material=assets.materials.material(job.material);String root=model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(job.material),null);Local local=root==null?new Local(inputs,base):roots.computeIfAbsent(root,k->localFrame(builder,k,actorId,frame,inputs,base,job.draw.nativeIndex));
                 AimohGf2OriginalProgram program=assets.materials.program(job.material,stage,early);if(!early&&material.getString("shader").endsWith("/eyeblend_add"))program.authoredExposureView(environment.exposureTexture,environment.exposureFloatOffset);
                 queued.add(new AimohGf2RuntimeQueue.Job(program,assets.materials.state(job.material,stage,early),job.draw.nativeIndex,registers(program,job.material,root,local.inputs,frame,actorId,early?0:2,packet.cameraFillSlot()),assets.materials.textureBindings(program,job.material,environment.reflectionTexture,AimohGf2SourceHost.shadowTarget(),shadowSampler),local.frame));}
-            queue.draw(queued,base);
+            queue.draw(queued,base,renderScale);
         }
         if(index==actorCount-1){target.writeBackDepth(AimohGf2SourceHost.nativeColorFbo());if(!early)target.decodeMotion(AimohGf2SourceHost.motionTarget());}
         if(!early)histories.put(actorId,new History(model.getString("pmx_sha256"),frame,placement.clone(),eye.clone()));

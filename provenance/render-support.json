@@ -126,6 +126,11 @@
       "Main logs the installed renderer revision",
       "AimohGf2Rc2Vertex keeps host scratch values local and assigns an explicit bridge varying after original outputs",
       "AimohGf2OriginalProgram applies the shared vertex/fragment interface adaptation"
+    ],
+    "0.1.2": [
+      "Shared effective screen scale and actual clip transport for original geometry and native glass",
+      "Source early/late raster coordinates match Eclipse TAA upscaling; shadow scale remains one",
+      "Screen parameter dimensions match the rendered subregion; no object or bone scale change"
     ]
   }
 }

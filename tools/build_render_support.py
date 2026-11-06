@@ -18,7 +18,12 @@ if __name__=='__main__':
         relative=source.relative_to(ROOT).as_posix()
         if relative not in {'render-support/java/aimoh/gf2/bridge/Main.java',
                             'render-support/java/viewpoint/render/AimohGf2Rc2Vertex.java',
-                            'render-support/java/viewpoint/render/AimohGf2OriginalProgram.java'}:
+                            'render-support/java/viewpoint/render/AimohGf2OriginalProgram.java',
+                            'render-support/java/viewpoint/render/AimohGf2Runtime.java',
+                            'render-support/java/viewpoint/render/AimohGf2RuntimeQueue.java',
+                            'render-support/java/viewpoint/render/AimohGf2NativeShaders.java',
+                            'render-support/java/viewpoint/render/AimohGf2IrisGlass.java',
+                            'render-support/java/viewpoint/render/AimohGf2Screen.java'}:
             actual=hashlib.sha256(source.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
             assert actual==origin['imported_sources'][relative]['canonical_sha256'],'Unreviewed renderer change: '+relative
     game=Path(cfg['game_root']);out=BUILD/'render-support';classes=out/'classes'

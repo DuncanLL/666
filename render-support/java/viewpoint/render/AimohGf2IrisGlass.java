@@ -38,6 +38,7 @@ public final class AimohGf2IrisGlass {
             GL43.glCopyImageSubData(source,GL11.GL_TEXTURE_2D,0,0,0,0,s.texture,GL11.GL_TEXTURE_2D,0,0,0,0,f.width,f.height,1);
             var gl=s.program;gl.use();FrameUniforms.apply(gl,f);gl.set("uViewProjection",new Matrix4f(p.uniforms.projection).mul(f.view));
             float[] jitter=AimohGf2Runtime.clipJitter(p,f.width,f.height);gl.set("uEclipseGlassJitter",jitter[0],jitter[1]);
+            gl.set("uEclipseGlassScale",AimohGf2Screen.scale(p.configured.values()));
             gl.set("uEye",f.eyeX,f.eyeY,f.eyeZ);gl.set("uCameraFocus",f.scene.cameraFocus);gl.set("uGlassAlpha",0f);
             ForwardLight.uniforms(gl,f,shadows);water.glassUniforms(gl);water.bind(s.texture);
             GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER,p.targets.framebuffer(List.of(3),false,1,-1));GL11.glViewport(0,0,f.width,f.height);

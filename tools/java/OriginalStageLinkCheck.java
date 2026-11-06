@@ -48,7 +48,9 @@ public final class OriginalStageLinkCheck {
                 }
                 linked++;System.out.println("LINKED "+linked+" "+job.getString("vs").substring(0,12)+"/"+job.getString("fs").substring(0,12)+" "+job.getString("kind"));
             }
-            JSONObject result=new JSONObject().put("status","EXPLICIT_STAGE_INTERFACES_AND_REAL_GL_LINKS_PASS").put("program_pairs",linked)
+            var glass=viewpoint.render.AimohGf2NativeShaders.glass();glass.delete();
+            if(GL11.glGetError()!=0)throw new AssertionError("Native glass program GL error");
+            JSONObject result=new JSONObject().put("status","EXPLICIT_STAGE_INTERFACES_AND_REAL_GL_LINKS_PASS").put("program_pairs",linked).put("native_glass_linked",true)
                 .put("gpu",GL11.glGetString(GL11.GL_RENDERER)).put("vendor",GL11.glGetString(GL11.GL_VENDOR))
                 .put("opengl",GL11.glGetString(GL11.GL_VERSION)).put("game_started",false).put("live_nvidia_tested",false);
             Files.writeString(out.resolve("result.json"),result.toString(2));System.out.println(result);

@@ -13,6 +13,9 @@ public final class AimohGf2Rc2Vertex {
         if(split<0||bridge<split||!source.substring(0,split).contains("uniform samplerBuffer uPalettes;"))
             throw new IllegalArgumentException("Unreviewed GF2 native vertex ABI");
         String original=source.substring(split,bridge),tail=source.substring(bridge);
+        String jitter="gl_Position.xy+=gf2ClipJitter*gl_Position.w;";
+        if(tail.indexOf(jitter)<0||tail.indexOf(jitter)!=tail.lastIndexOf(jitter))throw new IllegalArgumentException("Unreviewed original clip transport");
+        tail="uniform float gf2ClipScale=1.0;\n"+AimohGf2Screen.glsl()+tail.replace(jitter,"gl_Position=aimohEclipseClip(gl_Position,gf2ClipJitter,gf2ClipScale);");
         tail=Pattern.compile("texelFetch\\((uPalettes|uDraws),([^(),]+)\\)").matcher(tail).replaceAll("$1[$2]");
         if(tail.contains("texelFetch(uPalettes,")||tail.contains("texelFetch(uDraws,"))
             throw new IllegalArgumentException("Unmapped GF2 native palette fetch");

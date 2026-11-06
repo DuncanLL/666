@@ -50,7 +50,7 @@ public final class AimohGf2NativeShaders {
     }
     public static String[] glassSources(){
         String vertex=replace(raw("model.vert"),"void main() {","uniform vec2 uEclipseGlassJitter;\nvoid vpNativeGlassVertex() {");
-        vertex+="\nvoid main(){vpNativeGlassVertex();gl_Position.xy+=uEclipseGlassJitter*gl_Position.w;}\n";
+        vertex+="\nuniform float uEclipseGlassScale=1.0;\n"+AimohGf2Screen.glsl()+"\nvoid main(){vpNativeGlassVertex();gl_Position=aimohEclipseClip(gl_Position,uEclipseGlassJitter,uEclipseGlassScale);}\n";
         String fragment=raw("vehicle_glass.frag");int main=fragment.indexOf("void main() {");
         if(main<0)throw new IllegalStateException("Official glass shader entry missing");fragment=fragment.substring(0,main);
         fragment=replace(fragment,"#version 330","#version 430 compatibility");

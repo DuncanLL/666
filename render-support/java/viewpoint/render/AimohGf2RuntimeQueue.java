@@ -14,9 +14,13 @@ public final class AimohGf2RuntimeQueue {
         public Job(AimohGf2OriginalProgram program,JSONObject state,int draw,Map<Integer,Integer> registers,Map<Integer,int[]> textures){this(program,state,draw,registers,textures,null);}
     }
     private Frame frame;
+    private float scale=Float.NaN;
     private final Map<AimohGf2OriginalProgram,Frame> prepared=new IdentityHashMap<>();
     public int draw(List<Job> jobs,Frame next){
-        if(frame!=next){frame=next;prepared.clear();}
+        return draw(jobs,next,1);
+    }
+    public int draw(List<Job> jobs,Frame next,float renderScale){
+        if(frame!=next||scale!=renderScale){frame=next;scale=renderScale;prepared.clear();}
         GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,next.attributeTexture());
         for(Job job:jobs){
             AimohGf2OriginalProgram program=job.program();program.registers(job.registers());program.textures(job.textures());
@@ -24,6 +28,7 @@ public final class AimohGf2RuntimeQueue {
             if(prepared.put(program,actual)!=actual){
                 program.nativeInputs(actual.inverse(),actual.inverseNormal(),actual.attributeCount());
                 program.nativeFrame(actual.previousModel(),actual.previousInverse(),actual.previousEye(),actual.jitter(),actual.history());
+                program.renderScale(renderScale);
             }
             if(next.sourceMrt()){program.nativeSunVisibility(AimohGf2SourceHost.color(16));GL20.glDrawBuffers(program.sourceOutputs());}
             AimohGf2SourceHost.drawNative(program,job.state(),job.draw());

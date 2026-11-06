@@ -91,6 +91,7 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
         gl.set("gf2PreviousEye",eye[0],eye[1],eye[2]);gl.set("gf2ClipJitter",jitter[0],jitter[1]);
         gl.setInt("gf2HistoryEnabled",history?1:0);
     }
+    public void renderScale(float value){gl.set("gf2ClipScale",value);}
     private int[] cachedSourceOutputs;
     public int[] sourceOutputs(){
         if(cachedSourceOutputs!=null)return cachedSourceOutputs;

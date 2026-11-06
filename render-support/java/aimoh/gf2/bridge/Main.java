@@ -25,6 +25,6 @@ public final class Main {
         Instrumentation agent=(Instrumentation)field.get(null);
         if(agent==null)throw new IllegalStateException("Enable this Java MOD through the normal ZombieBuddy approval");
         RuntimeHooks candidate=new RuntimeHooks();candidate.install(agent);hooks=candidate;
-        System.out.println("[AimohGF2] 0.1.1 common renderer ready; explicit original-stage outputs; shader "+installed.action()+" at "+installed.pack()+". Select it in Viewpoint to enable.");
+        System.out.println("[AimohGF2] 0.1.2 common renderer ready; source screen transport aligned; shader "+installed.action()+" at "+installed.pack()+". Select it in Viewpoint to enable.");
     }
 }
