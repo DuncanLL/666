@@ -105,6 +105,7 @@ function W:createChildren()
     self.preview.onMouseUpOutside=self.preview.onMouseUp
     self.preview.onMouseWheel=function(p,d)p.parent.zoom=math.max(.7,math.min(1.5,p.parent.zoom-d*.08));return true end
     self:addChild(self.preview)
+    self.preview:backMost()
     self:removeChild(self.content);self:addChild(self.content)
     self.widgets={};self.tab="skins";self:refresh()
 end

@@ -19,6 +19,10 @@ function UI:getWidth()return self.width end
 function UI:getHeight()return self.height end
 function UI:getYScroll()return 0 end
 function UI:bringToTop()end
+function UI:backMost()
+ local parent=self.parent
+ if parent then parent:removeChild(self);table.insert(parent.children,1,self)end
+end
 function UI:addScrollBars()end
 function UI:setScrollChildren(value)self.scrollChildren=value end
 function UI:setScrollHeight(value)self.scrollHeight=value end
@@ -49,7 +53,7 @@ function ISComboBox:new(x,y,w,h,target,callback,arg)local b=UI.new(self,x,y,w,h)
 function ISComboBox:addOption(text)table.insert(self.options,text)end
 function ISComboBox:hidePopup()self.expanded=false;self.popupClosed=true end
 UIFont={Small="small",Medium="medium"}
-function getCore()return {getScreenWidth=function()return screenWidth or 1920 end,getScreenHeight=function()return 1080 end}end
+function getCore()return {getScreenWidth=function()return screenWidth or 1920 end,getScreenHeight=function()return screenHeight or 1080 end}end
 function require(name)
  if name=="AimohPMXWindow" then return AimohPMXWindow end
  if name=="AimohPMXProtocol" then return protocolFixture end
