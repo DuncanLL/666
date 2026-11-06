@@ -48,7 +48,10 @@ end
 local function panel(parent,x,y,w,h)
     local p=ISPanel:new(x,y,w,h);p:initialise();p.background=false;p:addScrollBars();p:setScrollChildren(true)
     p.onMouseWheel=function(s,delta) s:setYScroll(math.max(math.min(0,s.height-s:getScrollHeight()),math.min(0,s:getYScroll()-delta*48)));return true end
-    p.prerender=function(s) s:setStencilRect(0,0,s.width,s.height) end
+    p.prerender=function(s)
+        if s.parent.tab~="skins" then s:drawRect(0,0,s.width,s.height,.84,.025,.04,.048)end
+        s:setStencilRect(0,0,s.width,s.height)
+    end
     p.render=function(s) s:clearStencilRect() end
     parent:addChild(p);return p
 end
@@ -90,10 +93,12 @@ function W:createChildren()
     self:addChild(self.sidebar)
     self.refreshButton=button(self,14,self.height-55,104,tr("Refresh"),self,self.onLibrary)
     self.content=panel(self,self.rightX,105,self.rightWidth,self.height-247)
-    self.chestButton=button(self,self.rightX,self.height-132,self.rightWidth,tr("ChestPhysics"),self,function(s)s:setTab(s.tab=="chest" and "parts" or "chest")end)
-    self.pageButton=button(self,self.rightX,self.height-55,132,tr("Parts"),self,function(s)s:setTab(s.tab=="skins" and "parts" or "skins")end)
+    local half=(self.rightWidth-8)/2
+    self.pageButton=button(self,self.rightX,self.height-94,half,tr("Parts"),self,function(s)s:setTab("parts")end)
+    self.chestButton=button(self,self.rightX+half+8,self.height-94,half,tr("ChestPhysics"),self,function(s)s:setTab("chest")end)
+    self.skinButton=button(self,self.rightX,self.height-55,132,tr("Back"),self,function(s)s:setTab("skins")end)
     self.wearButton=button(self,self.rightX+140,self.height-55,self.rightWidth-140,tr("Wear"),self,function(w)w:applyBrowse()end)
-    self.advancedButton=button(self,self.rightX,self.height-94,self.rightWidth,tr("Advanced"),self,function(s)s:setTab(s.tab=="advanced" and "parts" or "advanced")end)
+    self.advancedButton=button(self,self.rightX,105,self.rightWidth,tr("Advanced"),self,function(s)s:setTab(s.tab=="advanced" and "parts" or "advanced")end)
     self.physicsResetButton=button(self,self.width-362,5,176,tr("PhysicsReset"),self,function(w)w.actions.physicsReset(w.player)end)
     self.physicsResetButton:setHeight(34)
     self.physicsResetButton.backgroundColor={r=.18,g=.125,b=.045,a=.96}
@@ -177,7 +182,9 @@ function W:updateWear()
     local wearing=self.browsed and self.browsed.id==self.currentId
     self.wearButton.roomTitle=wearing and tr("Wearing")or tr("Wear")
     self.wearButton:setEnable(self.browsed~=nil and not wearing and not self.waiting)
-    self.pageButton:setEnable(self.tab~="skins" or wearing and not self.waiting)
+    local editable=AimohPMXPreview.isEnabled(self.player) and not self.waiting and (self.tab~="skins" or wearing)
+    self.pageButton:setEnable(editable)
+    self.chestButton:setEnable(editable and AimohPMXPreview.hasChestPhysics(self.player))
 end
 function W:applyBrowse()if self.browsed then self:selectSkin(self.browsed)end end
 function W:refresh()
@@ -241,8 +248,13 @@ function W:refreshControls()
     self:clearContent()
     local enabled=AimohPMXPreview.isEnabled(self.player)
     self.physicsResetButton:setEnable(enabled and not self.waiting);self.restoreButton:setEnable(enabled);self.resetButton:setEnable(enabled and not self.waiting);self.reloadButton:setEnable(enabled and not self.waiting)
-    self.chestButton:setEnable(enabled and not self.waiting and AimohPMXPreview.hasChestPhysics(self.player))
-    self.chestButton.roomTitle=self.tab=="chest" and tr("BackParts") or tr("ChestPhysics")
+    local details=self.tab=="parts" or self.tab=="advanced"
+    self.content:setY(details and 143 or 105);self.content:setHeight(self.height-self.content.y-142)
+    self.skinButton:setVisible(self.tab~="skins")
+    self.skinButton:setEnable(not self.waiting)
+    for _,item in ipairs({{self.pageButton,details},{self.chestButton,self.tab=="chest"}})do
+        local active=item[2];item[1].borderColor={r=active and 1 or .34,g=active and .58 or .56,b=active and .17 or .58,a=active and 1 or .55}
+    end
     self.resetButton:setVisible(self.tab=="advanced");self.reloadButton:setVisible(self.tab=="advanced")
     self.eyeGroup=nil
     local eye=self.selected and self.selected.meta.groups and self.selected.meta.groups.eyes
@@ -259,9 +271,8 @@ function W:refreshControls()
             b.borderColor={r=active and 1 or .34,g=active and .58 or .56,b=active and .17 or .58,a=active and 1 or .55}
         end
     end
-    self.pageButton.roomTitle=self.tab=="skins" and tr("Parts") or tr("Back")
-    self.advancedButton:setVisible(self.tab~="skins")
-    self.advancedButton.roomTitle=self.tab=="advanced" and tr("BackParts")or tr("Other")
+    self.advancedButton:setVisible(details)
+    self.advancedButton.roomTitle=self.tab=="advanced" and tr("BackParts")or tr("Advanced")
     local y=0;local width=self.rightWidth-18
     if self.tab=="skins" then
         local character=self.byCharacter[self.character]

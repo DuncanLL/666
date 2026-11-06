@@ -2,7 +2,7 @@
   "text": {
     "Menu": "整备室",
     "Skins": "皮肤",
-    "Parts": "部件预览",
+    "Parts": "切换配件",
     "Back": "返回皮肤",
     "Default": "默认",
     "Saved": "修改已保存",
@@ -10,7 +10,7 @@
     "Reset": "恢复默认",
     "Reload": "重新应用",
     "Refresh": "刷新",
-    "Advanced": "详细部件",
+    "Advanced": "详细配件",
     "Presets": "材质预设",
     "NoGroups": "这套皮肤没有可切换部件",
     "Choose": "请选择角色",
@@ -2463,6 +2463,16 @@
     "已暂停，请重置物理解算": {
       "path": "media/ui/AimohPMXReadyRoom/label-e4ce66fa4c79ba.png",
       "width": 312,
+      "height": 40
+    },
+    "切换配件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-04ba51ea9eaa0c.png",
+      "width": 116,
+      "height": 40
+    },
+    "详细配件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c2c4f6200132dd.png",
+      "width": 116,
       "height": 40
     }
   },

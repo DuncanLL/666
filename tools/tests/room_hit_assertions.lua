@@ -33,11 +33,20 @@ for _,size in ipairs({{1100,670},{960,620},{736,520}})do
  -- Width is fixed at construction; test each full tab's control ordering.
  for _,tab in ipairs({'skins','parts','advanced','chest'})do
   w:setTab(tab)
-  for _,b in ipairs({w.closeButton,w.refreshButton,w.chestButton,w.pageButton,w.wearButton,w.advancedButton,w.physicsResetButton,w.restoreButton,w.resetButton,w.reloadButton,w.eyeOpenButton,w.eyeClosedButton})do checkArea(w,b)end
+  for _,b in ipairs({w.closeButton,w.refreshButton,w.chestButton,w.pageButton,w.skinButton,w.wearButton,w.advancedButton,w.physicsResetButton,w.restoreButton,w.resetButton,w.reloadButton,w.eyeOpenButton,w.eyeClosedButton})do checkArea(w,b)end
   for _,b in ipairs(w.content.children)do
    if b.roomTitle and b.y>=0 and b.y+b.height<=w.content.height then checkArea(w.content,b)end
   end
  end
+ assert(w.pageButton.parent==w.chestButton.parent and w.pageButton.y==w.chestButton.y,'Parts and chest must be peer navigation')
+ click(w,w.pageButton);assert(w.tab=='parts' and w.advancedButton.visible)
+ click(w,w.advancedButton);assert(w.tab=='advanced')
+ click(w,w.chestButton);assert(w.tab=='chest' and not w.advancedButton.visible)
+ local sliders=0;for _,widget in ipairs(w.widgets)do if widget.isSlider then sliders=sliders+1 end end
+ assert(sliders==4,'Chest navigation must open its four sliders directly')
+ local underlay=false;local drawRect=w.content.drawRect
+ w.content.drawRect=function(s,x,y,width,height,alpha,r,g,b)if alpha>=.8 and r<.1 and g<.1 and b<.1 then underlay=true end end
+ w.content:prerender();w.content.drawRect=drawRect;assert(underlay,'Controls require a readable dark underlay')
  w:setTab('skins');click(w,w.eyeClosedButton);click(w,w.eyeOpenButton)
  assert(not w.preview.dragging,'Eye button initiated preview rotation')
  local x,y=(w.sidebar.x+w.sidebar.width+w.rightX)/2,w.preview.y+120

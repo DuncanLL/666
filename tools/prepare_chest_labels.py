@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,hashlib,json,sys
 from common import ROOT,BUILD,settings
-TEXT={'ChestPhysics':'胸部物理','ChestSoftness':'柔软程度','ChestDamping':'回弹阻尼',
+TEXT={'Parts':'切换配件','Advanced':'详细配件','ChestPhysics':'胸部物理','ChestSoftness':'柔软程度','ChestDamping':'回弹阻尼',
       'ChestInertia':'惯性重量','ChestStrength':'效果幅度','ChestSuspended':'已暂停，请重置物理解算'}
 def prepare(update=False):
     c=settings();sys.path.insert(0,c['python_dependencies'])
