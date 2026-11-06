@@ -45,6 +45,7 @@ public final class NativeFunc {
     public native void SetAutoBlinkEnabled(long model, boolean enabled);
     public native void SetFirstPersonMode(long model, boolean enabled);
     public native void SetPZLegIKSuppressed(long model, boolean suppressed);
+    public native boolean SetAnimationOwnedPhysicsBones(long model, int[] bones);
     public native long GetMorphCount(long model);
     public native String GetMorphName(long model, int index);
     public native float GetMorphWeight(long model, int index);

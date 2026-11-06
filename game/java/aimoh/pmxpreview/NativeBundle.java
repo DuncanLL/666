@@ -10,7 +10,7 @@ import java.util.HexFormat;
 import java.util.Properties;
 import zombie.core.Core;
 
-/** Unchanged native libraries travel inside the authorized Java MOD JAR. */
+/** Versioned native libraries travel inside the authorized Java MOD JAR. */
 final class NativeBundle {
     private static final String ROOT = "/aimoh/pmxpreview/native/windows-x64/";
 
@@ -19,7 +19,7 @@ final class NativeBundle {
         try (InputStream stream = resource("index.properties")) { index.load(stream); }
         String[] names = index.getProperty("files").split(",");
         boolean loose = true;
-        for (String name : names) loose &= Files.isRegularFile(legacy.resolve(name));
+        for (String name : names) loose &= Files.isRegularFile(legacy.resolve(name)) && index.getProperty(name).equals(sha(legacy.resolve(name)));
         if (loose) return legacy;
         Path cache = Path.of(Core.getMyDocumentFolder(), "cache", "AimohPMX", "native", index.getProperty("bundle"));
         Files.createDirectories(cache);

@@ -1,0 +1,34 @@
+{
+  "version": "0.3.0-chest-trial",
+  "mod_name": "R116",
+  "mod_id": "AimohPmxPreview",
+  "native_version": "Aimoh-Upstream-1/skeleton-eval1-softbody1",
+  "native_hashes": {
+    "AimohGripOzz.dll": "a41be04aae5f62f0b5c599ec50993428bc2afd39b104227db4142b3b437ebe1c",
+    "AimohMmdUpstream.dll": "64fe715c6b84a6415a88843b439ab7c6c5de60a3daa2099571f6825b389ebd05",
+    "libgcc_s_seh-1.dll": "368488a9089e3d89b32a3609816fa40dd02fa4cdf480a2bc86e19c7bebdc8bda",
+    "libstdc++-6.dll": "ba2f2acaa48011aff3f14a9806cc69db1e78c12c9a87ad3f7f88b965fce7fb1d",
+    "libwinpthread-1.dll": "1b801c9280f6cad8cb2a026bfa48be8c4bea07a0dc78a820d1591f900ee76f0b",
+    "AimohChestSoftBody.dll": "929df9ccc0b6155e7181ced6426fd358b8dbcedc5350f401b14e3dae8f0827a3"
+  },
+  "jar_sha256": "cd53f9c276cc05969218f704ca3f803193df37449bafb606d2495e2c20fb23ea",
+  "chest_models": 6,
+  "original_models_and_shading_identity_changed": false,
+  "local_commit_only_until_gameplay_approval": true,
+  "controlled_checks": [
+    "actual Java/native model chain for all 11 models",
+    "six chest models with continuous actual action samples",
+    "FFM and approved preview same-input position and normal parity",
+    "real Kahlua and game slider source with actor/widget substitutes",
+    "Workshop validator and zero remaining native objects"
+  ],
+  "gameplay_tested": false,
+  "multiplayer_tested": false,
+  "subscription_cold_start_tested": false,
+  "historical_switch_crash_confirmed_fixed": false,
+  "existing_limits": [
+    "volume error",
+    "strong artificial impulse recovery residual",
+    "no body/hand/garment contact coupling"
+  ]
+}

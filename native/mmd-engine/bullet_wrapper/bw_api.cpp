@@ -414,7 +414,13 @@ void bw_rigid_body_set_kinematic(BW_RigidBody* rb, bool kinematic) {
     btRigidBody* body = (btRigidBody*)rb;
     int flags = body->getCollisionFlags();
     if (kinematic) {
+        body->setMassProps(0, btVector3(0, 0, 0));
+        body->updateInertiaTensor();
+        body->setLinearVelocity(btVector3(0, 0, 0));
+        body->setAngularVelocity(btVector3(0, 0, 0));
+        body->clearForces();
         flags |= btCollisionObject::CF_KINEMATIC_OBJECT;
+        flags &= ~btCollisionObject::CF_STATIC_OBJECT;
     } else {
         flags &= ~btCollisionObject::CF_KINEMATIC_OBJECT;
     }

@@ -16,7 +16,22 @@ use super::{
     TEXTURE_PATH_INDEX,
 };
 
-const VERSION: &str = "Aimoh-Upstream-1/skeleton-eval1";
+const VERSION: &str = "Aimoh-Upstream-1/skeleton-eval1-softbody1";
+
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAnimationOwnedPhysicsBones(
+    env: JNIEnv, _class: JClass, handle: jlong, ids: jni::objects::JIntArray,
+) -> jboolean {
+    let Ok(length)=env.get_array_length(&ids) else {return 0;};
+    if !(1..=16).contains(&length) {return 0;}
+    let mut values=vec![0;length as usize];
+    if env.get_int_array_region(&ids,0,&mut values).is_err() || values.iter().any(|id|*id<0) {return 0;}
+    let indices:Vec<usize>=values.iter().map(|id|*id as usize).collect();
+    let models=MODELS.read().unwrap_or_else(|p|p.into_inner());
+    let Some(model)=models.get(&handle) else {return 0;};
+    let mut model=model.lock().unwrap_or_else(|p|p.into_inner());
+    model.set_animation_owned_physics_bones(&indices) as jboolean
+}
 
 #[no_mangle]
 pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_EvaluateSkeleton(

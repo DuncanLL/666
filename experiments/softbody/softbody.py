@@ -32,11 +32,12 @@ class SoftBody:
         self.lib.sb_impulse.argtypes=[C.c_void_p,C.c_int,F]
         self.lib.sb_press.argtypes=[C.c_void_p,C.c_int,C.c_float]
         self.lib.sb_configure.argtypes=[C.c_void_p,C.c_float,C.c_float,C.c_float]
+        self.lib.sb_tune.argtypes=[C.c_void_p,C.c_float,C.c_float,C.c_float]
         self.handle=self.lib.sb_new()
         if not self.handle:raise RuntimeError('Bullet软体预览初始化失败')
         self.outputs=[];self.cpu_ms=0.
 
-    def add(self,center,radius,attachment,positions,normals,*,resolution=96,mass=1.,stiffness=.45,damping=.16,recovery=.035):
+    def add(self,center,radius,attachment,positions,normals,*,resolution=40,mass=1.,stiffness=.45,damping=.045,recovery=0.):
         arrays=list(map(array,[center,radius,attachment,positions,normals]))
         result=self.lib.sb_add(self.handle,*[pointer(x) for x in arrays],len(arrays[3]),resolution,mass,stiffness,damping,recovery)
         if result<0:raise RuntimeError('Bullet软体区域初始化失败：'+str(result))
@@ -65,8 +66,9 @@ class SoftBody:
     def press(self,id,speed=1.2):
         if self.lib.sb_press(self.handle,id,float(speed)):raise RuntimeError('局部按压测试失败')
 
-    def configure(self,stiffness,damping=.16,recovery=.035):
-        if self.lib.sb_configure(self.handle,float(stiffness),float(damping),float(recovery)):
+    def configure(self,stiffness,damping=.045,recovery=0.,*,inertia=1.):
+        if recovery!=0:raise ValueError('体积软体不使用形状强制恢复参数')
+        if self.lib.sb_tune(self.handle,float(stiffness),float(damping),float(inertia)):
             raise ValueError('软体参数无效')
 
     def stats(self):
@@ -82,31 +84,6 @@ class SoftBody:
         self.dll_directory.close()
 
 
-def vertex_weights(vertex):
-    w=vertex.weight
-    values=[1.] if w.type==0 else [w.weights[0],1-w.weights[0]] if w.type==1 else w.weights if w.type==2 else [w.weights.weight,1-w.weights.weight] if w.type==3 else []
-    return list(zip(w.bones,values))
-
-
-def regions(model,bones,unit_scale):
-    result=[]
-    xyz=np.asarray([v.co for v in model.vertices],dtype='f4')
-    normals=np.asarray([v.normal for v in model.vertices],dtype='f4')
-    # Match the existing MC-MMD PMX loader exactly: one Z reflection at import.
-    xyz[:,2]*=-1;normals[:,2]*=-1
-    for bone in bones:
-        weights=np.asarray([sum(float(value) for index,value in vertex_weights(v) if index==bone) for v in model.vertices],dtype='f4')
-        ids=np.flatnonzero(weights>.001);core=xyz[weights>=.25]
-        if len(core)<24:raise ValueError('有效胸部权重不足，不能自动建立软体区域')
-        lo,hi=core.min(0),core.max(0)
-        center=(lo+hi)*.5;radius=(hi-lo)*.55
-        if np.any(radius<1e-4):raise ValueError('胸部绑定区域退化，不能建立软体')
-        bone_position=np.asarray(model.bones[bone].location)*np.array([1.,1.,-1.])
-        attachment=bone_position-center
-        if np.linalg.norm(attachment)<min(radius)*.1:raise ValueError('模型没有明确的胸部附着方向')
-        meters=radius*unit_scale
-        result.append(dict(bone=int(bone),name=model.bones[bone].name,indices=ids,weights=weights[ids],
-                           center=array(center*unit_scale),radius=array(meters),attachment=array(attachment/np.linalg.norm(attachment)),
-                           positions=array(xyz[ids]*unit_scale),normals=normals[ids],
-                           mass=float(4/3*np.pi*np.prod(meters)*1000)))
-    return result
+# One shared geometry fit for the preview harness and game data generator.
+sys.path.insert(0,str(ROOT/'tools'))
+from chest_model_data import vertex_weights,regions

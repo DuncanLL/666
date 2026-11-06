@@ -1,12 +1,16 @@
-// Preview-only C ABI over the unchanged upstream Bullet soft-body solver.
+// Preview-only C ABI over pinned Bullet, with the two recorded fixed-node fixes.
 #include <cmath>
 #include <vector>
 #include <array>
 #include <map>
+#include <atomic>
 #include "btBulletDynamicsCommon.h"
 #include "BulletSoftBody/btSoftBody.h"
 #include "BulletSoftBody/btSoftBodyHelpers.h"
-#include "BulletSoftBody/btSoftRigidDynamicsWorld.h"
+#include "BulletSoftBody/btDeformableMultiBodyDynamicsWorld.h"
+#include "BulletSoftBody/btDeformableBodySolver.h"
+#include "BulletSoftBody/btDeformableNeoHookeanForce.h"
+#include "BulletSoftBody/btDeformableGravityForce.h"
 #include "BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h"
 #include "BulletSoftBody/btDefaultSoftBodySolver.h"
 
@@ -16,6 +20,7 @@ struct Cage {
     std::vector<btMatrix3x3> inverseRestTets,normalTransforms;
     std::vector<int> renderTet;
     std::vector<int> pins;
+    std::vector<btScalar> inverseMass;
     btVector3 center,extent,back;
     btTransform frame = btTransform::getIdentity();
     btTransform previousFrame = btTransform::getIdentity();
@@ -25,27 +30,37 @@ struct Cage {
     int invertedTets=0;
 };
 
-struct PreviewWorld : btSoftRigidDynamicsWorld {
+struct PreviewWorld : btDeformableMultiBodyDynamicsWorld {
     int predictions=0;
-    using btSoftRigidDynamicsWorld::btSoftRigidDynamicsWorld;
+    using btDeformableMultiBodyDynamicsWorld::btDeformableMultiBodyDynamicsWorld;
     void predictUnconstraintMotion(btScalar dt) override {
-        ++predictions;btSoftRigidDynamicsWorld::predictUnconstraintMotion(dt);
+        ++predictions;btDeformableMultiBodyDynamicsWorld::predictUnconstraintMotion(dt);
     }
+};
+struct PreviewSolver : btDeformableBodySolver {
+    PreviewSolver() { m_maxNewtonIterations=3; m_newtonTolerance=1e-9f; }
 };
 struct Preview {
     btSoftBodyRigidBodyCollisionConfiguration config;
     btCollisionDispatcher dispatcher{&config};
     btDbvtBroadphase broadphase;
-    btSequentialImpulseConstraintSolver solver;
-    btDefaultSoftBodySolver softSolver;
+    btDeformableMultiBodyConstraintSolver solver;
+    PreviewSolver softSolver;
     PreviewWorld world{&dispatcher, &broadphase, &solver, &config, &softSolver};
+    btDeformableNeoHookeanForce elasticity{80,5000,.015f};
+    btDeformableGravityForce gravity{btVector3(0,0,0)};
     std::vector<Cage> cages;
     bool ready = false;
+    btScalar inertia=1;
     Preview() {
         // The rest shape is already authored. Inertial response is driven by
         // animated attachment motion; no uncalibrated extra gravity sag.
         world.setGravity(btVector3(0,0,0));
         world.getWorldInfo().m_gravity.setValue(0,0,0);
+        solver.setDeformableSolver(&softSolver);
+        world.setImplicit(true);
+        world.setLineSearch(true);
+        world.setUseProjection(true);
         world.getWorldInfo().m_sparsesdf.Initialize();
     }
     ~Preview() {
@@ -54,7 +69,13 @@ struct Preview {
     }
 };
 
-static int livePreviews = 0;
+// Upstream volumetric elasticity separates shape/shear from bulk resistance.
+static void setMaterial(Preview* p,btScalar control,btScalar damping) {
+    p->elasticity.setLameParameters(50+350*control*control,5000);
+    p->elasticity.setDamping(.003f+.25f*damping);
+}
+
+static std::atomic<int> livePreviews{0};
 static bool finite3(const float* a) {
     return a && std::isfinite(a[0]) && std::isfinite(a[1]) && std::isfinite(a[2]);
 }
@@ -65,7 +86,26 @@ static btMatrix3x3 tetraMatrix(const btVector3& a,const btVector3& b,const btVec
 extern "C" {
 __declspec(dllexport) Preview* sb_new() { auto* p=new Preview(); ++livePreviews; return p; }
 __declspec(dllexport) void sb_delete(Preview* p) { if(p) { delete p; --livePreviews; } }
-__declspec(dllexport) int sb_live() { return livePreviews; }
+__declspec(dllexport) int sb_live() { return livePreviews.load(); }
+
+// Exercise the exact upstream indexing regression across two bodies with
+// interleaved fixed nodes, without depending on an animation or a character.
+__declspec(dllexport) int sb_check_fixed_force_index() {
+    btSoftBodyWorldInfo info;
+    btVector3 points[3]={btVector3(0,0,0),btVector3(1,0,0),btVector3(2,0,0)};
+    btScalar masses[3]={1,0,1};
+    btSoftBody first(&info,3,points,masses),second(&info,3,points,masses);
+    btAlignedObjectArray<btSoftBody*> bodies;bodies.push_back(&first);bodies.push_back(&second);
+    btAlignedObjectArray<btVector3> backup,force;backup.resize(6);force.resize(6);
+    for(int i=0;i<6;++i) force[i]=btVector3(i+1,0,0);
+    for(auto* body:{&first,&second}) for(int i=0;i<3;++i) {
+        body->m_nodes[i].m_v.setZero();body->m_nodes[i].m_effectiveMass_inv.setIdentity();
+    }
+    btDeformableBackwardEulerObjective objective(bodies,backup);objective.setImplicit(true);
+    objective.applyForce(force,false);
+    return first.m_nodes[0].m_v.x()==1 && first.m_nodes[2].m_v.x()==3
+        && second.m_nodes[0].m_v.x()==4 && second.m_nodes[2].m_v.x()==6 ? 0 : -1;
+}
 
 __declspec(dllexport) int sb_add(Preview* p, const float* center, const float* radius,
     const float* attachment, const float* xyz, const float* normals, int vertices,
@@ -86,21 +126,15 @@ __declspec(dllexport) int sb_add(Preview* p, const float* center, const float* r
     auto* body=cage.body;
     // Animated attachments need a live solver even when their rigid parent is stationary.
     body->setActivationState(DISABLE_DEACTIVATION);
-    body->m_materials[0]->m_kLST=stiffness;
-    auto* bending=body->appendMaterial();bending->m_kLST=stiffness*.45f;
-    body->generateBendingConstraints(2,bending);
-    // Give the closed cage an interior rather than treating it as an empty
-    // cloth shell. All constraints still use Bullet's existing link solver.
+    // One interior node closes the existing ellipsoid as a tetrahedral volume.
     const int middle=body->m_nodes.size();
     body->appendNode(origin,mass/(middle+1));
-    auto* radial=body->appendMaterial();radial->m_kLST=stiffness*.55f;
-    for(int i=0;i<middle;++i) body->appendLink(middle,i,radial);
     body->setTotalMass(mass,false);
     body->m_cfg.kDP=damping;
-    body->m_cfg.kMT=recovery;
+    body->m_cfg.kMT=0;
     cage.damping=damping;cage.recovery=recovery;
-    body->m_cfg.kVC=20;
-    body->m_cfg.piterations=8;
+    body->m_cfg.kVC=0;
+    body->m_cfg.piterations=0;
     // Upstream position preset: velocity iterations would overwrite its
     // predicted pose-matching correction before the position solve.
     body->m_cfg.viterations=0;
@@ -113,15 +147,13 @@ __declspec(dllexport) int sb_add(Preview* p, const float* center, const float* r
         btVector3 unit((point.x()-origin.x())/extent.x(),
                       (point.y()-origin.y())/extent.y(),
                       (point.z()-origin.z())/extent.z());
-        if(unit.dot(back)>.45f) { cage.pins.push_back(i); body->setMass(i,0); }
+        if(i==middle || unit.dot(back)>.45f) { cage.pins.push_back(i); body->setMass(i,0); }
     }
     if(cage.pins.size()<3 || cage.pins.size()>cage.rest.size()/2) { delete body; return -4; }
+    for(int i=0;i<body->m_nodes.size();++i) cage.inverseMass.push_back(body->m_nodes[i].m_im);
     body->setPose(true,true);
     cage.volume=body->getVolume();
     if(!std::isfinite(cage.volume) || btFabs(cage.volume)<1e-9f) { delete body; return -5; }
-    // kVC multiplies absolute volume error. Normalize it to a common bulk
-    // response instead of letting model scale silently change compressibility.
-    body->m_cfg.kVC=10000.f/btFabs(cage.volume);
     body->m_renderNodes.resize(vertices);
     for(int i=0;i<vertices;++i) {
         if(!finite3(xyz+i*3) || !finite3(normals+i*3)) { delete body; return -6; }
@@ -136,8 +168,11 @@ __declspec(dllexport) int sb_add(Preview* p, const float* center, const float* r
         const auto& f=body->m_faces[i];
         int a=int(f.m_n[0]-&body->m_nodes[0]), b=int(f.m_n[1]-&body->m_nodes[0]), c=int(f.m_n[2]-&body->m_nodes[0]);
         btScalar volume=tetraMatrix(body->m_nodes[middle].m_x,f.m_n[0]->m_x,f.m_n[1]->m_x,f.m_n[2]->m_x).determinant();
-        if(btFabs(volume)>1e-10f) body->appendTetra(middle,a,b,c);
+        if(btFabs(volume)>1e-10f) body->appendTetra(middle,a,volume>0?b:c,volume>0?c:b);
     }
+    body->initializeDmInverse();
+    body->m_tetraScratches.resize(body->m_tetras.size());
+    body->m_tetraScratchesTn.resize(body->m_tetras.size());
     btSoftBodyHelpers::interpolateBarycentricWeights(body);
     std::map<std::array<int,4>,int> tetraIndex;
     for(int t=0;t<body->m_tetras.size();++t) {
@@ -153,6 +188,9 @@ __declspec(dllexport) int sb_add(Preview* p, const float* center, const float* r
         cage.renderTet.push_back(tetraIndex.at(key));
     }
     p->world.addSoftBody(body);
+    p->world.addForce(body,&p->elasticity);
+    p->world.addForce(body,&p->gravity);
+    setMaterial(p,stiffness,damping);
     p->cages.push_back(std::move(cage));
     return int(p->cages.size())-1;
 }
@@ -170,6 +208,7 @@ __declspec(dllexport) int sb_frames(Preview* p, const float* frames, int reset) 
                 node.m_v.setZero(); node.m_vn.setZero(); node.m_f.setZero();
             }
             cage.body->setPose(true,true);
+            cage.body->advanceDeformation();
             // setPose has already captured the complete rest constants. Do not
             // recapture them on the next tick after only the pins have moved.
             cage.body->m_bUpdateRtCst=false;
@@ -198,10 +237,37 @@ __declspec(dllexport) int sb_step(Preview* p,float dt) {
                     auto& node=cage.body->m_nodes[i];
                     node.m_x=frame*cage.rest[i];node.m_q=node.m_x;node.m_v.setZero();node.m_f.setZero();
                 }
-                cage.body->m_cfg.kDP=1-std::pow(1-cage.damping,h*60);
-                cage.body->m_cfg.kMT=1-std::pow(1-cage.recovery,h*60);
+                // The implicit solver carries velocity in m_vn as well as m_v.
+                // External damping must update both, otherwise setup restores it.
+                const btScalar decay=std::pow(1-cage.damping,h*60);
+                for(int i=0;i<cage.body->m_nodes.size();++i) if(cage.body->m_nodes[i].m_im>0) {
+                    cage.body->m_nodes[i].m_v*=decay;cage.body->m_nodes[i].m_vn*=decay;
+                }
             }
             p->world.stepSimulation(h,0);
+            // Standard skinned-soft-body MaxDistance constraint (cf. Jolt's
+            // Skinned constraints): bound local freedom without resetting it.
+            for(Cage& cage:p->cages) {
+                btTransform frame,last;
+                frame.setOrigin(cage.previousFrame.getOrigin().lerp(cage.frame.getOrigin(),fraction));
+                frame.setRotation(cage.previousFrame.getRotation().slerp(cage.frame.getRotation(),fraction));
+                const btScalar before=btScalar(step-1)/steps;
+                last.setOrigin(cage.previousFrame.getOrigin().lerp(cage.frame.getOrigin(),before));
+                last.setRotation(cage.previousFrame.getRotation().slerp(cage.frame.getRotation(),before));
+                const btScalar maximum=.25f*btMin(cage.extent.x(),btMin(cage.extent.y(),cage.extent.z()));
+                for(int i=0;i<int(cage.rest.size());++i) {
+                    auto& node=cage.body->m_nodes[i];if(node.m_im<=0) continue;
+                    const btVector3 goal=frame*cage.rest[i],offset=node.m_x-goal;
+                    const btScalar distance=offset.length();
+                    if(distance>maximum) {
+                        const btVector3 normal=offset/distance;
+                        node.m_x=goal+normal*maximum;node.m_q=node.m_x;
+                        const btVector3 anchorVelocity=(goal-last*cage.rest[i])/h;
+                        node.m_v-=normal*btMax(btScalar(0),(node.m_v-anchorVelocity).dot(normal));
+                        node.m_vn=node.m_v;
+                    }
+                }
+            }
         }
         for(Cage& cage:p->cages) cage.previousFrame=cage.frame;
     }
@@ -240,7 +306,10 @@ __declspec(dllexport) int sb_delta(Preview* p,int id,float* positions,float* nor
 __declspec(dllexport) int sb_impulse(Preview* p,int id,const float* velocity) {
     if(!p || id<0 || id>=int(p->cages.size()) || !finite3(velocity)) return -1;
     auto& nodes=p->cages[id].body->m_nodes;
-    for(int i=0;i<nodes.size();++i) if(nodes[i].m_im>0) nodes[i].m_v+=btVector3(velocity[0],velocity[1],velocity[2]);
+    for(int i=0;i<nodes.size();++i) if(nodes[i].m_im>0) {
+        const btVector3 kick(velocity[0],velocity[1],velocity[2]);
+        nodes[i].m_v+=kick;nodes[i].m_vn+=kick;
+    }
     return 0;
 }
 
@@ -254,7 +323,8 @@ __declspec(dllexport) int sb_press(Preview* p,int id,float speed) {
         btVector3 point=cage.rest[i]-cage.center;
         btVector3 unit(point.x()/cage.extent.x(),point.y()/cage.extent.y(),point.z()/cage.extent.z());
         btScalar front=btMax(btScalar(0),-unit.dot(cage.back));
-        node.m_v+=inward*(speed*front*front);
+        const btVector3 kick=inward*(speed*front*front);
+        node.m_v+=kick;node.m_vn+=kick;
     }
     return 0;
 }
@@ -263,12 +333,21 @@ __declspec(dllexport) int sb_configure(Preview* p,float stiffness,float damping,
     if(!p || !std::isfinite(stiffness) || !std::isfinite(damping) || !std::isfinite(recovery)
        || stiffness<=0 || stiffness>1 || damping<0 || damping>=1 || recovery<0 || recovery>1) return -1;
     for(Cage& cage:p->cages) {
-        cage.body->m_materials[0]->m_kLST=stiffness;
-        cage.body->m_materials[1]->m_kLST=stiffness*.45f;
-        cage.body->m_materials[2]->m_kLST=stiffness*.55f;
         cage.damping=damping;cage.recovery=recovery;
-        // Update coefficients only; the authored rest lengths stay intact.
-        cage.body->updateLinkConstants();
+    }
+    setMaterial(p,stiffness,damping);
+    return 0;
+}
+
+__declspec(dllexport) int sb_tune(Preview* p,float stiffness,float damping,float inertia) {
+    if(!std::isfinite(inertia) || inertia<.6f || inertia>1.4f) return -1;
+    if(sb_configure(p,stiffness,damping,0)) return -1;
+    if(inertia!=p->inertia) {
+        for(Cage& cage:p->cages) for(int i=0;i<cage.body->m_nodes.size();++i)
+            cage.body->m_nodes[i].m_im=cage.inverseMass[i]/inertia;
+        p->inertia=inertia;
+        // Bullet caches inverse masses in its preconditioner, not just nodes.
+        if(p->ready) p->softSolver.m_objective->m_preconditioner->reinitialize(true);
     }
     return 0;
 }

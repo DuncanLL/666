@@ -121,6 +121,7 @@ final class ModelSession {
         api.CopyDataToByteBuffer(normals,api.GetNormals(model.handle()),normals.capacity());
         float[] p=new float[positions.capacity()/4],n=new float[p.length];
         positions.asFloatBuffer().get(p);normals.asFloatBuffer().get(n);
+        model.deformChest(p,n);
         float[] finalMaterials=model.appearance().readMaterials();
         PmxDrawMesh.FrameData next=new PmxDrawMesh.FrameData(p,n,finalMaterials,shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
         olderFrozen=frame.number==lastFrame+1?previousFrozen:null;previousFrozen=frame.number==lastFrame+1?frozen:null;

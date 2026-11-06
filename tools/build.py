@@ -21,7 +21,7 @@ def compile_java(config, sources, target, classpath):
         result.check_returncode()
 
 
-def build(compare_baseline=False):
+def build(compare_baseline=False,native_candidate=None):
     config = settings()
     game = Path(config['game_root'])
     classpath = [config['viewpoint_jar'], config['zombiebuddy_jar'], *game.glob('*.jar')]
@@ -37,9 +37,14 @@ def build(compare_baseline=False):
         print(comparison.stdout, flush=True)
         comparison.check_returncode()
     baseline = json.loads((ROOT / 'provenance/baseline.json').read_text('utf8'))
-    natives = {name: Path(config['native_source']) / name for name in baseline['native_hashes']}
+    candidate=None if native_candidate is None else json.loads(Path(native_candidate).read_text('utf8'))
+    natives = {name: Path(config['native_source']) / name for name in baseline['native_hashes']} if candidate is None else {name:Path(row['path'])for name,row in candidate['files'].items()}
     for name, path in natives.items():
-        assert sha(path) == baseline['native_hashes'][name], 'Native input changed: ' + name
+        assert sha(path) == (baseline['native_hashes'][name] if candidate is None else candidate['files'][name]['sha256']), 'Native input changed: ' + name
+    resources={}
+    if candidate is not None:
+        from prepare_chest_data import prepare
+        resources=prepare(config)
     hashes = {name: sha(path) for name, path in natives.items()}
     identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
     index = 'bundle=' + identity + '\nfiles=' + ','.join(sorted(natives)) + '\n'
@@ -58,12 +63,14 @@ def build(compare_baseline=False):
         prefix = 'aimoh/pmxpreview/native/windows-x64/'
         write(prefix + 'index.properties', index)
         for name in sorted(natives): write(prefix + name, natives[name].read_bytes())
+        for name,path in sorted(resources.items()):write(name,path.read_bytes())
     with zipfile.ZipFile(temporary) as archive: assert archive.testzip() is None
     os.replace(temporary, jar)
     save(BUILD / 'build.json', {'status': 'PASS_FULL_SOURCE_BUILD_AND_RUNTIME_CLASS_PARITY' if compare_baseline else 'PASS_FULL_SOURCE_BUILD',
          'jar': str(jar), 'jar_sha256': sha(jar), 'jar_bytes': jar.stat().st_size,
          'reference_jar_sha256': sha(config['reference_jar']), 'java_sources': len(source),
-         'native_hashes': hashes, 'native_rebuilt': False, 'runtime_class_baseline_compared': compare_baseline,
+         'native_hashes': hashes, 'native_rebuilt': candidate is not None, 'native_version':baseline['native_version'] if candidate is None else candidate['native_version'],
+         'runtime_class_baseline_compared': compare_baseline,'chest_models':len(resources),
          'source_hashes': {p.relative_to(ROOT).as_posix(): sha(p) for p in source},
          'game_started': False, 'installed': False})
     print('Built: ' + str(jar), flush=True)
@@ -72,4 +79,5 @@ def build(compare_baseline=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--compare-baseline', action='store_true', help='Require exact runtime class parity, ignoring compiler debug attributes.')
-    build(parser.parse_args().compare_baseline)
+    parser.add_argument('--native-candidate',type=Path)
+    args=parser.parse_args();build(args.compare_baseline,args.native_candidate)

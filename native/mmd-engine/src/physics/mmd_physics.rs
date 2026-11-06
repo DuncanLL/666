@@ -43,6 +43,20 @@ pub struct MMDPhysics {
 }
 
 impl MMDPhysics {
+    /// Transfer only declared soft-tissue bones to animation; retain their
+    /// authored colliders and all unrelated hair/garment dynamics.
+    pub fn set_animation_owned_bones(&mut self, ids: &[usize]) -> bool {
+        if ids.is_empty() || ids.len()>16 || ids.iter().any(|id|
+            !self.rigid_bodies.iter().any(|rb|rb.bone_index==*id as i32 && rb.bullet_body.is_some())) {return false;}
+        for rb in &mut self.rigid_bodies {
+            if rb.bone_index>=0 && ids.contains(&(rb.bone_index as usize)) {
+                rb.physics_mode=PhysicsMode::FollowBone;
+                if let Some(body)=&rb.bullet_body {body.set_kinematic(true);}
+                self.dynamic_bone_indices.remove(&(rb.bone_index as usize));
+            }
+        }
+        true
+    }
     // Editing only: change existing constraints without rebuilding the model or its world.
     pub fn configure_secondary(&self, ids: &[usize], x: f32, z: f32, stiffness: f32, damping: f32) -> bool {
         if ids.is_empty() || ids.len()>16 || ![x,z,stiffness,damping].iter().all(|v|v.is_finite())

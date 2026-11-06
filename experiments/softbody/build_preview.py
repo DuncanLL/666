@@ -12,22 +12,21 @@ engine=tools.parent
 libraries=list((engine/'target-engine/release/build').glob('mmd_engine-*/out/libbullet3.a'))
 assert len(libraries)==1,libraries
 bullet=ROOT/'native/mmd-engine/deps/bullet3/src'
-names=['btSoftBody.cpp','btSoftBodyHelpers.cpp','btSoftRigidDynamicsWorld.cpp',
-       'btSoftBodyRigidBodyCollisionConfiguration.cpp','btSoftBodyConcaveCollisionAlgorithm.cpp',
-       'btSoftRigidCollisionAlgorithm.cpp','btSoftSoftCollisionAlgorithm.cpp','btDefaultSoftBodySolver.cpp','poly34.cpp']
+names=[p.relative_to(bullet/'BulletSoftBody').as_posix() for p in sorted((bullet/'BulletSoftBody').rglob('*.cpp'))]
 sources=[bullet/'BulletSoftBody'/name for name in names]
 dll=out/'AimohSoftBodyPreview.dll'
 command=[str(gcc/'g++.exe'),'-std=c++17','-O2','-g0','-fno-exceptions','-fno-rtti',
-         '-shared','-static-libgcc','-static-libstdc++','-I'+str(bullet),str(HERE/'bullet_preview.cpp'),
+         '-shared','-static-libgcc','-static-libstdc++','-I'+str(bullet),str(ROOT/'native/chest-softbody/softbody.cpp'),
          *map(str,sources),str(libraries[0]),'-o',str(dll)]
 env=dict(os.environ,TEMP=str(temp),TMP=str(temp));env['PATH']=str(gcc)+';'+env['PATH']
 with (out/'compile.log').open('w',encoding='utf8') as log:
-    print('Compiling unchanged Bullet soft-body sources and preview-only ABI',flush=True)
+    print('Compiling pinned Bullet soft-body sources with recorded fixed-node fixes and preview-only ABI',flush=True)
     r=subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT)
 if r.returncode:
     print((out/'compile.log').read_text('utf8',errors='replace')[-6000:]);r.check_returncode()
 report={'dll':str(dll),'bytes':dll.stat().st_size,'sha256':hashlib.sha256(dll.read_bytes()).hexdigest(),
         'bullet_commit':'63c4d67e337017f9d8b298c900e9aabdb69296e7','upstream_softbody_sources':names,
         'existing_rigid_static_library':str(libraries[0]),'production_native_unchanged':True,
+        'local_upstream_fixes':['implicit applyForce increments index for fixed nodes','initialize optional gravity vector to zero'],
         'game_installed':False}
 (out/'build.json').write_text(json.dumps(report,indent=2),'utf8');print(json.dumps(report),flush=True)

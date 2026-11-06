@@ -151,8 +151,10 @@ void btDeformableBackwardEulerObjective::applyForce(TVStack& force, bool setZero
 			{
 				if (psb->m_nodes[j].m_im != 0)
 				{
-					psb->m_nodes[j].m_v += psb->m_nodes[j].m_effectiveMass_inv * force[counter++];
+					psb->m_nodes[j].m_v += psb->m_nodes[j].m_effectiveMass_inv * force[counter];
 				}
+				// R116: force indices include fixed nodes, just like updateId().
+				++counter;
 			}
 		}
 		else
@@ -219,7 +221,7 @@ void btDeformableBackwardEulerObjective::applyExplicitForce(TVStack& force)
 	if (m_implicit)
 	{
 		// apply forces except gravity force
-		btVector3 gravity;
+		btVector3 gravity(0, 0, 0); // R116: valid even without a gravity force.
 		for (int i = 0; i < m_lf.size(); ++i)
 		{
 			if (m_lf[i]->getForceType() == BT_GRAVITY_FORCE)

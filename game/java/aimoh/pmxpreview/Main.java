@@ -1,6 +1,7 @@
 package aimoh.pmxpreview;
 
 import aimoh.motion.OzzGrip;
+import aimoh.motion.ChestSoftBody;
 import com.shiroha.mmdskin.NativeFunc;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,7 +29,7 @@ public class Main {
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.2.1 loaded; optional multiplayer is separate"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.0 chest-softbody trial; optional multiplayer is separate"); }
 
     private static Path locate() throws Exception {
         String root=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
@@ -70,6 +71,7 @@ public class Main {
         for(String dependency:new String[]{"libwinpthread-1.dll","libgcc_s_seh-1.dll","libstdc++-6.dll","AimohMmdUpstream.dll"})
             System.load(nativeDirectory.resolve(dependency).toString());
         NativeFunc loaded=new NativeFunc();
+        if(Files.isRegularFile(nativeDirectory.resolve("AimohChestSoftBody.dll")))ChestSoftBody.initialize(nativeDirectory.resolve("AimohChestSoftBody.dll"));
         grip=new OzzGrip(nativeDirectory.resolve("AimohGripOzz.dll"));api=loaded;
         System.out.println("[AimohPMXPreview] native="+api.GetVersion()+" assets="+directory);
     }
@@ -116,7 +118,7 @@ public class Main {
         try {
             ModelSession s=required(actor);
             if (!s.model.physicsEnabled()) return "当前人物未启用物理";
-            s.model.retargeter().resetPhysics();return "";
+            s.model.resetPhysics();return "";
         } catch(Throwable e) {error(e);return lastError;}
     }
     public static synchronized String status() { return lastError; }
@@ -128,7 +130,7 @@ public class Main {
     private static JSONObject settings(String value) {
         if(value==null||value.length()>65536)throw new IllegalArgumentException("外观配置超过 64 KiB");
         JSONObject j=new JSONObject(value);j.getJSONObject("appearance");
-        for(String key:j.keySet())if(!key.equals("appearance")&&!key.equals("weapon_tuning"))throw new IllegalArgumentException("不支持的同步字段："+key);
+        for(String key:j.keySet())if(!key.equals("appearance")&&!key.equals("weapon_tuning")&&!key.equals("chest_physics"))throw new IllegalArgumentException("不支持的同步字段："+key);
         return j;
     }
     private static JSONObject settingsFor(ModelSession session,String value) {
@@ -136,8 +138,13 @@ public class Main {
     }
     public static synchronized String settingsJson(IsoGameCharacter actor) {
         ModelSession s=active.get(actor);return s==null?"":new JSONObject().put("appearance",new JSONObject(s.model.appearance().stateJson()))
-            .put("weapon_tuning",s.profile.optJSONObject("weapon_tuning")).toString();
+            .put("weapon_tuning",s.profile.optJSONObject("weapon_tuning")).put("chest_physics",s.model.chestSettings()).toString();
     }
+    public static synchronized boolean hasChestPhysics(IsoGameCharacter actor){ModelSession s=active.get(actor);return s!=null&&s.model.hasChestPhysics();}
+    public static synchronized double chestPhysicsSlider(IsoGameCharacter actor,int index){return required(actor).model.chestSlider(index);}
+    public static synchronized String chestPhysicsStatus(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?"":s.model.chestError();}
+    public static synchronized String setChestPhysicsSlider(IsoGameCharacter actor,int index,double value){try{required(actor).model.chestSlider(index,value);return "";}catch(Throwable e){error(e);return lastError;}}
+    public static synchronized String resetChestPhysicsSettings(IsoGameCharacter actor){try{required(actor).model.resetChestSettings();return "";}catch(Throwable e){error(e);return lastError;}}
     public static synchronized String savedSettings(String id,String appearance) {
         try {JSONObject p=new JSONObject(Files.readString(entry(id).profile()));return new JSONObject().put("appearance",appearance==null||appearance.isBlank()?p.getJSONObject("appearance"):new JSONObject(appearance))
             .put("weapon_tuning",p.optJSONObject("weapon_tuning")).toString();}catch(Throwable e){error(e);return "";}

@@ -2363,6 +2363,11 @@ impl MmdModel {
         self.physics.as_ref().is_some_and(|p|p.configure_secondary(ids,x,z,stiffness,damping))
     }
 
+    pub fn set_animation_owned_physics_bones(&mut self, ids: &[usize]) -> bool {
+        if ids.iter().any(|id|*id>=self.bone_manager.bone_count()) {return false;}
+        self.physics.as_mut().is_some_and(|p|p.set_animation_owned_bones(ids))
+    }
+
     /// 重置物理系统
     pub fn reset_physics(&mut self) {
         self.external_input.physics_reset=true;

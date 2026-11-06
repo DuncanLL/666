@@ -36,8 +36,8 @@ try:
     initialize.setAccessible(True); initialize.invoke(None)
     api_field = main.class_.getDeclaredField('api'); api_field.setAccessible(True)
     api = api_field.get(None)
-    baseline = json.loads((ROOT / 'provenance/baseline.json').read_text('utf8'))
-    assert api.GetVersion() == baseline['native_version']
+    build = json.loads((BUILD / 'build.json').read_text('utf8'))
+    assert api.GetVersion() == build.get('native_version',json.loads((ROOT/'provenance/baseline.json').read_text('utf8'))['native_version'])
     assets = mod / '42/media/aimoh_pmx'
     registry = json.loads((assets / 'registry.json').read_text('utf8'))['models']
     checked = []
@@ -53,6 +53,7 @@ try:
         finally: model.close()
     stats = json.loads(str(api.GetRuntimeStats()))
     assert all(value == 0 for value in stats.values())
+    assert J('aimoh.motion.ChestSoftBody').liveWorlds()==0
     field = main.class_.getDeclaredField('grip'); field.setAccessible(True); field.get(None).close()
     save(BUILD / 'runtime-check.json', {'status': 'PASS_WORKSHOP_VALIDATOR_AND_NATIVE_MODEL_COMPONENTS',
          'jar_sha256': sha(jar), 'models': checked, 'remaining_objects': stats,

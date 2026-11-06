@@ -25,6 +25,8 @@ def record(output, jar):
 
 def package(output, verify_existing=False):
     config = settings()
+    from prepare_chest_labels import prepare
+    generated=prepare()
     build = json.loads((BUILD / 'build.json').read_text('utf8'))
     jar = Path(build['jar'])
     assert sha(jar) == build['jar_sha256']
@@ -36,6 +38,7 @@ def package(output, verify_existing=False):
     if verify_existing:
         expected = dict(manifest)
         expected.update({name: row for name, row in inventory(ROOT / 'game/mod').items() if name != 'common/.gitkeep'})
+        expected.update(inventory(generated))
         expected['42/media/java/client/AimohPMXPreview.jar'] = {'bytes': jar.stat().st_size, 'sha256': sha(jar)}
         assert inventory(output / 'Contents/mods/AimohPmxPreview') == expected, 'Existing candidate differs from the current source/resources.'
         assert set(p.name for p in output.iterdir()) == {'Contents', 'workshop.txt', 'preview.png'}
@@ -57,6 +60,7 @@ def package(output, verify_existing=False):
         shutil.copy2(path, dest)
     # The repository owns these configuration, Lua and sound-declaration files.
     shutil.copytree(ROOT / 'game/mod', mod, dirs_exist_ok=True)
+    shutil.copytree(generated,mod,dirs_exist_ok=True)
     runtime = mod / '42/media/java/client/AimohPMXPreview.jar'
     runtime.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(jar, runtime)

@@ -20,7 +20,7 @@ local function voiceChanged(player)
     if AimohPMXVoiceEngine then AimohPMXVoiceEngine.modelChanged(player) end
 end
 
-local function remember(player)
+local function remember(player,quiet)
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     local saved = {
@@ -32,7 +32,7 @@ local function remember(player)
     profiles[saved.model]=saved.settings
     player:getModData()[key] = saved
     publish(player, saved)
-    voiceChanged(player)
+    if not quiet then voiceChanged(player) end
 end
 
 local function enable(player, index)
@@ -72,6 +72,15 @@ local function resetPhysics(player)
     return not problem(player,AimohPMXPreview.resetModelPhysics(player))
 end
 
+local function chestPhysics(player,index,value)
+    if problem(player,AimohPMXPreview.setChestPhysicsSlider(player,index,value))then return false end
+    remember(player,true);return true
+end
+local function chestDefaults(player)
+    if problem(player,AimohPMXPreview.resetChestPhysicsSettings(player))then return false end
+    remember(player,true);return true
+end
+
 local function disable(player)
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
@@ -101,7 +110,7 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics})
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults})
 end
 
 local function menu(playerIndex, context, worldObjects, test)

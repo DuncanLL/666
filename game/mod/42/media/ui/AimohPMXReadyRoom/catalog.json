@@ -34,7 +34,13 @@
     "Swipe": "左右拖动选择皮肤",
     "EyeOpen": "睁眼",
     "EyeClosed": "闭眼",
-    "PhysicsReset": "重置物理解算"
+    "PhysicsReset": "重置物理解算",
+    "ChestPhysics": "胸部物理",
+    "ChestSoftness": "柔软程度",
+    "ChestDamping": "回弹阻尼",
+    "ChestInertia": "惯性重量",
+    "ChestStrength": "效果幅度",
+    "ChestSuspended": "已暂停，请重置物理解算"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
@@ -2428,6 +2434,36 @@
       "path": "media/ui/AimohPMXReadyRoom/label-176b797ae78ff4.png",
       "width": 407,
       "height": 38
+    },
+    "胸部物理": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a5d428d6a5a98a.png",
+      "width": 116,
+      "height": 40
+    },
+    "柔软程度": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c8ccd85d3753c4.png",
+      "width": 116,
+      "height": 40
+    },
+    "回弹阻尼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-101a46dd17f22d.png",
+      "width": 116,
+      "height": 40
+    },
+    "惯性重量": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6c077352a443d3.png",
+      "width": 116,
+      "height": 40
+    },
+    "效果幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/label-74b090ee65e2f7.png",
+      "width": 116,
+      "height": 40
+    },
+    "已暂停，请重置物理解算": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e4ce66fa4c79ba.png",
+      "width": 312,
+      "height": 40
     }
   },
   "categories": {

@@ -2,6 +2,7 @@ require "ISUI/ISCollapsableWindow"
 require "ISUI/ISScrollingListBox"
 require "ISUI/ISComboBox"
 require "ISUI/ISButton"
+require "RadioCom/ISUIRadio/ISSliderPanel"
 local loadData=require "AimohPMXRoomData"
 local data
 local textures={}
@@ -75,7 +76,8 @@ function W:createChildren()
     self.sidebar.onMouseUpOutside=function(s,x,y) s.roomDown=false;s:setCapture(false);ISScrollingListBox.onMouseUpOutside(s,x,y) end
     self:addChild(self.sidebar)
     self.refreshButton=button(self,14,self.height-55,104,tr("Refresh"),self,self.onLibrary)
-    self.content=panel(self,self.rightX,105,self.rightWidth,self.height-207)
+    self.content=panel(self,self.rightX,105,self.rightWidth,self.height-247)
+    self.chestButton=button(self,self.rightX,self.height-132,self.rightWidth,tr("ChestPhysics"),self,function(s)s:setTab(s.tab=="chest" and "parts" or "chest")end)
     self.pageButton=button(self,self.rightX,self.height-55,132,tr("Parts"),self,function(s)s:setTab(s.tab=="skins" and "parts" or "skins")end)
     self.wearButton=button(self,self.rightX+140,self.height-55,self.rightWidth-140,tr("Wear"),self,function(w)w:applyBrowse()end)
     self.advancedButton=button(self,self.rightX,self.height-94,self.rightWidth,tr("Advanced"),self,function(s)s:setTab(s.tab=="advanced" and "parts" or "advanced")end)
@@ -118,6 +120,7 @@ function W:clearContent()
     for _,widget in ipairs(self.widgets) do
         widget:setCapture(false)
         if widget.hidePopup then widget:hidePopup() end
+        if widget.deactivateToolTip then widget:deactivateToolTip() end
         self.content:removeChild(widget)
     end
     self.widgets={};self.content:setYScroll(0)
@@ -238,6 +241,8 @@ function W:refreshControls()
     self:clearContent()
     local enabled=AimohPMXPreview.isEnabled(self.player)
     self.physicsResetButton:setEnable(enabled and not self.waiting);self.restoreButton:setEnable(enabled);self.resetButton:setEnable(enabled and not self.waiting);self.reloadButton:setEnable(enabled and not self.waiting)
+    self.chestButton:setEnable(enabled and not self.waiting and AimohPMXPreview.hasChestPhysics(self.player))
+    self.chestButton.roomTitle=self.tab=="chest" and tr("BackParts") or tr("ChestPhysics")
     self.resetButton:setVisible(self.tab=="advanced");self.reloadButton:setVisible(self.tab=="advanced")
     self.eyeGroup=nil
     local eye=self.selected and self.selected.meta.groups and self.selected.meta.groups.eyes
@@ -246,7 +251,7 @@ function W:refreshControls()
             if AimohPMXPreview.groupLabel(self.player,i)==eye.label then self.eyeGroup=i;break end
         end
     end
-    local showEyes=self.eyeGroup~=nil and self.tab~="advanced"
+    local showEyes=self.eyeGroup~=nil and (self.tab=="skins" or self.tab=="parts")
     for option,b in ipairs({self.eyeOpenButton,self.eyeClosedButton})do
         b:setVisible(showEyes)
         if showEyes then
@@ -263,7 +268,23 @@ function W:refreshControls()
         if character then self:carousel(character) end
         y=self.content.height
     elseif enabled and not self.waiting and self.selected and self.selected.id==self.currentId then
-        if self.tab=="advanced" then
+        if self.tab=="chest" then
+            self:addLabel(tr("ChestPhysics"),y);y=y+38
+            for index,key in ipairs({"ChestSoftness","ChestDamping","ChestInertia","ChestStrength"})do
+                local field=index-1;self:addLabel(tr(key),y);y=y+28
+                local slider=ISSliderPanel:new(4,y,width-12,24,self,function(w,value,s)
+                    if not w.actions.chestPhysics(w.player,field,value)then w.status=tr("Error")end
+                end)
+                slider:initialise();slider:instantiate();slider:setValues(0,100,1,10,true)
+                slider:setCurrentValue(AimohPMXPreview.chestPhysicsSlider(self.player,field),true)
+                local base=slider.render
+                slider.render=function(s)base(s);s:drawTextRight(tostring(math.floor(s.currentValue+.5)),s.width,-25,.95,.95,.95,1,UIFont.Small)end
+                self.content:addChild(slider);table.insert(self.widgets,slider);y=y+46
+            end
+            local b=button(self.content,0,y,width,tr("Reset"),self,function(w)if w.actions.chestDefaults(w.player)then w:refreshControls()end end)
+            table.insert(self.widgets,b);y=y+36
+            if AimohPMXPreview.chestPhysicsStatus(self.player)~="" then self:addLabel(tr("ChestSuspended"),y);y=y+32 end
+        elseif self.tab=="advanced" then
             y=self:drawGroups(self:partRows(true),y,width)
             for row=0,AimohPMXPreview.materialCount(self.player)-1 do
                 local index=AimohPMXPreview.materialIndex(self.player,row);local available=AimohPMXPreview.materialAvailable(self.player,index)

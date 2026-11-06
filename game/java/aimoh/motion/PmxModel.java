@@ -19,6 +19,7 @@ public final class PmxModel implements AutoCloseable {
     private final WorldPoseRetargeter core;
     private final Profile profile;
     private final ModelAppearance appearance;
+    private final ChestSoftBody chest;
     private boolean closed;
 
     private static final class Profile {
@@ -72,10 +73,11 @@ public final class PmxModel implements AutoCloseable {
         }
     }
 
-    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile) {
+    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile) throws IOException {
         this.api = api; this.handle = handle; this.core = core; this.profile = profile;
         appearance=new ModelAppearance(api,handle);
         if (profile.appearance!=null) appearance.configure(profile.appearance.toString(),profile.appearance_controls==null?Wardrobe.empty():profile.appearance_controls.toString());
+        chest=ChestSoftBody.load(api,handle,new JSONObject().put("pmx_sha256",profile.pmx_sha256).put("unit_scale",profile.unit_scale).put("bones",profile.bones).put("vertices",profile.vertices));
     }
 
     public static PmxModel load(NativeFunc api, Path pmx, Path generatedProfile) throws IOException {
@@ -122,10 +124,12 @@ public final class PmxModel implements AutoCloseable {
     }
     public synchronized WorldPoseRetargeter.GripResult[] apply(float[] finalSourcePose,OzzGrip grip,float seconds,int sourceAnchor,int targetAnchor) {
         if (closed) throw new IllegalStateException("Closed PMX model");
+        WorldPoseRetargeter.GripResult[] result;
         if (grip != null && profile.palm_ready)
-            return core.applyWithGrip(finalSourcePose, grip, profile.source_arms, profile.target_arms, .97f,seconds,sourceAnchor,targetAnchor);
-        core.apply(finalSourcePose,seconds);
-        return new WorldPoseRetargeter.GripResult[0];
+            result=core.applyWithGrip(finalSourcePose, grip, profile.source_arms, profile.target_arms, .97f,seconds,sourceAnchor,targetAnchor);
+        else {core.apply(finalSourcePose,seconds);result=new WorldPoseRetargeter.GripResult[0];}
+        if(chest!=null){chest.enabled(core.physicsEnabled());chest.evaluate(seconds);}
+        return result;
     }
 
     public long handle() { return handle; }
@@ -143,10 +147,18 @@ public final class PmxModel implements AutoCloseable {
         appearance.configure(state.toString(),controls==null?Wardrobe.empty():controls.toString());
         if(tuning!=null){profile.weapon_tuning.clear();profile.weapon_tuning.putAll(next);}
         JSONObject physics=settings.optJSONObject("physics");if(physics!=null)core.setPhysicsEnabled(physics.optBoolean("enabled",false));
+        JSONObject soft=settings.optJSONObject("chest_physics");if(soft!=null&&chest!=null)chest.settings(soft);
     }
     public synchronized void setPhysicsEnabled(boolean enabled) { core.setPhysicsEnabled(enabled); }
     public synchronized boolean physicsEnabled() { return core.physicsEnabled(); }
-    public synchronized void resetPhysics() { core.resetPhysics(); }
+    public synchronized void resetPhysics() { core.resetPhysics();if(chest!=null)chest.reset(); }
+    public synchronized boolean hasChestPhysics(){return chest!=null&&chest.available();}
+    public synchronized JSONObject chestSettings(){return chest==null?null:chest.settings();}
+    public synchronized double chestSlider(int index){return chest==null?0:chest.slider(index);}
+    public synchronized void chestSlider(int index,double value){if(chest==null)throw new IllegalStateException("当前模型无胸部物理");chest.slider(index,value);}
+    public synchronized void resetChestSettings(){if(chest!=null)chest.defaults();}
+    public synchronized String chestError(){return chest==null?"":chest.error();}
+    public synchronized void deformChest(float[] positions,float[] normals){if(chest!=null)chest.deform(positions,normals);}
 
     public synchronized float[] remapHeldItem(float[] sourceWorld, boolean left,
             float[] actualItemWorld, String calibrationKey) {
@@ -159,6 +171,6 @@ public final class PmxModel implements AutoCloseable {
     }
 
     @Override public synchronized void close() {
-        if (!closed) { api.DeleteModel(handle); closed = true; }
+        if (!closed) { try{if(chest!=null)chest.close();}finally{api.DeleteModel(handle);closed=true;} }
     }
 }

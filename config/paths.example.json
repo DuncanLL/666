@@ -8,5 +8,6 @@
   "native_source": "D:/verified-native-libraries",
   "native_toolchain_root": "D:/private-tools/mmd",
   "zig": "D:/private-tools/zig/zig.exe",
-  "python_dependencies": "D:/private-python-dependencies"
+  "python_dependencies": "D:/private-python-dependencies",
+  "pmx_reader_scripts": "D:/existing-pmx-reader/scripts"
 }
