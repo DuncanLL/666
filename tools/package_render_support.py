@@ -3,11 +3,16 @@ from pathlib import Path
 import argparse,json,shutil,zipfile
 from common import ROOT,BUILD,settings,sha,save,inventory
 
-def package(output,verify_existing=False):
+def package(output,verify_existing=False,evidence=None,public=False):
     output=Path(output).resolve()
     report=json.loads((BUILD/'render-support/build.json').read_text('utf8'));jar=Path(report['jar'])
     assert sha(jar)==report['jar_sha256']
     for name,value in report['source_hashes'].items():assert sha(ROOT/name)==value,'Source changed after build: '+name
+    if public:
+        if evidence is None:raise ValueError('Public validation requires --evidence; ordinary output is a candidate only')
+        from check_render_release import evaluate
+        validation=evaluate(evidence)
+        if validation['status']!='THREE_VENDOR_DRIVER_VALIDATED':raise ValueError(json.dumps(validation,ensure_ascii=False))
     if verify_existing:
         expected={n:r for n,r in inventory(ROOT/'render-support/mod').items()if n!='common/.gitkeep'}
         expected['42/media/java/client/AimohGF2Eclipse.jar']={'bytes':jar.stat().st_size,'sha256':sha(jar)}
@@ -31,10 +36,11 @@ def package(output,verify_existing=False):
     files=inventory(output)
     save(BUILD/'render-support/workshop.json',dict(status='WORKSHOP_CANDIDATE_NOT_UPLOADED',root=str(output),
          files=files,bytes=sum(r['bytes']for r in files.values()),jar_sha256=sha(target),
-         title='R116 渲染支持 光影分发',visible_description=False,game_started=False,uploaded=False))
+         title='R116 渲染支持 光影分发',visible_description=False,game_started=False,uploaded=False,
+         validation_claim='THREE_VENDOR_DRIVER_VALIDATED'if public else 'CANDIDATE_ONLY_NOT_CROSS_VENDOR_ACCEPTED'))
     print('Workshop project: '+str(output),flush=True)
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=BUILD/'workshop/R116RenderSupport')
-    parser.add_argument('--verify-existing',action='store_true');args=parser.parse_args()
-    package(args.output,args.verify_existing)
+    parser.add_argument('--verify-existing',action='store_true');parser.add_argument('--public',action='store_true');parser.add_argument('--evidence',type=Path);args=parser.parse_args()
+    package(args.output,args.verify_existing,args.evidence,args.public)

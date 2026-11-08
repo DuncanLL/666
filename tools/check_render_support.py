@@ -58,5 +58,6 @@ if __name__=='__main__':
         assert item.getTitle()=='R116 渲染支持 光影分发'and item.getDescription()=='\u200b'
     finally:jpype.shutdownJVM()
     report=json.loads((out/'startup.json').read_text('utf8'));report.update(workshop_validator_passed=True,
-           jar_sha256=sha(jar),shader_sha256=build['shader_sha256'],official_host_unchanged=True,uploaded=False)
+           jar_sha256=sha(jar),shader_sha256=build['shader_sha256'],official_host_unchanged=True,uploaded=False,
+           validation_scope='STARTUP_AND_RESOURCE_DISCOVERY_ONLY',cross_vendor_status='NOT_ESTABLISHED_BY_THIS_CHECK')
     save(out/'validation.json',report);print(json.dumps(report,ensure_ascii=False))
