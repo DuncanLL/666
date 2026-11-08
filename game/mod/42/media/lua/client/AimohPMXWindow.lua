@@ -209,16 +209,18 @@ function W:refresh()
 end
 function W:setTab(tab)self.tab=tab;self:refreshControls()end
 function W:partRows(extrasOnly)
+            local names=self.selected and self.selected.meta.primaryCategories or {tr("Head"),tr("Top"),tr("Bottom")}
+            local primary={};for _,name in ipairs(names)do primary[name]=true end
             local groups=AimohPMXPreview.groupCount(self.player);local categories={};local extra={}
             for group=0,groups-1 do
                 local name=AimohPMXPreview.groupLabel(self.player,group)
                 local normalized=data.categories[name] or name
                 local row={index=group,label=normalized}
-                if normalized==tr("Head") or normalized==tr("Top") or normalized==tr("Bottom") then categories[normalized]=row else table.insert(extra,row) end
+                if primary[normalized] then categories[normalized]=row else table.insert(extra,row) end
             end
             local ordered={}
             if extrasOnly then ordered=extra else
-                for _,name in ipairs({tr("Head"),tr("Top"),tr("Bottom")})do table.insert(ordered,categories[name] or {label=name})end
+                for _,name in ipairs(names)do table.insert(ordered,categories[name] or {label=name})end
             end
             return ordered
 end

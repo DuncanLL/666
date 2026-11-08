@@ -60,6 +60,8 @@ public final class AimohGf2FrameInputs {
         Matrix4d previousVp=history?matrix(nativeValues.get("gbufferPreviousProjection")).mul(matrix(nativeValues.get("gbufferPreviousModelView"))):new Matrix4d(projection).mul(view);
         values.put("_PrevViewProjMatrix",floats(previousVp));values.put("unity_MatrixPreviousM",floats(previous));values.put("unity_MotionVectorsParams",new float[]{history?1:0,1,0,0});
         values.put("_TAAOffsets",new float[4]);values.put("_CharGlobalBloomSize",new float[]{0});
+        // This renderer schedules the base surface, not the separate layered fur passes.
+        values.put("_FurShellFactor",new float[4]);
         int[] counts=localLights(values,points,torches,spots,eye,cameraToWorld);
         return new Inputs(values,floats(new Matrix4d(previous).invert()),counts[0],counts[1],counts[2]);
     }

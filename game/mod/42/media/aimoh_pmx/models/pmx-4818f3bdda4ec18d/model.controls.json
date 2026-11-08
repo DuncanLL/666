@@ -1,0 +1,631 @@
+{
+  "pmx_sha256": "4818f3bdda4ec18dd2cb496d304dc0140e23494254b70044afe38b883abdad57",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "hands",
+        "label": "手部",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              23,
+              24
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              34,
+              35
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              43,
+              44
+            ]
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "上衣",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              25,
+              26,
+              28
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              36,
+              37,
+              39
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              42,
+              46,
+              47,
+              51
+            ]
+          }
+        ]
+      },
+      {
+        "id": "legs",
+        "label": "下衣",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              19,
+              20,
+              21,
+              30
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              31,
+              32
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              45,
+              49,
+              50
+            ]
+          }
+        ]
+      },
+      {
+        "id": "footwear",
+        "label": "鞋子",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "穿鞋"
+          },
+          {
+            "id": "off",
+            "label": "赤脚"
+          }
+        ]
+      },
+      {
+        "id": "coat",
+        "label": "外套",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              53,
+              54
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "head",
+        "label": "头部配件",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              13,
+              14,
+              15
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "weapon",
+        "label": "模型自带武器",
+        "default": "off",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              16
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "when": {
+          "legs": "p1",
+          "footwear": "on"
+        },
+        "materials": [
+          22,
+          29
+        ]
+      },
+      {
+        "when": {
+          "legs": "p1",
+          "footwear": "off"
+        },
+        "materials": [
+          27
+        ]
+      },
+      {
+        "when": {
+          "legs": "p2",
+          "footwear": "on"
+        },
+        "materials": [
+          33,
+          40
+        ]
+      },
+      {
+        "when": {
+          "legs": "p2",
+          "footwear": "off"
+        },
+        "materials": [
+          38
+        ]
+      },
+      {
+        "when": {
+          "legs": "p3",
+          "footwear": "on"
+        },
+        "materials": [
+          41,
+          52
+        ]
+      },
+      {
+        "when": {
+          "legs": "p3",
+          "footwear": "off"
+        },
+        "materials": [
+          48
+        ]
+      }
+    ]
+  },
+  "appearance": {
+    "texture_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "Textures/c_FlorenceSSR0102_slg_P3_cloth2_d.png",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "Textures/c_FlorenceSSR0102_slg_P3_cloth2_d.png",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "alpha_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "colour_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "format": 2,
+    "double_sided": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "morph_weights": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "groups": [],
+    "material_visibility": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "choices": {
+      "head": "on",
+      "coat": "on",
+      "weapon": "off",
+      "footwear": "on",
+      "hands": "p1",
+      "top": "p1",
+      "legs": "p1"
+    }
+  },
+  "material_presets": []
+}

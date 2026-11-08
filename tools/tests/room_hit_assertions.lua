@@ -53,5 +53,15 @@ for _,size in ipairs({{1100,670},{960,620},{736,520}})do
  assert(hit(w,x,y)==w.preview,'Preview interaction was disabled')
  w.preview:onMouseDown();w.preview:onMouseMove(12,0);w.preview:onMouseUp();assert(w.yaw>0 and not w.preview.dragging)
 end
+local previousSelected=w.selected
+local previousCount=AimohPMXPreview.groupCount;local previousLabel=AimohPMXPreview.groupLabel
+w.selected={meta={primaryCategories={'Hands',roomData.text.Top,roomData.text.Bottom}}}
+local supplied={'Hands',roomData.text.Top,roomData.text.Bottom,roomData.text.Head}
+AimohPMXPreview.groupCount=function()return #supplied end
+AimohPMXPreview.groupLabel=function(player,index)return supplied[index+1]end
+local primary=w:partRows(false);local extra=w:partRows(true)
+assert(#primary==3 and primary[1].label=='Hands' and primary[1].index==0 and primary[2].index==1 and primary[3].index==2,'Model-supplied primary categories were not preserved')
+assert(#extra==1 and extra[1].label==roomData.text.Head and extra[1].index==3,'Non-primary accessories were lost: '..tostring(#extra)..'/'..tostring(extra[1]and extra[1].label)..'/'..tostring(extra[1]and extra[1].index))
+AimohPMXPreview.groupCount=previousCount;AimohPMXPreview.groupLabel=previousLabel;w.selected=previousSelected
 w:close()
 return 'PASS_ROOM_HIT_REGIONS_REAL_BUTTON_HANDLERS_EYES_SAVE_'..checks
