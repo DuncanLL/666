@@ -1,6 +1,6 @@
 # R116 0.3.6：切换交接、配置提交与资源收尾
 
-状态：独立候选和针对性组件检查完成，**尚未安装、未上传、未启动或操作游戏**。用户要求先完成，再由用户退出游戏后覆盖；不能在本轮结束前自行安装。
+状态：独立候选和针对性组件检查完成；用户随后明确要求立即替换，**现已差分安装至 F/Steam 两个用户 MOD 及两份既有工坊项目**。安装前未发现游戏进程，未启动、关闭或操作游戏，未上传工坊；实际游玩仍待确认。安装回执：`build/installs/0.3.6/result.json`。
 
 ## 范围
 
@@ -36,7 +36,7 @@
 - 上一版 JAR 小回退：`build/lifecycle-0.3.6/baseline/AimohPMXPreview.jar`，SHA256 `b42662ec165f84f6c006e2b0fb2a71fd1c17455610238ba671d04f20b577fa73`。
 - 此轮打包修正了工具的输入所有权：仓库拥有的配置直接取仓库版本，避免先校验随后必被覆盖的外部旧副本。其余模型/贴图/语音仍逐文件哈希校验；没有放宽外部资源检查。
 - 初次打包遗留 `build/workshop/lifecycle-0.3.6/R116.preparing`；删除该派生临时目录被自动审批策略拒绝，已保留，未通过其它方式删除。
-- 用户退出游戏并明确通知后，差分覆盖 JAR、`42/mod.info`、`AimohPMXPreview.lua`、`AimohPMXWindow.lua` 到 F/Steam 两个用户 MOD 和两份既有 Workshop/R116 的对应位置。保护原工坊 ID、预览、元数据及其余资源，不拿独立候选的空 ID 元数据覆盖已有项目。
+- 已按用户后续明确指示，差分覆盖 JAR、`42/mod.info`、`AimohPMXPreview.lua`、`AimohPMXWindow.lua` 到 F/Steam 两个用户 MOD 和两份既有 Workshop/R116 的对应位置。四处逐文件回读一致，原工坊 ID、预览、元数据及其余资源保持不变；小回退位于 `build/installs/0.3.6/rollback`，未拿独立候选的空 ID 元数据覆盖已有项目。
 
 ## 未确认项
 
