@@ -32,6 +32,7 @@ if __name__=='__main__':
     report=dict(status='PASS_REAL_TEXTURE_DECODE_UPLOAD_RELEASE_DEBUG_ALLOCATOR',jar_sha256=sha(args.jar),
                 game_root=str(game),cycles=args.cycles,models=sorted({r[1]for r in checked}),
                 completed_model_sessions=len(checked),invalid_free_or_allocator_leaks_detected=False,
+                 owned_deformation_draw_flags_checked='PASS_OWNED_DEFORMATION_FLAGS 'in output,unrelated_draw_preserved='PASS_OWNED_DEFORMATION_FLAGS 'in output,
                 unchanged_texture_reuse_checked=True,remaining_native_objects=0,remaining_chest_worlds=0,
                 private_hidden_gl_context=True,game_started=False,actual_gameplay_tested=False,log=str(log))
     save(out/'runtime-check.json',report);print(json.dumps(report,ensure_ascii=False))

@@ -34,11 +34,11 @@ final class ModelSession {
     final String[] sourceNames;
     final float[] reference;
     final ByteBuffer positions,normals;
-    volatile PmxDrawMesh mesh;
+    volatile PmxDrawMesh mesh,preparedMesh;
     volatile boolean ready,failed,retired;
     private TextureFactory textures;
     private boolean queued;
-    private long lastFrame=Long.MIN_VALUE,lastNanos;
+    private long lastFrame=Long.MIN_VALUE,lastNanos,lastWallNanos,lastSlowFrame=Long.MIN_VALUE;
     private PmxDrawMesh.FrameData frozen;
     PmxDrawMesh.FrameData previousFrozen,olderFrozen;
     final PmxPresentation presentation=new PmxPresentation();
@@ -73,12 +73,14 @@ final class ModelSession {
         for(int i=0;i<sourceIds.length;i++)if("Bip01_Head".equals(sourceNames[sourceIds[i]])){head=sourceIds[i];target=targetIds[i];break;}
         sourceHead=head;targetHead=target;
         model=PmxModel.load(api,entry.model(),entry.profile());
+        try {
         IdleHandPose candidate;
         try { candidate=new IdleHandPose(api,model,profile); }
         catch(RuntimeException e) { candidate=null;System.out.println("[AimohPMXPreview] Idle hand unavailable: "+e); }
         idleHand=candidate;
         positions=ByteBuffer.allocateDirect(Math.toIntExact(profile.getLong("vertices")*12)).order(ByteOrder.nativeOrder());
         normals=ByteBuffer.allocateDirect(positions.capacity()).order(ByteOrder.nativeOrder());
+        }catch(RuntimeException|Error e){model.close();throw e;}
     }
     private float[] pose(AnimationPlayer player) {
         var skin=player.getSkinningData();float[] actual=PzPoseCapture.capture(player,skin.skeletonHierarchy.size());
@@ -104,7 +106,7 @@ final class ModelSession {
         if(lastFrame==frame.number)return frozen;
         drawHistory.values().removeIf(history->history.frame<frame.number-1);
         sourcePose=pose(player);
-        long capturedNanos=System.nanoTime();
+        long wallNanos=System.nanoTime(),capturedNanos=DrawAccess.frameNanos(frame);
         float seconds=lastNanos==0?0:Math.clamp((capturedNanos-lastNanos)*1e-9f,0,.08f);
         // The target placement is R_y(-angle); the native inertia API negates its yaw input.
         model.retargeter().setModelMotion(-x*scale/1.5f,z*2.4494896f*scale/1.5f,-y*scale/1.5f,player.getRenderedAngle());
@@ -124,18 +126,29 @@ final class ModelSession {
         model.deformChest(p,n);
         float[] finalMaterials=model.appearance().readMaterials();
         PmxDrawMesh.FrameData next=new PmxDrawMesh.FrameData(p,n,finalMaterials,shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
+        long cpuNanos=System.nanoTime()-wallNanos,wallGap=lastWallNanos==0?0:wallNanos-lastWallNanos;
+        if((cpuNanos>50_000_000L||wallGap>100_000_000L)&&(lastSlowFrame==Long.MIN_VALUE||frame.number-lastSlowFrame>=300)){
+            lastSlowFrame=frame.number;
+            System.out.println("[AimohPMXPreview] Slow model "+entry.id()+" "+model.stepTiming().put("capture_cpu_ms",cpuNanos/1e6).put("capture_gap_ms",wallGap/1e6).put("simulation_dt",seconds));
+        }
         olderFrozen=frame.number==lastFrame+1?previousFrozen:null;previousFrozen=frame.number==lastFrame+1?frozen:null;
-        frozen=next;lastFrame=frame.number;lastNanos=capturedNanos;
-        if(!ready&&!queued) { queued=true;PmxDrawMesh.FrameData initial=frozen;RenderThread.queueInvokeOnRenderContext(()->initialize(initial)); }
+        frozen=next;lastFrame=frame.number;lastNanos=capturedNanos;lastWallNanos=wallNanos;
+        prepareMesh(frozen);
         return frozen;
     }
+    synchronized void prepareMesh(PmxDrawMesh.FrameData frame){
+        preparedMesh=mesh==null?null:mesh.readyMesh();ready=preparedMesh!=null;
+        if(!ready&&!queued){queued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame));}
+    }
     private synchronized void initialize(PmxDrawMesh.FrameData frame) {
-        if(retired)return;
         try {
-            textures=new TextureFactory();Texture[] material=prepareMaterials(materials);
-            mesh=new PmxDrawMesh(api,model.handle(),material,model.appearance(),shading);mesh.upload(frame);ready=true;
-            System.out.println("[AimohPMXPreview] GPU ready "+frame.positions().length/3+" vertices, "+material.length+" materials");
-        } catch(Throwable e) { fail(e); }
+            if(retired||failed)return;
+            if(textures==null)textures=new TextureFactory();Texture[] material=prepareMaterials(materials);
+            boolean first=mesh==null;if(first)mesh=new PmxDrawMesh(api,model.handle(),material,model.appearance(),shading);
+            mesh.upload(frame);preparedMesh=mesh.readyMesh();ready=preparedMesh!=null;
+            if(first)
+            System.out.println("[AimohPMXPreview] GPU ready "+frame.positions().length/3+" vertices, "+material.length+" materials; physics "+model.stepTiming());
+        } catch(Throwable e) { fail(e); }finally{queued=false;}
     }
     Texture[] prepareMaterials(Materials state)throws Exception {Texture[] result=textures.prepare(state.paths(),state.factors(),state.version(),state.epoch(),shading);if(mesh!=null)mesh.updateOutlineTextures(result);return result;}
     private String resolveTexture(String file) {
@@ -204,7 +217,7 @@ final class ModelSession {
         return continuous;
     }
     synchronized void retire() {
-        retired=true;
+        if(retired)return;retired=true;ready=false;preparedMesh=null;
         drawHistory.clear();
         Retirement.retire(()->{ if(mesh!=null)mesh.close();if(textures!=null)textures.close();model.close();presentation.clear();previousFrozen=olderFrozen=null; });
     }

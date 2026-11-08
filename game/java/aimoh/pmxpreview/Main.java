@@ -29,7 +29,7 @@ public class Main {
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.1 texture base-pointer fix; chest-softbody trial; optional multiplayer is separate"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.5 owned deformation; prepared mesh lifecycle; host simulation clock"); }
 
     private static Path locate() throws Exception {
         String root=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");

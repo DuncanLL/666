@@ -1,11 +1,11 @@
 """Check current material programs and the reported NVIDIA varying collision, without game startup."""
 from pathlib import Path
-import argparse,json,os,subprocess
+import argparse,json,os,subprocess,zipfile
 from common import ROOT,BUILD,settings,environment,save,sha
 from build import compile_java
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--jar',type=Path,default=BUILD/'render-support/AimohGF2Eclipse.jar');p.add_argument('--tag',default='fixed');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--jar',type=Path,default=BUILD/'render-support/AimohGF2Eclipse.jar');p.add_argument('--tag',default='fixed');p.add_argument('--pmx-reader',action='store_true');a=p.parse_args()
     assert a.tag.isidentifier()
     c=settings();game=Path(c['game_root']);out=BUILD/'shader-link-fix'/a.tag;out.mkdir(parents=True,exist_ok=True)
     media=Path(c['asset_root'])/'42/media';data=json.loads((media/'aimoh_gf2/characters.json').read_text('utf8'))['characters']
@@ -23,9 +23,18 @@ if __name__=='__main__':
     assert values[0]['vs'].startswith('0625dcfb5b91')and values[0]['fs'].startswith('4b1d0100e82b')
     save(out/'jobs.json',values)
     cp=[a.jar.resolve(),Path(c['viewpoint_jar']),Path(c['zombiebuddy_jar']),BUILD/'AimohPMXPreview.jar',game,*game.glob('*.jar')]
-    compile_java(c,[ROOT/'tools/java/OriginalStageLinkCheck.java'],out/'classes',cp)
+    sources=[ROOT/'tools/java/OriginalStageLinkCheck.java']
+    if a.pmx_reader:sources.append(ROOT/'tools/java/DeformedMotionCheck.java')
+    compile_java(c,sources,out/'classes',cp)
+    agent=[];main=['OriginalStageLinkCheck']
+    if a.pmx_reader:
+        file=out/'pmx-reader-agent.jar'
+        with zipfile.ZipFile(file,'w')as z:
+            z.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: DeformedMotionCheck\nCan-Retransform-Classes: true\nCan-Redefine-Classes: true\n\n')
+            for f in(out/'classes').rglob('*.class'):z.write(f,f.relative_to(out/'classes').as_posix())
+        agent=['-javaagent:'+str(file)];main=['DeformedMotionCheck','--delegate','OriginalStageLinkCheck']
     cmd=[str(game/'jre64/bin/java.exe'),'--enable-native-access=ALL-UNNAMED','-Djava.io.tmpdir='+str(BUILD/'tmp'),
-         '-cp',';'.join(map(str,[out/'classes',*cp])),'OriginalStageLinkCheck',str(out/'jobs.json'),str(out)]
+         *agent,'-cp',';'.join(map(str,[out/'classes',*cp])),*main,str(out/'jobs.json'),str(out)]
     with (out/'run.log').open('w',encoding='utf8')as log:r=subprocess.run(cmd,env=environment(),cwd=game,stdout=log,stderr=subprocess.STDOUT,timeout=180)
     if r.returncode:print((out/'run.log').read_text('utf8',errors='replace')[-4000:]);r.check_returncode()
-    result=json.loads((out/'result.json').read_text('utf8'));result['addon_sha256']=sha(a.jar);save(out/'result.json',result);print(json.dumps(result,ensure_ascii=False))
+    result=json.loads((out/'result.json').read_text('utf8'));result['addon_sha256']=sha(a.jar);result['normal_pmx_shader_reader']=a.pmx_reader;save(out/'result.json',result);print(json.dumps(result,ensure_ascii=False))

@@ -24,6 +24,7 @@ public final class Bridge {
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
             PmxDrawMesh.FrameData data=session.update(frame,actor.getAnimationPlayer(),holding,
                 actor.getX(),actor.getY(),actor.getZ(),hideHead,IdleHandPose.eligible(actor,holding),firstPerson);if(!session.ready)return;
+            PmxDrawMesh prepared=session.preparedMesh;if(prepared==null)return;
             var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
             int body=-1;
             for(int n=first;n<originalEnd;n++)if(!equipment.containsKey(DrawAccess.instance(draws,n))){body=n;break;}
@@ -31,9 +32,9 @@ public final class Bridge {
             Matrix4f sourcePlacement=DrawAccess.matrix(draws,body),inverse=new Matrix4f(sourcePlacement).invert();
             Matrix4f targetPlacement=new Matrix4f(sourcePlacement).scale(1,1,-1).scale(1/session.scale);
             if(firstPerson)targetPlacement=session.firstPersonHeadPlacement(sourcePlacement,targetPlacement);
-            draw=new Frozen(session,data,draws,first,originalEnd);
+            draw=new Frozen(session,prepared,data,draws,first,originalEnd);
             Frozen command=draw;
-            int added=session.mesh.submitFrozen(draws,targetPlacement,data,material->new Part(command,material),draw.materials.shadow(),draw.materials.doubleSided());
+            int added=prepared.submitPreparedFrozen(draws,targetPlacement,data,material->new Part(command,material),draw.materials.shadow(),draw.materials.doubleSided());
             if(added==0)return;
             draw.customEnd=draws.count();
             boolean continuous=false;
@@ -77,7 +78,7 @@ public final class Bridge {
     }
     record Part(Frozen frame,int material) {}
     static final class Frozen {
-        final ModelSession session;final PmxDrawMesh.FrameData data;final ModelDraws draws;
+        final ModelSession session;final PmxDrawMesh mesh;final PmxDrawMesh.FrameData data;final ModelDraws draws;
         final PmxDrawMesh.FrameData previous,older;
         final Vector3f low,high;
         final ModelSession.Materials materials;
@@ -85,8 +86,8 @@ public final class Bridge {
         final int first,originalEnd;int customEnd;
         final int[] originalFlags,originalMotion;final float[] originalRecords;
         long preparedSerial=Long.MIN_VALUE,headerSerial=Long.MIN_VALUE;ModelDraws headerDraws;float[] renderedHeader;
-        Frozen(ModelSession session,PmxDrawMesh.FrameData data,ModelDraws draws,int first,int end) {
-            this.session=session;this.data=data;this.draws=draws;this.first=first;originalEnd=end;customEnd=end;materials=session.materials;
+        Frozen(ModelSession session,PmxDrawMesh mesh,PmxDrawMesh.FrameData data,ModelDraws draws,int first,int end) {
+            this.session=session;this.mesh=mesh;this.data=data;this.draws=draws;this.first=first;originalEnd=end;customEnd=end;materials=session.materials;
             previous=session.previousFrozen;older=session.olderFrozen;
             if(previous==null){low=high=null;}
             else {
@@ -108,7 +109,7 @@ public final class Bridge {
             try {
                 if(boundTextures==null)boundTextures=session.prepareMaterials(materials);
                 PmxDrawMesh.FrameData sampled=session.presentation.sample(data,previous,older,phase,cut);
-                session.mesh.upload(sampled);renderedHeader=sampled.shadingHead();
+                mesh.uploadPrepared(sampled);renderedHeader=sampled.shadingHead();
             }catch(Throwable e){restore();session.fail(e);}
         }
         void restore() {

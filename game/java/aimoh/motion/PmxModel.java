@@ -21,6 +21,7 @@ public final class PmxModel implements AutoCloseable {
     private final ModelAppearance appearance;
     private final ChestSoftBody chest;
     private boolean closed;
+    private long lastRetargetNanos,lastChestNanos;
 
     private static final class Profile {
         int format, bones, source_root, target_root, source_motion;
@@ -124,13 +125,17 @@ public final class PmxModel implements AutoCloseable {
     }
     public synchronized WorldPoseRetargeter.GripResult[] apply(float[] finalSourcePose,OzzGrip grip,float seconds,int sourceAnchor,int targetAnchor) {
         if (closed) throw new IllegalStateException("Closed PMX model");
+        long started=System.nanoTime();
         WorldPoseRetargeter.GripResult[] result;
         if (grip != null && profile.palm_ready)
             result=core.applyWithGrip(finalSourcePose, grip, profile.source_arms, profile.target_arms, .97f,seconds,sourceAnchor,targetAnchor);
         else {core.apply(finalSourcePose,seconds);result=new WorldPoseRetargeter.GripResult[0];}
+        long solved=System.nanoTime();lastRetargetNanos=solved-started;
         if(chest!=null){chest.enabled(core.physicsEnabled());chest.evaluate(seconds);}
+        lastChestNanos=System.nanoTime()-solved;
         return result;
     }
+    public synchronized JSONObject stepTiming(){return new JSONObject().put("retarget_rigid_ms",lastRetargetNanos/1e6).put("chest_ms",lastChestNanos/1e6).put("chest_data",chest!=null).put("physics_requested",core.physicsEnabled()).put("chest_strength",chest==null?0:chest.slider(3)).put("chest_error",chest==null?"":chest.error());}
 
     public long handle() { return handle; }
     public WorldPoseRetargeter retargeter() { return core; }

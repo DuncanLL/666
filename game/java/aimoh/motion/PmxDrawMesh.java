@@ -22,6 +22,8 @@ import zombie.core.textures.Texture;
 
 /** CPU-deformed PMX to the host's existing ModelDraws path. GL-thread only. */
 public final class PmxDrawMesh implements AutoCloseable {
+    /** Private draw bit, above the inspected host's BAKED bit; never inferred from disabled attributes. */
+    public static final int DEFORMED = 1 << 12;
     private static final Field HANDLE,NATIVE_DEFINES;
     private static final Method NATIVE_SHADER;
     private static final String[] OUTLINE_OPTIONS={"VP_PMX_MODEL_OUTLINE","VP_PMX_SHADING","VP_NPR","VP_CHARACTER_PBR","VP_ASTERIA","VP_LAIYA","VP_DANRP_PIPELINE"};
@@ -38,7 +40,7 @@ public final class PmxDrawMesh implements AutoCloseable {
     private final ModelAppearance appearance;
     private final PmxShading shading;
     private final Texture[] renderTextures;
-    private PmxDrawMesh alternateMesh;
+    private volatile PmxDrawMesh alternateMesh;
     private final String sourceProfile;
     private final ByteBuffer positions, normals, uv;
     private final ArrayList<Part> parts = new ArrayList<>();
@@ -180,9 +182,15 @@ public final class PmxDrawMesh implements AutoCloseable {
         PmxShading selected=shading==null?null:shading.renderProfile();
         String key=PmxOriginalInputs.key(selected);
         if(selected==shading&&java.util.Objects.equals(sourceProfile,key))return this;
-        if(alternateMesh!=null&&(alternateMesh.shading!=selected||!java.util.Objects.equals(alternateMesh.sourceProfile,key))){alternateMesh.close();alternateMesh=null;}
+        if(alternateMesh!=null&&(alternateMesh.shading!=selected||!java.util.Objects.equals(alternateMesh.sourceProfile,key))){PmxDrawMesh old=alternateMesh;alternateMesh=null;viewpoint.render.Retirement.retire(old::close);}
         if(alternateMesh==null)alternateMesh=new PmxDrawMesh(api,model,renderTextures,appearance,selected);
         return alternateMesh;
+    }
+    /** Capture never creates GPU resources or publishes an unuploaded topology. */
+    public PmxDrawMesh readyMesh(){
+        PmxShading selected=shading==null?null:shading.renderProfile();String key=PmxOriginalInputs.key(selected);
+        PmxDrawMesh candidate=selected==shading&&java.util.Objects.equals(sourceProfile,key)?this:alternateMesh;
+        return candidate!=null&&candidate.shading==selected&&java.util.Objects.equals(candidate.sourceProfile,key)&&candidate.uploaded&&!candidate.closed?candidate:null;
     }
     public void updateOutlineTextures(Texture[] textures){
         if(alternateMesh!=null)alternateMesh.updateOutlineTextures(textures);
@@ -232,6 +240,10 @@ public final class PmxDrawMesh implements AutoCloseable {
 
     public void upload(FrameData frame) {
         PmxDrawMesh selected=renderMesh();if(selected!=this){selected.upload(frame);return;}
+        uploadPrepared(frame);
+    }
+    /** An already captured command keeps the topology it was submitted with. */
+    public void uploadPrepared(FrameData frame) {
         if (closed || frame.positions.length*4!=positions.capacity()) throw new IllegalArgumentException("Frozen mesh size differs");
         for (int i=0;i<frame.positions.length;i++) {
             positions.putFloat(i*4,frame.positions[i]); normals.putFloat(i*4,frame.normals[i]);
@@ -320,7 +332,7 @@ public final class PmxDrawMesh implements AutoCloseable {
             if(part.fringe)continue;
             if(part.hull&&(!useOutline||!part.hullReady))continue;
             if (part.alpha <= .01f) continue;
-            int n = draws.add(part.mesh, null, part.texture, placement, -1, -1, part.cull, part.hull?1:3);
+            int n = draws.add(part.mesh, null, part.texture, placement, -1, -1, part.cull, (part.hull?1:3)|DEFORMED);
             draws.material(n, part.r, part.g, part.b, 0);
             draws.light(n, 1, 1, 1, 0);
             draws.bounds(n, placement, part.mesh.minXyz, part.mesh.maxXyz, 1);
@@ -336,6 +348,9 @@ public final class PmxDrawMesh implements AutoCloseable {
 
     public int submitFrozen(ModelDraws draws,Matrix4f placement,FrameData frame,IntFunction<Object> frameKeys,float[] shadowMaterials,boolean[] doubleSided) {
         PmxDrawMesh selected=renderMesh();if(selected!=this){return selected.submitFrozen(draws,placement,frame,frameKeys,shadowMaterials,doubleSided);}
+        return submitPreparedFrozen(draws,placement,frame,frameKeys,shadowMaterials,doubleSided);
+    }
+    public int submitPreparedFrozen(ModelDraws draws,Matrix4f placement,FrameData frame,IntFunction<Object> frameKeys,float[] shadowMaterials,boolean[] doubleSided) {
         if (!uploaded || closed) throw new IllegalStateException("Mesh not ready");
         for (Part part:parts) if (part.texture==null || !part.texture.isReady()) throw new IllegalStateException("Texture not ready");
         Vector3f low=new Vector3f(Float.POSITIVE_INFINITY),high=new Vector3f(Float.NEGATIVE_INFINITY);
@@ -359,7 +374,8 @@ public final class PmxDrawMesh implements AutoCloseable {
             if((part.hull||part.fringe)&&!colour)continue;
             if(!colour&&!shadow)continue;
             int cull=part.fringe?1029:part.hull?1028:doubleSided==null?part.cull:doubleSided[part.material]?0:1029;
-            int n=draws.add(part.mesh,null,part.texture,placement,shadingPalette,shadingPalette,cull,(part.hull||part.fringe)?(colour?1:0):(colour?1:0)|(shadow?2:0));
+            int flags=(part.hull||part.fringe)?(colour?1:0):(colour?1:0)|(shadow?2:0);
+            int n=draws.add(part.mesh,null,part.texture,placement,shadingPalette,shadingPalette,cull,flags|DEFORMED);
             draws.material(n,1,1,1,0);draws.light(n,1,1,1,0);
             draws.bounds(n,placement,part.hull?outlineLow:low,part.hull?outlineHigh:high,1);draws.key(n,frameKeys.apply(part.material));
         }
