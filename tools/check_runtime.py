@@ -15,7 +15,9 @@ sys.path.insert(0, config['python_dependencies'])
 import jpype
 game = Path(config['game_root'])
 jar = mod / '42/media/java/client/AimohPMXPreview.jar'
-home = BUILD
+# The game's file validator permits only its private user root (or game roots).
+# Keep an out-of-workspace candidate inside this check's own permitted root.
+home = BUILD if project.is_relative_to(BUILD) else project.parent.parent
 home.mkdir(exist_ok=True)
 jpype.startJVM(str(game / 'jre64/bin/server/jvm.dll'), '--enable-native-access=ALL-UNNAMED',
               '-Djava.io.tmpdir=' + str(temp), '-Duser.home=' + str(home),
