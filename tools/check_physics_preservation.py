@@ -3,14 +3,14 @@ from pathlib import Path
 import argparse,json,os,subprocess,sys,zipfile
 from common import ROOT,BUILD,settings,save,sha,environment
 
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('--baseline',type=Path);p.add_argument('--jar',type=Path);p.add_argument('--old',action='store_true');a=p.parse_args();c=settings()
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--baseline',type=Path);p.add_argument('--jar',type=Path);p.add_argument('--old',action='store_true');p.add_argument('--baseline-atomic',action='store_true');a=p.parse_args();c=settings()
 out=BUILD/'lifecycle-0.3.6/physics';out.mkdir(parents=True,exist_ok=True)
 sys.path.insert(0,c['python_dependencies'])
 import numpy as np
 if a.jar is None:
     assert a.baseline
     for label,jar in [('old',a.baseline),('new',BUILD/'AimohPMXPreview.jar')]:
-        command=[sys.executable,__file__,'--jar',str(jar.resolve())]+(['--old']if label=='old'else[])
+        command=[sys.executable,__file__,'--jar',str(jar.resolve())]+(['--old']if label=='old'else[])+(['--baseline-atomic']if a.baseline_atomic else[])
         with (out/(label+'.log')).open('w',encoding='utf8')as log:
             subprocess.run(command,cwd=ROOT,env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
     old=np.load(out/'old.npz');new=np.load(out/'new.npz');errors={}
@@ -21,7 +21,7 @@ if a.jar is None:
         payload=[key for key in b.namelist()if not key.endswith('.class')];assert set(payload)=={key for key in n.namelist()if not key.endswith('.class')}
         assert all(b.read(key)==n.read(key)for key in payload)
     result=dict(status='PASS_OLD_NEW_RECORDED_POSES_AND_PHYSICS_PARITY',models=3,frames_per_model=120,position_and_normal_max_errors=errors,
-                native_and_binding_payloads_byte_identical=True,old_late_setting_partial_commit_reproduced=True,new_invalid_setting_atomic=True,
+                native_and_binding_payloads_byte_identical=True,old_late_setting_partial_commit_reproduced=not a.baseline_atomic,new_invalid_setting_atomic=True,
                 baseline_sha256=sha(a.baseline),candidate_sha256=sha(BUILD/'AimohPMXPreview.jar'),game_started=False,actual_gameplay_tested=False)
     save(out/'result.json',result);print(json.dumps(result));raise SystemExit
 
@@ -62,7 +62,7 @@ try:
             try:model.applySettings(json.dumps(bad));raise AssertionError('Invalid late setting accepted')
             except jpype.JException:pass
             partial=json.loads(str(model.appearance().stateJson()))!=previous
-            assert partial==a.old,(label,'late-setting rollback',partial)
+            assert partial==(a.old and not a.baseline_atomic),(label,'late-setting rollback',partial)
             samples['model_'+str(index)]=np.asarray(captured);print(label,id,'120 frames; late-setting partial commit',partial,flush=True)
         finally:model.close()
     assert J('aimoh.motion.ChestSoftBody').liveWorlds()==0

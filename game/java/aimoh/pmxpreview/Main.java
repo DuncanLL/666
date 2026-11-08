@@ -14,6 +14,7 @@ import me.zed_0xff.zombie_buddy.Exposer;
 import org.json.JSONObject;
 import zombie.ZomboidFileSystem;
 import zombie.characters.IsoGameCharacter;
+import zombie.core.skinnedmodel.animation.AnimationPlayer;
 
 public class Main {
     public record Entry(String id,String label,Path model,Path profile) {
@@ -26,12 +27,26 @@ public class Main {
     private static final IdentityHashMap<IsoGameCharacter,ModelSession> preparing=new IdentityHashMap<>();
     private static final HashSet<IsoGameCharacter> switchFailures=new HashSet<>();
     private static final IdentityHashMap<IsoGameCharacter,Pending> pending=new IdentityHashMap<>();
+    private static volatile IdentityHashMap<IsoGameCharacter,SourcePoseGuard.AnimationPose> poseOwners=new IdentityHashMap<>();
     private static String lastError="";
     private static NativeFunc api;
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.6 staged switching; atomic settings; complete retirement"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.8 animation/presentation pose boundary; existing chest physics retained"); }
+
+    private static void refreshPoseOwners() {
+        IdentityHashMap<IsoGameCharacter,SourcePoseGuard.AnimationPose> next=new IdentityHashMap<>();
+        for(var owners:java.util.List.of(active.keySet(),preparing.keySet(),pending.keySet()))for(IsoGameCharacter actor:owners){
+            SourcePoseGuard.AnimationPose pose=poseOwners.get(actor);
+            next.put(actor,pose==null?new SourcePoseGuard.AnimationPose():pose);
+        }
+        poseOwners=next;
+    }
+    static SourcePoseGuard.AnimationPose sourceAnimationPose(AnimationPlayer player) {
+        IsoGameCharacter actor=player.getIsoGameCharacter();
+        return actor!=null&&actor.getAnimationPlayer()==player?poseOwners.get(actor):null;
+    }
 
     private static Path locate() throws Exception {
         String root=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
@@ -92,14 +107,15 @@ public class Main {
                 next.applySettings(settingsFor(next,request.settings()),false);
                 stage(actor,next);
             } catch(Throwable e){if(next!=null)next.retire();switchFailures.add(actor);error(e);}
+            refreshPoseOwners();
         }
         ModelSession next=preparing.get(actor);return next==null?active.get(actor):next;
     }
     private static void cancelPreparation(IsoGameCharacter actor) {
-        ModelSession previous=preparing.remove(actor);if(previous!=null)previous.retire();
+        ModelSession previous=preparing.remove(actor);if(previous!=null)previous.retire();refreshPoseOwners();
     }
     private static void stage(IsoGameCharacter actor,ModelSession next) {
-        cancelPreparation(actor);preparing.put(actor,next);switchFailures.remove(actor);
+        cancelPreparation(actor);preparing.put(actor,next);switchFailures.remove(actor);refreshPoseOwners();
     }
     static synchronized ModelSession completeCapture(IsoGameCharacter actor,ModelSession captured) {
         if(preparing.get(actor)!=captured)return active.get(actor);
@@ -109,6 +125,7 @@ public class Main {
             preparing.remove(actor);ModelSession old=active.put(actor,captured);
             if(old!=null)old.retire();switchFailures.remove(actor);
         }
+        refreshPoseOwners();
         return active.get(actor);
     }
     public static synchronized int modelCount() {
@@ -181,7 +198,7 @@ public class Main {
     public static synchronized String queueSettings(IsoGameCharacter actor,String id,String value) {
         try {
             Entry e=entry(id);settings(value);
-            cancelPreparation(actor);switchFailures.remove(actor);pending.put(actor,new Pending(e,value));return "";
+            cancelPreparation(actor);switchFailures.remove(actor);pending.put(actor,new Pending(e,value));refreshPoseOwners();return "";
         }catch(Throwable e){error(e);return lastError;}
     }
     private static ModelSession required(IsoGameCharacter actor){ModelSession s=active.get(actor);if(s==null)throw new IllegalStateException("请先启用人物");return s;}
@@ -256,11 +273,11 @@ public class Main {
         } catch (Throwable e) { if(next!=null)next.retire();error(e);return lastError; }
     }
     public static synchronized void disable(IsoGameCharacter actor) {
-        pending.remove(actor);cancelPreparation(actor);switchFailures.remove(actor);ModelSession old=active.remove(actor);if(old!=null) old.retire();
+        pending.remove(actor);cancelPreparation(actor);switchFailures.remove(actor);ModelSession old=active.remove(actor);if(old!=null) old.retire();refreshPoseOwners();
     }
     public static synchronized void clear() {
         for(ModelSession session:preparing.values())session.retire();preparing.clear();
-        for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();switchFailures.clear();
+        for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();switchFailures.clear();refreshPoseOwners();
     }
     static void error(Throwable e) {
         lastError=e.toString();System.err.println("[AimohPMXPreview] "+lastError);e.printStackTrace();
