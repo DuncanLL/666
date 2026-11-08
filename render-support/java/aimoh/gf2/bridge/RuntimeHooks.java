@@ -10,7 +10,8 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     public static final Map<String,Integer> EXPECTED=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/PackOption",1);
     private volatile Throwable transformFailure;
-    public static final String SUPPORTED_VP="605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f";
+    public static final String SUPPORTED_VP="c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8";
+    private static final Set<String> SUPPORTED_HOSTS=Set.of(SUPPORTED_VP,"605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f");
     public static void verifyHost()throws Exception{
         Set<String> copies=new LinkedHashSet<>();var entries=RuntimeHooks.class.getClassLoader().getResources("aimoh/gf2/bridge/Main.class");while(entries.hasMoreElements())copies.add(entries.nextElement().toExternalForm());
         if(copies.size()!=1)throw new IllegalStateException("More than one R116 render-support copy is on the Java classpath; keep one enabled version: "+copies);
@@ -20,7 +21,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     }
     static void verifyHost(Path jar)throws Exception{
         String actual=Files.isRegularFile(jar)?HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jar))):"not-a-JAR";
-        if(!SUPPORTED_VP.equals(actual))throw new IllegalStateException("R116 Native test supports official Viewpoint 0.1.7-rc2 build "+SUPPORTED_VP+"; detected "+actual+". This VP update/build has not been validated; no runtime hooks applied.");
+        if(!SUPPORTED_HOSTS.contains(actual))throw new IllegalStateException("R116 Native test supports verified official Viewpoint 0.1.7-rc2 / rc3; current rc3 build "+SUPPORTED_VP+"; detected "+actual+". This VP update/build has not been validated; no runtime hooks applied.");
     }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;

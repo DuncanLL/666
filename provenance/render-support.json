@@ -1,16 +1,16 @@
 {
   "format": 2,
   "backend": "VP_NATIVE",
-  "release_version": "0.2.7",
+  "release_version": "0.2.8",
   "internal_mod_id": "AimohGF2Eclipse",
   "workshop_id": "3834707439",
-  "supported_viewpoint": "official 0.1.7-rc2",
-  "official_host_sha256": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f",
+  "supported_viewpoint": "official 0.1.7-rc3 and retained rc2",
+  "official_host_sha256": "c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8",
   "source_snapshot": "Native development compatibility-hardening snapshot 2026-11-08",
   "source_snapshot_jar_sha256": "41bffc99dc355506f474c280ff4f3fa7ad9d68602265f4887f449ac8d0804dce",
   "migration": [
     "Keep validated Native material/lighting code and compatibility hardening",
-    "Native-only entry and four required runtime hook targets",
+    "Native-only entry and five verified runtime hook targets, including character option grouping",
     "Embed only the owned Native resource pack; no Eclipse payload or Iris rendering hooks",
     "Read original GF2 programs/textures from external character MOD resources; not from Git",
     "Read official model helpers from the actual VP dependency; no VP classes/shaders copied into addon"
@@ -18,5 +18,9 @@
   "historical_eclipse_provenance": "provenance/render-support-eclipse-20261106.json",
   "material_texture_pose_physics_changes": false,
   "nvidia_hardware_acceptance": false,
-  "steam_subscription_acceptance": false
+  "steam_subscription_acceptance": false,
+  "compatible_official_hosts": {
+    "0.1.7-rc2": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f",
+    "0.1.7-rc3": "c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8"
+  }
 }
