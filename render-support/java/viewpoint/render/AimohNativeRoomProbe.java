@@ -37,7 +37,9 @@ public final class AimohNativeRoomProbe implements AutoCloseable {
                 vertex=vertex.replaceAll("\\b"+v.name+"\\b","gf2ProbeIn_"+v.name);
                 gs.append(v.qualifier).append("in ").append(v.type).append(" gf2ProbeIn_").append(v.name).append("[];\n").append(v.qualifier).append("out ").append(v.type).append(' ').append(v.name).append(";\n");
             }
-            gs.append("void main(){if(gf2ProbeHidden[0]!=0||gf2ProbeHidden[1]!=0||gf2ProbeHidden[2]!=0)return;for(int i=0;i<3;i++){gl_Position=gf2ProbeViewProjection[gl_InvocationID]*vec4(gf2ProbeIn_vPos[i],1);gl_Layer=gl_InvocationID;\n");
+            gs.append("void main(){if(gf2ProbeHidden[0]!=0||gf2ProbeHidden[1]!=0||gf2ProbeHidden[2]!=0)return;vec4 clip[3];for(int i=0;i<3;i++)clip[i]=gf2ProbeViewProjection[gl_InvocationID]*vec4(gf2ProbeIn_vPos[i],1);\n");
+            // Reject only triangles the fixed-function clipper would discard on this cube face.
+            gs.append("for(int axis=0;axis<3;axis++){if(clip[0][axis]<-clip[0].w&&clip[1][axis]<-clip[1].w&&clip[2][axis]<-clip[2].w)return;if(clip[0][axis]>clip[0].w&&clip[1][axis]>clip[1].w&&clip[2][axis]>clip[2].w)return;}for(int i=0;i<3;i++){gl_Position=clip[i];gl_Layer=gl_InvocationID;\n");
             for(Varying v:varyings)gs.append(v.name).append('=').append(v.name.equals("vDistance")?"gl_Position.w":"gf2ProbeIn_"+v.name+"[i]").append(";\n");
             gs.append("EmitVertex();}EndPrimitive();}");
             geometry=GlProgram.fromSources("GF2 Native room geometry",new GlProgram.Sources(vertex,null,null,gs.toString(),fragment),Map.of(),Map.of(),List.of());

@@ -2,6 +2,12 @@
   "format": 6,
   "pipeline": "gf2-original-eclipse",
   "runtime_ready": true,
+  "original_display_profile": {
+    "format": 1,
+    "width": 1024,
+    "height": 32,
+    "sha256": "d0b139ece5bc71d416cf167cdbae2f22cb1ab4814649fb93011b18809d18b2ef"
+  },
   "native_backend": "VP Native Default; independent development candidate, exposure/motion/indoor acceptance pending",
   "features": {
     "external_mod_resources": true,

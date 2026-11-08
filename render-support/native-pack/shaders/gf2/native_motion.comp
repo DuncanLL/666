@@ -7,6 +7,18 @@ layout(rgba16f,binding=0)uniform image2D nativeVelocity;
 layout(rgb10_a2,binding=1)uniform image2D nativeNormals;
 layout(rgba16f,binding=2)uniform image2D originalNormals;
 uniform int initializeNormals;
+uniform sampler2D gf2TransferLut;
+uniform float gf2TransferExposure;
+uniform int gf2TransferOn;
+uniform float gf2TransferStrength;
+uniform sampler2D gf2TransferOwnership;
+layout(rgba16f,binding=3)uniform image2D gf2TransferColour;
+vec3 originalDisplayInput(vec3 rgb){
+    vec3 p=clamp(log2(max(rgb,vec3(0.0))*5.555556+0.047996)*0.0735+0.386036,0.0,1.0)*31.0;
+    float layer=floor(p.b);vec2 uv=(vec2(layer*32.0+p.r,p.g)+0.5)/vec2(1024,32);
+    vec3 a=textureLod(gf2TransferLut,uv,0).rgb,b=textureLod(gf2TransferLut,uv+vec2(1.0/32.0,0),0).rgb;
+    return mix(a,b,p.b-layer);
+}
 vec3 decodeOct(vec2 e){
     e=e*2.0-1.0;vec3 n=vec3(e,1.0-abs(e.x)-abs(e.y));
     if(n.z<=0.0)n.xy=(1.0-abs(n.yx))*vec2(n.x>=0.0?1.0:-1.0,n.y>=0.0?1.0:-1.0);
@@ -33,5 +45,16 @@ void main(){
     if(abs(original.z-.498)<.0003||abs(original.z-.499)<.0003){
         normal.xy=encodeOct(decodeOct(original.xy)*vec3(-1,1,-1));
         imageStore(nativeNormals,pixel,normal);
+    }
+    // MRT1 was initialized with z=w=0 outside the actual original-character draws.
+    // Apply once after all original colour/stencil phases, never to shadow factors or the background.
+    if(gf2TransferOn!=0){
+        bool ownsOpaque=abs(texelFetch(gf2TransferOwnership,pixel,0).a-31.0/255.0)<0.5/255.0;
+        if(ownsOpaque&&(abs(original.z)>.0001||abs(original.w)>.0001)){
+            vec4 colour=imageLoad(gf2TransferColour,pixel);
+            float exposure=max(gf2TransferExposure,1e-8);
+            if(max(colour.r,max(colour.g,colour.b))>1e-8)colour.rgb=mix(colour.rgb,originalDisplayInput(colour.rgb*exposure)/exposure,clamp(gf2TransferStrength,0.0,1.0));
+            imageStore(gf2TransferColour,pixel,colour);
+        }
     }
 }

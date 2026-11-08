@@ -26,6 +26,8 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
         pack=AimohNativePackSelection.compute("GF2 Native SH register transfer","gf2/native_light.comp");
         reflection=AimohNativePackSelection.compute("GF2 Native default reflection cube","gf2/native_cube.comp");
         reflection.sampler("uDepth",0);reflection.sampler("gf2ProbeScene",4);reflection.sampler("gf2ProbeAlbedo",5);reflection.sampler("gf2ProbeRoom",3);
+        // Ultra cloud reflections consume the same weather/noise inputs as the stock sky.
+        WeatherMap.samplers(reflection);
         prefilter=AimohNativePackSelection.compute("GF2 source GGX reflection filtering","gf2/native_prefilter.comp");prefilter.sampler("nativeRawCube",0);
         if(pack.id()==0||reflection.id()==0||prefilter.id()==0)throw new IllegalStateException("Native light/cube/filter program missing: "+GlProgram.lastError());
         buffer=GL45.glCreateBuffers();GL45.glNamedBufferData(buffer,128L,GL15.GL_DYNAMIC_DRAW);

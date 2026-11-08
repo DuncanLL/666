@@ -77,9 +77,10 @@ void main(){
     vec2 uv=(vec2(at.xy)+.5)/float(size)*2-1;
     vec3 sourceDirection=normalize(cubeDirection(at.z,uv));
     vec3 nativeDirection=sourceDirection*vec3(-1,1,-1);
-    vec3 sky=reflectedSky(gf2ProbePosition,nativeDirection,gf2ProbeRoomOn!=0?1.0:clamp(gf2ProbeSkyShare,0.0,1.0));
     vec4 room=gf2ProbeRoomOn!=0?textureLod(gf2ProbeRoom,nativeDirection,0):vec4(0.0);
-    vec3 environment=room.a>.5?room.rgb:sky;
+    // A captured wall already supplies radiance; do not trace clouds behind it.
+    vec3 environment=room.rgb;
+    if(room.a<=.5)environment=reflectedSky(gf2ProbePosition,nativeDirection,gf2ProbeRoomOn!=0?1.0:clamp(gf2ProbeSkyShare,0.0,1.0));
     vec4 local=gf2ProbeSceneLight(nativeDirection);
     // Sky visibility applies to sky only. Local room/lamp reflections must not be zeroed by an indoor sky-share.
     imageStore(sourceCube,at,vec4(mix(environment,local.rgb,local.a),1));

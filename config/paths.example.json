@@ -5,6 +5,7 @@
   "ecj_jar": "D:/private-tools/ecj-4.38.jar",
   "reference_jar": "D:/current-R116/42/media/java/client/AimohPMXPreview.jar",
   "asset_root": "D:/current-R116",
+  "render_support_asset_root": "D:/prepared-original-render-resources",
   "native_source": "D:/verified-native-libraries",
   "native_toolchain_root": "D:/private-tools/mmd",
   "zig": "D:/private-tools/zig/zig.exe",

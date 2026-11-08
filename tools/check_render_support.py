@@ -14,6 +14,10 @@ if __name__=='__main__':
     with zipfile.ZipFile(jar)as z:
         assert not [n for n in z.namelist()if n.endswith('.class')and n in stock]
         payload=z.read('aimoh/gf2/bridge/Aimoh-Native-GF2.zip');assert 'aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'not in z.namelist()
+        display=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
+        expected_display=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
+        import hashlib
+        assert len(display)==expected_display['bytes']and hashlib.sha256(display).hexdigest()==expected_display['sha256']
     import hashlib
     build=json.loads((BUILD/'render-support/build.json').read_text('utf8'))
     assert hashlib.sha256(payload).hexdigest()==build['shader_sha256']
@@ -24,6 +28,10 @@ if __name__=='__main__':
         z.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: RenderSupportTestAgent\nCan-Retransform-Classes: true\n\n')
         z.write(out/'agent-classes/RenderSupportTestAgent.class','RenderSupportTestAgent.class')
     cp=[jar,Path(cfg['reference_jar']),host,cfg['zombiebuddy_jar'],agent,*game.glob('*.jar')]
+    compile_java(cfg,[ROOT/'tools/java/NativePackOptionsCheck.java'],out/'pack-options-classes',cp)
+    options_check=subprocess.run([str(game/'jre64/bin/java.exe'),'-ea','-cp',';'.join(map(str,[out/'pack-options-classes',*cp])),'viewpoint.render.NativePackOptionsCheck'],env=environment(),capture_output=True,text=True,timeout=30)
+    (out/'pack-options.log').write_text(options_check.stdout+options_check.stderr,'utf8');options_check.check_returncode()
+    assert 'NATIVE_PACK_OPTIONS_COMPOSITION_PASS' in options_check.stdout
     compile_java(cfg,[ROOT/'tools/java/RenderSupportStartupCheck.java'],out/'classes',cp)
     command=[str(game/'jre64/bin/java.exe'),'-ea','-Xverify:all','--enable-native-access=ALL-UNNAMED',
              '-Duser.home='+str(out/'home'),'-Djava.io.tmpdir='+str(BUILD/'tmp'),

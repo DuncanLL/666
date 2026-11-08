@@ -23,6 +23,21 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
     private int exposureOffsetLocation=-1,lastExposureOffset=-1;
     private int sunVisibilityLocation=-1;
     private static final Pattern TEXTURE=Pattern.compile("(?:hlslcc_zcmp)?GF2(VS)?Texture(\\d+)(?:TEX_with_SMPGF2(?:VS)?Sampler(\\d+))?");
+    private static final Pattern PACK_OPTIONS=Pattern.compile("(?:layout\\s*\\([^)]*\\)\\s*)?uniform\\s+PackOptions\\s*\\{[^}]*\\}\\s*;");
+
+    // VP expands each service with its own live-option header; a combined stage needs only one.
+    static String singlePackOptions(String source){
+        Matcher matcher=PACK_OPTIONS.matcher(source);String first=null;StringBuilder result=new StringBuilder();
+        while(matcher.find()){
+            String declaration=matcher.group().replaceAll("\\s+","");
+            if(first==null){first=declaration;matcher.appendReplacement(result,Matcher.quoteReplacement(matcher.group()));}
+            else {
+                if(!first.equals(declaration))throw new IllegalStateException("Conflicting Native PackOptions declarations");
+                matcher.appendReplacement(result,"");
+            }
+        }
+        matcher.appendTail(result);return result.toString();
+    }
 
     public AimohGf2OriginalProgram(Path vertex,Path fragment,String vertexHash,String fragmentHash) throws IOException {
         this(Files.readString(vertex),Files.readString(fragment),vertexHash,fragmentHash);
@@ -30,6 +45,7 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
     /** PackSource supplies already verified UTF-8 programs; no runtime files. */
     public AimohGf2OriginalProgram(String vertex,String fragment,String vertexHash,String fragmentHash) {
         var stages=AimohGf2Rc2Vertex.stages(vertex,fragment);vertex=stages.vertex();fragment=stages.fragment();
+        vertex=singlePackOptions(vertex);fragment=singlePackOptions(fragment);
         this.vertexHash=vertexHash;this.fragmentHash=fragmentHash;
         gl=GlProgram.fromSources("GF2 original "+vertexHash.substring(0,12)+"/"+fragmentHash.substring(0,12),
             new GlProgram.Sources(vertex,null,null,null,fragment),Map.of(),Map.of(),List.of());

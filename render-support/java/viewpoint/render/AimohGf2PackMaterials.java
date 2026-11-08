@@ -16,6 +16,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private final AimohGf2PackData data;
     private final AimohGf2OriginalSamplers sourceSamplers;
     private final JSONObject[] materials;
+    private final Map<Integer,Map<String,JSONObject>> materialPasses=new HashMap<>();
     private final Map<String,JSONObject> programMetadata=new HashMap<>();
     private final Map<String,Map<String,String>> variants=new HashMap<>();
     private final Map<Integer,Integer> materialBuffers=new LinkedHashMap<>();
@@ -26,8 +27,14 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private record TextureKey(AimohGf2OriginalProgram program,int material){}
     private final Map<ProgramKey,AimohGf2OriginalProgram> programs=new LinkedHashMap<>();
     private final Map<StateKey,JSONObject> states=new HashMap<>();
-    private final Map<TextureKey,Map<Integer,int[]>> bindings=new HashMap<>();
-    private int cubeEpoch,shadowEpoch,samplerEpoch;
+    private record BindingSet(Map<Integer,int[]> values,List<int[]> cubes,List<int[]> shadows){
+        Map<Integer,int[]> current(int cube,int shadow,int sampler){
+            for(int[] value:cubes)value[1]=cube;
+            for(int[] value:shadows){value[1]=shadow;value[2]=sampler;}
+            return values;
+        }
+    }
+    private final Map<TextureKey,BindingSet> bindings=new HashMap<>();
     private boolean closed;
     public long materialBytes;
     public int textureUploads,attributeUploads;
@@ -76,10 +83,16 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     public int textureSetCount(){return bindings.size();}
     public int materialCount(){return materials.length;}
 
+    public JSONObject optionalPass(int id,String name){
+        return materialPasses.computeIfAbsent(id,key->{
+            Map<String,JSONObject> result=new HashMap<>();
+            for(Object value:material(key).getJSONArray("passes")){
+                JSONObject pass=(JSONObject)value;if(!pass.getBoolean("disabled_by_material"))result.putIfAbsent(pass.getString("name"),pass);
+            }return result;
+        }).get(name);
+    }
     private JSONObject pass(int id,String name){
-        for(Object value:material(id).getJSONArray("passes")){
-            JSONObject pass=(JSONObject)value;if(name.equals(pass.getString("name"))&&!pass.getBoolean("disabled_by_material"))return pass;
-        }
+        JSONObject pass=optionalPass(id,name);if(pass!=null)return pass;
         throw new IllegalArgumentException("Source material pass is absent/disabled: "+id+" "+name);
     }
     public AimohGf2OriginalProgram program(int id,String name,boolean early)throws IOException {
@@ -134,9 +147,8 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     }
 
     public Map<Integer,int[]> textureBindings(AimohGf2OriginalProgram program,int materialId,int cube,int shadow,int sampler)throws IOException {
-        if(cubeEpoch!=cube||shadowEpoch!=shadow||samplerEpoch!=sampler){bindings.clear();cubeEpoch=cube;shadowEpoch=shadow;samplerEpoch=sampler;}
-        TextureKey key=new TextureKey(program,materialId);Map<Integer,int[]> result=bindings.get(key);if(result!=null)return result;
-        result=new LinkedHashMap<>();JSONObject material=material(materialId);
+        TextureKey key=new TextureKey(program,materialId);BindingSet existing=bindings.get(key);if(existing!=null)return existing.current(cube,shadow,sampler);
+        Map<Integer,int[]> result=new LinkedHashMap<>();List<int[]> cubes=new ArrayList<>(),shadows=new ArrayList<>();JSONObject material=material(materialId);
         for(int registerKey:program.textureRegisters()){
             boolean vertex=(registerKey&65536)!=0;int register=(registerKey>>8)&255;String sha=vertex?program.vertexHash:program.fragmentHash;
             JSONObject original=null;for(Object value:programMetadata.get(sha).getJSONArray("textures")){JSONObject entry=(JSONObject)value;if(entry.getInt("m_Index")==register){original=entry;break;}}
@@ -150,9 +162,11 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
                 else id=defaultTexture(slot.getJSONObject("unassigned_shader_default").getString("m_DefaultName"));
             }
             if(!name.equals("_MainLightShadowmapTexture"))sourceSampler=sourceSamplers.sampler(programMetadata.get(sha),material,registerKey);
-            if(id<=0)throw new IllegalArgumentException("Source texture target absent: "+name);result.put(registerKey,new int[]{target,id,sourceSampler});
+            if(id<=0)throw new IllegalArgumentException("Source texture target absent: "+name);int[] value={target,id,sourceSampler};result.put(registerKey,value);
+            if(name.equals("unity_SpecCube0"))cubes.add(value);
+            if(name.equals("_MainLightShadowmapTexture"))shadows.add(value);
         }
-        bindings.put(key,result);return result;
+        bindings.put(key,new BindingSet(result,cubes,shadows));return result;
     }
 
     public int attributeTexture(JSONObject model)throws IOException {

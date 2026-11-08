@@ -1,6 +1,14 @@
 {
   "format": 1,
   "date": "2026-11-06",
+  "render_support": {
+    "original_display_profile": {
+      "file": "d0b139ece5bc71d416cf167cdbae2f22cb1ab4814649fb93011b18809d18b2ef.rgba16f",
+      "bytes": 262144,
+      "sha256": "d0b139ece5bc71d416cf167cdbae2f22cb1ab4814649fb93011b18809d18b2ef",
+      "source_shader_sha256": "3164f8a334bdb408056d00dd6d504782a9ffbccea4762df5b45cfe2d7c29ec48"
+    }
+  },
   "files": {
     "42/media/aimoh_gf2/characters.json": {
       "bytes": 13713295,

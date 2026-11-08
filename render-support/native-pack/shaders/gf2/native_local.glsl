@@ -15,7 +15,13 @@ uniform int gf2NativeLocalKind[7];
 uniform int gf2NativeLocalIndex[7];
 
 vec4 gf2NativeLocalColor(int slot,vec4 colour,vec3 pos,vec3 normal){
-    if(slot>=gf2NativeLocalCount)return colour; // Captured directional camera fill is not a Native emitter.
+    if(slot>=gf2NativeLocalCount){
+        // Reuse the camera-relative fill slot; zero preserves its original colour exactly.
+        float fill=float(OPTION_CHARACTER_SOFT_FILL);
+        if(fill<=0.0)return colour;
+        float level=max(colour.r,max(colour.g,colour.b));
+        return vec4(colour.rgb+level*fill*vec3(0.90,0.97,1.0),colour.a);
+    }
     int kind=gf2NativeLocalKind[slot],i=gf2NativeLocalIndex[slot];
     vec3 n=normalize(normal),d;float dist,energy;
     if(kind==0){
