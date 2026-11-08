@@ -3,8 +3,8 @@
   "date": "2026-11-08",
   "files": {
     "42/media/aimoh_gf2/characters.json": {
-      "bytes": 21569155,
-      "sha256": "8427c2b50ad04027c8a0ae9e9161863a6caba782a6b3f7a428d083fa13ce9484"
+      "bytes": 22383772,
+      "sha256": "4a40683736b51d1e399e70861b0e95235dafe9e5ab5d41292e708d1129d4aa90"
     },
     "42/media/aimoh_gf2/data/0041875d4c1a71ae532313a2d18aeaae9e59b35d38d53f5b8bc7834cd8efbd2d.f32": {
       "bytes": 544,
@@ -8191,8 +8191,8 @@
       "sha256": "fde919d547f118d84373d6a2a94c348597f0cc402fc5af75f54f09c33798fcb6"
     },
     "42/media/aimoh_pmx/models/pmx-4818f3bdda4ec18d/model.pmx": {
-      "bytes": 13151387,
-      "sha256": "4818f3bdda4ec18dd2cb496d304dc0140e23494254b70044afe38b883abdad57"
+      "bytes": 13246359,
+      "sha256": "ba8172885eb50332c1d1f2c988eea2c9e8522990065b493e3a30ff7951e489cd"
     },
     "42/media/aimoh_pmx/models/pmx-4818f3bdda4ec18d/spa/skintoon.bmp": {
       "bytes": 7656,
@@ -8421,6 +8421,10 @@
     "42/media/ui/AimohPMXReadyRoom/round-pmx-4818f3bdda4ec18d.png": {
       "bytes": 33102,
       "sha256": "697848b70587f2c22083336083d55db36ed171e635e62170cb714d1ecd6c807c"
+    },
+    "42/media/aimoh_gf2/data/a1fa925a8103484b61735c50e1bfedd0bcf3ecaba81a29ca5af814e0d15203d9.f32": {
+      "bytes": 9961472,
+      "sha256": "a1fa925a8103484b61735c50e1bfedd0bcf3ecaba81a29ca5af814e0d15203d9"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git."

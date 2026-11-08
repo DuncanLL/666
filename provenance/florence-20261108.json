@@ -1,12 +1,12 @@
 {
-  "version": "0.3.9",
+  "version": "0.3.10",
   "character": "芙洛伦",
   "skin": "翠雀媚",
   "id": "pmx-4818f3bdda4ec18d",
   "source_archive": "[260204] 芙洛伦 - 翠雀媚 (游戏提取全配件公开配布) (1)_by_9口6_fc20804bd38b58a05938d69d37682699.zip",
   "source_archive_sha256": "20204d09bd62489c79cd1170afd1207075dcb51e2087ce202c974621bfcf3574",
   "source_blend_sha256": "36a27a41ddcf583a0cb6473683a13a6074b4002a57b3141a7d40bfb92cd7d0d0",
-  "pmx_sha256": "4818f3bdda4ec18dd2cb496d304dc0140e23494254b70044afe38b883abdad57",
+  "pmx_sha256": "ba8172885eb50332c1d1f2c988eea2c9e8522990065b493e3a30ff7951e489cd",
   "vertices": 98215,
   "bones": 375,
   "materials": 55,
@@ -48,5 +48,16 @@
   "multiplayer_tested": false,
   "source_originals_unchanged": true,
   "installed_f_and_steam": true,
-  "uploaded": false
+  "uploaded": false,
+  "previous_import_pmx_sha256": "4818f3bdda4ec18dd2cb496d304dc0140e23494254b70044afe38b883abdad57",
+  "p3_weights_reconstructed": true,
+  "p3_reconstructed_vertices": 7588,
+  "foot_accessory_reconstructed_vertices": 12,
+  "p3_main_material_dynamic_vertices": 5250,
+  "original_mesh_positions_uv_normals_faces_bones_preserved": true,
+  "rigid_and_joint_parameters_identical": true,
+  "solver_changed": false,
+  "continuous_p3_physics_frames": 119,
+  "weight_reconstruction_method": "Blender Data Transfer nearest-face interpolation from the same model P2 clothing and P3 shoes, only originally unweighted vertices. Original P3 weights did not exist.",
+  "earlier_whole_model_checks_did_not_validate_each_accessory_physics": true
 }
