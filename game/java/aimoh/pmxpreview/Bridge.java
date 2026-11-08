@@ -101,10 +101,7 @@ public final class Bridge {
             else {
                 low=new Vector3f(Float.POSITIVE_INFINITY);high=new Vector3f(Float.NEGATIVE_INFINITY);
                 for(PmxDrawMesh.FrameData snapshot:new PmxDrawMesh.FrameData[]{data,previous,older})if(snapshot!=null){
-                    float[] p=snapshot.positions();for(int i=0;i<p.length;i+=3){
-                        low.x=Math.min(low.x,p[i]);low.y=Math.min(low.y,p[i+1]);low.z=Math.min(low.z,p[i+2]);
-                        high.x=Math.max(high.x,p[i]);high.y=Math.max(high.y,p[i+1]);high.z=Math.max(high.z,p[i+2]);
-                    }
+                    snapshot.includeBounds(low,high);
                 }
                 float pad=session.shading==null?0:session.shading.renderProfile().outlineMaxNative;low.sub(pad,pad,pad);high.add(pad,pad,pad);
             }
@@ -117,7 +114,7 @@ public final class Bridge {
             try {
                 if(boundTextures==null)boundTextures=session.prepareMaterials(materials);
                 PmxDrawMesh.FrameData sampled=session.presentation.sample(data,previous,older,phase,cut);
-                mesh.uploadPrepared(sampled);renderedHeader=sampled.shadingHead();
+                mesh.uploadPrepared(sampled,materials.shadow());renderedHeader=sampled.shadingHead();
             }catch(Throwable e){restore();session.fail(e);}
         }
         void restore() {

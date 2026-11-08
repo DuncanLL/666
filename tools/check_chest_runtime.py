@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse,json,os,sys,time
 from common import ROOT,BUILD,settings,save,sha
 p=argparse.ArgumentParser();p.add_argument('--poses',type=Path,required=True);args=p.parse_args()
+args.poses=args.poses.resolve()
 c=settings();sys.path.insert(0,c['python_dependencies'])
 import jpype,numpy as np
 game=Path(c['game_root']);home=BUILD/'chest-runtime-check';home.mkdir(exist_ok=True)

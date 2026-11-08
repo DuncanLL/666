@@ -63,7 +63,7 @@ final class PmxPresentation {
         }
         side^=1;
         // This upload view is render-thread scratch; immutable game snapshots remain untouched.
-        return new PmxDrawMesh.FrameData(output,normals,current.materials(),header);
+        return PmxDrawMesh.FrameData.interpolated(output,normals,current.materials(),header,a,b);
     }
     private static void normalize(float[] values,int at){
         float x=values[at],y=values[at+1],z=values[at+2],length=(float)Math.sqrt(x*x+y*y+z*z);

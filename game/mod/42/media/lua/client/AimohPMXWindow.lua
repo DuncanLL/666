@@ -8,8 +8,8 @@ local data
 local textures={}
 local function image(path)
     if not path then return nil end
-    if textures[path]==nil then textures[path]=getTexture(path) or false end
-    return textures[path] or nil
+    if not textures[path] then textures[path]=getTexture(path) end
+    return textures[path]
 end
 local function tr(key) return data.text[key] or key end
 local function label(panel,value,x,y,height,width,r,g,b)
@@ -342,7 +342,7 @@ end
 function W:onEyes(option)
     if self.eyeGroup~=nil and self.actions.choice(self.player,self.eyeGroup,option)then self:refreshControls()end
 end
-function W:onLibrary()if not self.waiting and self.actions.refresh(self.player)then self:refresh()end end
+function W:onLibrary()if not self.waiting and self.actions.refresh(self.player)then data=loadData();textures={};self:refresh()end end
 function W:onRestore()self.actions.disable(self.player);if AimohPMXReadyRoom then AimohPMXReadyRoom.release(self.player)end;self.waiting=false;self.selected=nil;self:refresh()end
 function W:onReset()if self.actions.reset(self.player)then self:refreshControls()end end
 function W:onReload()if self.actions.reload(self.player)then self:refreshControls()end end
@@ -375,7 +375,7 @@ function W:close()
 end
 function W.open(player,actions)
     if not AimohPMXReadyRoom then player:Say(getText("ContextMenu_AimohPMX_JavaUnavailable"));return end
-    if not data then data=loadData() end
+    data=loadData()
     local index=player:getPlayerNum();local window=W.instances[index]
     if not window then
         local sw,sh=getCore():getScreenWidth(),getCore():getScreenHeight()
@@ -386,7 +386,7 @@ function W.open(player,actions)
     else window.actions=actions;window:addToUIManager();window:refresh()end
     window:setVisible(true);window:bringToTop();return window
 end
-function W.closeAll()for _,window in pairs(W.instances)do window:close()end;W.instances={}end
+function W.closeAll()for _,window in pairs(W.instances)do window:close()end;W.instances={};data=nil;textures={}end
 function W.closeFor(player)
     if not player then return end
     local index=player:getPlayerNum();if W.instances[index]then W.instances[index]:close();W.instances[index]=nil end

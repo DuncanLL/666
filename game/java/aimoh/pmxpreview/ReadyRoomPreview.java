@@ -24,15 +24,12 @@ import zombie.core.textures.TextureDraw;
 
 /** Display the world's immutable PMX snapshot. Never advances animation or physics. */
 public class ReadyRoomPreview {
-    private static KahluaTable catalog;
     public static synchronized KahluaTable data() throws Exception {
-        if(catalog==null){
-            Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
-            Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
-            Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
-            catalog=(KahluaTable)lua(new JSONObject(Files.readString(path)));
-        }
-        return catalog;
+        Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
+        Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
+        Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
+        // UI tables belong to this Lua/window lifecycle, not to a previous game session.
+        return (KahluaTable)lua(new JSONObject(Files.readString(path)));
     }
     private static Object lua(Object value){
         if(value instanceof JSONObject object){KahluaTable t=J2SEPlatform.getInstance().newTable();for(String key:object.keySet())t.rawset(key,lua(object.get(key)));return t;}

@@ -52,15 +52,37 @@ public final class PmxDrawMesh implements AutoCloseable {
     private boolean nativeOutlineSupported;
 
     /** Arrays belong to this frame and are never mutated after capture. */
-    public record FrameData(float[] positions,float[] normals,float[] materials,float[] shadingHead) {
+    public static final class FrameData {
+        private final float[] positions,normals,materials,shadingHead;
+        private final float minX,minY,minZ,maxX,maxY,maxZ;
         public FrameData(float[] positions,float[] normals,float[] materials){this(positions,normals,materials,null);}
-        public FrameData {
+        public FrameData(float[] positions,float[] normals,float[] materials,float[] shadingHead) {this(positions,normals,materials,shadingHead,null,null);}
+        private FrameData(float[] positions,float[] normals,float[] materials,float[] shadingHead,FrameData a,FrameData b) {
             if (positions.length!=normals.length || positions.length%3!=0 || materials.length%12!=0)
                 throw new IllegalArgumentException("Invalid frozen PMX frame");
             if(shadingHead!=null&&(shadingHead.length<12||shadingHead.length%12!=0))throw new IllegalArgumentException("Invalid shading frame");
             if(shadingHead!=null)for(float value:shadingHead)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite shading frame");
-            for (float[] values:new float[][]{positions,normals,materials}) for (float value:values)
-                if (!Float.isFinite(value)) throw new IllegalArgumentException("Non-finite frozen PMX frame");
+            float lx=Float.POSITIVE_INFINITY,ly=lx,lz=lx,hx=-lx,hy=hx,hz=hx;
+            for(int i=0;i<positions.length;i+=3){
+                float x=positions[i],y=positions[i+1],z=positions[i+2];
+                if(!Float.isFinite(x)||!Float.isFinite(y)||!Float.isFinite(z))throw new IllegalArgumentException("Non-finite frozen PMX frame");
+                if(a==null){lx=Math.min(lx,x);ly=Math.min(ly,y);lz=Math.min(lz,z);hx=Math.max(hx,x);hy=Math.max(hy,y);hz=Math.max(hz,z);}
+            }
+            for(float value:normals)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
+            for(float value:materials)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
+            this.positions=positions;this.normals=normals;this.materials=materials;this.shadingHead=shadingHead;
+            minX=a==null?lx:Math.min(a.minX,b.minX);minY=a==null?ly:Math.min(a.minY,b.minY);minZ=a==null?lz:Math.min(a.minZ,b.minZ);
+            maxX=a==null?hx:Math.max(a.maxX,b.maxX);maxY=a==null?hy:Math.max(a.maxY,b.maxY);maxZ=a==null?hz:Math.max(a.maxZ,b.maxZ);
+        }
+        /** Convex display interpolation stays inside the union of its two validated snapshots. */
+        public static FrameData interpolated(float[] p,float[] n,float[] m,float[] h,FrameData a,FrameData b){return new FrameData(p,n,m,h,a,b);}
+        public float[] positions(){return positions;}
+        public float[] normals(){return normals;}
+        public float[] materials(){return materials;}
+        public float[] shadingHead(){return shadingHead;}
+        public void includeBounds(Vector3f low,Vector3f high){
+            low.x=Math.min(low.x,minX);low.y=Math.min(low.y,minY);low.z=Math.min(low.z,minZ);
+            high.x=Math.max(high.x,maxX);high.y=Math.max(high.y,maxY);high.z=Math.max(high.z,maxZ);
         }
     }
 
@@ -85,6 +107,7 @@ public final class PmxDrawMesh implements AutoCloseable {
         final float[] edgeWeights,smooth;
         float inkU,inkV;
         volatile boolean hullReady;
+        boolean continuous;
         Part(int material, int[] source, int[] indices, Texture texture, boolean bothFaces, int ordinal, boolean shading) {
             this(material,source,indices,texture,bothFaces,ordinal,shading,null,null,0);
         }
@@ -243,18 +266,21 @@ public final class PmxDrawMesh implements AutoCloseable {
         uploadPrepared(frame);
     }
     /** An already captured command keeps the topology it was submitted with. */
-    public void uploadPrepared(FrameData frame) {
+    public void uploadPrepared(FrameData frame) {uploadPrepared(frame,appearance.readMaterials(false));}
+    public void uploadPrepared(FrameData frame,float[] shadowMaterials) {
         if (closed || frame.positions.length*4!=positions.capacity()) throw new IllegalArgumentException("Frozen mesh size differs");
         for (int i=0;i<frame.positions.length;i++) {
             positions.putFloat(i*4,frame.positions[i]); normals.putFloat(i*4,frame.normals[i]);
         }
-        uploadBuffers(frame.materials);
+        uploadBuffers(frame.materials,shadowMaterials);
     }
 
-    private void uploadBuffers(float[] materialState) {
+    private void uploadBuffers(float[] materialState){uploadBuffers(materialState,appearance.readMaterials(false));}
+    private void uploadBuffers(float[] materialState,float[] shadowMaterials) {
+        if(shadowMaterials.length!=materialState.length)throw new IllegalArgumentException("Shadow material count differs");
         boolean useOutline=outlineEnabled();
         for (Part part : parts) {
-            if(part.hull&&(!useOutline||!part.hullReady))continue;
+            if(part.hull&&(!useOutline||!part.hullReady)){part.continuous=false;continue;}
             int offset=part.material*12;
             part.r=materialState[offset]*materialState[offset+4];
             part.g=materialState[offset+1]*materialState[offset+5];
@@ -266,6 +292,10 @@ public final class PmxDrawMesh implements AutoCloseable {
             if (!Float.isFinite(part.alpha) || !Float.isFinite(part.r) ||
                 !Float.isFinite(part.g) || !Float.isFinite(part.b))
                 throw new IllegalArgumentException("Non-finite PMX material");
+            boolean colour=colourVisible(part,materialState),shadow=shadowVisible(part,shadowMaterials);
+            // Pack-owned eye layers can ignore base alpha; keep them ready across queued appearance changes.
+            if(part.original!=null&&part.original.sourceAlphaIndependent()&&materialState[offset+7]+materialState[offset+11]>0)colour=true;
+            if(!colour&&((part.hull||part.fringe)||!shadow)){part.continuous=false;continue;}
             part.vertices.clear();
             part.mesh.minXyz.set(Float.POSITIVE_INFINITY);
             part.mesh.maxXyz.set(Float.NEGATIVE_INFINITY);
@@ -287,7 +317,7 @@ public final class PmxDrawMesh implements AutoCloseable {
                     float width=shading.outlineBaseNative*shading.outlineSize[part.material]*part.edgeWeights[i];x+=nx*width;y+=ny*width;z+=nz*width;
                 }
                 // PMX-DEFORM1: previous rendered local position; the negative weight flag never invokes skinning.
-                float px=part.handle==null?x:part.vertices.getFloat(i*part.stride),py=part.handle==null?y:part.vertices.getFloat(i*part.stride+4),pz=part.handle==null?z:part.vertices.getFloat(i*part.stride+8);
+                float px=!part.continuous?x:part.vertices.getFloat(i*part.stride),py=!part.continuous?y:part.vertices.getFloat(i*part.stride+4),pz=!part.continuous?z:part.vertices.getFloat(i*part.stride+8);
                 part.vertices.putFloat(x).putFloat(y).putFloat(z);
                 float sign=part.hull&&!shading.shaderOutline?-1f:1f;
                 part.vertices.putFloat(normals.getFloat(source * 12)*sign)
@@ -310,9 +340,13 @@ public final class PmxDrawMesh implements AutoCloseable {
             try { HANDLE.set(part.mesh.vb, part.handle); }
             catch (IllegalAccessException e) { throw new IllegalStateException(e); }
             part.mesh.modificationCount++;
+            part.continuous=true;
         }
         uploaded = true;
     }
+
+    private boolean colourVisible(Part part,float[] m){int at=part.material*12;return(m[at+3]>0||(part.original!=null&&part.original.sourceAlphaIndependent()&&appearance.gf2SourceZeroAlphaVisible(part.material)))&&m[at+7]+m[at+11]>0;}
+    private static boolean shadowVisible(Part part,float[] m){int at=part.material*12;return m[at+3]>0&&m[at+7]+m[at+11]>0;}
 
     public int submit(ModelDraws draws, Matrix4f placement) {
         PmxDrawMesh selected=renderMesh();if(selected!=this){return selected.submit(draws,placement);}
@@ -354,10 +388,7 @@ public final class PmxDrawMesh implements AutoCloseable {
         if (!uploaded || closed) throw new IllegalStateException("Mesh not ready");
         for (Part part:parts) if (part.texture==null || !part.texture.isReady()) throw new IllegalStateException("Texture not ready");
         Vector3f low=new Vector3f(Float.POSITIVE_INFINITY),high=new Vector3f(Float.NEGATIVE_INFINITY);
-        Vector3f corner=new Vector3f();
-        for (int i=0;i<frame.positions.length;i+=3) {
-            corner.set(frame.positions[i],frame.positions[i+1],frame.positions[i+2]);low.min(corner);high.max(corner);
-        }
+        frame.includeBounds(low,high);
         int first=draws.count();
         int shadingPalette=frame.shadingHead==null?-1:draws.palette(frame.shadingHead,frame.shadingHead.length/12);
         boolean useOutline=outlineEnabled()&&frame.shadingHead!=null&&frame.shadingHead.length>15&&frame.shadingHead[12]==shading.modelToken0&&frame.shadingHead[13]==shading.modelToken1&&frame.shadingHead[15]>0;
@@ -368,9 +399,7 @@ public final class PmxDrawMesh implements AutoCloseable {
         for (Part part:parts) {
             if(part.fringe&&!useFringe)continue;
             if(part.hull&&(!useOutline||!part.hullReady))continue;
-            int at=part.material*12;float[] m=frame.materials;
-            boolean colour=(m[at+3]>0||(part.original!=null&&part.original.sourceAlphaIndependent()&&appearance.gf2SourceZeroAlphaVisible(part.material)))&&m[at+7]+m[at+11]>0;
-            boolean shadow=shadowMaterials[at+3]>0&&shadowMaterials[at+7]+shadowMaterials[at+11]>0;
+            boolean colour=colourVisible(part,frame.materials),shadow=shadowVisible(part,shadowMaterials);
             if((part.hull||part.fringe)&&!colour)continue;
             if(!colour&&!shadow)continue;
             int cull=part.fringe?1029:part.hull?1028:doubleSided==null?part.cull:doubleSided[part.material]?0:1029;

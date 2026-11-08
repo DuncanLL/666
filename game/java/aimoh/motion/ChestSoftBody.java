@@ -117,6 +117,7 @@ public final class ChestSoftBody implements AutoCloseable {
         try{
             int result=(int)tune.invokeExact(handle,(float)Math.clamp(.75-.67*next[0]/100,.08,.75),(float)(.035+.085*next[1]/100),(float)(.6+.8*next[2]/100));
             if(result!=0)throw new IllegalStateException("Chest parameter update failed");
+            if(values[3]==0&&next[3]>0)reset=true;
             System.arraycopy(next,0,values,0,values.length);
         }catch(Throwable e){throw new IllegalStateException("Chest parameter update failed",e);}
     }
@@ -125,7 +126,7 @@ public final class ChestSoftBody implements AutoCloseable {
     public void enabled(boolean value){if(enabled!=value){enabled=value;reset=true;}}
     public void reset(){reset=true;failed=false;error="";}
     public void evaluate(float seconds) {
-        if(!enabled||failed||closed)return;
+        if(!enabled||failed||closed||values[3]==0)return;
         try{
             palette.clear();if(api.CopySkinningMatricesToBuffer(model,palette)!=palette.capacity()/64)throw new IllegalStateException("Incomplete chest palette");
             for(int r=0;r<regions.length;r++)for(int i=0;i<16;i++){

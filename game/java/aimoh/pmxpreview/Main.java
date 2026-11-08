@@ -33,7 +33,7 @@ public class Main {
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.10 validated PMX deform weights; shared wardrobe, chest physics and pose boundary retained"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.12 ready-room resource recovery; 0.3.11 physics and streaming retained"); }
 
     private static void refreshPoseOwners() {
         IdentityHashMap<IsoGameCharacter,SourcePoseGuard.AnimationPose> next=new IdentityHashMap<>();
