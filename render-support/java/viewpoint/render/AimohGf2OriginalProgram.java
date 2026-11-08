@@ -29,10 +29,11 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
     }
     /** PackSource supplies already verified UTF-8 programs; no runtime files. */
     public AimohGf2OriginalProgram(String vertex,String fragment,String vertexHash,String fragmentHash) {
-        var stages=AimohGf2Rc2Vertex.adapt(vertex,fragment);vertex=stages.vertex();fragment=stages.fragment();
+        var stages=AimohGf2Rc2Vertex.stages(vertex,fragment);vertex=stages.vertex();fragment=stages.fragment();
         this.vertexHash=vertexHash;this.fragmentHash=fragmentHash;
         gl=GlProgram.fromSources("GF2 original "+vertexHash.substring(0,12)+"/"+fragmentHash.substring(0,12),
             new GlProgram.Sources(vertex,null,null,null,fragment),Map.of(),Map.of(),List.of());
+        if(gl.id()==0){gl.delete();throw new IllegalStateException("Original GF2 program link failed "+vertexHash+"/"+fragmentHash+": "+GlProgram.lastError());}
         int previous=GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);
         try {
             gl.use();int maxBytes=GL11.glGetInteger(GL31.GL_MAX_UNIFORM_BLOCK_SIZE);
@@ -91,7 +92,6 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
         gl.set("gf2PreviousEye",eye[0],eye[1],eye[2]);gl.set("gf2ClipJitter",jitter[0],jitter[1]);
         gl.setInt("gf2HistoryEnabled",history?1:0);
     }
-    public void renderScale(float value){gl.set("gf2ClipScale",value);}
     private int[] cachedSourceOutputs;
     public int[] sourceOutputs(){
         if(cachedSourceOutputs!=null)return cachedSourceOutputs;

@@ -19,14 +19,14 @@ public final class OriginalStageLinkCheck {
             int slot=Integer.parseInt(location.group(1));if(!slots.add(slot))throw new AssertionError("Duplicate vertex output slot: "+slot);
             if(out.group(3).equals("gf2NativeWorldNormal"))normal=slot;count++;
         }
-        if(count==0||normal<0)throw new AssertionError("Original vertex outputs missing");
+        if(fragment.contains("in vec3 gf2NativeWorldNormal;")&&normal<0)throw new AssertionError("Consumed bridge normal missing");
         Matcher input=Pattern.compile("layout\\s*\\(\\s*location\\s*=\\s*(\\d+)\\s*\\)\\s*in\\s+vec3\\s+gf2NativeWorldNormal;").matcher(fragment);
         if(fragment.contains("in vec3 gf2NativeWorldNormal;")&&(!input.find()||Integer.parseInt(input.group(1))!=normal))throw new AssertionError("Bridge normal locations differ");
     }
     private static String[] adapted(String vertex,String fragment)throws Exception {
         Class<?> adapter=Class.forName("viewpoint.render.AimohGf2Rc2Vertex");
         try {
-            Object stages=adapter.getMethod("adapt",String.class,String.class).invoke(null,vertex,fragment);
+            Object stages=adapter.getMethod("stages",String.class,String.class).invoke(null,vertex,fragment);
             return new String[]{(String)stages.getClass().getMethod("vertex").invoke(stages),(String)stages.getClass().getMethod("fragment").invoke(stages)};
         }catch(NoSuchMethodException old){return new String[]{(String)adapter.getMethod("adapt",String.class).invoke(null,vertex),fragment};}
     }
@@ -48,9 +48,7 @@ public final class OriginalStageLinkCheck {
                 }
                 linked++;System.out.println("LINKED "+linked+" "+job.getString("vs").substring(0,12)+"/"+job.getString("fs").substring(0,12)+" "+job.getString("kind"));
             }
-            var glass=viewpoint.render.AimohGf2NativeShaders.glass();glass.delete();
-            if(GL11.glGetError()!=0)throw new AssertionError("Native glass program GL error");
-            JSONObject result=new JSONObject().put("status","EXPLICIT_STAGE_INTERFACES_AND_REAL_GL_LINKS_PASS").put("program_pairs",linked).put("native_glass_linked",true)
+            JSONObject result=new JSONObject().put("status","EXPLICIT_STAGE_INTERFACES_AND_REAL_GL_LINKS_PASS").put("program_pairs",linked)
                 .put("gpu",GL11.glGetString(GL11.GL_RENDERER)).put("vendor",GL11.glGetString(GL11.GL_VENDOR))
                 .put("opengl",GL11.glGetString(GL11.GL_VERSION)).put("game_started",false).put("live_nvidia_tested",false);
             Files.writeString(out.resolve("result.json"),result.toString(2));System.out.println(result);

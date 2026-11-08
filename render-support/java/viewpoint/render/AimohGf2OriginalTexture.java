@@ -13,6 +13,9 @@ public final class AimohGf2OriginalTexture implements AutoCloseable {
     public AimohGf2OriginalTexture(String resource,JSONObject metadata,ByteBuffer originalPayload){
         this.resource=resource;width=metadata.getInt("m_Width");height=metadata.getInt("m_Height");levels=metadata.getInt("m_MipCount");
         int format=metadata.getInt("m_TextureFormat");boolean srgb=metadata.getInt("m_ColorSpace")==1;
+        var caps=GL.getCapabilities();
+        if(format==25&&!caps.OpenGL42&&!caps.GL_ARB_texture_compression_bptc)throw new IllegalStateException("GF2 BC7/BPTC texture unsupported by this driver: "+resource);
+        if(format==10&&!caps.GL_EXT_texture_compression_s3tc)throw new IllegalStateException("GF2 DXT1/S3TC texture unsupported by this driver: "+resource);
         int internal=switch(format){
             case 25->srgb?GL42.GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM:GL42.GL_COMPRESSED_RGBA_BPTC_UNORM;
             case 10->srgb?EXTTextureSRGB.GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT:EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
@@ -20,8 +23,9 @@ public final class AimohGf2OriginalTexture implements AutoCloseable {
             default->throw new IllegalArgumentException("Unmapped original texture format "+format+" "+resource);
         };
         if(width<=0||height<=0||levels<=0||!originalPayload.isDirect())throw new IllegalArgumentException("Invalid original texture payload");
+        int maximum=GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);if(width>maximum||height>maximum||levels>32-Integer.numberOfLeadingZeros(Math.max(width,height)))throw new IllegalArgumentException("GF2 texture dimensions/mips exceed driver limits: "+width+"x"+height+" / "+levels+"; max="+maximum+"; "+resource);
         int old=GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);texture=GL11.glGenTextures();GL11.glBindTexture(GL11.GL_TEXTURE_2D,texture);
-        try {
+        try(AimohGf2UnpackScope unpack=new AimohGf2UnpackScope()) {
             int offset=originalPayload.position();
             for(int level=0;level<levels;level++){
                 int w=Math.max(1,width>>level),h=Math.max(1,height>>level);
@@ -45,6 +49,6 @@ public final class AimohGf2OriginalTexture implements AutoCloseable {
         } catch(RuntimeException e){GL11.glDeleteTextures(texture);throw e;}
         finally {GL11.glBindTexture(GL11.GL_TEXTURE_2D,old);}
     }
-    private static int wrap(int value){return switch(value){case 0->GL11.GL_REPEAT;case 1->GL12.GL_CLAMP_TO_EDGE;case 2->GL14.GL_MIRRORED_REPEAT;case 3->GL44.GL_MIRROR_CLAMP_TO_EDGE;default->throw new IllegalArgumentException("Original wrap mode "+value);};}
+    static int wrap(int value){return switch(value){case 0->GL11.GL_REPEAT;case 1->GL12.GL_CLAMP_TO_EDGE;case 2->GL14.GL_MIRRORED_REPEAT;case 3->GL44.GL_MIRROR_CLAMP_TO_EDGE;default->throw new IllegalArgumentException("Original wrap mode "+value);};}
     @Override public void close(){GL11.glDeleteTextures(texture);}
 }

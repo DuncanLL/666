@@ -14,37 +14,30 @@ public final class AimohGf2DepthStencil implements AutoCloseable {
     private final GlProgram copy;
     private final int vao;
     private int depth,framebuffer,width,height,sourceNormal,sourceMotion;
-    private final int motionProgram,motionViewport;
+    private boolean nativeMotionOutput;
     public AimohGf2DepthStencil(){
-        this(null);
-    }
-    public AimohGf2DepthStencil(String motionSource){
         copy=GlProgram.fromSources("GF2 source depth copy",new GlProgram.Sources(VERTEX,null,null,null,FRAGMENT),Map.of(),Map.of(),List.of());
         copy.sampler("sourceDepth",0);vao=GL30.glGenVertexArrays();
-        motionProgram=motionSource==null?0:AimohGf2EclipseEnvironment.compileCompute(motionSource);
-        motionViewport=motionProgram==0?-1:GL20.glGetUniformLocation(motionProgram,"sourceViewport");
-        if(motionProgram!=0){int old=GL11.glGetInteger(GL20.GL_CURRENT_PROGRAM);GL20.glUseProgram(motionProgram);GL20.glUniform1i(GL20.glGetUniformLocation(motionProgram,"sourceMotion"),0);GL20.glUseProgram(old);}
     }
     public int depthTexture(){return depth;}
     public int framebuffer(){return framebuffer;}
     public int sourceNormal(){return sourceNormal;}
     public int sourceMotion(){return sourceMotion;}
     public void ensureOriginalOutputs(){
+        ensureOriginalOutputs(false);
+    }
+    public void ensureOriginalOutputs(boolean nativeMotion){
         if(width<=0||height<=0)throw new IllegalStateException("Source output size missing");
-        if(sourceNormal!=0)return;
+        if(sourceNormal!=0){if(nativeMotionOutput!=nativeMotion)throw new IllegalStateException("Source MRT output contract changed without release");return;}
+        nativeMotionOutput=nativeMotion;
         int old=GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
-        sourceNormal=outputTexture(GL30.GL_RGBA16F);sourceMotion=outputTexture(GL30.GL_RG16F);GL11.glBindTexture(GL11.GL_TEXTURE_2D,old);
+        sourceNormal=outputTexture(GL30.GL_RGBA16F);sourceMotion=outputTexture(nativeMotion?GL30.GL_RGBA16F:GL30.GL_RG16F);GL11.glBindTexture(GL11.GL_TEXTURE_2D,old);
     }
     private int outputTexture(int format){
         int texture=GL11.glGenTextures();GL11.glBindTexture(GL11.GL_TEXTURE_2D,texture);GL42.glTexStorage2D(GL11.GL_TEXTURE_2D,1,format,width,height);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);return texture;
     }
-    public void decodeMotion(int nativeTarget){
-        if(sourceMotion==0||motionProgram==0||nativeTarget<=0)throw new IllegalStateException("Motion resources missing");
-        GL20.glUseProgram(motionProgram);GL20.glUniform2f(motionViewport,width,height);GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL11.GL_TEXTURE_2D,sourceMotion);GL33.glBindSampler(0,0);
-        GL42.glBindImageTexture(0,nativeTarget,0,false,0,GL15.GL_WRITE_ONLY,GL30.GL_RG16F);GL43.glDispatchCompute((width+15)/16,(height+15)/16,1);GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT);
-    }
-    public long extraBytes(){return (long)width*height*(sourceNormal==0?8:20);}
+    public long extraBytes(){return (long)width*height*(sourceNormal==0?8:nativeMotionOutput?24:20);}
     public void ensure(int w,int h){
         if(w<=0||h<=0)throw new IllegalArgumentException("Invalid source depth dimensions");
         if(w==width&&h==height)return;
@@ -102,5 +95,5 @@ public final class AimohGf2DepthStencil implements AutoCloseable {
     private static void enable(int capability,boolean on){if(on)GL11.glEnable(capability);else GL11.glDisable(capability);}
     private static void check(){int value=GL30.glCheckFramebufferStatus(GL30.GL_FRAMEBUFFER);if(value!=GL30.GL_FRAMEBUFFER_COMPLETE)throw new IllegalStateException("GF2 packed source FBO incomplete: "+Integer.toHexString(value));}
     private void deleteImages(){if(framebuffer!=0)GL30.glDeleteFramebuffers(framebuffer);if(depth!=0)GL11.glDeleteTextures(depth);if(sourceNormal!=0)GL11.glDeleteTextures(sourceNormal);if(sourceMotion!=0)GL11.glDeleteTextures(sourceMotion);framebuffer=depth=sourceNormal=sourceMotion=0;}
-    @Override public void close(){deleteImages();GL30.glDeleteVertexArrays(vao);copy.delete();if(motionProgram!=0)GL20.glDeleteProgram(motionProgram);}
+    @Override public void close(){deleteImages();GL30.glDeleteVertexArrays(vao);copy.delete();}
 }

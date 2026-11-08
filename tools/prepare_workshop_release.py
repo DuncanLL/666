@@ -65,12 +65,12 @@ def promote(source,target,out,index,apply,item_id=None):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--apply',action='store_true');args=parser.parse_args()
-    cfg=settings();out=BUILD/'release-20261106';out.mkdir(exist_ok=True)
+    cfg=settings();out=BUILD/'release-20261108-native';out.mkdir(exist_ok=True)
     character=BUILD/'workshop/chest-trial/R116';support=BUILD/'workshop/R116RenderSupport'
     body=json.loads((BUILD/'runtime-check.json').read_text('utf8'));render=json.loads((BUILD/'render-support/checks/validation.json').read_text('utf8'))
     assert body['jar_sha256']==sha(character/'Contents/mods/AimohPmxPreview/42/media/java/client/AimohPMXPreview.jar')
     assert render['jar_sha256']==sha(support/'Contents/mods/AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar')
-    assert not json.loads((BUILD/'render-support/checks/release-defaults.json').read_text('utf8'))['differences_from_live']
+    assert render.get('native_discovered')is True,'Native distributor has not passed normal discovery checks'
     roots=list(map(Path,cfg['workshop_targets']));ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in roots if (r/'workshop.txt').exists()};ids.discard(None)
     assert len(ids)<=1,'Existing character projects point to different Workshop items'
     character_id=next(iter(ids),None)

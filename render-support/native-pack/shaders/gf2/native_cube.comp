@@ -1,0 +1,86 @@
+#version 430
+#include "constants.glsl"
+#include "lib/camera.glsl"
+#include "lib/sky.glsl"
+uniform vec3 uSunDir;
+uniform vec3 uSunColor;
+uniform float uSunStrength;
+uniform sampler2D gf2ProbeScene;
+uniform sampler2D gf2ProbeAlbedo;
+uniform mat4 gf2ProbeViewProjection;
+uniform vec3 gf2ProbePosition;
+uniform float gf2ProbeSkyShare;
+uniform int gf2ProbeSceneOn;
+uniform samplerCube gf2ProbeRoom;
+uniform int gf2ProbeRoomOn;
+#include "lib/reflected.glsl"
+layout(local_size_x=8,local_size_y=8)in;
+layout(rgba16f,binding=0)writeonly uniform imageCube sourceCube;
+#include "gf2/cube_faces.glsl"
+// Current-frame Native scene radiance; no historical frame and no second scene render.
+// A miss retains the Native sky/environment. The source GBuffer marker is excluded to avoid self reflection.
+bool gf2ProbePoint(vec3 position,out vec2 uv,out float depth){
+    vec4 clip=gf2ProbeViewProjection*vec4(position,1.0);
+    if(clip.w<=uCamera.x)return false;
+    vec3 projected=clip.xyz/clip.w*.5+.5;uv=projected.xy;depth=projected.z;
+    return all(greaterThan(uv,vec2(.001)))&&all(lessThan(uv,vec2(.999)))&&depth>0.0&&depth<1.0;
+}
+float gf2ProbeEdge(vec2 uv){return smoothstep(0.0,.05,min(min(uv.x,uv.y),min(1.0-uv.x,1.0-uv.y)));}
+vec4 gf2ProbeSceneLight(vec3 direction){
+    if(gf2ProbeSceneOn==0)return vec4(0.0);
+    float previous=0.0;bool approached=false;
+    for(int step=0;step<32;step++){
+        float distance=.15*(exp2(float(step+1)*.2)-1.0)+.06;
+        vec2 uv;float rayDepth;
+        if(!gf2ProbePoint(gf2ProbePosition+direction*distance,uv,rayDepth)){previous=distance;approached=false;continue;}
+        ivec2 pixel=clamp(ivec2(uv*vec2(textureSize(uDepth,0))),ivec2(0),textureSize(uDepth,0)-1);
+        float sceneDepth=texelFetch(uDepth,pixel,0).r;
+        bool source=abs(texelFetch(gf2ProbeAlbedo,pixel,0).a-31.0/255.0)<.5/255.0;
+        if(sceneDepth>=1.0||source){previous=distance;approached=false;continue;}
+        float delta=linearDepth(rayDepth)-linearDepth(sceneDepth);
+        if(delta<0.0){previous=distance;approached=true;continue;}
+        if(approached){
+            float lo=previous,hi=distance;
+            for(int refine=0;refine<5;refine++){
+                float middle=(lo+hi)*.5;vec2 midUv;float midDepth;
+                if(!gf2ProbePoint(gf2ProbePosition+direction*middle,midUv,midDepth))break;
+                float observed=textureLod(uDepth,midUv,0).r;
+                if(midDepth>observed)hi=middle;else lo=middle;
+            }
+            if(!gf2ProbePoint(gf2ProbePosition+direction*((lo+hi)*.5),uv,rayDepth))break;
+            pixel=clamp(ivec2(uv*vec2(textureSize(uDepth,0))),ivec2(0),textureSize(uDepth,0)-1);
+            sceneDepth=texelFetch(uDepth,pixel,0).r;
+            if(abs(texelFetch(gf2ProbeAlbedo,pixel,0).a-31.0/255.0)<.5/255.0)break;
+            delta=linearDepth(rayDepth)-linearDepth(sceneDepth);
+        }
+        float thickness=max(.035,linearDepth(sceneDepth)*.03);
+        if(abs(delta)<thickness){
+            vec3 radiance=texelFetch(gf2ProbeScene,pixel,0).rgb;
+            if(!any(isnan(radiance))&&!any(isinf(radiance)))return vec4(max(radiance,vec3(0.0)),gf2ProbeEdge(uv));
+        }
+        previous=distance;approached=false;
+    }
+    // A visible sky aperture can contribute inside a room even when the actor's sky-share is zero.
+    vec4 far=gf2ProbeViewProjection*vec4(direction,0.0);
+    if(far.w>0.0){
+        vec2 uv=far.xy/far.w*.5+.5;
+        if(all(greaterThan(uv,vec2(.001)))&&all(lessThan(uv,vec2(.999)))&&textureLod(uDepth,uv,0).r>=1.0){
+            vec3 radiance=textureLod(gf2ProbeScene,uv,0).rgb;
+            if(!any(isnan(radiance))&&!any(isinf(radiance)))return vec4(max(radiance,vec3(0.0)),gf2ProbeEdge(uv));
+        }
+    }
+    return vec4(0.0);
+}
+void main(){
+    ivec3 at=ivec3(gl_GlobalInvocationID);int size=imageSize(sourceCube).x;
+    if(at.x>=size||at.y>=size||at.z>=6)return;
+    vec2 uv=(vec2(at.xy)+.5)/float(size)*2-1;
+    vec3 sourceDirection=normalize(cubeDirection(at.z,uv));
+    vec3 nativeDirection=sourceDirection*vec3(-1,1,-1);
+    vec3 sky=reflectedSky(gf2ProbePosition,nativeDirection,gf2ProbeRoomOn!=0?1.0:clamp(gf2ProbeSkyShare,0.0,1.0));
+    vec4 room=gf2ProbeRoomOn!=0?textureLod(gf2ProbeRoom,nativeDirection,0):vec4(0.0);
+    vec3 environment=room.a>.5?room.rgb:sky;
+    vec4 local=gf2ProbeSceneLight(nativeDirection);
+    // Sky visibility applies to sky only. Local room/lamp reflections must not be zeroed by an indoor sky-share.
+    imageStore(sourceCube,at,vec4(mix(environment,local.rgb,local.a),1));
+}

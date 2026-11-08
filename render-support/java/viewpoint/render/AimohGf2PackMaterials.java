@@ -14,6 +14,7 @@ import org.lwjgl.opengl.*;
  */
 public final class AimohGf2PackMaterials implements AutoCloseable {
     private final AimohGf2PackData data;
+    private final AimohGf2OriginalSamplers sourceSamplers;
     private final JSONObject[] materials;
     private final Map<String,JSONObject> programMetadata=new HashMap<>();
     private final Map<String,Map<String,String>> variants=new HashMap<>();
@@ -32,7 +33,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     public int textureUploads,attributeUploads;
 
     public AimohGf2PackMaterials(AimohGf2PackData data)throws IOException {
-        this.data=data;JSONArray source=data.manifest.getJSONArray("materials");materials=new JSONObject[source.length()];
+        this.data=data;sourceSamplers=new AimohGf2OriginalSamplers(data.manifest.getJSONObject("textures"));JSONArray source=data.manifest.getJSONArray("materials");materials=new JSONObject[source.length()];
         for(Object value:data.manifest.getJSONArray("programs")){
             JSONObject row=(JSONObject)value;Map<String,String> selected=variants.computeIfAbsent(row.getString("material")+"\n"+row.getString("pass"),k->new HashMap<>());
             JSONArray choices=row.getJSONArray("programs");if(choices.length()!=1)throw new IllegalArgumentException("Source hardware variant is not unique");
@@ -129,7 +130,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
         Integer texture=defaults.get(name);if(texture!=null)return texture;
         float[] color=switch(name){case "white"->new float[]{1,1,1,1};case "black"->new float[]{0,0,0,1};case "gray"->new float[]{.5f,.5f,.5f,1};case "bump"->new float[]{.5f,.5f,1,1};case "red"->new float[]{1,0,0,1};default->throw new IllegalArgumentException("Unmapped source default texture "+name);};
         int id=GL45.glCreateTextures(GL11.GL_TEXTURE_2D);defaults.put(name,id);GL45.glTextureStorage2D(id,1,GL30.GL_RGBA32F,1,1);
-        GL45.glTextureSubImage2D(id,0,0,0,1,1,GL11.GL_RGBA,GL11.GL_FLOAT,color);GL45.glTextureParameteri(id,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR);GL45.glTextureParameteri(id,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR);return id;
+        try(AimohGf2UnpackScope unpack=new AimohGf2UnpackScope()){GL45.glTextureSubImage2D(id,0,0,0,1,1,GL11.GL_RGBA,GL11.GL_FLOAT,color);}GL45.glTextureParameteri(id,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR);GL45.glTextureParameteri(id,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR);return id;
     }
 
     public Map<Integer,int[]> textureBindings(AimohGf2OriginalProgram program,int materialId,int cube,int shadow,int sampler)throws IOException {
@@ -148,6 +149,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
                 else if(slot.has("resource"))id=texture(slot.getString("resource")).texture;
                 else id=defaultTexture(slot.getJSONObject("unassigned_shader_default").getString("m_DefaultName"));
             }
+            if(!name.equals("_MainLightShadowmapTexture"))sourceSampler=sourceSamplers.sampler(programMetadata.get(sha),material,registerKey);
             if(id<=0)throw new IllegalArgumentException("Source texture target absent: "+name);result.put(registerKey,new int[]{target,id,sourceSampler});
         }
         bindings.put(key,result);return result;
@@ -158,7 +160,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
         int width=model.getInt("texture_width"),height=model.getInt("texture_height");byte[] bytes=data.bytes(model.getJSONObject("attributes"));
         if((long)width*height*16!=bytes.length)throw new IllegalArgumentException("Source attribute texture dimensions differ");
         int texture=GL45.glCreateTextures(GL11.GL_TEXTURE_2D);attributes.put(key,texture);GL45.glTextureStorage2D(texture,1,GL30.GL_RGBA32F,width,height);
-        GL45.glTextureSubImage2D(texture,0,0,0,width,height,GL11.GL_RGBA,GL11.GL_FLOAT,direct(bytes));GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);attributeUploads++;return texture;
+        try(AimohGf2UnpackScope unpack=new AimohGf2UnpackScope()){GL45.glTextureSubImage2D(texture,0,0,0,width,height,GL11.GL_RGBA,GL11.GL_FLOAT,direct(bytes));}GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);attributeUploads++;return texture;
     }
 
     /** Explicit load-time diagnostic, never called by ordinary frame submission. */
@@ -168,6 +170,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
 
     @Override public void close(){
         if(closed)return;closed=true;
+        sourceSamplers.close();
         for(AimohGf2OriginalProgram program:programs.values())program.close();for(AimohGf2OriginalTexture texture:textures.values())texture.close();
         for(int buffer:materialBuffers.values())GL15.glDeleteBuffers(buffer);for(int texture:defaults.values())GL11.glDeleteTextures(texture);for(int texture:attributes.values())GL11.glDeleteTextures(texture);
         programs.clear();textures.clear();materialBuffers.clear();defaults.clear();attributes.clear();states.clear();bindings.clear();

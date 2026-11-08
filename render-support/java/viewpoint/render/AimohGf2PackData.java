@@ -23,8 +23,9 @@ public final class AimohGf2PackData {
     private final Map<String,JSONObject> resources=new LinkedHashMap<>();
     private final Map<Long,JSONObject> models=new LinkedHashMap<>();
 
-    public AimohGf2PackData(PackSource source)throws IOException {
-        this.source=source;
+    public AimohGf2PackData(PackSource source)throws IOException {this((viewpoint.iris.SourceFiles)source);}
+    public AimohGf2PackData(viewpoint.iris.SourceFiles source)throws IOException {
+        this.source=source instanceof PackSource packed?packed:null;
         manifest=readManifest(source);
         int format=manifest.getInt("format");
         if((format!=1&&format!=2&&format!=3&&format!=EXTERNAL_MOD_RESOURCE_FORMAT)||!"gf2-original-eclipse".equals(manifest.getString("pipeline")))
@@ -36,6 +37,9 @@ public final class AimohGf2PackData {
         identity=manifest.getString("data_identity");
         if(!identity.matches("[a-f0-9]{64}"))throw new IllegalArgumentException("Invalid GF2 data identity");
         index(manifest);
+        for(Object rowValue:manifest.getJSONArray("programs")){
+            JSONObject row=(JSONObject)rowValue;for(Object programValue:row.getJSONArray("programs"))if(((JSONObject)programValue).optJSONArray("samplers")==null)throw new IllegalArgumentException("R116 Native needs updated character MOD sampler metadata; update the R116 character Workshop item together with render support: "+row.getString("material")+" / "+row.getString("pass"));
+        }
         JSONArray materials=manifest.getJSONArray("materials");
         for(int i=0;i<materials.length();i++)if(materials.getJSONObject(i).getInt("id")!=i)
             throw new IllegalArgumentException("Non-contiguous source material identity");
@@ -53,7 +57,7 @@ public final class AimohGf2PackData {
         }
     }
 
-    private static JSONObject readManifest(PackSource source)throws IOException{
+    private static JSONObject readManifest(viewpoint.iris.SourceFiles source)throws IOException{
         String text=source.read("gf2/manifest.json");JSONObject root=new JSONObject(text);
         if(root.getInt("format")!=EXTERNAL_CHARACTER_CATALOG_FORMAT)return root;
         if(!"gf2-original-eclipse".equals(root.getString("pipeline")))throw new IllegalArgumentException("Unknown renderer bootstrap");
@@ -122,6 +126,7 @@ public final class AimohGf2PackData {
             if(Files.size(file)!=expected.getLong("bytes"))throw new IOException("GF2 external resource size differs: "+relative);
             value=Files.readAllBytes(file);
         }else{
+            if(source==null)throw new IOException("Native character resources must be external in the MOD: "+path);
             value=source.readBytes(path);
             if(value==null)throw new IOException("GF2 packed resource missing: "+path);
         }

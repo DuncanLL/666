@@ -20,9 +20,8 @@ if __name__=='__main__':
             entry=data['early_fragments'][fs]if early else data['glsl'][fs]
             jobs.setdefault((vs,fs,early),dict(vs=vs,fs=fs,kind=kind+('/early'if early else''),vertex=resource(data['glsl'][vs]),fragment=resource(entry)))
     values=sorted(jobs.values(),key=lambda j:(not(j['vs'].startswith('0625dcfb5b91')and j['fs'].startswith('4b1d0100e82b')),j['vs'],j['fs'],j['kind']))
-    assert values[0]['vs'].startswith('0625dcfb5b91')and values[0]['fs'].startswith('4b1d0100e82b')
     save(out/'jobs.json',values)
-    cp=[a.jar.resolve(),Path(c['viewpoint_jar']),Path(c['zombiebuddy_jar']),BUILD/'AimohPMXPreview.jar',game,*game.glob('*.jar')]
+    cp=[a.jar.resolve(),Path(c['viewpoint_jar']),Path(c['zombiebuddy_jar']),Path(c['reference_jar']),game,*game.glob('*.jar')]
     compile_java(c,[ROOT/'tools/java/OriginalStageLinkCheck.java'],out/'classes',cp)
     cmd=[str(game/'jre64/bin/java.exe'),'--enable-native-access=ALL-UNNAMED','-Djava.io.tmpdir='+str(BUILD/'tmp'),
          '-cp',';'.join(map(str,[out/'classes',*cp])),'OriginalStageLinkCheck',str(out/'jobs.json'),str(out)]

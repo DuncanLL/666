@@ -2,7 +2,7 @@
 
 Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建发布流程从当前 R116 工坊候选整理而来，工作台不在本仓库内。
 
-**当前接续入口：[2026-11-07当日收口](docs/handoffs/2026-11-07.md)。人物菜单0.3.4，渲染支持0.1.2；阶段收口，未全部解决，等待反馈方NVIDIA实机结果。** 详细问题与验证见[维护记录索引](docs/README.md)。
+**当前接续入口：[2026-11-08 Native分发迁移](docs/handoffs/2026-11-08-native.md)。人物菜单0.3.4不变，渲染支持0.2.0改为VP Native主线；NVIDIA与真实订阅冷启动仍待外测。** 详细问题与验证见[维护记录索引](docs/README.md)。
 
 ## 目录
 
@@ -12,7 +12,7 @@ Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建�
 | `game/mod` | 模组信息、Lua、整备室资料、声音定义和人物配置 |
 | `native/mmd-engine` | 当前 MC-MMD 上游派生的原生引擎，包含固定的 PMX parser/Bullet 源码 |
 | `native/ozz` | 现用 Ozz 握持求解与薄 C 接口 |
-| `render-support` | 冻结的 Eclipse 渲染接入、自动分发入口及发布默认值 |
+| `render-support` | VP Native人物渲染接入、自动分发入口与自有适配着色代码 |
 | `tools` | 构建、工坊候选生成与组件检查 |
 | `resources/manifest.json` | 仓库外人物素材的相对路径、大小、SHA-256 |
 | `provenance`、`licenses` | 来源、上游版本、导入记录和第三方许可 |
@@ -29,7 +29,7 @@ python tools/build_chest_trial.py
 python tools/check_runtime.py build/workshop/chest-trial/R116
 ```
 
-Eclipse 配套工坊项目独立生成，名称为 `R116 渲染支持 光影分发`，内部 ID 保留 `AimohGF2Eclipse`：
+Native 配套工坊项目独立生成，名称为 `R116 渲染支持 光影分发`，内部 ID 保留 `AimohGF2Eclipse`：
 
 ```powershell
 python tools/build_render_support.py
@@ -37,7 +37,7 @@ python tools/package_render_support.py
 python tools/check_render_support.py
 ```
 
-光影和原有完整渲染代码来自 `provenance/render-support.json` 冻结输入。ZIP 封装于 JAR，正常 Java MOD 启动后安装到真实玩家目录，再由玩家在 VP 选择；无需修改 VP 文件或写作者配置。两份发布记录见 `docs/RELEASE-2026-11-06.md`。
+Native来源与兼容基线见 `provenance/render-support.json`。自有Native资源包内嵌于JAR，正常Java MOD启动后自动安装为 `viewpoint-shaderpacks/Aimoh-Native-GF2/`，由玩家在VP选择；不分发VP原类，不写作者图形配置。原游程序和贴图仍由人物MOD提供，不进Git。分发器保留内部ID与工坊项目，Eclipse载荷和挂接已移除；历史版可从Git历史恢复。
 
 当前人物候选在 `build/workshop/chest-trial/R116`，独立光影候选在 `build/workshop/R116RenderSupport`；基础 `package_workshop.py` 的默认输出仍是 `build/workshop/R116`。脚本不会启动游戏或执行 Steam 上传，安装/作者项目提升使用独立命令。输出包含完整人物资料；人物文件从本机资源目录读回，不需要下载 GitHub 仓库的玩家参与构建。
 

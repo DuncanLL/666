@@ -22,9 +22,10 @@ public final class AimohGf2GlScope implements AutoCloseable {
     private final int[] units,slots;
     private final int indirectBuffer=GL11.glGetInteger(GL40.GL_DRAW_INDIRECT_BUFFER_BINDING);
     public AimohGf2GlScope(){this(false);}
-    public AimohGf2GlScope(boolean glass){
+    public AimohGf2GlScope(boolean glass){this(glass,glass?3:1);}
+    AimohGf2GlScope(boolean glass,int imageUnits){
         units=glass?GLASS_UNITS:UNITS;slots=glass?GLASS_SLOTS:SSBO_SLOTS;
-        textures=new int[units.length][5];ssbos=new int[slots.length];ssboStart=new long[slots.length];ssboSize=new long[slots.length];image=new int[glass?18:6];
+        textures=new int[units.length][5];ssbos=new int[slots.length];ssboStart=new long[slots.length];ssboSize=new long[slots.length];image=new int[imageUnits*6];
         GL11.glGetIntegerv(GL11.GL_VIEWPORT,viewport);GL11.glGetIntegerv(GL11.GL_SCISSOR_BOX,box);GL11.glGetDoublev(GL11.GL_DEPTH_RANGE,depthRange);
         int[] sf={GL11.GL_STENCIL_FUNC,GL11.GL_STENCIL_REF,GL11.GL_STENCIL_VALUE_MASK,GL11.GL_STENCIL_WRITEMASK,GL11.GL_STENCIL_FAIL,GL11.GL_STENCIL_PASS_DEPTH_FAIL,GL11.GL_STENCIL_PASS_DEPTH_PASS};
         int[] sb={GL20.GL_STENCIL_BACK_FUNC,GL20.GL_STENCIL_BACK_REF,GL20.GL_STENCIL_BACK_VALUE_MASK,GL20.GL_STENCIL_BACK_WRITEMASK,GL20.GL_STENCIL_BACK_FAIL,GL20.GL_STENCIL_BACK_PASS_DEPTH_FAIL,GL20.GL_STENCIL_BACK_PASS_DEPTH_PASS};

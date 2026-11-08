@@ -13,21 +13,30 @@ if __name__=='__main__':
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(jar)as z:
         assert not [n for n in z.namelist()if n.endswith('.class')and n in stock]
-        payload=z.read('aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip')
+        payload=z.read('aimoh/gf2/bridge/Aimoh-Native-GF2.zip');assert 'aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'not in z.namelist()
     import hashlib
     build=json.loads((BUILD/'render-support/build.json').read_text('utf8'))
     assert hashlib.sha256(payload).hexdigest()==build['shader_sha256']
     out=BUILD/'render-support/checks';out.mkdir(parents=True,exist_ok=True)
-    cp=[jar,BUILD/'AimohPMXPreview.jar',host,cfg['zombiebuddy_jar'],Path(cfg['render_support_test_agent']),*game.glob('*.jar')]
+    agent=out/'test-agent.jar'
+    compile_java(cfg,[ROOT/'tools/java/RenderSupportTestAgent.java'],out/'agent-classes',[jar,host,cfg['zombiebuddy_jar'],*game.glob('*.jar')])
+    with zipfile.ZipFile(agent,'w',zipfile.ZIP_DEFLATED)as z:
+        z.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: RenderSupportTestAgent\nCan-Retransform-Classes: true\n\n')
+        z.write(out/'agent-classes/RenderSupportTestAgent.class','RenderSupportTestAgent.class')
+    cp=[jar,Path(cfg['reference_jar']),host,cfg['zombiebuddy_jar'],agent,*game.glob('*.jar')]
     compile_java(cfg,[ROOT/'tools/java/RenderSupportStartupCheck.java'],out/'classes',cp)
     command=[str(game/'jre64/bin/java.exe'),'-ea','-Xverify:all','--enable-native-access=ALL-UNNAMED',
              '-Duser.home='+str(out/'home'),'-Djava.io.tmpdir='+str(BUILD/'tmp'),
-             '-javaagent:'+cfg['render_support_test_agent']+'='+str(jar),'-cp',
+             '-javaagent:'+str(agent)+'='+str(jar),'-cp',
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out)]
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
     (out/'startup.log').write_text(result.stdout+result.stderr,'utf8');result.check_returncode()
-    assert 'NORMAL_LOADER_EMBEDDED_INSTALL_DISCOVERY_PASS'in result.stdout
+    assert 'NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS'in result.stdout
     assert sha(host)==before,'Official VP modified'
+    compile_java(cfg,[ROOT/'tools/java/RelocatedResourceChecks.java'],out/'resource-classes',cp)
+    resource_command=[str(game/'jre64/bin/java.exe'),'-ea','-Dstdout.encoding=UTF-8','-Dstderr.encoding=UTF-8','-cp',';'.join(map(str,[out/'resource-classes',*cp])),'RelocatedResourceChecks',str(Path(cfg['asset_root'])/'42/media'),str(ROOT/'render-support/native-pack'),str(out/'resources.json')]
+    resource_result=subprocess.run(resource_command,env=environment(),cwd=game,capture_output=True,timeout=90)
+    (out/'resources.log').write_bytes(resource_result.stdout+resource_result.stderr);resource_result.check_returncode()
     # Reuse the game's actual Workshop validator, without starting the game.
     import sys
     sys.path.insert(0,cfg['python_dependencies']);import jpype

@@ -2,7 +2,7 @@
 
 - 本仓库维护游戏人物 MOD、其独立原生核心、已冻结的 Eclipse 渲染支持与构建发布工具。工作台不纳入；不要恢复旧 FBX 人物卡流程。
 - `game/java` 是当前游戏 Java 实现；`game/mod` 是 Lua、声音定义、菜单和人物配置；`native` 是实际使用的 Rust/Bullet 与 Ozz 源码。
-- `render-support` 仅维护用户认可的 Eclipse 配套分发版本，沿用 `AimohGF2Eclipse` 内部 ID；显示名为 `R116 渲染支持 光影分发`，无可见简介。另一对话的 Native 开发不自动合入本发布线。
+- `render-support` 按用户2026-11-08最新指示改为 VP Native＋少前2人物渲染分发主线，移除 Eclipse 载荷与挂接；沿用 `AimohGF2Eclipse` 内部 ID 和工坊项目3834707439以保护订阅关系，显示名仍为 `R116 渲染支持 光影分发`，无可见简介。历史Eclipse从Git历史和本地回退恢复，不自动上传工坊。
 - 原生核心直接来源于已记录的 MC-MMD-rust 上游。第三方来源与许可保留在 `provenance`、`licenses`；不导入 PZMMD 作者分支或其成品核心。
 - 模型、贴图、语音及原游着色资源不进 Git，按 `resources/manifest.json` 读回；本机路径只放被忽略的 `.local/paths.json`。
 - `build` 是可重新生成的本地输出，不提交二进制、日志、缓存、游戏或存档。

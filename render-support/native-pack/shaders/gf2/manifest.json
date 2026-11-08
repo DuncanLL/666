@@ -1,0 +1,41 @@
+{
+  "format": 6,
+  "pipeline": "gf2-original-eclipse",
+  "runtime_ready": true,
+  "native_backend": "VP Native Default; independent development candidate, exposure/motion/indoor acceptance pending",
+  "features": {
+    "external_mod_resources": true,
+    "native_camera_exposure_units": true,
+    "native_sun_visibility": true,
+    "authored_eye_add_exposure_adapter": false
+  },
+  "original_camera_fill": {
+    "scope": "Original two-frame observed camera-relative directional fill; shared source input, not per-character tuning. Runtime controller/all-scene enable policy not recovered.",
+    "evidence_sha256": "dc87209f8a8a0eed9f1b1697c444ec987df515b0f9164963c493e1f603d7132d",
+    "camera_local_direction": [
+      0.30997553925190696,
+      0.4226181495333386,
+      -0.8516507880290524
+    ],
+    "color": [
+      0.699999988079071,
+      0.6942809820175171,
+      0.6841813325881958,
+      0.699999988079071
+    ],
+    "unity_camera_to_world_z_parity": -1,
+    "capture_events": [
+      6865,
+      2336
+    ]
+  },
+  "character_catalog": {
+    "path": "media/aimoh_gf2/characters.json",
+    "format": 1
+  },
+  "addon_runtime": {
+    "id": "AimohGF2Eclipse",
+    "format": 1,
+    "backend": "native"
+  }
+}

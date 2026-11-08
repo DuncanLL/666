@@ -1,0 +1,25 @@
+#version 430
+#include "gf2/cube_faces.glsl"
+// Karis, Real Shading in UE4 (SIGGRAPH 2013), split-sum GGX radiance convolution.
+// GF2's actual skin consumer uses LOD=RMO.r*6, not Unity's optional 1.7/.7 remapping.
+layout(local_size_x=8,local_size_y=8)in;
+layout(rgba16f,binding=0)writeonly uniform imageCube filteredCube;
+uniform samplerCube nativeRawCube;
+uniform float sourcePerceptualRoughness;
+const uint SAMPLE_COUNT=128u;
+const float PI=3.141592653589793;
+void main(){
+    ivec3 at=ivec3(gl_GlobalInvocationID);int side=imageSize(filteredCube).x;
+    if(at.x>=side||at.y>=side||at.z>=6)return;
+    vec3 n=normalize(cubeDirection(at.z,(vec2(at.xy)+.5)/float(side)*2-1));
+    vec3 axis=abs(n.z)<.999?vec3(0,0,1):vec3(1,0,0),t=normalize(cross(axis,n)),b=cross(n,t);
+    float a=sourcePerceptualRoughness*sourcePerceptualRoughness,a2=a*a;
+    vec3 sum=vec3(0);float weights=0;
+    for(uint i=0u;i<SAMPLE_COUNT;i++){
+        float u=float(bitfieldReverse(i))*2.3283064365386963e-10,phi=2*PI*float(i)/float(SAMPLE_COUNT);
+        float c=sqrt((1-u)/(1+(a2-1)*u)),s=sqrt(max(1-c*c,0));
+        vec3 h=t*(cos(phi)*s)+b*(sin(phi)*s)+n*c,l=2*dot(n,h)*h-n;
+        float w=max(dot(n,l),0);if(w>0){sum+=textureLod(nativeRawCube,l,0).rgb*w;weights+=w;}
+    }
+    imageStore(filteredCube,at,vec4(sum/max(weights,1e-9),1));
+}
