@@ -23,6 +23,15 @@ if __name__=='__main__':
     game=Path(cfg['game_root']);out=BUILD/'render-support';out.mkdir(parents=True,exist_ok=True);classes=out/('classes-'+origin['release_version']);sources=sorted((ROOT/'render-support/java').rglob('*.java'))
     compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
     packroot=ROOT/'render-support/native-pack';payload=io.BytesIO();shader_sources=sorted(p for p in packroot.rglob('*')if p.is_file())
+    # Cross-driver guard: include legacy names accepted by some modern compilers.
+    import re
+    reserved='packed common partition active asm class union enum typedef template this resource goto inline noinline public static extern external interface long short half fixed unsigned superp input output hvec2 hvec3 hvec4 fvec2 fvec3 fvec4 filter sizeof cast namespace using sampler3DRect'.split()
+    unsafe_declaration=re.compile(r'\b(?:float|double|bool|int|uint|[biu]?vec[234]|mat[234](?:x[234])?)\s+('+ '|'.join(reserved)+r')\b')
+    for source in shader_sources:
+        if source.suffix not in ('.glsl','.comp','.frag','.vert','.geom'):continue
+        code=re.sub(r'/\*.*?\*/|//[^\n]*','',source.read_text('utf8'),flags=re.S)
+        invalid=unsafe_declaration.search(code)
+        assert invalid is None,'Non-portable GLSL identifier '+invalid.group(1)+' in '+str(source)
     profile=json.loads((packroot/'shaders/gf2/manifest.json').read_text('utf8'))['original_display_profile'];assert profile['sha256']==resources['sha256']and profile['width']*profile['height']*8==resources['bytes']
     with zipfile.ZipFile(payload,'w',zipfile.ZIP_DEFLATED)as z:
         for p in shader_sources:write(z,p.relative_to(packroot).as_posix(),p.read_bytes())

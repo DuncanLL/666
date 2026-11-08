@@ -9,9 +9,9 @@ vec3 gf2NativeBouncedIrradiance;
 void gf2NativeInitIndirect(vec3 pos){
     gf2NativeBouncedIrradiance=vec3(0.0);
     if(gf2NativeIndirectOn==0)return;
-    vec4 packed=texelFetch(gf2NativeNormals,ivec2(gl_FragCoord.xy),0);
-    if(packed.w<0.5)return;
-    vec3 normal=gNormalUnpack(packed).xyz;
+    vec4 gf2NativeNormalSample=texelFetch(gf2NativeNormals,ivec2(gl_FragCoord.xy),0);
+    if(gf2NativeNormalSample.w<0.5)return;
+    vec3 normal=gNormalUnpack(gf2NativeNormalSample).xyz;
     gf2NativeBouncedIrradiance=bounceAt(pos,normal)+flashBounceAt(pos,normal);
 }
 
