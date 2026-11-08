@@ -170,7 +170,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
                 for(Draw draw:actor.draws){JSONObject pass=materials.optionalPass(draw.material,"GFCharForward");if(pass==null||!writesDepth(pass))continue;
                     String root=actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);
                     Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),packet.previousInverse()):locals.computeIfAbsent(root,r->local(builder,r,draws,draw,input,history,identity));
-                    AimohGf2OriginalProgram program=nativePrograms.early(draw.material);program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),shadow.texture(),environment.shadowSampler));
+                    AimohGf2OriginalProgram program=nativePrograms.early(draw.material);surfaceControls(program,draw.material);program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),shadow.texture(),environment.shadowSampler));
                     program.nativeInputs(local.inverse,local.inverseNormal,actor.model.getInt("attribute_records"));program.nativeFrame(history?old.placement:placement,local.previousInverse,history?old.eye:eye,new float[2],history);
                     GlProgram gl=program.nativeProgram();gl.use();gl.set("gf2NativePlainViewProjection",frame.plainViewProjection);gl.set("gf2NativePreviousViewProjection",history?frame.previousViewProjection:frame.plainViewProjection);gl.set("gf2NativePreviousSourceToWorld",new Matrix4f().set(local.values.get("unity_MatrixPreviousM")));
                     GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,attributes);GL20.glDrawBuffers(new int[]{GL30.GL_COLOR_ATTACHMENT0,GL30.GL_COLOR_ATTACHMENT1,GL30.GL_COLOR_ATTACHMENT2,GL30.GL_COLOR_ATTACHMENT3});
@@ -262,7 +262,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         String root=ready.actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);
         Map<String,float[]> input=ready.input;
         Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),ready.packet.previousInverse()):ready.locals.computeIfAbsent(root,r->local(ready.builder,r,draws,draw,input,ready.history,ready.identity));
-        AimohGf2OriginalProgram program=nativePrograms.source(draw.material,stage);program.registers(registers(program,draw.material,root,local.values,ready.identity,false,ready.lighting));program.textures(materials.textureBindings(program,draw.material,ready.cube,ready.shadow.texture(),environment.shadowSampler));
+        AimohGf2OriginalProgram program=nativePrograms.source(draw.material,stage);surfaceControls(program,draw.material);program.registers(registers(program,draw.material,root,local.values,ready.identity,false,ready.lighting));program.textures(materials.textureBindings(program,draw.material,ready.cube,ready.shadow.texture(),environment.shadowSampler));
         program.nativeInputs(local.inverse,local.inverseNormal,ready.actor.model.getInt("attribute_records"));program.nativeFrame(ready.history?ready.old.placement:ready.placement,local.previousInverse,ready.history?ready.old.eye:ready.eye,new float[2],ready.history);
         program.nativeProgram().set("gf2NativeMotionJitter",ready.history?frame.jitterX/width-ready.old.jitterU:0,ready.history?frame.jitterY/height-ready.old.jitterV:0);
         GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,ready.attributes);
@@ -315,6 +315,10 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         GlProgram base=(GlProgram)AimohNativeGf2Environment.field(models,"gbuffer");
         if(reliefBaseId!=base.id()){reliefBaseId=base.id();for(int i=0;i<RELIEF_NAMES.length;i++)reliefLocations[i]=GL20.glGetUniformLocation(base.id(),RELIEF_NAMES[i]);}
         for(int i=0;i<RELIEF_NAMES.length;i++)if(reliefLocations[i]>=0)GL20.glGetUniformfv(base.id(),reliefLocations[i],reliefValues[i]);
+    }
+    private void surfaceControls(AimohGf2OriginalProgram program,int material){
+        var settings=viewpoint.platform.AimohNativePackSelection.displaySettings();GlProgram gl=program.nativeProgram();gl.use();
+        gl.set("gf2CharacterEnhancement",settings==null?0:settings.surfaceDetail(),settings==null?0:settings.skinGloss(),materials.surfaceWeight(material));
     }
     private int drawNative(FrameContext frame,ModelPass models,AimohGf2OriginalProgram program,JSONObject state,int selected)throws Exception{
         GlProgram gl=program.nativeProgram();gl.use();gl.setInt("uShadowPalette",0);gl.setInt("uIrisEntity",-1);gl.setInt("uIrisUntinted",0);gl.set("uIrisEye",frame.eyeX,frame.eyeY,frame.eyeZ);

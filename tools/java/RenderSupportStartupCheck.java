@@ -17,6 +17,14 @@ public final class RenderSupportStartupCheck {
         var selected=(viewpoint.platform.ShaderPack)find.invoke(null,"Aimoh-Native-GF2");var fill=selected.option("characterSoftFill");
         require(fill!=null&&fill.kept&&fill.label.equals("人物柔和底灯"),"Character fill slider missing from official Native options");
         var strength=selected.option("characterDisplayStrength");require(strength!=null&&strength.kept&&strength.label.equals("原游人物显示还原强度"),"Shared original display slider missing");
+        var declare=viewpoint.platform.PackOption.class.getDeclaredMethod("declare",String.class,String.class);declare.setAccessible(true);
+        var section=viewpoint.platform.LiveSettings.Setting.class.getDeclaredField("section");section.setAccessible(true);
+        for(String id:List.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss")){
+            var option=selected.option(id);require(option!=null&&option.kept,"Character option missing: "+id);
+            Object row=declare.invoke(option,"test."+id,"Graphics/Shader Options");require(section.get(row).equals("Graphics/R116 人物效果"),"Character option was not grouped: "+id);
+            if(id.equals("characterSurfaceDetail")||id.equals("characterSkinGloss"))for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(option))==0,"Enhancement changed default");
+        }
+        require(section.get(declare.invoke(selected.option("contrast"),"test.contrast","Graphics/Shader Options")).equals("Graphics/Shader Options"),"Scene option moved");
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(strength))==.5f,"Preset changed shared display default: "+preset);
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Math.abs(Float.parseFloat(selected.preset(preset).valueFor(fill))-.08f)<1e-6f,"Preset changed the subtle fill default: "+preset);
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");

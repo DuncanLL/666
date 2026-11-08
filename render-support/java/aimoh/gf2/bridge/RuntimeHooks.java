@@ -8,7 +8,7 @@ import net.bytebuddy.jar.asm.*;
 /** Native-only method-body integration; no Iris/Eclipse hooks or host class copies. */
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
-    public static final Map<String,Integer> EXPECTED=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,"aimoh/motion/PmxOriginalInputs",1);
+    public static final Map<String,Integer> EXPECTED=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/PackOption",1);
     private volatile Throwable transformFailure;
     public static final String SUPPORTED_VP="605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f";
     public static void verifyHost()throws Exception{
@@ -24,6 +24,17 @@ public final class RuntimeHooks implements ClassFileTransformer {
     }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
+        if(type.equals("viewpoint/platform/PackOption")){
+            ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);int[] hits={0};
+            reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
+                public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] exceptions){
+                    MethodVisitor base=super.visitMethod(access,name,desc,sig,exceptions);
+                    if(!name.equals("declare")||!desc.equals("(Ljava/lang/String;Ljava/lang/String;)Lviewpoint/platform/LiveSettings$Setting;"))return base;
+                    hits[0]++;return new MethodVisitor(Opcodes.ASM9,base){public void visitCode(){super.visitCode();mv.visitVarInsn(Opcodes.ALOAD,0);mv.visitVarInsn(Opcodes.ALOAD,2);mv.visitMethodInsn(Opcodes.INVOKESTATIC,"viewpoint/platform/AimohNativeCharacterMenu","section","(Lviewpoint/platform/PackOption;Ljava/lang/String;)Ljava/lang/String;",false);mv.visitVarInsn(Opcodes.ASTORE,2);}};
+                }
+            },0);
+            if(hits[0]!=1)throw new IllegalStateException("Native character setting section entry changed");return writer.toByteArray();
+        }
         if(!type.equals("aimoh/motion/PmxOriginalInputs"))return NativeHooks.rewrite(type,raw);
         ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,0);int[] hits={0};
         reader.accept(new ClassVisitor(Opcodes.ASM9,writer){public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] ex){return new MethodVisitor(Opcodes.ASM9,super.visitMethod(access,name,desc,sig,ex)){public void visitLdcInsn(Object value){if("viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.AimohGf2SourceHost");hits[0]++;}else super.visitLdcInsn(value);}};}},0);

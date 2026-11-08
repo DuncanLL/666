@@ -16,6 +16,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private final AimohGf2PackData data;
     private final AimohGf2OriginalSamplers sourceSamplers;
     private final JSONObject[] materials;
+    private final float[] surfaceWeights;
     private final Map<Integer,Map<String,JSONObject>> materialPasses=new HashMap<>();
     private final Map<String,JSONObject> programMetadata=new HashMap<>();
     private final Map<String,Map<String,String>> variants=new HashMap<>();
@@ -40,7 +41,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     public int textureUploads,attributeUploads;
 
     public AimohGf2PackMaterials(AimohGf2PackData data)throws IOException {
-        this.data=data;sourceSamplers=new AimohGf2OriginalSamplers(data.manifest.getJSONObject("textures"));JSONArray source=data.manifest.getJSONArray("materials");materials=new JSONObject[source.length()];
+        this.data=data;sourceSamplers=new AimohGf2OriginalSamplers(data.manifest.getJSONObject("textures"));JSONArray source=data.manifest.getJSONArray("materials");materials=new JSONObject[source.length()];surfaceWeights=new float[source.length()];
         for(Object value:data.manifest.getJSONArray("programs")){
             JSONObject row=(JSONObject)value;Map<String,String> selected=variants.computeIfAbsent(row.getString("material")+"\n"+row.getString("pass"),k->new HashMap<>());
             JSONArray choices=row.getJSONArray("programs");if(choices.length()!=1)throw new IllegalArgumentException("Source hardware variant is not unique");
@@ -50,6 +51,8 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
         try {
             for(int i=0;i<source.length();i++){
                 JSONObject material=source.getJSONObject(i);if(material.getInt("id")!=i)throw new IllegalArgumentException("Source material identity differs");materials[i]=material;
+                // Authored character-receiving path; never infer a role from a character name or skin colour.
+                for(Object f:material.getJSONArray("bindings")){JSONObject field=(JSONObject)f;if(field.getString("name").equals("_UseGIFlatten")){float weight=field.getJSONArray("value").getFloat(0);if(!Float.isFinite(weight)||weight<0||weight>1)throw new IllegalArgumentException("Invalid authored surface weight");surfaceWeights[i]=weight;}}
                 byte[] raw=data.bytes(material.getJSONObject("buffer"));
                 if(raw.length!=material.getInt("bytes"))throw new IllegalArgumentException("Material register byte count differs");
                 ByteBuffer bytes=direct(raw);int buffer=GL45.glCreateBuffers();materialBuffers.put(i,buffer);
@@ -78,6 +81,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private String source(JSONObject resource)throws IOException {return new String(data.bytes(resource),StandardCharsets.UTF_8);}
     public JSONObject material(int id){if(id<0||id>=materials.length)throw new IllegalArgumentException("Source material out of range");return materials[id];}
     public int materialBuffer(int id){material(id);return materialBuffers.get(id);}
+    public float surfaceWeight(int id){material(id);return surfaceWeights[id];}
     public int programCount(){return programs.size();}
     public int stateCount(){return states.size();}
     public int textureSetCount(){return bindings.size();}
