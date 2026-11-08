@@ -16,14 +16,22 @@ public final class Bridge {
     public static void begin(Frame frame) { start.set(frame.scene.models.count()); }
     public static void end(Frame frame,ModelSlotRenderData slot,IsoGameCharacter actor,boolean hideHead,boolean captured) {
         Integer first=start.get();start.remove();if(!captured||first==null)return;
-        ModelSession session=Main.sessionForCapture(actor);if(session==null||session.failed)return;
+        ModelSession session=Main.sessionForCapture(actor);if(session==null)return;
         ModelDraws draws=frame.scene.models;int originalEnd=draws.count();
         Frozen draw=null;
         try {
             boolean firstPerson=hideHead&&!slot.inVehicle;
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
-            PmxDrawMesh.FrameData data=session.update(frame,actor.getAnimationPlayer(),holding,
-                actor.getX(),actor.getY(),actor.getZ(),hideHead,IdleHandPose.eligible(actor,holding),firstPerson);if(!session.ready)return;
+            boolean idle=IdleHandPose.eligible(actor,holding);
+            PmxDrawMesh.FrameData data=null;
+            try {if(!session.failed)data=session.update(frame,actor.getAnimationPlayer(),holding,
+                actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson);}catch(Throwable e){session.fail(e);}
+            ModelSession selected=Main.completeCapture(actor,session);
+            if(selected!=session){
+                session=selected;if(session==null||session.failed)return;
+                data=session.update(frame,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson);
+            }
+            if(session.failed||!session.ready)return;
             PmxDrawMesh prepared=session.preparedMesh;if(prepared==null)return;
             var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
             int body=-1;

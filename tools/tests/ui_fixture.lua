@@ -70,7 +70,7 @@ client=false
 function isClient()return client end
 function sendClientCommand(a,b,c,d)table.insert(calls.sent,d or c)end
 Events={}
-for _,name in ipairs({"OnFillWorldObjectContextMenu","OnGameStart","OnCreatePlayer","OnPlayerDeath","OnMainMenuEnter","OnServerCommand","OnDisconnect"})do
+for _,name in ipairs({"OnTick","OnFillWorldObjectContextMenu","OnGameStart","OnCreatePlayer","OnPlayerDeath","OnMainMenuEnter","OnServerCommand","OnDisconnect"})do
  Events[name]={handlers={}};Events[name].Add=function(fn)table.insert(Events[name].handlers,fn)end
 end
 ISWorldObjectContextMenu={setTest=function()calls.test=calls.test+1;return true end}
@@ -88,6 +88,7 @@ function api.modelListed(i)return i~=5 end
 function api.modelId(a)return a.current<0 and "" or api.modelIdAt(a.current)end
 function api.isEnabled(a)return a.current>=0 end
 function api.isReady(a)return a.current>=0 end
+function api.hasModelFailure(a)return false end
 function api.status()return "" end
 function api.enableWithSettings(a,i,s)
  if calls.fail then return "invalid settings" end

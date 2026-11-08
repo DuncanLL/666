@@ -104,10 +104,16 @@ public final class ChestSoftBody implements AutoCloseable {
     public double slider(int index){return values[index];}
     public JSONObject settings(){JSONObject j=new JSONObject();for(int i=0;i<KEYS.length;i++)j.put(KEYS[i],values[i]);return j;}
     public void settings(JSONObject input){
+        applySettings(prepareSettings(input));
+    }
+    double[] prepareSettings(JSONObject input){
         double[] next=values.clone();
         for(String key:input.keySet())if(!Arrays.asList(KEYS).contains(key))throw new IllegalArgumentException("Unknown chest setting: "+key);
         for(int i=0;i<KEYS.length;i++)if(input.has(KEYS[i]))next[i]=input.getDouble(KEYS[i]);
         for(double value:next)if(!Double.isFinite(value)||value<0||value>100)throw new IllegalArgumentException("Chest sliders must be 0..100");
+        return next;
+    }
+    void applySettings(double[] next){
         try{
             int result=(int)tune.invokeExact(handle,(float)Math.clamp(.75-.67*next[0]/100,.08,.75),(float)(.035+.085*next[1]/100),(float)(.6+.8*next[2]/100));
             if(result!=0)throw new IllegalStateException("Chest parameter update failed");

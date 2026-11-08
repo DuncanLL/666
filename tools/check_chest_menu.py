@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,json,os,sys
 from common import ROOT,BUILD,settings,save
-p=argparse.ArgumentParser();p.add_argument('--hit-test',action='store_true');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--hit-test',action='store_true');p.add_argument('--lifecycle',action='store_true');args=p.parse_args()
 c=settings();sys.path.insert(0,c['python_dependencies'])
 import jpype
 game=Path(c['game_root']);temp=BUILD/'menu-check';temp.mkdir(exist_ok=True)
@@ -44,6 +44,6 @@ try:
   load(ROOT/'tools/tests/room_hit_fixture.lua');load(game/'media/lua/client/ISUI/ISButton.lua')
  load(game/'media/lua/client/RadioCom/ISUIRadio/ISSliderPanel.lua')
  load(ROOT/'game/mod/42/media/lua/client/AimohPMXWindow.lua');load(ROOT/'game/mod/42/media/lua/client/AimohPMXPreview.lua')
- status=str(load(ROOT/'tools/tests'/('room_hit_assertions.lua'if args.hit_test else'chest_assertions.lua')));print(status,flush=True)
- save(BUILD/('menu-check/hit-regions.json'if args.hit_test else'game-softbody/menu-check.json'),dict(status=status,real_kahlua=True,game_slider_source=True,game_button_source=args.hit_test,actor_and_widgets_substituted=True,actual_gameplay_tested=False,game_started=False))
+ status=str(load(ROOT/'tools/tests'/('lifecycle_assertions.lua'if args.lifecycle else'room_hit_assertions.lua'if args.hit_test else'chest_assertions.lua')));print(status,flush=True)
+ save(BUILD/('lifecycle-0.3.6/menu.json'if args.lifecycle else'menu-check/hit-regions.json'if args.hit_test else'game-softbody/menu-check.json'),dict(status=status,real_kahlua=True,game_slider_source=True,game_button_source=args.hit_test,actor_and_widgets_substituted=True,actual_gameplay_tested=False,game_started=False))
 finally:jpype.shutdownJVM()

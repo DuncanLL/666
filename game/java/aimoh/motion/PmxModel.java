@@ -149,10 +149,21 @@ public final class PmxModel implements AutoCloseable {
             ItemCalibration.apply(new float[]{1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1},matrix);next.put(key,matrix);
         }
         JSONObject state=settings.getJSONObject("appearance"),controls=settings.optJSONObject("appearance_controls");
-        appearance.configure(state.toString(),controls==null?Wardrobe.empty():controls.toString());
+        ModelAppearance.Prepared prepared=appearance.prepare(state.toString(),controls==null?Wardrobe.empty():controls.toString());
+        JSONObject soft=settings.optJSONObject("chest_physics"),physics=settings.optJSONObject("physics");
+        double[] nextChest=soft==null||chest==null?null:chest.prepareSettings(soft);
+        double[] oldChest=nextChest==null?null:chest.prepareSettings(chest.settings());
+        boolean nextPhysics=physics==null?core.physicsEnabled():physics.optBoolean("enabled",false),oldPhysics=core.physicsEnabled();
+        try{
+            if(nextChest!=null)chest.applySettings(nextChest);
+            core.setPhysicsEnabled(nextPhysics);
+            appearance.apply(prepared);
+        }catch(RuntimeException|Error e){
+            try{if(oldChest!=null)chest.applySettings(oldChest);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+            try{core.setPhysicsEnabled(oldPhysics);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+            throw e;
+        }
         if(tuning!=null){profile.weapon_tuning.clear();profile.weapon_tuning.putAll(next);}
-        JSONObject physics=settings.optJSONObject("physics");if(physics!=null)core.setPhysicsEnabled(physics.optBoolean("enabled",false));
-        JSONObject soft=settings.optJSONObject("chest_physics");if(soft!=null&&chest!=null)chest.settings(soft);
     }
     public synchronized void setPhysicsEnabled(boolean enabled) { core.setPhysicsEnabled(enabled); }
     public synchronized boolean physicsEnabled() { return core.physicsEnabled(); }
@@ -176,6 +187,6 @@ public final class PmxModel implements AutoCloseable {
     }
 
     @Override public synchronized void close() {
-        if (!closed) { try{if(chest!=null)chest.close();}finally{api.DeleteModel(handle);closed=true;} }
+        if (!closed) {closed=true;ResourceCleanup.close(chest,()->api.DeleteModel(handle));}
     }
 }

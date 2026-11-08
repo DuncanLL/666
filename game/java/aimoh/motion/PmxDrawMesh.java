@@ -387,8 +387,9 @@ public final class PmxDrawMesh implements AutoCloseable {
 
     @Override public void close() {
         if (closed) return;
-        if(alternateMesh!=null)alternateMesh.close();
-        for (Part part : parts) part.mesh.clear();
         closed = true;
+        AutoCloseable[] owned=new AutoCloseable[parts.size()+1];owned[0]=alternateMesh;alternateMesh=null;
+        for(int i=0;i<parts.size();i++){Part part=parts.get(i);owned[i+1]=part.mesh::clear;}
+        ResourceCleanup.close(owned);
     }
 }

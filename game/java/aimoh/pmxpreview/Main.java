@@ -23,13 +23,15 @@ public class Main {
     private static final ArrayList<Entry> entries=new ArrayList<>();
     private static final HashSet<String> hiddenEntries=new HashSet<>();
     private static final IdentityHashMap<IsoGameCharacter,ModelSession> active=new IdentityHashMap<>();
+    private static final IdentityHashMap<IsoGameCharacter,ModelSession> preparing=new IdentityHashMap<>();
+    private static final HashSet<IsoGameCharacter> switchFailures=new HashSet<>();
     private static final IdentityHashMap<IsoGameCharacter,Pending> pending=new IdentityHashMap<>();
     private static String lastError="";
     private static NativeFunc api;
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.5 owned deformation; prepared mesh lifecycle; host simulation clock"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.6 staged switching; atomic settings; complete retirement"); }
 
     private static Path locate() throws Exception {
         String root=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
@@ -83,12 +85,29 @@ public class Main {
             try {
                 ModelSession current=active.get(actor);
                 if(current!=null&&!current.failed&&current.entry.id().equals(request.entry().id())) {
+                    cancelPreparation(actor);
                     current.applySettings(settingsFor(current,request.settings()),false);return current;
                 }
                 nativeRuntime();next=new ModelSession(api,grip,request.entry());
                 next.applySettings(settingsFor(next,request.settings()),false);
-                ModelSession old=active.put(actor,next);if(old!=null)old.retire();
-            } catch(Throwable e){if(next!=null)next.retire();error(e);}
+                stage(actor,next);
+            } catch(Throwable e){if(next!=null)next.retire();switchFailures.add(actor);error(e);}
+        }
+        ModelSession next=preparing.get(actor);return next==null?active.get(actor):next;
+    }
+    private static void cancelPreparation(IsoGameCharacter actor) {
+        ModelSession previous=preparing.remove(actor);if(previous!=null)previous.retire();
+    }
+    private static void stage(IsoGameCharacter actor,ModelSession next) {
+        cancelPreparation(actor);preparing.put(actor,next);switchFailures.remove(actor);
+    }
+    static synchronized ModelSession completeCapture(IsoGameCharacter actor,ModelSession captured) {
+        if(preparing.get(actor)!=captured)return active.get(actor);
+        if(captured.failed||captured.retired){
+            preparing.remove(actor);switchFailures.add(actor);captured.retire();
+        }else if(captured.ready){
+            preparing.remove(actor);ModelSession old=active.put(actor,captured);
+            if(old!=null)old.retire();switchFailures.remove(actor);
         }
         return active.get(actor);
     }
@@ -100,11 +119,11 @@ public class Main {
     public static synchronized boolean modelListed(int index) { return !hiddenEntries.contains(entries.get(index).id()); }
     public static synchronized boolean isEnabled(IsoGameCharacter actor) { return active.containsKey(actor); }
     public static synchronized boolean isReady(IsoGameCharacter actor) {
-        ModelSession s=active.get(actor);return s!=null && s.ready && !s.failed && !s.retired;
+        ModelSession s=active.get(actor);return !preparing.containsKey(actor)&&!pending.containsKey(actor)&&s!=null && s.ready && !s.failed && !s.retired;
     }
     public static int modelSessionApi(){return 1;}
     public static synchronized boolean hasModelFailure(IsoGameCharacter actor) {
-        ModelSession s=active.get(actor);return s!=null&&(s.failed||s.retired);
+        ModelSession s=active.get(actor);return switchFailures.contains(actor)||s!=null&&(s.failed||s.retired);
     }
     public static synchronized String applySavedSettings(IsoGameCharacter actor,String value) {
         try {ModelSession s=required(actor);s.applySettings(settingsFor(s,value),false);return "";}
@@ -162,7 +181,7 @@ public class Main {
     public static synchronized String queueSettings(IsoGameCharacter actor,String id,String value) {
         try {
             Entry e=entry(id);settings(value);
-            pending.put(actor,new Pending(e,value));return "";
+            cancelPreparation(actor);switchFailures.remove(actor);pending.put(actor,new Pending(e,value));return "";
         }catch(Throwable e){error(e);return lastError;}
     }
     private static ModelSession required(IsoGameCharacter actor){ModelSession s=active.get(actor);if(s==null)throw new IllegalStateException("请先启用人物");return s;}
@@ -232,16 +251,16 @@ public class Main {
             nativeRuntime();next=new ModelSession(api,grip,entries.get(index));
             if(saved!=null&&!saved.isBlank())next.applySettings(settingsFor(next,saved),false);
             pending.remove(actor);
-            ModelSession old=active.put(actor,next);
-            if (old!=null) old.retire();lastError="";
+            stage(actor,next);lastError="";
             System.out.println("[AimohPMXPreview] enabled "+entries.get(index).label());return "";
         } catch (Throwable e) { if(next!=null)next.retire();error(e);return lastError; }
     }
     public static synchronized void disable(IsoGameCharacter actor) {
-        pending.remove(actor);ModelSession old=active.remove(actor);if(old!=null) old.retire();
+        pending.remove(actor);cancelPreparation(actor);switchFailures.remove(actor);ModelSession old=active.remove(actor);if(old!=null) old.retire();
     }
     public static synchronized void clear() {
-        for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();
+        for(ModelSession session:preparing.values())session.retire();preparing.clear();
+        for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();switchFailures.clear();
     }
     static void error(Throwable e) {
         lastError=e.toString();System.err.println("[AimohPMXPreview] "+lastError);e.printStackTrace();

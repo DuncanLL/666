@@ -64,7 +64,7 @@ public final class MeshReadinessCheck {
                         Method drain=RenderThread.class.getDeclaredMethod("flushInvokeQueue");drain.setAccessible(true);drain.invoke(null);
                         if(!session.ready||session.failed||prepared.get(session)==retained||field(ModelSession.class,"queued").getBoolean(session))throw new AssertionError("Queued session did not recover after upload");
                         PmxDrawMesh.class.getMethod("uploadPrepared",PmxDrawMesh.FrameData.class).invoke(retained,frame);
-                    }finally{IrisPacks.linked(previous);session.retire();GL11.glFinish();viewpoint.render.Retirement.drawn(10000);viewpoint.render.Retirement.collect();}
+                    }finally{IrisPacks.linked(previous);session.retire();viewpoint.render.Retirement.drawn(10000);GL11.glFinish();viewpoint.render.Retirement.collect();}
                 }
             }
             ((OzzGrip)field(Main.class,"grip").get(null)).close();JSONObject stats=new JSONObject(api.GetRuntimeStats());for(String key:stats.keySet())if(stats.getLong(key)!=0)throw new AssertionError(stats);

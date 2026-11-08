@@ -347,8 +347,8 @@ function W:onReload()if self.actions.reload(self.player)then self:refreshControl
 function W:update()
     ISCollapsableWindow.update(self)
     if self.waiting then
-        if AimohPMXPreview.isReady(self.player)then self.waiting=false;self:refresh()
-        elseif AimohPMXPreview.hasModelFailure and AimohPMXPreview.hasModelFailure(self.player)then self.waiting=false;self:refreshControls();self.status=tr("Error")end
+        if AimohPMXPreview.hasModelFailure and AimohPMXPreview.hasModelFailure(self.player)then self.waiting=false;self:refresh();self.status=tr("Error")
+        elseif AimohPMXPreview.isReady(self.player)then self.waiting=false;self:refresh()end
     end
 end
 function W:prerender()

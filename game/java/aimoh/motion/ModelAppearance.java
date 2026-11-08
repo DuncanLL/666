@@ -57,6 +57,11 @@ public final class ModelAppearance {
     }
     public synchronized void configure(String json){configure(json,wardrobe.json());}
     public synchronized void configure(String json,String definition) {
+        apply(prepare(json,definition));
+    }
+    record Prepared(boolean[] visible,float[] alpha,float[] weights,float[][] colours,Boolean[] bothFaces,String[] textures,
+                    Wardrobe wardrobe,JSONObject selected,JSONArray groups,boolean[] resolved,float[] resolvedWeights,boolean changed) {}
+    synchronized Prepared prepare(String json,String definition) {
         JSONObject state=new JSONObject(json);int format=state.getInt("format");
         if(format!=1&&format!=2)throw new IllegalArgumentException("Unsupported appearance format");
         Wardrobe nextWardrobe=new Wardrobe(definition,visible.length,weights.length);
@@ -79,14 +84,24 @@ public final class ModelAppearance {
         JSONArray nextGroups=state.optJSONArray("groups")==null?new JSONArray():new JSONArray(state.getJSONArray("groups").toString());
         boolean changed=!Arrays.equals(visible,nextVisible)||!Arrays.equals(alpha,nextAlpha)||!Arrays.equals(weights,nextWeights)||!Arrays.deepEquals(colours,nextColours)
             ||!Arrays.equals(bothFaces,nextBoth)||!Arrays.equals(textures,nextTextures)||!selected.similar(nextSelected)||!new JSONObject(wardrobe.json()).similar(new JSONObject(nextWardrobe.json()));
-        // Full zero weights clear old manual morphs. Current transport uses the game's animation source.
-        if(changed) {
-            api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,resolvedWeights);
-            for(int i=0;i<resolved.length;i++)api.SetMaterialVisible(model,i,resolved[i]);
+        return new Prepared(nextVisible,nextAlpha,nextWeights,nextColours,nextBoth,nextTextures,nextWardrobe,nextSelected,nextGroups,resolved,resolvedWeights,changed);
+    }
+    private void applyNative(boolean[] visibility,float[] morphs) {
+        api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,morphs);
+        for(int i=0;i<visibility.length;i++)api.SetMaterialVisible(model,i,visibility[i]);
+    }
+    synchronized void apply(Prepared next) {
+        if(next.changed()) {
+            try{applyNative(next.resolved(),next.resolvedWeights());}
+            catch(RuntimeException|Error e){
+                float[] previous=weights.clone();wardrobe.resolve(selected,visible.clone(),previous);
+                try{applyNative(effectiveVisible,previous);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+                throw e;
+            }
             revision++;
         }
-        visible=nextVisible;effectiveVisible=resolved;alpha=nextAlpha;weights=nextWeights;colours=nextColours;bothFaces=nextBoth;textures=nextTextures;
-        wardrobe=nextWardrobe;selected=nextSelected;groups=nextGroups;
+        visible=next.visible();effectiveVisible=next.resolved();alpha=next.alpha();weights=next.weights();colours=next.colours();bothFaces=next.bothFaces();textures=next.textures();
+        wardrobe=next.wardrobe();selected=next.selected();groups=next.groups();
     }
     public synchronized void choose(String group,String option) {
         JSONObject state=new JSONObject(stateJson());state.getJSONObject("choices").put(group,option);configure(state.toString());

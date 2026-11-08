@@ -5,6 +5,7 @@ import aimoh.motion.PmxDrawMesh;
 import aimoh.motion.PmxModel;
 import aimoh.motion.PmxShading;
 import aimoh.motion.PzPoseCapture;
+import aimoh.motion.ResourceCleanup;
 import com.shiroha.mmdskin.NativeFunc;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -161,6 +162,8 @@ final class ModelSession {
         if(state!=null)for(int i=0;i<state.length();i++)if(!state.isNull(i))resolveTexture(state.getString(i));
     }
     synchronized void applySettings(JSONObject settings,boolean reloadImages) {
+        for(String key:new String[]{"appearance_controls","weapon_tuning"})if(settings.has(key))settings.getJSONObject(key);
+        if(settings.has("material_presets"))settings.getJSONArray("material_presets");
         validateTextures(settings);model.applySettings(settings.toString());
         if(settings.has("hand_relax_strength")&&idleHand!=null) {
             idleHand.setStrength(settings.optDouble("hand_relax_strength",0));profile.put("hand_relax_strength",settings.optDouble("hand_relax_strength",0));
@@ -219,6 +222,10 @@ final class ModelSession {
     synchronized void retire() {
         if(retired)return;retired=true;ready=false;preparedMesh=null;
         drawHistory.clear();
-        Retirement.retire(()->{ if(mesh!=null)mesh.close();if(textures!=null)textures.close();model.close();presentation.clear();previousFrozen=olderFrozen=null; });
+        Retirement.retire(()->{
+            try{ResourceCleanup.close(mesh,textures,model);}
+            catch(Throwable e){Main.error(e);}
+            finally{mesh=null;textures=null;frozen=previousFrozen=olderFrozen=null;presentation.clear();}
+        });
     }
 }

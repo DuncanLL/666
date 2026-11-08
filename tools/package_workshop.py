@@ -51,7 +51,10 @@ def package(output, verify_existing=False):
     assert not stage.exists()
     mod = stage / 'Contents/mods/AimohPmxPreview'
     mod.mkdir(parents=True)
+    owned=set(inventory(ROOT/'game/mod'))|set(inventory(generated))|{'42/media/java/client/AimohPMXPreview.jar'}
     for relative, row in manifest.items():
+        # These files come from this checkout, never from the external asset copy.
+        if relative in owned:continue
         path = (source / relative).resolve()
         assert path.is_relative_to(source) and path.is_file(), relative
         assert path.stat().st_size == row['bytes'] and sha(path) == row['sha256'], 'External asset changed: ' + relative
