@@ -1,64 +1,54 @@
 # R116
 
-Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建发布流程从当前 R116 工坊候选整理而来，工作台不在本仓库内。
+Project Zomboid B42.21 的 R116 人物 MOD 和配套渲染支持。两者是独立的工坊项目。渲染支持用一个 MOD 分发 Native 和 Eclipse，由玩家在官方 Viewpoint 0.1.7-rc3 中选择。工作台独立维护。
 
-**当前接续入口：[2026-11-08 Native分发迁移](docs/handoffs/2026-11-08-native.md)。人物菜单0.3.4不变，渲染支持0.2.0改为VP Native主线；NVIDIA与真实订阅冷启动仍待外测。** 详细问题与验证见[维护记录索引](docs/README.md)。
+接新需求时先看[板块与工作树索引](docs/README.md)，构建和安装前以目标工作树、候选指纹和实际装载位置为准。
 
 ## 目录
 
 | 目录 | 内容 |
 |---|---|
-| `game/java` | 游戏入口、动作映射、绘制、生命周期、原生库启动 |
-| `game/mod` | 模组信息、Lua、整备室资料、声音定义和人物配置 |
-| `native/mmd-engine` | 当前 MC-MMD 上游派生的原生引擎，包含固定的 PMX parser/Bullet 源码 |
-| `native/ozz` | 现用 Ozz 握持求解与薄 C 接口 |
-| `render-support` | VP Native人物渲染接入、自动分发入口与自有适配着色代码 |
-| `tools` | 构建、工坊候选生成与组件检查 |
-| `resources/manifest.json` | 仓库外人物素材的相对路径、大小、SHA-256 |
-| `provenance`、`licenses` | 来源、上游版本、导入记录和第三方许可 |
-| `.local`、`build` | 仅本机路径和生成结果，Git 忽略 |
+| [game/java](game/java) | 人物会话、动作映射、握持、网格提交和 JNI 入口 |
+| [game/mod](game/mod) | 游戏内 Lua、整备室、多人协议、声音定义和人物配置 |
+| [native](native) | PMX 与 Bullet 刚体引擎、胸部体积解算、Ozz 握持求解 |
+| [render-support](render-support) | Native 与公共渲染源码、Eclipse 覆盖和双后端合包入口 |
+| [tools](tools) | 构建、工坊候选、组件检查及 Java／Lua 检查夹具 |
+| [resources/manifest.json](resources/manifest.json) | 外置人物素材的相对路径、大小与 SHA-256 |
+| [config](config)、[provenance](provenance)、[licenses](licenses) | 本机配置模板、来源与构建基线、第三方许可 |
+| [docs](docs)、[experiments](experiments) | 维护记录和独立实验 |
+| `.local`、`build` | Git 忽略的本机配置和可重新生成的输出 |
 
 ## 本机使用
 
-本机 `.local/paths.json` 已配置；在另一台制作电脑上先复制 `config/paths.example.json` 并填写依赖位置。需要已有合法游戏依赖、ZombieBuddy、Viewpoint、Java 25 运行时、ECJ 4.38，以及现有外部人物资源。第三方游戏和工具二进制不随仓库分发。
+从 [config/paths.example.json](config/paths.example.json) 复制出 `.local/paths.json`，填写游戏、ZombieBuddy、Viewpoint、Java 25、ECJ 4.38 和外置人物素材的位置。路径和资源基线按工作树核对。
 
-当前含新胸部物理的完整候选使用已有构建入口；只改Java且复用已验证的新原生候选时，可以用 `tools/build.py --native-candidate build/native/game-candidate.json`。裸 `tools/build.py` 默认仍读取历史原生基准，不作为本轮胸部物理发布构建命令。
+### 人物 MOD
+
+以下是本工作树胸部物理候选的构建和组件检查入口。
 
 ```powershell
 python tools/build_chest_trial.py
 python tools/check_runtime.py build/workshop/chest-trial/R116
 ```
 
-Native 配套工坊项目独立生成，名称为 `R116 渲染支持 光影分发`，内部 ID 保留 `AimohGF2Eclipse`：
+只改 Java 并复用已验证的原生候选时，可传 `tools/build.py --native-candidate build/native/game-candidate.json`。直接运行 `tools/build.py` 会读取历史原生基准。`--compare-baseline` 用于历史迁移的类文件对照。功能改动按影响范围检查。`tools/package_workshop.py` 的默认输出为 `build/workshop/R116`。
+
+### 渲染支持
+
+先生成两个后端的构建输入，再合成一个工坊候选。打包时用 `--metadata-from` 读取现有作者项目的元数据与预览图，保留项目 `3834707439` 和内部 ID `AimohGF2Eclipse`。
 
 ```powershell
 python tools/build_render_support.py
-python tools/package_render_support.py
-python tools/check_render_support.py
+python tools/build_eclipse_support.py
+python tools/build_combined_render_support.py
+python tools/package_render_support.py --metadata-from "<现有作者项目目录>" --output "<新的候选目录>"
+python tools/check_render_support.py --project "<新的候选目录>"
 ```
 
-Native来源与兼容基线见 `provenance/render-support.json`。自有Native资源包内嵌于JAR，正常Java MOD启动后自动安装为 `viewpoint-shaderpacks/Aimoh-Native-GF2/`，由玩家在VP选择；不分发VP原类，不写作者图形配置。原游程序和贴图仍由人物MOD提供，不进Git。分发器保留内部ID与工坊项目，Eclipse载荷和挂接已移除；历史版可从Git历史恢复。
-
-当前人物候选在 `build/workshop/chest-trial/R116`，独立光影候选在 `build/workshop/R116RenderSupport`；基础 `package_workshop.py` 的默认输出仍是 `build/workshop/R116`。脚本不会启动游戏或执行 Steam 上传，安装/作者项目提升使用独立命令。输出包含完整人物资料；人物文件从本机资源目录读回，不需要下载 GitHub 仓库的玩家参与构建。
-
-已有本轮人物候选需要复查时，运行 `python tools/package_workshop.py --output build/workshop/chest-trial/R116 --verify-existing`，只读回核对当前代码与资源，不再复制整套素材。
-
-首次迁移基准使用 `python tools/build.py --compare-baseline`：完整编译游戏源码，与迁移前工坊 JAR 比较，忽略编译调试属性。功能修改后的普通构建允许产生预期差异。
-
-默认发布沿用已验证原生库的指纹。`python tools/build_native.py`、`python tools/build_native.py --ozz` 可分别生成原生候选，使用工程私有工具链；不会自动更新现用库或基准指纹。原生候选必须经过对应回归后才能进入发布资料。
+人物原游程序、贴图及属性数据由人物 MOD 的 `media/aimoh_gf2` 提供。渲染支持提供两个光影包和共用的宿主接入。来源和基线见 [Native](provenance/render-support.json) 与 [Eclipse](provenance/eclipse-outline.json)，验证要求见[渲染发布标准](docs/render-release-standard.md)。
 
 ## 日常维护
 
-1. 在 GitHub Desktop 的 Changes 查看本次差异。
-2. 修改并运行相关检查。源码、配置与本机资源清单要对应同一版本。
-3. 记录清楚的提交，推送到私有仓库。
-4. 需要发测试版时生成工坊候选，确认后再安装或更新作者项目；保留已有工坊 ID。
+用 `git worktree list` 和 `git status --short --branch` 定位任务所在的源码和已有差异。单独记录本次改动及对应验证。人物模型、贴图、语音、原游着色资源、工具链和本机生成物留在 Git 外。
 
-构建记录包含源码提交号与未提交状态。人物模型、贴图、语音、光影大资源、工作台、工具链、测试游戏及历史输出不提交。
-
-## 当前验收边界
-
-迁移基准的历史结果见 `docs/BASELINE.md`。当前妮基塔入口已恢复，用户已认可新胸部物理的实际游戏效果；0.3.1 修复了已复现的 STB 图片末尾地址误释放，见 `docs/texture-release-fix.md`。受控回归、安装和用户认可分别记录，不能外推所有历史崩溃、多人或真实订阅冷启动均已通过。
-
-第三方许可分别保留，本仓库没有把游戏人物素材或全部第三方代码声明为我们原创；根目录未擅自选择覆盖全部内容的新许可证。
-
+候选构建、组件检查、安装、真实游戏验收和工坊上传分别记录。现装 MOD 可能来自另一工作树，版本号由对应的 `mod.info` 和产物记录核对。
