@@ -1,0 +1,9 @@
+name=R116 渲染支持 光影分发
+id=AimohGF2Eclipse
+require=\ZombieBuddy,\Viewpoint,\AimohPmxPreview
+javaJarFile=media/java/client/AimohGF2Eclipse.jar
+javaPkgName=aimoh.gf2.bridge
+ZBVersionMin=2.3.4
+versionMin=42.21
+versionMax=42.21
+modversion=0.1.4

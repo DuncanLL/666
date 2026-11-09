@@ -1,10 +1,10 @@
 {
   "format": 2,
   "backend": "VP_NATIVE",
-  "release_version": "0.2.9",
+  "release_version": "0.2.11",
   "internal_mod_id": "AimohGF2Eclipse",
   "workshop_id": "3834707439",
-  "supported_viewpoint": "official 0.1.7-rc3 and retained rc2",
+  "supported_viewpoint": "official 0.1.7-rc3",
   "official_host_sha256": "c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8",
   "source_snapshot": "Native development compatibility-hardening snapshot 2026-11-08",
   "source_snapshot_jar_sha256": "41bffc99dc355506f474c280ff4f3fa7ad9d68602265f4887f449ac8d0804dce",
@@ -20,7 +20,6 @@
   "nvidia_hardware_acceptance": false,
   "steam_subscription_acceptance": false,
   "compatible_official_hosts": {
-    "0.1.7-rc2": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f",
     "0.1.7-rc3": "c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8"
   }
 }

@@ -8,7 +8,11 @@ def read(path):
 
 def evaluate(evidence_file):
     evidence_file=Path(evidence_file).resolve();base=evidence_file.parent;e=read(evidence_file)
-    build=read(BUILD/'render-support/build.json');origin=read(ROOT/'provenance/render-support.json')
+    backend=e.get('backend','native')
+    if backend not in ('native','eclipse'):raise ValueError('Unsupported render backend')
+    eclipse=backend=='eclipse'
+    build=read(BUILD/('eclipse-support' if eclipse else 'render-support')/'build.json')
+    origin=read(ROOT/'provenance'/('eclipse-outline.json' if eclipse else 'render-support.json'))
     errors=[];vendors=set();hosts=set()
     def require(ok,message):
         if not ok:errors.append(message)
@@ -17,7 +21,7 @@ def evaluate(evidence_file):
     require(e.get('format')==1,'Unsupported evidence format')
     require(sha(build['jar'])==build['jar_sha256'],'Built JAR has changed')
     with zipfile.ZipFile(build['jar'])as archive:
-        payload=archive.read('aimoh/gf2/bridge/Aimoh-Native-GF2.zip')
+        payload=archive.read(build.get('shader_payload','aimoh/gf2/bridge/Aimoh-Native-GF2.zip'))
         require(hashlib.sha256(payload).hexdigest()==build['shader_sha256'],'Embedded shader payload differs')
     for name,digest in build['source_hashes'].items():require(sha(ROOT/name)==digest,'Source changed after build: '+name)
     for key in ('jar_sha256','shader_sha256'):require(e.get(key)==build[key],'Evidence belongs to another '+key)
@@ -29,7 +33,7 @@ def evaluate(evidence_file):
     allowed=set(origin.get('compatible_official_hosts',{}).values())or{origin['official_host_sha256']}
     startup=report(e['startup_report'])
     require(startup.get('jar_sha256')==build['jar_sha256']and startup.get('shader_sha256')==build['shader_sha256'],'Startup evidence is stale')
-    for flag in ('normal_zombiebuddy_dispatch','native_discovered','player_custom_pack_preserved','official_host_unchanged','workshop_validator_passed'):require(startup.get(flag)is True,'Startup check not passed: '+flag)
+    for flag in ('normal_zombiebuddy_dispatch',backend+'_discovered','player_custom_pack_preserved','official_host_unchanged','workshop_validator_passed'):require(startup.get(flag)is True,'Startup check not passed: '+flag)
     references=e.get('reference_reports',[]);require(bool(references),'No host-expanded reference compilation evidence')
     for path in references:
         ref=report(path);rows=ref.get('programs',[])
@@ -47,10 +51,10 @@ def evaluate(evidence_file):
         require(d.get('addon_sha256')==build['jar_sha256'],'Driver report belongs to another JAR: '+path)
         require(d.get('core_sha256')==sha(character_jar),'Driver report used another character core')
         require(host in allowed,'Driver report used an unverified VP host')
-        require(d.get('gl_messages') == [] and d.get('gl_error',0) == 0 and d.get('iris_active',False) is False,'Driver reported GL errors or wrong backend')
+        require(d.get('gl_messages') == [] and d.get('gl_error',0) == 0 and d.get('iris_active',False) is eclipse,'Driver reported GL errors or wrong backend')
         renderer=d.get('original_renderer',{})
         require(renderer.get('frames',0)>0 and renderer.get('original_stage_draws',0)>0,'Driver report did not render the character path')
-        variants=d.get('native_catalog_variant_proof',{})
+        variants=d.get(backend+'_catalog_variant_proof',{})
         coverage |= variants.get('models',0)>=model_count and variants.get('unique_linked_pairs',0)>0 and variants.get('material_upload_readback_equal') is True
         if re.search(r'AMD|Radeon',gpu,re.I):vendors.add('AMD')
         elif re.search(r'NVIDIA|GeForce|Quadro',gpu,re.I):vendors.add('NVIDIA')
@@ -66,7 +70,7 @@ def evaluate(evidence_file):
     require(changed<=covered,'Changed/new character lacks integration evidence')
     missing=sorted({'AMD','NVIDIA','Intel'}-vendors)
     status='BLOCKED'if errors else 'LIMITED_HARDWARE_VALIDATION'if missing else 'THREE_VENDOR_DRIVER_VALIDATED'
-    return dict(status=status,version=build['version'],jar_sha256=build['jar_sha256'],shader_sha256=build['shader_sha256'],errors=errors,driver_vendors=sorted(vendors),missing_vendors=missing,
+    return dict(status=status,backend=backend,version=build['version'],jar_sha256=build['jar_sha256'],shader_sha256=build['shader_sha256'],errors=errors,driver_vendors=sorted(vendors),missing_vendors=missing,
                 scope='Actual documented devices/drivers only; reference compilation is not vendor hardware. Gameplay, multiplayer and cold subscription acceptance remain separate.',evidence=str(evidence_file))
 
 if __name__=='__main__':

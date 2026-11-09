@@ -17,6 +17,7 @@ import viewpoint.iris.PackSource;
 public final class AimohGf2PackData {
     public static final int EXTERNAL_MOD_RESOURCE_FORMAT=5;
     public static final int EXTERNAL_CHARACTER_CATALOG_FORMAT=6;
+    static final String CATALOG_PATH="media/aimoh_gf2/characters.json";
     public final JSONObject manifest;
     public final String identity;
     private final PackSource source;
@@ -39,7 +40,7 @@ public final class AimohGf2PackData {
         if(!identity.matches("[a-f0-9]{64}"))throw new IllegalArgumentException("Invalid GF2 data identity");
         index(manifest);
         for(Object rowValue:manifest.getJSONArray("programs")){
-            JSONObject row=(JSONObject)rowValue;for(Object programValue:row.getJSONArray("programs"))if(((JSONObject)programValue).optJSONArray("samplers")==null)throw new IllegalArgumentException("R116 Native needs updated character MOD sampler metadata; update the R116 character Workshop item together with render support: "+row.getString("material")+" / "+row.getString("pass"));
+            JSONObject row=(JSONObject)rowValue;for(Object programValue:row.getJSONArray("programs"))if(((JSONObject)programValue).optJSONArray("samplers")==null)throw new IllegalArgumentException("R116 needs updated character MOD sampler metadata; update the R116 character Workshop item together with render support: "+row.getString("material")+" / "+row.getString("pass"));
         }
         JSONArray materials=manifest.getJSONArray("materials");
         for(int i=0;i<materials.length();i++)if(materials.getJSONObject(i).getInt("id")!=i)
@@ -69,7 +70,7 @@ public final class AimohGf2PackData {
         String text=source.read("gf2/manifest.json");JSONObject root=new JSONObject(text);
         if(root.getInt("format")!=EXTERNAL_CHARACTER_CATALOG_FORMAT)return root;
         if(!"gf2-original-eclipse".equals(root.getString("pipeline")))throw new IllegalArgumentException("Unknown renderer bootstrap");
-        JSONObject entry=root.getJSONObject("character_catalog");String relative="media/aimoh_gf2/characters.json";
+        JSONObject entry=root.getJSONObject("character_catalog");String relative=CATALOG_PATH;
         if(entry.getInt("format")!=1||!relative.equals(entry.getString("path"))||entry.length()!=2)throw new IllegalArgumentException("Unsupported character catalog location/schema");
         Path file=Path.of(ZomboidFileSystem.instance.getString(relative));
         if(!file.isAbsolute()||!Files.isRegularFile(file))throw new IOException("GF2 character catalog missing; enable/update its character MOD: "+relative);

@@ -26,11 +26,12 @@
 ```powershell
 python tools/check_render_release.py --evidence <evidence.json> --out <result.json>
 python tools/check_render_release.py --evidence <evidence.json> --out <public-result.json> --public
+python tools/check_render_support.py --backend eclipse --project <Eclipse工坊候选目录>
 python tools/package_render_support.py --output <新工坊项目目录> --public --evidence <evidence.json>
 ```
 
 `--public`要求三家驱动证据齐全才通过。没有此标志的目录是候选，不能把候选目录生成成功当作跨显卡发布验收。上传仍由用户决定，工具不会自动上传。
 
-证据JSON `format=1`，包含当前`jar_sha256`、`shader_sha256`、`character_jar_sha256`、`catalog_sha256`，以及`startup_report`、`reference_reports[]`、`driver_reports[]`、`changed_models[]`、`integration_reports[]`。路径可相对于证据文件。启动、编译和驱动报告必须是真实输出，不能手改GPU名称或通过字段；检查器核当前源码/产物、角色核心与索引、参考源码/编译器指纹、声明宿主覆盖、GL错误及新增人物契约。引用的内容变化或缺失会阻断。不要把测试伪造反例当发布证据。
+证据 JSON 用 `format=1` 和 `backend=native` 或 `backend=eclipse`，缺省为 Native。包含当前 `jar_sha256`、`shader_sha256`、`character_jar_sha256`、`catalog_sha256`，以及 `startup_report`、`reference_reports[]`、`driver_reports[]`、`changed_models[]`、`integration_reports[]`。路径可相对于证据文件。检查器核对报告与当前源码、产物、角色核心、目录、宿主和编译器的指纹，并核对 GL 错误和新增人物契约。使用实际启动、编译和驱动输出，测试夹具的伪造反例仅供单元测试。
 
 2026-11-08实例：NVIDIA4070 Laptop的旧`packed`词法问题已修；150项参考检查和AMD下RC2/RC3检查通过，NVIDIA/Intel修正版实机反馈缺失，因此0.2.9只能归为有限硬件验证，不能写“三家兼容完成”。

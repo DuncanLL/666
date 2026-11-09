@@ -1,6 +1,7 @@
 {
   "game_root": "D:/SteamLibrary/steamapps/common/ProjectZomboid",
   "viewpoint_jar": "D:/path/to/Viewpoint/42/media/java/client/Viewpoint.jar",
+  "eclipse_support_reference_jar": "D:/prepared-original-render-resources/eclipse/preserved-reference.jar",
   "zombiebuddy_jar": "D:/path/to/ZombieBuddy/libs/ZombieBuddy.jar",
   "ecj_jar": "D:/private-tools/ecj-4.38.jar",
   "reference_jar": "D:/current-R116/42/media/java/client/AimohPMXPreview.jar",

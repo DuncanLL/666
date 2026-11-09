@@ -1,8 +1,6 @@
 package aimoh.gf2.bridge;
 import java.lang.instrument.*;
 import java.security.ProtectionDomain;
-import java.security.MessageDigest;
-import java.nio.file.*;
 import java.util.*;
 import net.bytebuddy.jar.asm.*;
 /** Native-only method-body integration; no Iris/Eclipse hooks or host class copies. */
@@ -10,19 +8,6 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     public static final Map<String,Integer> EXPECTED=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/PackOption",1);
     private volatile Throwable transformFailure;
-    public static final String SUPPORTED_VP="c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8";
-    private static final Set<String> SUPPORTED_HOSTS=Set.of(SUPPORTED_VP,"605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f");
-    public static void verifyHost()throws Exception{
-        Set<String> copies=new LinkedHashSet<>();var entries=RuntimeHooks.class.getClassLoader().getResources("aimoh/gf2/bridge/Main.class");while(entries.hasMoreElements())copies.add(entries.nextElement().toExternalForm());
-        if(copies.size()!=1)throw new IllegalStateException("More than one R116 render-support copy is on the Java classpath; keep one enabled version: "+copies);
-        var resource=Class.forName("viewpoint.platform.GlProgram",false,RuntimeHooks.class.getClassLoader()).getResource("GlProgram.class");
-        if(resource==null||!(resource.openConnection()instanceof java.net.JarURLConnection location))throw new IllegalStateException("Cannot identify official Viewpoint dependency JAR");
-        verifyHost(Path.of(location.getJarFileURL().toURI()));
-    }
-    static void verifyHost(Path jar)throws Exception{
-        String actual=Files.isRegularFile(jar)?HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jar))):"not-a-JAR";
-        if(!SUPPORTED_HOSTS.contains(actual))throw new IllegalStateException("R116 Native test supports verified official Viewpoint 0.1.7-rc2 / rc3; current rc3 build "+SUPPORTED_VP+"; detected "+actual+". This VP update/build has not been validated; no runtime hooks applied.");
-    }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
         if(type.equals("viewpoint/platform/PackOption")){
@@ -42,7 +27,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         if(hits[0]!=1)throw new IllegalStateException("Character source-host entry changed: "+hits[0]);return writer.toByteArray();
     }
     public void install(Instrumentation agent)throws Exception{
-        verifyHost();
+        VerifiedViewpoint.verify();
         Class<?> core=Class.forName("aimoh.motion.PmxShading",false,RuntimeHooks.class.getClassLoader());
         if(core.getDeclaredField("danrpVariant").getType()!=core||core.getDeclaredMethod("renderProfile").getReturnType()!=core||core.getDeclaredMethod("freezeDanrp",float[].class,float[].class).getReturnType()!=float[].class)throw new IllegalStateException("R116 character core GF2 ABI differs; no runtime hooks applied");
         if(!agent.isRetransformClassesSupported())throw new IllegalStateException("ZombieBuddy retransformation unavailable");

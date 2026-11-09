@@ -56,6 +56,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     private static final Pattern PART=Pattern.compile("aimoh:pmx-part-gf2-(-?\\d+)-(\\d+)");
     private record Draw(int index,int material,int ordinal){}
     private record Actor(int palette,JSONObject model,List<Draw> draws){}
+    private record Casters(Actor actor,List<Draw> draws){}
     private record History(String asset,float[] placement,float[] eye,int frame,float jitterU,float jitterV){}
     private record RootPose(int frame,double[] rotation,double[] previous){}
     private record RootKey(int actor,String root){}
@@ -73,7 +74,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     AimohNativeSourceRenderer(AimohGf2PackData prepared)throws Exception{
         data=prepared;
         data.manifest.getJSONObject("features").put("authored_eye_add_exposure_adapter",false);
-        var caps=GL.getCapabilities();if(!caps.OpenGL43||!caps.OpenGL45&&!caps.GL_ARB_direct_state_access||!caps.OpenGL44&&!caps.GL_ARB_clear_texture)throw new IllegalStateException("R116 Native requires OpenGL 4.3 plus direct-state-access and clear-texture support; driver="+GL11.glGetString(GL11.GL_VERSION));
+        var caps=GL.getCapabilities();
         AimohGf2PackMaterials createdMaterials=null;AimohNativeSourcePrograms createdPrograms=null;AimohGf2DepthStencil createdTarget=null;AimohNativeGf2Environment createdEnvironment=null;GlProgram createdMotion=null;AimohNativeDisplayTransfer createdDisplay=null;
         try{createdTarget=new AimohGf2DepthStencil();createdMaterials=new AimohGf2PackMaterials(data);createdPrograms=new AimohNativeSourcePrograms(data,createdMaterials);createdEnvironment=new AimohNativeGf2Environment();createdMotion=AimohNativePackSelection.compute("Original source MRT to Native velocity","gf2/native_motion.comp");createdMotion.sampler("sourceNativeMotion",0);}
         catch(Exception e){if(createdMotion!=null)createdMotion.delete();if(createdEnvironment!=null)createdEnvironment.close();if(createdPrograms!=null)createdPrograms.close();if(createdMaterials!=null)createdMaterials.close();if(createdTarget!=null){AimohNativeSourceScope.forget((GlProgram)AimohNativeGf2Environment.field(createdTarget,"copy"));createdTarget.close();}throw e;}
@@ -130,11 +131,22 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         colour=GL45.glCreateTextures(GL11.GL_TEXTURE_2D);GL45.glTextureStorage2D(colour,1,GL30.GL_RGBA16F,w,h);GL45.glTextureParameteri(colour,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL45.glTextureParameteri(colour,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);
     }
     private static boolean writesDepth(JSONObject pass){Object value=pass.getJSONObject("state").get("zWrite");return value instanceof Number n?n.doubleValue()!=0:((JSONObject)value).getDouble("value")!=0;}
+    private static AutoCloseable modelBindings(ModelPass models){
+        models.begin();
+        return models::end;
+    }
     private void cast(Matrix4f nativeVp,int[] candidates,int count,ModelBatches.Filter filter)throws Exception{
         FrameContext frame=(FrameContext)AimohNativeGf2Environment.world("frame");if(shadowFrame!=frame.index){shadowFrame=frame.index;shadowDraws=shadowViews=visibleCasterViews=0;}shadowPhase++;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(models,2);if(actors.isEmpty())return;
         boolean[] selected=null;if(candidates!=null){selected=new boolean[draws.count];for(int i=0;i<count;i++)selected[candidates[i]]=true;}
-        try(AimohGf2GlScope scope=new AimohGf2GlScope()){
+        List<Casters> casters=new ArrayList<>();
+        for(Actor actor:actors){
+            List<Draw> eligible=new ArrayList<>();
+            for(Draw draw:actor.draws)if((selected==null||selected[draw.index])&&filter.take(draw.index)&&materials.optionalPass(draw.material,"ShadowCaster")!=null)eligible.add(draw);
+            if(!eligible.isEmpty())casters.add(new Casters(actor,eligible));
+        }
+        if(casters.isEmpty())return;
+        try(AimohGf2GlScope scope=new AimohGf2GlScope();AutoCloseable bindings=modelBindings(models)){
             captureRelief(models);
             float factor=GL11.glIsEnabled(GL11.GL_POLYGON_OFFSET_FILL)?GL11.glGetFloat(GL11.GL_POLYGON_OFFSET_FACTOR):0,units=GL11.glIsEnabled(GL11.GL_POLYGON_OFFSET_FILL)?GL11.glGetFloat(GL11.GL_POLYGON_OFFSET_UNITS):0;
             float[] eye={frame.eyeX,frame.eyeY,frame.eyeZ};Matrix4f sourceVp=new Matrix4f(nativeVp).translate(eye[0],eye[1],eye[2]).scale(-1,1,-1);
@@ -143,16 +155,14 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             Matrix4f view=new Matrix4f(right.x,up.x,back.x,0,right.y,up.y,back.y,0,right.z,up.z,back.z,0,0,0,0,1),inverse=new Matrix4f(view).invert();
             Map<String,float[]> nativeValues=AimohNativeSourceSpace.values(frame,new float[]{frame.scene.sunX,frame.scene.sunY,frame.scene.sunZ},null);
             if(casterQuery!=0){GL15.glBeginQuery(GL33.GL_ANY_SAMPLES_PASSED,casterQuery);casterQueryActive=true;}
-            for(Actor actor:actors){
-                List<Draw> eligible=new ArrayList<>();
-                for(Draw draw:actor.draws)if((selected==null||selected[draw.index])&&filter.take(draw.index)&&materials.optionalPass(draw.material,"ShadowCaster")!=null)eligible.add(draw);
-                if(eligible.isEmpty())continue;
+            for(Casters caster:casters){
+                Actor actor=caster.actor;
                 int first=actor.draws.get(0).index,identity=(int)draws.palettes[actor.palette*12+24];float[] placement=Arrays.copyOfRange(draws.values,first*68,first*68+16);
                 AimohGf2FrameInputs builder=builders.computeIfAbsent(actor.model.getString("pmx_sha256"),id->new AimohGf2FrameInputs(actor.model,data.manifest.getJSONObject("original_camera_fill")));
                 Map<String,float[]> input=new LinkedHashMap<>(builder.build(nativeValues,placement,eye,placement,eye,frame.width,frame.height,frame.time,false,new float[0],new float[0],new float[0]).values());
                 input.put("unity_MatrixVP",sourceVp.get(new float[16]));input.put("unity_MatrixV",view.get(new float[16]));input.put("unity_MatrixInvV",inverse.get(new float[16]));input.put("unity_CameraToWorld",inverse.get(new float[16]));input.put("glstate_matrix_projection",new Matrix4f(sourceVp).mul(inverse).get(new float[16]));
                 int attributes=materials.attributeTexture(actor.model),nativeShadow=((int[])AimohNativeGf2Environment.field(AimohNativeGf2Environment.world("shadows"),"views"))[0];Map<String,Local> locals=new HashMap<>();
-                for(Draw draw:eligible){
+                for(Draw draw:caster.draws){
                     String root=actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),input.get("unity_WorldToObject")):locals.computeIfAbsent(root,r->local(builder,r,draws,draw,input,false,identity));
                     AimohGf2OriginalProgram program=nativePrograms.source(draw.material,"ShadowCaster");program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),nativeShadow,environment.shadowSampler));
                     program.nativeInputs(local.inverse,local.inverseNormal,actor.model.getInt("attribute_records"));program.nativeFrame(placement,local.inverse,eye,new float[2],false);GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,attributes);
@@ -166,7 +176,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         if(earlyFrame==frame.index)throw new IllegalStateException("Duplicate source GBuffer callback");earlyFrame=frame.index;earlyDraws=0;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(models);if(actors.isEmpty())return;
         Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
-        try(AimohGf2GlScope scope=new AimohGf2GlScope()){
+        try(AimohGf2GlScope scope=new AimohGf2GlScope();AutoCloseable bindings=modelBindings(models)){
             captureRelief(models);
             environment.prepareDepth(frame);ensure(frame.width,frame.height);target.targets(Map.of(0,nativeTargets.albedo,1,nativeTargets.normal,2,nativeTargets.engineLight,3,nativeTargets.velocity));target.begin(nativeTargets.depth);
             Map<String,float[]> values=AimohNativeSourceSpace.values(frame,environment.direction,previousValues);
@@ -213,16 +223,24 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             Map<String,float[]> values=AimohNativeSourceSpace.values(frame,environment.direction,previousValues);AimohNativeLocalLights frameLights=AimohNativeLocalLights.capture(frame);
             List<Ready> ready=new ArrayList<>(actors.size());for(Actor actor:actors)ready.add(prepareActor(frame,draws,actor,values,frameLights));
             captureRelief(models);
-            // Original renderer phases share one camera depth/stencil target across all renderers.
-            for(String stage:STAGES){
-                List<Job> jobs=new ArrayList<>();
-                for(Ready actor:ready)for(Draw draw:actor.actor.draws){JSONObject pass=materials.optionalPass(draw.material,stage);if(pass==null)continue;
-                    int at=draw.index*68+24;org.joml.Vector3f position=new org.joml.Vector3f(draws.values[at],draws.values[at+1],draws.values[at+2]);frame.view.transformPosition(position);
-                    jobs.add(new Job(actor,draw,queues.computeIfAbsent(pass,p->queue(materials.material(draw.material),p)),-position.z));
+            float[] depth=new float[draws.count];var position=new org.joml.Vector3f();
+            for(Ready actor:ready)for(Draw draw:actor.actor.draws){
+                int at=draw.index*68+24;
+                frame.view.transformPosition(position.set(draws.values[at],draws.values[at+1],draws.values[at+2]));
+                depth[draw.index]=-position.z;
+            }
+            // Keep the host's palette and draw buffers attached across the source passes.
+            try(AutoCloseable bindings=modelBindings(models)){
+                for(String stage:STAGES){
+                    List<Job> jobs=new ArrayList<>();
+                    for(Ready actor:ready)for(Draw draw:actor.actor.draws){
+                        JSONObject pass=materials.optionalPass(draw.material,stage);if(pass==null)continue;
+                        jobs.add(new Job(actor,draw,queues.computeIfAbsent(pass,p->queue(materials.material(draw.material),p)),depth[draw.index]));
+                    }
+                    jobs.sort(Comparator.comparingInt(Job::queue).thenComparingDouble(j->j.queue>2500?-j.depth:j.depth).thenComparingInt(j->j.ready.identity).thenComparingInt(j->j.draw.ordinal));
+                    if(!jobs.isEmpty())stageOrder.add(stage);
+                    for(Job job:jobs)drawPrepared(frame,models,draws,job.ready,job.draw,stage);
                 }
-                jobs.sort(Comparator.comparingInt(Job::queue).thenComparingDouble(j->j.queue>2500?-j.depth:j.depth).thenComparingInt(j->j.ready.identity).thenComparingInt(j->j.draw.ordinal));
-                if(!jobs.isEmpty())stageOrder.add(stage);
-                for(Job job:jobs)drawPrepared(frame,models,draws,job.ready,job.draw,stage);
             }
             for(Ready actor:ready)histories.put(actor.identity,new History(actor.actor.model.getString("pmx_sha256"),actor.placement.clone(),actor.eye.clone(),frames,frame.jitterX/width,frame.jitterY/height));
             // Original capture: late hair/outline passes can write depth, and MRT2 is consumed after them.
@@ -338,9 +356,8 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             String name=RELIEF_NAMES[i];if(reliefLocations[i]<0)continue;float[] values=reliefValues[i];
             switch(name){case "uReliefGrid"->gl.set(name,values[0],values[1],values[2],values[3]);case "uReliefCamera","uReliefFlowCells"->gl.set(name,values[0],values[1]);default->gl.set(name,values[0]);}
         }
-        try{models.begin();
-            // Preserve the stock batch path, but visit only the already-selected draw.
-            singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});}finally{models.end();}
+        // Preserve the stock batch path, but visit only the already-selected draw.
+        singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});
     }
     public String evidence(){return new JSONObject().put("frames",frames).put("early_frames",earlyFrames).put("early_draws",earlyDraws).put("actors",lastActors).put("original_stage_draws",lastDraws).put("stages",stageDraws).put("stage_order",stageOrder).put("actor_lighting_buffers",actorLighting.size()).put("native_programs",nativePrograms.count()).put("native_additional_light_inputs",nativeLightCount).put("native_local_selected_slots",localLights==null?0:localLights.kinds.length).put("native_local_kinds",localLights==null?new int[0]:localLights.kinds).put("native_local_indices",localLights==null?new int[0]:localLights.indices).put("native_local_fragment_consumers",nativePrograms.localConsumers()).put("native_indirect_fragment_consumers",nativePrograms.indirectConsumers()).put("native_actor_light",actorEngineLight).put("unsupported_car_beams",unsupportedCarBeams).put("shadow_views",shadowViews).put("shadow_draws",shadowDraws).put("visible_caster_views",visibleCasterViews).put("caster_query_is_fixture_only",casterQuery!=0).put("geometry_witness",geometryWitness).put("source_data_identity",data.identity).put("native_environment",environment.evidence()).put("original_display_transfer",display==null?JSONObject.NULL:display.evidence()).put("native_reflection_cube",environment.cube).put("native_main_shadow_consumers",nativePrograms.mainConsumers()).put("native_legacy_shadow_samplers",nativePrograms.legacySunSamplers()).put("scope","Native opaque depth/velocity retained; original source colour/stencil/shadow, Native cloud and actor ambient connected. Shared display transform and current-scene reflection are connected. Point/muzzle/spot services and actual Native bounce/flash-bounce feed source lighting. Actual six-direction room radiance is connected. Transparent/dynamic reflection coverage, conditional original effects, full authored motion and gameplay acceptance remain incomplete").toString();}
     @Override public void close()throws Exception{AimohNativeGf2Registry.detach(data);AimohNativeSourceScope.forget(motionBridge,(GlProgram)AimohNativeGf2Environment.field(target,"copy"));for(AimohGf2RegisterBank b:banks.values())b.close();for(int buffer:actorLighting.values())GL15.glDeleteBuffers(buffer);actorLighting.clear();if(display!=null)display.close();nativePrograms.close();materials.close();environment.close();motionBridge.delete();target.close();if(colour!=0)GL11.glDeleteTextures(colour);if(casterQuery!=0)GL15.glDeleteQueries(casterQuery);}

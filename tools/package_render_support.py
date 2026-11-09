@@ -12,7 +12,8 @@ def package(output,verify_existing=False,evidence=None,public=False):
         if evidence is None:raise ValueError('Public validation requires --evidence; ordinary output is a candidate only')
         from check_render_release import evaluate
         validation=evaluate(evidence)
-        if validation['status']!='THREE_VENDOR_DRIVER_VALIDATED':raise ValueError(json.dumps(validation,ensure_ascii=False))
+        if validation['backend']!='native' or validation['jar_sha256']!=report['jar_sha256'] or validation['status']!='THREE_VENDOR_DRIVER_VALIDATED':
+            raise ValueError(json.dumps(validation,ensure_ascii=False))
     if verify_existing:
         expected={n:r for n,r in inventory(ROOT/'render-support/mod').items()if n!='common/.gitkeep'}
         expected['42/media/java/client/AimohGF2Eclipse.jar']={'bytes':jar.stat().st_size,'sha256':sha(jar)}

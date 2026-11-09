@@ -9,14 +9,6 @@ import java.util.zip.*;
 /** Installs only our own ZIP, using the actual user's cache root. Never selects a shader. */
 public final class ManagedShaderPack {
     public record Result(Path pack,String action,String sha256){}
-    public static String retireManagedEclipse(Path userRoot)throws IOException{
-        userRoot=userRoot.toAbsolutePath().normalize();Path old=userRoot.resolve("viewpoint-shaderpacks/Aimoh-Eclipse-GF2.zip");
-        if(!Files.isRegularFile(old)||Files.isSymbolicLink(old))return "ABSENT_OR_PRESERVED";
-        String digest=sha(old);if(!Set.of("6cb7934477d15b82d2c4f5d3fb74152c299240fea14a29c047cf9ff9a665a076","bf49fef353de59d86f511ec2d6bd48373e0c22da5153ece4b9aa9b3db903e2a2").contains(digest))return "PLAYER_FILE_PRESERVED";
-        Path retired=userRoot.resolve("aimoh-gf2/retired-eclipse");Files.createDirectories(retired);Path backup=retired.resolve(digest+".zip");
-        if(Files.exists(backup)){if(!sha(backup).equals(digest))throw new IOException("Eclipse rollback fingerprint differs");Files.delete(old);}else Files.move(old,backup,StandardCopyOption.ATOMIC_MOVE);
-        return "ARCHIVED_"+digest;
-    }
     private static String sha(Path file)throws IOException{
         try(InputStream in=Files.newInputStream(file)){
             try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(in.readAllBytes()));}
