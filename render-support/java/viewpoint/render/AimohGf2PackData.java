@@ -18,6 +18,7 @@ public final class AimohGf2PackData {
     public static final int EXTERNAL_MOD_RESOURCE_FORMAT=5;
     public static final int EXTERNAL_CHARACTER_CATALOG_FORMAT=6;
     static final String CATALOG_PATH="media/aimoh_gf2/characters.json";
+    private static final Set<String> CHARACTER_FIELDS=Set.of("materials","textures","shader_property_defaults","programs","glsl","early_fragments","consumed","models");
     public final JSONObject manifest;
     public final String identity;
     private final PackSource source;
@@ -76,15 +77,84 @@ public final class AimohGf2PackData {
         if(!file.isAbsolute()||!Files.isRegularFile(file))throw new IOException("GF2 character catalog missing; enable/update its character MOD: "+relative);
         byte[] raw=Files.readAllBytes(file);JSONObject catalog=new JSONObject(new String(raw,StandardCharsets.UTF_8));
         if(catalog.getInt("format")!=1||!"gf2-character-catalog".equals(catalog.getString("pipeline")))throw new IllegalArgumentException("Unsupported MOD character catalog");
-        JSONObject fields=catalog.getJSONObject("characters");Set<String> names=Set.of("materials","textures","shader_property_defaults","programs","glsl","early_fragments","consumed","models");
-        if(!fields.keySet().equals(names))throw new IllegalArgumentException("Character catalog fields differ");
-        for(String name:names){if(root.has(name))throw new IllegalArgumentException("Bootstrap must not duplicate character field: "+name);root.put(name,fields.get(name));}
-        root.remove("character_catalog");root.put("format",EXTERNAL_MOD_RESOURCE_FORMAT);
+        JSONObject fields=catalog.getJSONObject("characters");
+        if(!fields.keySet().equals(CHARACTER_FIELDS))throw new IllegalArgumentException("Character catalog fields differ");
         try{
             MessageDigest digest=MessageDigest.getInstance("SHA-256");digest.update(text.getBytes(StandardCharsets.UTF_8));digest.update((byte)'\n');digest.update(raw);
+            Path registry=file.getParent().getParent().resolve("aimoh_pmx/registry.json");
+            JSONObject packs=Files.isRegularFile(registry)?new JSONObject(Files.readString(registry)).optJSONObject("packs"):null;
+            if(packs!=null)for(String mod:packs.keySet().stream().sorted().toList()){
+                if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(mod))continue;
+                try{
+                    Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(mod)).toAbsolutePath();
+                    String relativePack="media/aimoh_gf2/packs/"+mod+".json";
+                    Path fragment=modRoot.resolve(relativePack);
+                    if(!Files.isRegularFile(fragment))fragment=modRoot.resolve("42").resolve(relativePack);
+                    byte[] packBytes=Files.readAllBytes(fragment);
+                    JSONObject extra=new JSONObject(new String(packBytes,StandardCharsets.UTF_8));
+                    if(extra.getInt("format")!=1||!mod.equals(extra.getString("mod")))throw new IllegalArgumentException("Invalid GF2 character pack");
+                    JSONObject combined=new JSONObject(fields.toString());
+                    mergeCharacters(combined,extra.getJSONObject("characters"));
+                    fields=combined;
+                    digest.update((byte)'\n');digest.update(packBytes);
+                }catch(Exception e){System.err.println("[R116 GF2] Character pack "+mod+": "+e);}
+            }
+            for(String name:CHARACTER_FIELDS){
+                if(root.has(name))throw new IllegalArgumentException("Bootstrap must not duplicate character field: "+name);
+                root.put(name,fields.get(name));
+            }
+            root.remove("character_catalog");root.put("format",EXTERNAL_MOD_RESOURCE_FORMAT);
             root.put("data_identity",HexFormat.of().formatHex(digest.digest()));
         }catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
         return root;
+    }
+
+    private static void mergeCharacters(JSONObject base,JSONObject extra){
+        if(!extra.keySet().equals(CHARACTER_FIELDS))throw new IllegalArgumentException("Character pack fields differ");
+        JSONArray materials=base.getJSONArray("materials"), additions=extra.getJSONArray("materials");
+        Map<String,JSONObject> byName=new HashMap<>();
+        for(Object value:materials){JSONObject row=(JSONObject)value;byName.put(row.getString("name"),row);}
+        int[] remap=new int[additions.length()];
+        for(int i=0;i<remap.length;i++){
+            JSONObject row=additions.getJSONObject(i);
+            if(row.getInt("id")!=i)throw new IllegalArgumentException("Non-contiguous pack material ID");
+            String name=row.getString("name");JSONObject old=byName.get(name);
+            int id=old==null?materials.length():old.getInt("id");
+            row.put("id",id);remap[i]=id;
+            if(old==null){materials.put(row);byName.put(name,row);}
+            else if(!old.similar(row))throw new IllegalArgumentException("Conflicting pack material "+name);
+        }
+        for(String key:List.of("textures","shader_property_defaults","glsl","early_fragments","consumed")){
+            JSONObject target=base.getJSONObject(key),incoming=extra.getJSONObject(key);
+            for(String name:incoming.keySet()){
+                JSONObject row=incoming.getJSONObject(name);
+                if(!target.has(name))target.put(name,row);
+                else if(!target.getJSONObject(name).similar(row))throw new IllegalArgumentException("Conflicting pack resource "+name);
+            }
+        }
+        JSONArray programs=base.getJSONArray("programs");
+        Map<List<String>,JSONObject> choices=new HashMap<>();
+        for(Object value:programs){JSONObject row=(JSONObject)value;choices.put(programKey(row),row);}
+        for(Object value:extra.getJSONArray("programs")){
+            JSONObject row=(JSONObject)value;JSONObject old=choices.putIfAbsent(programKey(row),row);
+            if(old==null)programs.put(row);
+            else if(!old.similar(row))throw new IllegalArgumentException("Conflicting pack program "+programKey(row));
+        }
+        JSONArray models=base.getJSONArray("models");Set<String> modelIds=new HashSet<>();
+        for(Object value:models)modelIds.add(((JSONObject)value).getString("pmx_sha256"));
+        for(Object value:extra.getJSONArray("models")){
+            JSONObject model=(JSONObject)value;
+            if(!modelIds.add(model.getString("pmx_sha256")))throw new IllegalArgumentException("Duplicate pack model SHA");
+            for(Object part:model.getJSONArray("parts")){
+                JSONObject row=(JSONObject)part;row.put("source_material",remap[row.getInt("source_material")]);
+            }
+            JSONObject frames=model.getJSONObject("renderer_frames"), old=frames.getJSONObject("materials"), updated=new JSONObject();
+            for(String key:old.keySet())updated.put(Integer.toString(remap[Integer.parseInt(key)]),old.get(key));
+            frames.put("materials",updated);models.put(model);
+        }
+    }
+    private static List<String> programKey(JSONObject row){
+        return List.of(row.getString("material"),row.getString("pass"),row.getString("stage"));
     }
 
     private void index(Object value){

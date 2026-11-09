@@ -34,15 +34,17 @@ public final class AimohGf2Runtime implements AutoCloseable {
         Assets a=PACKS.get(p.programs);if(a==null)return null;
         AimohGf2Runtime current=FRAMES.get(p.targets);if(current!=null&&current.assets==a)return current;
         if(current!=null)current.close();try{
-            current=new AimohGf2Runtime(a);FRAMES.put(p.targets,current);
-            System.out.println("[AimohGF2] Screen mapping: TAA="+p.configured.values().get("TAA")+", TAA_UPSCALING="+p.configured.values().get("TAA_UPSCALING")+", effective scale="+AimohGf2Screen.scale(p.configured.values()));
+            float keyLight=AimohGf2SourceHost.numberOption(p.configured.values().get("characterKeyLightStrength"),1f,0f,10f);
+            current=new AimohGf2Runtime(a,AimohGF2Services.actorMotion(p.programs),keyLight);FRAMES.put(p.targets,current);
+            System.out.println("[AimohGF2] Screen mapping: TAA="+p.configured.values().get("TAA")+", TAA_UPSCALING="+p.configured.values().get("TAA_UPSCALING")+", effective scale="+AimohGf2Screen.scale(p.configured.values())+", actor motion="+current.actorMotion);
             return current;
         }catch(IOException e){throw new IllegalStateException("GF2 source runtime initialization",e);}
     }
     private final Assets assets;
     private final AimohGf2DepthStencil target;
     private final AimohGf2EclipseEnvironment environment;
-    private final AimohGf2RuntimeQueue queue=new AimohGf2RuntimeQueue();
+    private final boolean actorMotion;
+    private final AimohGf2RuntimeQueue queue;
     private final int shadowSampler;
     private AimohGf2WorldShadow worldBridge;
     private String worldKey;
@@ -67,14 +69,16 @@ public final class AimohGf2Runtime implements AutoCloseable {
     private long revision;
     private boolean closed;
 
-    private AimohGf2Runtime(Assets assets)throws IOException{
-        this.assets=assets;target=new AimohGf2DepthStencil(assets.kernel("MOTION_DECODE"));
+    private AimohGf2Runtime(Assets assets,boolean actorMotion,float keyLight)throws IOException{
+        this.assets=assets;this.actorMotion=actorMotion;
+        target=new AimohGf2DepthStencil(actorMotion?assets.kernel("MOTION_DECODE"):null);
+        queue=new AimohGf2RuntimeQueue(actorMotion);
         // Source materials select the cube mip with RMO.r * 6. Eclipse's atlas also uses linear roughness.
         String cube=assets.kernel("CUBE").replace(
             "float rough=(1.7-sqrt(max(0,2.89-2.8*float(level)/6)))/1.4;",
             "float rough=float(level)/6.0;");
-        environment=new AimohGf2EclipseEnvironment(assets.kernel("ENVIRONMENT_SH"),cube);
-        environment.configureLocalProbe(assets.text(assets.data.manifest.getJSONObject("native_probe")));
+        environment=new AimohGf2EclipseEnvironment(sourceKeyLight(assets.kernel("ENVIRONMENT_SH"),keyLight),cube);
+        environment.configureLocalProbe(sourceShadowLight(assets.text(assets.data.manifest.getJSONObject("native_probe")),keyLight));
         shadowSampler=GL33.glGenSamplers();for(int[] p:new int[][]{{GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_WRAP_S,GL12.GL_CLAMP_TO_EDGE},{GL11.GL_TEXTURE_WRAP_T,GL12.GL_CLAMP_TO_EDGE},{GL14.GL_TEXTURE_COMPARE_MODE,GL30.GL_COMPARE_REF_TO_TEXTURE},{GL14.GL_TEXTURE_COMPARE_FUNC,GL11.GL_LEQUAL}})GL33.glSamplerParameteri(shadowSampler,p[0],p[1]);
     }
     private static float[] flat(Matrix4d m){return new Matrix4f(m).get(new float[16]);}
@@ -101,12 +105,64 @@ public final class AimohGf2Runtime implements AutoCloseable {
         return new float[]{v[0]/width,v[1]/height};
     }
 
+    private static String sourceKeyLight(String source,float strength){
+        if(strength==0f)return source;
+        String output="])*nativeMainScale;";
+        if(source.indexOf(output)<0||source.indexOf(output)!=source.lastIndexOf(output))
+            throw new IllegalArgumentException("Source key light layout differs");
+        // The captured GF2 key is 0.9 in the ready room and 1.2 in the activity scene.
+        return source.replace(output,output+"""
+            const float keyStrength=%s;
+            const vec3 gf2Luminance=vec3(.2126,.7152,.0722);
+            float keyEnergy=dot(mainLight.rgb,gf2Luminance);
+            float excess=max(keyEnergy-.9,0.0);
+            float shoulder=excess/(1.0+excess/.3);
+            vec3 skyDiffuse=max(c[0],vec3(0.0));
+            float skyEnergy=dot(skyDiffuse,gf2Luminance);
+            float highStrength=clamp((keyStrength-2.0)/8.0,0.0,1.0);
+            float daylight=smoothstep(.08,.45,keyEnergy);
+            float excessFraction=clamp(min(keyStrength,2.0)*excess/max(keyEnergy,1e-6),0.0,1.0);
+            if(skyEnergy>1e-6)
+                mainLight.rgb=mix(mainLight.rgb,skyDiffuse*(keyEnergy/skyEnergy),max(excessFraction,highStrength*daylight));
+            mainLight.rgb*=1.0-min(min(keyStrength,2.0)*(excess-shoulder),excess)/max(keyEnergy,1e-6);
+            """.formatted(Float.toString(strength)));
+    }
+
+    private static String sourceShadowLight(String source,float strength){
+        if(strength<=2f)return source;
+        String output="actorSH[6].w=1;";
+        if(source.indexOf(output)<0||source.indexOf(output)!=source.lastIndexOf(output))
+            throw new IllegalArgumentException("Source diffuse probe layout differs");
+        // The ready-room diffuse reference is about 1.67 times the legacy camera-fill reference.
+        return source.replace(output,"""
+            const float highStrength=%s;
+            const vec3 gf2Luminance=vec3(.2126,.7152,.0722);
+            vec3 localDiffuse=budgetedLevel*diffuseReference;
+            float diffuseEnergy=dot(localDiffuse,gf2Luminance);
+            float daylight=smoothstep(.08,.45,dot(sourceMain.rgb,gf2Luminance));
+            if(diffuseEnergy>1e-6 && daylight>0.0){
+                vec3 chroma=localDiffuse/diffuseEnergy;
+                float blend=highStrength*daylight*visible;
+                vec4 luminanceA=actorSH[0]*gf2Luminance.r+actorSH[1]*gf2Luminance.g+actorSH[2]*gf2Luminance.b;
+                vec4 luminanceB=actorSH[3]*gf2Luminance.r+actorSH[4]*gf2Luminance.g+actorSH[5]*gf2Luminance.b;
+                float missingDiffuse=max(1.67*diffuseEnergy-dot(mean+missing,gf2Luminance),0.0);
+                for(int channel=0;channel<3;channel++){
+                    actorSH[channel]=mix(actorSH[channel],luminanceA*chroma[channel],blend);
+                    actorSH[channel+3]=mix(actorSH[channel+3],luminanceB*chroma[channel],blend);
+                    actorSH[channel].w+=blend*missingDiffuse*chroma[channel];
+                }
+                actorSH[6].rgb=mix(actorSH[6].rgb,dot(actorSH[6].rgb,gf2Luminance)*chroma,blend);
+            }
+            """.formatted(Float.toString((strength-2f)/8f))+output)
+            .replace("writeonly buffer ActorUnitySH","buffer ActorUnitySH");
+    }
+
     void draw(boolean early)throws IOException{
         if(!early)renderFrame++;int frame=early?renderFrame+1:renderFrame;
         var actors=AimohGf2SourceHost.sourceState().actors;
         histories.keySet().retainAll(actors.keySet());poses.keySet().removeIf(k->!actors.containsKey(k.actor));
         if(!early){lastActors=actors.size();lastDraws=0;}
-        if(early)GL44.glClearTexImage(AimohGf2SourceHost.motionTarget(),0,GL30.GL_RG,GL11.GL_FLOAT,new float[]{65504,65504});
+        if(early&&actorMotion)GL44.glClearTexImage(AimohGf2SourceHost.motionTarget(),0,GL30.GL_RG,GL11.GL_FLOAT,new float[]{65504,65504});
         if(actors.isEmpty())return;
         int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height();
         target.ensure(width,height);
@@ -114,11 +170,13 @@ public final class AimohGf2Runtime implements AutoCloseable {
             target.targets(Map.of(0,AimohGf2SourceHost.color(1),1,AimohGf2SourceHost.color(8),2,AimohGf2SourceHost.color(2),3,AimohGf2SourceHost.color(17)));
         }else{
             target.ensureOriginalOutputs();
-            target.targets(Map.of(0,AimohGf2SourceHost.color(3),1,target.sourceNormal(),2,target.sourceMotion()));
+            target.targets(actorMotion?Map.of(0,AimohGf2SourceHost.color(3),1,target.sourceNormal(),2,target.sourceMotion())
+                :Map.of(0,AimohGf2SourceHost.color(3),1,target.sourceNormal()));
         }
         target.begin(AimohGf2SourceHost.depth());
         if(!early){
-            GL30.glClearBufferfv(GL11.GL_COLOR,1,new float[4]);GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});
+            GL30.glClearBufferfv(GL11.GL_COLOR,1,new float[4]);
+            if(actorMotion)GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});
             int[] main=AimohGf2SourceHost.gpuField("lightSourceColorSSBO");
             environment.updateFrame(AimohGf2SourceHost.color(20),AimohGf2SourceHost.color(21),1,main[0],main[1],1f/2400,renderFrame);
             int[] exposure=AimohGf2SourceHost.gpuField("exposureSSBO");
@@ -131,7 +189,7 @@ public final class AimohGf2Runtime implements AutoCloseable {
             first=false;
         }
         target.writeBackDepth(AimohGf2SourceHost.nativeColorFbo());
-        if(!early)target.decodeMotion(AimohGf2SourceHost.motionTarget());
+        if(!early&&actorMotion)target.decodeMotion(AimohGf2SourceHost.motionTarget());
     }
 
     private void drawActor(boolean early,int frame,AimohGF2Services.Actor actor)throws IOException{
@@ -160,7 +218,7 @@ public final class AimohGf2Runtime implements AutoCloseable {
         if(!early)lastDraws+=draws.size();
         GL11.glFrontFace(GL11.GL_CCW);
         if(!early)shadow(draws,inputs,base,shadowCamera,actorId,frame,packet.cameraFillSlot());
-        String[] stages=early?new String[]{"GFCharForward"}:new String[]{"GFCharForward","GFHairShadow","GFCharFaceShadow","GFCharHairTransE","GFCharTransMrtWrtie","GFCharTransBack","GFCharTransFront","GFOutline","GFCharTransOutline"};
+        String[] stages=early?new String[]{"GFCharForward"}:new String[]{"GFCharForward","GFHairShadow","GFCharFaceShadow","GFCharHairTransE","GFOutline","GFCharTransMrtWrtie","GFCharTransBack","GFCharTransFront","GFCharTransOutline"};
         Map<String,Local> roots=new HashMap<>();
         for(String stage:stages){List<Job> jobs=new ArrayList<>();for(Draw draw:draws){JSONObject material=assets.materials.material(draw.material);JSONObject pass=pass(material,stage);if(pass==null)continue;if(early&&!enabledNumber(pass.getJSONObject("state").get("zWrite")))continue;jobs.add(new Job(renderQueue(material,pass),draw,draw.material));}jobs.sort(Comparator.comparingInt(Job::queue));
             List<AimohGf2RuntimeQueue.Job> queued=new ArrayList<>();for(Job job:jobs){JSONObject material=assets.materials.material(job.material);String root=model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(job.material),null);Local local=root==null?new Local(inputs,base):roots.computeIfAbsent(root,k->localFrame(builder,k,actorId,frame,inputs,base,job.draw.nativeIndex));

@@ -41,6 +41,7 @@ def evaluate(evidence_file):
         require(all(startup.get(name+'_discovered') is True and startup.get('shader_hashes',{}).get(name)==row['shader_sha256']
                     for name,row in build['backends'].items()),'Combined startup did not verify both embedded packs')
     references=e.get('reference_reports',[]);require(bool(references),'No host-expanded reference compilation evidence')
+    terrain_checked=False
     for path in references:
         ref=report(path);rows=ref.get('programs',[])
         if combined:
@@ -51,9 +52,15 @@ def evaluate(evidence_file):
         require(bool(rows)and ref.get('all_reference_passed')is True,'Reference compilation incomplete: '+path)
         for row in rows:
             require(row.get('reference_status')=='REFERENCE_COMPILE_PASS','Reference stage/link failure')
+            if eclipse and row.get('program','').rsplit('.',1)[-1]=='gbuffers_terrain':
+                terrain_checked=True
+                stages={stage['stage'] for stage in row.get('stages',[])}
+                require(stages=={'vert','tesc','tese','frag'},
+                        'Eclipse terrain must link with VP tessellation and without Minecraft grass geometry: '+path)
             for stage in row.get('stages',[]):
                 p=Path(stage['path']);require(sha(p)==stage['sha256'],'Expanded source changed: '+str(p))
                 text=p.read_text('utf8');require(text.lstrip().startswith('#version')and not re.search(r'^\s*#include\b',text,re.M),'Raw/unversioned shader is not host-expanded evidence')
+    if eclipse:require(terrain_checked,'No host-expanded Eclipse terrain link evidence')
     drivers=e.get('driver_reports',[]);require(bool(drivers),'No actual driver rendering evidence')
     coverage=False
     for path in drivers:

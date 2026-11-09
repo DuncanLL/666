@@ -25,7 +25,7 @@ public final class AimohGf2SourceHost {
         skinGloss=numberOption(options.get("characterSkinGloss"),0f,0f,1f);
         outlineWidth=numberOption(options.get("characterOutlineWidth"),1f,.75f,1.35f);
     }
-    private static float numberOption(String value,float fallback,float min,float max){
+    static float numberOption(String value,float fallback,float min,float max){
         if(value==null)return fallback;
         try{float v=Float.parseFloat(value);return Float.isFinite(v)?Math.clamp(v,min,max):fallback;}
         catch(NumberFormatException ignored){return fallback;}
@@ -128,8 +128,25 @@ public final class AimohGf2SourceHost {
     public static float[] gpuVector(String variable,int components){
         int[] field=gpuField(variable);var data=BufferUtils.createFloatBuffer(components);GL45.glGetNamedBufferSubData(field[0],field[1],data);float[] values=new float[components];data.get(values);return values;
     }
+    static float[] nativeMoonDirection(boolean hasActors){
+        if(!hasActors)return gpuVector("customMoonVecSSBO",3);
+        int[] moon=gpuField("customMoonVecSSBO"),matrix=gpuField("customShadowMatrixSSBO");
+        int first=Math.min(moon[1],matrix[1]),end=Math.max(moon[1]+3*Float.BYTES,matrix[1]+16*Float.BYTES);
+        if(moon[0]!=matrix[0]||end-first>256)return gpuVector("customMoonVecSSBO",3);
+        // Eclipse writes both fields in begin.csh. One read also supplies the later character shadow.
+        var data=BufferUtils.createFloatBuffer((end-first)/Float.BYTES);
+        GL45.glGetNamedBufferSubData(moon[0],first,data);
+        frameShadowView=new float[16];data.get((matrix[1]-first)/Float.BYTES,frameShadowView);
+        float[] direction=new float[3];data.get((moon[1]-first)/Float.BYTES,direction);
+        return direction;
+    }
     public static float[] nativeShadowView(){
-        if(frameShadowView==null)frameShadowView="true".equals(pipeline.configured.values().get("CUSTOM_MOON_ROTATION"))?gpuVector("customShadowMatrixSSBO",16):values.get("shadowModelView");
+        if(frameShadowView==null){
+            if("true".equals(pipeline.configured.values().get("CUSTOM_MOON_ROTATION"))){
+                frameShadowView=sourceState().bundle.shadowReadback.read();
+                if(frameShadowView==null)frameShadowView=gpuVector("customShadowMatrixSSBO",16);
+            }else frameShadowView=values.get("shadowModelView");
+        }
         return frameShadowView;
     }
     public static float[] sourceShadowCamera(int id){

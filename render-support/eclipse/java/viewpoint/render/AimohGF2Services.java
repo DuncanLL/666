@@ -13,6 +13,7 @@ import viewpoint.platform.GlProgram;
 /** Optional pack-owned character stages. Reuses the host's frozen ModelDraws. */
 public final class AimohGF2Services {
     public static State sourceState(IrisPipeline p){return STATES.get(p.targets);}
+    static boolean actorMotion(IrisPrograms programs){return BUNDLES.get(programs).actorMotion;}
 
     private static final Map<IrisPrograms,Bundle> BUNDLES=new IdentityHashMap<>();
     private static final Map<IrisTargets,State> STATES=new IdentityHashMap<>();
@@ -50,14 +51,27 @@ public final class AimohGF2Services {
 
     static final class Bundle {
         final int nativeEntityProgram;
+        final boolean actorMotion;
+        final AimohGf2ShadowReadback shadowReadback=new AimohGf2ShadowReadback();
         IrisPrograms.Pass skyBase,skyFilter;
-        int moonDirectionOffset=-1;
-        Bundle(int nativeEntityProgram){this.nativeEntityProgram=nativeEntityProgram;}
+        Bundle(IrisPrograms programs){
+            nativeEntityProgram=programs.draws.get(IrisPrograms.Draw.ENTITIES).gl.id();
+            actorMotion=samplesActorMotion(programs);
+        }
         void delete(){
+            shadowReadback.close();
             if(skyBase!=null&&skyBase.program()!=null)skyBase.program().delete();
             if(skyFilter!=null&&skyFilter.program()!=null)skyFilter.program().delete();
         }
     }
+    private static boolean samplesActorMotion(IrisPrograms programs){
+        if(programs.draws.values().stream().anyMatch(AimohGF2Services::samplesActorMotion))return true;
+        for(var passes:programs.passes.values())for(var pass:passes){
+            if(samplesActorMotion(pass.program())||pass.computes().stream().anyMatch(AimohGF2Services::samplesActorMotion))return true;
+        }
+        return false;
+    }
+    private static boolean samplesActorMotion(IrisProgram program){return program!=null&&program.units.containsKey("vpDanMotionTex");}
     public static void link(IrisPrograms programs,IrisPack pack,IrisPack.Configured configured,Map<String,String> macros){
         if(!AimohGf2AddonContext.supports(pack))return;
         Bundle b=null;
@@ -71,7 +85,7 @@ public final class AimohGF2Services {
                     System.err.println("[R116 Eclipse] Character rendering unavailable; check the R116 character MOD and restart or reload the shader: "+e);
                     return;
                 }
-                b=new Bundle(programs.draws.get(IrisPrograms.Draw.ENTITIES).gl.id());
+                b=new Bundle(programs);
                 b.skyBase=(IrisPrograms.Pass)PASS.invoke(programs,new ProgramSet.Program("dan_sky_base","danrp/sky_base.vsh",null,"danrp/sky_base.fsh",List.of()));
                 b.skyFilter=(IrisPrograms.Pass)PASS.invoke(programs,new ProgramSet.Program("dan_sky_filter","danrp/sky_filter.vsh",null,"danrp/sky_filter.fsh",List.of()));
                 if(b.skyBase.program()==null||b.skyFilter.program()==null)throw new IllegalStateException("Native filtered sky stages missing");BUNDLES.put(programs,b);return;
@@ -173,13 +187,14 @@ public final class AimohGF2Services {
             return texture;
         }
         void ensure(IrisPipeline p,FrameContext frame){
-            int w=actors.isEmpty()?1:frame.width,h=actors.isEmpty()?1:frame.height;
             int atlas=actors.isEmpty()?1:2048;
-            if(w==width&&h==height&&atlas==atlasSize&&motion!=0)return;
+            int w=0,h=0;
+            if(bundle.actorMotion){w=actors.isEmpty()?1:frame.width;h=actors.isEmpty()?1:frame.height;}
+            if(w==width&&h==height&&atlas==atlasSize&&shadowFbo!=0)return;
             delete();
             width=w;height=h;atlasSize=atlas;
             try{
-                motion=texture(w,h,GL30.GL_RG16F);
+                if(bundle.actorMotion)motion=texture(w,h,GL30.GL_RG16F);
                 shadow=texture(atlas,atlas,GL14.GL_DEPTH_COMPONENT16);
                 shadowFbo=GL45.glCreateFramebuffers();
                 GL45.glNamedFramebufferTexture(shadowFbo,GL30.GL_DEPTH_ATTACHMENT,shadow,0);
@@ -218,26 +233,12 @@ public final class AimohGF2Services {
         }
     }
 
-    private static void eclipseDirection(IrisPipeline p,Bundle b,Map<String,float[]> values){
+    private static void eclipseDirection(IrisPipeline p,Map<String,float[]> values,boolean hasActors){
         boolean day=values.get("sunElevation")[0]>1e-5f;
         Vector3f direction;
         if(!day&&"true".equals(p.configured.values().get("CUSTOM_MOON_ROTATION"))){
-            // begin.csh produces this vector before model/PerObject drawing.
-            // Reflect its actual layout once; do not assume a constant SSBO offset.
-            if(b.moonDirectionOffset<0){
-                search:for(var passes:p.programs.passes.values())for(var pass:passes){
-                    List<IrisProgram> entries=new ArrayList<>(pass.computes());if(pass.program()!=null)entries.add(pass.program());
-                    for(IrisProgram entry:entries)for(String name:List.of("customMoonVecSSBO","SSBO1.customMoonVecSSBO")){
-                        int index=GL43.glGetProgramResourceIndex(entry.gl.id(),GL43.GL_BUFFER_VARIABLE,name);if(index==-1)continue;
-                        int[] offset=new int[1];GL43.glGetProgramResourceiv(entry.gl.id(),GL43.GL_BUFFER_VARIABLE,index,new int[]{GL43.GL_OFFSET},null,offset);
-                        b.moonDirectionOffset=offset[0];break search;
-                    }
-                }
-            }
-            Integer buffer=p.images.buffers.get(4);
-            if(buffer==null||b.moonDirectionOffset<0)throw new IllegalStateException("Eclipse GPU moon direction provider missing");
-            var vector=BufferUtils.createFloatBuffer(3);GL45.glGetNamedBufferSubData(buffer,b.moonDirectionOffset,vector);
-            direction=new Vector3f(vector.get(0),vector.get(1),vector.get(2));
+            float[] vector=AimohGf2SourceHost.nativeMoonDirection(hasActors);
+            direction=new Vector3f(vector[0],vector[1],vector[2]);
         }else{
             String smooth=day?"SMOOTH_SUN_ROTATION":"SMOOTH_MOON_ROTATION";
             float[] vector=values.get("true".equals(p.configured.values().get(smooth))?(day?"unsigned_WsunVecSmooth":"unsigned_WmoonVecSmooth"):(day?"sunPosition":"moonPosition"));
@@ -255,10 +256,16 @@ public final class AimohGF2Services {
     public static void prepare(IrisPipeline p,FrameContext frame,ShadowPass shadow,ModelPass models,Map<String,float[]> values){
         Bundle bundle=BUNDLES.get(p.programs);if(bundle==null)return;
         AimohGf2SourceHost.prepare(p,frame,shadow,models,values);
-        eclipseDirection(p,bundle,values);
+        bundle.shadowReadback.reset();
         State state=STATES.computeIfAbsent(p.targets,key->new State(bundle));
         state.collect(models,frame,AimohGf2Runtime.PACKS.get(p.programs).data);
+        boolean hasActors=!state.actors.isEmpty();
+        eclipseDirection(p,values,hasActors);
         state.ensure(p,frame);
+        if(hasActors&&values.get("sunElevation")[0]>1e-5f&&"true".equals(p.configured.values().get("CUSTOM_MOON_ROTATION"))){
+            int[] matrix=AimohGf2SourceHost.gpuField("customShadowMatrixSSBO");
+            bundle.shadowReadback.queue(matrix[0],matrix[1]);
+        }
         SceneData scene=frame.scene;
         values.put("uSceneOrigin",new float[]{(float)scene.originX,(float)scene.originY,(float)scene.originZ});
         values.put("uDaylight",new float[]{scene.daylightKnown?scene.daylightR:.8f,scene.daylightKnown?scene.daylightG:.8f,scene.daylightKnown?scene.daylightB:.8f});

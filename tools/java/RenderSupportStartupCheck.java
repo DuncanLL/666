@@ -23,17 +23,49 @@ public final class RenderSupportStartupCheck {
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
             var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
+            var macros=viewpoint.iris.IrisMacros.standard(460,"","",
+                Set.of("COMPUTE_SHADERS","CUSTOM_IMAGES","SSBO","FADE_VARIABLE"),true);
+            var lpvOff=iris.configure(Map.of("LPV_ENABLED","false","LPV_SIZE","8","WATER_INTERACTION","0",
+                "SHADER_GRASS_SETTING","true","BEACON_FLOODFILL","true"),macros);
+            require(Collections.disjoint(lpvOff.properties().images.keySet(),List.of("imgVoxelMask","imgLpv1","imgLpv2")),
+                "Retired Minecraft grass still allocates voxel images with LPV off");
+            var water=iris.configure(Map.of("LPV_ENABLED","false","LPV_SIZE","8","WATER_INTERACTION","2"),macros);
+            require(water.properties().images.getOrDefault("imgVoxelMask","").strip().endsWith("5 5 5")
+                &&Collections.disjoint(water.properties().images.keySet(),List.of("imgLpv1","imgLpv2")),
+                "Eclipse water must keep its small interaction mask with LPV off");
+            require(water.programs().passes(viewpoint.iris.ProgramSet.Stage.SETUP).isEmpty()
+                &&water.programs().passes(viewpoint.iris.ProgramSet.Stage.COMPOSITE).stream().noneMatch(p->p.name().equals("composite20")),
+                "Inactive Eclipse LPV must not dispatch empty compute programs");
+            var lpvOn=iris.configure(Map.of("LPV_ENABLED","true","LPV_SIZE","8","BEACON_FLOODFILL","true"),macros);
+            require(lpvOn.properties().images.getOrDefault("imgVoxelMask","").contains("R16UI")
+                &&lpvOn.properties().images.keySet().containsAll(List.of("imgLpv1","imgLpv2")),
+                "Eclipse LPV images changed or the retired beacon still widens the voxel mask");
+            require(lpvOn.programs().passes(viewpoint.iris.ProgramSet.Stage.SETUP).stream().anyMatch(p->p.name().equals("setup"))
+                &&lpvOn.programs().passes(viewpoint.iris.ProgramSet.Stage.COMPOSITE).stream().anyMatch(p->p.name().equals("composite20")),
+                "Eclipse LPV lost an active compute program");
+            for(boolean taa:new boolean[]{false,true}){
+                var configured=iris.configure(Map.of("TAA",String.valueOf(taa),"VP_DANRP_PIPELINE","true"),macros);
+                var post=iris.preprocess(configured,"world0/composite6.fsh",macros);
+                require(post.errors().isEmpty()&&post.text().contains("vpDanMotionTex")==taa,
+                    "Eclipse actor motion consumer does not match the configured TAA pass");
+            }
+            require(lpvOff.blocks().size()==11&&lpvOff.blocks().id("water","flowing_water")==8
+                &&lpvOff.blocks().id("glass_pane","glass","white_stained_glass_pane")==301
+                &&lpvOff.blocks().id("short_grass","grass","tall_grass","fern")==12
+                &&lpvOff.blocks().id("oak_leaves","leaves","birch_leaves")==56,
+                "Eclipse material IDs differ from the official VP inputs");
             require(Set.of("Skin Normal Detail","皮肤凹凸细节").contains(iris.text("option.characterSurfaceDetail"))
                 &&Set.of("Skin Highlight Tightness","皮肤高光集中度").contains(iris.text("option.characterSkinGloss")),
                 "Eclipse skin labels missing");
-            var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss","characterOutlineWidth");
+            var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss","characterOutlineWidth","characterKeyLightStrength");
             require(surfaceOptions.equals(iris.defaults.screens.get("R116_CHARACTER"))
                 &&iris.defaults.screens.get("").contains("[R116_CHARACTER]"),"Eclipse character options page missing");
             for(String id:surfaceOptions){
                 var option=iris.options.get(id);
                 boolean outline=id.equals("characterOutlineWidth");
-                String min=outline?"0.75":"0.00",max=outline?"1.35":"1.00",fallback=outline?"1.00":"0.00",custom=outline?"1.27":"0.37";
-                require(option!=null&&iris.defaults.sliders.contains(id)&&option.values().size()==(outline?61:101),
+                boolean keyLight=id.equals("characterKeyLightStrength");
+                String min=outline?"0.75":"0.00",max=outline?"1.35":keyLight?"10.00":"1.00",fallback=outline||keyLight?"1.00":"0.00",custom=outline?"1.27":keyLight?"7.35":"0.37";
+                require(option!=null&&iris.defaults.sliders.contains(id)&&option.values().size()==(outline?61:keyLight?201:101),
                         "Eclipse slider range missing: "+id);
                 require(option.values().getFirst().equals(min)&&option.values().getLast().equals(max)
                         &&option.fallback().equals(fallback),"Eclipse slider bounds or default changed: "+id);
