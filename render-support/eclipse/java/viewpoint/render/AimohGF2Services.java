@@ -99,7 +99,6 @@ public final class AimohGF2Services {
     static void beforeSourceColor(IrisFrame host,IrisPipeline p,FrameContext frame,Set<Integer> flips){
         State state=STATES.get(p.targets);
         if(state==null||state.actors.isEmpty())return;
-        if(!"false".equalsIgnoreCase(p.configured.values().get("screenspaceReflectionsEnabled")))p.targets.mipmaps(3);
         try{
             SCREEN.invoke(host,p,state.bundle.skyBase,"composite",frame,false,flips);
             SCREEN.invoke(host,p,state.bundle.skyFilter,"composite",frame,false,flips);
