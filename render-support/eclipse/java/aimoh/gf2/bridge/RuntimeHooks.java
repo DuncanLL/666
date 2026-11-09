@@ -10,7 +10,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/",D=R+"AimohGF2Services",S=R+"AimohGf2SourceHost",C=R+"AimohGf2AddonContext";
     static final String LINK="(Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)Lviewpoint/render/IrisPrograms;";
     public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",2,R+"IrisBindings",2,R+"IrisPipeline",3,
-        R+"IrisPrograms",3,R+"IrisFrame",8,R+"ModelPass",4,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
+        R+"IrisPrograms",3,R+"IrisFrame",4,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
     private volatile Throwable transformFailure;
     private static String t(String name){return "L"+R+name+";";}
     public static byte[] rewrite(String type,byte[] raw){
@@ -25,8 +25,6 @@ public final class RuntimeHooks implements ClassFileTransformer {
                     void invoke(String owner,String method,String descriptor){mv.visitMethodInsn(Opcodes.INVOKESTATIC,owner,method,descriptor,false);}
                     void call(String owner,String method,String descriptor){invoke(owner,method,descriptor);hits[0]++;}
                     void field(String owner,String field,String descriptor){load(0);mv.visitFieldInsn(Opcodes.GETFIELD,owner,field,descriptor);}
-                    void frameArgs(){load(1,2,3);field(type,"models",t("ModelPass"));field(type,"geometry",t("IrisGeometry"));field(type,"values","Ljava/util/Map;");}
-                    String six(){return "("+t("IrisPipeline")+t("FrameContext")+t("ShadowPass")+t("ModelPass")+t("IrisGeometry")+"Ljava/util/Map;)V";}
                     @Override public void visitCode(){
                         super.visitCode();
                         if(linking){load(0);invoke(C,"beginCompile","(Lviewpoint/iris/IrisPack;)V");mv.visitLabel(start);}
@@ -42,9 +40,8 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         }
                         if(type.equals(R+"IrisFrame"))switch(name){
                             case "draw"->{load(1,2);call(D,"beginFrame","("+t("IrisPipeline")+t("FrameContext")+")V");}
-                            case "opaque"->{frameArgs();call(D,"prepare",six());}
+                            case "opaque"->{load(1,2,3);field(type,"models",t("ModelPass"));field(type,"values","Ljava/util/Map;");call(D,"prepare","("+t("IrisPipeline")+t("FrameContext")+t("ShadowPass")+t("ModelPass")+"Ljava/util/Map;)V");}
                             case "computes"->{load(0,1,2,3,4,5);call(S,"beforeSourcePass","("+t("IrisFrame")+t("IrisPipeline")+t("IrisPrograms$Pass")+"Ljava/lang/String;"+t("FrameContext")+"Ljava/util/Set;)V");}
-                            case "screen"->{load(0,1,2);mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,R+"IrisPrograms$Pass","name","()Ljava/lang/String;",false);load(4,6);call(D,"beforeScreen","("+t("IrisFrame")+t("IrisPipeline")+"Ljava/lang/String;"+t("FrameContext")+"Ljava/util/Set;)V");}
                         }
                     }
                     @Override public void visitInsn(int op){
@@ -52,8 +49,6 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         if(linking&&op==Opcodes.ARETURN){mv.visitInsn(Opcodes.DUP);load(0,1,2);call(D,"link","("+t("IrisPrograms")+"Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)V");invoke(C,"endCompile","()V");}
                         if(op==Opcodes.RETURN){
                             if(type.equals(R+"IrisBindings")&&name.equals("bind")){field(type,"targets",t("IrisTargets"));load(1);call(C,"nativeLights","("+t("IrisTargets")+t("IrisProgram")+")V");}
-                            if(type.equals(R+"IrisFrame")&&name.equals("screen")){load(1,2);mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,R+"IrisPrograms$Pass","name","()Ljava/lang/String;",false);load(4);call(D,"afterScreen","("+t("IrisPipeline")+"Ljava/lang/String;"+t("FrameContext")+")V");}
-                            if(type.equals(R+"ModelPass")&&name.equals("cull"))call(D,"modelCull","()V");
                             if(type.equals(R+"ModelPass")&&name.equals("begin"))call(R+"AimohGf2IrisGlass","modelState","()V");
                         }
                         super.visitInsn(op);
@@ -73,14 +68,11 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         if(type.equals("aimoh/motion/PmxOriginalInputs")&&"viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.AimohGf2SourceHost");hits[0]++;}else super.visitLdcInsn(value);
                     }
                     @Override public void visitMethodInsn(int op,String owner,String method,String descriptor,boolean itf){
-                        if(type.equals(R+"IrisFrame")&&name.equals("draw")&&owner.equals(type)&&method.equals("translucent")){load(1,2,3,4);field(type,"geometry",t("IrisGeometry"));field(type,"values","Ljava/util/Map;");call(D,"forward",six());}
                         if(type.equals(R+"IrisFrame")&&name.equals("opaque")&&owner.equals(R+"IrisTargets")&&method.equals("copyDepth")&&!early){load(0,1,2);call(S,"sourceEarly","("+t("IrisFrame")+t("IrisPipeline")+t("FrameContext")+")V");early=true;}
                         if(type.equals(R+"ModelPass")&&name.equals("iris")&&owner.equals(R+"ModelBatches")&&method.equals("draw")){mv.visitInsn(Opcodes.SWAP);call(D,"filter","("+t("ModelBatches$Filter")+")"+t("ModelBatches$Filter"));mv.visitInsn(Opcodes.SWAP);}
                         super.visitMethodInsn(op,owner,method,descriptor,itf);
                         if(type.equals(R+"IrisGeometry")&&name.equals("viewpoint")&&owner.equals(R+"SurfacePass")&&method.equals("torches")){load(1,3);call(C,"bindMuzzle","("+t("IrisProgram")+t("ShadowPass")+")V");}
                         if(type.equals(R+"IrisPrograms")&&name.equals("geometry")&&owner.equals("viewpoint/iris/IrisAssembler")&&method.equals("fragment")){load(2);mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,"viewpoint/iris/ProgramSet$Program","name","()Ljava/lang/String;",false);call(C,"fragment","(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");}
-                        if(type.equals(R+"IrisFrame")&&name.equals("opaque")&&owner.equals(R+"IrisGeometry")&&method.equals("models")){frameArgs();call(D,"producers",six());}
-                        if(type.equals(R+"ModelPass")&&name.equals("iris")&&owner.equals(type)&&method.equals("begin"))call(D,"modelState","()V");
                     }
                 };
             }

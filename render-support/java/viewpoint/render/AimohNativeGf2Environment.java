@@ -49,10 +49,12 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
     private void uniform(String name,float[] result){int location=GL20.glGetUniformLocation(lighting.id(),name);if(location<0)throw new IllegalStateException("Native light uniform absent: "+name);GL20.glGetUniformfv(lighting.id(),location,result);}
     public void update(FrameContext frame)throws Exception{
         find();uniform("uSunDir",direction);uniform("uSkyLevel",level);uniform("uSunColor",sunColor);strength=GL20.glGetUniformf(lighting.id(),GL20.glGetUniformLocation(lighting.id(),"uSunStrength"));
-        int block=GL31.glGetUniformBlockIndex(lighting.id(),"SkyLight"),binding=GL31.glGetActiveUniformBlocki(lighting.id(),block,GL31.GL_UNIFORM_BLOCK_BINDING),sky=GL30.glGetIntegeri(GL31.GL_UNIFORM_BUFFER_BINDING,binding);long start=GL32.glGetInteger64i(GL31.GL_UNIFORM_BUFFER_START,binding);
+        int block=GL31.glGetUniformBlockIndex(lighting.id(),"SkyLight"),binding=GL31.glGetActiveUniformBlocki(lighting.id(),block,GL31.GL_UNIFORM_BLOCK_BINDING),sky=GL30.glGetIntegeri(GL31.GL_UNIFORM_BUFFER_BINDING,binding);
         if(sky==0)throw new IllegalStateException("Actual Native SkyLight UBO is not bound");
         pack.use();pack.set("nativeRelativeSky",level[0],level[1],level[2]);pack.set("nativePrimaryStrength",strength);
-        GL31.glUniformBlockBinding(pack.id(),GL31.glGetUniformBlockIndex(pack.id(),"NativeSkyLight"),binding);lastEngine=null;actorLight(new float[]{level[0],level[1],level[2],1});
+        GL31.glUniformBlockBinding(pack.id(),GL31.glGetUniformBlockIndex(pack.id(),"NativeSkyLight"),binding);
+        // The first actor writes the buffer before any copy or draw consumes it.
+        lastEngine=null;
         reflection.use();reflection.set("uEye",frame.eyeX,frame.eyeY,frame.eyeZ);reflection.set("uSunDir",direction[0],direction[1],direction[2]);reflection.set("uSunColor",sunColor[0],sunColor[1],sunColor[2]);reflection.set("uSunStrength",strength);
         for(int i=0;i<3;i++){
             float[] matrix=new float[16],params=new float[4];uniform("uShadowMatrix["+i+"]",matrix);uniform("uShadowMaps["+i+"]",params);System.arraycopy(matrix,0,shadowMatrices,i*16,16);System.arraycopy(params,0,shadowParams,i*4,4);

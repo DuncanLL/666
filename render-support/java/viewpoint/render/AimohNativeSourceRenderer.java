@@ -53,9 +53,12 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     private boolean casterQueryActive;
     private boolean reportedPaletteFallback;
     private final Map<String,Integer> stageDraws=new LinkedHashMap<>();
+    private FrameActors frozenActors;
     private static final Pattern PART=Pattern.compile("aimoh:pmx-part-gf2-(-?\\d+)-(\\d+)");
     private record Draw(int index,int material,int ordinal){}
     private record Actor(int palette,JSONObject model,List<Draw> draws){}
+    private record ActorParts(JSONObject model,List<Draw> colour,List<Draw> shadow){}
+    private record FrameActors(long frame,List<Actor> colour,List<Actor> shadow,Set<Integer> submitted){}
     private record Casters(Actor actor,List<Draw> draws){}
     private record History(String asset,float[] placement,float[] eye,int frame,float jitterU,float jitterV){}
     private record RootPose(int frame,double[] rotation,double[] previous){}
@@ -97,18 +100,21 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         Matcher m=QUEUE.matcher(text);if(!m.matches())throw new IllegalArgumentException("Source render queue differs");
         int base=switch(m.group(1)){case "Background"->1000;case "Geometry"->2000;case "AlphaTest"->2450;case "Transparent"->3000;case "Overlay"->4000;default->throw new IllegalArgumentException("Unknown source queue");};return base+(m.group(2)==null?0:Integer.parseInt(m.group(2)));
     }
-    private List<Actor> actors(ModelPass models)throws Exception{return actors(models,1);}
-    private List<Actor> actors(ModelPass models,int visible)throws Exception{
+    private FrameActors actors(FrameContext frame,ModelPass models)throws Exception{
+        if(frozenActors!=null&&frozenActors.frame==frame.index)return frozenActors;
         ModelDraws draws=models.draws();
         int[] rank=(int[])AimohNativeGf2Environment.field(models.batches,"rank");
-        Map<Integer,Actor> found=new LinkedHashMap<>();
+        Map<Integer,ActorParts> found=new LinkedHashMap<>();
+        List<Actor> colour=new ArrayList<>(),shadow=new ArrayList<>();
+        Set<Integer> submitted=new HashSet<>();
         // Stock batches omit meshes/textures still loading. Use the same eligible draw set.
         for(int i=0;i<draws.count;i++){
             if(rank[i]<0)continue;
-            if((draws.flags[i]&visible)==0||draws.meshes[i]==null||draws.meshes[i].getPath()==null)continue;
+            int flags=draws.flags[i];
+            if(flags==0||draws.meshes[i]==null||draws.meshes[i].getPath()==null)continue;
             Matcher match=PART.matcher(draws.meshes[i].getPath().getPath());if(!match.matches())continue;
             int palette=draws.palette[i];
-            Actor actor=found.get(palette);
+            ActorParts actor=found.get(palette);
             if(actor==null){
                 JSONObject model=data.modelForPalette(draws,palette);
                 if(model==null){
@@ -118,13 +124,22 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
                     }
                     continue;
                 }
-                actor=new Actor(palette,model,new ArrayList<>());found.put(palette,actor);
+                actor=new ActorParts(model,new ArrayList<>(),new ArrayList<>());found.put(palette,actor);
+                submitted.add((int)draws.palettes[palette*12+24]);
             }
             int material=Integer.parseInt(match.group(1)),ordinal=Integer.parseInt(match.group(2));
             if(actor.model.getJSONArray("parts").getJSONObject(ordinal).getInt("source_material")!=material)throw new IllegalArgumentException("Native source material/part mapping differs");
-            actor.draws.add(new Draw(i,material,ordinal));
+            Draw draw=new Draw(i,material,ordinal);
+            if((flags&ModelDraws.COLOUR)!=0){
+                if(actor.colour.isEmpty())colour.add(new Actor(palette,actor.model,actor.colour));
+                actor.colour.add(draw);
+            }
+            if((flags&ModelDraws.SHADOW)!=0){
+                if(actor.shadow.isEmpty())shadow.add(new Actor(palette,actor.model,actor.shadow));
+                actor.shadow.add(draw);
+            }
         }
-        return new ArrayList<>(found.values());
+        return frozenActors=new FrameActors(frame.index,colour,shadow,submitted);
     }
     private void ensure(int w,int h){
         if(width==w&&height==h)return;if(colour!=0)GL11.glDeleteTextures(colour);width=w;height=h;target.ensure(w,h);target.ensureOriginalOutputs(true);
@@ -137,7 +152,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     }
     private void cast(Matrix4f nativeVp,int[] candidates,int count,ModelBatches.Filter filter)throws Exception{
         FrameContext frame=(FrameContext)AimohNativeGf2Environment.world("frame");if(shadowFrame!=frame.index){shadowFrame=frame.index;shadowDraws=shadowViews=visibleCasterViews=0;}shadowPhase++;
-        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(models,2);if(actors.isEmpty())return;
+        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).shadow;if(actors.isEmpty())return;
         boolean[] selected=null;if(candidates!=null){selected=new boolean[draws.count];for(int i=0;i<count;i++)selected[candidates[i]]=true;}
         List<Casters> casters=new ArrayList<>();
         for(Actor actor:actors){
@@ -174,7 +189,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     }
     private void prepass(FrameContext frame)throws Exception{
         if(earlyFrame==frame.index)throw new IllegalStateException("Duplicate source GBuffer callback");earlyFrame=frame.index;earlyDraws=0;
-        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(models);if(actors.isEmpty())return;
+        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).colour;if(actors.isEmpty())return;
         Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
         try(AimohGf2GlScope scope=new AimohGf2GlScope();AutoCloseable bindings=modelBindings(models)){
             captureRelief(models);
@@ -207,9 +222,9 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         if(earlyFrame!=frame.index)throw new IllegalStateException("Native original colour ran before its GBuffer callback");
         if(lastFrame==frame.index)throw new IllegalStateException("Duplicate Native source frame");lastFrame=frame.index;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
-        List<Actor> actors=actors(models);lastActors=actors.size();lastDraws=0;stageDraws.clear();stageOrder.clear();
+        FrameActors frozen=actors(frame,models);List<Actor> actors=frozen.colour;lastActors=actors.size();lastDraws=0;stageDraws.clear();stageOrder.clear();
         Set<Integer> alive=new HashSet<>();for(Actor actor:actors)alive.add((int)draws.palettes[actor.palette*12+24]);histories.keySet().retainAll(alive);rootPoses.keySet().removeIf(k->!alive.contains(k.actor));
-        Set<Integer> submitted=new HashSet<>();for(Actor actor:actors(models,-1))submitted.add((int)draws.palettes[actor.palette*12+24]);
+        Set<Integer> submitted=frozen.submitted;
         for(var it=banks.entrySet().iterator();it.hasNext();){var entry=it.next();if(!submitted.contains(entry.getKey().actor)){entry.getValue().close();bankScopes.remove(entry.getKey());it.remove();}}
         for(var it=actorLighting.entrySet().iterator();it.hasNext();){var entry=it.next();if(!alive.contains(entry.getKey())){GL15.glDeleteBuffers(entry.getValue());it.remove();}}
         environment.retainActors(alive);
@@ -279,7 +294,10 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         Map<String,float[]> input=new LinkedHashMap<>(packet.values());float[] center=Arrays.copyOfRange(draws.values,first*68+24,first*68+27);var shadow=environment.shadow(center,eye);
         // The cube already contains sky visibility and current local radiance. Do not attenuate room reflections again.
         input.put("unity_SpecCube0_HDR",new float[]{1,1,0,0});
-        org.joml.Vector4f clip=new org.joml.Vector4f(center[0],center[1],center[2],1);frame.plainViewProjection.transform(clip);geometryWitness=new JSONObject().put("native_bounds_center",center).put("native_clip_center",new float[]{clip.x,clip.y,clip.z,clip.w}).put("placement",placement).put("eye",eye);
+        if(casterQuery!=0){
+            org.joml.Vector4f clip=new org.joml.Vector4f(center[0],center[1],center[2],1);frame.plainViewProjection.transform(clip);
+            geometryWitness=new JSONObject().put("native_bounds_center",center).put("native_clip_center",new float[]{clip.x,clip.y,clip.z,clip.w}).put("placement",placement).put("eye",eye);
+        }
         int lighting=actorLighting.computeIfAbsent(identity,k->{int buffer=GL45.glCreateBuffers();GL45.glNamedBufferData(buffer,128L,GL15.GL_DYNAMIC_DRAW);return buffer;});
         GL45.glCopyNamedBufferSubData(environment.buffer,lighting,0,0,128);
         environment.reflection(frame,center,java.lang.Math.max(engine[3],0),identity);

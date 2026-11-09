@@ -3,10 +3,10 @@
   "base_version": "0.1.2 preserved Eclipse distribution",
   "reference_jar_sha256": "614df4df845c07b935116fbe470fc0f8109ea0b9400f867e2c30584430beb547",
   "official_host_sha256": "c032ef0655f2c97c9eb4e3f713d087a718b0a13fdac786f3e64994420aaf37e8",
-  "shader_payload_preserved": true,
+  "shader_change": "Bounds and ownership check before sampling character motion in composite6",
   "source_adapter_origin": "3127265^:render-support/java/viewpoint/render/AimohGf2Rc2Vertex.java",
-  "scope": "Official RC3, shared frozen pose and vertex interface adapters, Eclipse submission and TAA input reuse",
-  "version": "0.1.4",
+  "scope": "Official RC3, source-only Eclipse frame path and shared frozen pose and vertex adapters",
+  "version": "0.1.5",
   "shared_sources": [
     "aimoh/gf2/bridge/VerifiedViewpoint.java",
     "viewpoint/render/AimohGf2Device.java",

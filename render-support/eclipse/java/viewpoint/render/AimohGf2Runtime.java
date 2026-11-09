@@ -17,7 +17,7 @@ import viewpoint.iris.*;
  * frame owns final PMX geometry, world lighting, depth and post-processing.
  */
 public final class AimohGf2Runtime implements AutoCloseable {
-    static final Map<IrisPrograms,Assets> PACKS=new IdentityHashMap<>();
+    static final Map<IrisPrograms,Assets> PACKS=Collections.synchronizedMap(new IdentityHashMap<>());
     private static final Map<IrisTargets,AimohGf2Runtime> FRAMES=new IdentityHashMap<>();
     static final class Assets implements AutoCloseable {
         final IrisPack pack;final AimohGf2PackData data;final AimohGf2PackMaterials materials;
@@ -58,7 +58,7 @@ public final class AimohGf2Runtime implements AutoCloseable {
     private final Map<String,Boolean> options=new HashMap<>();
     private List<float[]> jitterRows;
     private record History(String asset,int frame,float[] model,float[] eye){}
-    private record Draw(int nativeIndex,int material,int ordinal){}
+    record Draw(int nativeIndex,int material,int ordinal){}
     private record Job(int queue,Draw draw,int material){}
     private record Local(Map<String,float[]> inputs,AimohGf2RuntimeQueue.Frame frame){}
     private int renderFrame;
@@ -99,41 +99,44 @@ public final class AimohGf2Runtime implements AutoCloseable {
 
     void draw(boolean early)throws IOException{
         if(!early)renderFrame++;int frame=early?renderFrame+1:renderFrame;
-        int[][] actors=AimohGf2SourceHost.sourceActors();Set<Integer> alive=new HashSet<>();for(int[] actor:actors)alive.add(actor[0]);histories.keySet().retainAll(alive);poses.keySet().removeIf(k->!alive.contains(k.actor));
-        if(!early){lastActors=actors.length;lastDraws=0;}
+        var actors=AimohGf2SourceHost.sourceState().actors;
+        histories.keySet().retainAll(actors.keySet());poses.keySet().removeIf(k->!actors.containsKey(k.actor));
+        if(!early){lastActors=actors.size();lastDraws=0;}
         if(early)GL44.glClearTexImage(AimohGf2SourceHost.motionTarget(),0,GL30.GL_RG,GL11.GL_FLOAT,new float[]{65504,65504});
-        for(int index=0;index<actors.length;index++)drawActor(early,frame,actors[index],index,actors.length);
+        int index=0;
+        for(var actor:actors.values())drawActor(early,frame,actor,index++,actors.size());
     }
 
-    private void drawActor(boolean early,int frame,int[] actor,int index,int actorCount)throws IOException{
-        int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height(),actorId=actor[0];JSONObject model=assets.data.model(actor[2],actor[3]);if(model==null)throw new IllegalArgumentException("Source actor is absent from pack data");
+    private void drawActor(boolean early,int frame,AimohGF2Services.Actor actor,int index,int actorCount)throws IOException{
+        int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height(),actorId=actor.id;JSONObject model=actor.model;
         AimohGf2FrameInputs builder=inputBuilders.computeIfAbsent(model.getString("pmx_sha256"),k->new AimohGf2FrameInputs(model,assets.data.manifest.getJSONObject("original_camera_fill")));
         target.ensure(width,height);Map<Integer,Integer> colors=new HashMap<>();
         if(early){int[] slots={1,8,2,17};for(int i=0;i<slots.length;i++)colors.put(i,AimohGf2SourceHost.color(slots[i]));}
         else{colors.put(0,AimohGf2SourceHost.color(3));target.ensureOriginalOutputs();colors.put(1,target.sourceNormal());colors.put(2,target.sourceMotion());}
         target.targets(colors);if(index==0)target.begin(AimohGf2SourceHost.depth());else target.clearActorStencil();
         if(!early&&index==0){GL30.glClearBufferfv(GL11.GL_COLOR,1,new float[4]);GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});}
+        float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);
         if(!early){
             int[] main=AimohGf2SourceHost.gpuField("lightSourceColorSSBO");environment.updateFrame(AimohGf2SourceHost.color(20),AimohGf2SourceHost.color(21),1,main[0],main[1],1f/2400,renderFrame);
             int[] exposure=AimohGf2SourceHost.gpuField("exposureSSBO");environment.exposureView(exposure[0],exposure[1]);
-            float[] shadow=AimohGf2SourceHost.sourceShadowCamera(actorId);Vector3d anchor=new Vector3d();matrix(Arrays.copyOfRange(shadow,32,48)).invert().transformPosition(anchor);
+            Vector3d anchor=new Vector3d();matrix(Arrays.copyOfRange(shadowCamera,32,48)).invert().transformPosition(anchor);
             SceneData scene=AimohGf2SourceHost.context.scene;
             environment.probeActor(new float[]{(float)anchor.x,(float)anchor.y,(float)anchor.z},AimohGf2SourceHost.values.get("cameraPosition"),new float[]{number("MIN_LIGHT_AMOUNT"),number("MIN_LIGHT_AMOUNT_INSIDE"),AimohGf2SourceHost.values.get("nightVision")[0]},new float[]{scene.skyR,scene.skyG,scene.skyB},false);
         }
         History old=histories.get(actorId);boolean history=old!=null&&old.asset.equals(model.getString("pmx_sha256"))&&old.frame==frame-1&&!AimohGf2SourceHost.context.scene.cameraCut;
-        float[] placement=AimohGf2SourceHost.actorModel(actorId),eye=AimohGf2SourceHost.eye(),previous=history?old.model:placement,previousEye=history?old.eye:eye;
+        float[] placement=actor.placement,eye=AimohGf2SourceHost.eye(),previous=history?old.model:placement,previousEye=history?old.eye:eye;
         // Native elapsed time is authoritative; frame/60 is only the controlled
         // fixture fallback when that native value is not exported.
         float[] time=AimohGf2SourceHost.values.get("frameTimeCounter");double seconds=time==null?frame/60d:time[0];
         AimohGf2FrameInputs.Inputs packet=builder.build(AimohGf2SourceHost.values,placement,eye,previous,previousEye,width,height,seconds,history,AimohGf2SourceHost.pointLightData(),AimohGf2SourceHost.torchLightData(),AimohGf2SourceHost.spotLightData());
         Map<String,float[]> inputs=new LinkedHashMap<>(packet.values());float renderScale=AimohGf2Screen.scale(AimohGf2SourceHost.pipeline.configured.values());
         AimohGf2Screen.inputs(inputs,width,height,renderScale);
-        float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);Matrix4d vp=matrix(Arrays.copyOfRange(shadowCamera,32,48));
+        Matrix4d vp=matrix(Arrays.copyOfRange(shadowCamera,32,48));
         Matrix4d worldToShadow=new Matrix4d().translation(.5,.5,.5).scale(.5).mul(vp);float[] matrices=new float[80];System.arraycopy(flat(worldToShadow),0,matrices,0,16);int size=AimohGf2SourceHost.shadowSize();
         inputs.put("_MainLightWorldToShadow",matrices);inputs.put("_MainLightShadowParams",new float[]{1,1,0,0});inputs.put("_MainLightShadowmapSize",new float[]{1f/size,1f/size,size,size});inputs.put("_CascadeDepthBiasArray",new float[4]);inputs.put("_CascadeNormalBiasArray",new float[4]);
         int attributes=assets.materials.attributeTexture(model);float[] clipJitter=jitter(width,height);Matrix4d object=matrix(inputs.get("unity_ObjectToWorld"));
         AimohGf2RuntimeQueue.Frame base=new AimohGf2RuntimeQueue.Frame(inputs.get("unity_WorldToObject"),normal(object),model.getInt("attribute_records"),attributes,previous,packet.previousInverse(),previousEye,clipJitter,history,!early);
-        List<Draw> draws=new ArrayList<>();for(int[] row:AimohGf2SourceHost.sourceDraws(actorId)){JSONObject part=model.getJSONArray("parts").getJSONObject(row[2]);if(row[1]!=part.getInt("source_material"))throw new IllegalArgumentException("Source draw mapping differs");draws.add(new Draw(row[0],row[1],row[2]));}
+        List<Draw> draws=actor.draws;
         if(!early)lastDraws+=draws.size();
         GL11.glFrontFace(GL11.GL_CCW);
         if(!early)shadow(draws,inputs,base,shadowCamera,actorId,frame,packet.cameraFillSlot());
