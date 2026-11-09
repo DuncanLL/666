@@ -28,15 +28,21 @@ public final class AimohNativeGf2Registry {
     public static void shadows(ShadowDraw draw){shadowDraw=draw;}
     public static void shadows(org.joml.Matrix4f matrix,int[] candidates,int count,ModelBatches.Filter filter){if(active()&&shadowDraw!=null)shadowDraw.draw(matrix,candidates,count,filter);}
     public static boolean active(){
-        State s=current;if(s==null||IrisPacks.active()!=null)return false;
-        var drawn=ShaderPacks.drawn();return s.pack.equals(drawn.pack.id)&&s.generation==drawn.generation;
+        return active(current);
+    }
+    private static boolean active(State state){
+        if(state==null||IrisPacks.active()!=null)return false;
+        var drawn=ShaderPacks.drawn();return drawn!=null&&state.pack.equals(drawn.pack.id)&&state.generation==drawn.generation;
     }
     public static String profileKey(int a,int b){
         State s=current;return active()&&s.data.model(a,b)!=null?s.key:null;
     }
     public static boolean owns(ModelDraws draws,int index){
-        if(!active()||prepass==null||shadowDraw==null||index<0||index>=draws.count)return false;
-        var mesh=draws.meshes[index];return mesh!=null&&mesh.getPath()!=null&&mesh.getPath().getPath().startsWith("aimoh:pmx-part-gf2-");
+        State state=current;
+        if(!active(state)||prepass==null||shadowDraw==null||index<0||index>=draws.count)return false;
+        var mesh=draws.meshes[index];
+        return mesh!=null&&mesh.getPath()!=null&&mesh.getPath().getPath().startsWith("aimoh:pmx-part-gf2-")
+            &&state.data.modelForPalette(draws,draws.palette[index])!=null;
     }
     private static State require(String key){
         State s=current;if(!active()||s==null||!s.key.equals(key))throw new IllegalStateException("Native source profile changed during resource load");return s;

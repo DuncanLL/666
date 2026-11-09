@@ -51,6 +51,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     private long shadowFrame=-1;
     private int casterQuery,visibleCasterViews;
     private boolean casterQueryActive;
+    private boolean reportedPaletteFallback;
     private final Map<String,Integer> stageDraws=new LinkedHashMap<>();
     private static final Pattern PART=Pattern.compile("aimoh:pmx-part-gf2-(-?\\d+)-(\\d+)");
     private record Draw(int index,int material,int ordinal){}
@@ -105,9 +106,19 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             if(rank[i]<0)continue;
             if((draws.flags[i]&visible)==0||draws.meshes[i]==null||draws.meshes[i].getPath()==null)continue;
             Matcher match=PART.matcher(draws.meshes[i].getPath().getPath());if(!match.matches())continue;
-            int palette=draws.palette[i],at=palette*12;if(at<0||at+26>=draws.bones*12)throw new IllegalArgumentException("Native source palette absent");
+            int palette=draws.palette[i];
             Actor actor=found.get(palette);
-            if(actor==null){JSONObject model=data.model((int)draws.palettes[at+12],(int)draws.palettes[at+13]);if(model==null)throw new IllegalArgumentException("Source geometry not registered at "+palette+" header "+Arrays.toString(Arrays.copyOfRange(draws.palettes,at,at+28)));actor=new Actor(palette,model,new ArrayList<>());found.put(palette,actor);}
+            if(actor==null){
+                JSONObject model=data.modelForPalette(draws,palette);
+                if(model==null){
+                    if(!reportedPaletteFallback){
+                        System.out.println("[R116 Native] Source mesh has no compatible frozen pose palette; using Viewpoint model pass until a matching pose arrives.");
+                        reportedPaletteFallback=true;
+                    }
+                    continue;
+                }
+                actor=new Actor(palette,model,new ArrayList<>());found.put(palette,actor);
+            }
             int material=Integer.parseInt(match.group(1)),ordinal=Integer.parseInt(match.group(2));
             if(actor.model.getJSONArray("parts").getJSONObject(ordinal).getInt("source_material")!=material)throw new IllegalArgumentException("Native source material/part mapping differs");
             actor.draws.add(new Draw(i,material,ordinal));

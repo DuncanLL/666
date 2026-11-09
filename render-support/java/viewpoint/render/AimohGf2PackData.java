@@ -21,7 +21,8 @@ public final class AimohGf2PackData {
     public final String identity;
     private final PackSource source;
     private final Map<String,JSONObject> resources=new LinkedHashMap<>();
-    private final Map<Long,JSONObject> models=new LinkedHashMap<>();
+    private record Model(JSONObject description,int lastRootBone){}
+    private final Map<Long,Model> models=new LinkedHashMap<>();
 
     public AimohGf2PackData(PackSource source)throws IOException {this((viewpoint.iris.SourceFiles)source);}
     public AimohGf2PackData(viewpoint.iris.SourceFiles source)throws IOException {
@@ -48,7 +49,14 @@ public final class AimohGf2PackData {
             if(!sha.matches("[a-f0-9]{64}")||model.getInt("format")!=2)
                 throw new IllegalArgumentException("Invalid PMX source identity");
             long key=token(Integer.parseInt(sha.substring(0,6),16),Integer.parseInt(sha.substring(6,12),16));
-            if(models.put(key,model)!=null)throw new IllegalArgumentException("Ambiguous frozen model token");
+            JSONObject groups=model.getJSONObject("renderer_frames").getJSONObject("groups");
+            int lastRootBone=-1;
+            for(String name:groups.keySet()){
+                int bone=groups.getJSONObject(name).getInt("bone");
+                if(bone<0)throw new IllegalArgumentException("Invalid source renderer root bone");
+                lastRootBone=Math.max(lastRootBone,bone);
+            }
+            if(models.put(key,new Model(model,lastRootBone))!=null)throw new IllegalArgumentException("Ambiguous frozen model token");
             for(Object partValue:model.getJSONArray("parts")){
                 JSONObject part=(JSONObject)partValue;int material=part.getInt("source_material");
                 if(!part.getBoolean("source_identity_resolved")||material<0||material>=materials.length())
@@ -111,7 +119,25 @@ public final class AimohGf2PackData {
             throw new IllegalArgumentException("Current PMX topology differs from source sidecar");
         return model;
     }
-    public JSONObject model(int first,int second){return models.get(token(first,second));}
+    public JSONObject model(int first,int second){
+        Model model=models.get(token(first,second));
+        return model==null?null:model.description;
+    }
+
+    /** Both renderers see the same draw list, which can still carry the previous pack's palette. */
+    JSONObject modelForPalette(ModelDraws draws,int palette){
+        float[] values=draws.palettes;
+        int limit=Math.min(draws.bones,values.length/12);
+        if(palette<0||palette>limit-3)return null;
+        int at=palette*12;
+        if(values[at+26]!=42137)return null;
+        int bones=(int)values[at+16],rotationOffset=(int)values[at+17];
+        if(bones<=0||rotationOffset<9||at+rotationOffset*4L+bones*12L>limit*12L)return null;
+        int first=(int)values[at+12],second=(int)values[at+13];
+        if(((first|second)&0xff000000)!=0)return null;
+        Model model=models.get(token(first,second));
+        return model!=null&&model.lastRootBone<bones?model.description:null;
+    }
 
     public Set<String> paths(){return Collections.unmodifiableSet(resources.keySet());}
 
