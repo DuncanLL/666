@@ -233,7 +233,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             environment.update(frame);ensure(frame.width,frame.height);target.targets(Map.of(0,colour,1,target.sourceNormal(),2,target.sourceMotion()));target.begin(nativeTargets.depth);
             GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,nativeTargets.hdrFbo);GL11.glReadBuffer(GL30.GL_COLOR_ATTACHMENT0);GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER,target.framebuffer());GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);
             GL30.glBlitFramebuffer(0,0,width,height,0,0,width,height,GL11.GL_COLOR_BUFFER_BIT,GL11.GL_NEAREST);
-            target.targets(Map.of(0,colour,1,target.sourceNormal(),2,target.sourceMotion()));GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});
+            GL44.glClearTexImage(target.sourceMotion(),0,GL11.GL_RGBA,GL11.GL_FLOAT,new float[]{65504,65504,0,0});
             transferOutputs(frame,nativeTargets,true);
             Map<String,float[]> values=AimohNativeSourceSpace.values(frame,environment.direction,previousValues);AimohNativeLocalLights frameLights=AimohNativeLocalLights.capture(frame);
             List<Ready> ready=new ArrayList<>(actors.size());for(Actor actor:actors)ready.add(prepareActor(frame,draws,actor,values,frameLights));

@@ -10,7 +10,6 @@ import viewpoint.platform.AimohNativePackSelection;
 public final class AimohNativeGf2Environment implements AutoCloseable {
     public int buffer,cube,shadowSampler;
     private GlProgram pack,reflection,prefilter;
-    private int rawCube;
     private AimohNativeRoomProbe roomProbe;
     private GlProgram lighting;
     public final float[] direction=new float[3],level=new float[3],sunColor=new float[3];
@@ -31,12 +30,12 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
         prefilter=AimohNativePackSelection.compute("GF2 source GGX reflection filtering","gf2/native_prefilter.comp");prefilter.sampler("nativeRawCube",0);
         if(pack.id()==0||reflection.id()==0||prefilter.id()==0)throw new IllegalStateException("Native light/cube/filter program missing: "+GlProgram.lastError());
         buffer=GL45.glCreateBuffers();GL45.glNamedBufferData(buffer,128L,GL15.GL_DYNAMIC_DRAW);
-        rawCube=environmentCube(1);cube=environmentCube(7);
+        cube=environmentCube();
         shadowSampler=GL33.glGenSamplers();for(int[] p:new int[][]{{GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_WRAP_S,GL12.GL_CLAMP_TO_EDGE},{GL11.GL_TEXTURE_WRAP_T,GL12.GL_CLAMP_TO_EDGE},{GL14.GL_TEXTURE_COMPARE_MODE,GL30.GL_COMPARE_REF_TO_TEXTURE},{GL14.GL_TEXTURE_COMPARE_FUNC,GL11.GL_LEQUAL}})GL33.glSamplerParameteri(shadowSampler,p[0],p[1]);
         }catch(Exception e){close();throw e;}
     }
-    private static int environmentCube(int levels){
-        int texture=GL45.glCreateTextures(GL13.GL_TEXTURE_CUBE_MAP);GL45.glTextureStorage2D(texture,levels,GL30.GL_RGBA16F,64,64);GL45.glTextureParameteri(texture,GL12.GL_TEXTURE_MAX_LEVEL,levels-1);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MIN_FILTER,levels==1?GL11.GL_LINEAR:GL11.GL_LINEAR_MIPMAP_LINEAR);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR);
+    private static int environmentCube(){
+        int texture=GL45.glCreateTextures(GL13.GL_TEXTURE_CUBE_MAP);GL45.glTextureStorage2D(texture,7,GL30.GL_RGBA16F,64,64);GL45.glTextureParameteri(texture,GL12.GL_TEXTURE_MAX_LEVEL,6);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR_MIPMAP_LINEAR);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR);
         for(int axis:new int[]{GL11.GL_TEXTURE_WRAP_S,GL11.GL_TEXTURE_WRAP_T,GL12.GL_TEXTURE_WRAP_R})GL45.glTextureParameteri(texture,axis,GL12.GL_CLAMP_TO_EDGE);return texture;
     }
     static Object world(String name)throws Exception{Field f=WorldRenderer.class.getDeclaredField(name);f.setAccessible(true);return f.get(null);}
@@ -62,7 +61,7 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
         Object shadows=world("shadows");shadowViews=(int[])field(shadows,"views");shadowSize=(Integer)field(shadows,"size");
     }
     public void reflection(FrameContext frame,float[] center,float skyShare,int actor)throws Exception{
-        cube=reflectionCubes.computeIfAbsent(actor,k->reflectionCubes.isEmpty()&&cube!=0?cube:environmentCube(7));
+        cube=reflectionCubes.computeIfAbsent(actor,k->reflectionCubes.isEmpty()&&cube!=0?cube:environmentCube());
         boolean room=frame.pipeline.reflections;
         if(room){if(roomProbe==null)roomProbe=new AimohNativeRoomProbe();roomProbe.capture(frame,center);roomProbe.illuminate(frame,center);}
         Targets targets=(Targets)world("targets");reflection.use();frame.camera(reflection);
@@ -72,15 +71,16 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
         reflection.setInt("gf2ProbeRoomOn",room?1:0);
         int[] textures={targets.depth,targets.hdr,targets.albedo};
         int[] units={0,4,5};for(int i=0;i<textures.length;i++){GL13.glActiveTexture(GL13.GL_TEXTURE0+units[i]);GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[i]);GL33.glBindSampler(units[i],0);}
-        GL13.glActiveTexture(GL13.GL_TEXTURE0+3);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,room?roomProbe.radiance:cube);GL33.glBindSampler(3,0);
-        GL42.glBindImageTexture(0,rawCube,0,true,0,GL15.GL_WRITE_ONLY,GL30.GL_RGBA16F);GL43.glDispatchCompute(8,8,6);GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_UPDATE_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT);
-        GL43.glCopyImageSubData(rawCube,GL13.GL_TEXTURE_CUBE_MAP,0,0,0,0,cube,GL13.GL_TEXTURE_CUBE_MAP,0,0,0,0,64,64,6);
-        prefilter.use();GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,rawCube);GL33.glBindSampler(0,0);
+        GL13.glActiveTexture(GL13.GL_TEXTURE0+3);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,room?roomProbe.radiance:0);GL33.glBindSampler(3,0);
+        GL42.glBindImageTexture(0,cube,0,true,0,GL15.GL_WRITE_ONLY,GL30.GL_RGBA16F);GL43.glDispatchCompute(8,8,6);
+        GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT);
+        // The shader fetches only LOD 0. It writes a different mip on each dispatch.
+        prefilter.use();GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,cube);GL33.glBindSampler(0,0);
         for(int mip=1;mip<=6;mip++){int side=64>>mip;prefilter.set("sourcePerceptualRoughness",mip/6f);GL42.glBindImageTexture(0,cube,mip,true,0,GL15.GL_WRITE_ONLY,GL30.GL_RGBA16F);GL43.glDispatchCompute((side+7)/8,(side+7)/8,6);}GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT);
         reflectionUpdates++;
     }
     public int reflectionUpdates(){return reflectionUpdates;}
-    public int earlyReflection(){if(cube==0)cube=environmentCube(7);return cube;}
+    public int earlyReflection(){if(cube==0)cube=environmentCube();return cube;}
     public void retainActors(Set<Integer> alive){
         for(var it=reflectionCubes.entrySet().iterator();it.hasNext();){var entry=it.next();if(!alive.contains(entry.getKey())){if(cube==entry.getValue())cube=0;GL11.glDeleteTextures(entry.getValue());it.remove();}}
     }
@@ -115,5 +115,5 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
         if(engine.length!=4)throw new IllegalArgumentException("Native actor light record differs");for(int i=0;i<4;i++)if(!Float.isFinite(engine[i])||i<3&&engine[i]<0)throw new IllegalArgumentException("Invalid Native actor light");if(engine[3]<-.0625f||engine[3]>1)throw new IllegalArgumentException("Invalid Native actor sky share");
         if(Arrays.equals(engine,lastEngine))return;lastEngine=engine.clone();pack.use();pack.set("nativeEngineLight",engine[0],engine[1],engine[2],engine[3]);GL30.glBindBufferBase(GL43.GL_SHADER_STORAGE_BUFFER,0,buffer);GL43.glDispatchCompute(1,1,1);GL42.glMemoryBarrier(GL43.GL_SHADER_STORAGE_BARRIER_BIT|GL42.GL_BUFFER_UPDATE_BARRIER_BIT);
     }
-    @Override public void close(){if(roomProbe!=null)roomProbe.close();roomProbe=null;AimohNativeSourceScope.forget(pack,reflection,prefilter);if(pack!=null)pack.delete();if(reflection!=null)reflection.delete();if(prefilter!=null)prefilter.delete();GL15.glDeleteBuffers(buffer);if(reflectionCubes.isEmpty()&&cube!=0)GL11.glDeleteTextures(cube);for(int texture:reflectionCubes.values())GL11.glDeleteTextures(texture);reflectionCubes.clear();GL11.glDeleteTextures(rawCube);GL33.glDeleteSamplers(shadowSampler);buffer=cube=rawCube=shadowSampler=0;}
+    @Override public void close(){if(roomProbe!=null)roomProbe.close();roomProbe=null;AimohNativeSourceScope.forget(pack,reflection,prefilter);if(pack!=null)pack.delete();if(reflection!=null)reflection.delete();if(prefilter!=null)prefilter.delete();GL15.glDeleteBuffers(buffer);if(reflectionCubes.isEmpty()&&cube!=0)GL11.glDeleteTextures(cube);for(int texture:reflectionCubes.values())GL11.glDeleteTextures(texture);reflectionCubes.clear();GL33.glDeleteSamplers(shadowSampler);buffer=cube=shadowSampler=0;}
 }

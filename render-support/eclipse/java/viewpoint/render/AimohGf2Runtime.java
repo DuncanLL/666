@@ -103,22 +103,38 @@ public final class AimohGf2Runtime implements AutoCloseable {
         histories.keySet().retainAll(actors.keySet());poses.keySet().removeIf(k->!actors.containsKey(k.actor));
         if(!early){lastActors=actors.size();lastDraws=0;}
         if(early)GL44.glClearTexImage(AimohGf2SourceHost.motionTarget(),0,GL30.GL_RG,GL11.GL_FLOAT,new float[]{65504,65504});
-        int index=0;
-        for(var actor:actors.values())drawActor(early,frame,actor,index++,actors.size());
+        if(actors.isEmpty())return;
+        int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height();
+        target.ensure(width,height);
+        if(early){
+            target.targets(Map.of(0,AimohGf2SourceHost.color(1),1,AimohGf2SourceHost.color(8),2,AimohGf2SourceHost.color(2),3,AimohGf2SourceHost.color(17)));
+        }else{
+            target.ensureOriginalOutputs();
+            target.targets(Map.of(0,AimohGf2SourceHost.color(3),1,target.sourceNormal(),2,target.sourceMotion()));
+        }
+        target.begin(AimohGf2SourceHost.depth());
+        if(!early){
+            GL30.glClearBufferfv(GL11.GL_COLOR,1,new float[4]);GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});
+            int[] main=AimohGf2SourceHost.gpuField("lightSourceColorSSBO");
+            environment.updateFrame(AimohGf2SourceHost.color(20),AimohGf2SourceHost.color(21),1,main[0],main[1],1f/2400,renderFrame);
+            int[] exposure=AimohGf2SourceHost.gpuField("exposureSSBO");
+            environment.exposureView(exposure[0],exposure[1]);
+        }
+        boolean first=true;
+        for(var actor:actors.values()){
+            if(!first)target.clearActorStencil();
+            drawActor(early,frame,actor);
+            first=false;
+        }
+        target.writeBackDepth(AimohGf2SourceHost.nativeColorFbo());
+        if(!early)target.decodeMotion(AimohGf2SourceHost.motionTarget());
     }
 
-    private void drawActor(boolean early,int frame,AimohGF2Services.Actor actor,int index,int actorCount)throws IOException{
+    private void drawActor(boolean early,int frame,AimohGF2Services.Actor actor)throws IOException{
         int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height(),actorId=actor.id;JSONObject model=actor.model;
         AimohGf2FrameInputs builder=inputBuilders.computeIfAbsent(model.getString("pmx_sha256"),k->new AimohGf2FrameInputs(model,assets.data.manifest.getJSONObject("original_camera_fill")));
-        target.ensure(width,height);Map<Integer,Integer> colors=new HashMap<>();
-        if(early){int[] slots={1,8,2,17};for(int i=0;i<slots.length;i++)colors.put(i,AimohGf2SourceHost.color(slots[i]));}
-        else{colors.put(0,AimohGf2SourceHost.color(3));target.ensureOriginalOutputs();colors.put(1,target.sourceNormal());colors.put(2,target.sourceMotion());}
-        target.targets(colors);if(index==0)target.begin(AimohGf2SourceHost.depth());else target.clearActorStencil();
-        if(!early&&index==0){GL30.glClearBufferfv(GL11.GL_COLOR,1,new float[4]);GL30.glClearBufferfv(GL11.GL_COLOR,2,new float[]{65504,65504,0,0});}
         float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);
         if(!early){
-            int[] main=AimohGf2SourceHost.gpuField("lightSourceColorSSBO");environment.updateFrame(AimohGf2SourceHost.color(20),AimohGf2SourceHost.color(21),1,main[0],main[1],1f/2400,renderFrame);
-            int[] exposure=AimohGf2SourceHost.gpuField("exposureSSBO");environment.exposureView(exposure[0],exposure[1]);
             Vector3d anchor=new Vector3d();matrix(Arrays.copyOfRange(shadowCamera,32,48)).invert().transformPosition(anchor);
             SceneData scene=AimohGf2SourceHost.context.scene;
             environment.probeActor(new float[]{(float)anchor.x,(float)anchor.y,(float)anchor.z},AimohGf2SourceHost.values.get("cameraPosition"),new float[]{number("MIN_LIGHT_AMOUNT"),number("MIN_LIGHT_AMOUNT_INSIDE"),AimohGf2SourceHost.values.get("nightVision")[0]},new float[]{scene.skyR,scene.skyG,scene.skyB},false);
@@ -148,7 +164,6 @@ public final class AimohGf2Runtime implements AutoCloseable {
                 queued.add(new AimohGf2RuntimeQueue.Job(program,assets.materials.state(job.material,stage,early),job.draw.nativeIndex,registers(program,job.material,root,local.inputs,frame,actorId,early?0:2,packet.cameraFillSlot()),assets.materials.textureBindings(program,job.material,environment.reflectionTexture,AimohGf2SourceHost.shadowTarget(),shadowSampler),local.frame));}
             queue.draw(queued,base,renderScale);
         }
-        if(index==actorCount-1){target.writeBackDepth(AimohGf2SourceHost.nativeColorFbo());if(!early)target.decodeMotion(AimohGf2SourceHost.motionTarget());}
         if(!early)histories.put(actorId,new History(model.getString("pmx_sha256"),frame,placement.clone(),eye.clone()));
     }
 
