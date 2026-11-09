@@ -6,7 +6,7 @@
   "shader_change": "Retain the weather guards and expose the shared character surface and outline controls",
   "source_adapter_origin": "3127265^:render-support/java/viewpoint/render/AimohGf2Rc2Vertex.java",
   "scope": "Official RC3 Eclipse character surface controls and weather safety",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "shared_sources": [
     "aimoh/gf2/bridge/VerifiedViewpoint.java",
     "viewpoint/render/AimohGf2Device.java",

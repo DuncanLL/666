@@ -23,6 +23,9 @@ public final class RenderSupportStartupCheck {
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
             var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
+            require(Set.of("Skin Normal Detail","皮肤凹凸细节").contains(iris.text("option.characterSurfaceDetail"))
+                &&Set.of("Skin Highlight Tightness","皮肤高光集中度").contains(iris.text("option.characterSkinGloss")),
+                "Eclipse skin labels missing");
             var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss","characterOutlineWidth");
             require(surfaceOptions.equals(iris.defaults.screens.get("R116_CHARACTER"))
                 &&iris.defaults.screens.get("").contains("[R116_CHARACTER]"),"Eclipse character options page missing");
@@ -54,6 +57,8 @@ public final class RenderSupportStartupCheck {
         var selected=(viewpoint.platform.ShaderPack)find.invoke(null,"Aimoh-Native-GF2");var fill=selected.option("characterSoftFill");
         require(fill!=null&&fill.kept&&fill.label.equals("人物柔和底灯"),"Character fill slider missing from official Native options");
         var strength=selected.option("characterDisplayStrength");require(strength!=null&&strength.kept&&strength.label.equals("原游人物显示还原强度"),"Shared original display slider missing");
+        require(selected.option("characterSurfaceDetail").label.equals("皮肤凹凸细节")
+            &&selected.option("characterSkinGloss").label.equals("皮肤高光集中度"),"Native skin labels missing");
         var declare=viewpoint.platform.PackOption.class.getDeclaredMethod("declare",String.class,String.class);declare.setAccessible(true);
         var section=viewpoint.platform.LiveSettings.Setting.class.getDeclaredField("section");section.setAccessible(true);
         for(String id:List.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss","characterOutlineWidth")){

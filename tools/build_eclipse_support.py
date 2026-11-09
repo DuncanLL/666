@@ -56,14 +56,14 @@ if __name__=='__main__':
     option_labels={
         'en_us':(
             'R116 Character Effects',
-            'Surface Detail', 'Strengthen existing skin normal detail. 0 keeps the original look.',
-            'Skin Gloss', 'Tighten existing skin highlights. 0 keeps the original look.',
+            'Skin Normal Detail', 'Strengthen surface relief and fine detail from the skin normal map. 0 keeps the original look.',
+            'Skin Highlight Tightness', 'Reduce skin roughness to concentrate existing reflections. 0 keeps the original look.',
             'Character Outline Width', 'Scale the original character outline width. 1 keeps the original width.',
         ),
         'zh_cn':(
             'R116 人物效果',
-            '体表细节增强', '强化原皮肤材质的法线起伏。0 保持原效果。',
-            '皮肤光泽增强', '收紧原皮肤高光，增强曲面反射感。0 保持原效果。',
+            '皮肤凹凸细节', '加强原法线的凹凸，例如腹部起伏与皮肤细纹。0 为原效果。',
+            '皮肤高光集中度', '降低皮肤材质粗糙度，让原有反光更集中。0 为原效果。',
             '人物描边粗细', '缩放人物原材质的描边宽度。1 保持原效果。',
         ),
     }
