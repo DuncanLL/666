@@ -12,7 +12,7 @@ public final class AimohGf2SourceHost {
     public static IrisPipeline pipeline;public static FrameContext context;
     public static ModelPass models;public static ShadowPass shadows;public static Map<String,float[]> values;
     private static boolean earlyDone,lateDone;private static float[] frameShadowView;
-    private static float surfaceDetail,skinGloss;
+    private static float surfaceDetail,skinGloss,outlineWidth;
     private static final Map<String,int[]> gpuFields=new HashMap<>();private static IrisPrograms gpuFieldOwner;
     private static IrisProgram reliefProgram;private static final Map<String,Integer> reliefLocations=new HashMap<>();private static final Map<String,float[]> reliefValues=new HashMap<>();
     private static final Field SPOT_RECORDS,SPOT_COUNT;
@@ -21,13 +21,14 @@ public final class AimohGf2SourceHost {
     public static void prepare(IrisPipeline p,FrameContext f,ShadowPass shadow,ModelPass model,Map<String,float[]> frameValues){
         pipeline=p;context=f;models=model;shadows=shadow;values=frameValues;earlyDone=lateDone=false;frameShadowView=null;reliefValues.clear();
         var options=p.configured.values();
-        surfaceDetail=surfaceOption(options.get("characterSurfaceDetail"));
-        skinGloss=surfaceOption(options.get("characterSkinGloss"));
+        surfaceDetail=numberOption(options.get("characterSurfaceDetail"),0f,0f,1f);
+        skinGloss=numberOption(options.get("characterSkinGloss"),0f,0f,1f);
+        outlineWidth=numberOption(options.get("characterOutlineWidth"),1f,.75f,1.35f);
     }
-    private static float surfaceOption(String value){
-        if(value==null)return 0;
-        try{float v=Float.parseFloat(value);return Float.isFinite(v)?Math.clamp(v,0f,1f):0f;}
-        catch(NumberFormatException ignored){return 0;}
+    private static float numberOption(String value,float fallback,float min,float max){
+        if(value==null)return fallback;
+        try{float v=Float.parseFloat(value);return Float.isFinite(v)?Math.clamp(v,min,max):fallback;}
+        catch(NumberFormatException ignored){return fallback;}
     }
     public static void released(IrisPrograms programs){if(pipeline!=null&&pipeline.programs==programs){pipeline=null;context=null;models=null;shadows=null;values=null;gpuFields.clear();gpuFieldOwner=null;reliefProgram=null;reliefLocations.clear();reliefValues.clear();}}
     public static void sourceEarly(IrisFrame host,IrisPipeline p,FrameContext f){
@@ -47,6 +48,7 @@ public final class AimohGf2SourceHost {
     public static int drawNative(AimohGf2OriginalProgram program,JSONObject state,int selected){
         var gl=program.nativeProgram();gl.use();gl.setInt("uShadowPalette",0);gl.setInt("uIrisEntity",-1);gl.setInt("uIrisUntinted",0);gl.set("uIrisEye",context.eyeX,context.eyeY,context.eyeZ);
         if(gl.has("gf2CharacterEnhancement"))gl.set("gf2CharacterEnhancement",surfaceDetail,skinGloss,state.optFloat("sourceSurfaceWeight",0f));
+        if(gl.has("gf2CharacterOutlineWidth"))gl.set("gf2CharacterOutlineWidth",outlineWidth);
         IrisProgram original=pipeline.programs.draws.get(IrisPrograms.Draw.ENTITIES);if(original==null)throw new IllegalStateException("Native entity program missing");
         if(reliefProgram!=original){reliefProgram=original;reliefLocations.clear();reliefValues.clear();}
         for(String name:List.of("uReliefGrid","uReliefCamera","uReliefScale","uReliefSplit","uReliefFlowCells")){

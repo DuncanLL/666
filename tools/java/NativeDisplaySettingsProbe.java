@@ -16,8 +16,11 @@ public final class NativeDisplaySettingsProbe {
         ShaderPacks.values(pack,option->option.id.equals("characterDisplayStrength")?Float.toString(value):values.get(option.id));
     }
     public static void surface(float detail,float gloss){
+        surface(detail,gloss,1f);
+    }
+    public static void surface(float detail,float gloss,float outlineWidth){
         ShaderPack pack=ShaderPacks.drawn().pack;java.util.Map<String,String> values=new java.util.HashMap<>();int index=0;for(PackOption option:pack.options)if(option.kind==PackOption.Kind.NUMBER)values.put(option.id,Float.toString(ShaderPacks.live()[index++]));
-        ShaderPacks.values(pack,option->switch(option.id){case "characterSurfaceDetail"->Float.toString(detail);case "characterSkinGloss"->Float.toString(gloss);default->values.get(option.id);});
+        ShaderPacks.values(pack,option->switch(option.id){case "characterSurfaceDetail"->Float.toString(detail);case "characterSkinGloss"->Float.toString(gloss);case "characterOutlineWidth"->Float.toString(outlineWidth);default->values.get(option.id);});
     }
     public static void numbers(float contrast,float saturation,float vibrance,float exposure){
         ShaderPack pack=ShaderPacks.drawn().pack;PackPreset preset=pack.preset("ultra");

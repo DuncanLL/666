@@ -23,18 +23,20 @@ public final class RenderSupportStartupCheck {
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
             var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
-            var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss");
+            var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss","characterOutlineWidth");
             require(surfaceOptions.equals(iris.defaults.screens.get("R116_CHARACTER"))
                 &&iris.defaults.screens.get("").contains("[R116_CHARACTER]"),"Eclipse character options page missing");
             for(String id:surfaceOptions){
                 var option=iris.options.get(id);
-                require(option!=null&&iris.defaults.sliders.contains(id)&&option.values().size()==101,
+                boolean outline=id.equals("characterOutlineWidth");
+                String min=outline?"0.75":"0.00",max=outline?"1.35":"1.00",fallback=outline?"1.00":"0.00",custom=outline?"1.27":"0.37";
+                require(option!=null&&iris.defaults.sliders.contains(id)&&option.values().size()==(outline?61:101),
                         "Eclipse slider range missing: "+id);
-                require(option.values().getFirst().equals("0.00")&&option.values().getLast().equals("1.00")
-                        &&option.fallback().equals("0.00"),"Eclipse slider bounds or default changed: "+id);
-                require(iris.options.values(Map.of(id,"0.37")).get(id).equals("0.37"),"Eclipse custom setting rejected: "+id);
+                require(option.values().getFirst().equals(min)&&option.values().getLast().equals(max)
+                        &&option.fallback().equals(fallback),"Eclipse slider bounds or default changed: "+id);
+                require(iris.options.values(Map.of(id,custom)).get(id).equals(custom),"Eclipse custom setting rejected: "+id);
                 for(String profile:iris.defaults.profiles.keySet()){
-                    require(iris.options.values(iris.profile(profile)).get(id).equals("0.00"),"Eclipse preset changed "+id);
+                    require(iris.options.values(iris.profile(profile)).get(id).equals(fallback),"Eclipse preset changed "+id);
                 }
             }
             require(Arrays.equals(edited,Files.readAllBytes(player)),"Player shader overwritten");
@@ -54,10 +56,11 @@ public final class RenderSupportStartupCheck {
         var strength=selected.option("characterDisplayStrength");require(strength!=null&&strength.kept&&strength.label.equals("原游人物显示还原强度"),"Shared original display slider missing");
         var declare=viewpoint.platform.PackOption.class.getDeclaredMethod("declare",String.class,String.class);declare.setAccessible(true);
         var section=viewpoint.platform.LiveSettings.Setting.class.getDeclaredField("section");section.setAccessible(true);
-        for(String id:List.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss")){
+        for(String id:List.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss","characterOutlineWidth")){
             var option=selected.option(id);require(option!=null&&option.kept,"Character option missing: "+id);
             Object row=declare.invoke(option,"test."+id,"Graphics/Shader Options");require(section.get(row).equals("Graphics/R116 人物效果"),"Character option was not grouped: "+id);
             if(id.equals("characterSurfaceDetail")||id.equals("characterSkinGloss"))for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(option))==0,"Enhancement changed default");
+            if(id.equals("characterOutlineWidth"))for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(option))==1f,"Outline width changed default");
         }
         require(section.get(declare.invoke(selected.option("contrast"),"test.contrast","Graphics/Shader Options")).equals("Graphics/Shader Options"),"Scene option moved");
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(strength))==.5f,"Preset changed shared display default: "+preset);

@@ -45,19 +45,26 @@ if __name__=='__main__':
     replacements={p.relative_to(classes).as_posix():p.read_bytes()for p in classes.rglob('*.class')}
     jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')
     motion=ROOT/'render-support/eclipse/shaders/actor-motion.glsl'
-    controls=b'characterSurfaceDetail characterSkinGloss'
-    steps=' '.join(f'{i//100}.{i%100:02d}' for i in range(101)).encode('ascii')
-    defines=b''.join(b'#define '+name+b' 0.00 // ['+steps+b']\n' for name in controls.split())
+    options=((b'characterSurfaceDetail',0,0,100),(b'characterSkinGloss',0,0,100),
+             (b'characterOutlineWidth',100,75,135))
+    controls=b' '.join(name for name,_,_,_ in options)
+    def decimal(hundredths):
+        return f'{hundredths//100}.{hundredths%100:02d}'.encode('ascii')
+    defines=b''.join(b'#define '+name+b' '+decimal(default)+b' // ['+
+                     b' '.join(map(decimal,range(first,last+1)))+b']\n'
+                     for name,default,first,last in options)
     option_labels={
         'en_us':(
             'R116 Character Effects',
             'Surface Detail', 'Strengthen existing skin normal detail. 0 keeps the original look.',
             'Skin Gloss', 'Tighten existing skin highlights. 0 keeps the original look.',
+            'Character Outline Width', 'Scale the original character outline width. 1 keeps the original width.',
         ),
         'zh_cn':(
             'R116 人物效果',
             '体表细节增强', '强化原皮肤材质的法线起伏。0 保持原效果。',
             '皮肤光泽增强', '收紧原皮肤高光，增强曲面反射感。0 保持原效果。',
+            '人物描边粗细', '缩放人物原材质的描边宽度。1 保持原效果。',
         ),
     }
     patches={
@@ -93,12 +100,14 @@ if __name__=='__main__':
              b'vec2 tc = min(floor(gl_FragCoord.xy)/VL_RENDER_SCALE*texelSize + texelSize*0.5, vec2(1.0)-texelSize*0.5);'),
         ],
     }
-    for language,(screen,detail,detail_help,gloss,gloss_help) in option_labels.items():
+    for language,(screen,detail,detail_help,gloss,gloss_help,outline,outline_help) in option_labels.items():
         labels=(f'screen.R116_CHARACTER = {screen}\n'
                 f'option.characterSurfaceDetail = {detail}\n'
                 f'option.characterSurfaceDetail.comment = {detail_help}\n'
                 f'option.characterSkinGloss = {gloss}\n'
-                f'option.characterSkinGloss.comment = {gloss_help}\n').encode('utf8')
+                f'option.characterSkinGloss.comment = {gloss_help}\n'
+                f'option.characterOutlineWidth = {outline}\n'
+                f'option.characterOutlineWidth.comment = {outline_help}\n').encode('utf8')
         first=b'option.SHADER_VERSION_LABEL = '
         patches[PACK_SHADERS+'lang/'+language+'.lang']=[(first,labels+first)]
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
