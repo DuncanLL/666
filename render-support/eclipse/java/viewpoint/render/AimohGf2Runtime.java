@@ -69,7 +69,11 @@ public final class AimohGf2Runtime implements AutoCloseable {
 
     private AimohGf2Runtime(Assets assets)throws IOException{
         this.assets=assets;target=new AimohGf2DepthStencil(assets.kernel("MOTION_DECODE"));
-        environment=new AimohGf2EclipseEnvironment(assets.kernel("ENVIRONMENT_SH"),assets.kernel("CUBE"));
+        // Source materials select the cube mip with RMO.r * 6. Eclipse's atlas also uses linear roughness.
+        String cube=assets.kernel("CUBE").replace(
+            "float rough=(1.7-sqrt(max(0,2.89-2.8*float(level)/6)))/1.4;",
+            "float rough=float(level)/6.0;");
+        environment=new AimohGf2EclipseEnvironment(assets.kernel("ENVIRONMENT_SH"),cube);
         environment.configureLocalProbe(assets.text(assets.data.manifest.getJSONObject("native_probe")));
         shadowSampler=GL33.glGenSamplers();for(int[] p:new int[][]{{GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_LINEAR},{GL11.GL_TEXTURE_WRAP_S,GL12.GL_CLAMP_TO_EDGE},{GL11.GL_TEXTURE_WRAP_T,GL12.GL_CLAMP_TO_EDGE},{GL14.GL_TEXTURE_COMPARE_MODE,GL30.GL_COMPARE_REF_TO_TEXTURE},{GL14.GL_TEXTURE_COMPARE_FUNC,GL11.GL_LEQUAL}})GL33.glSamplerParameteri(shadowSampler,p[0],p[1]);
     }
