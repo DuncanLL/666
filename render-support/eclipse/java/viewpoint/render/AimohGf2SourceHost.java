@@ -24,6 +24,11 @@ public final class AimohGf2SourceHost {
         try(AimohGf2GlScope ignored=new AimohGf2GlScope()){AimohGf2Runtime.frame(p).draw(true);}catch(java.io.IOException e){throw new IllegalStateException("GF2 early stage",e);}
     }
     public static void beforeSourcePass(IrisFrame host,IrisPipeline p,IrisPrograms.Pass pass,String kind,FrameContext f,Set<Integer> flips){
+        if(kind.equals("composite")&&pass.name().equals("composite4")&&pass.program()!=null
+            &&pass.program().images.containsKey("cloudDepthTex")&&AimohGf2AddonContext.supports(p.pack)){
+            // composite3 writes the custom image from raster fragments; the host only barriers compute dispatches.
+            GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT);
+        }
         if(!AimohGf2Runtime.enabled(p)||lateDone||!kind.equals("composite"))return;String name=pass.name();if(!name.matches("composite[0-9]+")||Integer.parseInt(name.substring(9))<3)return;
         if(!earlyDone)throw new IllegalStateException("Source color stage before depth");lateDone=true;
         try(AimohGf2GlScope ignored=new AimohGf2GlScope()){AimohGF2Services.beforeSourceColor(host,p,f,flips);AimohGf2Runtime.frame(p).draw(false);AimohGf2IrisGlass.draw(p,f,shadows,models);}catch(java.io.IOException e){throw new IllegalStateException("GF2 color stage",e);}
