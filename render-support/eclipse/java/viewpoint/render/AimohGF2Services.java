@@ -34,13 +34,18 @@ public final class AimohGF2Services {
     }
     public static Map<String,String> macros(Map<String,String> input){Map<String,String> result=new LinkedHashMap<>(input);result.put("VIEWPOINT_DANRP_HOST","1");result.put("VIEWPOINT_GF2_MODEL_SSBO","1");result.put("VIEWPOINT_DANRP_NATIVE_LIGHTS","1");return result;}
     private static boolean singleAlbedoProgram(String name){return name.equals("gbuffers_dan_trans")||name.equals("gbuffers_dan_trans_motion")||name.equals("gbuffers_dan_eyelash");}
-    // Units 112..129 are unused by this model draw; avoid 130 (cloud shadow) and 139..141 (native lights).
-    public static int firstUserUnit(String name,GlProgram program){
-        if(singleAlbedoProgram(name))return 112;
-        if(name.startsWith("gbuffers_dan_")||name.startsWith("dan_sky_")||name.equals("dan_shadow_scatter")||program.has("vpDanActorShadowCmp")||program.has("vpDanMotionTex")||program.has("vpDanFGD"))return 142;
-        return 96; // Preserve the unmodified host's namespace for every ordinary shader.
+    public static int firstUserUnit(String name,GlProgram program){return 96;}
+    public static int nextUserUnit(String name,int next){
+        // Keep the RC3 cloud-shadow, native-light, model-look and snow reservations.
+        return next==130?131:next==139?160:next;
     }
-    public static int nextUserUnit(String name,int next){return singleAlbedoProgram(name)&&next==130?142:next;}
+    public static int checkedUserUnit(int unit,String program){
+        if(AimohGf2AddonContext.compiling()){
+            int limit=GL11.glGetInteger(GL20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+            if(unit>=limit)throw new IllegalArgumentException("Eclipse shader "+program+" needs texture unit "+unit+"; driver exposes "+limit+" units");
+        }
+        return unit;
+    }
     private static RuntimeException failure(Throwable e){if(e instanceof InvocationTargetException&&e.getCause()!=null)e=e.getCause();return e instanceof RuntimeException?(RuntimeException)e:new IllegalStateException("DanRP character stage",e);}
 
     static final class Bundle {

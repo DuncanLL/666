@@ -5,24 +5,27 @@ from common import ROOT,BUILD,settings,sha,save,environment
 from build import compile_java
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,default=BUILD/'workshop/R116RenderSupport');p.add_argument('--backend',choices=['native','eclipse'],default='native');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,default=BUILD/'workshop/R116RenderSupport');p.add_argument('--backend',choices=['native','eclipse','combined'],default='combined');a=p.parse_args()
     eclipse=a.backend=='eclipse'
-    build_dir=BUILD/('eclipse-support' if eclipse else 'render-support')
+    combined=a.backend=='combined'
+    build_dir=BUILD/({'native':'render-support','eclipse':'eclipse-support','combined':'combined-support'}[a.backend])
     build=json.loads((build_dir/'build.json').read_text('utf8'))
+    backends=build['backends'] if combined else {a.backend:build}
     cfg=settings();project=a.project.resolve();mod=project/'Contents/mods/AimohGF2Eclipse'
     jar=mod/'42/media/java/client/AimohGF2Eclipse.jar';game=Path(cfg['game_root']);host=Path(cfg['viewpoint_jar'])
     before=sha(host);assert before==build['host_sha256']
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(jar)as z:
         assert not [n for n in z.namelist()if n.endswith('.class')and n in stock]
-        payload=z.read(build['shader_payload'])
-        other='Native' if eclipse else 'Eclipse'
-        assert f'aimoh/gf2/bridge/Aimoh-{other}-GF2.zip' not in z.namelist()
+        payloads={f'aimoh/gf2/bridge/Aimoh-{name.capitalize()}-GF2.zip' for name in backends}
+        assert {name for name in z.namelist() if name.startswith('aimoh/gf2/bridge/Aimoh-') and name.endswith('-GF2.zip')}==payloads
+        for row in backends.values():
+            assert hashlib.sha256(z.read(row['shader_payload'])).hexdigest()==row['shader_sha256']
         if not eclipse:
             display=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
             expected_display=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
             assert len(display)==expected_display['bytes']and hashlib.sha256(display).hexdigest()==expected_display['sha256']
-    assert hashlib.sha256(payload).hexdigest()==build['shader_sha256']
+    assert sha(jar)==build['jar_sha256'],'Workshop JAR is not the build being validated'
     out=build_dir/'checks';out.mkdir(parents=True,exist_ok=True)
     agent=out/'test-agent.jar'
     compile_java(cfg,[ROOT/'tools/java/RenderSupportTestAgent.java'],out/'agent-classes',[jar,host,cfg['zombiebuddy_jar'],*game.glob('*.jar')])
@@ -66,6 +69,8 @@ if __name__=='__main__':
         assert item.getTitle()=='R116 渲染支持 光影分发'and item.getDescription()=='\u200b'
     finally:jpype.shutdownJVM()
     report=json.loads((out/'startup.json').read_text('utf8'));report.update(workshop_validator_passed=True,
-           jar_sha256=sha(jar),shader_sha256=build['shader_sha256'],official_host_unchanged=True,uploaded=False,
+           jar_sha256=sha(jar),official_host_unchanged=True,uploaded=False,
            validation_scope='STARTUP_AND_RESOURCE_DISCOVERY_ONLY',cross_vendor_status='NOT_ESTABLISHED_BY_THIS_CHECK')
+    if combined:report['shader_hashes']={name:row['shader_sha256'] for name,row in backends.items()}
+    else:report['shader_sha256']=build['shader_sha256']
     save(out/'validation.json',report);print(json.dumps(report,ensure_ascii=False))

@@ -43,5 +43,20 @@ class ReleaseGateTests(unittest.TestCase):
         self.write('provenance/render-support.json',dict(official_host_sha256='test-host',compatible_official_hosts={'one':'test-host','two':'missing-host'}));self.assertEqual(self.result()['status'],'BLOCKED')
     def test_incomplete_catalog_validation_is_blocked(self):
         self.driver.pop('native_catalog_variant_proof');self.write('amd.json',self.driver);self.assertEqual(self.result()['status'],'BLOCKED')
+    def test_combined_requires_both_packs_and_matching_reference_backend(self):
+        build=gate.read(self.root/'build/render-support/build.json')
+        build['backends']={'native':{'shader_sha256':self.pack_hash},'eclipse':{'shader_sha256':'eclipse-pack'}}
+        self.write('build/combined-support/build.json',build)
+        self.evidence['distribution']='combined'
+        self.startup['shader_hashes']={'native':self.pack_hash,'eclipse':'eclipse-pack'}
+        self.reference.update(backend='eclipse',jar_sha256=self.jar_hash,shader_sha256=self.pack_hash,host_sha256='test-host')
+        self.write('startup.json',self.startup);self.write('reference.json',self.reference)
+        self.assertEqual(self.result()['status'],'BLOCKED')
+        self.startup['eclipse_discovered']=True
+        self.write('startup.json',self.startup)
+        self.assertEqual(self.result()['status'],'BLOCKED')
+        self.reference['backend']='native'
+        self.write('reference.json',self.reference)
+        self.assertEqual(self.result()['status'],'LIMITED_HARDWARE_VALIDATION')
 
 if __name__=='__main__':unittest.main()

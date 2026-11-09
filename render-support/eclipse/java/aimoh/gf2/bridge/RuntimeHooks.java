@@ -9,7 +9,7 @@ import net.bytebuddy.jar.asm.*;
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/",D=R+"AimohGF2Services",S=R+"AimohGf2SourceHost",C=R+"AimohGf2AddonContext";
     static final String LINK="(Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)Lviewpoint/render/IrisPrograms;";
-    public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",2,R+"IrisBindings",2,R+"IrisPipeline",3,
+    public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",4,R+"IrisBindings",2,R+"IrisPipeline",3,
         R+"IrisPrograms",3,R+"IrisFrame",4,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
     private volatile Throwable transformFailure;
     private static String t(String name){return "L"+R+name+";";}
@@ -61,7 +61,13 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         }
                         super.visitMaxs(stack,locals);
                     }
-                    @Override public void visitVarInsn(int op,int var){if(type.equals(R+"IrisPipeline")&&name.equals("checkPool")&&op==Opcodes.LSTORE&&!pool){load(0);call(D,"extraBytes","("+t("IrisPipeline")+")J");mv.visitInsn(Opcodes.LADD);pool=true;}super.visitVarInsn(op,var);}
+                    @Override public void visitVarInsn(int op,int var){
+                        if(type.equals(R+"IrisPipeline")&&name.equals("checkPool")&&op==Opcodes.LSTORE&&!pool){load(0);call(D,"extraBytes","("+t("IrisPipeline")+")J");mv.visitInsn(Opcodes.LADD);pool=true;}
+                        super.visitVarInsn(op,var);
+                        if(type.equals(R+"IrisProgram")&&name.equals("<init>")&&op==Opcodes.ILOAD&&var==6){
+                            load(1);call(D,"checkedUserUnit","(ILjava/lang/String;)I");
+                        }
+                    }
                     @Override public void visitIntInsn(int op,int value){if(type.equals(R+"IrisProgram")&&name.equals("<init>")&&op==Opcodes.BIPUSH&&value==96){load(1,2);call(C,"firstUserUnit","(Ljava/lang/String;Lviewpoint/platform/GlProgram;)I");}else super.visitIntInsn(op,value);}
                     @Override public void visitIincInsn(int var,int amount){super.visitIincInsn(var,amount);if(type.equals(R+"IrisProgram")&&name.equals("<init>")&&var==6&&amount==1){load(1);mv.visitVarInsn(Opcodes.ILOAD,var);call(C,"nextUserUnit","(Ljava/lang/String;I)I");mv.visitVarInsn(Opcodes.ISTORE,var);}}
                     @Override public void visitLdcInsn(Object value){

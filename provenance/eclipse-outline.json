@@ -11,6 +11,7 @@
     "aimoh/gf2/bridge/VerifiedViewpoint.java",
     "viewpoint/render/AimohGf2Device.java",
     "viewpoint/render/AimohGf2FrameInputs.java",
+    "viewpoint/render/AimohGf2GlScope.java",
     "viewpoint/render/AimohGf2OriginalSamplers.java",
     "viewpoint/render/AimohGf2OriginalTexture.java",
     "viewpoint/render/AimohGf2OutlineBridge.java",

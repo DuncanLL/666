@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse,hashlib,io,os,shutil,zipfile
 from common import ROOT,BUILD,settings,sha,save
 from build import compile_java
+from build_render_support import check_glsl_names
 
 SHADER_PAYLOAD='aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'
 SHADERS='Eclipse-Shader-Unstable/shaders/dimensions/'
@@ -25,6 +26,7 @@ def patch_shaders(payload,patches):
             for before,after in patches.get(entry.filename,()):
                 assert data.count(before)==1,'Eclipse shader edit point changed: '+entry.filename
                 data=data.replace(before,after)
+            check_glsl_names(entry.filename,data)
             new.writestr(entry,data)
     return result.getvalue()
 

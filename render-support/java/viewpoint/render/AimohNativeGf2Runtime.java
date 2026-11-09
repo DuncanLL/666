@@ -38,14 +38,18 @@ public final class AimohNativeGf2Runtime {
     public static void prepareFrame(){
         prepareData();
         if(renderer==null&&prepared==null||renderer!=null&&drawnData==prepared&&AimohNativeGf2Registry.active())return;
+        if(prepared!=null){
+            String problem=AimohGf2Device.unsupported();
+            if(problem!=null){
+                System.err.println("[R116 Native] Character rendering unavailable: "+problem);
+                AimohNativeGf2Registry.detach(prepared);prepared=null;
+                if(renderer==null)return;
+            }
+        }
         try(AimohNativeSourceScope scope=new AimohNativeSourceScope()){
             if(renderer!=null&&(drawnData!=prepared||!AimohNativeGf2Registry.active())){renderer.close();renderer=null;drawnData=null;released++;}
             if(prepared!=null&&renderer==null){
-                String problem=AimohGf2Device.unsupported();
-                if(problem!=null){
-                    System.err.println("[R116 Native] Character rendering unavailable: "+problem);
-                    AimohNativeGf2Registry.detach(prepared);prepared=null;
-                }else try{
+                try{
                     renderer=new AimohNativeSourceRenderer(prepared);drawnData=prepared;created++;if(diagnostics)renderer.diagnostics();
                 }catch(IOException|IllegalArgumentException|JSONException e){
                     System.err.println("[R116 Native] Character resources unavailable: "+e);

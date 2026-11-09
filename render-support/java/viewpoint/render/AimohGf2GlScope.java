@@ -18,13 +18,17 @@ public final class AimohGf2GlScope implements AutoCloseable {
     private final long[] uboStart=new long[UBO_SLOTS.length],uboSize=new long[UBO_SLOTS.length],ssboStart,ssboSize;
     private final int arrayBuffer=GL11.glGetInteger(GL15.GL_ARRAY_BUFFER_BINDING),uniformBuffer=GL11.glGetInteger(GL31.GL_UNIFORM_BUFFER_BINDING),storageBuffer=GL11.glGetInteger(GL43.GL_SHADER_STORAGE_BUFFER_BINDING),copyRead=GL11.glGetInteger(GL31.GL_COPY_READ_BUFFER),copyWrite=GL11.glGetInteger(GL31.GL_COPY_WRITE_BUFFER);
     private static final int[] GLASS_UNITS=java.util.stream.IntStream.concat(java.util.Arrays.stream(UNITS),java.util.stream.IntStream.concat(java.util.stream.IntStream.range(32,39),java.util.stream.IntStream.range(52,61))).toArray();
+    private static final int[] ECLIPSE_UNITS=java.util.stream.IntStream.concat(java.util.Arrays.stream(UNITS),java.util.stream.IntStream.range(96,112)).toArray();
     private static final int[] GLASS_SLOTS={0,1,2,3,7,8,9,10,12,13};
     private final int[] units,slots;
+    private final int unitLimit;
     private final int indirectBuffer=GL11.glGetInteger(GL40.GL_DRAW_INDIRECT_BUFFER_BINDING);
     public AimohGf2GlScope(){this(false);}
     public AimohGf2GlScope(boolean glass){this(glass,glass?3:1);}
     AimohGf2GlScope(boolean glass,int imageUnits){
-        units=glass?GLASS_UNITS:UNITS;slots=glass?GLASS_SLOTS:SSBO_SLOTS;
+        boolean iris=viewpoint.platform.IrisPacks.active()!=null;
+        units=glass?GLASS_UNITS:iris?ECLIPSE_UNITS:UNITS;slots=glass?GLASS_SLOTS:SSBO_SLOTS;
+        unitLimit=iris?GL11.glGetInteger(GL20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS):Integer.MAX_VALUE;
         textures=new int[units.length][5];ssbos=new int[slots.length];ssboStart=new long[slots.length];ssboSize=new long[slots.length];image=new int[imageUnits*6];
         GL11.glGetIntegerv(GL11.GL_VIEWPORT,viewport);GL11.glGetIntegerv(GL11.GL_SCISSOR_BOX,box);GL11.glGetDoublev(GL11.GL_DEPTH_RANGE,depthRange);
         int[] sf={GL11.GL_STENCIL_FUNC,GL11.GL_STENCIL_REF,GL11.GL_STENCIL_VALUE_MASK,GL11.GL_STENCIL_WRITEMASK,GL11.GL_STENCIL_FAIL,GL11.GL_STENCIL_PASS_DEPTH_FAIL,GL11.GL_STENCIL_PASS_DEPTH_PASS};
@@ -32,7 +36,7 @@ public final class AimohGf2GlScope implements AutoCloseable {
         for(int i=0;i<7;i++){stencilFront[i]=GL11.glGetInteger(sf[i]);stencilBack[i]=GL11.glGetInteger(sb[i]);}
         int[] blendKeys={GL14.GL_BLEND_SRC_RGB,GL14.GL_BLEND_DST_RGB,GL14.GL_BLEND_SRC_ALPHA,GL14.GL_BLEND_DST_ALPHA,GL20.GL_BLEND_EQUATION_RGB,GL20.GL_BLEND_EQUATION_ALPHA};
         for(int i=0;i<8;i++){blendOn[i]=GL30.glIsEnabledi(GL11.GL_BLEND,i);for(int k=0;k<6;k++)blend[i][k]=GL30.glGetIntegeri(blendKeys[k],i);GL30.glGetIntegeri_v(GL11.GL_COLOR_WRITEMASK,i,masks[i]);}
-        for(int i=0;i<units.length;i++){int u=units[i];GL13.glActiveTexture(GL13.GL_TEXTURE0+u);textures[i][0]=GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);textures[i][1]=GL11.glGetInteger(GL13.GL_TEXTURE_BINDING_CUBE_MAP);textures[i][2]=GL11.glGetInteger(GL31.GL_TEXTURE_BINDING_BUFFER);textures[i][3]=GL11.glGetInteger(GL30.GL_TEXTURE_BINDING_2D_ARRAY);textures[i][4]=GL30.glGetIntegeri(GL33.GL_SAMPLER_BINDING,u);}
+        for(int i=0;i<units.length;i++){int u=units[i];if(u>=unitLimit)continue;GL13.glActiveTexture(GL13.GL_TEXTURE0+u);textures[i][0]=GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);textures[i][1]=GL11.glGetInteger(GL13.GL_TEXTURE_BINDING_CUBE_MAP);textures[i][2]=GL11.glGetInteger(GL31.GL_TEXTURE_BINDING_BUFFER);textures[i][3]=GL11.glGetInteger(GL30.GL_TEXTURE_BINDING_2D_ARRAY);textures[i][4]=GL30.glGetIntegeri(GL33.GL_SAMPLER_BINDING,u);}
         GL13.glActiveTexture(active);
         for(int i=0;i<UBO_SLOTS.length;i++){int slot=UBO_SLOTS[i];ubos[i]=GL30.glGetIntegeri(GL31.GL_UNIFORM_BUFFER_BINDING,slot);uboStart[i]=GL32.glGetInteger64i(GL31.GL_UNIFORM_BUFFER_START,slot);uboSize[i]=GL32.glGetInteger64i(GL31.GL_UNIFORM_BUFFER_SIZE,slot);}
         for(int i=0;i<slots.length;i++)ssbos[i]=GL30.glGetIntegeri(GL43.GL_SHADER_STORAGE_BUFFER_BINDING,slots[i]);
@@ -43,7 +47,7 @@ public final class AimohGf2GlScope implements AutoCloseable {
     private static void stencil(int face,int[] s){GL20.glStencilFuncSeparate(face,s[0],s[1],s[2]);GL20.glStencilMaskSeparate(face,s[3]);GL20.glStencilOpSeparate(face,s[4],s[5],s[6]);}
     private static void buffer(int target,int slot,int id,long start,long size){if(id!=0&&size>0)GL30.glBindBufferRange(target,slot,id,start,size);else GL30.glBindBufferBase(target,slot,id);}
     @Override public void close(){
-        for(int i=0;i<units.length;i++){GL13.glActiveTexture(GL13.GL_TEXTURE0+units[i]);GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[i][0]);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,textures[i][1]);GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER,textures[i][2]);GL11.glBindTexture(GL30.GL_TEXTURE_2D_ARRAY,textures[i][3]);GL33.glBindSampler(units[i],textures[i][4]);}
+        for(int i=0;i<units.length;i++){int u=units[i];if(u>=unitLimit)continue;GL13.glActiveTexture(GL13.GL_TEXTURE0+u);GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[i][0]);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,textures[i][1]);GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER,textures[i][2]);GL11.glBindTexture(GL30.GL_TEXTURE_2D_ARRAY,textures[i][3]);GL33.glBindSampler(u,textures[i][4]);}
         for(int i=0;i<UBO_SLOTS.length;i++)buffer(GL31.GL_UNIFORM_BUFFER,UBO_SLOTS[i],ubos[i],uboStart[i],uboSize[i]);for(int i=0;i<slots.length;i++)buffer(GL43.GL_SHADER_STORAGE_BUFFER,slots[i],ssbos[i],ssboStart[i],ssboSize[i]);for(int unit=0;unit<image.length/6;unit++){int off=unit*6;GL42.glBindImageTexture(unit,image[off],image[off+1],image[off+2]!=0,image[off+3],image[off+4],image[off+5]);}
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,arrayBuffer);GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER,uniformBuffer);GL15.glBindBuffer(GL43.GL_SHADER_STORAGE_BUFFER,storageBuffer);GL15.glBindBuffer(GL31.GL_COPY_READ_BUFFER,copyRead);GL15.glBindBuffer(GL31.GL_COPY_WRITE_BUFFER,copyWrite);
         GL15.glBindBuffer(GL40.GL_DRAW_INDIRECT_BUFFER,indirectBuffer);GL30.glBindVertexArray(vao);GL20.glUseProgram(program);GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER,draw);GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,read);GL13.glActiveTexture(active);

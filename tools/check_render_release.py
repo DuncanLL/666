@@ -11,7 +11,9 @@ def evaluate(evidence_file):
     backend=e.get('backend','native')
     if backend not in ('native','eclipse'):raise ValueError('Unsupported render backend')
     eclipse=backend=='eclipse'
-    build=read(BUILD/('eclipse-support' if eclipse else 'render-support')/'build.json')
+    combined=e.get('distribution')=='combined'
+    build=read(BUILD/('combined-support' if combined else 'eclipse-support' if eclipse else 'render-support')/'build.json')
+    if combined:build.update(build['backends'][backend])
     origin=read(ROOT/'provenance'/('eclipse-outline.json' if eclipse else 'render-support.json'))
     errors=[];vendors=set();hosts=set()
     def require(ok,message):
@@ -32,11 +34,19 @@ def evaluate(evidence_file):
     require(e.get('character_jar_sha256')==sha(character_jar),'Character core changed after verification')
     allowed=set(origin.get('compatible_official_hosts',{}).values())or{origin['official_host_sha256']}
     startup=report(e['startup_report'])
-    require(startup.get('jar_sha256')==build['jar_sha256']and startup.get('shader_sha256')==build['shader_sha256'],'Startup evidence is stale')
+    startup_shader=startup.get('shader_hashes',{}).get(backend) if combined else startup.get('shader_sha256')
+    require(startup.get('jar_sha256')==build['jar_sha256'] and startup_shader==build['shader_sha256'],'Startup evidence is stale')
     for flag in ('normal_zombiebuddy_dispatch',backend+'_discovered','player_custom_pack_preserved','official_host_unchanged','workshop_validator_passed'):require(startup.get(flag)is True,'Startup check not passed: '+flag)
+    if combined:
+        require(all(startup.get(name+'_discovered') is True and startup.get('shader_hashes',{}).get(name)==row['shader_sha256']
+                    for name,row in build['backends'].items()),'Combined startup did not verify both embedded packs')
     references=e.get('reference_reports',[]);require(bool(references),'No host-expanded reference compilation evidence')
     for path in references:
         ref=report(path);rows=ref.get('programs',[])
+        if combined:
+            require(ref.get('backend')==backend and ref.get('jar_sha256')==build['jar_sha256']
+                    and ref.get('shader_sha256')==build['shader_sha256'] and ref.get('host_sha256') in allowed,
+                    'Reference report belongs to another backend, build or host: '+path)
         require(sha(ref['binary'])==ref['binary_sha256'],'Reference compiler identity changed')
         require(bool(rows)and ref.get('all_reference_passed')is True,'Reference compilation incomplete: '+path)
         for row in rows:

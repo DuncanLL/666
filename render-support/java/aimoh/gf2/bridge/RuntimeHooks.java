@@ -3,13 +3,26 @@ import java.lang.instrument.*;
 import java.security.ProtectionDomain;
 import java.util.*;
 import net.bytebuddy.jar.asm.*;
-/** Native-only method-body integration; no Iris/Eclipse hooks or host class copies. */
+/** One installer for the verified host method-body integrations. */
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
-    public static final Map<String,Integer> EXPECTED=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/PackOption",1);
+    private static final String SOURCE_INPUTS="aimoh/motion/PmxOriginalInputs";
+    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
+    public static final Map<String,Integer> EXPECTED;
+    static {
+        Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);
+        EclipseHooks.EXPECTED.forEach((name,count)->{if(!name.equals(SOURCE_INPUTS))hooks.merge(name,count,Integer::sum);});
+        EXPECTED=Collections.unmodifiableMap(hooks);
+    }
     private volatile Throwable transformFailure;
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
+        byte[] result=NATIVE.containsKey(type)?rewriteNative(type,raw):raw;
+        if(!type.equals(SOURCE_INPUTS)&&EclipseHooks.EXPECTED.containsKey(type))
+            result=EclipseHooks.rewrite(type,result);
+        return result;
+    }
+    private static byte[] rewriteNative(String type,byte[] raw){
         if(type.equals("viewpoint/platform/PackOption")){
             ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);int[] hits={0};
             reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
@@ -21,7 +34,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
             },0);
             if(hits[0]!=1)throw new IllegalStateException("Native character setting section entry changed");return writer.toByteArray();
         }
-        if(!type.equals("aimoh/motion/PmxOriginalInputs"))return NativeHooks.rewrite(type,raw);
+        if(!type.equals(SOURCE_INPUTS))return NativeHooks.rewrite(type,raw);
         ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,0);int[] hits={0};
         reader.accept(new ClassVisitor(Opcodes.ASM9,writer){public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] ex){return new MethodVisitor(Opcodes.ASM9,super.visitMethod(access,name,desc,sig,ex)){public void visitLdcInsn(Object value){if("viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.AimohGf2SourceHost");hits[0]++;}else super.visitLdcInsn(value);}};}},0);
         if(hits[0]!=1)throw new IllegalStateException("Character source-host entry changed: "+hits[0]);return writer.toByteArray();

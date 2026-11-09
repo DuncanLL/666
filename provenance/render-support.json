@@ -1,7 +1,7 @@
 {
   "format": 2,
   "backend": "VP_NATIVE",
-  "release_version": "0.2.13",
+  "release_version": "0.3.0",
   "internal_mod_id": "AimohGF2Eclipse",
   "workshop_id": "3834707439",
   "supported_viewpoint": "official 0.1.7-rc3",

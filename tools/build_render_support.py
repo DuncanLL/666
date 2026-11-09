@@ -1,11 +1,21 @@
 """Build the Native-only support MOD and deterministic JAR-owned shader payload."""
 from pathlib import Path
-import argparse,io,json,os,zipfile
+import argparse,io,json,os,re,zipfile
 from common import ROOT,BUILD,settings,sha,save
 from build import compile_java
 
 def write(z,name,data):
     entry=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));entry.compress_type=zipfile.ZIP_DEFLATED;entry.create_system=3;entry.external_attr=0o100644<<16;z.writestr(entry,data)
+
+_RESERVED='packed common partition active asm class union enum typedef template this resource goto inline noinline public static extern external interface long short half fixed unsigned superp input output hvec2 hvec3 hvec4 fvec2 fvec3 fvec4 filter sizeof cast namespace using sampler3DRect'.split()
+_DECL=re.compile(r'\b(?:float|double|bool|int|uint|[biu]?vec[234]|mat[234](?:x[234])?)\s+('+'|'.join(_RESERVED)+r')\b')
+_SHADER_SUFFIXES={'.glsl','.comp','.frag','.vert','.geom','.tesc','.tese','.csh','.fsh','.vsh','.gsh','.tcs','.tes'}
+
+def check_glsl_names(name,data):
+    if Path(name).suffix.lower() not in _SHADER_SUFFIXES:return
+    code=re.sub(r'/\*.*?\*/|//[^\n]*','',data.decode('utf8',errors='replace'),flags=re.S)
+    invalid=_DECL.search(code)
+    assert invalid is None,'Non-portable GLSL identifier '+invalid.group(1)+' in '+str(name)
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--read-assets-from',type=Path,help='Recover the verified shared display asset from an existing matched support JAR before building');args=parser.parse_args()
@@ -24,14 +34,7 @@ if __name__=='__main__':
     compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
     packroot=ROOT/'render-support/native-pack';payload=io.BytesIO();shader_sources=sorted(p for p in packroot.rglob('*')if p.is_file())
     # Cross-driver guard: include legacy names accepted by some modern compilers.
-    import re
-    reserved='packed common partition active asm class union enum typedef template this resource goto inline noinline public static extern external interface long short half fixed unsigned superp input output hvec2 hvec3 hvec4 fvec2 fvec3 fvec4 filter sizeof cast namespace using sampler3DRect'.split()
-    unsafe_declaration=re.compile(r'\b(?:float|double|bool|int|uint|[biu]?vec[234]|mat[234](?:x[234])?)\s+('+ '|'.join(reserved)+r')\b')
-    for source in shader_sources:
-        if source.suffix not in ('.glsl','.comp','.frag','.vert','.geom'):continue
-        code=re.sub(r'/\*.*?\*/|//[^\n]*','',source.read_text('utf8'),flags=re.S)
-        invalid=unsafe_declaration.search(code)
-        assert invalid is None,'Non-portable GLSL identifier '+invalid.group(1)+' in '+str(source)
+    for source in shader_sources:check_glsl_names(source,source.read_bytes())
     profile=json.loads((packroot/'shaders/gf2/manifest.json').read_text('utf8'))['original_display_profile'];assert profile['sha256']==resources['sha256']and profile['width']*profile['height']*8==resources['bytes']
     with zipfile.ZipFile(payload,'w',zipfile.ZIP_DEFLATED)as z:
         for p in shader_sources:write(z,p.relative_to(packroot).as_posix(),p.read_bytes())
