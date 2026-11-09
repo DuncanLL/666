@@ -13,6 +13,7 @@ public final class NativeHooks {
             @Override public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] exceptions){
                 MethodVisitor base=super.visitMethod(access,name,desc,sig,exceptions);
                 boolean world=type.equals(R+"WorldRenderer"),profile=type.equals(PMX)&&name.equals("renderProfile")&&desc.equals("()L"+PMX+";");
+                boolean nativeWorld=world&&name.equals("drawWorld")&&desc.equals("()V");
                 boolean freeze=type.equals(PMX)&&name.equals("freezeDanrp")&&desc.equals("([F[F)[F");
                 boolean shown=type.equals(R+"ModelPass")&&name.equals("shown")&&desc.equals("(Lviewpoint/render/ModelDraws;I)Z");
                 boolean gbuffer=type.equals(R+"ModelPass")&&name.equals("gbuffer")&&desc.equals("(Lviewpoint/render/FrameContext;)V");
@@ -25,7 +26,9 @@ public final class NativeHooks {
                     void variant(){mv.visitVarInsn(Opcodes.ALOAD,0);mv.visitFieldInsn(Opcodes.GETFIELD,PMX,"danrpVariant","L"+PMX+";");}
                     void call(String owner,String method,String descriptor){mv.visitMethodInsn(Opcodes.INVOKESTATIC,owner,method,descriptor,false);}
                     @Override public void visitCode(){
-                        super.visitCode();if(world||gbuffer||caster)return;Label old=new Label();
+                        super.visitCode();
+                        if(nativeWorld){call(RUN,"beginNativeFrame","()V");hits[0]++;}
+                        if(world||gbuffer||caster)return;Label old=new Label();
                         if(shown||shadowFilter){
                             mv.visitVarInsn(Opcodes.ALOAD,shadowFilter?0:1);mv.visitVarInsn(Opcodes.ILOAD,2);call(REG,"owns","(Lviewpoint/render/ModelDraws;I)Z");
                             mv.visitJumpInsn(Opcodes.IFEQ,old);mv.visitInsn(Opcodes.ICONST_0);mv.visitInsn(Opcodes.IRETURN);
@@ -43,8 +46,8 @@ public final class NativeHooks {
                         mv.visitLabel(old);
                     }
                     @Override public void visitInsn(int opcode){
-                        if(gbuffer&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);call(REG,"beforeLighting","(Lviewpoint/render/FrameContext;)V");}
-                        if(caster&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);mv.visitVarInsn(Opcodes.ALOAD,2);mv.visitVarInsn(Opcodes.ILOAD,3);mv.visitVarInsn(Opcodes.ALOAD,4);call(REG,"shadows","(Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");}
+                        if(gbuffer&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);call(RUN,"beforeLighting","(Lviewpoint/render/FrameContext;)V");}
+                        if(caster&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);mv.visitVarInsn(Opcodes.ALOAD,2);mv.visitVarInsn(Opcodes.ILOAD,3);mv.visitVarInsn(Opcodes.ALOAD,4);call(RUN,"shadows","(Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");}
                         super.visitInsn(opcode);
                         if(freeze&&firstReturn&&opcode==Opcodes.ARETURN){firstReturn=false;mv.visitLabel(nativeBody);}
                     }
@@ -58,7 +61,7 @@ public final class NativeHooks {
                 };
             }
         },ClassReader.EXPAND_FRAMES);
-        int expected=type.equals(R+"ModelPass")?4:2;
+        int expected=type.equals(R+"ModelPass")?4:type.equals(R+"WorldRenderer")?3:2;
         if(hits[0]!=expected)throw new IllegalStateException(type+": Native integration expected "+expected+", found "+hits[0]);
         return writer.toByteArray();
     }

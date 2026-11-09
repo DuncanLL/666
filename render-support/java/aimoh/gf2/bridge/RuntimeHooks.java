@@ -7,7 +7,7 @@ import net.bytebuddy.jar.asm.*;
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     private static final String SOURCE_INPUTS="aimoh/motion/PmxOriginalInputs";
-    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",2,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
+    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
     public static final Map<String,Integer> EXPECTED;
     static {
         Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);

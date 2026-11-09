@@ -33,7 +33,11 @@ public final class AimohGf2SourceHost {
     public static void released(IrisPrograms programs){if(pipeline!=null&&pipeline.programs==programs){pipeline=null;context=null;models=null;shadows=null;values=null;gpuFields.clear();gpuFieldOwner=null;reliefProgram=null;reliefLocations.clear();reliefValues.clear();}}
     public static void sourceEarly(IrisFrame host,IrisPipeline p,FrameContext f){
         if(!AimohGf2Runtime.enabled(p))return;if(earlyDone)throw new IllegalStateException("Duplicate source early stage");earlyDone=true;
-        try(AimohGf2GlScope ignored=new AimohGf2GlScope()){AimohGf2Runtime.frame(p).draw(true);}catch(java.io.IOException e){throw new IllegalStateException("GF2 early stage",e);}
+        try(AimohGf2GlScope ignored=new AimohGf2GlScope()){
+            // These draws target an offscreen texture; the scope restores the game's output scissor.
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+            AimohGf2Runtime.frame(p).draw(true);
+        }catch(java.io.IOException e){throw new IllegalStateException("GF2 early stage",e);}
     }
     public static void beforeSourcePass(IrisFrame host,IrisPipeline p,IrisPrograms.Pass pass,String kind,FrameContext f,Set<Integer> flips){
         if(kind.equals("composite")&&pass.name().equals("composite4")&&pass.program()!=null
@@ -43,7 +47,11 @@ public final class AimohGf2SourceHost {
         }
         if(!AimohGf2Runtime.enabled(p)||lateDone||!kind.equals("composite"))return;String name=pass.name();if(!name.matches("composite[0-9]+")||Integer.parseInt(name.substring(9))<3)return;
         if(!earlyDone)throw new IllegalStateException("Source color stage before depth");lateDone=true;
-        try(AimohGf2GlScope ignored=new AimohGf2GlScope()){AimohGF2Services.beforeSourceColor(host,p,f,flips);AimohGf2Runtime.frame(p).draw(false);AimohGf2IrisGlass.draw(p,f,shadows,models);}catch(java.io.IOException e){throw new IllegalStateException("GF2 color stage",e);}
+        try(AimohGf2GlScope ignored=new AimohGf2GlScope()){
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+            AimohGF2Services.beforeSourceColor(host,p,f,flips);
+            AimohGf2Runtime.frame(p).draw(false);AimohGf2IrisGlass.draw(p,f,shadows,models);
+        }catch(java.io.IOException e){throw new IllegalStateException("GF2 color stage",e);}
     }
     public static int drawNative(AimohGf2OriginalProgram program,JSONObject state,int selected){
         var gl=program.nativeProgram();gl.use();gl.setInt("uShadowPalette",0);gl.setInt("uIrisEntity",-1);gl.setInt("uIrisUntinted",0);gl.set("uIrisEye",context.eyeX,context.eyeY,context.eyeZ);

@@ -8,7 +8,7 @@ import zombie.ZomboidFileSystem;
 public final class AimohNativeGf2Runtime {
     private static ShaderPacks.Active selected;
     private static AimohGf2PackData prepared,drawnData;
-    private static AimohNativeSourceRenderer renderer;
+    private static AimohNativeSourceRenderer renderer,frameRenderer;
     private static boolean diagnostics;
     private static boolean irisSelected;
     private static String rejectedCatalog;
@@ -24,7 +24,7 @@ public final class AimohNativeGf2Runtime {
             rejectedCatalog=catalogLocation();
             System.err.println("[R116 Native] Character rendering unavailable; check the R116 character MOD and restart or reload the shader: "+e);
         }
-        if(prepared!=null)AimohNativeGf2Registry.attach(prepared);
+        if(prepared!=null)AimohNativeGf2Registry.attach(prepared,drawn);
     }
     private static String catalogLocation(){return ZomboidFileSystem.instance.getString(AimohGf2PackData.CATALOG_PATH);}
     private static AimohGf2PackData loadData(ShaderPacks.Active drawn,boolean iris)throws IOException{
@@ -35,7 +35,9 @@ public final class AimohNativeGf2Runtime {
         if(addon==null||!"AimohGF2Eclipse".equals(addon.optString("id"))||addon.optInt("format")!=1||!"native".equals(addon.optString("backend")))return null;
         return new AimohGf2PackData(files);
     }
-    public static void prepareFrame(){
+    public static synchronized void prepareFrame(){
+        frameRenderer=null;
+        AimohNativeGf2Registry.frame(null);
         prepareData();
         if(renderer==null&&prepared==null||renderer!=null&&drawnData==prepared&&AimohNativeGf2Registry.active())return;
         if(prepared!=null){
@@ -58,16 +60,29 @@ public final class AimohNativeGf2Runtime {
             }
         }catch(Exception e){throw new IllegalStateException("Native GF2 renderer preparation",e);}
     }
+    public static void beginNativeFrame(){
+        frameRenderer=renderer;
+        AimohNativeGf2Registry.frame(frameRenderer==null?null:drawnData);
+    }
+    public static void beforeLighting(FrameContext frame){
+        if(frameRenderer==null)return;
+        try{frameRenderer.prepass(frame);}catch(Exception e){throw new IllegalStateException("Native source depth/GBuffer",e);}
+    }
+    public static void shadows(org.joml.Matrix4f matrix,int[] candidates,int count,ModelBatches.Filter filter){
+        if(frameRenderer==null)return;
+        try{frameRenderer.cast(matrix,candidates,count,filter);}catch(Exception e){throw new IllegalStateException("Native original ShadowCaster",e);}
+    }
     public static void draw(FrameContext frame){
-        if(renderer==null)return;
+        if(frameRenderer==null)return;
         int[] before=diagnostics?AimohNativeSourceScope.bindings():null;
-        try{renderer.draw(frame);}catch(Exception e){throw new IllegalStateException("Native GF2 AFTER_OPAQUE",e);}
+        try{frameRenderer.draw(frame);}catch(Exception e){throw new IllegalStateException("Native GF2 AFTER_OPAQUE",e);}
         if(diagnostics&&!java.util.Arrays.equals(before,AimohNativeSourceScope.bindings()))throw new IllegalStateException("Native GF2 shared GL bindings leaked");
     }
     public static void diagnostics(){diagnostics=true;if(renderer!=null)renderer.diagnostics();}
     public static String evidence(){return renderer==null?null:renderer.evidence();}
     public static String lifecycle(){return new JSONObject().put("created",created).put("released",released).put("renderer_active",renderer!=null).put("data_active",AimohNativeGf2Registry.active()).put("drawn_generation",selected==null?-1:selected.generation).toString();}
-    public static void close(){
+    public static synchronized void close(){
+        frameRenderer=null;AimohNativeGf2Registry.frame(null);
         try{if(renderer!=null){renderer.close();released++;}}catch(Exception e){throw new IllegalStateException("Native GF2 release",e);}finally{renderer=null;drawnData=null;if(prepared!=null)AimohNativeGf2Registry.detach(prepared);prepared=null;selected=null;rejectedCatalog=null;}
     }
     private AimohNativeGf2Runtime(){}

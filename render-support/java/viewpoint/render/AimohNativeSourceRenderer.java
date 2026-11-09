@@ -10,7 +10,6 @@ import org.joml.Matrix4f;
 import org.json.*;
 import org.lwjgl.opengl.*;
 import viewpoint.platform.GlProgram;
-import viewpoint.platform.IrisPacks;
 import viewpoint.platform.AimohNativePackSelection;
 
 /** Original GF2 source stages in Native AFTER_OPAQUE; Native world/lighting/post are retained. */
@@ -85,9 +84,6 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         catch(Exception e){System.err.println("[R116 Native] original display profile unavailable; retaining Native colour response: "+e.getMessage());}
         target=createdTarget;materials=createdMaterials;nativePrograms=createdPrograms;environment=createdEnvironment;motionBridge=createdMotion;display=createdDisplay;
         System.out.println("[R116 Native] GPU="+GL11.glGetString(GL11.GL_RENDERER)+"; driver="+GL11.glGetString(GL11.GL_VERSION)+"; maxTexture="+GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE)+"; maxUBO="+GL11.glGetInteger(GL31.GL_MAX_UNIFORM_BLOCK_SIZE)+"; textureUnits="+GL11.glGetInteger(GL20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS)+"; BC7="+(caps.OpenGL42||caps.GL_ARB_texture_compression_bptc)+"; S3TC="+caps.GL_EXT_texture_compression_s3tc+"; characterData="+data.identity);
-        AimohNativeGf2Registry.attach(data);
-        AimohNativeGf2Registry.beforeLighting(frame->{try{prepass(frame);}catch(Exception e){throw new IllegalStateException("Native source depth/GBuffer",e);}});
-        AimohNativeGf2Registry.shadows((matrix,candidates,count,filter)->{try{cast(matrix,candidates,count,filter);}catch(Exception e){throw new IllegalStateException("Native original ShadowCaster",e);}});
     }
     private static Matrix4d matrix(float[] a){return new Matrix4d(new Matrix4f().set(a));}
     public void diagnostics(){if(casterQuery==0)casterQuery=GL15.glGenQueries();}
@@ -150,7 +146,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         models.begin();
         return models::end;
     }
-    private void cast(Matrix4f nativeVp,int[] candidates,int count,ModelBatches.Filter filter)throws Exception{
+    void cast(Matrix4f nativeVp,int[] candidates,int count,ModelBatches.Filter filter)throws Exception{
         FrameContext frame=(FrameContext)AimohNativeGf2Environment.world("frame");if(shadowFrame!=frame.index){shadowFrame=frame.index;shadowDraws=shadowViews=visibleCasterViews=0;}shadowPhase++;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).shadow;if(actors.isEmpty())return;
         boolean[] selected=null;if(candidates!=null){selected=new boolean[draws.count];for(int i=0;i<count;i++)selected[candidates[i]]=true;}
@@ -187,7 +183,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
             if(casterQueryActive){GL15.glEndQuery(GL33.GL_ANY_SAMPLES_PASSED);casterQueryActive=false;visibleCasterViews+=GL15.glGetQueryObjecti(casterQuery,GL15.GL_QUERY_RESULT);}
         }finally{if(casterQueryActive){GL15.glEndQuery(GL33.GL_ANY_SAMPLES_PASSED);casterQueryActive=false;}}
     }
-    private void prepass(FrameContext frame)throws Exception{
+    void prepass(FrameContext frame)throws Exception{
         if(earlyFrame==frame.index)throw new IllegalStateException("Duplicate source GBuffer callback");earlyFrame=frame.index;earlyDraws=0;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).colour;if(actors.isEmpty())return;
         Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
@@ -217,8 +213,6 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         }
     }
     public void draw(FrameContext frame)throws Exception{
-        if(IrisPacks.active()!=null)throw new IllegalStateException("Native source stage entered Iris");
-        if(!AimohNativeGf2Registry.active())return;
         if(earlyFrame!=frame.index)throw new IllegalStateException("Native original colour ran before its GBuffer callback");
         if(lastFrame==frame.index)throw new IllegalStateException("Duplicate Native source frame");lastFrame=frame.index;
         ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
@@ -379,5 +373,5 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});
     }
     public String evidence(){return new JSONObject().put("frames",frames).put("early_frames",earlyFrames).put("early_draws",earlyDraws).put("actors",lastActors).put("original_stage_draws",lastDraws).put("stages",stageDraws).put("stage_order",stageOrder).put("actor_lighting_buffers",actorLighting.size()).put("native_programs",nativePrograms.count()).put("native_additional_light_inputs",nativeLightCount).put("native_local_selected_slots",localLights==null?0:localLights.kinds.length).put("native_local_kinds",localLights==null?new int[0]:localLights.kinds).put("native_local_indices",localLights==null?new int[0]:localLights.indices).put("native_local_fragment_consumers",nativePrograms.localConsumers()).put("native_indirect_fragment_consumers",nativePrograms.indirectConsumers()).put("native_actor_light",actorEngineLight).put("unsupported_car_beams",unsupportedCarBeams).put("shadow_views",shadowViews).put("shadow_draws",shadowDraws).put("visible_caster_views",visibleCasterViews).put("caster_query_is_fixture_only",casterQuery!=0).put("geometry_witness",geometryWitness).put("source_data_identity",data.identity).put("native_environment",environment.evidence()).put("original_display_transfer",display==null?JSONObject.NULL:display.evidence()).put("native_reflection_cube",environment.cube).put("native_main_shadow_consumers",nativePrograms.mainConsumers()).put("native_legacy_shadow_samplers",nativePrograms.legacySunSamplers()).put("scope","Native opaque depth/velocity retained; original source colour/stencil/shadow, Native cloud and actor ambient connected. Shared display transform and current-scene reflection are connected. Point/muzzle/spot services and actual Native bounce/flash-bounce feed source lighting. Actual six-direction room radiance is connected. Transparent/dynamic reflection coverage, conditional original effects, full authored motion and gameplay acceptance remain incomplete").toString();}
-    @Override public void close()throws Exception{AimohNativeGf2Registry.detach(data);AimohNativeSourceScope.forget(motionBridge,(GlProgram)AimohNativeGf2Environment.field(target,"copy"));for(AimohGf2RegisterBank b:banks.values())b.close();for(int buffer:actorLighting.values())GL15.glDeleteBuffers(buffer);actorLighting.clear();if(display!=null)display.close();nativePrograms.close();materials.close();environment.close();motionBridge.delete();target.close();if(colour!=0)GL11.glDeleteTextures(colour);if(casterQuery!=0)GL15.glDeleteQueries(casterQuery);}
+    @Override public void close()throws Exception{AimohNativeSourceScope.forget(motionBridge,(GlProgram)AimohNativeGf2Environment.field(target,"copy"));for(AimohGf2RegisterBank b:banks.values())b.close();for(int buffer:actorLighting.values())GL15.glDeleteBuffers(buffer);actorLighting.clear();if(display!=null)display.close();nativePrograms.close();materials.close();environment.close();motionBridge.delete();target.close();if(colour!=0)GL11.glDeleteTextures(colour);if(casterQuery!=0)GL15.glDeleteQueries(casterQuery);}
 }
