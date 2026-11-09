@@ -130,7 +130,7 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
     public AimohGf2OriginalProgram source(int material,String pass)throws java.io.IOException{
         var pair=pair(material,pass);String vs=pair.get("progVertex"),fs=pair.get("progFragment"),key=vs+":"+fs+":source";AimohGf2OriginalProgram program=programs.get(key);if(program!=null)return program;
         JSONObject library=data.manifest.getJSONObject("glsl");String original=text(library.getJSONObject(fs));reviewNormal(original,fs);var motion=AimohNativeMotionBridge.inspect(original,fs);
-        original=AimohNativeSurfaceControls.adapt(original,originalPrograms.get(fs));
+        original=AimohGf2SurfaceControls.adapt(original,originalPrograms.get(fs));
         String fragment=AimohNativeMotionBridge.adapt(indirectLighting(localLighting(mainLighting(original,fs),fs),fs),motion);
         program=new AimohGf2OriginalProgram(vertexUV1(text(library.getJSONObject(vs))),fragment,vs,fs);
         if(program.nativeProgram().has("gf2NativeSunVisibility")){program.close();throw new IllegalArgumentException("Unbridged Native source shadow consumer: "+fs);}
@@ -145,7 +145,7 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
         vertex=vertex.replace("out vec3 gf2NativeWorldNormal;","out vec3 gf2NativeWorldNormal;\nout vec4 gf2NativeClip;out vec4 gf2NativePreviousClip;\nuniform mat4 gf2NativePlainViewProjection;uniform mat4 gf2NativePreviousViewProjection;uniform mat4 gf2NativePreviousSourceToWorld;");
         vertex=vertex.replace("    gf2OriginalVertex();","    gf2OriginalVertex();\n    gf2NativeClip=gf2NativePlainViewProjection*vec4(vPos,1);\n    vec3 previousWorld=(gf2NativePreviousSourceToWorld*vec4(gf2PreviousSourcePosition,1)).xyz*vec3(-1,1,-1)+gf2PreviousEye;\n    gf2NativePreviousClip=gf2NativePreviousViewProjection*vec4(previousWorld,1);");
         int tail=early.indexOf("in vec3 gf2NativeWorldNormal;");if(tail<0||tail!=early.lastIndexOf("in vec3 gf2NativeWorldNormal;"))throw new IllegalArgumentException("Reviewed early source tail changed");fragment=early.substring(0,tail);
-        fragment=AimohNativeSurfaceControls.adapt(fragment,originalPrograms.get(fs));
+        fragment=AimohGf2SurfaceControls.adapt(fragment,originalPrograms.get(fs));
         // Source normal support comes from its reviewed early adapter, not material-name guesses.
         String normal=early.contains("#define GF2_SOURCE_NORMAL_MRT")?"gf2NativeDecode(SV_Target1.xy)":"normalize(gf2NativeWorldNormal)";
         String outputs="layout(location=0)out vec4 gf2NativeAlbedo;layout(location=1)out vec4 gf2NativeNormal;layout(location=2)out vec4 gf2NativeLight;layout(location=3)out vec4 gf2NativeVelocity;";

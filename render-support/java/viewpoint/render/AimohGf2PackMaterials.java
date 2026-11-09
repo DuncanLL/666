@@ -119,6 +119,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
                     fs+="\nvoid main(){gf2OriginalAuthoredLayer();float exposure=texelFetch(gf2AuthoredExposure,gf2AuthoredExposureOffset).r;SV_Target0.rgb/=max(exposure,0.00001);}\n";
                 }
             }
+            if(name.equals("GFCharForward"))fs=AimohGf2SurfaceControls.adapt(fs,programMetadata.get(fragment));
             program=new AimohGf2OriginalProgram(vs,fs,vertex,fragment);programs.put(key,program);
         }
         return program;
@@ -128,6 +129,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
         StateKey key=new StateKey(id,name,early);JSONObject result=states.get(key);
         if(result==null){
             result=new JSONObject(pass(id,name).getJSONObject("state").toString());
+            if(name.equals("GFCharForward"))result.put("sourceSurfaceWeight",surfaceWeight(id));
             if(early){result.put("rtSeparateBlend",false).put("alphaToMask",0);result.getJSONObject("rtBlend0").put("srcBlend",1).put("destBlend",0).put("srcBlendAlpha",1).put("destBlendAlpha",0).put("colMask",15);}
             if(name.equals("ShadowCaster"))result.put("offsetFactor",2.5).put("offsetUnits",1);
             states.put(key,result);

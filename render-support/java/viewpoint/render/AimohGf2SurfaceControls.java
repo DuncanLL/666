@@ -4,7 +4,7 @@ import java.util.regex.*;
 import org.json.*;
 
 /** Optional arithmetic on existing authored normal/RMO samples; no extra texture fetches. */
-final class AimohNativeSurfaceControls {
+final class AimohGf2SurfaceControls {
     static String adapt(String source,JSONObject program){
         int bump=-1,rmo=-1;
         for(Object value:program.getJSONArray("textures")){

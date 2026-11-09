@@ -21,7 +21,22 @@ public final class RenderSupportStartupCheck {
             }
             var discover=viewpoint.platform.IrisPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,pack.getParent().toFile());
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
-            require(find.invoke(null,"minecraft-Aimoh-Eclipse-GF2")!=null,"Official Iris discoverer did not find installed Eclipse");
+            var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
+            require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
+            var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss");
+            require(surfaceOptions.equals(iris.defaults.screens.get("R116_CHARACTER"))
+                &&iris.defaults.screens.get("").contains("[R116_CHARACTER]"),"Eclipse character options page missing");
+            for(String id:surfaceOptions){
+                var option=iris.options.get(id);
+                require(option!=null&&iris.defaults.sliders.contains(id)&&option.values().size()==101,
+                        "Eclipse slider range missing: "+id);
+                require(option.values().getFirst().equals("0.00")&&option.values().getLast().equals("1.00")
+                        &&option.fallback().equals("0.00"),"Eclipse slider bounds or default changed: "+id);
+                require(iris.options.values(Map.of(id,"0.37")).get(id).equals("0.37"),"Eclipse custom setting rejected: "+id);
+                for(String profile:iris.defaults.profiles.keySet()){
+                    require(iris.options.values(iris.profile(profile)).get(id).equals("0.00"),"Eclipse preset changed "+id);
+                }
+            }
             require(Arrays.equals(edited,Files.readAllBytes(player)),"Player shader overwritten");
             require(viewpoint.platform.IrisPacks.active()==null,"Startup changed the selected shader");
             if(eclipse){
