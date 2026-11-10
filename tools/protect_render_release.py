@@ -2,8 +2,11 @@
 from pathlib import Path
 import argparse
 import hashlib
+import hmac
 import io
 import json
+import random
+import secrets
 import re
 import shutil
 import subprocess
@@ -44,10 +47,26 @@ def renamed_shader(data, symbols, scope):
     return encoded, aliases
 
 
+COMMENTS = re.compile(rb'"(?:\\.|[^"\\])*"|/\*[\s\S]*?\*/|//[^\r\n]*')
+ANNOTATION = re.compile(rb'RENDERTARGETS|DRAWBUFFERS|^//\s*\[|SPDX|copyright|license|Karis', re.I)
+
+
+def strip_notes(data):
+    def hide(match):
+        comment = match[0]
+        if comment.startswith(b'"') or ANNOTATION.search(comment):
+            return comment
+        # Preserve token separation and source line locations.
+        return re.sub(rb'[^\r\n]', b' ', comment)
+
+    return COMMENTS.sub(hide, data)
+
+
 def protect_shaders(payload, backend, rules, fragments):
     changed = {}
     mapping = {}
     sealed = []
+    relocated = {}
 
     def seal(entry, data):
         marker = digest(f'{backend}/{entry}'.encode())[:16]
@@ -64,7 +83,7 @@ def protect_shaders(payload, backend, rules, fragments):
                 original = (ROOT / 'render-support/native-pack' / entry).read_bytes()
                 assert data.replace(b'\r\n', b'\n') == original.replace(b'\r\n', b'\n'), entry
                 protected, mapping[entry] = renamed_shader(data, symbols, entry)
-                changed[entry] = seal(entry, protected)
+                changed[entry] = seal(entry, strip_notes(protected))
         else:
             entries = [name for name in source.namelist() if name.endswith(MOTION_SUFFIX)]
             assert len(entries) == 1, entries
@@ -73,34 +92,51 @@ def protect_shaders(payload, backend, rules, fragments):
             fragment = (ROOT / 'render-support/eclipse/shaders/actor-motion.glsl').read_bytes().replace(b'\r\n', b'\n')
             assert data.count(fragment) == 1, 'Eclipse author-owned motion fragment differs from the built package'
             protected, mapping[entry] = renamed_shader(fragment, rules['eclipse_motion_local_symbols'], entry)
-            marker = seal(entry, protected)
+            marker = seal(entry, strip_notes(protected))
             changed[entry] = data.replace(fragment, marker, 1)
             assert changed[entry].replace(marker, fragment, 1) == data
             shader_root = entry.removesuffix('dimensions/composite6.fsh')
+            bootstrap = json.loads(source.read(GF2_MANIFEST))
+            probe = bootstrap['native_probe']
+            indexed = {row['path']: row for row in [probe, *bootstrap['kernels'].values()]}
+
+            def seal_kernel(entry, prefix, fragment, original):
+                row = indexed[entry.removeprefix(shader_root)]
+                assert len(original) == row['bytes'] and digest(original) == row['sha256'], entry
+                code = prefix + fragment
+                fingerprint = digest(code)
+                path = 'gf2/data/' + fingerprint + '.comp'
+                target = shader_root + path
+                assert target == entry or target not in source.namelist()
+                row.update(path=path, sha256=fingerprint, bytes=len(code))
+                relocated[entry] = target
+                changed[entry] = prefix + seal(target, fragment)
+
             for name in rules['eclipse_owned_files']:
                 owned = shader_root + name
                 code = source.read(owned)
                 if name.startswith('gf2/data/'):
                     assert digest(code) == Path(name).stem, owned
-                changed[owned] = seal(owned, code)
+                    seal_kernel(owned, b'', strip_notes(code), code)
+                else:
+                    changed[owned] = seal(owned, strip_notes(code))
 
-            probe = json.loads(source.read(GF2_MANIFEST))['native_probe']
             entry = shader_root + probe['path']
             data = source.read(entry)
-            assert len(data) == probe['bytes'] and digest(data) == probe['sha256'], entry
             assert data.count(PROBE_FRAGMENT_START) == 1, entry
             split = data.index(PROBE_FRAGMENT_START)
             author_fragment = data[split:]
             assert digest(author_fragment) == rules['eclipse_probe_fragment_sha256'], entry
-            marker = seal(entry, author_fragment)
-            changed[entry] = data[:split] + marker
-            assert changed[entry].replace(marker, author_fragment, 1) == data
+            seal_kernel(entry, data[:split], strip_notes(author_fragment), data)
 
         manifest = [name for name in source.namelist() if name.endswith('shaders/gf2/manifest.json')]
         assert len(manifest) == 1, manifest
         entry = manifest[0]
         data = source.read(entry)
-        bootstrap = json.loads(data)
+        if backend == 'eclipse':
+            data = (json.dumps(bootstrap, indent=2) + '\n').encode()
+        else:
+            bootstrap = json.loads(data)
         public = {key: bootstrap[key] for key in ('format', 'pipeline', 'addon_runtime', 'character_catalog')}
         public['input'] = seal(entry, data).decode()
         changed[entry] = (json.dumps(public, separators=(',', ':')) + '\n').encode()
@@ -108,9 +144,11 @@ def protect_shaders(payload, backend, rules, fragments):
         with zipfile.ZipFile(output, 'w') as target:
             for name in source.namelist():
                 if not name.endswith('/'):
-                    write(target, name, changed[name] if name in changed else source.read(name))
+                    write(target, relocated.get(name, name), changed[name] if name in changed else source.read(name))
         with zipfile.ZipFile(output) as target:
-            assert all(target.read(name) == source.read(name) for name in target.namelist() if name not in changed)
+            assert target.testzip() is None
+            assert all(target.read(name) == source.read(name) for name in source.namelist()
+                       if name not in changed and not name.endswith('/'))
     return output.getvalue(), mapping, sealed
 
 
@@ -134,11 +172,12 @@ def owned_classes(archive):
     return classes
 
 
-def run_java(command, log):
-    result = subprocess.run(command, env=environment(), capture_output=True, encoding='utf8', errors='replace', timeout=120)
-    log.write_text(result.stdout + result.stderr, 'utf8')
+def run_java(command, log, input_data=None):
+    result = subprocess.run(command, env=environment(), input=input_data, capture_output=True, timeout=120)
+    output = (result.stdout + result.stderr).decode('utf8', errors='replace')
+    log.write_text(output, 'utf8')
     if result.returncode:
-        print((result.stdout + result.stderr)[-5000:], flush=True)
+        print(output[-5000:], flush=True)
         result.check_returncode()
 
 
@@ -200,7 +239,63 @@ def protect_classes(source, private, rules, proguard_zip, config):
     return output, names, renamed_members
 
 
-def package(output, proguard, metadata):
+def release_context(seed, raw, owned, names, private, config):
+    def part(label):
+        return hmac.digest(seed, label.encode(), 'sha256')
+
+    layout = random.Random(part('layout'))
+    carrier_names = ['x' + part(f'class/{i}')[:4].hex() for i in range(4)]
+    assert len(set(carrier_names)) == len(carrier_names)
+    carriers = {name: [] for name in carrier_names}
+    order = carrier_names * 2
+    layout.shuffle(order)
+    calls = []
+    for i, owner in enumerate(order):
+        method = 'a' + part(f'method/{i}')[:4].hex()
+        values = part(f'fragment/{i}')[:16]
+        carriers[owner].append((method, values))
+        calls.append((owner, method, values))
+    layout.shuffle(calls)
+    layout.shuffle(carrier_names)
+
+    generated = private / 'context-sources'
+    generated.mkdir()
+    sources = []
+    for name, methods in carriers.items():
+        layout.shuffle(methods)
+        lines = ['package aimoh.gf2.bridge;', f'final class {name} {{']
+        for method, values in methods:
+            signed = ', '.join(str(v if v < 128 else v - 256) for v in values)
+            lines.append(f'    static void {method}(java.security.MessageDigest d) {{ d.update(new byte[] {{{signed}}}); }}')
+        file = generated / f'{name}.java'
+        file.write_text('\n'.join([*lines, '}']) + '\n', 'utf8')
+        sources.append(file)
+
+    classes = ', '.join(f'{name}.class' for name in ['K', *carrier_names])
+    lines = ['package aimoh.gf2.bridge;', 'final class K {',
+             f'    static Class<?>[] types() {{ return new Class<?>[] {{{classes}}}; }}',
+             '    static void mix(java.security.MessageDigest d) {']
+    lines.extend(f'        {owner}.{method}(d);' for owner, method, _ in calls)
+    dispatcher = generated / 'K.java'
+    dispatcher.write_text('\n'.join([*lines, '    }', '}']) + '\n', 'utf8')
+    output = private / 'context-classes'
+    compile_java(config, [dispatcher, *sources], output, [raw])
+    rows = {BRIDGE + name + '.class': (output / BRIDGE / (name + '.class')).read_bytes()
+            for name in ['K', *carrier_names]}
+
+    key = hashlib.sha256()
+    with zipfile.ZipFile(owned) as archive:
+        for tail in ('', '$Payload', '$Watch'):
+            entry = names[BRIDGE + 'AimohSealedSources' + tail + '.class']
+            key.update(hashlib.sha256(archive.read(entry)).digest())
+    for data in rows.values():
+        key.update(hashlib.sha256(data).digest())
+    for _, _, values in calls:
+        key.update(values)
+    return rows, key.digest()
+
+
+def package(output, proguard, metadata, seed_from=None):
     config = settings()
     rules_file = ROOT / 'render-support/release-protection.json'
     rules = json.loads(rules_file.read_text('utf8'))
@@ -217,6 +312,9 @@ def package(output, proguard, metadata):
     output.mkdir(parents=True, exist_ok=False)
     private = output / 'private'
     private.mkdir()
+    seed = seed_from.read_bytes() if seed_from else secrets.token_bytes(32)
+    assert len(seed) == 32, 'Expected a 32-byte private build seed'
+    (private / 'seed.bin').write_bytes(seed)
 
     origin = json.loads((ROOT / 'provenance/render-support.json').read_text('utf8'))
     workshop_id = origin['workshop_id']
@@ -246,17 +344,21 @@ def package(output, proguard, metadata):
         with zipfile.ZipFile(source_archive, 'w') as fragment_archive:
             for name, data in sorted(fragments.items()):
                 write(fragment_archive, name, data)
+        context, key = release_context(seed, raw, protected, names, private, config)
+        nonce = hmac.digest(seed, b'nonce/' + hashlib.sha256(source_archive.read_bytes()).digest(), 'sha256')[:12]
         tool = ROOT / 'tools/java/SealRenderResources.java'
         tool_classes = private / 'sealer-classes'
-        compile_java(config, [tool], tool_classes, [raw])
+        compile_java(config, [tool], tool_classes, [])
         sealed_resource = private / 'render-inputs.bin'
         java = Path(config['game_root']) / 'jre64/bin/java.exe'
-        run_java([str(java), '-cp', f'{tool_classes};{raw}', 'aimoh.gf2.bridge.SealRenderResources',
-                  str(source_archive), str(sealed_resource)], private / 'sealer.log')
+        run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',
+                  str(source_archive), str(sealed_resource)], private / 'sealer.log', key + nonce)
         with zipfile.ZipFile(protected) as owned, zipfile.ZipFile(jar, 'w') as target:
             assert {n for n in owned.namelist() if n.endswith('.class')} == set(names.values())
             for name in source.namelist():
                 if name.endswith('/'):
+                    continue
+                if name in context:
                     continue
                 if name in names:
                     write(target, names[name], owned.read(names[name]))
@@ -264,10 +366,14 @@ def package(output, proguard, metadata):
                     write(target, name, shaders[name])
                 else:
                     write(target, name, source.read(name))
+            assert set(context) & set(source.namelist()) == {BRIDGE + 'K.class'}
+            assert not set(context) & set(names.values())
+            for name, data in sorted(context.items()):
+                write(target, name, data)
             assert SEALED_RESOURCE not in source.namelist()
             write(target, SEALED_RESOURCE, sealed_resource.read_bytes())
         with zipfile.ZipFile(jar) as result:
-            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in result.namelist() if name not in names.values() and name not in shaders and name != SEALED_RESOURCE)
+            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in result.namelist() if name not in names.values() and name not in shaders and name not in context and name != SEALED_RESOURCE)
     assert all(sha(path) == value for path, value in inputs.items())
     save(private / 'GLSL-MAPPING.json', shader_mapping)
     save(output / 'protection-report.json', dict(status='PROTECTED_REVIEW_BUILD', version=report['version'],
@@ -276,7 +382,7 @@ def package(output, proguard, metadata):
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
          shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=sha(sealed_resource),
-         seal_tool_sha256=sha(tool), private_mapping_bundled=False, installed=False, uploaded=False))
+         seal_tool_sha256=sha(tool), generated_context_classes=len(context), randomized_context=True, private_mapping_bundled=False, installed=False, uploaded=False))
     print(f'Protected review JAR: {jar}', flush=True)
 
 
@@ -285,5 +391,6 @@ if __name__ == '__main__':
     parser.add_argument('--proguard-zip', type=Path, required=True)
     parser.add_argument('--metadata-from', type=Path, required=True)
     parser.add_argument('--output', type=Path, default=BUILD / 'protected-render-review')
+    parser.add_argument('--seed-from', type=Path, help='Private seed for reproducing an exact prior build')
     args = parser.parse_args()
-    package(args.output, args.proguard_zip.resolve(strict=True), args.metadata_from.resolve(strict=True))
+    package(args.output, args.proguard_zip.resolve(strict=True), args.metadata_from.resolve(strict=True), args.seed_from)

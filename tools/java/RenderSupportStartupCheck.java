@@ -1,4 +1,7 @@
+import java.lang.instrument.ClassFileTransformer;
+import java.security.ProtectionDomain;
 import java.nio.file.*;
+import net.bytebuddy.jar.asm.*;
 import java.util.*;
 import java.util.zip.*;
 import org.json.*;
@@ -147,7 +150,7 @@ public final class RenderSupportStartupCheck {
             String data=(String)read.invoke(selected,"gf2/manifest.json");
             checkReleaseManifest(new JSONObject(data));
             String light=(String)read.invoke(selected,"gf2/native_light.comp");
-            require(light.startsWith("#version")&&light.contains("sky_light.glsl"),"Native light input did not open in memory");
+            require(light.startsWith("#version")&&light.contains("sourceSH[7]"),"Native light input did not open in memory");
         }
         long nativeLoad=System.nanoTime()-nativeStart;
         require(fill!=null&&fill.kept&&fill.label.equals("人物柔和底灯"),"Character fill slider missing from official Native options");
@@ -165,12 +168,54 @@ public final class RenderSupportStartupCheck {
         require(section.get(declare.invoke(selected.option("contrast"),"test.contrast","Graphics/Shader Options")).equals("Graphics/Shader Options"),"Scene option moved");
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(strength))==.5f,"Preset changed shared display default: "+preset);
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Math.abs(Float.parseFloat(selected.preset(preset).valueFor(fill))-.08f)<1e-6f,"Preset changed the subtle fill default: "+preset);
+        if(sealed) checkSealedRetransform(selected);
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");
         try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("(aimoh-native|r116)-bundled-.*")),"Embedded payload temp leaked");}
         String status=combined?"NORMAL_COMBINED_EMBEDDED_INSTALL_DISCOVERY_PASS":"NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS";
         JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("eclipse_embedded",combined).put("eclipse_discovered",combined).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
-        result.put("sealed_disk_checks",sealed).put("eclipse_discovery_configure_ns",eclipseLoad)
+        result.put("sealed_retransform_rejected",sealed).put("sealed_disk_checks",sealed).put("eclipse_discovery_configure_ns",eclipseLoad)
             .put("native_discovery_source_read_ns",nativeLoad).put("check_elapsed_ns",System.nanoTime()-start);
         Files.writeString(root.resolve("startup.json"),result.toString(2));System.out.println(result.toString());
     }
+
+    private static void checkSealedRetransform(viewpoint.platform.ShaderPack pack)throws Exception{
+        var types=Class.forName("aimoh.gf2.bridge.K").getDeclaredMethod("types");
+        types.setAccessible(true);
+        Class<?> carrier=((Class<?>[])types.invoke(null))[1];
+        var agent=RenderSupportTestAgent.agent;
+        boolean[] changed={false};
+        ClassFileTransformer extra=new ClassFileTransformer(){
+            @Override public byte[] transform(ClassLoader loader,String name,Class<?> type,ProtectionDomain domain,byte[] bytes){
+                if(type!=carrier)return null;
+                ClassReader reader=new ClassReader(bytes);
+                ClassWriter writer=new ClassWriter(reader,0);
+                reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
+                    @Override public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] errors){
+                        MethodVisitor base=super.visitMethod(access,name,desc,sig,errors);
+                        if(!desc.equals("(Ljava/security/MessageDigest;)V"))return base;
+                        return new MethodVisitor(Opcodes.ASM9,base){
+                            @Override public void visitCode(){
+                                super.visitCode();
+                                mv.visitInsn(Opcodes.NOP);
+                                changed[0]=true;
+                            }
+                        };
+                    }
+                },0);
+                return writer.toByteArray();
+            }
+        };
+        agent.addTransformer(extra,true);
+        try{agent.retransformClasses(carrier);}finally{agent.removeTransformer(extra);}
+        require(changed[0],"Test did not rewrite a protected class");
+        var read=viewpoint.platform.ShaderPack.class.getDeclaredMethod("shader",String.class);
+        read.setAccessible(true);
+        try{
+            read.invoke(pack,"gf2/native_light.comp");
+            throw new AssertionError("Protected shader was accepted after retransform");
+        }catch(java.lang.reflect.InvocationTargetException error){
+            require("shader pack load failed".equals(error.getCause().getMessage()),"Unexpected integrity failure");
+        }
+    }
+
 }

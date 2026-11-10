@@ -2,7 +2,7 @@
   "proguard_version": "7.10.0",
   "proguard_zip_sha256": "5aa88c434766a057a2ead3412acc01022bb444f9f1bfbae690a1d48b2006b242",
   "internal_java_roots": [
-    "AimohGf2OutlineBridge", "AimohGf2SurfaceControls", "AimohGf2FrameInputs",
+    "AimohSealedSources", "AimohGf2OutlineBridge", "AimohGf2SurfaceControls", "AimohGf2FrameInputs",
     "AimohGf2RegisterBank", "AimohEclipseGf2RegisterBank", "AimohNativeSourcePrograms",
     "AimohNativeSourceRenderer", "AimohNativeSourceScope", "AimohNativeSourceSpace",
     "AimohNativeDisplayTransfer", "AimohNativeGf2Environment", "AimohNativeLocalLights",

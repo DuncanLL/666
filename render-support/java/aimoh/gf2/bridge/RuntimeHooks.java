@@ -55,7 +55,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
                     @Override public void visitInsn(int op) {
                         if (op == Opcodes.ARETURN) {
                             mv.visitVarInsn(Opcodes.ALOAD, 1);
-                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "aimoh/gf2/bridge/AimohSealedSources",
+                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(AimohSealedSources.class),
                                 iris ? "bytes" : "text", "(" + value + path + ")" + value, false);
                             hits[0]++;
                         }
@@ -104,6 +104,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         try{
             agent.retransformClasses(loaded.toArray(Class<?>[]::new));
             if(transformFailure!=null)throw new IllegalStateException("Runtime integration rejected",transformFailure);
+            AimohSealedSources.arm(agent);
         }catch(Throwable failure){
             agent.removeTransformer(this);
             var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(targets.contains(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
