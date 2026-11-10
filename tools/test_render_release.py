@@ -39,6 +39,19 @@ class ReleaseGateTests(unittest.TestCase):
         self.evidence['changed_models']=['new-model'];self.assertEqual(self.result()['status'],'BLOCKED')
     def test_reference_failure_is_blocked(self):
         self.reference['all_reference_passed']=False;self.write('reference.json',self.reference);self.assertEqual(self.result()['status'],'BLOCKED')
+    def test_write_only_access_is_checked_even_when_reference_compiles(self):
+        shader=self.root/'shader.frag'
+        header='#version 430\nlayout(std430,binding=0) writeonly buffer Output { vec4 mainLight; };\n'
+        for body,status in (
+            ('mainLight=vec4(1.0);','LIMITED_HARDWARE_VALIDATION'),
+            ('mainLight.rgb=vec3(mainLight.r);','BLOCKED'),
+            ('mainLight.rgb*=0.5;','BLOCKED'),
+        ):
+            with self.subTest(body=body):
+                shader.write_text(header+'void main(){'+body+'}',encoding='utf8')
+                self.reference['programs'][0]['stages'][0]['sha256']=gate.sha(shader)
+                self.write('reference.json',self.reference)
+                self.assertEqual(self.result()['status'],status)
     def test_missing_host_is_blocked(self):
         self.write('provenance/render-support.json',dict(official_host_sha256='test-host',compatible_official_hosts={'one':'test-host','two':'missing-host'}));self.assertEqual(self.result()['status'],'BLOCKED')
     def test_incomplete_catalog_validation_is_blocked(self):

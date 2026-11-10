@@ -23,7 +23,7 @@ public final class Main {
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
-        System.out.println("[R116] Native and Eclipse integration ready for official Viewpoint 0.1.7-rc3. Select the pack in Viewpoint.");
+        System.out.println("[R116] Native and Eclipse integration ready for official Viewpoint 0.1.7-rc4. Select the pack in Viewpoint.");
     }
 
     private static void install(Path user,String backend,boolean eclipse)throws Exception{

@@ -3,8 +3,25 @@ from pathlib import Path
 import argparse, hashlib, json, re, zipfile
 from common import ROOT, BUILD, sha, save, settings
 
+_WRITE_ONLY_BLOCK = re.compile(r'\bwriteonly\s+(?:(?:coherent|volatile|restrict)\s+)*buffer\s+(\w+)\s*\{([^{}]*)\}\s*(\w+)?\s*;')
+_BUFFER_MEMBER = re.compile(r'\b\w+\s+(\w+)\s*(?:\[[^\]]*\])?\s*;')
+_OUTPUT_ACCESS = re.compile(r'\s*(?:\s*(?:\[[^\[\]]*\]|\.\s*\w+))*\s*(?:=(?!=)|\.\s*length\s*\(\s*\))')
+
 def read(path):
     return json.loads(Path(path).read_text('utf-8-sig'))
+
+def write_only_buffer_accesses(source):
+    """Require direct stores for write-only SSBO outputs in expanded shaders."""
+    code = re.sub(r'/\*.*?\*/|//[^\n]*', ' ', source, flags=re.S)
+    for declaration in _WRITE_ONLY_BLOCK.finditer(code):
+        block, members, instance = declaration.groups()
+        names = [instance] if instance else _BUFFER_MEMBER.findall(members)
+        for name in names:
+            for access in re.finditer(r'\b' + name + r'\b', code):
+                if declaration.start() <= access.start() < declaration.end():
+                    continue
+                if not _OUTPUT_ACCESS.match(code, access.end()):
+                    yield f'{block}.{name}'
 
 def evaluate(evidence_file):
     evidence_file=Path(evidence_file).resolve();base=evidence_file.parent;e=read(evidence_file)
@@ -60,6 +77,8 @@ def evaluate(evidence_file):
             for stage in row.get('stages',[]):
                 p=Path(stage['path']);require(sha(p)==stage['sha256'],'Expanded source changed: '+str(p))
                 text=p.read_text('utf8');require(text.lstrip().startswith('#version')and not re.search(r'^\s*#include\b',text,re.M),'Raw/unversioned shader is not host-expanded evidence')
+                for name in set(write_only_buffer_accesses(text)):
+                    require(False,f'Write-only GLSL buffer output must be a direct store: {name} in {p}')
     if eclipse:require(terrain_checked,'No host-expanded Eclipse terrain link evidence')
     drivers=e.get('driver_reports',[]);require(bool(drivers),'No actual driver rendering evidence')
     coverage=False

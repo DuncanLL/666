@@ -9,7 +9,7 @@ import net.bytebuddy.jar.asm.*;
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/",D=R+"AimohGF2Services",S=R+"AimohGf2SourceHost",C=R+"AimohGf2AddonContext";
     static final String LINK="(Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)Lviewpoint/render/IrisPrograms;";
-    public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",4,R+"IrisBindings",2,R+"IrisPipeline",3,
+    public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",5,R+"IrisBindings",2,R+"IrisPipeline",3,
         R+"IrisPrograms",3,R+"IrisFrame",4,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
     private volatile Throwable transformFailure;
     private static String t(String name){return "L"+R+name+";";}
@@ -28,6 +28,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
                     @Override public void visitCode(){
                         super.visitCode();
                         if(linking){load(0);invoke(C,"beginCompile","(Lviewpoint/iris/IrisPack;)V");mv.visitLabel(start);}
+                        if(type.equals(R+"IrisProgram")&&name.equals("checkUnits")){load(0);call(D,"bindReliefSamplers","("+t("IrisProgram")+")V");}
                         if(type.equals(R+"IrisPrograms")&&name.equals("delete")){load(0);call(D,"releasePrograms","("+t("IrisPrograms")+")V");}
                         if(type.equals(R+"IrisPipeline")){
                             if(name.equals("release")){load(0);call(D,"release","("+t("IrisPipeline")+")V");}
