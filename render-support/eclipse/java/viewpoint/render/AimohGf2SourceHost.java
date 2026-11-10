@@ -39,6 +39,12 @@ public final class AimohGf2SourceHost {
             AimohGf2Runtime.frame(p).draw(true);
         }catch(java.io.IOException e){throw new IllegalStateException("GF2 early stage",e);}
     }
+    public static void sourceCoverage(IrisPipeline p){
+        if(!AimohGf2Runtime.enabled(p))return;
+        if(!earlyDone||lateDone)throw new IllegalStateException("Source coverage outside the translucent boundary");
+        try{AimohGf2Runtime.frame(p).drawCoverage();}
+        catch(java.io.IOException e){throw new IllegalStateException("GF2 source coverage stage",e);}
+    }
     public static void beforeSourcePass(IrisFrame host,IrisPipeline p,IrisPrograms.Pass pass,String kind,FrameContext f,Set<Integer> flips){
         if(kind.equals("composite")&&pass.name().equals("composite4")&&pass.program()!=null
             &&pass.program().images.containsKey("cloudDepthTex")&&AimohGf2AddonContext.supports(p.pack)){

@@ -63,6 +63,13 @@ public final class AimohGf2Runtime implements AutoCloseable {
     record Draw(int nativeIndex,int material,int ordinal){}
     private record Job(int queue,Draw draw,int material){}
     private record Local(Map<String,float[]> inputs,AimohGf2RuntimeQueue.Frame frame){}
+    private enum Phase {
+        EARLY("GFCharForward"), COVERAGE("GFCharTransFront"),
+        COLOR("GFCharForward","GFHairShadow","GFCharFaceShadow","GFCharHairTransE","GFOutline",
+            "GFCharTransMrtWrtie","GFCharTransBack","GFCharTransFront","GFCharTransOutline");
+        final String[] stages;
+        Phase(String... stages){this.stages=stages;}
+    }
     private int renderFrame;
     private int lastActors,lastDraws;
     public static String evidence(IrisPipeline p){AimohGf2Runtime r=FRAMES.get(p.targets);return r==null?"{}":new JSONObject().put("frames",r.renderFrame).put("actors",r.lastActors).put("native_source_draws",r.lastDraws).put("material_buffers",r.assets.materials.materialCount()).put("source_programs",r.assets.materials.programCount()).put("data_identity",r.assets.data.identity).put("python_callback",false).put("original_game_archive",false).put("native_probe_active",r.environment.localProbeActive).toString();}
@@ -191,14 +198,38 @@ public final class AimohGf2Runtime implements AutoCloseable {
         boolean first=true;
         for(var actor:actors.values()){
             if(!first)target.clearActorStencil();
-            drawActor(early,frame,actor);
+            drawActor(early?Phase.EARLY:Phase.COLOR,frame,actor);
             first=false;
         }
         target.writeBackDepth(AimohGf2SourceHost.nativeColorFbo());
         if(!early&&actorMotion)target.decodeMotion(AimohGf2SourceHost.motionTarget());
     }
 
-    private void drawActor(boolean early,int frame,AimohGF2Services.Actor actor)throws IOException{
+    void drawCoverage()throws IOException{
+        var actors=AimohGf2SourceHost.sourceState().actors.values().stream()
+            .filter(actor->actor.draws.stream().anyMatch(draw->writesCoverage(assets.materials.optionalPass(draw.material,"GFCharTransFront")))).toList();
+        if(actors.isEmpty())return;
+        try(AimohGf2GlScope ignored=new AimohGf2GlScope()){
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+            // The opaque depth snapshots are complete. Only the live scene depth receives coverage.
+            int depthFbo=AimohGf2SourceHost.pipeline.targets.framebuffer(List.of(),false,1,-1);
+            GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER,depthFbo);
+            GL11.glViewport(0,0,AimohGf2SourceHost.width(),AimohGf2SourceHost.height());
+            for(var actor:actors)drawActor(Phase.COVERAGE,renderFrame+1,actor);
+        }
+    }
+
+    private static boolean writesCoverage(JSONObject pass){
+        if(pass==null)return false;
+        JSONObject state=pass.getJSONObject("state");
+        double stencil=stateNumber(state.getJSONObject("stencilOp").get("comp"));
+        // Alpha 1 is an occluder when the pass replaces the destination and has no stencil dependency.
+        return enabledNumber(state.get("zWrite"))&&(stencil==0||stencil==8)
+            &&stateNumber(state.getJSONObject("rtBlend0").get("destBlend"))==10;
+    }
+
+    private void drawActor(Phase phase,int frame,AimohGF2Services.Actor actor)throws IOException{
+        boolean early=phase!=Phase.COLOR,coverage=phase==Phase.COVERAGE;
         int width=AimohGf2SourceHost.width(),height=AimohGf2SourceHost.height(),actorId=actor.id;JSONObject model=actor.model;
         AimohGf2FrameInputs builder=inputBuilders.computeIfAbsent(model.getString("pmx_sha256"),k->new AimohGf2FrameInputs(model,assets.data.manifest.getJSONObject("original_camera_fill")));
         float[] shadowCamera=AimohGf2SourceHost.sourceShadowCamera(actorId,!early);
@@ -224,12 +255,31 @@ public final class AimohGf2Runtime implements AutoCloseable {
         if(!early)lastDraws+=draws.size();
         GL11.glFrontFace(GL11.GL_CCW);
         if(!early)shadow(draws,inputs,base,shadowCamera,actorId,frame,packet.cameraFillSlot());
-        String[] stages=early?new String[]{"GFCharForward"}:new String[]{"GFCharForward","GFHairShadow","GFCharFaceShadow","GFCharHairTransE","GFOutline","GFCharTransMrtWrtie","GFCharTransBack","GFCharTransFront","GFCharTransOutline"};
         Map<String,Local> roots=new HashMap<>();
-        for(String stage:stages){List<Job> jobs=new ArrayList<>();for(Draw draw:draws){JSONObject material=assets.materials.material(draw.material);JSONObject pass=pass(material,stage);if(pass==null)continue;if(early&&!enabledNumber(pass.getJSONObject("state").get("zWrite")))continue;jobs.add(new Job(renderQueue(material,pass),draw,draw.material));}jobs.sort(Comparator.comparingInt(Job::queue));
-            List<AimohGf2RuntimeQueue.Job> queued=new ArrayList<>();for(Job job:jobs){JSONObject material=assets.materials.material(job.material);String root=model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(job.material),null);Local local=root==null?new Local(inputs,base):roots.computeIfAbsent(root,k->localFrame(builder,k,actorId,frame,inputs,base,job.draw.nativeIndex));
-                AimohGf2OriginalProgram program=assets.materials.program(job.material,stage,early);if(!early&&material.getString("shader").endsWith("/eyeblend_add"))program.authoredExposureView(environment.exposureTexture,environment.exposureFloatOffset);
-                queued.add(new AimohGf2RuntimeQueue.Job(program,assets.materials.state(job.material,stage,early),job.draw.nativeIndex,registers(program,job.material,root,local.inputs,frame,actorId,early?0:2,packet.cameraFillSlot()),assets.materials.textureBindings(program,job.material,environment.reflectionTexture,AimohGf2SourceHost.shadowTarget(),shadowSampler),local.frame));}
+        for(String stage:phase.stages){
+            List<Job> jobs=new ArrayList<>();
+            for(Draw draw:draws){
+                JSONObject material=assets.materials.material(draw.material);
+                JSONObject pass=pass(material,stage);
+                if(pass==null)continue;
+                if(coverage&&!writesCoverage(pass))continue;
+                if(phase==Phase.EARLY&&!enabledNumber(pass.getJSONObject("state").get("zWrite")))continue;
+                jobs.add(new Job(renderQueue(material,pass),draw,draw.material));
+            }
+            jobs.sort(Comparator.comparingInt(Job::queue));
+            List<AimohGf2RuntimeQueue.Job> queued=new ArrayList<>();
+            for(Job job:jobs){
+                JSONObject material=assets.materials.material(job.material);
+                String root=model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(job.material),null);
+                Local local=root==null?new Local(inputs,base):roots.computeIfAbsent(root,k->localFrame(builder,k,actorId,frame,inputs,base,job.draw.nativeIndex));
+                AimohGf2OriginalProgram program=coverage?assets.materials.coverageProgram(job.material):assets.materials.program(job.material,stage,early);
+                if(!early&&material.getString("shader").endsWith("/eyeblend_add"))
+                    program.authoredExposureView(environment.exposureTexture,environment.exposureFloatOffset);
+                JSONObject state=coverage?assets.materials.coverageState(job.material):assets.materials.state(job.material,stage,early);
+                var registers=registers(program,job.material,root,local.inputs,frame,actorId,early?0:2,packet.cameraFillSlot());
+                var textures=assets.materials.textureBindings(program,job.material,environment.reflectionTexture,AimohGf2SourceHost.shadowTarget(),shadowSampler);
+                queued.add(new AimohGf2RuntimeQueue.Job(program,state,job.draw.nativeIndex,registers,textures,local.frame));
+            }
             queue.draw(queued,base,renderScale);
         }
         if(!early)histories.put(actorId,new History(model.getString("pmx_sha256"),frame,placement.clone(),eye.clone()));
@@ -243,7 +293,8 @@ public final class AimohGf2Runtime implements AutoCloseable {
         Map<String,float[]> values=new LinkedHashMap<>(inputs);values.put("unity_ObjectToWorld",flat(object));values.put("unity_WorldToObject",flat(new Matrix4d(object).invert()));values.put("unity_MatrixPreviousM",flat(previous));
         return new Local(values,new AimohGf2RuntimeQueue.Frame(flat(new Matrix4d(object).invert()),normal(object),base.attributeCount(),base.attributeTexture(),base.previousModel(),flat(new Matrix4d(previous).invert()),base.previousEye(),base.jitter(),base.history(),base.sourceMrt()));
     }
-    private static boolean enabledNumber(Object value){if(value instanceof Number n)return n.doubleValue()!=0;return ((JSONObject)value).getDouble("value")!=0;}
+    private static double stateNumber(Object value){return value instanceof Number n?n.doubleValue():((JSONObject)value).getDouble("value");}
+    private static boolean enabledNumber(Object value){return stateNumber(value)!=0;}
     private static JSONObject pass(JSONObject material,String name){for(Object value:material.getJSONArray("passes")){JSONObject p=(JSONObject)value;if(p.getString("name").equals(name)&&!p.getBoolean("disabled_by_material"))return p;}return null;}
     private static int renderQueue(JSONObject material,JSONObject pass){int value=material.getInt("render_queue_override");if(value>=0)return value;String text="Geometry";for(Object tag:pass.getJSONObject("state").getJSONObject("m_Tags").getJSONArray("tags")){JSONArray pair=(JSONArray)tag;if(pair.getString(0).equals("QUEUE"))text=pair.getString(1);}Matcher m=Pattern.compile("([A-Za-z]+)([+-]\\d+)?").matcher(text);if(!m.matches())throw new IllegalArgumentException("Source queue changed");int base=switch(m.group(1)){case "Background"->1000;case "Geometry"->2000;case "AlphaTest"->2450;case "Transparent"->3000;case "Overlay"->4000;default->throw new IllegalArgumentException("Unknown source queue");};return base+(m.group(2)==null?0:Integer.parseInt(m.group(2)));}
 
