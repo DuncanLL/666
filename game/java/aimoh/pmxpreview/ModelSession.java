@@ -127,8 +127,9 @@ final class ModelSession {
         if(model.motionActive()&&player.getIsoGameCharacter() instanceof IsoPlayer actor&&!ReadyRoomPreview.motionAllowed(actor))model.stopMotion();
         long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame.number==lastFrame+1;
         float[] poseForModel=idleHand==null||model.motionActive()?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
-        model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,adjustment);
-        gripAdjustment=adjustment;
+        boolean efzGrip=holding&&firstPerson&&EfzAimCompatibility.ownsPose(player.getIsoGameCharacter());
+        gripAdjustment=efzGrip?null:adjustment;
+        model.apply(poseForModel,holding&&!efzGrip?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {
             String[] paths=model.appearance().readTextures();
             for(int i=0;i<paths.length;i++)paths[i]=resolveTexture(paths[i]);
