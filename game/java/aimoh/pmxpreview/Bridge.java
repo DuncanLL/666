@@ -25,12 +25,14 @@ public final class Bridge {
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
             boolean idle=IdleHandPose.eligible(actor,holding);
             var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
-            boolean calibrating=!slot.inVehicle&&actor instanceof IsoPlayer player&&player.isLocalPlayer()&&actor.isAiming();
+            boolean calibrating=!slot.inVehicle&&actor instanceof IsoPlayer player&&player.isLocalPlayer()&&actor.getPrimaryHandItem()!=null;
             int body=-1, gun=-1;
             for(int n=first;n<originalEnd;n++){
                 ModelInstance instance=DrawAccess.instance(draws,n);
-                if(body<0&&!equipment.containsKey(instance))body=n;
-                if(calibrating&&instance!=null&&instance==actor.primaryHandModel&&instance.model!=null&&instance.model.isStatic)gun=n;
+                DrawAccess.Gear gear=equipment.get(instance);
+                if(body<0&&gear==null)body=n;
+                if(calibrating&&gear!=null&&gear.side==1&&instance.model!=null&&instance.model.isStatic
+                    &&(gun<0||instance==gear.root))gun=n;
             }
             Matrix4f sourcePlacement=body<0?null:DrawAccess.matrix(draws,body);
             Matrix4f inverse=sourcePlacement==null?null:new Matrix4f(sourcePlacement).invert();

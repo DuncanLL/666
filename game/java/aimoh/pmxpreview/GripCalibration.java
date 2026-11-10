@@ -16,13 +16,16 @@ final class GripCalibration {
 
     private static HandWeapon weapon(IsoGameCharacter actor) {
         return actor instanceof IsoPlayer player && player.isLocalPlayer()
-            && actor.getPrimaryHandItem() instanceof HandWeapon item && item.isRanged()
-            && item.getFullType().startsWith("Base.") ? item : null;
+            && actor.getPrimaryHandItem() instanceof HandWeapon item && item.isRanged() ? item : null;
     }
 
     static String family(IsoGameCharacter actor) {
         HandWeapon item=weapon(actor);
-        return item==null?"":WeaponType.getWeaponType(item).getType();
+        return item==null?"":family(item);
+    }
+
+    private static String family(HandWeapon item) {
+        return (item.isTwoHandWeapon()?WeaponType.FIREARM:WeaponType.HANDGUN).getType();
     }
 
     private static KahluaTable table(KahluaTable parent,String key,boolean create) {
@@ -64,12 +67,12 @@ final class GripCalibration {
 
     static GripAdjustment request(IsoGameCharacter actor,String id,Matrix4f weaponMatrix) {
         if(weaponMatrix==null||!weaponMatrix.isFinite()||Math.abs(weaponMatrix.determinant())<1e-8f
-            ||!actor.isAiming()||actor.getVariableBoolean("isLoading")||actor.getVariableBoolean("isRacking"))return null;
+            ||actor.getVariableBoolean("isLoading")||actor.getVariableBoolean("isRacking"))return null;
         String reload=actor.getVariableString("WeaponReloadType");
         if(reload!=null&&!reload.isEmpty())return null;
         HandWeapon item=weapon(actor);
         if(item==null)return null;
-        KahluaTable row=table(model(actor,id,false),WeaponType.getWeaponType(item).getType(),false);
+        KahluaTable row=table(model(actor,id,false),family(item),false);
         if(row==null)return null;
         float[] offsets=new float[COUNT];
         boolean edited=false;

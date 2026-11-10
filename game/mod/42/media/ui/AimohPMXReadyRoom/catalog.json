@@ -81,7 +81,7 @@
     "ChestJoltStrain": "惯性伸缩",
     "MotionSpeed": "播放倍速",
     "GripCalibration": "握持校准",
-    "GripEquip": "请装备一把原版枪械",
+    "GripEquip": "请装备一把枪械",
     "GripHandgun": "手枪握持",
     "GripLongGun": "长枪握持",
     "GripSupport": "副手握点",
@@ -2852,11 +2852,6 @@
       "width": 116,
       "height": 33
     },
-    "请装备一把原版枪械": {
-      "path": "media/ui/AimohPMXReadyRoom/GripEquip.png",
-      "width": 256,
-      "height": 34
-    },
     "手枪握持": {
       "path": "media/ui/AimohPMXReadyRoom/GripHandgun.png",
       "width": 116,
@@ -2876,6 +2871,11 @@
       "path": "media/ui/AimohPMXReadyRoom/GripPrimary.png",
       "width": 116,
       "height": 32
+    },
+    "请装备一把枪械": {
+      "path": "media/ui/AimohPMXReadyRoom/GripEquip.png",
+      "width": 200,
+      "height": 34
     }
   },
   "categories": {

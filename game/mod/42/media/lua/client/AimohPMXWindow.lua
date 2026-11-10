@@ -125,7 +125,7 @@ local function panel(parent,x,y,w,h)
     local p=ISPanel:new(x,y,w,h);p:initialise();p.background=false;p:addScrollBars();p:setScrollChildren(true)
     p.onMouseWheel=function(s,delta) s:setYScroll(math.max(math.min(0,s.height-s:getScrollHeight()),math.min(0,s:getYScroll()-delta*48)));return true end
     p.prerender=function(s)
-        if s.parent.tab~="skins" then surface(s,0,0,s.width,s.height,.88) end
+        if s.parent.tab~="skins" then surface(s,0,-s:getYScroll(),s.width,s.height,.88) end
         s:setStencilRect(0,0,s.width,s.height)
     end
     p.render=function(s) s:clearStencilRect() end

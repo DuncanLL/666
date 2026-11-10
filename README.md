@@ -2,7 +2,7 @@
 
 Project Zomboid B42.22 游戏人物 MOD 的维护仓库。人物代码和资源清单对应当前工坊项目，工作台单独维护。
 
-**人物版本 0.3.32。** [版本说明](docs/RELEASE-R116-0.3.32.md)记录本次功能、包体及验证范围。历史记录见[维护索引](docs/README.md)。
+**人物版本 0.3.33。** [0.3.33 修复说明](docs/RELEASE-R116-0.3.33.md)和 [0.3.32 功能说明](docs/RELEASE-R116-0.3.32.md)记录功能和验证范围。历史记录见[维护索引](docs/README.md)。
 
 ## 目录
 
@@ -22,7 +22,7 @@ Project Zomboid B42.22 游戏人物 MOD 的维护仓库。人物代码和资源�
 
 本机 `.local/paths.json` 已配置；在另一台制作电脑上先复制 `config/paths.example.json` 并填写依赖位置。需要已有合法游戏依赖、ZombieBuddy、Viewpoint、Java 25 运行时、ECJ 4.38，以及现有外部人物资源。第三方游戏和工具二进制不随仓库分发。
 
-核对这版时，用 `--release-reference` 指定已验证的 0.3.32 JAR。工具完整编译人物 Java 源码，核对类内容后复用已验证的 JAR。对应的资源目录和工坊元数据从本机配置读取。
+核对这版时，用 `--release-reference` 指定已验证的 0.3.33 JAR。工具完整编译人物 Java 源码，核对类内容后复用已验证的 JAR。对应的资源目录和工坊元数据从本机配置读取。
 
 ```powershell
 $paths = Get-Content .local/paths.json -Raw | ConvertFrom-Json
