@@ -48,6 +48,7 @@ final class ModelSession {
     final PmxPresentation presentation=new PmxPresentation();
     private float[] sourcePose;
     private GripAdjustment gripAdjustment;
+    private boolean preserveAimWeapon;
     private int[] sourceIndices;
     private SkinningData sourceSkin;
     private final boolean[] required;
@@ -127,9 +128,10 @@ final class ModelSession {
         if(model.motionActive()&&player.getIsoGameCharacter() instanceof IsoPlayer actor&&!ReadyRoomPreview.motionAllowed(actor))model.stopMotion();
         long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame.number==lastFrame+1;
         float[] poseForModel=idleHand==null||model.motionActive()?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
-        boolean efzGrip=holding&&firstPerson&&EfzAimCompatibility.ownsPose(player.getIsoGameCharacter());
-        gripAdjustment=efzGrip?null:adjustment;
-        model.apply(poseForModel,holding&&!efzGrip?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
+        preserveAimWeapon=holding&&firstPerson&&EfzAimCompatibility.keepsWeapon(player.getIsoGameCharacter());
+        gripAdjustment=preserveAimWeapon?null:adjustment;
+        // Fit both PMX palms to the posed source hands in the same head frame as the sight.
+        model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {
             String[] paths=model.appearance().readTextures();
             for(int i=0;i<paths.length;i++)paths[i]=resolveTexture(paths[i]);
@@ -203,6 +205,7 @@ final class ModelSession {
     }
     int textureCount(){return textures==null?0:textures.liveTextures;}
     long textureUploads(){return textures==null?0:textures.uploads;}
+    synchronized boolean retargetsAttachment(DrawAccess.Gear gear){return !preserveAimWeapon||gear.side!=1;}
     synchronized Matrix4f attachment(DrawAccess.Gear gear,Matrix4f actual,AnimationPlayer player) {
         if(gear.side==1&&gripAdjustment!=null){
             Matrix4f locked=gripAdjustment.placement(actual);

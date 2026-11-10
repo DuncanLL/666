@@ -6,9 +6,9 @@ import java.lang.reflect.Proxy;
 import zombie.characters.IsoGameCharacter;
 import zombie.characters.IsoPlayer;
 
-/** Optional ownership handoff for EFZ's first-person pose and stock-model replay. */
+/** Optional ownership handoff for EFZ's first-person weapon placement and stock-model replay. */
 public final class EfzAimCompatibility {
-    private record Bridge(Method view, Method layer, Field replay) {}
+    private record Bridge(Method view, Method held, Field replay) {}
     private static final Bridge BRIDGE = find();
 
     private static Bridge find() {
@@ -18,20 +18,20 @@ public final class EfzAimCompatibility {
             Class<?> latch = Class.forName(namespace + "FpViewLatch", false, loader);
             Class<?> camera = Class.forName(namespace + "ViewpointBridge", false, loader);
             Method view = camera.getMethod("state");
-            Method layer = latch.getDeclaredMethod("layer");
+            Method held = latch.getDeclaredMethod("held");
             Field replay = latch.getDeclaredField("acceptAllFilter");
-            layer.setAccessible(true);
+            held.setAccessible(true);
             replay.setAccessible(true);
-            return new Bridge(view, layer, replay);
+            return new Bridge(view, held, replay);
         } catch (ReflectiveOperationException | LinkageError unavailable) {
             return null;
         }
     }
 
-    static boolean ownsPose(IsoGameCharacter actor) {
+    static boolean keepsWeapon(IsoGameCharacter actor) {
         if (BRIDGE == null || actor == null || actor != IsoPlayer.getInstance()) return false;
         try {
-            return Integer.valueOf(1).equals(BRIDGE.view.invoke(null)) && Boolean.TRUE.equals(BRIDGE.layer.invoke(null));
+            return Integer.valueOf(1).equals(BRIDGE.view.invoke(null)) && Boolean.TRUE.equals(BRIDGE.held.invoke(null));
         } catch (ReflectiveOperationException | LinkageError unavailable) {
             return false;
         }

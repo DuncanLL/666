@@ -67,14 +67,12 @@ public final class Bridge {
             for(int n=first;n<originalEnd;n++) {
                 ModelInstance instance=DrawAccess.instance(draws,n);DrawAccess.Gear gear=equipment.get(instance);
                 if(gear==null)DrawAccess.flags(draws,n,0);
-                else {
-                    if(instance.model.isStatic) {
-                        Matrix4f local=new Matrix4f(inverse).mul(DrawAccess.matrix(draws,n));
-                        Matrix4f placement=new Matrix4f(targetPlacement).mul(session.attachment(gear,local,actor.getAnimationPlayer()));
-                        DrawAccess.matrix(draws,n,placement);
-                        var mesh=DrawAccess.mesh(draws,n);draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
-                        DrawAccess.ownPlacement(draws,n,originalEnd,continuous);
-                    }
+                else if(instance.model.isStatic&&session.retargetsAttachment(gear)) {
+                    Matrix4f local=new Matrix4f(inverse).mul(DrawAccess.matrix(draws,n));
+                    Matrix4f placement=new Matrix4f(targetPlacement).mul(session.attachment(gear,local,actor.getAnimationPlayer()));
+                    DrawAccess.matrix(draws,n,placement);
+                    var mesh=DrawAccess.mesh(draws,n);draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
+                    DrawAccess.ownPlacement(draws,n,originalEnd,continuous);
                 }
             }
         } catch(Throwable e) { if(draw!=null){draw.customEnd=draws.count();draw.restore();}session.fail(e); }
