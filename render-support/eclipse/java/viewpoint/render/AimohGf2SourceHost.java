@@ -56,7 +56,7 @@ public final class AimohGf2SourceHost {
         try(AimohGf2GlScope ignored=new AimohGf2GlScope()){
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             AimohGF2Services.beforeSourceColor(host,p,f,flips);
-            AimohGf2Runtime.frame(p).draw(false);AimohGf2IrisGlass.draw(p,f,shadows,models);
+            AimohGf2Runtime.frame(p).draw(false);
         }catch(java.io.IOException e){throw new IllegalStateException("GF2 color stage",e);}
     }
     public static int drawNative(AimohGf2OriginalProgram program,JSONObject state,int selected){
@@ -70,7 +70,7 @@ public final class AimohGf2SourceHost {
             if(saved==null){var buffer=BufferUtils.createFloatBuffer(4);GL20.glGetUniformfv(original.gl.id(),location,buffer);saved=new float[]{buffer.get(0),buffer.get(1),buffer.get(2),buffer.get(3)};reliefValues.put(name,saved);}
             switch(name){case "uReliefGrid"->gl.set(name,saved[0],saved[1],saved[2],saved[3]);case "uReliefCamera","uReliefFlowCells"->gl.set(name,saved[0],saved[1]);default->gl.set(name,saved[0]);}
         }
-        try{models.begin();singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});}finally{models.end();}
+        try(var ignored=AimohWorkshopRender.modelBindings(models)){singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});}
     }
     public static int color(int slot){return pipeline.targets.buffers[slot].current();}
     public static int depth(){return pipeline.targets.depth;}
@@ -106,7 +106,7 @@ public final class AimohGf2SourceHost {
         for(int i=0;i<count;i++)System.arraycopy(context.scene.lights,i*12,result,i*8,8);
         return result;
     }
-    public static float[] torchLightData(){return Arrays.copyOf(context.lights.torches,Math.min(context.scene.torches.count,8)*11);}
+    public static float[] torchLightData(){return Arrays.copyOf(context.scene.torches,Math.min(context.scene.torchCount,8)*11);}
     public static float[] spotLightData(){
         if(shadows==null)throw new IllegalStateException("Actual spotlight frame owner absent");
         try{int count=SPOT_COUNT.getInt(shadows.spots);var buffer=((java.nio.FloatBuffer)SPOT_RECORDS.get(shadows.spots)).duplicate();buffer.position(0);buffer.limit(count*24);float[] result=new float[count*24];buffer.get(result);return result;}

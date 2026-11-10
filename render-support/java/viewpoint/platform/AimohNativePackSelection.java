@@ -6,23 +6,27 @@ import java.util.*;
 public final class AimohNativePackSelection {
     public record DisplaySettings(float contrast,float saturation,float vibrance,float exposure,float strength,boolean filmic,float surfaceDetail,float skinGloss,float outlineWidth){}
     private static ShaderPacks.Active displayPack;
-    private static float[] displayLive;
     private static DisplaySettings displaySettings;
-    private static int contrastIndex,saturationIndex,vibranceIndex,exposureIndex,strengthIndex,detailIndex,glossIndex,outlineIndex;
-    private static boolean filmic;
     private static final java.util.regex.Pattern FILMIC=java.util.regex.Pattern.compile("(?m)^#define\\s+OPTION_TONE_CURVE\\s+0\\s*$");
-    /** Native already keeps numeric options on the CPU. Never read the GPU option UBO per frame. */
+    private static final java.util.regex.Pattern NUMBER=java.util.regex.Pattern.compile("(?m)^#define[ \\t]+OPTION_([A-Z_]+)[ \\t]+([-+0-9.Ee]+)[ \\t]*$");
+    /** This Workshop host compiles numeric options into the selected pack's defines. */
     public static DisplaySettings displaySettings(){
-        ShaderPacks.Active pack=ShaderPacks.drawn();float[] live=ShaderPacks.live();if(pack==null||live==null||ShaderPacks.active()!=pack)return null;
+        ShaderPacks.Active pack=ShaderPacks.drawn();if(pack==null||ShaderPacks.active()!=pack)return null;
         if(displayPack!=pack){
-            contrastIndex=saturationIndex=vibranceIndex=exposureIndex=strengthIndex=detailIndex=glossIndex=outlineIndex=-1;int at=0;
-            for(PackOption option:pack.pack.options)if(option.kind==PackOption.Kind.NUMBER){switch(option.id){case "contrast"->contrastIndex=at;case "saturation"->saturationIndex=at;case "vibrance"->vibranceIndex=at;case "exposure"->exposureIndex=at;case "characterDisplayStrength"->strengthIndex=at;case "characterSurfaceDetail"->detailIndex=at;case "characterSkinGloss"->glossIndex=at;case "characterOutlineWidth"->outlineIndex=at;}at++;}
-            filmic=FILMIC.matcher(pack.defines).find();displayPack=pack;displayLive=null;
+            Map<String,Float> values=new HashMap<>();
+            var matches=NUMBER.matcher(pack.defines);
+            while(matches.find())try{values.put(matches.group(1),Float.parseFloat(matches.group(2)));}catch(NumberFormatException ignored){}
+            Float contrast=values.get("CONTRAST"),saturation=values.get("SATURATION"),
+                vibrance=values.get("VIBRANCE"),exposure=values.get("EXPOSURE");
+            displaySettings=contrast==null||saturation==null||vibrance==null||exposure==null?null:
+                new DisplaySettings(contrast,saturation,vibrance,exposure,values.getOrDefault("CHARACTER_DISPLAY_STRENGTH",1f),
+                    FILMIC.matcher(pack.defines).find(),values.getOrDefault("CHARACTER_SURFACE_DETAIL",0f),
+                    values.getOrDefault("CHARACTER_SKIN_GLOSS",0f),values.getOrDefault("CHARACTER_OUTLINE_WIDTH",1f));
+            displayPack=pack;
         }
-        if(displayLive!=live){displayLive=live;displaySettings=contrastIndex<0||saturationIndex<0||vibranceIndex<0||exposureIndex<0?null:new DisplaySettings(live[contrastIndex],live[saturationIndex],live[vibranceIndex],live[exposureIndex],strengthIndex<0?1:live[strengthIndex],filmic,detailIndex<0?0:live[detailIndex],glossIndex<0?0:live[glossIndex],outlineIndex<0?1:live[outlineIndex]);}
         return displaySettings;
     }
-    public static void clearDisplaySettings(){displayPack=null;displayLive=null;displaySettings=null;}
+    public static void clearDisplaySettings(){displayPack=null;displaySettings=null;}
     public static String readData(String path){return GlProgram.pack().pack.shader(path);}
     public static String expanded(String path){return Shaders.load(path,GlProgram.pack()).text;}
     public static viewpoint.iris.SourceFiles files(ShaderPacks.Active active){return path->active.pack.shader(path);}
@@ -30,6 +34,7 @@ public final class AimohNativePackSelection {
     public static void use(String folder)throws IOException{
         Map<String,ShaderPack> parents=new HashMap<>();
         ShaderPack library=ShaderPack.parse("library",ShaderPack.jar("library"),id->parents.get(id),true);parents.put("library",library);
+        ShaderPack vivid=ShaderPack.parse("vivid",ShaderPack.jar("vivid"),id->parents.get(id),true);parents.put("vivid",vivid);
         ShaderPack defaults=ShaderPack.parse("default",ShaderPack.jar("default"),id->parents.get(id),true);parents.put("default",defaults);
         ShaderPack selected=ShaderPack.parse("gf2-native-development",ShaderPack.folder(new File(folder)),id->parents.get(id),false);
         PackPreset preset=selected.preset(selected.firstPreset);ShaderPacks.use(selected,preset::valueFor);

@@ -40,7 +40,9 @@ def assemble(args):
     assert {path.name for path in (character / 'Contents/mods').iterdir()} == {'AimohPmxPreview'}
     assert 'id=3834454638' in (character / 'workshop.txt').read_text('utf-8-sig').splitlines()
     assert not source.with_suffix('.jar.zbs').exists(), 'The unified JAR needs fresh approval and cannot carry an old signature'
-    pins = {path: sha(path) for path in (source, addon, host, host.with_suffix('.jar.zbs'), zombie)}
+    pins = {path: sha(path) for path in (source, addon, host, zombie)}
+    signature=host.with_suffix('.jar.zbs')
+    if signature.is_file():pins[signature]=sha(signature)
     assert pins[source] == args.character_sha256
     assert report['status'] == 'PROTECTED_REVIEW_BUILD' and pins[addon] == report['jar_sha256']
     assert pins[host] == report['host_sha256']
@@ -95,7 +97,7 @@ def assemble(args):
          character_version=version.split('=',1)[1], render_version=report['version'], workshop_id='3834454638',
          project=str(output), jar_sha256=result[CHARACTER_MOD+'/'+CHARACTER_JAR]['sha256'],
          character_sha256=pins[source], render_sha256=pins[addon], host_sha256=pins[host],
-         signature_sha256=pins[host.with_suffix('.jar.zbs')], loader_sha256=pins[zombie],
+         signature_sha256=pins.get(signature), loader_sha256=pins[zombie],
          catalog_sha256=result[CHARACTER_MOD+'/42/media/aimoh_gf2/characters.json']['sha256'],
          character_workshop_files=len(result), changed_character_entries=sorted(ENTRY_CLASSES),
          installed=False, uploaded=False))

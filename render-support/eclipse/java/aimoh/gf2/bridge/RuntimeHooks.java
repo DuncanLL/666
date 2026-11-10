@@ -10,7 +10,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/",D=R+"AimohGF2Services",S=R+"AimohGf2SourceHost",C=R+"AimohGf2AddonContext";
     static final String LINK="(Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)Lviewpoint/render/IrisPrograms;";
     public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",5,R+"IrisBindings",2,R+"IrisPipeline",3,
-        R+"IrisPrograms",3,R+"IrisFrame",5,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
+        R+"IrisPrograms",3,R+"IrisFrame",5,R+"ModelPass",1,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
     private volatile Throwable transformFailure;
     private static String t(String name){return "L"+R+name+";";}
     public static byte[] rewrite(String type,byte[] raw){
@@ -51,7 +51,6 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         if(linking&&op==Opcodes.ARETURN){mv.visitInsn(Opcodes.DUP);load(0,1,2);call(D,"link","("+t("IrisPrograms")+"Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)V");invoke(C,"endCompile","()V");}
                         if(op==Opcodes.RETURN){
                             if(type.equals(R+"IrisBindings")&&name.equals("bind")){field(type,"targets",t("IrisTargets"));load(1);call(C,"nativeLights","("+t("IrisTargets")+t("IrisProgram")+")V");}
-                            if(type.equals(R+"ModelPass")&&name.equals("begin"))call(R+"AimohGf2IrisGlass","modelState","()V");
                         }
                         super.visitInsn(op);
                     }

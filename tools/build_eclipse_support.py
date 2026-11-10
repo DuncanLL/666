@@ -12,7 +12,12 @@ MOTION_PASS=SHADERS+'composite6.fsh'
 FOG_FILTER_PASS=SHADERS+'composite4.fsh'
 FOG_RAY_PASS=SHADERS+'composite3.fsh'
 GF2_MANIFEST=PACK_SHADERS+'gf2/manifest.json'
-ORPHAN_SNAPSHOT='viewpoint/render/AimohGF2Services$Snapshot.class'
+RETIRED_ENTRIES={
+    'viewpoint/render/AimohGF2Services$Snapshot.class',
+    # Workshop Viewpoint owns glass drawing and has no separate wiper overlay pass.
+    'viewpoint/render/AimohGf2IrisGlass.class',
+    'viewpoint/render/AimohGf2IrisGlass$State.class',
+}
 MC_TREES=('world-1/','world1/','world0_with_aether_flag/','world0_with_twilight_forest_flag/',
           'template/','world0/clrwl_')
 # Official RC3 has no draw or fallback path to these entries.
@@ -193,21 +198,22 @@ if __name__=='__main__':
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     assert not stock.intersection(replacements),'Official class collision'
     with zipfile.ZipFile(reference)as old,zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as new:
-        assert ORPHAN_SNAPSHOT in old.namelist() and ORPHAN_SNAPSHOT not in replacements
+        assert RETIRED_ENTRIES<=set(old.namelist()) and not RETIRED_ENTRIES.intersection(replacements)
         shader,removed=patch_shaders(old.read(SHADER_PAYLOAD),patches)
         for name in old.namelist():
-            if name not in replacements and name!=ORPHAN_SNAPSHOT:
+            if name not in replacements and name not in RETIRED_ENTRIES:
                 raw=shader if name==SHADER_PAYLOAD else old.read(name)
                 new.writestr(old.getinfo(name),raw)
         for name,data in sorted(replacements.items()):
             info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;new.writestr(info,data)
     with zipfile.ZipFile(reference)as old,zipfile.ZipFile(temporary)as new:
-        assert new.testzip()is None and ORPHAN_SNAPSHOT not in new.namelist()
-        orphan=ORPHAN_SNAPSHOT.removesuffix('.class').encode()
-        assert all(orphan not in new.read(name) and orphan.replace(b'/',b'.') not in new.read(name)
-                   for name in new.namelist() if name.endswith('.class')),'Eclipse snapshot is still referenced'
+        assert new.testzip()is None and not RETIRED_ENTRIES.intersection(new.namelist())
+        retired_classes={entry.removesuffix('.class').encode() for entry in RETIRED_ENTRIES}
+        assert all(orphan not in raw and orphan.replace(b'/',b'.') not in raw
+                   for name in new.namelist() if name.endswith('.class')
+                   for raw in (new.read(name),) for orphan in retired_classes),'Retired Eclipse class is still referenced'
         for name in old.namelist():
-            if name not in (SHADER_PAYLOAD,ORPHAN_SNAPSHOT) and name not in replacements:
+            if name!=SHADER_PAYLOAD and name not in RETIRED_ENTRIES and name not in replacements:
                 assert old.read(name)==new.read(name),'Unrelated Eclipse payload changed: '+name
         with zipfile.ZipFile(io.BytesIO(old.read(SHADER_PAYLOAD)))as old_pack,zipfile.ZipFile(io.BytesIO(new.read(SHADER_PAYLOAD)))as new_pack:
             assert removed<=set(old_pack.namelist()),'Expected terrain geometry stage missing from the reference'
@@ -216,7 +222,7 @@ if __name__=='__main__':
     os.replace(temporary,jar)
     with zipfile.ZipFile(jar)as archive:
         shader_sha=hashlib.sha256(archive.read(SHADER_PAYLOAD)).hexdigest()
-    save(out/'build.json',dict(status='ECLIPSE_CANDIDATE_NOT_INSTALLED',backend='eclipse',version=origin['version'],jar=str(jar),jar_sha256=sha(jar),base_jar_sha256=sha(reference),host_sha256=sha(host),replaced_entries=sorted(replacements),source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,motion,ROOT/'tools/build_eclipse_support.py',ROOT/'tools/build_render_support.py',ROOT/'provenance/eclipse-outline.json']},shader_payload=SHADER_PAYLOAD,shader_sha256=shader_sha,shader_entries_changed=sorted(patches),retired_jar_entries=[ORPHAN_SNAPSHOT],official_host_unchanged=True,game_started=False,installed=False,uploaded=False))
+    save(out/'build.json',dict(status='ECLIPSE_CANDIDATE_NOT_INSTALLED',backend='eclipse',version=origin['version'],jar=str(jar),jar_sha256=sha(jar),base_jar_sha256=sha(reference),host_sha256=sha(host),replaced_entries=sorted(replacements),source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,motion,ROOT/'tools/build_eclipse_support.py',ROOT/'tools/build_render_support.py',ROOT/'provenance/eclipse-outline.json']},shader_payload=SHADER_PAYLOAD,shader_sha256=shader_sha,shader_entries_changed=sorted(patches),retired_jar_entries=sorted(RETIRED_ENTRIES),official_host_unchanged=True,game_started=False,installed=False,uploaded=False))
     if args.workshop:
         assert args.metadata_from is not None,'Preserve the existing Workshop metadata with --metadata-from'
         target=args.workshop.resolve();assert not target.exists(),'Preserve existing candidates; choose a new output'

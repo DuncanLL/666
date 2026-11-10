@@ -29,8 +29,8 @@ final class AimohNativeLocalLights {
     }
     static AimohNativeLocalLights capture(FrameContext frame)throws Exception{
         List<float[]> records=new ArrayList<>();List<Integer> kinds=new ArrayList<>(),indices=new ArrayList<>();
-        float[] torches=frame.lights.torches;
-        for(int i=0;i<java.lang.Math.min(frame.scene.torches.count,8);i++){int p=i*11;records.add(new float[]{torches[p],torches[p+1],torches[p+2],torches[p+3],torches[p+8],torches[p+9],torches[p+10],1});kinds.add(1);indices.add(i);}
+        float[] torches=frame.scene.torches;
+        for(int i=0;i<java.lang.Math.min(frame.scene.torchCount,8);i++){int p=i*11;records.add(new float[]{torches[p],torches[p+1],torches[p+2],torches[p+3],torches[p+8],torches[p+9],torches[p+10],1});kinds.add(1);indices.add(i);}
         Object spots=AimohNativeGf2Environment.field(AimohNativeGf2Environment.world("shadows"),"spots");int count=(Integer)AimohNativeGf2Environment.field(spots,"count");FloatBuffer values=((FloatBuffer)AimohNativeGf2Environment.field(spots,"records")).duplicate();
         for(int i=0;i<count;i++){int p=i*24;records.add(new float[]{values.get(p),values.get(p+1),values.get(p+2),values.get(p+3),values.get(p+8),values.get(p+9),values.get(p+10),1});kinds.add(2);indices.add(i);}
         if(!WorldRenderer.off(3))for(int i=0;i<java.lang.Math.min(frame.scene.lightCount,48);i++)if(frame.scene.lightKeys[i]>=0){int p=i*12;records.add(Arrays.copyOfRange(frame.scene.lights,p,p+8));kinds.add(0);indices.add(i);}
@@ -45,7 +45,7 @@ final class AimohNativeLocalLights {
         if(!gl.has("gf2NativeLocalCount"))return;gl.use();gl.setInt("gf2NativeLocalCount",kinds.length);
         if(kinds.length==0)return;
         GL20.glUniform1iv(GL20.glGetUniformLocation(gl.id(),"gf2NativeLocalKind"),kinds);GL20.glUniform1iv(GL20.glGetUniformLocation(gl.id(),"gf2NativeLocalIndex"),indices);
-        FrameUniforms.apply(gl,frame);SurfacePass.lamps(gl,frame.scene);SurfacePass.torches(gl,frame);
+        AimohWorkshopRender.uniforms(gl,frame);SurfacePass.lamps(gl,frame.scene);SurfacePass.torches(gl,frame.scene);
         ShadowPass shadows=(ShadowPass)AimohNativeGf2Environment.world("shadows");shadows.lamps.uniforms(gl,frame.scene);shadows.muzzle.uniforms(gl);shadows.spots.uniforms(gl);
         LampShadows.sampler(gl);Spots.sampler(gl);shadows.bind(true);
     }

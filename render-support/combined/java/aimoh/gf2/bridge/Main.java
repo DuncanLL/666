@@ -15,7 +15,7 @@ public final class Main {
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
-        System.out.println("[R116] Native and Eclipse integration ready for official Viewpoint 0.1.7-rc4. Select the pack in Viewpoint.");
+        System.out.println("[R116] Native and Eclipse integration ready for official Workshop Viewpoint 0.1.6.2. Select the pack in Viewpoint.");
     }
 
     static Instrumentation instrumentation()throws Exception{

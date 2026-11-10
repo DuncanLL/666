@@ -19,7 +19,9 @@ def check(project, legacy):
     report = json.loads((out/'build.json').read_text('utf8'))
     assert sha(jar) == report['jar_sha256']
     deps = [Path(config['viewpoint_jar']), Path(config['zombiebuddy_jar']), *game.glob('*.jar')]
-    assert sha(deps[0]) == report['host_sha256'] and sha(deps[0].with_suffix('.jar.zbs')) == report['signature_sha256']
+    signature=deps[0].with_suffix('.jar.zbs')
+    assert sha(deps[0]) == report['host_sha256']
+    assert (sha(signature) if signature.is_file() else None) == report['signature_sha256']
     assert sha(deps[1]) == report['loader_sha256']
     classes = out/'check-classes'
     compile_java(config,[ROOT/'tools/java'/name for name in ('UnifiedStartupCheck.java','RenderSupportTestAgent.java')],classes,[jar,*deps])

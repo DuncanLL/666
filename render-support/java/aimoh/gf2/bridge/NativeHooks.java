@@ -17,12 +17,12 @@ public final class NativeHooks {
                 boolean freeze=type.equals(PMX)&&name.equals("freezeDanrp")&&desc.equals("([F[F)[F");
                 boolean shown=type.equals(R+"ModelPass")&&name.equals("shown")&&desc.equals("(Lviewpoint/render/ModelDraws;I)Z");
                 boolean gbuffer=type.equals(R+"ModelPass")&&name.equals("gbuffer")&&desc.equals("(Lviewpoint/render/FrameContext;)V");
-                boolean caster=type.equals(R+"ModelPass")&&name.equals("shadow")&&desc.equals("(Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");
+                boolean caster=type.equals(R+"ModelPass")&&name.equals("shadow")&&desc.equals("(Lviewpoint/render/SceneData;Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");
                 boolean shadowFilter=type.equals(R+"ModelPass")&&name.startsWith("lambda$shadow$")&&desc.equals("(Lviewpoint/render/ModelDraws;Lviewpoint/render/ModelBatches$Filter;I)Z");
                 if(!world&&!profile&&!freeze&&!shown&&!gbuffer&&!caster&&!shadowFilter)return base;
                 if(!world)hits[0]++;
                 return new MethodVisitor(Opcodes.ASM9,base){
-                    final Label nativeBody=new Label();boolean firstReturn=true;
+                    final Label nativeBody=new Label();boolean firstReturn=true,translucentBound;
                     void variant(){mv.visitVarInsn(Opcodes.ALOAD,0);mv.visitFieldInsn(Opcodes.GETFIELD,PMX,"danrpVariant","L"+PMX+";");}
                     void call(String owner,String method,String descriptor){mv.visitMethodInsn(Opcodes.INVOKESTATIC,owner,method,descriptor,false);}
                     @Override public void visitCode(){
@@ -47,14 +47,15 @@ public final class NativeHooks {
                     }
                     @Override public void visitInsn(int opcode){
                         if(gbuffer&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);call(RUN,"beforeLighting","(Lviewpoint/render/FrameContext;)V");}
-                        if(caster&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,1);mv.visitVarInsn(Opcodes.ALOAD,2);mv.visitVarInsn(Opcodes.ILOAD,3);mv.visitVarInsn(Opcodes.ALOAD,4);call(RUN,"shadows","(Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");}
+                        if(caster&&opcode==Opcodes.RETURN){mv.visitVarInsn(Opcodes.ALOAD,2);mv.visitVarInsn(Opcodes.ALOAD,3);mv.visitVarInsn(Opcodes.ILOAD,4);mv.visitVarInsn(Opcodes.ALOAD,5);call(RUN,"shadows","(Lorg/joml/Matrix4f;[IILviewpoint/render/ModelBatches$Filter;)V");}
                         super.visitInsn(opcode);
                         if(freeze&&firstReturn&&opcode==Opcodes.ARETURN){firstReturn=false;mv.visitLabel(nativeBody);}
                     }
                     @Override public void visitMethodInsn(int opcode,String owner,String method,String descriptor,boolean iface){
                         super.visitMethodInsn(opcode,owner,method,descriptor,iface);
-                        if(world&&name.equals("begin")&&owner.equals(R+"LiveOptions")&&method.equals("frame")&&descriptor.equals("()V")){call(RUN,"prepareFrame","()V");hits[0]++;}
-                        if(world&&name.equals("drawTranslucent")&&owner.equals(R+"AddonDraws")&&method.equals("afterOpaque")&&descriptor.equals("(Lviewpoint/render/FrameContext;)V")){
+                        if(world&&name.equals("begin")&&owner.equals(R+"FrameUniforms")&&method.equals("set")&&descriptor.equals("(Lviewpoint/render/FrameContext;Lviewpoint/render/Targets;)V")){call(RUN,"prepareFrame","()V");hits[0]++;}
+                        if(world&&name.equals("drawTranslucent")&&!translucentBound&&owner.equals(type)&&method.equals("bindTarget")&&descriptor.equals("()V")){
+                            translucentBound=true;
                             mv.visitFieldInsn(Opcodes.GETSTATIC,type,"frame","Lviewpoint/render/FrameContext;");call(RUN,"draw","(Lviewpoint/render/FrameContext;)V");hits[0]++;
                         }
                     }

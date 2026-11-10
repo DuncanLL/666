@@ -14,7 +14,7 @@ import zipfile
 
 from build import compile_java
 from build_render_support import check_glsl_names, write
-from build_eclipse_support import GF2_MANIFEST, ORPHAN_SNAPSHOT
+from build_eclipse_support import GF2_MANIFEST, RETIRED_ENTRIES
 from common import BUILD, ROOT, environment, save, settings, sha
 
 
@@ -158,13 +158,13 @@ def owned_classes(archive):
     sources = {file.stem for file in (ROOT / 'render-support').rglob('*.java')}
     sources.update(Path(file).stem for file in historical if file.endswith('.java'))
     classes = set()
-    assert ORPHAN_SNAPSHOT not in archive.namelist(), 'Rebuild cleaned Eclipse support'
+    assert not RETIRED_ENTRIES.intersection(archive.namelist()), 'Rebuild cleaned Eclipse support'
     for name in archive.namelist():
         if not name.endswith('.class'):
             continue
         root = Path(name).name.split('$', 1)[0].removesuffix('.class')
         source = root.replace('AimohEclipseGf2', 'AimohGf2')
-        effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh')) and root != 'AimohGf2IrisGlass'
+        effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh'))
         hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources', 'UnifiedStartup'}
         if effect or hook:
             assert source in sources or root == 'EclipseHooks', name
@@ -305,7 +305,9 @@ def package(output, proguard, metadata, seed_from=None):
     for name, expected in report['source_hashes'].items():
         assert sha(ROOT / name) == expected, f'Rebuild changed source: {name}'
     host = Path(config['viewpoint_jar'])
-    inputs = {path: sha(path) for path in (raw, host, host.with_suffix('.jar.zbs'), Path(config['reference_jar']))}
+    inputs = {path: sha(path) for path in (raw, host, Path(config['reference_jar']))}
+    signature=host.with_suffix('.jar.zbs')
+    if signature.is_file():inputs[signature]=sha(signature)
     assert inputs[host] == report['host_sha256']
     output = output.resolve()
     assert output.is_relative_to(BUILD.resolve()) and output != BUILD.resolve(), 'Protected outputs belong under build/'

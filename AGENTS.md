@@ -5,7 +5,7 @@
 - 按用户2026-11-09指示，`render-support` 用同一分发 MOD 提供 VP Native 默认管线与 Eclipse，按实际光影选择启用后端。沿用 `AimohGF2Eclipse` 内部 ID 和工坊项目3834707439，显示名仍为 `R116 渲染支持 光影分发`，无可见简介。不自动上传工坊。
 - 按用户2026-11-10指示，R116 人物工坊发行走单 MOD 合包，用 tools/package_r116_unified.py 将已验证的人物发布目录与当前封装光影装成一个 AimohPmxPreview MOD，沿用人物工坊项目 3834454638。两套光影自动安装，玩家自己选择。独立光影构建保留用于验证和回退。
 - 人物还原以整备室为主要观感参考，但人物仍接受VP现场光照与反射。所有角色共用材质/显示接入，不按角色美白、固定布灯或复制房间反射；VP原版环境、天空、雾、曝光和场景后处理保持。新角色沿共同资料契约接入，不另写角色补丁；被否定的调色预设不得恢复。
-- 按用户2026-11-10指示，两条发行线都面向 PZ 42.22 和官方 VP 0.1.7-rc4。官方JAR与签名保持原包字节，后续升级按实际接口与受控绘制重新核定。
+- 本分支面向 PZ 42.22 和 Steam 创意工坊正式版 Viewpoint 0.1.6.2。官方文件保持 Steam 清单原字节，换宿主时重新核对实际接口和受控绘制。
 - Eclipse 专用覆盖源在 `render-support/eclipse`。两份独立后端构建是 `tools/build_combined_render_support.py` 的输入。`tools/package_render_support.py` 默认同时分发两套光影，同一 JAR 只运行一份安装入口和宿主挂接安装器。两后端共用宿主校验、人物骨骼数据、描边和纹理读取。
 - 原生核心直接来源于已记录的 MC-MMD-rust 上游。第三方来源与许可保留在 `provenance`、`licenses`；不导入 PZMMD 作者分支或其成品核心。
 - 模型、贴图、语音及原游着色资源不进 Git，按 `resources/manifest.json` 读回；本机路径只放被忽略的 `.local/paths.json`。

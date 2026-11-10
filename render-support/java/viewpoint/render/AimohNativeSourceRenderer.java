@@ -98,7 +98,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     }
     private FrameActors actors(FrameContext frame,ModelPass models)throws Exception{
         if(frozenActors!=null&&frozenActors.frame==frame.index)return frozenActors;
-        ModelDraws draws=models.draws();
+        ModelDraws draws=AimohWorkshopRender.draws(models);
         int[] rank=(int[])AimohNativeGf2Environment.field(models.batches,"rank");
         Map<Integer,ActorParts> found=new LinkedHashMap<>();
         List<Actor> colour=new ArrayList<>(),shadow=new ArrayList<>();
@@ -143,12 +143,11 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     }
     private static boolean writesDepth(JSONObject pass){Object value=pass.getJSONObject("state").get("zWrite");return value instanceof Number n?n.doubleValue()!=0:((JSONObject)value).getDouble("value")!=0;}
     private static AutoCloseable modelBindings(ModelPass models){
-        models.begin();
-        return models::end;
+        return AimohWorkshopRender.modelBindings(models);
     }
     void cast(Matrix4f nativeVp,int[] candidates,int count,ModelBatches.Filter filter)throws Exception{
         FrameContext frame=(FrameContext)AimohNativeGf2Environment.world("frame");if(shadowFrame!=frame.index){shadowFrame=frame.index;shadowDraws=shadowViews=visibleCasterViews=0;}shadowPhase++;
-        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).shadow;if(actors.isEmpty())return;
+        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=AimohWorkshopRender.draws(models);List<Actor> actors=actors(frame,models).shadow;if(actors.isEmpty())return;
         boolean[] selected=null;if(candidates!=null){selected=new boolean[draws.count];for(int i=0;i<count;i++)selected[candidates[i]]=true;}
         List<Casters> casters=new ArrayList<>();
         for(Actor actor:actors){
@@ -170,9 +169,9 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
                 Actor actor=caster.actor;
                 int first=actor.draws.get(0).index,identity=(int)draws.palettes[actor.palette*12+24];float[] placement=Arrays.copyOfRange(draws.values,first*68,first*68+16);
                 AimohGf2FrameInputs builder=builders.computeIfAbsent(actor.model.getString("pmx_sha256"),id->new AimohGf2FrameInputs(actor.model,data.manifest.getJSONObject("original_camera_fill")));
-                Map<String,float[]> input=new LinkedHashMap<>(builder.build(nativeValues,placement,eye,placement,eye,frame.width,frame.height,frame.time,false,new float[0],new float[0],new float[0]).values());
+                Map<String,float[]> input=new LinkedHashMap<>(builder.build(nativeValues,placement,eye,placement,eye,frame.width,frame.height,frame.scene.time,false,new float[0],new float[0],new float[0]).values());
                 input.put("unity_MatrixVP",sourceVp.get(new float[16]));input.put("unity_MatrixV",view.get(new float[16]));input.put("unity_MatrixInvV",inverse.get(new float[16]));input.put("unity_CameraToWorld",inverse.get(new float[16]));input.put("glstate_matrix_projection",new Matrix4f(sourceVp).mul(inverse).get(new float[16]));
-                int attributes=materials.attributeTexture(actor.model),nativeShadow=((int[])AimohNativeGf2Environment.field(AimohNativeGf2Environment.world("shadows"),"views"))[0];Map<String,Local> locals=new HashMap<>();
+                int attributes=materials.attributeTexture(actor.model),nativeShadow=((int[])AimohNativeGf2Environment.field(AimohNativeGf2Environment.world("shadows"),"textures"))[0];Map<String,Local> locals=new HashMap<>();
                 for(Draw draw:caster.draws){
                     String root=actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),input.get("unity_WorldToObject")):locals.computeIfAbsent(root,r->local(builder,r,draws,draw,input,false,identity));
                     AimohGf2OriginalProgram program=nativePrograms.source(draw.material,"ShadowCaster");program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),nativeShadow,environment.shadowSampler));
@@ -185,7 +184,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     }
     void prepass(FrameContext frame)throws Exception{
         if(earlyFrame==frame.index)throw new IllegalStateException("Duplicate source GBuffer callback");earlyFrame=frame.index;earlyDraws=0;
-        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).colour;if(actors.isEmpty())return;
+        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=AimohWorkshopRender.draws(models);List<Actor> actors=actors(frame,models).colour;if(actors.isEmpty())return;
         Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
         try(AimohGf2GlScope scope=new AimohGf2GlScope();AutoCloseable bindings=modelBindings(models)){
             captureRelief(models);
@@ -195,7 +194,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
                 Actor actor=actors.get(actorIndex);if(actorIndex>0)target.clearActorStencil();int first=actor.draws.get(0).index,identity=(int)draws.palettes[actor.palette*12+24];float[] placement=Arrays.copyOfRange(draws.values,first*68,first*68+16),eye={frame.eyeX,frame.eyeY,frame.eyeZ};
                 History old=histories.get(identity);boolean history=old!=null&&old.asset.equals(actor.model.getString("pmx_sha256"))&&old.frame==frames-1&&!frame.scene.cameraCut;
                 AimohGf2FrameInputs builder=builders.computeIfAbsent(actor.model.getString("pmx_sha256"),id->new AimohGf2FrameInputs(actor.model,data.manifest.getJSONObject("original_camera_fill")));
-                var packet=builder.build(values,placement,eye,history?old.placement:placement,history?old.eye:eye,width,height,frame.time,history,new float[0],new float[0],new float[0]);
+                var packet=builder.build(values,placement,eye,history?old.placement:placement,history?old.eye:eye,width,height,frame.scene.time,history,new float[0],new float[0],new float[0]);
                 Map<String,float[]> input=new LinkedHashMap<>(packet.values());var shadow=environment.shadow(Arrays.copyOfRange(draws.values,first*68+24,first*68+27),eye);
                 input.put("_MainLightWorldToShadow",shadow.sourceMatrices());input.put("_MainLightShadowParams",new float[]{shadow.enabled()?1:0,1,0,0});input.put("_MainLightShadowmapSize",new float[]{1f/shadow.size(),1f/shadow.size(),shadow.size(),shadow.size()});input.put("_CascadeDepthBiasArray",new float[4]);input.put("_CascadeNormalBiasArray",new float[4]);
                 Map<String,Local> locals=new HashMap<>();int attributes=materials.attributeTexture(actor.model);
@@ -215,7 +214,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
     public void draw(FrameContext frame)throws Exception{
         if(earlyFrame!=frame.index)throw new IllegalStateException("Native original colour ran before its GBuffer callback");
         if(lastFrame==frame.index)throw new IllegalStateException("Duplicate Native source frame");lastFrame=frame.index;
-        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=models.draws();Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
+        ModelPass models=(ModelPass)AimohNativeGf2Environment.world("models");ModelDraws draws=AimohWorkshopRender.draws(models);Targets nativeTargets=(Targets)AimohNativeGf2Environment.world("targets");
         FrameActors frozen=actors(frame,models);List<Actor> actors=frozen.colour;lastActors=actors.size();lastDraws=0;stageDraws.clear();stageOrder.clear();
         Set<Integer> alive=new HashSet<>();for(Actor actor:actors)alive.add((int)draws.palettes[actor.palette*12+24]);histories.keySet().retainAll(alive);rootPoses.keySet().removeIf(k->!alive.contains(k.actor));
         Set<Integer> submitted=frozen.submitted;
@@ -268,7 +267,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         GL42.glBindImageTexture(3,colour,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL11.GL_TEXTURE_2D,target.sourceMotion());GL33.glBindSampler(0,0);
         GL42.glBindImageTexture(0,nativeTargets.velocity,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
-        GL42.glBindImageTexture(1,nativeTargets.normal,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGB10_A2);
+        GL42.glBindImageTexture(1,nativeTargets.normal,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
         GL42.glBindImageTexture(2,target.sourceNormal(),0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
         GL43.glDispatchCompute((width+15)/16,(height+15)/16,1);
         GL42.glMemoryBarrier(GL42.GL_SHADER_IMAGE_ACCESS_BARRIER_BIT|GL42.GL_TEXTURE_FETCH_BARRIER_BIT|GL42.GL_FRAMEBUFFER_BARRIER_BIT);
@@ -282,7 +281,7 @@ public final class AimohNativeSourceRenderer implements AutoCloseable {
         float[] engine=Arrays.copyOfRange(draws.values,first*68+20,first*68+24);environment.actorLight(engine);actorEngineLight=engine;
         int identity=(int)draws.palettes[actor.palette*12+24];History old=histories.get(identity);boolean history=old!=null&&old.asset.equals(actor.model.getString("pmx_sha256"))&&old.frame==frames-1&&!frame.scene.cameraCut;
         AimohGf2FrameInputs builder=builders.computeIfAbsent(actor.model.getString("pmx_sha256"),id->new AimohGf2FrameInputs(actor.model,data.manifest.getJSONObject("original_camera_fill")));
-        AimohGf2FrameInputs.Inputs packet=builder.build(nativeValues,placement,eye,history?old.placement:placement,history?old.eye:eye,width,height,frame.time,history,localLights.points,new float[0],new float[0]);
+        AimohGf2FrameInputs.Inputs packet=builder.build(nativeValues,placement,eye,history?old.placement:placement,history?old.eye:eye,width,height,frame.scene.time,history,localLights.points,new float[0],new float[0]);
         localLights.neutralAttenuation(packet.values());
         nativeLightCount=packet.nativeLightCount();unsupportedCarBeams=packet.unsupportedCarBeams();
         Map<String,float[]> input=new LinkedHashMap<>(packet.values());float[] center=Arrays.copyOfRange(draws.values,first*68+24,first*68+27);var shadow=environment.shadow(center,eye);

@@ -27,7 +27,11 @@ public final class RenderSupportStartupCheck {
         byte[] edited={7,8,9};Path player=user.resolve(eclipse||combined?"viewpoint-shaderpacks/PlayerCustom.zip":"viewpoint-shaderpacks/Aimoh-Eclipse-GF2.zip");Files.createDirectories(player.getParent());Files.write(player,edited);
         Class<?> loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");var field=loader.getDeclaredField("g_instrumentation");field.setAccessible(true);field.set(null,RenderSupportTestAgent.agent);
         Class<?> phase=Class.forName("me.zed_0xff.zombie_buddy.Loader$Phase");Object main=Arrays.stream(phase.getEnumConstants()).filter(v->v.toString().equals("MAIN")).findFirst().orElseThrow();var dispatch=loader.getDeclaredMethod("try_call_main",Class.class,phase);dispatch.setAccessible(true);dispatch.invoke(null,Main.class,main);
-        var ready=Main.class.getDeclaredField("hooks");ready.setAccessible(true);require(ready.get(null)!=null,"Normal entry did not install hooks");
+        var ready=Main.class.getDeclaredField("hooks");ready.setAccessible(true);
+        if(ready.get(null)==null){
+            try{Main.main(new String[0]);}catch(Throwable failure){throw new AssertionError("Normal entry did not install hooks",failure);}
+            throw new AssertionError("Normal dispatch failed but direct entry succeeded");
+        }
         if(eclipse||combined){
             Path pack=player.resolveSibling("Aimoh-Eclipse-GF2.zip");
             try(var embedded=Main.class.getResourceAsStream("/aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip")){

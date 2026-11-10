@@ -13,7 +13,7 @@
   "native_local_symbols": {
     "cube_faces.glsl": ["face", "p"],
     "native_cube.comp": ["gf2ProbePoint", "gf2ProbeEdge", "gf2ProbeSceneLight", "clip", "projected", "approached", "rayDepth", "sceneDepth", "midUv", "midDepth", "observed", "thickness", "sourceDirection", "nativeDirection"],
-    "native_indirect.glsl": ["gf2NativeNormalSample", "coefficient", "channel"],
+    "native_indirect.glsl": ["normal", "coefficient", "channel"],
     "native_light.comp": ["share", "skyPart", "scale", "isotropic", "constant", "dx", "dy", "dz", "diagonal"],
     "native_local.glsl": ["slot", "colour", "kind", "dist", "energy", "att", "edge", "beam"],
     "native_main.glsl": ["visibility"],

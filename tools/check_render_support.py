@@ -59,7 +59,9 @@ if __name__=='__main__':
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out),a.backend]
     if a.protected_report:command.append('sealed')
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
-    (out/'startup.log').write_text(result.stdout+result.stderr,'utf8');result.check_returncode()
+    (out/'startup.log').write_text(result.stdout+result.stderr,'utf8')
+    if result.returncode:print((result.stdout+result.stderr)[-7000:],flush=True)
+    result.check_returncode()
     assert f'NORMAL_{a.backend.upper()}_EMBEDDED_INSTALL_DISCOVERY_PASS'in result.stdout
     assert sha(host)==before,'Official VP modified'
     if not eclipse:
@@ -75,6 +77,8 @@ if __name__=='__main__':
     try:
         os.chdir(game)
         J=jpype.JClass;J('zombie.ZomboidFileSystem').instance.setCacheDir(str(out/'validator-home'));J('zombie.ZomboidFileSystem').instance.init()
+        if project.parent.name.casefold()=='workshop':
+            J('zombie.ZomboidFileSystem').instance.setCacheDir(str(project.parent.parent))
         item=J('zombie.core.znet.SteamWorkshopItem')(str(project));assert item.readWorkshopTxt()
         assert item.validateContents()is None,str(item.validateContents())
         assert item.getTitle()=='R116 渲染支持 光影分发'and item.getDescription()=='\u200b'
