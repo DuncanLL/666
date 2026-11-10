@@ -170,10 +170,12 @@ function W:createChildren()
     self:addChild(self.sidebar)
     self.refreshButton=button(self,14,self.height-55,104,tr("Refresh"),self,self.onLibrary)
     self.content=panel(self,self.rightX,105,self.rightWidth,self.height-247)
-    local third=(self.rightWidth-12)/3
-    self.pageButton=button(self,self.rightX,self.height-94,third,tr("Parts"),self,function(s)s:setTab("parts")end)
-    self.chestButton=button(self,self.rightX+third+6,self.height-94,third,tr("ChestPhysics"),self,function(s)s:setTab("chest")end)
-    self.gripButton=button(self,self.rightX+(third+6)*2,self.height-94,third,tr("GripCalibration"),self,function(s)s:setTab("grip")end)
+    local tabWidth=(self.rightWidth-18)/4
+    self.pageButton=button(self,self.rightX,self.height-94,tabWidth,tr("Parts"),self,function(s)s:setTab("parts")end)
+    self.chestButton=button(self,self.rightX+tabWidth+6,self.height-94,tabWidth,tr("ChestPhysics"),self,function(s)s:setTab("chest")end)
+    self.gripButton=button(self,self.rightX+(tabWidth+6)*2,self.height-94,tabWidth,tr("GripCalibration"),self,function(s)s:setTab("grip")end)
+    self.expressionButton=button(self,self.rightX+(tabWidth+6)*3,self.height-94,tabWidth,tr("Expression"),self,function(s)s:setTab("expression")end)
+    self:createExpressionFooter()
     self.skinButton=button(self,self.rightX,self.height-55,132,tr("Back"),self,function(s)s:setTab("skins")end)
     self.wearButton=button(self,self.rightX+140,self.height-55,self.rightWidth-140,tr("Wear"),self,function(w)w:applyBrowse()end)
     self.advancedButton=button(self,self.rightX,105,self.rightWidth,tr("Advanced"),self,function(s)s:setTab(s.tab=="advanced" and "parts" or "advanced")end)
@@ -195,6 +197,64 @@ function W:createChildren()
     self.appearanceTab.roomTab=true;self.motionTab.roomTab=true;self.foldButton.roomFold=true
     self:createMotionPage()
     self.widgets={};self.tab="skins";self:roomVisibility();self:refresh()
+end
+
+function W:createExpressionFooter()
+    local footer=ISPanel:new(self.rightX,self.fullHeight-200,self.rightWidth,103)
+    footer:initialise();footer.background=false
+    footer.prerender=function(p)surface(p,0,0,p.width,p.height,.97)end
+    self:addChild(footer);self.expressionFooter=footer
+    self.expressionSave=button(footer,4,4,footer.width-8,tr("ExpressionSave"),self,function(w)
+        w.expressionSaving=not w.expressionSaving;w:refreshExpressionSlots(true)
+    end)
+    self.expressionSlotButtons={}
+    local width=(footer.width-24)/5
+    for index=1,10 do
+        local slot=index
+        local x=4+((index-1)%5)*(width+4)
+        local y=36+math.floor((index-1)/5)*32
+        self.expressionSlotButtons[index]=button(footer,x,y,width,tostring(index),self,function(w)w:useExpressionSlot(slot)end)
+    end
+    footer:setVisible(false)
+end
+
+function W:expressionSlots()
+    local slots=self.player:getModData().AimohPMXExpressions
+    return slots and slots[self.currentId] or {}
+end
+
+function W:refreshExpressionSlots(visible)
+    self.expressionFooter:setVisible(visible)
+    if not visible then self.expressionSaving=false;return end
+    self.expressionSave.roomTitle=tr(self.expressionSaving and "ExpressionPickSlot" or "ExpressionSave")
+    self.expressionSave.roomActive=self.expressionSaving
+    local slots=self:expressionSlots()
+    for index,b in ipairs(self.expressionSlotButtons)do
+        local saved=type(slots[tostring(index)])=="string"
+        b:setEnable(saved or self.expressionSaving==true)
+        b.roomActive=saved
+        b.backgroundColor=saved and {r=.25,g=.17,b=.07,a=.98} or {r=.06,g=.08,b=.10,a=.70}
+    end
+end
+
+function W:useExpressionSlot(index)
+    if self.tab~="expression" or self.waiting or self.roomPage~="appearance" then return end
+    local slot=tostring(index)
+    local slots=self:expressionSlots()
+    if self.expressionSaving then
+        local snapshot=AimohPMXReadyRoom.expressionSnapshot(self.player,self.currentId)
+        if snapshot=="" then self.status=tr("Error");return end
+        slots[slot]=snapshot
+        local saved=self.player:getModData()
+        saved.AimohPMXExpressions=saved.AimohPMXExpressions or {}
+        saved.AimohPMXExpressions[self.currentId]=slots
+        self.expressionSaving=false;self:refreshExpressionSlots(true)
+    elseif type(slots[slot])=="string" then
+        local error=AimohPMXReadyRoom.expressionLoad(self.player,self.currentId,slots[slot])
+        if error~="" then print("[AimohPMXPreview] "..error);self.status=tr("Error");return end
+        self:refreshControls(true)
+    else return end
+    self.actions.expressionRemember(self.player)
 end
 
 function W:createMotionPage()
@@ -458,7 +518,8 @@ function W:roomVisibility()
         self.preview:setX(math.floor(self.width*.5-390));self.preview:setWidth(780)
         self.preview:setY(50);self.preview:setHeight(self.fullHeight-100)
     end
-    for _,widget in ipairs({self.sidebar,self.refreshButton,self.content,self.pageButton,self.chestButton,self.gripButton,
+    self:refreshExpressionSlots(false)
+    for _,widget in ipairs({self.sidebar,self.refreshButton,self.content,self.pageButton,self.chestButton,self.gripButton,self.expressionButton,
         self.skinButton,self.wearButton,self.advancedButton,self.physicsResetButton,self.restoreButton,
         self.resetButton,self.reloadButton,self.eyeOpenButton,self.eyeClosedButton})do widget:setVisible(appearance)end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -577,6 +638,7 @@ function W:updateWear()
     self.pageButton:setEnable(editable)
     self.chestButton:setEnable(editable and AimohPMXPreview.hasChestPhysics(self.player))
     self.gripButton:setEnable(editable)
+    self.expressionButton:setEnable(editable)
 end
 function W:applyBrowse()if self.browsed then self:selectSkin(self.browsed)end end
 function W:refresh()
@@ -611,7 +673,10 @@ function W:refresh()
     if not self.byCharacter[self.character] then self.character=self.characters[1] and self.characters[1].name end
     self:refreshControls()
 end
-function W:setTab(tab)self.tab=tab;self:refreshControls()end
+function W:setTab(tab)
+    if self.tab~=tab then self.expressionSaving=false end
+    self.tab=tab;self:refreshControls()
+end
 function W:partRows(extrasOnly)
             local names=self.selected and self.selected.meta.primaryCategories or {tr("Head"),tr("Top"),tr("Bottom")}
             local primary={};for _,name in ipairs(names)do primary[name]=true end
@@ -663,7 +728,8 @@ function W:refreshControls(keepScroll)
     self.content:setY(details and 143 or 105);self.content:setHeight(self.height-self.content.y-142)
     self.skinButton:setVisible(self.tab~="skins")
     self.skinButton:setEnable(not self.waiting)
-    for _,item in ipairs({{self.pageButton,details},{self.chestButton,self.tab=="chest"},{self.gripButton,self.tab=="grip"}})do
+    for _,item in ipairs({{self.pageButton,details},{self.chestButton,self.tab=="chest"},{self.gripButton,self.tab=="grip"},
+        {self.expressionButton,self.tab=="expression"}})do
         item[1].roomActive=item[2]
     end
     self.resetButton:setVisible(self.tab=="advanced");self.reloadButton:setVisible(self.tab=="advanced")
@@ -684,13 +750,40 @@ function W:refreshControls(keepScroll)
     end
     self.advancedButton:setVisible(details)
     self.advancedButton.roomTitle=self.tab=="advanced" and tr("BackParts")or tr("Advanced")
-    local y=0;local width=self.rightWidth-18
+    local y=0;local width=self.rightWidth-18;local showExpressionSlots=false
     if self.tab=="skins" then
         local character=self.byCharacter[self.character]
         if character and not character.locked then self:carousel(character) end
         y=self.content.height
     elseif enabled and not self.waiting and self.selected and self.selected.id==self.currentId then
-        if self.tab=="grip" then
+        if self.tab=="expression" then
+            local id=self.currentId
+            local rows=AimohPMXReadyRoom.expressionRows(self.player,id)
+            showExpressionSlots=#rows>0
+            if showExpressionSlots then
+                self.content:setHeight(self.expressionFooter.y-self.content.y-6)
+                if AimohPMXReadyRoom.motionState(self.player).name~="" then
+                    self:addLabel(tr("ExpressionVmd"),y);y=y+28
+                end
+                local group
+                for _,row in ipairs(rows)do
+                    if group~=row.group then group=row.group;self:addLabel(tr(group),y);y=y+31 end
+                    local field=row.index
+                    self:addLabel(row.label,y,18)
+                    local slider=ISSliderPanel:new(5,y+24,width-10,20,self,function(w,value)
+                        local error=AimohPMXReadyRoom.expressionSet(w.player,id,field,value/100)
+                        if error~="" then print("[AimohPMXPreview] "..error);w.status=tr("Error") end
+                    end)
+                    slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(0,100,1,10,true)
+                    slider:setCurrentValue(row.value*100,true)
+                    local render=slider.render
+                    slider.render=function(s)
+                        render(s);s:drawTextRight(string.format("%d%%",math.floor(s.currentValue+.5)),s.width,-21,.81,.88,.92,1,UIFont.Small)
+                    end
+                    self.content:addChild(slider);table.insert(self.widgets,slider);y=y+49
+                end
+            else self:addLabel(tr("ExpressionEmpty"),y);y=y+30 end
+        elseif self.tab=="grip" then
             local family=AimohPMXReadyRoom.gripFamily(self.player)
             self.gripFamily=family
             if family=="" then
@@ -773,6 +866,7 @@ function W:refreshControls(keepScroll)
             y=self:drawGroups(self:partRows(false),y,width)
         end
     else self:addLabel(self.waiting and tr("Loading") or tr("Choose"),8);y=56 end
+    self:refreshExpressionSlots(showExpressionSlots)
     self:updateWear()
     self.content:setScrollHeight(math.max(y,self.content.height))
     self.content:setYScroll(clamp(scroll,self.content.height-self.content:getScrollHeight(),0))
@@ -859,6 +953,7 @@ function W:render()
     self:drawRect(1,44,self.width-2,self.height-45,.38*(1-phase),.035,.052,.069)
 end
 function W:close()
+    self:refreshExpressionSlots(false)
     if self.motionSeek then self.motionSeek:cancel() end
     if self.motionSpeed then self.motionSpeed.dragInside=false end
     self:closeMotionPathDialog()

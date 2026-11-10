@@ -124,7 +124,8 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults})
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults,
+        expressionRemember=function(p)remember(p,true)end})
 end
 
 local function menu(playerIndex, context, worldObjects, test)

@@ -150,6 +150,43 @@ public class ReadyRoomPreview {
         ModelSession session=Main.session(actor);
         return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),family,axis,value);
     }
+    private static ModelSession expressionSession(IsoGameCharacter actor, String id) {
+        if (!(actor instanceof IsoPlayer player) || !player.isLocalPlayer() || !Main.isReady(actor)) return null;
+        ModelSession session = Main.session(actor);
+        return session != null && session.entry.id().equals(id) ? session : null;
+    }
+    public static KahluaTable expressionRows(IsoGameCharacter actor, String id) {
+        ModelSession s = expressionSession(actor, id);
+        if (s != null) synchronized (s) {
+            if (!s.retired && !s.failed) return (KahluaTable)lua(s.model.appearance().expressionRows());
+        }
+        return J2SEPlatform.getInstance().newTable();
+    }
+    public static String expressionSnapshot(IsoGameCharacter actor, String id) {
+        ModelSession s = expressionSession(actor, id);
+        if (s != null) synchronized (s) {
+            if (!s.retired && !s.failed) return s.model.appearance().expressionSnapshot();
+        }
+        return "";
+    }
+    public static String expressionSet(IsoGameCharacter actor, String id, int index, double value) {
+        ModelSession s = expressionSession(actor, id);
+        if (s == null) return "请先启用一个 R116 人物";
+        synchronized (s) {
+            if (s.retired || s.failed) return "人物正在切换";
+            try { s.model.appearance().setExpression(index, value); return ""; }
+            catch (RuntimeException e) { return e.toString(); }
+        }
+    }
+    public static String expressionLoad(IsoGameCharacter actor, String id, String preset) {
+        ModelSession s = expressionSession(actor, id);
+        if (s == null) return "请先启用一个 R116 人物";
+        synchronized (s) {
+            if (s.retired || s.failed) return "人物正在切换";
+            try { s.model.appearance().loadExpression(preset); return ""; }
+            catch (RuntimeException e) { return e.toString(); }
+        }
+    }
     public static KahluaTable motionState(IsoGameCharacter actor) {
         ModelSession s=Main.session(actor);
         return (KahluaTable)lua(s==null

@@ -4,6 +4,7 @@ import com.shiroha.mmdskin.NativeFunc;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ public final class ModelAppearance {
     private JSONArray groups=new JSONArray();
     private long revision;
     private Set<String> animatedMorphs=Set.of();
+    private List<FacialExpressions.Control> facialControls;
 
     public ModelAppearance(NativeFunc api,long model) {
         this.api=api;this.model=model;
@@ -140,6 +142,56 @@ public final class ModelAppearance {
     public synchronized String texture(int material){return textures[material]==null?originalTextures[material]:textures[material];}
     public synchronized String[] readTextures(){String[] result=new String[visible.length];for(int i=0;i<result.length;i++)result[i]=texture(i);return result;}
     public synchronized boolean managesMorph(int index){return wardrobe.managesMorph(index);}
+    private List<FacialExpressions.Control> facialControls() {
+        if (facialControls == null) facialControls = FacialExpressions.controls(api, model, weights.length);
+        return facialControls;
+    }
+    public synchronized JSONArray expressionRows() {
+        JSONArray rows = new JSONArray();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) rows.put(new JSONObject().put("index", index)
+                .put("group", control.group()).put("label", control.label()).put("value", weights[index]));
+        }
+        return rows;
+    }
+    public synchronized String expressionSnapshot() {
+        JSONObject snapshot = new JSONObject();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index) && weights[index] != 0) snapshot.put(control.name(), weights[index]);
+        }
+        return snapshot.toString();
+    }
+    private static float expressionWeight(double value) {
+        if (!Double.isFinite(value) || value < 0 || value > 1) throw new IllegalArgumentException("表情权重须在 0 到 100% 之间");
+        return (float)value;
+    }
+    public synchronized void setExpression(int index, double value) {
+        if (facialControls().stream().noneMatch(control -> control.index() == index) || wardrobe.managesMorph(index))
+            throw new IllegalArgumentException("当前模型没有此表情");
+        float[] next = weights.clone();
+        next[index] = expressionWeight(value);
+        applyExpressionWeights(next);
+    }
+    public synchronized void loadExpression(String preset) {
+        if (preset == null || preset.length() > 8192) throw new IllegalArgumentException("表情预设格式无效");
+        JSONObject values = new JSONObject(preset);
+        float[] next = weights.clone();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) next[index] = values.has(control.name()) ? expressionWeight(values.getDouble(control.name())) : 0;
+        }
+        applyExpressionWeights(next);
+    }
+    private void applyExpressionWeights(float[] next) {
+        if (Arrays.equals(weights, next)) return;
+        float[] resolved = next.clone();
+        wardrobe.resolve(selected, visible.clone(), resolved);
+        applyMorphs(resolved);
+        weights = next;
+        revision++;
+    }
     public synchronized float[] readMaterials(){return read(true,true);}
     public synchronized float[] readTextureFactors(){return read(false,false);}
     public synchronized boolean materialAvailable(int index) {

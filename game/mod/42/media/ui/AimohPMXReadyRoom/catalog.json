@@ -87,7 +87,16 @@
     "GripSupport": "副手握点",
     "GripPrimary": "主手握点",
     "GripSupportWrist": "副手手腕旋转",
-    "GripPrimaryWrist": "主手手腕旋转"
+    "GripPrimaryWrist": "主手手腕旋转",
+    "Expression": "表情",
+    "ExpressionMouth": "嘴型",
+    "ExpressionEyes": "眼睛",
+    "ExpressionBrows": "眉毛",
+    "ExpressionOther": "其他表情",
+    "ExpressionSave": "保存表情",
+    "ExpressionPickSlot": "选择保存位置 · 再点此处取消",
+    "ExpressionEmpty": "这套皮肤没有可调表情",
+    "ExpressionVmd": "VMD 自带的表情会按动作播放"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
