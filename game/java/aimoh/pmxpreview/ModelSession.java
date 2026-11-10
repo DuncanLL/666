@@ -6,6 +6,7 @@ import aimoh.motion.PmxModel;
 import aimoh.motion.PmxShading;
 import aimoh.motion.PzPoseCapture;
 import aimoh.motion.ResourceCleanup;
+import aimoh.motion.WorldPoseRetargeter.GripAdjustment;
 import com.shiroha.mmdskin.NativeFunc;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -18,6 +19,7 @@ import org.joml.Vector3f;
 import viewpoint.core.Frame;
 import viewpoint.render.Retirement;
 import viewpoint.render.ModelDraws;
+import zombie.characters.IsoPlayer;
 import zombie.core.opengl.RenderThread;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.skinnedmodel.model.SkinningData;
@@ -40,15 +42,18 @@ final class ModelSession {
     private TextureFactory textures;
     private boolean queued;
     private long lastFrame=Long.MIN_VALUE,lastNanos,lastWallNanos,lastSlowFrame=Long.MIN_VALUE;
+    private long lastMotionRevision;
     private PmxDrawMesh.FrameData frozen;
     PmxDrawMesh.FrameData previousFrozen,olderFrozen;
     final PmxPresentation presentation=new PmxPresentation();
     private float[] sourcePose;
+    private GripAdjustment gripAdjustment;
     private int[] sourceIndices;
     private SkinningData sourceSkin;
     private final boolean[] required;
     private final int[] sourceIds,targetIds;
     final int sourceHead,targetHead;
+    private final int sourcePelvis,targetPelvis;
     record Materials(long version,long epoch,float[] factors,float[] shadow,String[] paths,boolean[] doubleSided) {}
     Materials materials;
     final Main.Entry entry;
@@ -70,9 +75,13 @@ final class ModelSession {
         required[profile.getInt("source_root")]=true;
         var s=profile.getJSONArray("source_ids");var t=profile.getJSONArray("target_ids");sourceIds=new int[s.length()];targetIds=new int[t.length()];
         for(int i=0;i<sourceIds.length;i++){sourceIds[i]=s.getInt(i);targetIds[i]=t.getInt(i);}
-        int head=-1,target=-1;
-        for(int i=0;i<sourceIds.length;i++)if("Bip01_Head".equals(sourceNames[sourceIds[i]])){head=sourceIds[i];target=targetIds[i];break;}
-        sourceHead=head;targetHead=target;
+        int head=-1,headTarget=-1,pelvis=-1,pelvisTarget=-1;
+        for(int i=0;i<sourceIds.length;i++){
+            String name=sourceNames[sourceIds[i]];
+            if(head<0&&"Bip01_Head".equals(name)){head=sourceIds[i];headTarget=targetIds[i];}
+            else if(pelvis<0&&"Bip01_Pelvis".equals(name)){pelvis=sourceIds[i];pelvisTarget=targetIds[i];}
+        }
+        sourceHead=head;targetHead=headTarget;sourcePelvis=pelvis;targetPelvis=pelvisTarget;
         model=PmxModel.load(api,entry.model(),entry.profile());
         try {
         IdleHandPose candidate;
@@ -104,6 +113,10 @@ final class ModelSession {
         return update(frame,player,holding,x,y,z,hideHead,idleEligible,false);
     }
     synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead,boolean idleEligible,boolean firstPerson) {
+        return update(frame,player,holding,x,y,z,hideHead,idleEligible,firstPerson,null);
+    }
+    synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead,
+            boolean idleEligible,boolean firstPerson,GripAdjustment adjustment) {
         if(lastFrame==frame.number)return frozen;
         drawHistory.values().removeIf(history->history.frame<frame.number-1);
         sourcePose=pose(player);
@@ -111,8 +124,11 @@ final class ModelSession {
         float seconds=lastNanos==0?0:Math.clamp((capturedNanos-lastNanos)*1e-9f,0,.08f);
         // The target placement is R_y(-angle); the native inertia API negates its yaw input.
         model.retargeter().setModelMotion(-x*scale/1.5f,z*2.4494896f*scale/1.5f,-y*scale/1.5f,player.getRenderedAngle());
-        float[] poseForModel=idleHand==null?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
-        model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1);
+        if(model.motionActive()&&player.getIsoGameCharacter() instanceof IsoPlayer actor&&!ReadyRoomPreview.motionAllowed(actor))model.stopMotion();
+        long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame.number==lastFrame+1;
+        float[] poseForModel=idleHand==null||model.motionActive()?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
+        model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,adjustment);
+        gripAdjustment=adjustment;
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {
             String[] paths=model.appearance().readTextures();
             for(int i=0;i<paths.length;i++)paths[i]=resolveTexture(paths[i]);
@@ -132,7 +148,7 @@ final class ModelSession {
             lastSlowFrame=frame.number;
             System.out.println("[AimohPMXPreview] Slow model "+entry.id()+" "+model.stepTiming().put("capture_cpu_ms",cpuNanos/1e6).put("capture_gap_ms",wallGap/1e6).put("simulation_dt",seconds));
         }
-        olderFrozen=frame.number==lastFrame+1?previousFrozen:null;previousFrozen=frame.number==lastFrame+1?frozen:null;
+        olderFrozen=continuous?previousFrozen:null;previousFrozen=continuous?frozen:null;lastMotionRevision=revision;
         frozen=next;lastFrame=frame.number;lastNanos=capturedNanos;lastWallNanos=wallNanos;
         prepareMesh(frozen);
         return frozen;
@@ -187,6 +203,10 @@ final class ModelSession {
     int textureCount(){return textures==null?0:textures.liveTextures;}
     long textureUploads(){return textures==null?0:textures.uploads;}
     synchronized Matrix4f attachment(DrawAccess.Gear gear,Matrix4f actual,AnimationPlayer player) {
+        if(gear.side==1&&gripAdjustment!=null){
+            Matrix4f locked=gripAdjustment.placement(actual);
+            if(locked!=null)return locked;
+        }
         if(gear.side>=0)return new Matrix4f().set(model.remapHeldItem(sourcePose,gear.side==0,actual.get(new float[16]),gear.key));
         String name=gear.root.parentBoneName;var skin=player.getSkinningData();
         Integer bone=name==null?null:skin.boneIndices.get(name);
@@ -198,14 +218,18 @@ final class ModelSession {
         return new Matrix4f().scaling(scale,scale,-scale).mul(actual);
     }
     synchronized Matrix4f firstPersonHeadPlacement(Matrix4f source,Matrix4f target) {
-        if(sourceHead>=0&&targetHead>=0) {
-            Matrix4f head=new Matrix4f().set(sourcePose,sourceHead*16);
-            Matrix4f mapped=new Matrix4f().set(model.retargeter().remapBodyAttachment(sourcePose,sourceHead,targetHead,head.get(new float[16])));
-            Vector3f delta=source.transformPosition(head.getTranslation(new Vector3f()))
-                .sub(target.transformPosition(mapped.getTranslation(new Vector3f())));
-            return new Matrix4f(target).m30(target.m30()+delta.x).m31(target.m31()+delta.y).m32(target.m32()+delta.z);
-        }
-        return target;
+        return anchorPlacement(source,target,sourceHead,targetHead);
+    }
+    synchronized Matrix4f vehicleSeatPlacement(Matrix4f source,Matrix4f target) {
+        return anchorPlacement(source,target,sourcePelvis,targetPelvis);
+    }
+    private Matrix4f anchorPlacement(Matrix4f source,Matrix4f target,int sourceBone,int targetBone) {
+        if(sourceBone<0||targetBone<0)return target;
+        Matrix4f anchor=new Matrix4f().set(sourcePose,sourceBone*16);
+        Matrix4f mapped=new Matrix4f().set(model.retargeter().remapBodyAttachment(sourcePose,sourceBone,targetBone,anchor.get(new float[16])));
+        Vector3f delta=source.transformPosition(anchor.getTranslation(new Vector3f()))
+            .sub(target.transformPosition(mapped.getTranslation(new Vector3f())));
+        return new Matrix4f(target).m30(target.m30()+delta.x).m31(target.m31()+delta.y).m32(target.m32()+delta.z);
     }
     void fail(Throwable e) { if(!failed){failed=true;ready=false;Main.error(e);} }
     synchronized boolean followDraw(ModelDraws draws,int index,long frame) {

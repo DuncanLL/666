@@ -21,16 +21,20 @@ home = BUILD if project.is_relative_to(BUILD) else project.parent.parent
 home.mkdir(exist_ok=True)
 jpype.startJVM(str(game / 'jre64/bin/server/jvm.dll'), '--enable-native-access=ALL-UNNAMED',
               '-Djava.io.tmpdir=' + str(temp), '-Duser.home=' + str(home),
-              classpath=[str(jar), config['zombiebuddy_jar'], str(game), *map(str, game.glob('*.jar'))], convertStrings=True)
+              classpath=[str(jar), config['zombiebuddy_jar'], config['viewpoint_jar'], str(game), *map(str, game.glob('*.jar'))], convertStrings=True)
 J = jpype.JClass
 try:
     os.chdir(game)
     J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
     J('zombie.ZomboidFileSystem').instance.init()
+    if project.parent.name.casefold() == 'workshop':
+        J('zombie.ZomboidFileSystem').instance.setCacheDir(str(project.parent.parent))
     item = J('zombie.core.znet.SteamWorkshopItem')(str(project))
     assert item.readWorkshopTxt()
     assert item.validateContents() is None
     assert item.getTitle() == 'R116' and item.getDescription() == '\u200b'
+    J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
+    os.chdir(temp)
     main = J('aimoh.pmxpreview.Main')
     directory = main.class_.getDeclaredField('directory')
     directory.setAccessible(True); directory.set(None, J('java.nio.file.Path').of(str(mod / '42')))

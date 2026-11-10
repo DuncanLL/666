@@ -40,7 +40,52 @@
     "ChestDamping": "回弹阻尼",
     "ChestInertia": "惯性重量",
     "ChestStrength": "效果幅度",
-    "ChestSuspended": "已暂停，请重置物理解算"
+    "ChestSuspended": "已暂停，请重置物理解算",
+    "CharacterPackRequired": "请启用此角色包",
+    "RoomAppearance": "外观",
+    "RoomMotion": "动作预设",
+    "RoomFold": "收起",
+    "RoomUnfold": "展开",
+    "MotionLibrary": "动作库",
+    "MotionControls": "播放控制",
+    "MotionNoFiles": "添加包含 VMD 的文件夹",
+    "MotionSelected": "已选动作",
+    "MotionNoSelection": "请从左侧选择",
+    "MotionPlaying": "播放中",
+    "MotionPaused": "已暂停",
+    "MotionStopped": "未播放",
+    "MotionPlay": "播放选中动作",
+    "MotionPause": "暂停",
+    "MotionResume": "继续播放",
+    "MotionRestart": "从头播放",
+    "MotionStop": "停止",
+    "MotionPhysics": "物理控制",
+    "MotionPhysicsOn": "物理：开启",
+    "MotionPhysicsOff": "物理：关闭",
+    "MotionPhysicsReset": "重置物理",
+    "MotionAddPath": "添加动作文件夹",
+    "MotionRefresh": "刷新",
+    "MotionRemovePath": "移除文件夹",
+    "MotionPathTitle": "粘贴动作文件夹的完整路径",
+    "MotionLocal": "外部动作库",
+    "MotionFolder": "动作目录",
+    "MotionExample": "随包示例",
+    "MotionRemovePathTitle": "粘贴要移除的文件夹路径",
+    "ChestJoltFollow": "骨骼跟随范围",
+    "ChestXpbdVertical": "上下幅度",
+    "ChestXpbdLateral": "左右幅度",
+    "ChestXpbdDepth": "前后幅度",
+    "ChestXpbdCushion": "回弹缓冲",
+    "ChestJoltLateral": "横向惯性",
+    "ChestJoltLanding": "落地下摆",
+    "ChestJoltStrain": "惯性伸缩",
+    "MotionSpeed": "播放倍速",
+    "GripCalibration": "握持校准",
+    "GripEquip": "请装备一把原版枪械",
+    "GripHandgun": "手枪握持",
+    "GripLongGun": "长枪握持",
+    "GripSupport": "副手握点",
+    "GripPrimary": "主手握点"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
@@ -677,6 +722,18 @@
           "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Body.png"
         }
       }
+    },
+    "pmx-020abca186c52e7b": {
+      "character": "埃芙",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png",
+      "pack": "R116Alva"
+    },
+    "pmx-7c5ea1f673f69f12": {
+      "character": "桑朵莱希",
+      "skin": "泳装",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7c5ea1f673f69f12.png",
+      "pack": "R116Centaureissi"
     }
   },
   "labels": {
@@ -2584,6 +2641,241 @@
       "path": "media/ui/AimohPMXReadyRoom/label-640af617a992de.png",
       "width": 244,
       "height": 44
+    },
+    "外观": {
+      "path": "media/ui/AimohPMXReadyRoom/label-86a63f23a076b1.png",
+      "width": 84,
+      "height": 44
+    },
+    "动作预设": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0a8d6ddaa7f09b.png",
+      "width": 160,
+      "height": 44
+    },
+    "收起": {
+      "path": "media/ui/AimohPMXReadyRoom/label-afd4b783536b82.png",
+      "width": 84,
+      "height": 44
+    },
+    "展开": {
+      "path": "media/ui/AimohPMXReadyRoom/label-00bd3960fea8ea.png",
+      "width": 84,
+      "height": 42
+    },
+    "动作库": {
+      "path": "media/ui/AimohPMXReadyRoom/label-594f6b7f046ade.png",
+      "width": 122,
+      "height": 45
+    },
+    "播放控制": {
+      "path": "media/ui/AimohPMXReadyRoom/label-75028d08b9f4c4.png",
+      "width": 160,
+      "height": 46
+    },
+    "添加路径或放入动作文件": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07ed490e5d7fe0.png",
+      "width": 426,
+      "height": 47
+    },
+    "已选动作": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0f52d00dadaa32.png",
+      "width": 160,
+      "height": 44
+    },
+    "请从左侧选择": {
+      "path": "media/ui/AimohPMXReadyRoom/label-24872b6b79623c.png",
+      "width": 236,
+      "height": 44
+    },
+    "播放中": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8dc8241d68372c.png",
+      "width": 122,
+      "height": 46
+    },
+    "已暂停": {
+      "path": "media/ui/AimohPMXReadyRoom/label-eb0c326b60ae89.png",
+      "width": 122,
+      "height": 46
+    },
+    "未播放": {
+      "path": "media/ui/AimohPMXReadyRoom/label-b68bde17c39c8b.png",
+      "width": 122,
+      "height": 46
+    },
+    "播放选中动作": {
+      "path": "media/ui/AimohPMXReadyRoom/label-90ca5efae04cf6.png",
+      "width": 236,
+      "height": 46
+    },
+    "暂停": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8d12fc0d4eb260.png",
+      "width": 84,
+      "height": 46
+    },
+    "继续播放": {
+      "path": "media/ui/AimohPMXReadyRoom/label-11a6c8e68b591c.png",
+      "width": 160,
+      "height": 46
+    },
+    "从头播放": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3cf0d9e7fb39b9.png",
+      "width": 160,
+      "height": 46
+    },
+    "停止": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ca4d973c0b006b.png",
+      "width": 84,
+      "height": 44
+    },
+    "物理控制": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a7d8bb44c6da0b.png",
+      "width": 160,
+      "height": 45
+    },
+    "物理：开启": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a36c32866cfd1c.png",
+      "width": 198,
+      "height": 44
+    },
+    "物理：关闭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-42b87a59ec5635.png",
+      "width": 198,
+      "height": 46
+    },
+    "添加本地路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e21e7ea52b9027.png",
+      "width": 236,
+      "height": 45
+    },
+    "移除路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-45ae38534f4276.png",
+      "width": 160,
+      "height": 45
+    },
+    "粘贴本地 .vmd 文件的完整路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fa9e61c980124f.png",
+      "width": 537,
+      "height": 48
+    },
+    "本地路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba437ecbf0a374.png",
+      "width": 160,
+      "height": 45
+    },
+    "动作目录": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f64db745d0c751.png",
+      "width": 160,
+      "height": 45
+    },
+    "随包示例": {
+      "path": "media/ui/AimohPMXReadyRoom/label-691f239f658a41.png",
+      "width": 160,
+      "height": 45
+    },
+    "添加动作文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3024d70e5d84f1.png",
+      "width": 274,
+      "height": 47
+    },
+    "移除文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/label-25807d9f76f32c.png",
+      "width": 198,
+      "height": 47
+    },
+    "粘贴动作文件夹的完整路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-29da142e726bf3.png",
+      "width": 464,
+      "height": 48
+    },
+    "粘贴要移除的文件夹路径": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7777cbae28a4d7.png",
+      "width": 426,
+      "height": 48
+    },
+    "添加包含 VMD 的文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/label-56d242137cbe85.png",
+      "width": 426,
+      "height": 47
+    },
+    "外部动作库": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5b56be5fd9a096.png",
+      "width": 198,
+      "height": 45
+    },
+    "骨骼跟随范围": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestJoltFollow.png",
+      "width": 136,
+      "height": 25
+    },
+    "上下幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestXpbdVertical.png",
+      "width": 92,
+      "height": 27
+    },
+    "左右幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestXpbdLateral.png",
+      "width": 92,
+      "height": 27
+    },
+    "前后幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestXpbdDepth.png",
+      "width": 92,
+      "height": 27
+    },
+    "回弹缓冲": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestXpbdCushion.png",
+      "width": 92,
+      "height": 25
+    },
+    "横向惯性": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestJoltLateral.png",
+      "width": 116,
+      "height": 34
+    },
+    "落地下摆": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestJoltLanding.png",
+      "width": 116,
+      "height": 33
+    },
+    "惯性伸缩": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestJoltStrain.png",
+      "width": 116,
+      "height": 34
+    },
+    "播放倍速": {
+      "path": "media/ui/AimohPMXReadyRoom/MotionSpeed.png",
+      "width": 116,
+      "height": 35
+    },
+    "握持校准": {
+      "path": "media/ui/AimohPMXReadyRoom/GripCalibration.png",
+      "width": 116,
+      "height": 33
+    },
+    "请装备一把原版枪械": {
+      "path": "media/ui/AimohPMXReadyRoom/GripEquip.png",
+      "width": 256,
+      "height": 34
+    },
+    "手枪握持": {
+      "path": "media/ui/AimohPMXReadyRoom/GripHandgun.png",
+      "width": 116,
+      "height": 33
+    },
+    "长枪握持": {
+      "path": "media/ui/AimohPMXReadyRoom/GripLongGun.png",
+      "width": 116,
+      "height": 33
+    },
+    "副手握点": {
+      "path": "media/ui/AimohPMXReadyRoom/GripSupport.png",
+      "width": 116,
+      "height": 33
+    },
+    "主手握点": {
+      "path": "media/ui/AimohPMXReadyRoom/GripPrimary.png",
+      "width": 116,
+      "height": 32
     }
   },
   "categories": {
@@ -2601,5 +2893,9 @@
     "pmx-d99ea684060e1c76": true
   },
   "background": "media/ui/AimohPMXReadyRoom/room.png",
-  "portraitRing": "media/ui/AimohPMXReadyRoom/portrait-ring.png"
+  "portraitRing": "media/ui/AimohPMXReadyRoom/portrait-ring.png",
+  "optionalModels": [
+    "pmx-020abca186c52e7b",
+    "pmx-7c5ea1f673f69f12"
+  ]
 }

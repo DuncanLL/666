@@ -1,8 +1,8 @@
 # R116
 
-Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建发布流程从当前 R116 工坊候选整理而来，工作台不在本仓库内。
+Project Zomboid B42.22 游戏人物 MOD 的维护仓库。人物代码和资源清单对应当前工坊项目，工作台单独维护。
 
-**当前保存点：0.3.12，效果与性能阶段性趋稳，可继续游玩和测试。** 用户已确认帧数明显提升；不是完全版或全部问题已解决。今日成果、实际安装、使用边界与未解决事项先读[2026-11-08阶段总结](docs/STAGE-0.3.12-2026-11-08.md)，具体证据见[维护记录索引](docs/README.md)。
+**人物版本 0.3.32。** [版本说明](docs/RELEASE-R116-0.3.32.md)记录本次功能、包体及验证范围。历史记录见[维护索引](docs/README.md)。
 
 ## 目录
 
@@ -22,11 +22,13 @@ Project Zomboid B42.21 游戏人物 MOD 的私有维护仓库。代码与构建�
 
 本机 `.local/paths.json` 已配置；在另一台制作电脑上先复制 `config/paths.example.json` 并填写依赖位置。需要已有合法游戏依赖、ZombieBuddy、Viewpoint、Java 25 运行时、ECJ 4.38，以及现有外部人物资源。第三方游戏和工具二进制不随仓库分发。
 
-当前含新胸部物理的完整候选使用已有构建入口；只改Java且复用已验证的新原生候选时，可以用 `tools/build.py --native-candidate build/native/game-candidate.json`。裸 `tools/build.py` 默认仍读取历史原生基准，不作为本轮胸部物理发布构建命令。
+核对这版时，用 `--release-reference` 指定已验证的 0.3.32 JAR。工具完整编译人物 Java 源码，核对类内容后复用已验证的 JAR。对应的资源目录和工坊元数据从本机配置读取。
 
 ```powershell
-python tools/build_chest_trial.py
-python tools/check_runtime.py build/workshop/chest-trial/R116
+$paths = Get-Content .local/paths.json -Raw | ConvertFrom-Json
+python tools/build.py --release-reference $paths.reference_jar
+python tools/package_workshop.py --output $paths.workshop_targets[0] --verify-existing
+python tools/check_runtime.py $paths.workshop_targets[0]
 ```
 
 Eclipse 配套工坊项目独立生成，名称为 `R116 渲染支持 光影分发`，内部 ID 保留 `AimohGF2Eclipse`：
@@ -39,9 +41,7 @@ python tools/check_render_support.py
 
 光影和原有完整渲染代码来自 `provenance/render-support.json` 冻结输入。ZIP 封装于 JAR，正常 Java MOD 启动后安装到真实玩家目录，再由玩家在 VP 选择；无需修改 VP 文件或写作者配置。两份发布记录见 `docs/RELEASE-2026-11-06.md`。
 
-当前人物候选在 `build/workshop/chest-trial/R116`，独立光影候选在 `build/workshop/R116RenderSupport`；基础 `package_workshop.py` 的默认输出仍是 `build/workshop/R116`。脚本不会启动游戏或执行 Steam 上传，安装/作者项目提升使用独立命令。输出包含完整人物资料；人物文件从本机资源目录读回，不需要下载 GitHub 仓库的玩家参与构建。
-
-已有本轮人物候选需要复查时，运行 `python tools/package_workshop.py --output build/workshop/chest-trial/R116 --verify-existing`，只读回核对当前代码与资源，不再复制整套素材。
+生成新人物候选目录时，给 `package_workshop.py --output` 传入一个尚未存在的目录。发布校验模式沿用配置中首个工坊项目的 ID、预览图和元数据。人物文件从本机资源目录读回。
 
 首次迁移基准使用 `python tools/build.py --compare-baseline`：完整编译游戏源码，与迁移前工坊 JAR 比较，忽略编译调试属性。功能修改后的普通构建允许产生预期差异。
 

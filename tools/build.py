@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import zipfile
 from common import ROOT, BUILD, settings, sha, save, environment
@@ -21,21 +22,42 @@ def compile_java(config, sources, target, classpath):
         result.check_returncode()
 
 
-def build(compare_baseline=False,native_candidate=None):
+def build(compare_baseline=False,native_candidate=None,release_reference=None):
     config = settings()
     game = Path(config['game_root'])
     classpath = [config['viewpoint_jar'], config['zombiebuddy_jar'], *game.glob('*.jar')]
     source = sorted((ROOT / 'game/java').rglob('*.java'))
-    classes = BUILD / 'classes'
+    classes = BUILD / ('release-classes' if release_reference is not None else 'classes')
     compile_java(config, source, classes, classpath)
     compile_java(config, [ROOT / 'tools/java/CompareRuntime.java'], BUILD / 'tools', [config['zombiebuddy_jar']])
-    if compare_baseline:
+    if compare_baseline or release_reference is not None:
+        reference=Path(config['reference_jar']) if release_reference is None else release_reference.resolve(strict=True)
+        if release_reference is not None:
+            release=json.loads((ROOT/'provenance/character-release.json').read_text('utf8'))
+            assert sha(reference)==release['runtime_sha256'], 'Character release runtime fingerprint differs'
         comparison = subprocess.run([str(game / 'jre64/bin/java.exe'), '-cp', str(BUILD / 'tools') + ';' + config['zombiebuddy_jar'],
-                                     'CompareRuntime', config['reference_jar'], str(classes)],
+                                     'CompareRuntime', str(reference), str(classes)],
                                     env=environment(), capture_output=True, text=True, encoding='utf8')
         (BUILD / 'class-comparison.txt').write_text(comparison.stdout + comparison.stderr, 'utf8')
         print(comparison.stdout, flush=True)
         comparison.check_returncode()
+    if release_reference is not None:
+        # Keep the tested runtime bytes after verifying that the compiled source matches it.
+        with zipfile.ZipFile(reference) as archive:
+            assert archive.testzip() is None
+            prefix='aimoh/pmxpreview/native/windows-x64/'
+            for name,digest in release['native_hashes'].items():
+                assert hashlib.sha256(archive.read(prefix+name)).hexdigest()==digest,name
+        jar=BUILD/'AimohPMXPreview.jar'
+        temporary=jar.with_suffix('.jar.writing')
+        shutil.copyfile(reference,temporary)
+        os.replace(temporary,jar)
+        save(BUILD/'build.json',dict(status='PASS_CHARACTER_RELEASE_SOURCE_PARITY',jar=str(jar),
+            jar_sha256=sha(jar),native_version=release['native_version'],release_reference=True,
+            source_hashes={p.relative_to(ROOT).as_posix():sha(p) for p in source},
+            native_rebuilt=False,game_started=False,installed=False))
+        print('Verified character release: '+str(jar),flush=True)
+        return
     baseline = json.loads((ROOT / 'provenance/baseline.json').read_text('utf8'))
     candidate=None if native_candidate is None else json.loads(Path(native_candidate).read_text('utf8'))
     natives = {name: Path(config['native_source']) / name for name in baseline['native_hashes']} if candidate is None else {name:Path(row['path'])for name,row in candidate['files'].items()}
@@ -79,5 +101,8 @@ def build(compare_baseline=False,native_candidate=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--compare-baseline', action='store_true', help='Require exact runtime class parity, ignoring compiler debug attributes.')
-    parser.add_argument('--native-candidate',type=Path)
-    args=parser.parse_args();build(args.compare_baseline,args.native_candidate)
+    native_inputs=parser.add_mutually_exclusive_group()
+    native_inputs.add_argument('--native-candidate',type=Path)
+    native_inputs.add_argument('--release-reference',type=Path,
+                               help='Verify Java source parity and reuse the pinned release runtime verbatim.')
+    args=parser.parse_args();build(args.compare_baseline,args.native_candidate,args.release_reference)

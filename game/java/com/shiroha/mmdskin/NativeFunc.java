@@ -49,6 +49,12 @@ public final class NativeFunc {
     public native long GetMorphCount(long model);
     public native String GetMorphName(long model, int index);
     public native float GetMorphWeight(long model, int index);
+    public native long LoadAnimation(long model, String file);
+    public native void DeleteAnimation(long animation);
+    public native void ChangeModelAnim(long model, long animation, long layer);
+    public native float GetAnimMaxFrame(long animation);
+    public native void SetLayerLoop(long model, long layer, boolean loop);
+    public native void SeekLayer(long model, long layer, float frame);
     public native void SetPZAnimationState(long model, long[] animations, float[] frames,
                                           boolean[] additive, int[] morphs, float[] weights);
     public native String GetRuntimeStats();

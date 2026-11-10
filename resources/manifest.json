@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "date": "2026-11-08",
+  "date": "2026-11-10",
   "files": {
     "42/media/aimoh_gf2/characters.json": {
-      "bytes": 22383772,
-      "sha256": "4a40683736b51d1e399e70861b0e95235dafe9e5ab5d41292e708d1129d4aa90"
+      "bytes": 21569156,
+      "sha256": "2b6fbc508149a2a4da2533d0e14cf64ad6a932d9f575e335aa17959b07d4caa2"
     },
     "42/media/aimoh_gf2/data/0041875d4c1a71ae532313a2d18aeaae9e59b35d38d53f5b8bc7834cd8efbd2d.f32": {
       "bytes": 544,
@@ -1814,10 +1814,6 @@
       "bytes": 1184,
       "sha256": "0110daa7cfa7abbad395f5e5dbcf79559b27fd205a35181aad47da50d3624148"
     },
-    "42/media/aimoh_pmx/licenses/RUST-DEPENDENCIES.json": {
-      "bytes": 25567,
-      "sha256": "fd3a2bf0cf56308bf450cfb4237fa6d144f2462c44155baacd89d546dc6570a2"
-    },
     "42/media/aimoh_pmx/licenses/RUST-DEPENDENCIES.md": {
       "bytes": 3800,
       "sha256": "0766ebf43c511906fa7aa7325466653d780dfc7b816f44d43df4f26098b99f63"
@@ -1830,21 +1826,9 @@
       "bytes": 2883,
       "sha256": "63263614cdd29f2f93cba85e992f041b31f9fc7b4033692f31269489a8a1b177"
     },
-    "42/media/aimoh_pmx/models/pmx-0af216265749a22d/model.controls.json": {
-      "bytes": 9814,
-      "sha256": "ea2f096395d2f8f92099d326c9b0a90bbada2135dea7cc8f7b3857c553a5cf07"
-    },
     "42/media/aimoh_pmx/models/pmx-0af216265749a22d/model.pmx": {
       "bytes": 4742521,
       "sha256": "0af216265749a22d50f45270e935e687e959cdc8333dc83b8b2a4bacb9095db0"
-    },
-    "42/media/aimoh_pmx/models/pmx-0af216265749a22d/profile.json": {
-      "bytes": 72669,
-      "sha256": "ee505bc9679e38e8db14c1748b200507b8af131aaee08e4218f77b907fb614f9"
-    },
-    "42/media/aimoh_pmx/models/pmx-0af216265749a22d/shading-danrp.json": {
-      "bytes": 613235,
-      "sha256": "171158b81edf46760997727985ea9be37c954496fc364acee9220c64c17073d3"
     },
     "42/media/aimoh_pmx/models/pmx-0af216265749a22d/spa/skintoon.bmp": {
       "bytes": 7656,
@@ -1930,17 +1914,9 @@
       "bytes": 535568,
       "sha256": "5fb86b029b5a8f50e240f2d1f60f3e21d366de6b688abcb2b6ed6cd0a9de248c"
     },
-    "42/media/aimoh_pmx/models/pmx-225af1a054faefb0/model.controls.json": {
-      "bytes": 7669,
-      "sha256": "45e454b4a5c4d8b2219e2ce475771db0beef72339d05630aeb3d9dee11e96db1"
-    },
     "42/media/aimoh_pmx/models/pmx-225af1a054faefb0/model.pmx": {
       "bytes": 4274892,
       "sha256": "f5b2382912711eba6fbb390d0e601b6c15254402fdb722f44c3ab8492e16b37f"
-    },
-    "42/media/aimoh_pmx/models/pmx-225af1a054faefb0/profile.json": {
-      "bytes": 91177,
-      "sha256": "7e2db7f3eec72c4260a1451fd0ecb8487039fcb03103e215955ca136e897c57d"
     },
     "42/media/aimoh_pmx/models/pmx-225af1a054faefb0/spa/DiamondRainbow.png": {
       "bytes": 21779,
@@ -2014,17 +1990,9 @@
       "bytes": 406242,
       "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
     },
-    "42/media/aimoh_pmx/models/pmx-293917f24c2bd387/model.controls.json": {
-      "bytes": 9737,
-      "sha256": "b4e1d2d1253050e4c69525ef7b00734749671305edcd1e0aed41155368bb6c07"
-    },
     "42/media/aimoh_pmx/models/pmx-293917f24c2bd387/model.pmx": {
       "bytes": 6558570,
       "sha256": "36b7d4301dfff825d446bb5ac7e2a1c8bf4b5c9e329ffbcde763d16062351738"
-    },
-    "42/media/aimoh_pmx/models/pmx-293917f24c2bd387/profile.json": {
-      "bytes": 87159,
-      "sha256": "e651e5189df9aefa575b1e9d9435fba5309ebb97b3463ad49064a8a54d42abcb"
     },
     "42/media/aimoh_pmx/models/pmx-293917f24c2bd387/spa/hair-a.bmp": {
       "bytes": 1000054,
@@ -2126,25 +2094,9 @@
       "bytes": 406242,
       "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
     },
-    "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/model.controls.json": {
-      "bytes": 3268,
-      "sha256": "b09532ef222893d04adf2e1db4ed8b905f6ad7bdb88a48e04e0b773a571e51fd"
-    },
     "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/model.pmx": {
       "bytes": 7211793,
       "sha256": "412bd037301ebe18709eeac9cd3ec3d7f2ec4121cc83edd331843075b08b6a92"
-    },
-    "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/profile.json": {
-      "bytes": 89315,
-      "sha256": "b956b9b644e8efe33fe7b0f3ff47f20d3558638398cccb6d2fec0bb2cb658c9d"
-    },
-    "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/shading-danrp.json": {
-      "bytes": 1276643,
-      "sha256": "d258ca02848e537910fd1e95290637e7fbf66a0ee2a6eb321fb8e6877d57f595"
-    },
-    "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/shading.json": {
-      "bytes": 131364,
-      "sha256": "262408f732e957b3f461055040c2029f22add85f3f5066900052a8ea281accfd"
     },
     "42/media/aimoh_pmx/models/pmx-412bd037301ebe18/SOURCE_README.txt": {
       "bytes": 1015,
@@ -2238,21 +2190,9 @@
       "bytes": 692296,
       "sha256": "be9abe3b38f6b7fef19efb3dfe4ee31b719768c6a94ddebb793b30480ed8a324"
     },
-    "42/media/aimoh_pmx/models/pmx-48650a04a35b40e0/model.controls.json": {
-      "bytes": 5185,
-      "sha256": "63d69d7bf7703926fab2efeec6e22f7f87141fd39095dfba405aeceea2863924"
-    },
     "42/media/aimoh_pmx/models/pmx-48650a04a35b40e0/model.pmx": {
       "bytes": 5580872,
       "sha256": "48650a04a35b40e0bfba74707a9a517a89aed2ec372f0d6c6f510cbef9f0ce55"
-    },
-    "42/media/aimoh_pmx/models/pmx-48650a04a35b40e0/profile.json": {
-      "bytes": 88706,
-      "sha256": "7819f298f2ef8b58b2c90b94704f69de9cd8646cc45ff42647add3a7b60dd776"
-    },
-    "42/media/aimoh_pmx/models/pmx-48650a04a35b40e0/shading-danrp.json": {
-      "bytes": 1319,
-      "sha256": "20c0fecf53c440fbd47b97a85647a424cd574e273232735863215b141864338e"
     },
     "42/media/aimoh_pmx/models/pmx-48650a04a35b40e0/spa/hair-a.bmp": {
       "bytes": 1000054,
@@ -2338,21 +2278,9 @@
       "bytes": 533016,
       "sha256": "3bb208f90a2861e8a739ad8692ec86d99d547d2f6350384dd1f787077e7f3f82"
     },
-    "42/media/aimoh_pmx/models/pmx-782f06826adb1307/model.controls.json": {
-      "bytes": 6568,
-      "sha256": "d601ef17c59280e2f35dde2a43f14fa70e5222f003a827d5fd53c32146a153bf"
-    },
     "42/media/aimoh_pmx/models/pmx-782f06826adb1307/model.pmx": {
       "bytes": 6027719,
       "sha256": "b5013baf4dc16c9b394ddd25568ac58d23aeec5835683bbf42d185763a8d7960"
-    },
-    "42/media/aimoh_pmx/models/pmx-782f06826adb1307/profile.json": {
-      "bytes": 68737,
-      "sha256": "a323593eadc57bf37c2b2dc215e0d98e758b58c67d6ea1360e2ae9dae6c4c06c"
-    },
-    "42/media/aimoh_pmx/models/pmx-782f06826adb1307/shading-danrp.json": {
-      "bytes": 1201,
-      "sha256": "a3d2bcdd3a29bf7878bbaa8903597b3de43b8aff452c83561a9bd44103163786"
     },
     "42/media/aimoh_pmx/models/pmx-782f06826adb1307/SOURCE_README.txt": {
       "bytes": 1015,
@@ -2430,21 +2358,9 @@
       "bytes": 568096,
       "sha256": "75f70b8a30d02fdffb679745a5fe04c7333fd0bc37994daf50c666e30954ee57"
     },
-    "42/media/aimoh_pmx/models/pmx-abe3eaaaa9d04264/model.controls.json": {
-      "bytes": 4060,
-      "sha256": "52a97e39520ec9685aae63e7b3fd7bd8aba9ddace37c5c05c5886a47666446a9"
-    },
     "42/media/aimoh_pmx/models/pmx-abe3eaaaa9d04264/model.pmx": {
       "bytes": 4301015,
       "sha256": "abe3eaaaa9d042640f08e4f53f7d55a05d1e3c377798854b1f4c3ffee81a099f"
-    },
-    "42/media/aimoh_pmx/models/pmx-abe3eaaaa9d04264/profile.json": {
-      "bytes": 85877,
-      "sha256": "4084b3da7fc29b07888a36f1fe02d71664a455754bfdf4fbc750e5fc8934317e"
-    },
-    "42/media/aimoh_pmx/models/pmx-abe3eaaaa9d04264/shading-danrp.json": {
-      "bytes": 1113,
-      "sha256": "2fce348f6fad5f9f7b992b2b38d556751ad24272db7a622ce57990b4aee88195"
     },
     "42/media/aimoh_pmx/models/pmx-abe3eaaaa9d04264/spa/eyes.png": {
       "bytes": 13427,
@@ -2514,21 +2430,9 @@
       "bytes": 446744,
       "sha256": "1b23508a8d7c4d2e0caa5ccab63aa64aeb841af12ec24713ec57a1c209fe4d07"
     },
-    "42/media/aimoh_pmx/models/pmx-b0dd2e3cfd1ab80c/model.controls.json": {
-      "bytes": 9230,
-      "sha256": "6c7ca5b1e0ee7fc2c70b23ee6c969d509eab49d1b158686a54fa08fe30909c46"
-    },
     "42/media/aimoh_pmx/models/pmx-b0dd2e3cfd1ab80c/model.pmx": {
       "bytes": 11216417,
-      "sha256": "b0dd2e3cfd1ab80cd66c0b7d7ebd1a681d14b8d490b37e676e81f048beeeed26"
-    },
-    "42/media/aimoh_pmx/models/pmx-b0dd2e3cfd1ab80c/profile.json": {
-      "bytes": 109795,
-      "sha256": "1a33fbe3ebb31a9294eb3f6cc06815eb9cdfdf8a3a92e3b6720913594778b443"
-    },
-    "42/media/aimoh_pmx/models/pmx-b0dd2e3cfd1ab80c/shading-danrp.json": {
-      "bytes": 1528,
-      "sha256": "3dfffba228f2e1f2d91265557828c12dd187b80e57f8134ffa7b421fbd748f2d"
+      "sha256": "16a505f156a4c569457cac8d831b8a4b3435dd5932cae80c87f5a9d7662f8ae2"
     },
     "42/media/aimoh_pmx/models/pmx-b0dd2e3cfd1ab80c/Textures/02f5c817ea84a26aa5f7.png": {
       "bytes": 6106,
@@ -2626,21 +2530,9 @@
       "bytes": 1079624,
       "sha256": "1f1d06dbb39e2b24011d1dbdb1c0001933989666d96e41f4878c265aa1064294"
     },
-    "42/media/aimoh_pmx/models/pmx-c7270af966e8aaf8/model.controls.json": {
-      "bytes": 6897,
-      "sha256": "8412c4e91974782a9f13eab39fef915bc4a865300b046e17a0d96d40f6234621"
-    },
     "42/media/aimoh_pmx/models/pmx-c7270af966e8aaf8/model.pmx": {
       "bytes": 3774592,
       "sha256": "970165ef8f226cd9c2b4eed51935e88dad2148d4ce99f26e8556d011a6c98eec"
-    },
-    "42/media/aimoh_pmx/models/pmx-c7270af966e8aaf8/profile.json": {
-      "bytes": 76294,
-      "sha256": "2387903d4f1380a76ebbefb785d8703c9a0a97825d6d6e6befc3c34acf55f110"
-    },
-    "42/media/aimoh_pmx/models/pmx-c7270af966e8aaf8/shading-danrp.json": {
-      "bytes": 1133,
-      "sha256": "879abaf9e12040807f18d1ce88f4ba3ee24484c1e62c4375b27201e804bba133"
     },
     "42/media/aimoh_pmx/models/pmx-c7270af966e8aaf8/SOURCE_README.txt": {
       "bytes": 1015,
@@ -2726,21 +2618,9 @@
       "bytes": 374200,
       "sha256": "55bdc6400049eaf95e756d23e44ff805fccb2abab5c8659e3ef80dacd5a51a8c"
     },
-    "42/media/aimoh_pmx/models/pmx-f5b2807685b18a60/model.controls.json": {
-      "bytes": 8170,
-      "sha256": "69860bd1035de47422166b5ed14b6b9ec882202fcb95c9cbc3a4c010871cdeda"
-    },
     "42/media/aimoh_pmx/models/pmx-f5b2807685b18a60/model.pmx": {
       "bytes": 10706270,
       "sha256": "479727164fc1e964b46670e705bc6a2e039bc13e4fceb99ab04bdf51299b0dff"
-    },
-    "42/media/aimoh_pmx/models/pmx-f5b2807685b18a60/profile.json": {
-      "bytes": 91350,
-      "sha256": "f44e42ef06c2c0eaeae3d2321ffb8061fb3226771384f73ba025c37e31e0943f"
-    },
-    "42/media/aimoh_pmx/models/pmx-f5b2807685b18a60/shading-danrp.json": {
-      "bytes": 1709,
-      "sha256": "349f326f81236fb21b502b195a3636319dd2b46be88efdef678f1eb448119590"
     },
     "42/media/aimoh_pmx/models/pmx-f5b2807685b18a60/spa/DiamondRainbow.png": {
       "bytes": 21779,
@@ -2854,10 +2734,6 @@
       "bytes": 2609430,
       "sha256": "6eb458b3d9c9a0948c3382efbe5715d17d7cbfa823717b0f3740c0bc947f0a09"
     },
-    "42/media/aimoh_pmx/models/swimsuit/profile.json": {
-      "bytes": 55669,
-      "sha256": "9ac8b32cafe9ecf3a89a33e1bb37fa498df0d4cc0512d36b8cb179827fd6e42b"
-    },
     "42/media/aimoh_pmx/models/swimsuit/spa/eyes.png": {
       "bytes": 13427,
       "sha256": "5f9aced4edbcd24ed910a61bd31235a02d324162ee348b9ea459227d0a7033f6"
@@ -2933,10 +2809,6 @@
     "42/media/aimoh_pmx/models/swimsuit/Textures/extra.png": {
       "bytes": 406242,
       "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
-    },
-    "42/media/aimoh_pmx/registry.json": {
-      "bytes": 2319,
-      "sha256": "1bf9238673f4c48d149fcddc86fec6d5e03352654100143d05137fbe2206a162"
     },
     "42/media/sound/AimohPMXAsteria/Bleeding_L1_A.wav": {
       "bytes": 207404,
@@ -5581,10 +5453,6 @@
     "42/media/sound/AimohPMXVoice/silent.ogg": {
       "bytes": 3584,
       "sha256": "fa40ab0f102fe64ccd3391cd110c37f8a912203d90042f7a40358148512867ff"
-    },
-    "42/media/ui/AimohPMXReadyRoom/catalog.json": {
-      "bytes": 70099,
-      "sha256": "7e385efdc7a0a0567ec5e8b91bf66a985b563713d3dd7d6b9ea92e7df8b0c449"
     },
     "42/media/ui/AimohPMXReadyRoom/label-002c56e7bf5829.png": {
       "bytes": 2164,
@@ -8425,6 +8293,242 @@
     "42/media/aimoh_gf2/data/a1fa925a8103484b61735c50e1bfedd0bcf3ecaba81a29ca5af814e0d15203d9.f32": {
       "bytes": 9961472,
       "sha256": "a1fa925a8103484b61735c50e1bfedd0bcf3ecaba81a29ca5af814e0d15203d9"
+    },
+    "42/media/aimoh_pmx/motions/HeartPieDancehall-HimeTanaka.vmd": {
+      "bytes": 36890132,
+      "sha256": "5a96dcbf6e6acbe25ada1cd9427eb799002fa0d9d32277762044e9f672ab860b"
+    },
+    "42/media/aimoh_pmx/motions/LadyCrazy-HinaSuzuki.vmd": {
+      "bytes": 57770164,
+      "sha256": "da15073ae09818722b76c55a1de88471a1adce5be1ce8869e2e8fdb8051af6c1"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestJoltFollow.png": {
+      "bytes": 2257,
+      "sha256": "b7f1ef63f5294519614df74c3b1f1fcf3857e5ffbb9151d0b1659dd92e672bb1"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestJoltLanding.png": {
+      "bytes": 1875,
+      "sha256": "493c7baa6a816280dd366e8c9fb5ac1007d59451649ea662f37b4394a14d8d48"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestJoltLateral.png": {
+      "bytes": 1787,
+      "sha256": "d92ed4c65f321889137d8708e1e011c09073067e50a55f29c1887227c590af30"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestJoltStrain.png": {
+      "bytes": 1924,
+      "sha256": "2667620b5b5b21bb63bf7695d10cb01a3861575cfc425a7ba3781c64bc3f2a99"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestXpbdCushion.png": {
+      "bytes": 1507,
+      "sha256": "2afd4cfa72a5382c3e3e4364ec7b76c331a925811f6626d19470952b6fa6bbdf"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestXpbdDepth.png": {
+      "bytes": 1358,
+      "sha256": "a8b83f5eb97457f0548783febde5f85b92ad437058daa11164d65b00e2189f51"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestXpbdLateral.png": {
+      "bytes": 1360,
+      "sha256": "8e22f8d3978038ae4c50629d0e02eb4a2101ab0fc3a093a1d2f049ec953ca50b"
+    },
+    "42/media/ui/AimohPMXReadyRoom/ChestXpbdVertical.png": {
+      "bytes": 1111,
+      "sha256": "b6a579e8285740acd5a73d9ae0a4a34bcce9f376decac9ed48efce341156f1ec"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripCalibration.png": {
+      "bytes": 2020,
+      "sha256": "f3f32047e272e0a45576d032ca97b2bcadb84dcbcf626c19fa80886506739fcb"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripEquip.png": {
+      "bytes": 4285,
+      "sha256": "fa8013a8894dba20298b036ab3b506b7414797c8ab18a635b4918b31a994c167"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripHandgun.png": {
+      "bytes": 1977,
+      "sha256": "b6ab93bb676591dd2dc9a6660c1f5103cfdf53af0a95b7eb428d181e1e858d97"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripLongGun.png": {
+      "bytes": 2092,
+      "sha256": "544bf97a07b059defce77841ecf47445f9cb278a37efcbd5a0c0ddc225739a08"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripPrimary.png": {
+      "bytes": 1499,
+      "sha256": "22879ea9317f105c6cb99f1dc1874ed10c611fad456bc296d5d651142003e3b2"
+    },
+    "42/media/ui/AimohPMXReadyRoom/GripSupport.png": {
+      "bytes": 1617,
+      "sha256": "ca63c9f3583d8fceb68cd0b8fd4b9ad9b06df55ff0734b424ad76c67611a9c4b"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-00bd3960fea8ea.png": {
+      "bytes": 1083,
+      "sha256": "ecf9e94fe47f033f65bed02f77da83baf3b193a8bd35ada89d6f0f9ceb71a81d"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-07ed490e5d7fe0.png": {
+      "bytes": 7543,
+      "sha256": "d26626298dc9560a0004f47be82be4db2a5b68604fc4374c531311c067575767"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-0a8d6ddaa7f09b.png": {
+      "bytes": 2882,
+      "sha256": "31e7645aeff7a90eb5dfc42134b113a74e3c19283539e37942d9fd2ce4d4976d"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-0f52d00dadaa32.png": {
+      "bytes": 2439,
+      "sha256": "4ccfd36989c83125ed4a00edc4ebd6b40901d27d32a1efb7afd2dd0f0aaef1df"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-11a6c8e68b591c.png": {
+      "bytes": 3734,
+      "sha256": "ee501fedfa67379a01ed90e7cbf0de4f82ce4e5ed631c43a74a7e47104744adb"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-24872b6b79623c.png": {
+      "bytes": 4094,
+      "sha256": "dc3d6a09fdb3ee7f78ccbf98083e87151e2be6796ce747840f65ff1aee2897f8"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-25807d9f76f32c.png": {
+      "bytes": 3839,
+      "sha256": "6702e173cbac0c29e55da0362df78538f904908b1522f29a929a5cd6011a218c"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-29da142e726bf3.png": {
+      "bytes": 7559,
+      "sha256": "3136032d386053c68579c3294642f79595ac7ba8d3506c0035dc95bfefc859d3"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-3024d70e5d84f1.png": {
+      "bytes": 4670,
+      "sha256": "6e23af8ce5e4ae260f89d4eee1e86e8ce1db06bef92c19c408245214ecd43aab"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-3cf0d9e7fb39b9.png": {
+      "bytes": 3327,
+      "sha256": "aa23f5db51cf8034e2fd3b5ea6150e0b7c84e2c9a24af59861ca1a6c0b6c7400"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-42b87a59ec5635.png": {
+      "bytes": 3026,
+      "sha256": "d190dd8e384e5483267822fdd86bee49501f00cb6aa31e5601369befa8fa4309"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-45ae38534f4276.png": {
+      "bytes": 3446,
+      "sha256": "5f141465a48cacacc91c11d4dbf931b4743e4c4ad3c1cb3863677e07c433fa1d"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-56d242137cbe85.png": {
+      "bytes": 6866,
+      "sha256": "1921893efd2e042ebf0a3b7600e0e6e8641f62b384cc05841c4e5e72eb5ac6a1"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-594f6b7f046ade.png": {
+      "bytes": 1879,
+      "sha256": "68a57380076f6fb80a415a158fff208de2028b96cbb7b7d4744c3d68c1c54eb1"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-5b56be5fd9a096.png": {
+      "bytes": 3196,
+      "sha256": "77ad053b05810db333e7d411c3dd5fc8e7f0dcca5fcbb67fc8e0e38cf0e94f1a"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-691f239f658a41.png": {
+      "bytes": 2871,
+      "sha256": "1a82b2d1a3b5936e61df9711c3dc44a237fe0d4f0f0f6f313a6fb7a192219094"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-75028d08b9f4c4.png": {
+      "bytes": 3215,
+      "sha256": "d00eb8f4ed44723593653ba8b5ec6e2e5d85c759057f548319d7d877d7f74913"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-7777cbae28a4d7.png": {
+      "bytes": 7715,
+      "sha256": "e801c0997119b4c4e20e33c41e04e8285365deec4285a39be5581dd2111a817f"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-86a63f23a076b1.png": {
+      "bytes": 1658,
+      "sha256": "68283a95182077bccd9eef6751264f017b4f2ed2a447725f4182851e3213c154"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-8d12fc0d4eb260.png": {
+      "bytes": 1250,
+      "sha256": "f86b7f63d2459e4c4397ea77ddd7d8c8f21658e7a6af759fbd84bff7b5f75aaa"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-8dc8241d68372c.png": {
+      "bytes": 2269,
+      "sha256": "541a752f1415f435d4a05b29e25437f29eadc7d08549f1549dee9aecfec528d3"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-90ca5efae04cf6.png": {
+      "bytes": 4250,
+      "sha256": "63b5b0a092514f5dddd2c51ac57957a9411978238b9b2429337e3a7ea4c2a9d6"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-a36c32866cfd1c.png": {
+      "bytes": 2459,
+      "sha256": "ea969c59ba9bca44cdabcd1d96f818a521800b01dbcbe4c2897acfa1d396ec2a"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-a7d8bb44c6da0b.png": {
+      "bytes": 2740,
+      "sha256": "59a3f9b0073941567c02a775838555038512943dd4267fae63b6430fb9a5c0fa"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-afd4b783536b82.png": {
+      "bytes": 1476,
+      "sha256": "1b7c4f0934949d886c4614d7384c18fa895b48db97e6839aa8befeea69015d67"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-b68bde17c39c8b.png": {
+      "bytes": 2509,
+      "sha256": "79fc831dd3c778f452760491d2bdd1d4254da6aab8b3bab58f3037bc3e4ff637"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-ba437ecbf0a374.png": {
+      "bytes": 2769,
+      "sha256": "7e115789d2d2bf8c1d20b51774c1afc6530ba06baf2602c0cc3e6a9ece863b20"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-ca4d973c0b006b.png": {
+      "bytes": 758,
+      "sha256": "ff509450025272d4793948742d488fef05fbb3c3aff4d0320eb6d6aac05e1969"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-e21e7ea52b9027.png": {
+      "bytes": 4435,
+      "sha256": "663e803924de632ebc38627c8723e5c4cb73b6e3729c568de17245f78726a646"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-eb0c326b60ae89.png": {
+      "bytes": 1526,
+      "sha256": "d649c881ab0793ea55ff939258336fc85d0181b08c1fb9a49523250baa203027"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-f64db745d0c751.png": {
+      "bytes": 2238,
+      "sha256": "a94d122e56239abc7fb18b3d1de3645e6e8312eff047f821feb4c27de3a81c3c"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-fa9e61c980124f.png": {
+      "bytes": 8150,
+      "sha256": "ad80e2e7d8e2ea7a908aec6a9e682e9cfebcb420a31c4312c78a459ab2d04f12"
+    },
+    "42/media/ui/AimohPMXReadyRoom/MotionSpeed.png": {
+      "bytes": 2291,
+      "sha256": "d09d4a7d9b37df389e449c9220b4d2690e5dd44fd662efd642509bf8356fdda8"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-down.png": {
+      "bytes": 268,
+      "sha256": "03e4435e40032d512782d0cc65835a90e28ffffd6fb292d2251d648074eaf6e0"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-knob.png": {
+      "bytes": 502,
+      "sha256": "e6b65ab05569b65bad73e3601444acc1026c57985bc3083b4dfb46d21eebfa38"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-pause.png": {
+      "bytes": 259,
+      "sha256": "bce4c97c9f12e728daeaf3b67d1655c90249cf64ad202a07ccc703908acab207"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-play.png": {
+      "bytes": 324,
+      "sha256": "195801ce1ffa012608c96aef7df0f26e6f9786d688f6f3e3a4f8766e674b5b79"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-restart.png": {
+      "bytes": 578,
+      "sha256": "cae75dd034c3b1fa237bdeaa6bf42d8b3c518b46df1cb730726f550cff6d0467"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-stop.png": {
+      "bytes": 299,
+      "sha256": "b3310b747e5b181cb67f563cdb8991b98072ebde431836611d906f20482901b9"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-surface.png": {
+      "bytes": 157,
+      "sha256": "13665923cc08b786b4dc604d4852339e1fbfa7d4c71d1aebffc8ef5c5e18cecb"
+    },
+    "42/media/ui/AimohPMXReadyRoom/room-up.png": {
+      "bytes": 264,
+      "sha256": "22d4501f4a6970c672ce74da847e5621df52589c633ca006ffbdc0291f8c83fd"
+    },
+    "42/media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png": {
+      "bytes": 23811,
+      "sha256": "e80f1180d8228ec329cea9d36e99b4add4cb2c10477cdee191707606767f31dc"
+    },
+    "42/media/ui/AimohPMXReadyRoom/round-pmx-7c5ea1f673f69f12.png": {
+      "bytes": 21715,
+      "sha256": "add2c353dd5ecaf699733e92a58fe3f452bf1e5fe4a5f6a31ec5eacfa50c73a2"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git."

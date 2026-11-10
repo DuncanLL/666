@@ -3,19 +3,25 @@ package aimoh.pmxpreview;
 import aimoh.motion.PmxModel;
 import aimoh.motion.WorldPoseRetargeter;
 import com.shiroha.mmdskin.NativeFunc;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import zombie.characters.IsoGameCharacter;
+import zombie.characters.action.ActionContext;
 
 /** Common empty-hand preview, using the existing four-finger FK transport. */
 final class IdleHandPose {
+    private static final MethodHandle CHILD_STATE_COUNT = childStateCountHandle();
     // Bob_Walk at 25%, expressed relative to each source hand; same sample as the workbench.
     private static final float[][] REFERENCE={{-.00034764406f,.49012056f,.00019487736f,-.87165463f},
         {-.00035598874f,-.45357579f,.00018033385f,.89121765f}};
@@ -69,11 +75,35 @@ final class IdleHandPose {
         return (float)Math.sqrt(x*x+y*y+z*z);
     }
     void setStrength(double value) { strength=Double.isFinite(value)&&value>=0&&value<=1?(float)value:0; }
+    private static MethodHandle childStateCountHandle() {
+        var lookup = MethodHandles.publicLookup();
+        var countType = MethodType.methodType(int.class);
+        try {
+            try {
+                return lookup.findVirtual(ActionContext.class, "childStateCount", countType);
+            } catch (NoSuchMethodException oldBuild) {
+                // B42.21 exposes the list; B42.22 exposes the count.
+                var children = lookup.findVirtual(ActionContext.class, "getChildStates", MethodType.methodType(List.class));
+                return MethodHandles.filterReturnValue(children, lookup.findVirtual(List.class, "size", countType));
+            }
+        } catch (ReflectiveOperationException unsupportedBuild) {
+            throw new ExceptionInInitializerError(unsupportedBuild);
+        }
+    }
+    private static int childStateCount(ActionContext action) {
+        try {
+            return (int) CHILD_STATE_COUNT.invokeExact(action);
+        } catch (RuntimeException | Error failure) {
+            throw failure;
+        } catch (Throwable failure) {
+            throw new IllegalStateException(failure);
+        }
+    }
     static boolean eligible(IsoGameCharacter actor,boolean holding) {
         if(holding||actor==null)return false;
         try {
             var action=actor.getActionContext();if(action==null)return false;
-            return "idle".equalsIgnoreCase(action.getCurrentStateName())&&action.getChildStates().isEmpty()
+            return "idle".equalsIgnoreCase(action.getCurrentStateName())&&childStateCount(action)==0
                 &&!actor.isMoving()&&!actor.isSneaking()&&!actor.isAiming()&&!actor.isSitting()&&!actor.isClimbing()
                 &&!actor.isPerformingAttackAnimation()&&!actor.getVariableBoolean("IsPerformingAnAction")
                 &&!actor.getVariableBoolean("initiateAttack");

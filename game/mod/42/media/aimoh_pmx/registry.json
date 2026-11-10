@@ -74,5 +74,13 @@
       "model": "models/pmx-4818f3bdda4ec18d/model.pmx",
       "profile": "models/pmx-4818f3bdda4ec18d/profile.json"
     }
-  ]
+  ],
+  "packs": {
+    "R116Alva": [
+      "pmx-020abca186c52e7b"
+    ],
+    "R116Centaureissi": [
+      "pmx-7c5ea1f673f69f12"
+    ]
+  }
 }

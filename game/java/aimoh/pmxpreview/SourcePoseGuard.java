@@ -3,6 +3,7 @@ package aimoh.pmxpreview;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.lwjgl.util.vector.Matrix4f;
+import zombie.core.skinnedmodel.advancedanimation.AnimLayer;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 
 /** Render modifiers borrow model matrices; animation locals remain the source of truth. */
@@ -28,6 +29,19 @@ public final class SourcePoseGuard {
     private static boolean usable(Matrix4f m) {
         if(!finite(m))return false;
         float determinant=m.determinant();return Float.isFinite(determinant)&&determinant!=0;
+    }
+    public static boolean usesAuthoredEmoteFacing(AnimationPlayer player) {
+        if(Main.sourceAnimationPose(player)==null)return false;
+        var tracks=player.getMultiTrack();
+        for(int i=0;i<tracks.getTrackCount();i++){
+            var track=tracks.getTrackAt(i);
+            if(!track.isPlaying||!(track.getBlendWeight()>0)
+                    ||!"emote".equals(AnimLayer.getCurrentStateName(track.animLayer)))continue;
+            int root=player.getSkinningBoneIndex("Bip01",-1),head=player.getSkinningBoneIndex("Bip01_Head",-1);
+            // A full-body emote owns its facing. Aim twist otherwise pulls the head away from the turn.
+            if(root>=0&&head>=0&&track.getBoneWeight(root)>0&&track.getBoneWeight(head)>0)return true;
+        }
+        return false;
     }
     public static void animationReady(AnimationPlayer player) {
         AnimationPose pose=Main.sourceAnimationPose(player);if(pose==null)return;

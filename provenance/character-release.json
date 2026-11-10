@@ -1,0 +1,28 @@
+{
+  "version": "0.3.32",
+  "game": "42.22.2",
+  "runtime_sha256": "59aae61c7740f603560ab98752234e7ced019000812855f56b5d6b74e675f8ff",
+  "native_version": "Aimoh-Upstream-1/skeleton-eval1-softbody1",
+  "native_bundle": "94f53c3fa104907c80e97c8ecef9f2bbe440b5f224991b878559513970374c0a",
+  "native_hashes": {
+    "AimohChestSoftBody.dll": "93ad7293bf0c54c17af40a9d0754399570569093ed84c05697685eff110fe215",
+    "AimohGripOzz.dll": "a41be04aae5f62f0b5c599ec50993428bc2afd39b104227db4142b3b437ebe1c",
+    "AimohMmdUpstream.dll": "64fe715c6b84a6415a88843b439ab7c6c5de60a3daa2099571f6825b389ebd05",
+    "libgcc_s_seh-1.dll": "368488a9089e3d89b32a3609816fa40dd02fa4cdf480a2bc86e19c7bebdc8bda",
+    "libstdc++-6.dll": "ba2f2acaa48011aff3f14a9806cc69db1e78c12c9a87ad3f7f88b965fce7fb1d",
+    "libwinpthread-1.dll": "1b801c9280f6cad8cb2a026bfa48be8c4bea07a0dc78a820d1591f900ee76f0b"
+  },
+  "chest_data_hashes": {
+    "36b7d4301dfff825d446bb5ac7e2a1c8bf4b5c9e329ffbcde763d16062351738.bin": "cb0b262df55362279b3653ec79ab3654d1beedc21307535807a8c19441210350",
+    "479727164fc1e964b46670e705bc6a2e039bc13e4fceb99ab04bdf51299b0dff.bin": "6fee059c50fcc34e40218584871669425bd999c5eaf46322cdf068ac87a286d2",
+    "970165ef8f226cd9c2b4eed51935e88dad2148d4ce99f26e8556d011a6c98eec.bin": "9caf75fdde005735de65ade6627de36a9c0c19a112e895fa1860d74bae2a31fe",
+    "16a505f156a4c569457cac8d831b8a4b3435dd5932cae80c87f5a9d7662f8ae2.bin": "82c7d66e36c83e735f9ca49030958e6ecbafa0c8e7fa766fa4ede338f1987868",
+    "b5013baf4dc16c9b394ddd25568ac58d23aeec5835683bbf42d185763a8d7960.bin": "7685fa428dee81c7a104c01ca089b29873e051e1d379eddf569d36e5ef91561f",
+    "ba8172885eb50332c1d1f2c988eea2c9e8522990065b493e3a30ff7951e489cd.bin": "5180d3888f209b1c4e7dfb033911a07c27b2630f54a30cdab8fb72e75bb96a33",
+    "f5b2382912711eba6fbb390d0e601b6c15254402fdb722f44c3ab8492e16b37f.bin": "6eef992745a12df1966cff7f8b7065b956ecf6237c95e0c3625b8864f80590d7"
+  },
+  "chest_solver": "Jolt 5.6.0",
+  "body_physics": "existing MC-MMD-derived runtime",
+  "runtime_java_classes": 65,
+  "native_rebuilt": false
+}

@@ -38,8 +38,7 @@ struct PreviewWorld : btDeformableMultiBodyDynamicsWorld {
     }
 };
 struct PreviewSolver : btDeformableBodySolver {
-    // Keep the upstream iteration budget; repeated nonlinear solves dominated this local volume.
-    PreviewSolver() { m_maxNewtonIterations=1; m_newtonTolerance=1e-4f; }
+    PreviewSolver() { m_maxNewtonIterations=3; m_newtonTolerance=1e-9f; }
 };
 struct Preview {
     btSoftBodyRigidBodyCollisionConfiguration config;

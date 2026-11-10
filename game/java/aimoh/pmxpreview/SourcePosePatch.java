@@ -6,6 +6,13 @@ import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.skinnedmodel.model.SkinningData;
 
 public final class SourcePosePatch {
+    @Patch(className="zombie.core.skinnedmodel.animation.AnimationPlayer",methodName="updateTwistBone")
+    public static final class EmoteTwist {
+        @Patch.OnEnter(skipOn=true)
+        public static boolean enter(@Patch.This AnimationPlayer player) {
+            return SourcePoseGuard.usesAuthoredEmoteFacing(player);
+        }
+    }
     @Patch(className="zombie.core.skinnedmodel.animation.AnimationPlayer",methodName="getModelTransformAt")
     public static final class Bone {
         @Patch.OnExit

@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.function.IntFunction;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL15;
 import viewpoint.platform.IrisPacks;
 import viewpoint.platform.ShaderPacks;
 import viewpoint.platform.ShaderPack;
@@ -23,7 +24,8 @@ import zombie.core.textures.Texture;
 /** CPU-deformed PMX to the host's existing ModelDraws path. GL-thread only. */
 public final class PmxDrawMesh implements AutoCloseable {
     /** Private draw bit, above the inspected host's BAKED bit; never inferred from disabled attributes. */
-    public static final int DEFORMED = 1 << 12;
+    // RC3 reserves bits 12–15 for wall clipping. This private bit remains exact in the float draw record.
+    public static final int DEFORMED = 1 << 20;
     private static final Field HANDLE,NATIVE_DEFINES;
     private static final Method NATIVE_SHADER;
     private static final String[] OUTLINE_OPTIONS={"VP_PMX_MODEL_OUTLINE","VP_PMX_SHADING","VP_NPR","VP_CHARACTER_PBR","VP_ASTERIA","VP_LAIYA","VP_DANRP_PIPELINE"};
@@ -42,7 +44,8 @@ public final class PmxDrawMesh implements AutoCloseable {
     private final Texture[] renderTextures;
     private volatile PmxDrawMesh alternateMesh;
     private final String sourceProfile;
-    private final ByteBuffer positions, normals, uv;
+    private final int vertexCount;
+    private final ByteBuffer uv;
     private final ArrayList<Part> parts = new ArrayList<>();
     private final Vector3f point = new Vector3f();
     private volatile boolean uploaded, closed;
@@ -98,8 +101,6 @@ public final class PmxDrawMesh implements AutoCloseable {
         final ModelMesh mesh;
         final ByteBuffer vertices;
         VertexBufferObject.Vbo handle;
-        float r, g, b, alpha;
-        boolean additiveTint;
         final int cull;
         final int stride;
         final boolean hull,fringe;
@@ -152,8 +153,8 @@ public final class PmxDrawMesh implements AutoCloseable {
         int count = Math.toIntExact(api.GetVertexCount(model));
         if (count <= 0 || textures.length != api.GetMaterialCount(model))
             throw new IllegalArgumentException("PMX material/vertex count mismatch");
-        positions = buffer(Math.multiplyExact(count, 12));
-        normals = buffer(positions.capacity()); uv = buffer(Math.multiplyExact(count, 8));
+        vertexCount = count;
+        uv = buffer(Math.multiplyExact(count, 8));
         api.CopyDataToByteBuffer(uv, api.GetUVs(model), uv.capacity());
         int size = Math.toIntExact(api.GetIndexElementSize(model));
         if (size != 1 && size != 2 && size != 4) throw new IllegalArgumentException("PMX index size");
@@ -250,17 +251,6 @@ public final class PmxDrawMesh implements AutoCloseable {
         return true;
     }
 
-    public void upload() {
-        PmxDrawMesh selected=renderMesh();if(selected!=this){selected.upload();return;}
-        if (closed) throw new IllegalStateException("Closed mesh stream");
-        api.CopyDataToByteBuffer(positions, api.GetPoss(model), positions.capacity());
-        api.CopyDataToByteBuffer(normals, api.GetNormals(model), normals.capacity());
-        for (int i = 0; i < positions.capacity(); i += 4)
-            if (!Float.isFinite(positions.getFloat(i)) || !Float.isFinite(normals.getFloat(i)))
-                throw new IllegalArgumentException("Non-finite PMX geometry");
-        uploadBuffers(appearance.readMaterials());
-    }
-
     public void upload(FrameData frame) {
         PmxDrawMesh selected=renderMesh();if(selected!=this){selected.upload(frame);return;}
         uploadPrepared(frame);
@@ -268,30 +258,13 @@ public final class PmxDrawMesh implements AutoCloseable {
     /** An already captured command keeps the topology it was submitted with. */
     public void uploadPrepared(FrameData frame) {uploadPrepared(frame,appearance.readMaterials(false));}
     public void uploadPrepared(FrameData frame,float[] shadowMaterials) {
-        if (closed || frame.positions.length*4!=positions.capacity()) throw new IllegalArgumentException("Frozen mesh size differs");
-        for (int i=0;i<frame.positions.length;i++) {
-            positions.putFloat(i*4,frame.positions[i]); normals.putFloat(i*4,frame.normals[i]);
-        }
-        uploadBuffers(frame.materials,shadowMaterials);
-    }
-
-    private void uploadBuffers(float[] materialState){uploadBuffers(materialState,appearance.readMaterials(false));}
-    private void uploadBuffers(float[] materialState,float[] shadowMaterials) {
+        if (closed || frame.positions.length/3!=vertexCount) throw new IllegalArgumentException("Frozen mesh size differs");
+        float[] positions=frame.positions,normals=frame.normals,materialState=frame.materials;
         if(shadowMaterials.length!=materialState.length)throw new IllegalArgumentException("Shadow material count differs");
         boolean useOutline=outlineEnabled();
         for (Part part : parts) {
             if(part.hull&&(!useOutline||!part.hullReady)){part.continuous=false;continue;}
             int offset=part.material*12;
-            part.r=materialState[offset]*materialState[offset+4];
-            part.g=materialState[offset+1]*materialState[offset+5];
-            part.b=materialState[offset+2]*materialState[offset+6];
-            part.alpha=materialState[offset+3]*Math.clamp(materialState[offset+7]+materialState[offset+11],0,1);
-            part.additiveTint=false;
-            for (int k=8;k<11;k++) if (materialState[offset+k]!=0)
-                part.additiveTint=true;
-            if (!Float.isFinite(part.alpha) || !Float.isFinite(part.r) ||
-                !Float.isFinite(part.g) || !Float.isFinite(part.b))
-                throw new IllegalArgumentException("Non-finite PMX material");
             boolean colour=colourVisible(part,materialState),shadow=shadowVisible(part,shadowMaterials);
             // Pack-owned eye layers can ignore base alpha; keep them ready across queued appearance changes.
             if(part.original!=null&&part.original.sourceAlphaIndependent()&&materialState[offset+7]+materialState[offset+11]>0)colour=true;
@@ -302,26 +275,24 @@ public final class PmxDrawMesh implements AutoCloseable {
             if(part.hull&&!shading.shaderOutline){
                 Arrays.fill(part.smooth,0);
                 for(int i=0;i<part.source.length;i++){
-                    int source=part.source[i],g=part.weld[i]*3;float x=normals.getFloat(source*12),y=normals.getFloat(source*12+4),z=normals.getFloat(source*12+8);
+                    int at=part.source[i]*3,g=part.weld[i]*3;float x=normals[at],y=normals[at+1],z=normals[at+2];
                     float length=(float)Math.sqrt(x*x+y*y+z*z);if(length>1e-8f){part.smooth[g]+=x/length;part.smooth[g+1]+=y/length;part.smooth[g+2]+=z/length;}
                 }
                 for(int g=0;g<part.smooth.length;g+=3){float x=part.smooth[g],y=part.smooth[g+1],z=part.smooth[g+2],length=(float)Math.sqrt(x*x+y*y+z*z);if(length>1e-8f){part.smooth[g]/=length;part.smooth[g+1]/=length;part.smooth[g+2]/=length;}}
             }
             for (int i=0;i<part.source.length;i++) {
-                int source=part.source[i];
-                float x = positions.getFloat(source * 12), y = positions.getFloat(source * 12 + 4),
-                    z = positions.getFloat(source * 12 + 8);
+                int source=part.source[i],at=source*3;
+                float x=positions[at],y=positions[at+1],z=positions[at+2];
                 if(part.hull&&!shading.shaderOutline){
                     int g=part.weld[i]*3;float nx=part.smooth[g],ny=part.smooth[g+1],nz=part.smooth[g+2];
-                    if(nx*nx+ny*ny+nz*nz<.25f){nx=normals.getFloat(source*12);ny=normals.getFloat(source*12+4);nz=normals.getFloat(source*12+8);}
+                    if(nx*nx+ny*ny+nz*nz<.25f){nx=normals[at];ny=normals[at+1];nz=normals[at+2];}
                     float width=shading.outlineBaseNative*shading.outlineSize[part.material]*part.edgeWeights[i];x+=nx*width;y+=ny*width;z+=nz*width;
                 }
                 // PMX-DEFORM1: previous rendered local position; the negative weight flag never invokes skinning.
                 float px=!part.continuous?x:part.vertices.getFloat(i*part.stride),py=!part.continuous?y:part.vertices.getFloat(i*part.stride+4),pz=!part.continuous?z:part.vertices.getFloat(i*part.stride+8);
                 part.vertices.putFloat(x).putFloat(y).putFloat(z);
                 float sign=part.hull&&!shading.shaderOutline?-1f:1f;
-                part.vertices.putFloat(normals.getFloat(source * 12)*sign)
-                    .putFloat(normals.getFloat(source * 12 + 4)*sign).putFloat(normals.getFloat(source * 12 + 8)*sign);
+                part.vertices.putFloat(normals[at]*sign).putFloat(normals[at+1]*sign).putFloat(normals[at+2]*sign);
                 part.vertices.putInt(-1).putFloat(part.hull&&!shading.shaderOutline?part.inkU:uv.getFloat(source * 8)).putFloat(part.hull&&!shading.shaderOutline?part.inkV:uv.getFloat(source * 8 + 4));
                 if(part.original!=null){
                     int attribute=part.original.attributes()[i];
@@ -335,10 +306,16 @@ public final class PmxDrawMesh implements AutoCloseable {
                 part.mesh.minXyz.min(point); part.mesh.maxXyz.max(point);
             }
             part.vertices.flip();
-            part.handle = part.mesh.vb.LoadSoftwareVBO(part.vertices, part.handle, part.indices);
-            part.handle.vertexStride=part.stride;
-            try { HANDLE.set(part.mesh.vb, part.handle); }
-            catch (IllegalAccessException e) { throw new IllegalStateException(e); }
+            if(part.handle==null){
+                part.handle=part.mesh.vb.LoadSoftwareVBO(part.vertices,null,part.indices);
+                part.handle.vertexStride=part.stride;
+                try { HANDLE.set(part.mesh.vb,part.handle); }
+                catch(IllegalAccessException e){throw new IllegalStateException(e);}
+            }else{
+                // Keep the host's buffer object and replace its storage for the next draw.
+                GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,part.handle.vboId);
+                GL15.glBufferData(GL15.GL_ARRAY_BUFFER,part.vertices,GL15.GL_STREAM_DRAW);
+            }
             part.mesh.modificationCount++;
             part.continuous=true;
         }
@@ -347,33 +324,6 @@ public final class PmxDrawMesh implements AutoCloseable {
 
     private boolean colourVisible(Part part,float[] m){int at=part.material*12;return(m[at+3]>0||(part.original!=null&&part.original.sourceAlphaIndependent()&&appearance.gf2SourceZeroAlphaVisible(part.material)))&&m[at+7]+m[at+11]>0;}
     private static boolean shadowVisible(Part part,float[] m){int at=part.material*12;return m[at+3]>0&&m[at+7]+m[at+11]>0;}
-
-    public int submit(ModelDraws draws, Matrix4f placement) {
-        PmxDrawMesh selected=renderMesh();if(selected!=this){return selected.submit(draws,placement);}
-        if (!uploaded || closed) throw new IllegalStateException("Mesh not ready");
-        int first = draws.count();
-        boolean useOutline=outlineEnabled();
-        for (Part part : parts) {
-            if(part.fringe)continue;
-            if(part.hull&&(!useOutline||!part.hullReady))continue;
-            if (part.alpha <= .01f) continue;
-            if (part.additiveTint) throw new IllegalStateException("Host additive texture tint requires baked textures");
-            if (part.texture == null || !part.texture.isReady()) throw new IllegalStateException("Texture not ready");
-            // shortcut: host has no material-opacity scalar; validate fractional opacity before production use.
-            if (part.alpha < .99f) throw new IllegalStateException("Host material-opacity contract needs adaptation");
-        }
-        for (Part part : parts) {
-            if(part.fringe)continue;
-            if(part.hull&&(!useOutline||!part.hullReady))continue;
-            if (part.alpha <= .01f) continue;
-            int n = draws.add(part.mesh, null, part.texture, placement, -1, -1, part.cull, (part.hull?1:3)|DEFORMED);
-            draws.material(n, part.r, part.g, part.b, 0);
-            draws.light(n, 1, 1, 1, 0);
-            draws.bounds(n, placement, part.mesh.minXyz, part.mesh.maxXyz, 1);
-            draws.key(n, part);
-        }
-        return draws.count() - first;
-    }
 
     /** Main-thread commands reference immutable frame data; GL uploads happen in ModelPass.prepare. */
     public int submitFrozen(ModelDraws draws,Matrix4f placement,FrameData frame,Object frameKey,float[] shadowMaterials) {

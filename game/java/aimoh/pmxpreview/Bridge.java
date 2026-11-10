@@ -3,6 +3,7 @@ package aimoh.pmxpreview;
 import aimoh.motion.PmxDrawMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import zombie.characters.IsoPlayer;
 import viewpoint.core.Frame;
 import viewpoint.render.ModelDraws;
 import viewpoint.render.SceneData;
@@ -23,23 +24,34 @@ public final class Bridge {
             boolean firstPerson=hideHead&&!slot.inVehicle;
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
             boolean idle=IdleHandPose.eligible(actor,holding);
+            var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
+            boolean calibrating=!slot.inVehicle&&actor instanceof IsoPlayer player&&player.isLocalPlayer()&&actor.isAiming();
+            int body=-1, gun=-1;
+            for(int n=first;n<originalEnd;n++){
+                ModelInstance instance=DrawAccess.instance(draws,n);
+                if(body<0&&!equipment.containsKey(instance))body=n;
+                if(calibrating&&instance!=null&&instance==actor.primaryHandModel&&instance.model!=null&&instance.model.isStatic)gun=n;
+            }
+            Matrix4f sourcePlacement=body<0?null:DrawAccess.matrix(draws,body);
+            Matrix4f inverse=sourcePlacement==null?null:new Matrix4f(sourcePlacement).invert();
+            Matrix4f weapon=gun>=0&&inverse!=null
+                ?new Matrix4f(inverse).mul(DrawAccess.matrix(draws,gun)):null;
             PmxDrawMesh.FrameData data=null;
             try {if(!session.failed)data=session.update(frame,actor.getAnimationPlayer(),holding,
-                actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson);}catch(Throwable e){session.fail(e);}
+                actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
+                GripCalibration.request(actor,session.entry.id(),weapon));}catch(Throwable e){session.fail(e);}
             ModelSession selected=Main.completeCapture(actor,session);
             if(selected!=session){
                 session=selected;if(session==null||session.failed)return;
-                data=session.update(frame,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson);
+                data=session.update(frame,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
+                    GripCalibration.request(actor,session.entry.id(),weapon));
             }
             if(session.failed||!session.ready)return;
             PmxDrawMesh prepared=session.preparedMesh;if(prepared==null)return;
-            var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
-            int body=-1;
-            for(int n=first;n<originalEnd;n++)if(!equipment.containsKey(DrawAccess.instance(draws,n))){body=n;break;}
             if(body<0)return;
-            Matrix4f sourcePlacement=DrawAccess.matrix(draws,body),inverse=new Matrix4f(sourcePlacement).invert();
             Matrix4f targetPlacement=new Matrix4f(sourcePlacement).scale(1,1,-1).scale(1/session.scale);
-            if(firstPerson)targetPlacement=session.firstPersonHeadPlacement(sourcePlacement,targetPlacement);
+            if(slot.inVehicle)targetPlacement=session.vehicleSeatPlacement(sourcePlacement,targetPlacement);
+            else if(firstPerson)targetPlacement=session.firstPersonHeadPlacement(sourcePlacement,targetPlacement);
             draw=new Frozen(session,prepared,data,draws,first,originalEnd);
             Frozen command=draw;
             int added=prepared.submitPreparedFrozen(draws,targetPlacement,data,material->new Part(command,material),draw.materials.shadow(),draw.materials.doubleSided());

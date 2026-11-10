@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HexFormat;
 import java.util.IdentityHashMap;
-import me.zed_0xff.zombie_buddy.Exposer;
+import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import zombie.ZomboidFileSystem;
 import zombie.characters.IsoGameCharacter;
@@ -23,6 +24,8 @@ public class Main {
     private record Pending(Entry entry,String settings) {}
     private static final ArrayList<Entry> entries=new ArrayList<>();
     private static final HashSet<String> hiddenEntries=new HashSet<>();
+    record CharacterPack(String id,Path media) {}
+    private static List<CharacterPack> enabledPacks=List.of();
     private static final IdentityHashMap<IsoGameCharacter,ModelSession> active=new IdentityHashMap<>();
     private static final IdentityHashMap<IsoGameCharacter,ModelSession> preparing=new IdentityHashMap<>();
     private static final HashSet<IsoGameCharacter> switchFailures=new HashSet<>();
@@ -33,7 +36,7 @@ public class Main {
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.12 ready-room resource recovery; 0.3.11 physics and streaming retained"); }
+    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.20 optional character packs"); }
 
     private static void refreshPoseOwners() {
         IdentityHashMap<IsoGameCharacter,SourcePoseGuard.AnimationPose> next=new IdentityHashMap<>();
@@ -63,8 +66,38 @@ public class Main {
     private static synchronized void configure() throws Exception {
         if (directory!=null) return;
         Path d=locate(),root=d.resolve("media/aimoh_pmx").normalize();
-        var models=new JSONObject(Files.readString(root.resolve("registry.json"))).getJSONArray("models");
+        JSONObject registry=new JSONObject(Files.readString(root.resolve("registry.json")));
         ArrayList<Entry> loaded=new ArrayList<>();HashSet<String> hidden=new HashSet<>();
+        readEntries(root,registry.getJSONArray("models"),loaded,hidden);
+        ArrayList<CharacterPack> packs=new ArrayList<>();
+        JSONObject declared=registry.optJSONObject("packs");
+        if(declared!=null)for(String mod:declared.keySet().stream().sorted().toList()){
+            if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(mod))continue;
+            try {
+                Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(mod)).toAbsolutePath().normalize();
+                Path media=modRoot.resolve("media");
+                String relative="aimoh_pmx/packs/"+mod+".json";
+                if(!Files.isRegularFile(media.resolve(relative)))media=modRoot.resolve("42/media");
+                Path file=asset(media,relative);
+                JSONObject pack=new JSONObject(Files.readString(file));
+                if(pack.getInt("format")!=1||!mod.equals(pack.getString("mod")))throw new IllegalArgumentException("Invalid pack identity");
+                ArrayList<Entry> added=new ArrayList<>();HashSet<String> packHidden=new HashSet<>();
+                readEntries(media.resolve("aimoh_pmx"),pack.getJSONArray("models"),added,packHidden);
+                var ids=added.stream().map(Entry::id).toList();
+                if(ids.isEmpty()||!new HashSet<>(declared.getJSONArray(mod).toList()).equals(new HashSet<>(ids)))
+                    throw new IllegalArgumentException("Unexpected character pack models");
+                if(loaded.stream().anyMatch(entry->ids.contains(entry.id())))throw new IllegalArgumentException("Duplicate model ID");
+                loaded.addAll(added);hidden.addAll(packHidden);packs.add(new CharacterPack(mod,media));
+            }catch(Exception e){System.err.println("[AimohPMXPreview] Character pack "+mod+": "+e);}
+        }
+        entries.clear();entries.addAll(loaded);hiddenEntries.clear();hiddenEntries.addAll(hidden);
+        enabledPacks=List.copyOf(packs);directory=d;
+    }
+    static synchronized List<CharacterPack> enabledCharacterPacks() throws Exception {
+        configure();
+        return enabledPacks;
+    }
+    private static void readEntries(Path root,JSONArray models,ArrayList<Entry> loaded,HashSet<String> hidden) throws Exception {
         for (int i=0;i<models.length();i++) {
             JSONObject j=models.getJSONObject(i);
             Path profile=asset(root,j.getString("profile"));
@@ -73,7 +106,6 @@ public class Main {
             loaded.add(new Entry(id,j.getString("label"),asset(root,j.getString("model")),profile));
             if(j.optBoolean("hidden",false))hidden.add(id);
         }
-        entries.clear();entries.addAll(loaded);hiddenEntries.clear();hiddenEntries.addAll(hidden);directory=d;
     }
     public static synchronized String refreshLibrary() {
         Path previous=directory;directory=null;

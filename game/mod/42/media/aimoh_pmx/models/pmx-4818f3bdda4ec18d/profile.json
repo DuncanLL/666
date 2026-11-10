@@ -5185,8 +5185,8 @@
     "referenced_textures": 27,
     "texture_placeholders": 0,
     "missing_textures": [
-      "D:\\CodexBuild\\Florence20261108\\repair-p3\\pmx-fixed-v3\\spa\\skintoon.bmp",
-      "D:\\CodexBuild\\Florence20261108\\repair-p3\\pmx-fixed-v3\\spa\\skintoon4.bmp"
+      "skintoon.bmp",
+      "skintoon4.bmp"
     ],
     "outfit_groups": 7,
     "available_material_morphs": 0,

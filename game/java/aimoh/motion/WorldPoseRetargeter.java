@@ -239,6 +239,36 @@ public final class WorldPoseRetargeter {
     }
     public synchronized GripResult[] applyWithGrip(float[] sourceWorld, OzzGrip solver,
             int[] sourceArms, int[] targetArms, float soften,float seconds,int sourceAnchorBone,int targetAnchorBone) {
+        return applyWithGrip(sourceWorld,solver,sourceArms,targetArms,soften,seconds,sourceAnchorBone,targetAnchorBone,null);
+    }
+
+    public static final class GripAdjustment {
+        private final Matrix4f weapon;
+        private final float[] offsets;
+        final String itemKey;
+        float[] itemTuning;
+        private Matrix4f correction;
+
+        public GripAdjustment(Matrix4f weapon,float[] offsets,String itemKey) {
+            if(offsets.length!=6||!weapon.isFinite()||Math.abs(weapon.determinant())<1e-8f)
+                throw new IllegalArgumentException("Invalid grip calibration input");
+            this.weapon=new Matrix4f(weapon);
+            this.offsets=offsets.clone();
+            this.itemKey=itemKey;
+            for(float value:offsets)if(!Float.isFinite(value)||Math.abs(value)>.12f)
+                throw new IllegalArgumentException("Invalid grip offset");
+        }
+
+        public Matrix4f placement(Matrix4f sourceItem) {
+            if(correction==null)return null;
+            Matrix4f placed=new Matrix4f(correction).mul(sourceItem);
+            return itemTuning==null?placed:placed.mul(new Matrix4f().set(itemTuning));
+        }
+    }
+
+    public synchronized GripResult[] applyWithGrip(float[] sourceWorld, OzzGrip solver,
+            int[] sourceArms, int[] targetArms, float soften,float seconds,int sourceAnchorBone,int targetAnchorBone,
+            GripAdjustment adjustment) {
         if (sourceArms.length!=6 || targetArms.length!=6)
             throw new IllegalArgumentException("Expected two shoulder/elbow/wrist chains");
         applyBody(sourceWorld);
@@ -247,7 +277,7 @@ public final class WorldPoseRetargeter {
             .add(sourceMatrix(sourceWorld,sourceArms[3]).getTranslation(new Vector3f())).mul(.5f);
         Vector3f targetAnchor = joint(targetArms[0]).getTranslation(new Vector3f())
             .add(joint(targetArms[3]).getTranslation(new Vector3f())).mul(.5f);
-        // First-person hands share the camera's head anchor; the solver still runs only once.
+        // First-person hands share the camera's head anchor.
         if(sourceAnchorBone>=0&&targetAnchorBone>=0) {
             sourceAnchor=sourceMatrix(sourceWorld,sourceAnchorBone).getTranslation(new Vector3f());
             targetAnchor=joint(targetAnchorBone).getTranslation(new Vector3f());
@@ -258,39 +288,16 @@ public final class WorldPoseRetargeter {
         float scale = unitScale;
         for (int side=0;side<2;side++) {
             int at=side*3;
-            Matrix4f start=joint(targetArms[at]), mid=joint(targetArms[at+1]), end=joint(targetArms[at+2]);
             if (sourcePalmLocal[side]==null) throw new IllegalStateException("Palm calibration missing");
             wanted[side] = sourceMatrix(sourceWorld,sourceArms[at+2]).transformPosition(new Vector3f(sourcePalmLocal[side])).sub(sourceAnchor);
             wanted[side].z = -wanted[side].z;
             wanted[side].mul(scale).add(targetAnchor);
-            wristRotation[side]=end.getUnnormalizedRotation(new Quaternionf()).normalize();
+            wristRotation[side]=joint(targetArms[at+2]).getUnnormalizedRotation(new Quaternionf()).normalize();
             wanted[side].sub(wristRotation[side].transform(new Vector3f(targetPalmLocal[side])));
-            Vector3f bend=gripAxes[side];
-            if (bend==null) { status[side]=-3; continue; }
-            Vector3f pole=sourceMatrix(sourceWorld,sourceArms[at+1]).getTranslation(new Vector3f())
-                .sub(sourceMatrix(sourceWorld,sourceArms[at]).getTranslation(new Vector3f()));
-            pole.z=-pole.z;
-            float[] matrices=new float[48], result=new float[8];
-            start.get(matrices,0);mid.get(matrices,16);end.get(matrices,32);
-            status[side]=solver.solve(matrices,new float[]{wanted[side].x,wanted[side].y,wanted[side].z},
-                new float[]{pole.x,pole.y,pole.z},new float[]{bend.x,bend.y,bend.z},1,soften,0,result);
-            if (status[side]>=0) {
-                multiplyLocalCorrection(targetArms[at],new Quaternionf(result[0],result[1],result[2],result[3]));
-                multiplyLocalCorrection(targetArms[at+1],new Quaternionf(result[4],result[5],result[6],result[7]));
-            }
+            status[side]=solveGrip(sourceWorld,solver,sourceArms,targetArms,soften,side,wanted[side]);
         }
-        api.SetBoneAdditiveTransformBatch(handle,targetBones,qps);
-        api.EvaluateSkeleton(handle); evaluations++;
-        readPalette();
-        for (int side=0;side<2;side++) {
-            if (status[side]<0) continue;
-            int wrist=targetArms[side*3+2], offset=targetIndex(wrist)*10;
-            Quaternionf local=joint(parents[wrist]).getUnnormalizedRotation(new Quaternionf()).normalize()
-                .invert().mul(wristRotation[side]).normalize();
-            qps[offset+3]=local.x; qps[offset+4]=local.y;
-            qps[offset+5]=-local.z; qps[offset+6]=-local.w;
-        }
-        api.SetBoneAdditiveTransformBatch(handle,targetBones,qps);
+        restoreWrists(targetArms,wristRotation,status);
+        if(adjustment!=null)adjustGrip(sourceWorld,solver,sourceArms,targetArms,soften,adjustment,wanted,status);
         finishPose(seconds);
         readPalette();
         GripResult[] results=new GripResult[2];
@@ -300,6 +307,64 @@ public final class WorldPoseRetargeter {
                 solved.x,solved.y,solved.z);
         }
         return results;
+    }
+
+    private int solveGrip(float[] sourceWorld,OzzGrip solver,int[] sourceArms,int[] targetArms,float soften,int side,Vector3f wanted) {
+        Vector3f bend=gripAxes[side];
+        if(bend==null)return -3;
+        int at=side*3;
+        Vector3f pole=sourceMatrix(sourceWorld,sourceArms[at+1]).getTranslation(new Vector3f())
+            .sub(sourceMatrix(sourceWorld,sourceArms[at]).getTranslation(new Vector3f()));
+        pole.z=-pole.z;
+        float[] matrices=new float[48],result=new float[8];
+        for(int j=0;j<3;j++)joint(targetArms[at+j]).get(matrices,j*16);
+        int status=solver.solve(matrices,new float[]{wanted.x,wanted.y,wanted.z},
+            new float[]{pole.x,pole.y,pole.z},new float[]{bend.x,bend.y,bend.z},1,soften,0,result);
+        if(status>=0){
+            multiplyLocalCorrection(targetArms[at],new Quaternionf(result[0],result[1],result[2],result[3]));
+            multiplyLocalCorrection(targetArms[at+1],new Quaternionf(result[4],result[5],result[6],result[7]));
+        }
+        return status;
+    }
+
+    private void restoreWrists(int[] targetArms,Quaternionf[] wristRotation,int[] status) {
+        api.SetBoneAdditiveTransformBatch(handle,targetBones,qps);
+        api.EvaluateSkeleton(handle); evaluations++;
+        readPalette();
+        for (int side=0;side<2;side++) {
+            if (status[side]<0||wristRotation[side]==null) continue;
+            int wrist=targetArms[side*3+2], offset=targetIndex(wrist)*10;
+            Quaternionf local=joint(parents[wrist]).getUnnormalizedRotation(new Quaternionf()).normalize()
+                .invert().mul(wristRotation[side]).normalize();
+            qps[offset+3]=local.x; qps[offset+4]=local.y;
+            qps[offset+5]=-local.z; qps[offset+6]=-local.w;
+        }
+        api.SetBoneAdditiveTransformBatch(handle,targetBones,qps);
+    }
+
+    private void adjustGrip(float[] sourceWorld,OzzGrip solver,int[] sourceArms,int[] targetArms,float soften,
+            GripAdjustment adjustment,Vector3f[] wanted,int[] status) {
+        // Freeze the normal gun placement before changing either hand.
+        api.EvaluateSkeleton(handle);evaluations++;
+        Matrix4f weapon=new Matrix4f().set(remapHeldItem(sourceWorld,palmSourceHands[1],palmTargetHands[1],
+            adjustment.weapon.get(new float[16])));
+        adjustment.correction=new Matrix4f(weapon).mul(new Matrix4f(adjustment.weapon).invert());
+        if(adjustment.itemTuning!=null)weapon.mul(new Matrix4f().set(adjustment.itemTuning));
+        Vector3f x=weapon.transformDirection(new Vector3f(1,0,0)).normalize();
+        Vector3f y=weapon.transformDirection(new Vector3f(0,1,0)).normalize();
+        Vector3f z=weapon.transformDirection(new Vector3f(0,0,1)).normalize();
+        Quaternionf[] rotations=new Quaternionf[2];
+        for(int side=0;side<2;side++){
+            int at=side*3;
+            float dx=adjustment.offsets[at],dy=adjustment.offsets[at+1],dz=adjustment.offsets[at+2];
+            if(dx==0&&dy==0&&dz==0)continue;
+            Matrix4f wrist=joint(targetArms[at+2]);
+            wanted[side]=wrist.getTranslation(new Vector3f())
+                .fma(dx*unitScale,x).fma(dy*unitScale,y).fma(dz*unitScale,z);
+            rotations[side]=wrist.getUnnormalizedRotation(new Quaternionf()).normalize();
+            status[side]=solveGrip(sourceWorld,solver,sourceArms,targetArms,soften,side,wanted[side]);
+        }
+        restoreWrists(targetArms,rotations,status);
     }
 
     /** Standard attachment remap; the game's item matrix already contains
@@ -340,6 +405,7 @@ public final class WorldPoseRetargeter {
     public synchronized void setPhysicsEnabled(boolean enabled) { physics.request(enabled); }
     public synchronized boolean physicsEnabled() { return physics.enabled(); }
     public synchronized void resetPhysics() { physics.reset(); }
+    synchronized void finishNativePose(float seconds) { physics.finish(seconds); }
     public synchronized void setModelMotion(float x,float y,float z,float yaw) { physics.motion(x,y,z,yaw); }
     public synchronized long advancingPhysicsFrames() { return physics.advancingFrames(); }
 }

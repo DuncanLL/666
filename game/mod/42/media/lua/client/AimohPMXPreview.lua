@@ -86,7 +86,8 @@ end
 
 local function chestPhysics(player,index,value)
     if problem(player,AimohPMXPreview.setChestPhysicsSlider(player,index,value))then return false end
-    remember(player,true);return true
+    remember(player,true)
+    return true
 end
 local function chestDefaults(player)
     if problem(player,AimohPMXPreview.resetChestPhysicsSettings(player))then return false end

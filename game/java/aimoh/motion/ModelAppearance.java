@@ -4,6 +4,7 @@ import com.shiroha.mmdskin.NativeFunc;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,6 +26,7 @@ public final class ModelAppearance {
     private JSONObject selected=new JSONObject();
     private JSONArray groups=new JSONArray();
     private long revision;
+    private Set<String> animatedMorphs=Set.of();
 
     public ModelAppearance(NativeFunc api,long model) {
         this.api=api;this.model=model;
@@ -87,8 +89,24 @@ public final class ModelAppearance {
         return new Prepared(nextVisible,nextAlpha,nextWeights,nextColours,nextBoth,nextTextures,nextWardrobe,nextSelected,nextGroups,resolved,resolvedWeights,changed);
     }
     private void applyNative(boolean[] visibility,float[] morphs) {
-        api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,morphs);
+        applyMorphs(morphs);
         for(int i=0;i<visibility.length;i++)api.SetMaterialVisible(model,i,visibility[i]);
+    }
+    private void applyMorphs(float[] morphs) {
+        if(animatedMorphs.isEmpty()) {
+            api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,morphs);
+            return;
+        }
+        int[] ids=new int[morphIds.length];float[] manual=new float[morphIds.length];int count=0;
+        for(int i:morphIds)if(!animatedMorphs.contains(api.GetMorphName(model,i))) {
+            ids[count]=i;manual[count++]=morphs[i];
+        }
+        api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],Arrays.copyOf(ids,count),Arrays.copyOf(manual,count));
+    }
+    synchronized void setAnimatedMorphs(Set<String> names) {
+        animatedMorphs=Set.copyOf(names);
+        float[] resolved=weights.clone();wardrobe.resolve(selected,visible.clone(),resolved);
+        applyMorphs(resolved);
     }
     synchronized void apply(Prepared next) {
         if(next.changed()) {

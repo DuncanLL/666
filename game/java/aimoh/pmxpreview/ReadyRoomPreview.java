@@ -1,12 +1,19 @@
 package aimoh.pmxpreview;
 
 import aimoh.motion.PmxDrawMesh;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import me.zed_0xff.zombie_buddy.Exposer;
 import org.joml.Matrix4f;
 import org.json.JSONObject;
@@ -17,6 +24,7 @@ import zombie.ZomboidFileSystem;
 import org.lwjgl.opengl.*;
 import viewpoint.render.Retirement;
 import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
 import zombie.core.Core;
 import zombie.core.SpriteRenderer;
 import zombie.core.textures.Texture;
@@ -24,12 +32,193 @@ import zombie.core.textures.TextureDraw;
 
 /** Display the world's immutable PMX snapshot. Never advances animation or physics. */
 public class ReadyRoomPreview {
+    private static final Object motionPathsLock=new Object();
+    private static final String SAMPLE_PREFIX="sample:";
+    private static Path library() {
+        return Path.of(ZomboidFileSystem.instance.getCacheDir(),"R116","Motions").toAbsolutePath().normalize();
+    }
+    public static String motionDirectory() { return library().toString(); }
+    private static boolean motionFile(Path path) {
+        return path.getFileName()!=null&&path.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".vmd")
+            &&Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);
+    }
+    private static Path sampleLibrary() {
+        String directory=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
+        if(directory==null)throw new IllegalStateException("无法定位 R116 示例动作");
+        Path mod=Path.of(directory).toAbsolutePath().normalize();
+        Path relative=Path.of("media/aimoh_pmx/motions");
+        return Files.isDirectory(mod.resolve(relative))?mod.resolve(relative):mod.resolve("42").resolve(relative);
+    }
+    private static List<String> motionNames(Path directory) throws IOException {
+        if(!Files.isDirectory(directory))return List.of();
+        try(var paths=Files.list(directory)){
+            return paths.filter(ReadyRoomPreview::motionFile).map(p->p.getFileName().toString())
+                .sorted(String.CASE_INSENSITIVE_ORDER.thenComparing(Comparator.naturalOrder())).toList();
+        }
+    }
+    private static Path namedMotion(Path directory,String name) {
+        if(name.isBlank()||name.indexOf('/')>=0||name.indexOf('\\')>=0||name.indexOf(':')>=0)
+            throw new IllegalArgumentException("动作文件名无效");
+        Path file=directory.resolve(name).normalize();
+        if(!directory.equals(file.getParent()))throw new IllegalArgumentException("动作文件名无效");
+        return file;
+    }
+    private static Path localMotionPath(String value) {
+        String text=value==null?"":value.strip();
+        if(text.length()>=2&&text.startsWith("\"")&&text.endsWith("\""))text=text.substring(1,text.length()-1);
+        if(text.startsWith("\\\\")||text.startsWith("//"))throw new IllegalArgumentException("请输入本机磁盘上的 VMD 路径");
+        Path path=Path.of(text);
+        if(!path.isAbsolute())throw new IllegalArgumentException("请粘贴完整的 VMD 文件路径");
+        return path.normalize();
+    }
+    private static LinkedHashSet<Path> savedMotionPaths() throws IOException {
+        Path index=library().resolve("local-paths.json");
+        var paths=new LinkedHashSet<Path>();
+        if(Files.exists(index)){
+            var data=new JSONArray(Files.readString(index));
+            for(int i=0;i<data.length();i++)paths.add(localMotionPath(data.getString(i)));
+        }
+        return paths;
+    }
+    private static void saveMotionPaths(LinkedHashSet<Path> paths) throws IOException {
+        Path dir=Files.createDirectories(library());
+        Path staged=Files.createTempFile(dir,"local-paths-",".tmp");
+        try {
+            var data=new JSONArray();
+            paths.forEach(path->data.put(path.toString()));
+            Files.writeString(staged,data.toString(2));
+            Files.move(staged,dir.resolve("local-paths.json"),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+        }finally{Files.deleteIfExists(staged);}
+    }
+    public static KahluaTable addMotionPath(String value) {
+        var result=new JSONObject();
+        try {
+            Path path=localMotionPath(value);
+            if(!Files.isDirectory(path))throw new IOException("请输入存在的本地文件夹路径");
+            synchronized(motionPathsLock){
+                var paths=savedMotionPaths();
+                if(paths.add(path))saveMotionPaths(paths);
+            }
+            result.put("path",path.toString());
+        }catch(Exception e){result.put("error",e.getMessage()==null?"保存动作路径失败":e.getMessage());}
+        return (KahluaTable)lua(result);
+    }
+    public static String removeMotionPath(String value) {
+        try {
+            Path path=localMotionPath(value);
+            synchronized(motionPathsLock){
+                var paths=savedMotionPaths();
+                if(!paths.remove(path))return "这个来源没有登记";
+                saveMotionPaths(paths);
+            }
+            return "";
+        }catch(Exception e){return e.getMessage()==null?"移除动作路径失败":e.getMessage();}
+    }
+    public static KahluaTable motionLibrary() {
+        var entries=new LinkedHashSet<String>();
+        try {
+            List<String> local=motionNames(Files.createDirectories(library()));
+            for(String sample:motionNames(sampleLibrary()))
+                if(local.stream().noneMatch(sample::equalsIgnoreCase))entries.add(SAMPLE_PREFIX+sample);
+            entries.addAll(local);
+        }catch(Exception e){Main.error(e);}
+        try {
+            for(Path source:savedMotionPaths()) {
+                if(motionFile(source))entries.add(source.toString()); // Paths saved by older releases.
+                else {
+                    try {
+                        for(String name:motionNames(source))entries.add(source.resolve(name).toString());
+                    }catch(IOException e){Main.error(e);}
+                }
+            }
+        }catch(Exception e){Main.error(e);}
+        return (KahluaTable)lua(new JSONArray(entries));
+    }
+    static boolean motionAllowed(IsoPlayer actor) {
+        return !actor.isDead()&&actor.getVehicle()==null&&!actor.isPlayerMoving()&&!actor.isAiming()&&!actor.isAttackStarted();
+    }
+    public static String gripFamily(IsoGameCharacter actor) {
+        return Main.isReady(actor)?GripCalibration.family(actor):"";
+    }
+    public static KahluaTable gripValues(IsoGameCharacter actor,String family) {
+        ModelSession session=Main.session(actor);
+        if(session==null||family==null||family.isEmpty()||!family.equals(gripFamily(actor)))
+            return J2SEPlatform.getInstance().newTable();
+        return GripCalibration.sliders(actor,session.entry.id(),family);
+    }
+    public static boolean gripSet(IsoGameCharacter actor,String family,int axis,double value) {
+        ModelSession session=Main.session(actor);
+        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),family,axis,value);
+    }
+    public static KahluaTable motionState(IsoGameCharacter actor) {
+        ModelSession s=Main.session(actor);
+        return (KahluaTable)lua(s==null
+            ?new JSONObject().put("name","").put("paused",false).put("physics",false).put("frame",0).put("endFrame",0).put("speed",1).put("revision","")
+            :s.model.motionTimeline());
+    }
+    public static String motionCommand(IsoGameCharacter actor,String command,String name) {
+        if(!(actor instanceof IsoPlayer player)||!player.isLocalPlayer())return "只可控制本机玩家的动作";
+        ModelSession s=Main.session(actor);
+        if(s==null||!Main.isReady(actor))return "请先启用一个 R116 人物";
+        synchronized(s) {
+            if(s.retired||s.failed)return "人物正在切换";
+            try {
+                switch(command) {
+                    case "play" -> {
+                        if(!motionAllowed(player))return "请先停下移动、瞄准或下车";
+                        if(name==null||name.isBlank())return "请先选一个动作";
+                        Path file;
+                        if(name.startsWith(SAMPLE_PREFIX)){
+                            file=namedMotion(sampleLibrary(),name.substring(SAMPLE_PREFIX.length()));
+                        }else if(Path.of(name).isAbsolute()){
+                            file=localMotionPath(name);
+                            var sources=savedMotionPaths();
+                            if(!sources.contains(file)&&!sources.contains(file.getParent()))
+                                return "请先添加动作所在的文件夹";
+                        }else{
+                            file=namedMotion(library(),name);
+                        }
+                        if(!motionFile(file))return "动作文件已移动或移除";
+                        s.model.playMotion(file);
+                    }
+                    case "seek" -> {
+                        if(!motionAllowed(player))return "请先停下移动、瞄准或下车";
+                        String[] target=name==null?new String[0]:name.split(":",2);
+                        if(target.length!=2||!s.model.seekMotion(Long.parseLong(target[0]),Float.parseFloat(target[1])))
+                            return "动作已变化，请重新拖动进度条";
+                    }
+                    case "pause" -> s.model.toggleMotionPause();
+                    case "speed" -> s.model.setMotionSpeed(Float.parseFloat(name));
+                    case "restart" -> s.model.restartMotion();
+                    case "stop" -> s.model.stopMotion();
+                    case "physics" -> {if(s.model.motionActive())s.model.setPhysicsEnabled(!s.model.physicsEnabled());}
+                    case "reset" -> {if(s.model.motionActive())s.model.resetPhysics();}
+                    default -> {return "未知的动作控制";}
+                }
+                return "";
+            }catch(Exception e){Main.error(e);return e.getMessage()==null?"动作读取失败":e.getMessage();}
+        }
+    }
     public static synchronized KahluaTable data() throws Exception {
         Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
         Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
         Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
         // UI tables belong to this Lua/window lifecycle, not to a previous game session.
-        return (KahluaTable)lua(new JSONObject(Files.readString(path)));
+        JSONObject catalog=new JSONObject(Files.readString(path));
+        JSONObject models=catalog.getJSONObject("models"),labels=catalog.getJSONObject("labels");
+        for(var pack:Main.enabledCharacterPacks()){
+            Path file=pack.media().resolve("ui/AimohPMXReadyRoom/packs/"+pack.id()+".json");
+            try {
+                JSONObject extra=new JSONObject(Files.readString(file)),packModels=extra.getJSONObject("models");
+                for(String id:packModels.keySet()){
+                    JSONObject card=models.optJSONObject(id);
+                    if(card!=null&&pack.id().equals(card.optString("pack")))models.put(id,packModels.getJSONObject(id));
+                }
+                JSONObject packLabels=extra.getJSONObject("labels");
+                for(String key:packLabels.keySet())if(!labels.has(key))labels.put(key,packLabels.getJSONObject(key));
+            }catch(Exception e){System.err.println("[AimohPMXPreview] Character pack UI "+pack.id()+": "+e);}
+        }
+        return (KahluaTable)lua(catalog);
     }
     private static Object lua(Object value){
         if(value instanceof JSONObject object){KahluaTable t=J2SEPlatform.getInstance().newTable();for(String key:object.keySet())t.rawset(key,lua(object.get(key)));return t;}
@@ -50,13 +239,19 @@ public class ReadyRoomPreview {
                 PmxDrawMesh.FrameData frame=(PmxDrawMesh.FrameData)SNAPSHOT.get(session);
                 if(frame==null)return false;
                 Mesh mesh=previews.get(actor);
-                if(mesh==null||mesh.session!=session){release(actor);mesh=new Mesh(session,frame);previews.put(actor,mesh);}
+                if(mesh==null||mesh.session!=session){
+                    releaseMesh(actor);
+                    mesh=new Mesh(session,frame);previews.put(actor,mesh);
+                }
                 SpriteRenderer.instance.drawGeneric(new Draw(mesh,frame,session.materials,x,y,width,height,Core.height,yaw,zoom));
                 return true;
             }
         }catch(Exception e){System.err.println("[AimohPMXReadyRoom] Preview unavailable: "+e);return false;}
     }
     public static synchronized void release(IsoGameCharacter actor) {
+        releaseMesh(actor);
+    }
+    private static void releaseMesh(IsoGameCharacter actor) {
         Mesh mesh=previews.remove(actor);if(mesh!=null)Retirement.retire(mesh::close);
     }
     private static ByteBuffer buffer(int bytes){return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());}
