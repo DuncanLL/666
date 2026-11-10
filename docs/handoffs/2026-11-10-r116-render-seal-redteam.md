@@ -24,3 +24,4 @@
 - 2026-11-10 用户反馈，已把 A、B 同时给试读者。试读者正在分析 A，耗时体感高于第一版直接拆读。尚未收到完整着色器或校验值，提取结果待核。
 - 复跑正常 ZombieBuddy 启动，在空玩家目录核对落盘。Native 目录中的包文件和内嵌资源一致，Eclipse ZIP 与 JAR 内嵌 ZIP 逐字节一致。封装数据留在 MOD JAR，玩家的光影目录保存配套文件和占位符。
 - 实际单 MOD 的 AimohPMXPreview.jar 已原样复制到 build/r116-redteam-v3/Unified-review，SHA-256 为 7792aa98b8a234c3458eeb9d20482e2a80322994dc80af88310937429fdbcba6。用这一个 JAR 试读可覆盖实际发行的加载器和封装数据。验证详情在 build/r116-redteam-v3/distribution-readback.json。
+- 0.3.34 已放入原人物工坊项目的作者上传目录 Workshop/R116。只替换 Java JAR 和版本信息，原工坊 ID、上传元数据及人物资源按已验证合包逐文件回读，合计 2,218 个文件。备份及实际写入记录见 build/r116-redteam-v3/author-stage-* 下的 author-staging.json。当前状态为待作者上传。
