@@ -85,7 +85,9 @@
     "GripHandgun": "手枪握持",
     "GripLongGun": "长枪握持",
     "GripSupport": "副手握点",
-    "GripPrimary": "主手握点"
+    "GripPrimary": "主手握点",
+    "GripSupportWrist": "副手手腕旋转",
+    "GripPrimaryWrist": "主手手腕旋转"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {

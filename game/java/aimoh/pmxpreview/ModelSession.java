@@ -129,7 +129,7 @@ final class ModelSession {
         long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame.number==lastFrame+1;
         float[] poseForModel=idleHand==null||model.motionActive()?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
         preserveAimWeapon=holding&&firstPerson&&EfzAimCompatibility.keepsWeapon(player.getIsoGameCharacter());
-        gripAdjustment=preserveAimWeapon?null:adjustment;
+        gripAdjustment=preserveAimWeapon&&adjustment!=null?adjustment.wristsOnly():adjustment;
         // Fit both PMX palms to the posed source hands in the same head frame as the sight.
         model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {

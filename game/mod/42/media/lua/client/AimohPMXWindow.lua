@@ -698,20 +698,25 @@ function W:refreshControls(keepScroll)
             else
                 self:addLabel(tr(family=="handgun" and "GripHandgun" or "GripLongGun"),y);y=y+32
                 local values=AimohPMXReadyRoom.gripValues(self.player,family)
-                for _,hand in ipairs({{"GripSupport",0},{"GripPrimary",3}})do
-                    self:addLabel(tr(hand[1]),y);y=y+28
+                local groups={
+                    {"GripSupport",0,12,3,""},{"GripSupportWrist",6,90,5,"°"},
+                    {"GripPrimary",3,12,3,""},{"GripPrimaryWrist",9,90,5,"°"},
+                }
+                for _,group in ipairs(groups)do
+                    local label,start,limit,page,unit=unpack(group)
+                    self:addLabel(tr(label),y);y=y+28
                     for i,axis in ipairs({"X","Y","Z"})do
-                        local field=hand[2]+i-1
+                        local field=start+i-1
                         self:addLabel(axis,y,17)
                         local slider=ISSliderPanel:new(34,y+2,width-46,20,self,function(w,value)
                             if not AimohPMXReadyRoom.gripSet(w.player,family,field,value)then w.status=tr("Error") end
                         end)
-                        slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(-12,12,1,3,true)
+                        slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(-limit,limit,1,page,true)
                         slider:setCurrentValue(values[field+1] or 0,true)
                         local render=slider.render
                         slider.render=function(s)
                             render(s)
-                            s:drawTextRight(string.format("%+d",s.currentValue),s.width,20,.81,.88,.92,1,UIFont.Small)
+                            s:drawTextRight(string.format("%+d",s.currentValue)..unit,s.width,20,.81,.88,.92,1,UIFont.Small)
                         end
                         self.content:addChild(slider);table.insert(self.widgets,slider);y=y+39
                     end

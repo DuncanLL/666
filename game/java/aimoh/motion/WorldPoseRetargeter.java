@@ -245,18 +245,31 @@ public final class WorldPoseRetargeter {
     public static final class GripAdjustment {
         private final Matrix4f weapon;
         private final float[] offsets;
+        private final float[] wristAngles;
         final String itemKey;
         float[] itemTuning;
         private Matrix4f correction;
 
         public GripAdjustment(Matrix4f weapon,float[] offsets,String itemKey) {
-            if(offsets.length!=6||!weapon.isFinite()||Math.abs(weapon.determinant())<1e-8f)
+            this(weapon,offsets,new float[6],itemKey);
+        }
+
+        public GripAdjustment(Matrix4f weapon,float[] offsets,float[] wristAngles,String itemKey) {
+            if(offsets.length!=6||wristAngles.length!=6||!weapon.isFinite()||Math.abs(weapon.determinant())<1e-8f)
                 throw new IllegalArgumentException("Invalid grip calibration input");
             this.weapon=new Matrix4f(weapon);
             this.offsets=offsets.clone();
+            this.wristAngles=wristAngles.clone();
             this.itemKey=itemKey;
             for(float value:offsets)if(!Float.isFinite(value)||Math.abs(value)>.12f)
                 throw new IllegalArgumentException("Invalid grip offset");
+            for(float value:wristAngles)if(!Float.isFinite(value)||Math.abs(value)>(float)(Math.PI/2))
+                throw new IllegalArgumentException("Invalid wrist angle");
+        }
+
+        public GripAdjustment wristsOnly() {
+            for(float angle:wristAngles)if(angle!=0)return new GripAdjustment(weapon,new float[6],wristAngles,itemKey);
+            return null;
         }
 
         public Matrix4f placement(Matrix4f sourceItem) {
@@ -357,11 +370,19 @@ public final class WorldPoseRetargeter {
         for(int side=0;side<2;side++){
             int at=side*3;
             float dx=adjustment.offsets[at],dy=adjustment.offsets[at+1],dz=adjustment.offsets[at+2];
-            if(dx==0&&dy==0&&dz==0)continue;
+            float rx=adjustment.wristAngles[at],ry=adjustment.wristAngles[at+1],rz=adjustment.wristAngles[at+2];
+            boolean rotate=rx!=0||ry!=0||rz!=0;
+            if(dx==0&&dy==0&&dz==0&&!rotate)continue;
             Matrix4f wrist=joint(targetArms[at+2]);
             wanted[side]=wrist.getTranslation(new Vector3f())
                 .fma(dx*unitScale,x).fma(dy*unitScale,y).fma(dz*unitScale,z);
             rotations[side]=wrist.getUnnormalizedRotation(new Quaternionf()).normalize();
+            if(rotate){
+                // Keep the hand's contact point while changing the wrist's local orientation.
+                Vector3f pivot=rotations[side].transform(new Vector3f(targetPalmLocal[side]));
+                rotations[side].rotateXYZ(rx,ry,rz).normalize();
+                wanted[side].add(pivot).sub(rotations[side].transform(new Vector3f(targetPalmLocal[side])));
+            }
             status[side]=solveGrip(sourceWorld,solver,sourceArms,targetArms,soften,side,wanted[side]);
         }
         restoreWrists(targetArms,rotations,status);

@@ -9,10 +9,12 @@ import zombie.characters.IsoPlayer;
 import zombie.inventory.types.HandWeapon;
 import zombie.inventory.types.WeaponType;
 
-/** Per-save, per-model offsets keyed by the game's firearm animation family. */
+/** Per-save, per-model offsets and wrist angles keyed by firearm animation family. */
 final class GripCalibration {
     private static final String STORE="AimohR116GripCalibration";
-    private static final int COUNT=6, LIMIT=12;
+    private static final int POSITION_AXES=6, COUNT=12;
+
+    private static int limit(int axis){return axis<POSITION_AXES?12:90;}
 
     private static HandWeapon weapon(IsoGameCharacter actor) {
         return actor instanceof IsoPlayer player && player.isLocalPlayer()
@@ -43,7 +45,7 @@ final class GripCalibration {
 
     private static double value(KahluaTable row,int axis) {
         Object raw=row==null?null:row.rawget(axis+1);
-        return raw instanceof Number n&&Double.isFinite(n.doubleValue())&&Math.abs(n.doubleValue())<=LIMIT?n.doubleValue():0;
+        return raw instanceof Number n&&Double.isFinite(n.doubleValue())&&Math.abs(n.doubleValue())<=limit(axis)?n.doubleValue():0;
     }
 
     static KahluaTable sliders(IsoGameCharacter actor,String id,String family) {
@@ -60,7 +62,7 @@ final class GripCalibration {
             if(saved!=null)saved.rawset(family,null);
             return true;
         }
-        if(axis<0||axis>=COUNT||!Double.isFinite(offset)||Math.abs(offset)>LIMIT||offset!=Math.rint(offset))return false;
+        if(axis<0||axis>=COUNT||!Double.isFinite(offset)||Math.abs(offset)>limit(axis)||offset!=Math.rint(offset))return false;
         table(model(actor,id,true),family,true).rawset(axis+1,Double.valueOf(offset));
         return true;
     }
@@ -74,12 +76,13 @@ final class GripCalibration {
         if(item==null)return null;
         KahluaTable row=table(model(actor,id,false),family(item),false);
         if(row==null)return null;
-        float[] offsets=new float[COUNT];
+        float[] offsets=new float[POSITION_AXES],wrists=new float[POSITION_AXES];
         boolean edited=false;
-        for(int i=0;i<COUNT;i++){
+        for(int i=0;i<POSITION_AXES;i++){
             offsets[i]=(float)(value(row,i)*.01);
-            edited|=offsets[i]!=0;
+            wrists[i]=(float)Math.toRadians(value(row,POSITION_AXES+i));
+            edited|=offsets[i]!=0||wrists[i]!=0;
         }
-        return edited?new GripAdjustment(weaponMatrix,offsets,item.getType()):null;
+        return edited?new GripAdjustment(weaponMatrix,offsets,wrists,item.getType()):null;
     }
 }
