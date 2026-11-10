@@ -15,6 +15,7 @@ from common import BUILD, ROOT, environment, save, settings, sha
 
 
 BRIDGE = 'aimoh/gf2/bridge/'
+SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
 MOTION_SUFFIX = '/shaders/dimensions/composite6.fsh'
 ORPHAN_SNAPSHOT = 'viewpoint/render/AimohGF2Services$Snapshot.class'
 TOKEN = re.compile(r'^[ \t]*#[^\r\n]*|/\*[\s\S]*?\*/|//[^\r\n]*|"(?:\\.|[^"\\])*"|\.[ \t]*[A-Za-z_]\w*|\b[A-Za-z_]\w*\b', re.M | re.ASCII)
@@ -42,9 +43,18 @@ def renamed_shader(data, symbols, scope):
     return encoded, aliases
 
 
-def protect_shaders(payload, backend, rules):
+def protect_shaders(payload, backend, rules, fragments):
     changed = {}
     mapping = {}
+    sealed = []
+
+    def seal(entry, data):
+        marker = digest(f'{backend}/{entry}'.encode())[:16]
+        assert marker not in fragments and b'/*r116$' not in data, entry
+        fragments[marker] = data
+        sealed.append(entry)
+        return f'/*r116${marker}*/'.encode()
+
     with zipfile.ZipFile(io.BytesIO(payload)) as source:
         if backend == 'native':
             for name, symbols in rules['native_local_symbols'].items():
@@ -52,7 +62,8 @@ def protect_shaders(payload, backend, rules):
                 data = source.read(entry)
                 original = (ROOT / 'render-support/native-pack' / entry).read_bytes()
                 assert data.replace(b'\r\n', b'\n') == original.replace(b'\r\n', b'\n'), entry
-                changed[entry], mapping[entry] = renamed_shader(data, symbols, entry)
+                protected, mapping[entry] = renamed_shader(data, symbols, entry)
+                changed[entry] = seal(entry, protected)
         else:
             entries = [name for name in source.namelist() if name.endswith(MOTION_SUFFIX)]
             assert len(entries) == 1, entries
@@ -61,8 +72,25 @@ def protect_shaders(payload, backend, rules):
             fragment = (ROOT / 'render-support/eclipse/shaders/actor-motion.glsl').read_bytes().replace(b'\r\n', b'\n')
             assert data.count(fragment) == 1, 'Eclipse author-owned motion fragment differs from the built package'
             protected, mapping[entry] = renamed_shader(fragment, rules['eclipse_motion_local_symbols'], entry)
-            changed[entry] = data.replace(fragment, protected, 1)
-            assert changed[entry].replace(protected, fragment, 1) == data
+            marker = seal(entry, protected)
+            changed[entry] = data.replace(fragment, marker, 1)
+            assert changed[entry].replace(marker, fragment, 1) == data
+            shader_root = entry.removesuffix('dimensions/composite6.fsh')
+            for name in rules['eclipse_owned_files']:
+                owned = shader_root + name
+                code = source.read(owned)
+                if name.startswith('gf2/data/'):
+                    assert digest(code) == Path(name).stem, owned
+                changed[owned] = seal(owned, code)
+
+        manifest = [name for name in source.namelist() if name.endswith('shaders/gf2/manifest.json')]
+        assert len(manifest) == 1, manifest
+        entry = manifest[0]
+        data = source.read(entry)
+        bootstrap = json.loads(data)
+        public = {key: bootstrap[key] for key in ('format', 'pipeline', 'addon_runtime', 'character_catalog')}
+        public['input'] = seal(entry, data).decode()
+        changed[entry] = (json.dumps(public, separators=(',', ':')) + '\n').encode()
         output = io.BytesIO()
         with zipfile.ZipFile(output, 'w') as target:
             for name in source.namelist():
@@ -70,7 +98,7 @@ def protect_shaders(payload, backend, rules):
                     write(target, name, changed[name] if name in changed else source.read(name))
         with zipfile.ZipFile(output) as target:
             assert all(target.read(name) == source.read(name) for name in target.namelist() if name not in changed)
-    return output.getvalue(), mapping
+    return output.getvalue(), mapping, sealed
 
 
 def owned_classes(archive):
@@ -85,7 +113,7 @@ def owned_classes(archive):
         root = Path(name).name.split('$', 1)[0].removesuffix('.class')
         source = root.replace('AimohEclipseGf2', 'AimohGf2')
         effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh')) and root != 'AimohGf2IrisGlass'
-        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks'}
+        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources'}
         if name == ORPHAN_SNAPSHOT:
             # Historical build leftovers are copied as-is only when unreferenced.
             assert all(b'viewpoint/render/AimohGF2Services$Snapshot' not in archive.read(other)
@@ -198,12 +226,24 @@ def package(output, proguard, metadata):
     with zipfile.ZipFile(raw) as source:
         protected, names, renamed_members = protect_classes(source, private, rules, proguard, config)
         shaders = {}
+        fragments = {}
         for backend, row in report['backends'].items():
             entry = row['shader_payload']
             data = source.read(entry)
             assert digest(data) == row['shader_sha256']
-            shaders[entry], shader_mapping[backend] = protect_shaders(data, backend, rules)
-            shader_report[backend] = {'sha256': digest(shaders[entry]), 'changed_entries': sorted(shader_mapping[backend])}
+            shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments)
+            shader_report[backend] = {'sha256': digest(shaders[entry]), 'sealed_entries': sorted(sealed)}
+        source_archive = private / 'render-inputs.zip'
+        with zipfile.ZipFile(source_archive, 'w') as fragment_archive:
+            for name, data in sorted(fragments.items()):
+                write(fragment_archive, name, data)
+        tool = ROOT / 'tools/java/SealRenderResources.java'
+        tool_classes = private / 'sealer-classes'
+        compile_java(config, [tool], tool_classes, [raw])
+        sealed_resource = private / 'render-inputs.bin'
+        java = Path(config['game_root']) / 'jre64/bin/java.exe'
+        run_java([str(java), '-cp', f'{tool_classes};{raw}', 'aimoh.gf2.bridge.SealRenderResources',
+                  str(source_archive), str(sealed_resource)], private / 'sealer.log')
         with zipfile.ZipFile(protected) as owned, zipfile.ZipFile(jar, 'w') as target:
             assert {n for n in owned.namelist() if n.endswith('.class')} == set(names.values())
             for name in source.namelist():
@@ -215,8 +255,10 @@ def package(output, proguard, metadata):
                     write(target, name, shaders[name])
                 else:
                     write(target, name, source.read(name))
+            assert SEALED_RESOURCE not in source.namelist()
+            write(target, SEALED_RESOURCE, sealed_resource.read_bytes())
         with zipfile.ZipFile(jar) as result:
-            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in result.namelist() if name not in names.values() and name not in shaders)
+            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in result.namelist() if name not in names.values() and name not in shaders and name != SEALED_RESOURCE)
     assert all(sha(path) == value for path, value in inputs.items())
     save(private / 'GLSL-MAPPING.json', shader_mapping)
     save(output / 'protection-report.json', dict(status='PROTECTED_REVIEW_BUILD', version=report['version'],
@@ -224,7 +266,8 @@ def package(output, proguard, metadata):
          protection_rules_sha256=sha(rules_file), protection_script_sha256=sha(Path(__file__)),
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
-         shaders=shader_report, private_mapping_bundled=False, installed=False, uploaded=False))
+         shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=sha(sealed_resource),
+         seal_tool_sha256=sha(tool), private_mapping_bundled=False, installed=False, uploaded=False))
     print(f'Protected review JAR: {jar}', flush=True)
 
 

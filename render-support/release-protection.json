@@ -20,5 +20,14 @@
     "native_motion.comp": ["originalDisplayInput", "decodeOct", "encodeOct", "layer", "pixel", "ownsOpaque", "exposure"],
     "native_prefilter.comp": ["sampleH", "side", "phi", "axis", "weights"]
   },
-  "eclipse_motion_local_symbols": ["at", "actorMotion"]
+  "eclipse_motion_local_symbols": ["at", "actorMotion"],
+  "eclipse_owned_files": [
+    "danrp/sky_base.fsh",
+    "danrp/sky_base.vsh",
+    "danrp/sky_filter.fsh",
+    "danrp/sky_filter.vsh",
+    "gf2/data/b093d1c52cde3adb19168eecadbee39218f6d57ba1bcff6c8bfd7bd45539fb72.comp",
+    "gf2/data/c764fda6ed924d0d5605f6f1e5f9b243a98665aca7f36587bc0b08c21c56cfe6.comp",
+    "gf2/data/ef189cfaaf76dfae8eec9c341ca9ee10be138ca958cd36ace34753f2067a2d6e.comp"
+  ]
 }

@@ -5,12 +5,19 @@ from common import ROOT,BUILD,settings,sha,save,environment
 from build import compile_java
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,default=BUILD/'workshop/R116RenderSupport');p.add_argument('--backend',choices=['native','eclipse','combined'],default='combined');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,default=BUILD/'workshop/R116RenderSupport');p.add_argument('--backend',choices=['native','eclipse','combined'],default='combined');p.add_argument('--protected-report',type=Path);a=p.parse_args()
     eclipse=a.backend=='eclipse'
     combined=a.backend=='combined'
     build_dir=BUILD/({'native':'render-support','eclipse':'eclipse-support','combined':'combined-support'}[a.backend])
     build=json.loads((build_dir/'build.json').read_text('utf8'))
     backends=build['backends'] if combined else {a.backend:build}
+    if a.protected_report:
+        assert combined, 'Protected review builds contain both backends'
+        protected=json.loads(a.protected_report.read_text('utf8'))
+        assert protected['status']=='PROTECTED_REVIEW_BUILD' and protected['input_jar_sha256']==build['jar_sha256']
+        assert protected['host_sha256']==build['host_sha256'] and set(protected['shaders'])==set(backends)
+        backends={name:dict(row,shader_sha256=protected['shaders'][name]['sha256']) for name,row in backends.items()}
+        build['jar_sha256']=protected['jar_sha256']
     cfg=settings();project=a.project.resolve();mod=project/'Contents/mods/AimohGF2Eclipse'
     jar=mod/'42/media/java/client/AimohGF2Eclipse.jar';game=Path(cfg['game_root']);host=Path(cfg['viewpoint_jar'])
     before=sha(host);assert before==build['host_sha256']
@@ -21,32 +28,36 @@ if __name__=='__main__':
         assert {name for name in z.namelist() if name.startswith('aimoh/gf2/bridge/Aimoh-') and name.endswith('-GF2.zip')}==payloads
         for row in backends.values():
             assert hashlib.sha256(z.read(row['shader_payload'])).hexdigest()==row['shader_sha256']
+        if a.protected_report:
+            assert hashlib.sha256(z.read('aimoh/gf2/bridge/render-inputs.bin')).hexdigest()==protected['sealed_payload_sha256']
         if not eclipse:
             display=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
             expected_display=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
             assert len(display)==expected_display['bytes']and hashlib.sha256(display).hexdigest()==expected_display['sha256']
     assert sha(jar)==build['jar_sha256'],'Workshop JAR is not the build being validated'
-    out=build_dir/'checks';out.mkdir(parents=True,exist_ok=True)
+    out=(a.protected_report.resolve().parent if a.protected_report else build_dir)/'checks';out.mkdir(parents=True,exist_ok=True)
     agent=out/'test-agent.jar'
     compile_java(cfg,[ROOT/'tools/java/RenderSupportTestAgent.java'],out/'agent-classes',[jar,host,cfg['zombiebuddy_jar'],*game.glob('*.jar')])
     with zipfile.ZipFile(agent,'w',zipfile.ZIP_DEFLATED)as z:
         z.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: RenderSupportTestAgent\nCan-Retransform-Classes: true\n\n')
         z.write(out/'agent-classes/RenderSupportTestAgent.class','RenderSupportTestAgent.class')
     cp=[jar,Path(cfg['reference_jar']),host,cfg['zombiebuddy_jar'],agent,*game.glob('*.jar')]
-    if not eclipse:
+    if not eclipse and not a.protected_report:
         compile_java(cfg,[ROOT/'tools/java/NativePackOptionsCheck.java'],out/'pack-options-classes',cp)
         options_check=subprocess.run([str(game/'jre64/bin/java.exe'),'-ea','-cp',';'.join(map(str,[out/'pack-options-classes',*cp])),'viewpoint.render.NativePackOptionsCheck'],env=environment(),capture_output=True,text=True,timeout=30)
         (out/'pack-options.log').write_text(options_check.stdout+options_check.stderr,'utf8');options_check.check_returncode()
         assert 'NATIVE_PACK_OPTIONS_COMPOSITION_PASS' in options_check.stdout
-    compile_java(cfg,[ROOT/'tools/java/OutlineBridgeCheck.java'],out/'outline-classes',cp)
-    outline_check=subprocess.run([str(game/'jre64/bin/java.exe'),'-ea','-cp',';'.join(map(str,[out/'outline-classes',*cp])),'viewpoint.render.OutlineBridgeCheck'],env=environment(),capture_output=True,text=True,timeout=30)
-    (out/'outline.log').write_text(outline_check.stdout+outline_check.stderr,'utf8');outline_check.check_returncode()
-    assert 'SHARED_OUTLINE_PARITY_CHECK_PASS' in outline_check.stdout
+    if not a.protected_report:
+        compile_java(cfg,[ROOT/'tools/java/OutlineBridgeCheck.java'],out/'outline-classes',cp)
+        outline_check=subprocess.run([str(game/'jre64/bin/java.exe'),'-ea','-cp',';'.join(map(str,[out/'outline-classes',*cp])),'viewpoint.render.OutlineBridgeCheck'],env=environment(),capture_output=True,text=True,timeout=30)
+        (out/'outline.log').write_text(outline_check.stdout+outline_check.stderr,'utf8');outline_check.check_returncode()
+        assert 'SHARED_OUTLINE_PARITY_CHECK_PASS' in outline_check.stdout
     compile_java(cfg,[ROOT/'tools/java/RenderSupportStartupCheck.java'],out/'classes',cp)
     command=[str(game/'jre64/bin/java.exe'),'-ea','-Xverify:all','--enable-native-access=ALL-UNNAMED',
              '-Duser.home='+str(out/'home'),'-Djava.io.tmpdir='+str(BUILD/'tmp'),
              '-javaagent:'+str(agent)+'='+str(jar),'-cp',
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out),a.backend]
+    if a.protected_report:command.append('sealed')
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
     (out/'startup.log').write_text(result.stdout+result.stderr,'utf8');result.check_returncode()
     assert f'NORMAL_{a.backend.upper()}_EMBEDDED_INSTALL_DISCOVERY_PASS'in result.stdout

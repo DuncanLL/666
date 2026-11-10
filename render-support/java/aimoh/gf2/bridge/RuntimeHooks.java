@@ -8,19 +8,56 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     private static final String SOURCE_INPUTS="aimoh/motion/PmxOriginalInputs";
     private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
+    private static final String IRIS_SOURCE = "viewpoint/iris/PackSource";
+    private static final String NATIVE_SOURCE = "viewpoint/platform/ShaderPack$1";
     public static final Map<String,Integer> EXPECTED;
     static {
         Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);
         EclipseHooks.EXPECTED.forEach((name,count)->{if(!name.equals(SOURCE_INPUTS))hooks.merge(name,count,Integer::sum);});
+        if (AimohSealedSources.enabled()) {
+            hooks.put(IRIS_SOURCE, 2);
+            hooks.put(NATIVE_SOURCE, 1);
+        }
         EXPECTED=Collections.unmodifiableMap(hooks);
     }
     private volatile Throwable transformFailure;
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
+        if (type.equals(IRIS_SOURCE) || type.equals(NATIVE_SOURCE)) return openSources(type, raw);
         byte[] result=NATIVE.containsKey(type)?rewriteNative(type,raw):raw;
         if(!type.equals(SOURCE_INPUTS)&&EclipseHooks.EXPECTED.containsKey(type))
             result=EclipseHooks.rewrite(type,result);
         return result;
+    }
+    private static byte[] openSources(String type, byte[] raw) {
+        boolean iris = type.equals(IRIS_SOURCE);
+        String method = iris ? "bytes" : "read";
+        String value = iris ? "[B" : "Ljava/lang/String;";
+        String path = "Ljava/lang/String;";
+        ClassReader reader = new ClassReader(raw);
+        ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
+        int[] hits = {0};
+        reader.accept(new ClassVisitor(Opcodes.ASM9, writer) {
+            @Override public MethodVisitor visitMethod(int access, String name, String descriptor,
+                                                       String signature, String[] exceptions) {
+                MethodVisitor base = super.visitMethod(access, name, descriptor, signature, exceptions);
+                if (!name.equals(method) || !descriptor.equals("(" + path + ")" + value)) return base;
+                return new MethodVisitor(Opcodes.ASM9, base) {
+                    @Override public void visitInsn(int op) {
+                        if (op == Opcodes.ARETURN) {
+                            mv.visitVarInsn(Opcodes.ALOAD, 1);
+                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "aimoh/gf2/bridge/AimohSealedSources",
+                                iris ? "bytes" : "text", "(" + value + path + ")" + value, false);
+                            hits[0]++;
+                        }
+                        super.visitInsn(op);
+                    }
+                };
+            }
+        }, 0);
+        if (hits[0] != EXPECTED.get(type))
+            throw new IllegalStateException(type + ": protected shader read points changed: " + hits[0]);
+        return writer.toByteArray();
     }
     private static byte[] rewriteNative(String type,byte[] raw){
         if(type.equals("viewpoint/platform/PackOption")){
