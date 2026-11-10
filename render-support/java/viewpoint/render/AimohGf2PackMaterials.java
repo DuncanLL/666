@@ -27,6 +27,7 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private enum Variant { COLOR, EARLY, COVERAGE }
     private record ProgramKey(String vertex,String fragment,Variant variant){}
     private record StateKey(int material,String pass,Variant variant){}
+    private static final String FACE_FORWARD = "a2f224c7144485694aa46c3c3b302b9e22e401b29eae813ee19e8ea14c740a8a";
     private static final Pattern SOURCE_OUTPUT=Pattern.compile("(?m)^\\h*layout\\h*\\(\\h*location\\h*=\\h*\\d+\\h*\\)\\h*out\\h+vec4\\h+(SV_Target\\d+)\\h*;");
     private record TextureKey(AimohGf2OriginalProgram program,int material){}
     private final Map<ProgramKey,AimohGf2OriginalProgram> programs=new LinkedHashMap<>();
@@ -130,11 +131,29 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
                     fs+="\nvoid main(){gf2OriginalAuthoredLayer();float exposure=texelFetch(gf2AuthoredExposure,gf2AuthoredExposureOffset).r;SV_Target0.rgb/=max(exposure,0.00001);}\n";
                 }
             }
-            if(name.equals("GFCharForward"))fs=AimohGf2SurfaceControls.adapt(fs,programMetadata.get(fragment));
+            if(name.equals("GFCharForward")){
+                fs=AimohGf2SurfaceControls.adapt(fs,programMetadata.get(fragment));
+                if(variant==Variant.COLOR&&fragment.equals(FACE_FORWARD))fs=softenFaceMask(fs);
+            }
             if(variant==Variant.COVERAGE)fs=coverageFragment(fs);
             program=new AimohGf2OriginalProgram(vs,fs,vertex,fragment);programs.put(key,program);
         }
         return program;
+    }
+
+    /** Eclipse's direct face mask. Keep the shadow-map term and other face passes intact. */
+    private static String softenFaceMask(String source){
+        String width="GF2Raw2[17].x";
+        String begin="    u_xlat8.x = (-GF2Raw2[17].x) * 0.5 + u_xlat6.x;";
+        String end="    u_xlat8.x = u_xlat42 * u_xlat6.x;";
+        int start=source.indexOf(begin),stop=source.indexOf(end);
+        if(start<0||stop<=start||source.lastIndexOf(begin)!=start||source.lastIndexOf(end)!=stop)
+            throw new IllegalArgumentException("Source face mask layout differs");
+        String transition=source.substring(start,stop);
+        if(transition.split(Pattern.quote(width),-1).length!=6)
+            throw new IllegalArgumentException("Source face mask transition differs");
+        return source.substring(0,start)+transition.replace(width,"max("+width+", 0.30)")
+            +"    u_xlat6.x = mix(1.0, u_xlat6.x, 0.60);\n"+source.substring(stop);
     }
 
     static String coverageFragment(String source){
