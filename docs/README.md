@@ -21,6 +21,7 @@
 | Git 分支 | 用途 |
 |---|---|
 | `main` | Native／Eclipse 共用接入、后端修复、合包分发，以及人物与原生核心的仓库基线 |
+| `codex/r116-render-rc4-20261110` | PZ 42.22／VP RC4 的渲染分发与 Eclipse 遮挡修正。阶段点 `render-support-v0.3.23` |
 | `codex/r116-runtime-stability-20261108` | 人物运行时、物理、整备室和游戏动作修正。已提交人物阶段点是 `052649e` |
 | `codex/r116-live-vmd-room` | 游戏内舞蹈与整备室动作开发。由人物阶段点 `052649e` 分出，实际代码还需核对该工作树的差异 |
 
@@ -37,6 +38,7 @@
 
 ### 渲染支持
 
+- [0.3.23 的 RC4 适配、遮挡修正与玩家反馈](handoffs/2026-11-10-render-support-0.3.23.md)
 - [Native 与 Eclipse 合包](handoffs/2026-11-09-combined-render-support.md)
 - [RC3 接入与回退](handoffs/2026-11-09-rc3-render-stability.md)
 - [绘制路径与资源开销对照](handoffs/2026-11-09-render-active-path.md)
