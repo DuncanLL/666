@@ -20,7 +20,16 @@ public final class RuntimeHooks implements ClassFileTransformer {
         }
         EXPECTED=Collections.unmodifiableMap(hooks);
     }
+    private final Set<String> targets;
     private volatile Throwable transformFailure;
+
+    public RuntimeHooks() {
+        this(EXPECTED.keySet());
+    }
+
+    RuntimeHooks(Set<String> targets) {
+        this.targets = Set.copyOf(targets);
+    }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
         if (type.equals(IRIS_SOURCE) || type.equals(NATIVE_SOURCE)) return openSources(type, raw);
@@ -84,7 +93,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         ClassLoader loader=RuntimeHooks.class.getClassLoader();
         if(loader.getResource(R+"Gf2SourceHost.class")!=null)throw new IllegalStateException("A private GF2 host is already installed; refusing double rendering");
         var loaded=new ArrayList<Class<?>>();
-        for(String name:EXPECTED.keySet())try(var input=loader.getResourceAsStream(name+".class")){
+        for(String name:targets)try(var input=loader.getResourceAsStream(name+".class")){
             if(input==null)throw new IllegalStateException("Required integration class missing: "+name);
             rewrite(name,input.readAllBytes());
             Class<?> type=Class.forName(name.replace('/','.'),false,loader);
@@ -97,13 +106,13 @@ public final class RuntimeHooks implements ClassFileTransformer {
             if(transformFailure!=null)throw new IllegalStateException("Runtime integration rejected",transformFailure);
         }catch(Throwable failure){
             agent.removeTransformer(this);
-            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(EXPECTED.containsKey(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
+            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(targets.contains(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
             if(!restore.isEmpty())agent.retransformClasses(restore.toArray(Class<?>[]::new));
             throw failure;
         }
     }
     @Override public byte[] transform(ClassLoader loader,String name,Class<?> type,ProtectionDomain domain,byte[] bytes)throws IllegalClassFormatException{
-        if(!EXPECTED.containsKey(name))return null;
+        if(name==null||!targets.contains(name))return null;
         try{return rewrite(name,bytes);}catch(Throwable failure){transformFailure=failure;System.err.println("[AimohGF2] Integration failed for "+name+": "+failure);throw new IllegalClassFormatException(failure.toString());}
     }
 }

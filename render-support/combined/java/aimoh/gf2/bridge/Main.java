@@ -10,20 +10,28 @@ public final class Main {
     public static synchronized void main(String[] ignored)throws Exception{
         if(hooks!=null)return;
         VerifiedViewpoint.verify();
-        Class<?> loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");
-        var instrumentation=loader.getDeclaredField("g_instrumentation");
-        instrumentation.setAccessible(true);
-        Instrumentation agent=(Instrumentation)instrumentation.get(null);
-        if(agent==null)throw new IllegalStateException("Enable this Java MOD through normal ZombieBuddy approval");
-
-        Path user=Path.of(zombie.ZomboidFileSystem.instance.getCacheDir());
-        Files.createDirectories(user);
-        install(user,"Native",false);
-        install(user,"Eclipse",true);
+        Instrumentation agent=instrumentation();
+        installPacks();
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
         System.out.println("[R116] Native and Eclipse integration ready for official Viewpoint 0.1.7-rc4. Select the pack in Viewpoint.");
+    }
+
+    static Instrumentation instrumentation()throws Exception{
+        Class<?> loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");
+        var field=loader.getDeclaredField("g_instrumentation");
+        field.setAccessible(true);
+        Instrumentation agent=(Instrumentation)field.get(null);
+        if(agent==null)throw new IllegalStateException("Enable this Java MOD through normal ZombieBuddy approval");
+        return agent;
+    }
+
+    static void installPacks()throws Exception{
+        Path user=Path.of(zombie.ZomboidFileSystem.instance.getCacheDir());
+        Files.createDirectories(user);
+        install(user,"Native",false);
+        install(user,"Eclipse",true);
     }
 
     private static void install(Path user,String backend,boolean eclipse)throws Exception{
