@@ -17,3 +17,10 @@
 - 状态 LIMITED_HARDWARE_VALIDATION。正式游戏、NVIDIA、Intel 和外部独立红队测试是后续验收。
 
 本机证据在 build/r116-redteam-v3。A、B 公开试读文件在该目录的 Share 下。只将 JAR 交给试读者。用两份不同构建检验变体时，保持同一资源集合和两条计时规则。确认提取时以对方独立提交的完整着色器或 SHA-256 为准，私有输入归档可直接核对。
+
+## 实际分发选择
+
+- A、B 是同一套光影的独立试读构建，用来核对两份包对比时密钥载体和片段是否变化。R116 0.3.34 选用 A 对应的单 MOD 合包，因为该构建已通过人物入口、两套光影的实际分发和 AMD 组件绘制。B 留作差分对照。
+- 2026-11-10 用户反馈，已把 A、B 同时给试读者。试读者正在分析 A，耗时体感高于第一版直接拆读。尚未收到完整着色器或校验值，提取结果待核。
+- 复跑正常 ZombieBuddy 启动，在空玩家目录核对落盘。Native 目录中的包文件和内嵌资源一致，Eclipse ZIP 与 JAR 内嵌 ZIP 逐字节一致。封装数据留在 MOD JAR，玩家的光影目录保存配套文件和占位符。
+- 实际单 MOD 的 AimohPMXPreview.jar 已原样复制到 build/r116-redteam-v3/Unified-review，SHA-256 为 7792aa98b8a234c3458eeb9d20482e2a80322994dc80af88310937429fdbcba6。用这一个 JAR 试读可覆盖实际发行的加载器和封装数据。验证详情在 build/r116-redteam-v3/distribution-readback.json。
