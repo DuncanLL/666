@@ -7,13 +7,16 @@ import net.bytebuddy.jar.asm.*;
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     private static final String SOURCE_INPUTS="aimoh/motion/PmxOriginalInputs";
-    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
+    private static final String MODEL_BATCHES=R+"ModelBatches";
+    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,
+        SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1,MODEL_BATCHES,1);
     private static final String IRIS_SOURCE = "viewpoint/iris/PackSource";
     private static final String NATIVE_SOURCE = "viewpoint/platform/ShaderPack$1";
     public static final Map<String,Integer> EXPECTED;
     static {
         Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);
         EclipseHooks.EXPECTED.forEach((name,count)->{if(!name.equals(SOURCE_INPUTS))hooks.merge(name,count,Integer::sum);});
+        if(EclipseHooks.EXPECTED.isEmpty())hooks.remove(MODEL_BATCHES);
         if (AimohSealedSources.enabled()) {
             hooks.put(IRIS_SOURCE, 2);
             hooks.put(NATIVE_SOURCE, 1);
@@ -69,6 +72,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         return writer.toByteArray();
     }
     private static byte[] rewriteNative(String type,byte[] raw){
+        if(type.equals(MODEL_BATCHES))return replayFilter(raw);
         if(type.equals("viewpoint/platform/PackOption")){
             ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);int[] hits={0};
             reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
@@ -84,6 +88,32 @@ public final class RuntimeHooks implements ClassFileTransformer {
         ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,0);int[] hits={0};
         reader.accept(new ClassVisitor(Opcodes.ASM9,writer){public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] ex){return new MethodVisitor(Opcodes.ASM9,super.visitMethod(access,name,desc,sig,ex)){public void visitLdcInsn(Object value){if("viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.AimohGf2SourceHost");hits[0]++;}else super.visitLdcInsn(value);}};}},0);
         if(hits[0]!=1)throw new IllegalStateException("Character source-host entry changed: "+hits[0]);return writer.toByteArray();
+    }
+    private static byte[] replayFilter(byte[] raw){
+        String filter="L"+MODEL_BATCHES+"$Filter;";
+        String draws="L"+R+"ModelDraws;";
+        ClassReader reader=new ClassReader(raw);
+        ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);
+        int[] hits={0};
+        reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
+            @Override public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] exceptions){
+                MethodVisitor base=super.visitMethod(access,name,desc,sig,exceptions);
+                if(!name.equals("inOrder")||!desc.equals("([II"+filter+"L"+MODEL_BATCHES+"$State;)I"))return base;
+                hits[0]++;
+                return new MethodVisitor(Opcodes.ASM9,base){
+                    @Override public void visitCode(){
+                        super.visitCode();
+                        mv.visitVarInsn(Opcodes.ALOAD,0);
+                        mv.visitFieldInsn(Opcodes.GETFIELD,MODEL_BATCHES,"draws",draws);
+                        mv.visitVarInsn(Opcodes.ALOAD,3);
+                        mv.visitMethodInsn(Opcodes.INVOKESTATIC,R+"AimohStockModelReplay","filter","("+draws+filter+")"+filter,false);
+                        mv.visitVarInsn(Opcodes.ASTORE,3);
+                    }
+                };
+            }
+        },0);
+        if(hits[0]!=1)throw new IllegalStateException("Viewpoint model batch replay entry changed: "+hits[0]);
+        return writer.toByteArray();
     }
     public void install(Instrumentation agent)throws Exception{
         VerifiedViewpoint.verify();
