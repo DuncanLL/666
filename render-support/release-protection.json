@@ -1,0 +1,24 @@
+{
+  "proguard_version": "7.10.0",
+  "proguard_zip_sha256": "5aa88c434766a057a2ead3412acc01022bb444f9f1bfbae690a1d48b2006b242",
+  "internal_java_roots": [
+    "AimohGf2OutlineBridge", "AimohGf2SurfaceControls", "AimohGf2FrameInputs",
+    "AimohGf2RegisterBank", "AimohEclipseGf2RegisterBank", "AimohNativeSourcePrograms",
+    "AimohNativeSourceRenderer", "AimohNativeSourceScope", "AimohNativeSourceSpace",
+    "AimohNativeDisplayTransfer", "AimohNativeGf2Environment", "AimohNativeLocalLights",
+    "AimohNativeMotionBridge", "AimohNativeRoomProbe", "AimohGf2RuntimeQueue",
+    "AimohGf2WorldShadow", "AimohGf2ShadowReadback", "AimohGf2OriginalSamplers",
+    "AimohGf2OriginalTexture", "AimohGf2UnpackScope"
+  ],
+  "native_local_symbols": {
+    "cube_faces.glsl": ["face", "p"],
+    "native_cube.comp": ["gf2ProbePoint", "gf2ProbeEdge", "gf2ProbeSceneLight", "clip", "projected", "approached", "rayDepth", "sceneDepth", "midUv", "midDepth", "observed", "thickness", "sourceDirection", "nativeDirection"],
+    "native_indirect.glsl": ["gf2NativeNormalSample", "coefficient", "channel"],
+    "native_light.comp": ["share", "skyPart", "scale", "isotropic", "constant", "dx", "dy", "dz", "diagonal"],
+    "native_local.glsl": ["slot", "colour", "kind", "dist", "energy", "att", "edge", "beam"],
+    "native_main.glsl": ["visibility"],
+    "native_motion.comp": ["originalDisplayInput", "decodeOct", "encodeOct", "layer", "pixel", "ownsOpaque", "exposure"],
+    "native_prefilter.comp": ["sampleH", "side", "phi", "axis", "weights"]
+  },
+  "eclipse_motion_local_symbols": ["at", "actorMotion"]
+}

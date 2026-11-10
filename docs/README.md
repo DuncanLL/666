@@ -41,6 +41,7 @@
 
 ### 渲染支持
 
+- [自有渲染代码保护试读版与重建入口](handoffs/2026-11-10-render-protection-review.md)
 - [人物与双光影单 MOD 合包预检](handoffs/2026-11-10-r116-single-mod-preflight.md)
 - [0.3.23 的 RC4 适配、遮挡修正与玩家反馈](handoffs/2026-11-10-render-support-0.3.23.md)
 - [Native 与 Eclipse 合包](handoffs/2026-11-09-combined-render-support.md)
