@@ -6,6 +6,13 @@ import aimoh.gf2.bridge.*;
 /** Actual normal Java dispatcher, shader discovery and one-MOD classpath contract. */
 public final class RenderSupportStartupCheck {
     private static void require(boolean value,String why){if(!value)throw new AssertionError(why);}
+    private static void checkReleaseManifest(JSONObject manifest){
+        for(String key:List.of("native_backend","environment_unit_adapter","native_grid_address"))
+            require(!manifest.has(key),"Development manifest field shipped: "+key);
+        JSONObject fill=manifest.getJSONObject("original_camera_fill");
+        require(fill.length()==3&&fill.has("camera_local_direction")&&fill.has("color")&&fill.has("unity_camera_to_world_z_parity"),
+            "Camera fill must carry only its live inputs");
+    }
     public static void main(String[] args)throws Exception{
         Path root=Path.of(args[0]);Files.createDirectories(root);Path user=Files.createTempDirectory(root,"玩家 空目录-");zombie.ZomboidFileSystem.instance.setCacheDir(user.toString());
         boolean eclipse=args.length>1&&args[1].equals("eclipse");
@@ -34,13 +41,23 @@ public final class RenderSupportStartupCheck {
             var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
             var manifest=new JSONObject(iris.source.read("gf2/manifest.json"));
-            require(manifest.has("original_camera_fill"),"Eclipse calibration did not open in memory");
+            checkReleaseManifest(manifest);
             var environment=manifest.getJSONObject("kernels").getJSONObject("ENVIRONMENT_SH");
             String keySource=iris.source.read(environment.getString("path"));
-            if(protectedTrial) {
-                byte[] raw=iris.source.readBytes(environment.getString("path"));
-                require(java.security.MessageDigest.isEqual(java.security.MessageDigest.getInstance("SHA-256").digest(raw),
-                    HexFormat.of().parseHex(environment.getString("sha256"))),"Eclipse compute input changed");
+            if(sealed) {
+                var probe=manifest.getJSONObject("native_probe");
+                for(var input:List.of(environment,probe)){
+                    byte[] raw=iris.source.readBytes(input.getString("path"));
+                    require(java.security.MessageDigest.isEqual(java.security.MessageDigest.getInstance("SHA-256").digest(raw),
+                        HexFormat.of().parseHex(input.getString("sha256"))),"Eclipse compute input changed");
+                }
+                try(var raw=new ZipFile(pack.toFile())){
+                    String path=probe.getString("path");
+                    var entry=raw.stream().filter(e->e.getName().endsWith("/"+path)).findFirst().orElseThrow();
+                    String text=new String(raw.getInputStream(entry).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
+                    require(text.contains("/*r116$")&&!text.contains("authorSkyVisibility"),
+                        "Eclipse native probe author fragment is plaintext");
+                }
             }
             if(!protectedTrial){
                 var adaptKeyLight=Class.forName("viewpoint.render.AimohGf2Runtime").getDeclaredMethod("sourceKeyLight",String.class,float.class);
@@ -128,7 +145,7 @@ public final class RenderSupportStartupCheck {
         if(combined){
             var read=viewpoint.platform.ShaderPack.class.getDeclaredMethod("shader",String.class);read.setAccessible(true);
             String data=(String)read.invoke(selected,"gf2/manifest.json");
-            require(new JSONObject(data).has("original_camera_fill"),"Native calibration did not open in memory");
+            checkReleaseManifest(new JSONObject(data));
             String light=(String)read.invoke(selected,"gf2/native_light.comp");
             require(light.startsWith("#version")&&light.contains("sky_light.glsl"),"Native light input did not open in memory");
         }

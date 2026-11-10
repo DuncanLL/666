@@ -11,13 +11,14 @@ import zipfile
 
 from build import compile_java
 from build_render_support import check_glsl_names, write
+from build_eclipse_support import GF2_MANIFEST, ORPHAN_SNAPSHOT
 from common import BUILD, ROOT, environment, save, settings, sha
 
 
 BRIDGE = 'aimoh/gf2/bridge/'
 SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
 MOTION_SUFFIX = '/shaders/dimensions/composite6.fsh'
-ORPHAN_SNAPSHOT = 'viewpoint/render/AimohGF2Services$Snapshot.class'
+PROBE_FRAGMENT_START = b'uniform vec3 uSceneOrigin;\nfloat authorSkyVisibility('
 TOKEN = re.compile(r'^[ \t]*#[^\r\n]*|/\*[\s\S]*?\*/|//[^\r\n]*|"(?:\\.|[^"\\])*"|\.[ \t]*[A-Za-z_]\w*|\b[A-Za-z_]\w*\b', re.M | re.ASCII)
 
 
@@ -83,6 +84,18 @@ def protect_shaders(payload, backend, rules, fragments):
                     assert digest(code) == Path(name).stem, owned
                 changed[owned] = seal(owned, code)
 
+            probe = json.loads(source.read(GF2_MANIFEST))['native_probe']
+            entry = shader_root + probe['path']
+            data = source.read(entry)
+            assert len(data) == probe['bytes'] and digest(data) == probe['sha256'], entry
+            assert data.count(PROBE_FRAGMENT_START) == 1, entry
+            split = data.index(PROBE_FRAGMENT_START)
+            author_fragment = data[split:]
+            assert digest(author_fragment) == rules['eclipse_probe_fragment_sha256'], entry
+            marker = seal(entry, author_fragment)
+            changed[entry] = data[:split] + marker
+            assert changed[entry].replace(marker, author_fragment, 1) == data
+
         manifest = [name for name in source.namelist() if name.endswith('shaders/gf2/manifest.json')]
         assert len(manifest) == 1, manifest
         entry = manifest[0]
@@ -107,6 +120,7 @@ def owned_classes(archive):
     sources = {file.stem for file in (ROOT / 'render-support').rglob('*.java')}
     sources.update(Path(file).stem for file in historical if file.endswith('.java'))
     classes = set()
+    assert ORPHAN_SNAPSHOT not in archive.namelist(), 'Rebuild cleaned Eclipse support'
     for name in archive.namelist():
         if not name.endswith('.class'):
             continue
@@ -114,11 +128,6 @@ def owned_classes(archive):
         source = root.replace('AimohEclipseGf2', 'AimohGf2')
         effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh')) and root != 'AimohGf2IrisGlass'
         hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources'}
-        if name == ORPHAN_SNAPSHOT:
-            # Historical build leftovers are copied as-is only when unreferenced.
-            assert all(b'viewpoint/render/AimohGF2Services$Snapshot' not in archive.read(other)
-                       for other in archive.namelist() if other.endswith('.class') and other != name)
-            continue
         if effect or hook:
             assert source in sources or root == 'EclipseHooks', name
             classes.add(name)

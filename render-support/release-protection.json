@@ -21,6 +21,7 @@
     "native_prefilter.comp": ["sampleH", "side", "phi", "axis", "weights"]
   },
   "eclipse_motion_local_symbols": ["at", "actorMotion"],
+  "eclipse_probe_fragment_sha256": "2b400c51eca0f50cfb4ea1ee228896fa3cb8ab4b08b40ea7692398329b1a7f48",
   "eclipse_owned_files": [
     "danrp/sky_base.fsh",
     "danrp/sky_base.vsh",

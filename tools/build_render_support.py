@@ -17,6 +17,16 @@ def check_glsl_names(name,data):
     invalid=_DECL.search(code)
     assert invalid is None,'Non-portable GLSL identifier '+invalid.group(1)+' in '+str(name)
 
+def release_bootstrap(data):
+    manifest=json.loads(data)
+    for field in ('native_backend','environment_unit_adapter','native_grid_address'):
+        manifest.pop(field,None)
+    fill=manifest['original_camera_fill']
+    for field in ('scope','evidence_sha256','capture_events'):
+        fill.pop(field,None)
+    return (json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode('utf8')
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--read-assets-from',type=Path,help='Recover the verified shared display asset from an existing matched support JAR before building');args=parser.parse_args()
     cfg=settings();origin=json.loads((ROOT/'provenance/render-support.json').read_text('utf8'));host=Path(cfg['viewpoint_jar']);assert sha(host)==origin['official_host_sha256'],'Unsupported official VP build'
@@ -37,7 +47,10 @@ if __name__=='__main__':
     for source in shader_sources:check_glsl_names(source,source.read_bytes())
     profile=json.loads((packroot/'shaders/gf2/manifest.json').read_text('utf8'))['original_display_profile'];assert profile['sha256']==resources['sha256']and profile['width']*profile['height']*8==resources['bytes']
     with zipfile.ZipFile(payload,'w',zipfile.ZIP_DEFLATED)as z:
-        for p in shader_sources:write(z,p.relative_to(packroot).as_posix(),p.read_bytes())
+        for p in shader_sources:
+            name=p.relative_to(packroot).as_posix()
+            data=p.read_bytes()
+            write(z,name,release_bootstrap(data) if name=='shaders/gf2/manifest.json' else data)
     shader=payload.getvalue();jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as z:
@@ -49,5 +62,5 @@ if __name__=='__main__':
         assert z.testzip()is None;assert not any('Aimoh-Eclipse-GF2.zip'in n for n in z.namelist())
     os.replace(temporary,jar)
     import hashlib
-    save(out/'build.json',dict(status='BUILT_NATIVE_ONLY_EMBEDDED_SUPPORT',jar=str(jar),jar_sha256=sha(jar),jar_bytes=jar.stat().st_size,shader_sha256=hashlib.sha256(shader).hexdigest(),shader_payload='aimoh/gf2/bridge/Aimoh-Native-GF2.zip',host_sha256=sha(host),backend='native',version=origin['release_version'],source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,*shader_sources,ROOT/'resources/manifest.json',ROOT/'provenance/render-support.json']},original_display_asset_sha256=resources['sha256'],original_host_classes_packaged=0,eclipse_payloads=0,game_started=False,uploaded=False))
+    save(out/'build.json',dict(status='BUILT_NATIVE_ONLY_EMBEDDED_SUPPORT',jar=str(jar),jar_sha256=sha(jar),jar_bytes=jar.stat().st_size,shader_sha256=hashlib.sha256(shader).hexdigest(),shader_payload='aimoh/gf2/bridge/Aimoh-Native-GF2.zip',host_sha256=sha(host),backend='native',version=origin['release_version'],source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,*shader_sources,ROOT/'resources/manifest.json',ROOT/'provenance/render-support.json',Path(__file__).resolve()]},original_display_asset_sha256=resources['sha256'],original_host_classes_packaged=0,eclipse_payloads=0,game_started=False,uploaded=False))
     print('Built Native-only support: '+str(jar),flush=True)
