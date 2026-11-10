@@ -41,6 +41,7 @@
 
 ### 渲染支持
 
+- [人物与双光影单 MOD 合包预检](handoffs/2026-11-10-r116-single-mod-preflight.md)
 - [0.3.23 的 RC4 适配、遮挡修正与玩家反馈](handoffs/2026-11-10-render-support-0.3.23.md)
 - [Native 与 Eclipse 合包](handoffs/2026-11-09-combined-render-support.md)
 - [RC3 接入与回退](handoffs/2026-11-09-rc3-render-stability.md)
