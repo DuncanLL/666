@@ -16,16 +16,19 @@
 
 人物注册、整备室图文和专属渲染资料是三份独立索引。渲染索引 `42/media/aimoh_gf2/characters.json` 和其二进制资料从外置人物资源读取。改变 PMX 或材质槽时要核对三份索引的模型身份和实际文件。
 
-## 当前开发线
+## 分支与工作树
 
-| Git 分支 | 用途 |
+2026-11-10 整理后，GitHub 有三条分支。`main` 是默认入口，光影和人物工作分别沿自己的维护分支推进。已确认的版本用标签标记阶段点。
+
+| GitHub 分支 | 用途与阶段点 |
 |---|---|
-| `main` | Native／Eclipse 共用接入、后端修复、合包分发，以及人物与原生核心的仓库基线 |
-| `codex/r116-render-rc4-20261110` | PZ 42.22／VP RC4 的渲染分发与 Eclipse 遮挡修正。阶段点 `render-support-v0.3.23` |
-| `codex/r116-runtime-stability-20261108` | 人物运行时、物理、整备室和游戏动作修正。已提交人物阶段点是 `052649e` |
-| `codex/r116-live-vmd-room` | 游戏内舞蹈与整备室动作开发。由人物阶段点 `052649e` 分出，实际代码还需核对该工作树的差异 |
+| `main` | 仓库共同基线。当前光影阶段点为 `render-support-v0.3.18` |
+| `codex/r116-render-rc4-20261110` | PZ 42.22／VP RC4 的 Native、Eclipse 和分发器维护。当前光影阶段点为 `render-support-v0.3.23` |
+| `codex/r116-runtime-stability-20261108` | 人物运行时、物理、整备室和游戏动作。已提交的人物阶段点为 `052649e`（0.3.12） |
 
-用 `git worktree list` 找目录，再用 `git status --short --branch` 和 `git log -1 --oneline` 核对该处的提交与进行中的改动。现装人物版本从实际加载目录的 `42/mod.info` 和 JAR 指纹确认。当前两条人物开发线与 `main` 的提交合并会在文档、外置资源清单和原程序检查脚本上产生冲突，归并时按职责逐项核对。
+本机另有 `codex/r116-local-vmd` 和 `codex/r116-live-vmd-room` 两条舞蹈试验分支。两者都从 `052649e` 分出，各有不同的未提交改动，分别保留在自己的工作树。旧妮基塔实验分支的提交已包含在 `main` 与人物运行时分支中。原阶段点由 `archive/nikketa-softbody-preview` 标签保留。
+
+用 `git worktree list` 找到本机目录，再用 `git status --short --branch` 和 `git log -1 --oneline` 核对进行中的工作与提交。现装人物和光影版本从实际加载目录的 `42/mod.info` 和 JAR 指纹确认。跨分支整合前先核对文档、外置资源清单和原程序检查脚本的差异。
 
 ## 维护记录
 
