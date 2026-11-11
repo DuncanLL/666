@@ -1,0 +1,134 @@
+{
+  "version": "0.3.51",
+  "date": "2026-11-11",
+  "game": "42.22.2",
+  "viewpoint": "0.1.6.2",
+  "status": "LOCAL_WORKSHOP_AUTHOR_DIRECTORIES_VERIFIED",
+  "workshop_uploaded": false,
+  "source_commit": "a4027fbe1474475b2bba0be31cab235a3fcebda8",
+  "viewpoint_jar": {
+    "bytes": 33708543,
+    "sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e"
+  },
+  "viewpoint_signature": null,
+  "unified_jar": {
+    "bytes": 56304591,
+    "sha256": "01b0bd1e19b9cf1d7b2c479a6e956364a99144d4a6ef55ddf0ff554e5ed7a018"
+  },
+  "embedded_shader_packs": {
+    "Native": {
+      "bytes": 5903,
+      "sha256": "35abca7b8e2f6bc92eadd0a3f733d5f938fca58b99e24994819cf3291dd4bac4"
+    },
+    "Eclipse": {
+      "bytes": 46787069,
+      "sha256": "3b69ad26c0f3a7203f7f360a88aa24765e1c5e857ea8f21f6f93a74e74ec596b"
+    }
+  },
+  "changes": {
+    "shared_appearance": "555f2a0",
+    "gpu_grid_pack": "7bbbbb8",
+    "official_portraits": "0c70c86",
+    "native_reflection_sampler_fix": "e533af5",
+    "klukai_skin_atlas_tangent_fix": "a4027fb"
+  },
+  "source_verification": {
+    "unified_character_and_startup_classes_matched_ignoring_debug_attributes": 89,
+    "protected_display_record_public_methods_matched": 13,
+    "author_local_mod_files_matched": 2602,
+    "author_projects": 9,
+    "hardware_validation": "LIMITED_HARDWARE_VALIDATION"
+  },
+  "projects": {
+    "R116": {
+      "workshop_id": "3834454638",
+      "mod_id": "AimohPmxPreview",
+      "mod_version": "0.3.51",
+      "file_count": 1877,
+      "bytes": 1352504267,
+      "tree_sha256": "1540370cf11af605245dce9b5febbb45882bf52bab70988e5ed246517e35da18",
+      "workshop_metadata_sha256": "d594e79923703b62e77da0f0a6f3b0dbd5787c4dca9adfff4cc30aad9e8ae95e",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Alva": {
+      "workshop_id": "3837425337",
+      "mod_id": "R116Alva",
+      "mod_version": "0.3.38",
+      "file_count": 59,
+      "bytes": 62403855,
+      "tree_sha256": "fd3ce1b3c206843283539013a2c6eafffe34a80bfdb8b554c53ffc707dea2e5b",
+      "workshop_metadata_sha256": "7fd9323c9d5fe2981d5fff08cf43e32352257931beb27f6383598b9d34333f35",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Centaureissi": {
+      "workshop_id": null,
+      "mod_id": "R116Centaureissi",
+      "mod_version": "0.3.38",
+      "file_count": 66,
+      "bytes": 52024382,
+      "tree_sha256": "53513568ad1b0cd00825edd71572def2f0089113cbb812eea95ce4f6539c19b0",
+      "workshop_metadata_sha256": "ad18872a041d33f5d32f757303ceab95e941de9cc4f4fd8b1006b7b893a6c533",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Faelynn": {
+      "workshop_id": null,
+      "mod_id": "R116Faelynn",
+      "mod_version": "0.3.38",
+      "file_count": 267,
+      "bytes": 181524837,
+      "tree_sha256": "4f379aee2f38d08cff18899502fd7c028bce9141c39fc8d3b1a7c0b3fdbf021f",
+      "workshop_metadata_sha256": "6b6f283d13b12fe952669e7c9c3c643c8bba2895e3b4bb50040c289c3cf84361",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116OTs14": {
+      "workshop_id": null,
+      "mod_id": "R116OTs14",
+      "mod_version": "0.3.38",
+      "file_count": 30,
+      "bytes": 19526601,
+      "tree_sha256": "557b35298d2bbbbb097783b1cfd60e9ae136b5b0e753b221ad914777a177a9c2",
+      "workshop_metadata_sha256": "33cbfb7f5816dd1bdab6ff9ff815fc40325dfa4153c2c26789946406b1cda4ae",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Springfield": {
+      "workshop_id": null,
+      "mod_id": "R116Springfield",
+      "mod_version": "0.3.38",
+      "file_count": 69,
+      "bytes": 77975322,
+      "tree_sha256": "db880bfcc296d6985f31375e6b3bb64ddb9494ddaacbd41eab95f406737ad421",
+      "workshop_metadata_sha256": "e399de4331701b6e7e76d2e187c84438b23161eb61ba8935590f747ce0606b73",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Daiyan": {
+      "workshop_id": null,
+      "mod_id": "R116Daiyan",
+      "mod_version": "0.3.46",
+      "file_count": 68,
+      "bytes": 125227127,
+      "tree_sha256": "3d5584f8b36d0cc7bff4e5931bc14688d36be9f4871ee7051f1a10ab8bf3afd5",
+      "workshop_metadata_sha256": "1194a468473047e1719cc0877ecf071dbf01f0aa4b64e4a1093c06e93b3a3ce0",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Klukai": {
+      "workshop_id": null,
+      "mod_id": "R116Klukai",
+      "mod_version": "0.3.47",
+      "file_count": 132,
+      "bytes": 101657517,
+      "tree_sha256": "c13d2d2dab0126df994a4556f7483d25e287d465e531f1c047e85fd3179ab975",
+      "workshop_metadata_sha256": "d9eb0dfcd3de0db1b0a745c7c8cfb42744de8ad19e8ba05cba8421ec9fb51728",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    },
+    "R116Suomi": {
+      "workshop_id": null,
+      "mod_id": "R116Suomi",
+      "mod_version": "0.3.46",
+      "file_count": 52,
+      "bytes": 84228795,
+      "tree_sha256": "57beafedf9c3cd3400e38c275d131e0dbb65673ae9fa8563f27131e823ea8b4c",
+      "workshop_metadata_sha256": "fc5e1faf8849d13933a0e2725c8fbe7b45cc9c5d5ef2d8f23634ab9f4df0a3f8",
+      "preview_sha256": "391a18032cf1aeeb8719f97a78dfa8693de9f1060c72834e5a6262eba7d7d2be"
+    }
+  }
+}
