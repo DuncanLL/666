@@ -24,7 +24,7 @@ import zombie.core.skinnedmodel.model.ModelInstance;
 import zombie.core.textures.Texture;
 
 final class ModelSession {
-    private static final boolean GPU_REQUESTED=Boolean.getBoolean("r116.gpuDeformation");
+    private static final boolean GPU_REQUESTED=Boolean.parseBoolean(System.getProperty("r116.gpuDeformation","true"));
     final PmxModel model;
     final IdleHandPose idleHand;
     final PmxShading shading;
