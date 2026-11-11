@@ -95,7 +95,7 @@ public final class GpuDeformation implements AutoCloseable {
         weights=BufferUtils.createByteBuffer(Math.multiplyExact(morphCount,4));
         int bound=GL11.glGetInteger(GL43.GL_SHADER_STORAGE_BUFFER_BINDING);
         try {
-            program=link();
+            program=link(COMPUTE);
             vertexCountUniform=GL20.glGetUniformLocation(program,"vertexCount");
             chestActiveUniform=GL20.glGetUniformLocation(program,"chestActive");
             swingAxisUniform=GL20.glGetUniformLocation(program,"swingAxis");
@@ -119,10 +119,10 @@ public final class GpuDeformation implements AutoCloseable {
         ByteBuffer view=bytes.slice(bytes.position(),length);bytes.position(bytes.position()+length);return view;
     }
 
-    private static int link() {
+    static int link(String source) {
         int shader=GL20.glCreateShader(GL43.GL_COMPUTE_SHADER);int linked=0;
         try {
-            GL20.glShaderSource(shader,COMPUTE);GL20.glCompileShader(shader);
+            GL20.glShaderSource(shader,source);GL20.glCompileShader(shader);
             if(GL20.glGetShaderi(shader,GL20.GL_COMPILE_STATUS)==0)throw new IllegalStateException(GL20.glGetShaderInfoLog(shader));
             linked=GL20.glCreateProgram();GL20.glAttachShader(linked,shader);GL20.glLinkProgram(linked);
             if(GL20.glGetProgrami(linked,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(linked));

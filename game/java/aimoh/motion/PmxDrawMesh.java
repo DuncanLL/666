@@ -21,7 +21,7 @@ import zombie.core.skinnedmodel.model.ModelMesh;
 import zombie.core.skinnedmodel.model.VertexBufferObject;
 import zombie.core.textures.Texture;
 
-/** CPU-deformed PMX to the host's existing ModelDraws path. GL-thread only. */
+/** Streams deformed PMX geometry to Viewpoint's existing ModelDraws path. */
 public final class PmxDrawMesh implements AutoCloseable {
     /** Private draw bit, above the inspected host's BAKED bit; never inferred from disabled attributes. */
     // RC3 reserves bits 12–15 for wall clipping. This private bit remains exact in the float draw record.
@@ -49,6 +49,8 @@ public final class PmxDrawMesh implements AutoCloseable {
     private final ArrayList<Part> parts = new ArrayList<>();
     private final Vector3f point = new Vector3f();
     private volatile boolean uploaded, closed;
+    private PmxMeshStream stream;
+    private boolean streamUnavailable;
     private IrisPacks.Active lastOutlinePack;
     private boolean outlineSupported;
     private ShaderPacks.Active lastNativeOutlinePack;
@@ -115,7 +117,8 @@ public final class PmxDrawMesh implements AutoCloseable {
         final float[] edgeWeights,smooth;
         float inkU,inkV;
         volatile boolean hullReady;
-        boolean continuous;
+        boolean continuous, gpuWritten;
+        int gpuRemap;
         Part(int material, int[] source, int[] indices, Texture texture, boolean bothFaces, int ordinal, boolean shading) {
             this(material,source,indices,texture,bothFaces,ordinal,shading,null,null,0);
         }
@@ -265,6 +268,31 @@ public final class PmxDrawMesh implements AutoCloseable {
     /** An already captured command keeps the topology it was submitted with. */
     public void uploadPrepared(FrameData frame) {uploadPrepared(frame,appearance.readMaterials(false));}
     public void uploadPrepared(FrameData frame,float[] shadowMaterials) {
+        uploadPrepared(frame,shadowMaterials,null);
+    }
+
+    public void uploadStreamed(FrameData frame,float[] shadowMaterials) {
+        if(!streamUnavailable)try {
+            if(stream==null)stream=PmxMeshStream.create();
+            if(stream!=null) {
+                try {
+                    stream.begin(frame.positions,frame.normals);
+                    uploadPrepared(frame,shadowMaterials,stream);
+                } finally {
+                    stream.end();
+                }
+                return;
+            }
+            streamUnavailable=true;
+        } catch(RuntimeException|LinkageError failure) {
+            streamUnavailable=true;
+            if(stream!=null){stream.close();stream=null;}
+            System.err.println("[R116] Viewpoint mesh streaming fallback: "+failure);
+        }
+        uploadPrepared(frame,shadowMaterials);
+    }
+
+    private void uploadPrepared(FrameData frame,float[] shadowMaterials,PmxMeshStream streaming) {
         if (closed || frame.positions.length/3!=vertexCount) throw new IllegalArgumentException("Frozen mesh size differs");
         float[] positions=frame.positions,normals=frame.normals,materialState=frame.materials;
         if(shadowMaterials.length!=materialState.length)throw new IllegalArgumentException("Shadow material count differs");
@@ -276,10 +304,24 @@ public final class PmxDrawMesh implements AutoCloseable {
             // Pack-owned eye layers can ignore base alpha; keep them ready across queued appearance changes.
             if(part.original!=null&&part.original.sourceAlphaIndependent()&&materialState[offset+7]+materialState[offset+11]>0)colour=true;
             if(!colour&&((part.hull||part.fringe)||!shadow)){part.continuous=false;continue;}
-            part.vertices.clear();
             part.mesh.minXyz.set(Float.POSITIVE_INFINITY);
             part.mesh.maxXyz.set(Float.NEGATIVE_INFINITY);
-            if(part.hull&&!shading.shaderOutline){
+            boolean cpuOutline=part.hull&&!shading.shaderOutline;
+            if(streaming!=null&&part.handle!=null&&!cpuOutline) {
+                if(part.gpuRemap==0)part.gpuRemap=PmxMeshStream.remap(part.source);
+                streaming.pack(part.handle.vboId,part.gpuRemap,part.source.length,part.continuous);
+                for(int source:part.source) {
+                    int at=source*3;
+                    point.set(positions[at],positions[at+1],positions[at+2]);
+                    part.mesh.minXyz.min(point);part.mesh.maxXyz.max(point);
+                }
+                part.mesh.modificationCount++;
+                part.continuous=part.gpuWritten=true;
+                continue;
+            }
+            if(part.gpuWritten){part.continuous=false;part.gpuWritten=false;}
+            part.vertices.clear();
+            if(cpuOutline){
                 Arrays.fill(part.smooth,0);
                 for(int i=0;i<part.source.length;i++){
                     int at=part.source[i]*3,g=part.weld[i]*3;float x=normals[at],y=normals[at+1],z=normals[at+2];
@@ -290,7 +332,7 @@ public final class PmxDrawMesh implements AutoCloseable {
             for (int i=0;i<part.source.length;i++) {
                 int source=part.source[i],at=source*3;
                 float x=positions[at],y=positions[at+1],z=positions[at+2];
-                if(part.hull&&!shading.shaderOutline){
+                if(cpuOutline){
                     int g=part.weld[i]*3;float nx=part.smooth[g],ny=part.smooth[g+1],nz=part.smooth[g+2];
                     if(nx*nx+ny*ny+nz*nz<.25f){nx=normals[at];ny=normals[at+1];nz=normals[at+2];}
                     float width=shading.outlineBaseNative*shading.outlineSize[part.material]*part.edgeWeights[i];x+=nx*width;y+=ny*width;z+=nz*width;
@@ -298,7 +340,7 @@ public final class PmxDrawMesh implements AutoCloseable {
                 // PMX-DEFORM1: previous rendered local position; the negative weight flag never invokes skinning.
                 float px=!part.continuous?x:part.vertices.getFloat(i*part.stride),py=!part.continuous?y:part.vertices.getFloat(i*part.stride+4),pz=!part.continuous?z:part.vertices.getFloat(i*part.stride+8);
                 part.vertices.putFloat(x).putFloat(y).putFloat(z);
-                float sign=part.hull&&!shading.shaderOutline?-1f:1f;
+                float sign=cpuOutline?-1f:1f;
                 part.vertices.putFloat(normals[at]*sign).putFloat(normals[at+1]*sign).putFloat(normals[at+2]*sign);
                 part.vertices.putInt(-1).putFloat(part.hull&&!shading.shaderOutline?part.inkU:uv.getFloat(source * 8)).putFloat(part.hull&&!shading.shaderOutline?part.inkV:uv.getFloat(source * 8 + 4));
                 if(part.original!=null){
@@ -374,8 +416,16 @@ public final class PmxDrawMesh implements AutoCloseable {
     @Override public void close() {
         if (closed) return;
         closed = true;
-        AutoCloseable[] owned=new AutoCloseable[parts.size()+1];owned[0]=alternateMesh;alternateMesh=null;
-        for(int i=0;i<parts.size();i++){Part part=parts.get(i);owned[i+1]=part.mesh::clear;}
+        AutoCloseable[] owned=new AutoCloseable[parts.size()+2];
+        owned[0]=alternateMesh;alternateMesh=null;
+        owned[1]=stream;stream=null;
+        for(int i=0;i<parts.size();i++){
+            Part part=parts.get(i);
+            owned[i+2]=()->{
+                if(part.gpuRemap!=0)GL15.glDeleteBuffers(part.gpuRemap);
+                part.mesh.clear();
+            };
+        }
         ResourceCleanup.close(owned);
     }
 }

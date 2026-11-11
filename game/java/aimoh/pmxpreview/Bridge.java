@@ -132,7 +132,7 @@ public final class Bridge {
             try {
                 if(boundTextures==null)boundTextures=session.viewpointModel.textures(materials);
                 PmxDrawMesh.FrameData sampled=session.viewpointModel.presentation.sample(data,previous,older,phase,cut);
-                mesh.uploadPrepared(sampled,materials.shadow());renderedHeader=sampled.shadingHead();
+                mesh.uploadStreamed(sampled,materials.shadow());renderedHeader=sampled.shadingHead();
             }catch(Throwable e){restore();session.fail(e);}
         }
         void restore() {

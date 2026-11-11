@@ -4,7 +4,7 @@
 
 `UpdateModelPose` 推进一次原有动作、骨骼 Morph、材质 Morph 和刚体物理。胸部 Jolt 随完成的姿态求解。GPU 根据有效 Morph 权重、最终骨矩阵和局部 Jolt 数据生成位置和法线。原版世界与预览直接绑定 GPU 输出。需要 CPU 网格时，`SkinCompletedPose` 可以把同一姿态只生成一次，无需再次推进动作或物理。
 
-Viewpoint 的世界绘制目前走 CPU 兼容路径。其人物材质仍从 CPU 绘制记录读取上一帧的整张网格。后续接入 GPU 时，应让材质和运动向量直接读取 GPU 历史位置，并用 GPU 把共享顶点整理成 Viewpoint 的各材质段。Native 和 Eclipse 资源继续由原合包提供。
+Viewpoint 世界保留 CPU 蒙皮和显示插值，用计算着色器把采样后的顶点写入各材质的 VP 网格。位置和法线在同一映射缓冲上传，已存在的 UV、材质属性和索引留在绘制缓冲。GPU 保存上一帧位置；部件重新出现时以当前姿态开始新的历史。旧描边壳和能力不足的上下文继续使用 CPU 打包。Native 和 Eclipse 的人物着色与上一帧位置输入沿用同一套契约。
 
 RX 9070 XT 的受控检查覆盖了没有 Viewpoint 时的原版人物、3D 预览、外套显隐、VMD 和 CPU 回退，以及在同一游戏帧切进 Viewpoint 时的姿态复用。索米和阿斯缇亚 JK 的 GPU 顶点和法线均与同姿态 CPU 回退对齐。
 
