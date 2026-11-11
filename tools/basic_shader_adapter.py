@@ -1,6 +1,20 @@
 """Basic Viewpoint lighting adapters for the public source view."""
 
 
+CHARACTER_RESPONSE = '''
+vec3 characterColour(vec3 colour) {
+    vec3 rgb = max(colour, vec3(0.0));
+    float luminance = dot(rgb, vec3(0.2126, 0.7152, 0.0722));
+    if (luminance < 0.0001) return rgb;
+    float level = luminance / (1.0 + luminance);
+    float band = clamp(floor(level * 5.0 + 0.5) / 5.0, 0.04, 0.94);
+    float exposure = mix(level, band, 0.72);
+    float gain = (exposure / (1.0 - exposure)) / luminance;
+    vec3 tint = mix(vec3(0.81, 0.88, 1.18), vec3(1.10, 1.00, 0.82), smoothstep(0.25, 0.62, level));
+    return rgb * gain * tint;
+}
+'''
+
 NATIVE = {
     'native_indirect.glsl': ('void gf2NativeInitIndirect', '''
 void gf2NativeInitIndirect(vec3 position) {
@@ -18,7 +32,7 @@ float gf2NativeMainVisibility(vec3 position, vec3 normal) {
 #if PIPELINE_SHADOWS || PIPELINE_FAR_SHADOWS
     if (uShadowsOff < 0.5) shade = sunVisibility(position, normal, max(dot(normal, uSunDir), 0.0));
 #endif
-    return mix(0.25, 1.0, shade * cloudShadow(position));
+    return mix(0.38, 1.0, step(0.55, shade * cloudShadow(position)));
 }
 '''),
     'native_cube.comp': ('// Current-frame', '''
@@ -39,7 +53,7 @@ void main() {
     'native_light.comp': ('void main()', '''
 void main() {
     vec3 sky = max(texelFetch(nativeSkyTexture, ivec2(0), 0).rgb, vec3(0.0));
-    vec3 ambient = mix(max(nativeEngineLight.rgb, vec3(0.0)), sky, clamp(nativeEngineLight.a, 0.0, 1.0)) * 0.42;
+    vec3 ambient = mix(max(nativeEngineLight.rgb, vec3(0.0)), sky, clamp(nativeEngineLight.a, 0.0, 1.0)) * 0.88;
     for (int channel = 0; channel < 7; ++channel) sourceSH[channel] = vec4(0.0);
     sourceSH[0].w = ambient.r;
     sourceSH[1].w = ambient.g;
@@ -72,7 +86,7 @@ vec4 gf2NativeLocalColor(int slot, vec4 colour, vec3 position, vec3 normal) {
     return vec4(colour.rgb * falloff * falloff * facing * dot(offset, offset), colour.a);
 }
 '''),
-    'native_motion.comp': ('vec3 originalDisplayInput', '''
+    'native_motion.comp': ('vec3 originalDisplayInput', CHARACTER_RESPONSE + '''
 void main() {
     ivec2 pixel = ivec2(gl_GlobalInvocationID.xy);
     if (any(greaterThanEqual(pixel, imageSize(nativeVelocity)))) return;
@@ -87,6 +101,15 @@ void main() {
     if (normal.z > 0.0) {
         vec2 xy = normal.xy * 2.0 - 1.0;
         imageStore(nativeNormals, pixel, vec4(normalize(vec3(xy, 1.0)), 1.0));
+    }
+    if (gf2TransferOn != 0 && (abs(normal.z) + abs(normal.w)) > 0.0001) {
+        float ownership = texelFetch(gf2TransferOwnership, pixel, 0).a;
+        if (abs(ownership - 31.0 / 255.0) < 0.5 / 255.0) {
+            vec4 surface = imageLoad(gf2TransferColour, pixel);
+            float exposure = max(gf2TransferExposure, 0.001);
+            surface.rgb = characterColour(surface.rgb * exposure) / exposure;
+            imageStore(gf2TransferColour, pixel, surface);
+        }
     }
 }
 '''),
@@ -121,8 +144,8 @@ def public_manifest(formal):
     fill = manifest.get('original_camera_fill')
     if fill is not None:
         manifest['original_camera_fill'] = {
-            'camera_local_direction': [0, 0.6, -0.8],
-            'color': [0.12, 0.12, 0.12, 1.0],
+            'camera_local_direction': [0.6, -0.48, -0.64],
+            'color': [0.23, 0.42, 0.46, 1.0],
             'unity_camera_to_world_z_parity': fill['unity_camera_to_world_z_parity'],
         }
     return manifest
@@ -218,7 +241,7 @@ uniform samplerBuffer gf2NativeExposure;
 uniform int gf2NativeExposureOffset;
 
 void main() {
-    float visible = nativeSkyAvailable ? 0.45 : 0.6;
+    float visible = nativeSkyAvailable ? 0.8 : 0.92;
     float ambient = max(nativeMinimumLight.x, 0.0) * 0.01;
     vec3 diffuseReference = vec3(0.25);
     vec3 budgetedLevel = max(uSkyLevel, vec3(0.0));
@@ -231,7 +254,7 @@ void main() {
     }
     actorSH[6].w=1;
     reflectionHDR = vec4(visible, 1.0, 0.0, 0.0);
-    cameraLightColor = vec4(vec3(0.18 * visible), 1.0);
+    cameraLightColor = vec4(vec3(0.28, 0.43, 0.48) * visible, 1.0);
 }
 '''
 
@@ -245,3 +268,25 @@ ECLIPSE_COMPOSITE = b'''
      if (all(lessThan(abs(motion), vec2(1000.0)))) velocity = -motion;
  }
 '''
+
+
+def eclipse_composite(source, motion):
+    shader = source.replace(motion, ECLIPSE_COMPOSITE, 1)
+    marker = b'void main() {\n/* RENDERTARGETS:5 */'
+    mask = b'''
+bool characterPixel(vec2 uv) {
+    ivec2 size = textureSize(colortex17, 0);
+    ivec2 at = clamp(ivec2(uv * RENDER_SCALE * vec2(size)), ivec2(0), size - 1);
+    return texelFetch(colortex17, at, 0).r > 0.5;
+}
+'''
+    replacements = (
+        (marker, b'#if defined TAA && defined VP_DANRP_PIPELINE\n' + CHARACTER_RESPONSE.encode() + mask + b'#endif\n' + marker),
+        (b'vec4 color = computeTAA(texcoord, hand);',
+         b'vec4 color = computeTAA(texcoord, hand);\n#ifdef VP_DANRP_PIPELINE\n        if (characterPixel(texcoord)) color.rgb = characterColour(color.rgb);\n#endif'),
+    )
+    for original, replacement in replacements:
+        if shader.count(original) != 1:
+            raise ValueError('Eclipse public character composite layout changed')
+        shader = shader.replace(original, replacement, 1)
+    return shader

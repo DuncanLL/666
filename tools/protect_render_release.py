@@ -104,7 +104,7 @@ def protect_shaders(payload, backend, rules, fragments):
             assert data.count(fragment) == 1, 'Eclipse author-owned motion fragment differs from the built package'
             protected, mapping[entry] = renamed_shader(fragment, rules['eclipse_motion_local_symbols'], entry)
             changed[entry] = with_public_source(entry, data.replace(fragment, strip_notes(protected), 1),
-                                                data.replace(fragment, basic.ECLIPSE_COMPOSITE, 1))
+                                                basic.eclipse_composite(data, fragment))
             shader_root = entry.removesuffix('dimensions/composite6.fsh')
             bootstrap = json.loads(source.read(GF2_MANIFEST))
             probe = bootstrap['native_probe']
