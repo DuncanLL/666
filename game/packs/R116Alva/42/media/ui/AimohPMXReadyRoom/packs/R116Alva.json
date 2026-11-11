@@ -1,0 +1,99 @@
+{
+  "models": {
+    "pmx-020abca186c52e7b": {
+      "character": "埃芙",
+      "skin": "默认",
+      "officialSkin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR.png",
+      "primaryCategories": [
+        "头饰",
+        "口罩",
+        "披风"
+      ],
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "mask": {
+          "label": "口罩",
+          "display": "口罩",
+          "options": [
+            "戴上",
+            "取下"
+          ]
+        },
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "pouch": {
+          "label": "腰包",
+          "display": "腰包",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
+    }
+  },
+  "labels": {
+    "取下": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2bed1c4663c1ac.png",
+      "width": 84,
+      "height": 42
+    },
+    "口罩": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fc799edba0f2ae.png",
+      "width": 84,
+      "height": 41
+    },
+    "埃芙": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9cece63e2cf80a.png",
+      "width": 84,
+      "height": 43
+    },
+    "戴上": {
+      "path": "media/ui/AimohPMXReadyRoom/label-eb031b60f0b26c.png",
+      "width": 84,
+      "height": 43
+    },
+    "披风": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ff6519c3a91a79.png",
+      "width": 84,
+      "height": 44
+    },
+    "腰包": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8114bc5dc1256b.png",
+      "width": 84,
+      "height": 43
+    }
+  }
+}

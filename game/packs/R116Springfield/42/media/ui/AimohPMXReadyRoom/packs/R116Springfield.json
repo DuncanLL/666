@@ -1,0 +1,101 @@
+{
+  "models": {
+    "pmx-225af1a054faefb0": {
+      "character": "春田",
+      "skin": "睡醒的人鱼",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png",
+      "groups": {
+        "m91": {
+          "label": "Hide1",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide1"
+        },
+        "m92": {
+          "label": "Hide2",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide2"
+        },
+        "m93": {
+          "label": "Hide3",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide3"
+        },
+        "m94": {
+          "label": "Hide4",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide4"
+        },
+        "m95": {
+          "label": "Hide5",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide5"
+        }
+      },
+      "officialSkin": "睡醒的人鱼",
+      "partImages": {}
+    }
+  },
+  "labels": {
+    "Hide1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-62266505291a90.png",
+      "width": 121,
+      "height": 38
+    },
+    "原始": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8cb7c0a54b21bb.png",
+      "width": 84,
+      "height": 43
+    },
+    "Hide4": {
+      "path": "media/ui/AimohPMXReadyRoom/label-010f45b7da775f.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-34624794e62888.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide5": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fab23fdaa48782.png",
+      "width": 121,
+      "height": 38
+    },
+    "启用": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f4f0ead1116b5b.png",
+      "width": 84,
+      "height": 44
+    },
+    "春田": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6c49881b21ac71.png",
+      "width": 84,
+      "height": 43
+    },
+    "睡醒的人鱼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f14c171bb75283.png",
+      "width": 191,
+      "height": 43
+    },
+    "Hide2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c005b05d6d0210.png",
+      "width": 121,
+      "height": 38
+    }
+  }
+}

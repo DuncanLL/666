@@ -1,0 +1,134 @@
+{
+  "models": {
+    "pmx-293917f24c2bd387": {
+      "character": "芙铃",
+      "skin": "忻跃阳炎",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-293917f24c2bd387.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR01.png",
+      "groups": {
+        "top": {
+          "label": "上装",
+          "options": [
+            "原始",
+            "上着P2",
+            "上着P3"
+          ],
+          "display": "上衣"
+        },
+        "bottom": {
+          "label": "下装",
+          "options": [
+            "原始",
+            "下着p2-1",
+            "下着p2-2",
+            "下着p3"
+          ],
+          "display": "下衣"
+        },
+        "socks": {
+          "label": "袜装",
+          "options": [
+            "原始",
+            "Sock-P2",
+            "Sock-P3"
+          ],
+          "display": "袜装"
+        }
+      },
+      "officialSkin": "忻跃阳炎",
+      "partImages": {
+        "上装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Cloth.png",
+          "上着P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Cloth.png",
+          "上着P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Cloth.png"
+        },
+        "袜装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Body.png",
+          "Sock-P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Body.png",
+          "Sock-P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Body.png"
+        },
+        "下装": {
+          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Hip.png",
+          "下着p3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
+        }
+      }
+    }
+  },
+  "labels": {
+    "下着p3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-939495cee99fe8.png",
+      "width": 134,
+      "height": 47
+    },
+    "下装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-baf1039ba4cb31.png",
+      "width": 84,
+      "height": 43
+    },
+    "原始": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8cb7c0a54b21bb.png",
+      "width": 84,
+      "height": 43
+    },
+    "上衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f0ed5fbca37997.png",
+      "width": 84,
+      "height": 43
+    },
+    "上着P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7eb61f6d3d487c.png",
+      "width": 136,
+      "height": 43
+    },
+    "芙铃": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d1aa7db7058283.png",
+      "width": 84,
+      "height": 42
+    },
+    "袜装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c93e047ab6cdb4.png",
+      "width": 84,
+      "height": 43
+    },
+    "Sock-P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d4f80f79dcd6c1.png",
+      "width": 168,
+      "height": 37
+    },
+    "Sock-P2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-7a9cee4ade3fc6.png",
+      "width": 168,
+      "height": 37
+    },
+    "下着p2-2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8f485e8b3eea96.png",
+      "width": 173,
+      "height": 47
+    },
+    "忻跃阳炎": {
+      "path": "media/ui/AimohPMXReadyRoom/label-60bbfe30fc7155.png",
+      "width": 154,
+      "height": 44
+    },
+    "下衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3c2161a3eb17c0.png",
+      "width": 84,
+      "height": 43
+    },
+    "上装": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fd6709d36e5116.png",
+      "width": 84,
+      "height": 43
+    },
+    "上着P3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-25b42213917edb.png",
+      "width": 136,
+      "height": 43
+    },
+    "下着p2-1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e5455e535ef36d.png",
+      "width": 173,
+      "height": 47
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.3.46",
+  "game": "42.22.2",
+  "viewpoint": "0.1.6.2",
+  "workshop_id": "3834454638",
+  "workshop_manifest": "1889121898880067784",
+  "mod_id": "AimohPmxPreview",
+  "published_at": "2026-11-11T14:08:10+08:00",
+  "unified_jar_sha256": "0cde0952891f4f18a7a24cfb73e39d944b424ebd1d396248b405033339898ab9",
+  "sources": {
+    "render_and_startup": "5615ca4",
+    "character_runtime": "802e754",
+    "efz_model_replay": "9d688b1",
+    "optional_pack_split": "830e455"
+  },
+  "source_verification": {
+    "compiled_character_and_startup_classes_matched_ignoring_debug_attributes": 70,
+    "core_tracked_files_matched": 68,
+    "core_external_files_matched": 1803,
+    "optional_pack_external_files_matched": 443,
+    "optional_packs": ["R116Alva", "R116Centaureissi", "R116Faelynn", "R116OTs14", "R116Springfield"]
+  }
+}

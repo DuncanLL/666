@@ -1,0 +1,140 @@
+{
+  "models": {
+    "pmx-782f06826adb1307": {
+      "character": "OTs-14",
+      "skin": "默认",
+      "officialSkin": "暗昼冽影",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "equipment": {
+          "label": "随身装具",
+          "display": "随身装具",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "gloves": {
+          "label": "手套",
+          "display": "手套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hairband": {
+          "label": "发带",
+          "display": "发带",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "inner": {
+          "label": "内搭",
+          "display": "内搭",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "partImages": {}
+    }
+  },
+  "labels": {
+    "默认": {
+      "path": "media/ui/AimohPMXReadyRoom/label-844b8cc8dff7c1.png",
+      "width": 78,
+      "height": 44
+    },
+    "隐藏": {
+      "path": "media/ui/AimohPMXReadyRoom/label-145219e726b877.png",
+      "width": 84,
+      "height": 44
+    },
+    "手套": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d3db5e56061937.png",
+      "width": 84,
+      "height": 43
+    },
+    "上衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f0ed5fbca37997.png",
+      "width": 84,
+      "height": 43
+    },
+    "鞋子": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a00b97bbc47f09.png",
+      "width": 84,
+      "height": 43
+    },
+    "发带": {
+      "path": "media/ui/AimohPMXReadyRoom/label-73f7855d1a0c34.png",
+      "width": 84,
+      "height": 43
+    },
+    "随身装具": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e79f3e5197ec38.png",
+      "width": 164,
+      "height": 44
+    },
+    "内搭": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a389c65e990800.png",
+      "width": 84,
+      "height": 42
+    },
+    "头饰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d125891654451c.png",
+      "width": 84,
+      "height": 43
+    },
+    "下衣": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3c2161a3eb17c0.png",
+      "width": 84,
+      "height": 43
+    },
+    "显示": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4e1449e7d5e505.png",
+      "width": 84,
+      "height": 41
+    },
+    "OTs-14": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9ac0dc47628fe4.png",
+      "width": 141,
+      "height": 36
+    }
+  }
+}

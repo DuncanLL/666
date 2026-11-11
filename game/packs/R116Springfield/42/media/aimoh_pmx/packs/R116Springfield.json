@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Springfield",
+  "models": [
+    {
+      "id": "pmx-225af1a054faefb0",
+      "label": "春田 / 长裙",
+      "model": "models/pmx-225af1a054faefb0/model.pmx",
+      "profile": "models/pmx-225af1a054faefb0/profile.json"
+    }
+  ]
+}

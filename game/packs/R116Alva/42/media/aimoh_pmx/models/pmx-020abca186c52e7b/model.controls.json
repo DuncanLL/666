@@ -1,0 +1,124 @@
+{
+  "pmx_sha256": "020abca186c52e7b276cb0cba0eaaf334d61387315e5d234c968f3696eff2815",
+  "label": "埃芙 / 默认",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              12
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "mask",
+        "label": "口罩",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "戴上",
+            "morphs": {
+              "0": 0
+            }
+          },
+          {
+            "id": "off",
+            "label": "取下",
+            "morphs": {
+              "0": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "cape",
+        "label": "披风",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              15
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "pouch",
+        "label": "腰包",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              14
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "pistol",
+        "label": "模型自带手枪",
+        "default": "off",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              16
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "eyes",
+        "label": "眼睛",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "睁眼",
+            "morphs": {
+              "21": 0
+            }
+          },
+          {
+            "id": "off",
+            "label": "闭眼",
+            "morphs": {
+              "21": 1
+            }
+          }
+        ]
+      }
+    ],
+    "rules": []
+  }
+}

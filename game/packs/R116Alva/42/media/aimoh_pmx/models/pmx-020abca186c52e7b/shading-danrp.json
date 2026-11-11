@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "protocol": "PMX-MAT1",
+  "pmx_sha256": "020abca186c52e7b276cb0cba0eaaf334d61387315e5d234c968f3696eff2815",
+  "vertices": 49965,
+  "head_bone": 9,
+  "head_origin": [
+    1.3340044706085328e-15,
+    17.683870315551758,
+    0.15228469669818878
+  ],
+  "head_forward": [
+    0,
+    0,
+    1
+  ],
+  "head_up": [
+    0,
+    1,
+    0
+  ],
+  "head_radius": [
+    0.9154378175735474,
+    0.961787223815918,
+    0.608082190155983
+  ],
+  "material_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "material_kinds": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "uv1": "uv1-danrp.f32",
+  "uv1_sha256": "57d2c5fb26815a6808f04f9248ba85030a33ca11622a68e0994df208ffed0367",
+  "danrp_payload": 1,
+  "shader_outline": false,
+  "vertex_texture_width": 1024,
+  "vertex_texture_height": 196
+}

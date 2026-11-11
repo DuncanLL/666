@@ -18,9 +18,9 @@
 
 ## 分支与工作树
 
-2026-11-10 整理后，GitHub 有三条分支。`main` 是默认入口，光影和人物工作分别沿自己的维护分支推进。已确认的版本用标签标记阶段点。
+当前维护入口为 `codex/r116-unified-0.3.46`。它合并了已发布的 R116 人物与 Native、Eclipse 光影。人物配置和两个光影后端共用同一条发布线，五个可选人物包的配置在 [game/packs](../game/packs)。[0.3.46 单 MOD 发布记录](handoffs/2026-11-11-r116-public-pack-hygiene-046.md)
 
-| GitHub 分支 | 用途与阶段点 |
+| 历史分支 | 用途与阶段点 |
 |---|---|
 | `main` | 仓库共同基线。当前光影阶段点为 `render-support-v0.3.18` |
 | `codex/r116-render-rc4-20261110` | PZ 42.22／VP RC4 的 Native、Eclipse 和分发器维护。当前光影阶段点为 `render-support-v0.3.23` |

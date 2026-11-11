@@ -20,18 +20,6 @@
       "profile": "models/pmx-0af216265749a22d/profile.json"
     },
     {
-      "id": "pmx-293917f24c2bd387",
-      "label": "芙玲 / 体操服",
-      "model": "models/pmx-293917f24c2bd387/model.pmx",
-      "profile": "models/pmx-293917f24c2bd387/profile.json"
-    },
-    {
-      "id": "pmx-225af1a054faefb0",
-      "label": "春田 / 长裙",
-      "model": "models/pmx-225af1a054faefb0/model.pmx",
-      "profile": "models/pmx-225af1a054faefb0/profile.json"
-    },
-    {
       "id": "pmx-412bd037301ebe18",
       "label": "阿斯缇亚 / 原皮",
       "model": "models/pmx-412bd037301ebe18/model.pmx",
@@ -57,12 +45,6 @@
       "profile": "models/pmx-c7270af966e8aaf8/profile.json"
     },
     {
-      "id": "pmx-782f06826adb1307",
-      "label": "OTs-14 / 默认",
-      "model": "models/pmx-782f06826adb1307/model.pmx",
-      "profile": "models/pmx-782f06826adb1307/profile.json"
-    },
-    {
       "id": "pmx-f5b2807685b18a60",
       "label": "妮基塔 / 无垢契约",
       "model": "models/pmx-f5b2807685b18a60/model.pmx",
@@ -81,6 +63,15 @@
     ],
     "R116Centaureissi": [
       "pmx-7c5ea1f673f69f12"
+    ],
+    "R116Springfield": [
+      "pmx-225af1a054faefb0"
+    ],
+    "R116Faelynn": [
+      "pmx-293917f24c2bd387"
+    ],
+    "R116OTs14": [
+      "pmx-782f06826adb1307"
     ]
   }
 }

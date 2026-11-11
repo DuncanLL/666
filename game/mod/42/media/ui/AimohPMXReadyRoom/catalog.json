@@ -71,11 +71,11 @@
     "MotionFolder": "动作目录",
     "MotionExample": "随包示例",
     "MotionRemovePathTitle": "粘贴要移除的文件夹路径",
-    "ChestJoltFollow": "骨骼跟随范围",
     "ChestXpbdVertical": "上下幅度",
     "ChestXpbdLateral": "左右幅度",
     "ChestXpbdDepth": "前后幅度",
     "ChestXpbdCushion": "回弹缓冲",
+    "ChestJoltFollow": "骨骼跟随范围",
     "ChestJoltLateral": "横向惯性",
     "ChestJoltLanding": "落地下摆",
     "ChestJoltStrain": "惯性伸缩",
@@ -226,109 +226,6 @@
           "P3 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png"
         }
       }
-    },
-    "pmx-293917f24c2bd387": {
-      "character": "芙铃",
-      "skin": "忻跃阳炎",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-293917f24c2bd387.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR01.png",
-      "groups": {
-        "top": {
-          "label": "上装",
-          "options": [
-            "原始",
-            "上着P2",
-            "上着P3"
-          ],
-          "display": "上衣"
-        },
-        "bottom": {
-          "label": "下装",
-          "options": [
-            "原始",
-            "下着p2-1",
-            "下着p2-2",
-            "下着p3"
-          ],
-          "display": "下衣"
-        },
-        "socks": {
-          "label": "袜装",
-          "options": [
-            "原始",
-            "Sock-P2",
-            "Sock-P3"
-          ],
-          "display": "袜装"
-        }
-      },
-      "officialSkin": "忻跃阳炎",
-      "partImages": {
-        "上装": {
-          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Cloth.png",
-          "上着P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Cloth.png",
-          "上着P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Cloth.png"
-        },
-        "袜装": {
-          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Body.png",
-          "Sock-P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Body.png",
-          "Sock-P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Body.png"
-        },
-        "下装": {
-          "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Hip.png",
-          "下着p3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
-        }
-      }
-    },
-    "pmx-225af1a054faefb0": {
-      "character": "春田",
-      "skin": "睡醒的人鱼",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png",
-      "groups": {
-        "m91": {
-          "label": "Hide1",
-          "options": [
-            "原始",
-            "启用"
-          ],
-          "display": "Hide1"
-        },
-        "m92": {
-          "label": "Hide2",
-          "options": [
-            "原始",
-            "启用"
-          ],
-          "display": "Hide2"
-        },
-        "m93": {
-          "label": "Hide3",
-          "options": [
-            "原始",
-            "启用"
-          ],
-          "display": "Hide3"
-        },
-        "m94": {
-          "label": "Hide4",
-          "options": [
-            "原始",
-            "启用"
-          ],
-          "display": "Hide4"
-        },
-        "m95": {
-          "label": "Hide5",
-          "options": [
-            "原始",
-            "启用"
-          ],
-          "display": "Hide5"
-        }
-      },
-      "officialSkin": "睡醒的人鱼",
-      "partImages": {}
     },
     "pmx-412bd037301ebe18": {
       "character": "阿斯缇亚",
@@ -509,80 +406,6 @@
         }
       }
     },
-    "pmx-782f06826adb1307": {
-      "character": "OTs-14",
-      "skin": "默认",
-      "officialSkin": "暗昼冽影",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR.png",
-      "groups": {
-        "head": {
-          "label": "头饰",
-          "display": "头饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "top": {
-          "label": "上衣",
-          "display": "上衣",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "legs": {
-          "label": "下衣",
-          "display": "下衣",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "footwear": {
-          "label": "鞋子",
-          "display": "鞋子",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "equipment": {
-          "label": "随身装具",
-          "display": "随身装具",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "gloves": {
-          "label": "手套",
-          "display": "手套",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "hairband": {
-          "label": "发带",
-          "display": "发带",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "inner": {
-          "label": "内搭",
-          "display": "内搭",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        }
-      },
-      "partImages": {}
-    },
     "pmx-f5b2807685b18a60": {
       "character": "妮基塔",
       "skin": "无垢契约",
@@ -745,6 +568,24 @@
       "skin": "泳装",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7c5ea1f673f69f12.png",
       "pack": "R116Centaureissi"
+    },
+    "pmx-225af1a054faefb0": {
+      "character": "春田",
+      "skin": "睡醒的人鱼",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
+      "pack": "R116Springfield"
+    },
+    "pmx-293917f24c2bd387": {
+      "character": "芙铃",
+      "skin": "忻跃阳炎",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-293917f24c2bd387.png",
+      "pack": "R116Faelynn"
+    },
+    "pmx-782f06826adb1307": {
+      "character": "OTs-14",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
+      "pack": "R116OTs14"
     }
   },
   "labels": {
@@ -1338,46 +1179,6 @@
       "width": 84,
       "height": 43
     },
-    "原始": {
-      "path": "media/ui/AimohPMXReadyRoom/label-8cb7c0a54b21bb.png",
-      "width": 84,
-      "height": 43
-    },
-    "上着P2": {
-      "path": "media/ui/AimohPMXReadyRoom/label-7eb61f6d3d487c.png",
-      "width": 136,
-      "height": 43
-    },
-    "上着P3": {
-      "path": "media/ui/AimohPMXReadyRoom/label-25b42213917edb.png",
-      "width": 136,
-      "height": 43
-    },
-    "下着p2-1": {
-      "path": "media/ui/AimohPMXReadyRoom/label-e5455e535ef36d.png",
-      "width": 173,
-      "height": 47
-    },
-    "下着p2-2": {
-      "path": "media/ui/AimohPMXReadyRoom/label-8f485e8b3eea96.png",
-      "width": 173,
-      "height": 47
-    },
-    "下着p3": {
-      "path": "media/ui/AimohPMXReadyRoom/label-939495cee99fe8.png",
-      "width": 134,
-      "height": 47
-    },
-    "Sock-P2": {
-      "path": "media/ui/AimohPMXReadyRoom/label-7a9cee4ade3fc6.png",
-      "width": 168,
-      "height": 37
-    },
-    "Sock-P3": {
-      "path": "media/ui/AimohPMXReadyRoom/label-d4f80f79dcd6c1.png",
-      "width": 168,
-      "height": 37
-    },
     "EyeRed(Left)": {
       "path": "media/ui/AimohPMXReadyRoom/label-02b1a4bf80b7e5.png",
       "width": 261,
@@ -1548,11 +1349,6 @@
       "width": 230,
       "height": 43
     },
-    "手套": {
-      "path": "media/ui/AimohPMXReadyRoom/label-d3db5e56061937.png",
-      "width": 84,
-      "height": 43
-    },
     "Emotions(Blush)": {
       "path": "media/ui/AimohPMXReadyRoom/label-72edb43031bb67.png",
       "width": 336,
@@ -1570,36 +1366,6 @@
     },
     "长裙": {
       "path": "media/ui/AimohPMXReadyRoom/label-5ce7d3b5425ceb.png",
-      "width": 84,
-      "height": 44
-    },
-    "Hide1": {
-      "path": "media/ui/AimohPMXReadyRoom/label-62266505291a90.png",
-      "width": 121,
-      "height": 38
-    },
-    "Hide2": {
-      "path": "media/ui/AimohPMXReadyRoom/label-c005b05d6d0210.png",
-      "width": 121,
-      "height": 38
-    },
-    "Hide3": {
-      "path": "media/ui/AimohPMXReadyRoom/label-34624794e62888.png",
-      "width": 121,
-      "height": 38
-    },
-    "Hide4": {
-      "path": "media/ui/AimohPMXReadyRoom/label-010f45b7da775f.png",
-      "width": 121,
-      "height": 38
-    },
-    "Hide5": {
-      "path": "media/ui/AimohPMXReadyRoom/label-fab23fdaa48782.png",
-      "width": 121,
-      "height": 38
-    },
-    "启用": {
-      "path": "media/ui/AimohPMXReadyRoom/label-f4f0ead1116b5b.png",
       "width": 84,
       "height": 44
     },
@@ -2223,11 +1989,6 @@
       "width": 154,
       "height": 44
     },
-    "随身装具": {
-      "path": "media/ui/AimohPMXReadyRoom/label-e79f3e5197ec38.png",
-      "width": 164,
-      "height": 44
-    },
     "Cth2-TopCloth": {
       "path": "media/ui/AimohPMXReadyRoom/label-da43b3192cbcf1.png",
       "width": 297,
@@ -2813,11 +2574,6 @@
       "width": 198,
       "height": 45
     },
-    "骨骼跟随范围": {
-      "path": "media/ui/AimohPMXReadyRoom/ChestJoltFollow.png",
-      "width": 136,
-      "height": 25
-    },
     "上下幅度": {
       "path": "media/ui/AimohPMXReadyRoom/ChestXpbdVertical.png",
       "width": 92,
@@ -2836,6 +2592,11 @@
     "回弹缓冲": {
       "path": "media/ui/AimohPMXReadyRoom/ChestXpbdCushion.png",
       "width": 92,
+      "height": 25
+    },
+    "骨骼跟随范围": {
+      "path": "media/ui/AimohPMXReadyRoom/ChestJoltFollow.png",
+      "width": 136,
       "height": 25
     },
     "横向惯性": {
@@ -2907,6 +2668,9 @@
   "portraitRing": "media/ui/AimohPMXReadyRoom/portrait-ring.png",
   "optionalModels": [
     "pmx-020abca186c52e7b",
-    "pmx-7c5ea1f673f69f12"
+    "pmx-7c5ea1f673f69f12",
+    "pmx-225af1a054faefb0",
+    "pmx-293917f24c2bd387",
+    "pmx-782f06826adb1307"
   ]
 }

@@ -18,6 +18,7 @@ CHARACTER_JAR = '42/media/java/client/AimohPMXPreview.jar'
 RENDER_JAR = 'Contents/mods/AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar'
 ENTRY_CLASSES = {'aimoh/pmxpreview/Main.class', 'aimoh/pmxpreview/RenderPatch.class'}
 RENDER_STARTUP = 'aimoh/gf2/bridge/UnifiedStartup.class'
+RENDER_NOTICE = 'R116-RENDER-NOTICE.txt'
 
 
 def entries(archive):
@@ -65,6 +66,7 @@ def assemble(args):
     with zipfile.ZipFile(source) as person, zipfile.ZipFile(addon) as render, zipfile.ZipFile(host) as official, zipfile.ZipFile(zombie) as loader:
         person_entries, render_entries = entries(person), entries(render)
         assert not person_entries & render_entries, sorted(person_entries & render_entries)
+        assert RENDER_NOTICE not in person_entries | render_entries
         assert ENTRY_CLASSES <= person_entries and RENDER_STARTUP in render_entries
         assert not {name for name in (person_entries | render_entries) & (set(official.namelist()) | set(loader.namelist())) if name.endswith('.class')}
 
@@ -74,14 +76,17 @@ def assemble(args):
         shutil.copytree(character, stage)
         target = stage / CHARACTER_MOD / CHARACTER_JAR
         temporary = target.with_suffix('.jar.writing')
+        notice = (ROOT / 'render-support' / RENDER_NOTICE).read_bytes()
         with zipfile.ZipFile(temporary, 'w') as joined:
+            write(joined, RENDER_NOTICE, notice)
             for name in sorted(person_entries):
                 data = (overlay / name).read_bytes() if name in ENTRY_CLASSES else person.read(name)
                 write(joined, name, data)
             for name in sorted(render_entries):
                 write(joined, name, render.read(name))
         with zipfile.ZipFile(temporary) as joined:
-            assert joined.testzip() is None and entries(joined) == person_entries | render_entries
+            assert joined.testzip() is None and entries(joined) == person_entries | render_entries | {RENDER_NOTICE}
+            assert joined.read(RENDER_NOTICE) == notice
             assert all(joined.read(n) == person.read(n) for n in person_entries - ENTRY_CLASSES)
             assert all(joined.read(n) == render.read(n) for n in render_entries)
         os.replace(temporary, target)

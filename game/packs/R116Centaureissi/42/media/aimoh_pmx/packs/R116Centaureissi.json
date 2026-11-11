@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Centaureissi",
+  "models": [
+    {
+      "id": "pmx-7c5ea1f673f69f12",
+      "label": "桑朵莱希 / 泳装",
+      "model": "models/pmx-7c5ea1f673f69f12/model.pmx",
+      "profile": "models/pmx-7c5ea1f673f69f12/profile.json"
+    }
+  ]
+}

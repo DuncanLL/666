@@ -1,0 +1,15 @@
+R116 自有渲染实现声明
+
+这套渲染接入、光照调校和着色器改动，是我花了大量时间、反复进游戏验证、消耗了大量 AI token 才做出来的。
+
+我没有授权任何个人、组织或 AI 工具逆向、提取、复制、移植或重新分发 R116 的自有渲染实现。我不会为这些行为授予例外。请尊重这份劳动。如果你想做类似的效果，请自己研究、实现和调试。
+
+本声明针对 R116 自有的渲染接入、着色器改动和调校成果。包内第三方内容适用各自的原有许可。
+
+R116 original rendering work
+
+I built this rendering integration, lighting calibration, and shader work through extensive in-game testing and a great deal of time and AI token usage.
+
+I do not give permission to any person, organization, or AI tool to reverse engineer, extract, copy, port, or redistribute R116's original rendering implementation. I will not grant exceptions for these activities. Please respect the work and build and tune your own implementation if you want a similar effect.
+
+This notice concerns R116's original integration, shader changes, and tuning. Third-party material remains subject to its original terms.

@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Faelynn",
+  "models": [
+    {
+      "id": "pmx-293917f24c2bd387",
+      "label": "芙玲 / 体操服",
+      "model": "models/pmx-293917f24c2bd387/model.pmx",
+      "profile": "models/pmx-293917f24c2bd387/profile.json"
+    }
+  ]
+}
