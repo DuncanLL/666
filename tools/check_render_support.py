@@ -59,7 +59,8 @@ if __name__=='__main__':
              '-javaagent:'+str(agent)+'='+str(jar),'-cp',
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out),a.backend]
     if a.protected_report:
-        command.extend(('sealed',protected.get('marker_prefix','/*r116$'),protected.get('dispatcher_class','K')))
+        mode='sealed-public' if protected.get('public_source_view') else 'sealed'
+        command.extend((mode,protected.get('marker_prefix','/*r116$'),protected.get('dispatcher_class','K')))
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
     (out/'startup.log').write_text(result.stdout+result.stderr,'utf8')
     if result.returncode:print((result.stdout+result.stderr)[-7000:],flush=True)

@@ -11,9 +11,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.HashSet;
+import java.util.HexFormat;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
@@ -22,9 +21,6 @@ import javax.crypto.spec.SecretKeySpec;
 /** Opens the optional R116 payload at shader load. The client key only deters static browsing. */
 public final class AimohSealedSources {
     static final String RESOURCE = "/aimoh/gf2/bridge/render-inputs.bin";
-    private static final String PREFIX = "/*r116$";
-    private static final byte[] TAG = PREFIX.getBytes(StandardCharsets.US_ASCII);
-    private static final Pattern MARKER = Pattern.compile("/\\*r116\\$([0-9a-f]{16})\\*/");
 
     static boolean enabled() {
         return AimohSealedSources.class.getResource(RESOURCE) != null;
@@ -83,29 +79,39 @@ public final class AimohSealedSources {
 
     // Iris stores the returned text in its own source cache after newline normalization.
     public static byte[] bytes(byte[] raw, String path) {
-        if (raw == null || !(path.endsWith("gf2/manifest.json")
-            || path.contains("gf2/data/") && path.endsWith(".comp")
-            || path.contains("danrp/sky_") || path.endsWith("dimensions/composite6.fsh"))) return raw;
-        for (int offset = 0; offset <= raw.length - TAG.length; offset++) {
-            if (Arrays.equals(raw, offset, offset + TAG.length, TAG, 0, TAG.length))
-                return text(new String(raw, StandardCharsets.UTF_8), path).getBytes(StandardCharsets.UTF_8);
-        }
-        return raw;
+        String name = resourceName(path);
+        String replacement = raw == null || name == null ? null : replacement(name, raw);
+        return replacement == null ? raw : replacement.getBytes(StandardCharsets.UTF_8);
     }
 
     public static String text(String raw, String path) {
-        if (raw == null || !raw.contains(PREFIX)) return raw;
-        Matcher marker = MARKER.matcher(raw);
-        if (!marker.find()) return raw;
-        requireReady();
-        if (path.endsWith("gf2/manifest.json")) return fragment(marker.group(1));
-        return marker.reset().replaceAll(match -> Matcher.quoteReplacement(fragment(match.group(1))));
+        String name = resourceName(path);
+        String replacement = raw == null || name == null ? null : replacement(name, raw.getBytes(StandardCharsets.UTF_8));
+        return replacement == null ? raw : replacement;
     }
 
-    private static String fragment(String id) {
-        String value = Payload.FRAGMENTS.get(id);
-        if (value == null) throw new IllegalStateException("shader pack load failed");
-        return value;
+    private static String resourceName(String path) {
+        if (path == null) return null;
+        String relative = path.replace('\\', '/');
+        int root = relative.lastIndexOf("shaders/");
+        if (root >= 0) relative = relative.substring(root + 8);
+        else if (relative.startsWith("/")) relative = relative.substring(1);
+        if (relative.equals("gf2/manifest.json") || relative.equals("gf2/cube_faces.glsl")
+                || relative.startsWith("gf2/native_") || relative.startsWith("danrp/sky_")
+                || relative.startsWith("gf2/data/") && relative.endsWith(".comp")
+                || relative.equals("dimensions/composite6.fsh")) return relative;
+        return null;
+    }
+
+    private static String replacement(String name, byte[] raw) {
+        try {
+            String fingerprint = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(raw));
+            String found = Payload.FRAGMENTS.get(name + "/" + fingerprint);
+            if (found != null) requireReady();
+            return found;
+        } catch (GeneralSecurityException e) {
+            throw new IllegalStateException("shader pack load failed", e);
+        }
     }
 
     private static class Payload {

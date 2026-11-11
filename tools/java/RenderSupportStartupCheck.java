@@ -20,7 +20,8 @@ public final class RenderSupportStartupCheck {
         Path root=Path.of(args[0]);Files.createDirectories(root);Path user=Files.createTempDirectory(root,"玩家 空目录-");zombie.ZomboidFileSystem.instance.setCacheDir(user.toString());
         boolean eclipse=args.length>1&&args[1].equals("eclipse");
         boolean combined=args.length>1&&args[1].equals("combined");
-        boolean sealed=args.length>2&&args[2].equals("sealed");
+        boolean publicSources=args.length>2&&args[2].equals("sealed-public");
+        boolean sealed=publicSources||args.length>2&&args[2].equals("sealed");
         String markerPrefix=args.length>3?args[3]:"/*r116$";
         String dispatcher=args.length>4?args[4]:"K";
         boolean protectedTrial=args.length>2;
@@ -42,7 +43,8 @@ public final class RenderSupportStartupCheck {
             if(sealed)try(var raw=new ZipFile(pack.toFile())){
                 var manifest=raw.stream().filter(entry->entry.getName().endsWith("/gf2/manifest.json")).findFirst().orElseThrow();
                 String text=new String(raw.getInputStream(manifest).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
-                require(text.contains(markerPrefix)&&!text.contains("camera_local_direction"),"Installed Eclipse calibration is plaintext");
+                if(publicSources)require(!new JSONObject(text).has("input"),"Unexpected marker in public Eclipse manifest");
+                else require(text.contains(markerPrefix)&&!text.contains("camera_local_direction"),"Installed Eclipse calibration is plaintext");
             }
             long eclipseStart=System.nanoTime();
             var discover=viewpoint.platform.IrisPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,pack.getParent().toFile());
@@ -64,8 +66,9 @@ public final class RenderSupportStartupCheck {
                     String path=probe.getString("path");
                     var entry=raw.stream().filter(e->e.getName().endsWith("/"+path)).findFirst().orElseThrow();
                     String text=new String(raw.getInputStream(entry).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
-                    require(text.contains(markerPrefix)&&!text.contains("authorSkyVisibility"),
-                        "Eclipse native probe author fragment is plaintext");
+                    require(!text.contains("authorSkyVisibility"),"Eclipse native probe author fragment is plaintext");
+                    if(publicSources)require(text.contains("void main()")&&!text.contains(markerPrefix),"Public Eclipse probe is incomplete");
+                    else require(text.contains(markerPrefix),"Eclipse native probe has no marker");
                 }
             }
             if(!protectedTrial){
@@ -145,7 +148,8 @@ public final class RenderSupportStartupCheck {
         if(sealed){
             for(String name:List.of("manifest.json","native_light.comp","native_main.glsl","native_local.glsl","native_motion.comp","native_indirect.glsl","native_cube.comp","native_prefilter.comp","cube_faces.glsl")){
                 String raw=Files.readString(folder.resolve("shaders/gf2").resolve(name));
-                require(raw.contains(markerPrefix)&&!raw.contains("imageStore")&&!raw.contains("camera_local_direction"),"Native shader or calibration is plaintext: "+name);
+                if(publicSources)require(raw.length()>33&&!raw.contains(markerPrefix),"Public Native source is incomplete: "+name);
+                else require(raw.contains(markerPrefix)&&!raw.contains("imageStore")&&!raw.contains("camera_local_direction"),"Native shader or calibration is plaintext: "+name);
             }
         }
         long nativeStart=System.nanoTime();
@@ -157,6 +161,7 @@ public final class RenderSupportStartupCheck {
             checkReleaseManifest(new JSONObject(data));
             String light=(String)read.invoke(selected,"gf2/native_light.comp");
             require(light.startsWith("#version")&&light.contains("sourceSH[7]"),"Native light input did not open in memory");
+            if(publicSources)require(!light.equals(Files.readString(folder.resolve("shaders/gf2/native_light.comp"))),"Native light was not replaced in memory");
         }
         long nativeLoad=System.nanoTime()-nativeStart;
         require(fill!=null&&fill.kept&&fill.label.equals("人物柔和底灯"),"Character fill slider missing from official Native options");

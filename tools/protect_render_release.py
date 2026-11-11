@@ -66,27 +66,25 @@ def strip_notes(data):
 
 
 def seal_names(seed):
-    token = hmac.digest(seed, b'shader-marker', 'sha256')[:6].hex()
-    resource = hmac.digest(seed, b'archive-entry', 'sha256')[:12].hex()
-    return f'/*{token}$', BRIDGE + resource
+    return BRIDGE + hmac.digest(seed, b'archive-entry', 'sha256')[:12].hex()
 
 
-def seal_marker(seed, original):
-    return hmac.digest(seed, original.encode(), 'sha256')[:8].hex()
-
-
-def protect_shaders(payload, backend, rules, fragments, seed, prefix):
+def protect_shaders(payload, backend, rules, fragments):
+    import basic_shader_adapter as basic
     changed = {}
     mapping = {}
     sealed = []
     relocated = {}
+    public_kernels = {}
 
-    def seal(entry, data):
-        marker = seal_marker(seed, digest(f'{backend}/{entry}'.encode())[:16])
-        assert marker not in fragments and b'/*r116$' not in data, entry
-        fragments[marker] = data
+    def with_public_source(entry, formal, public):
+        public = public.replace(b'\r', b'').rstrip() + b'\n'
+        name = entry.rsplit('shaders/', 1)[1]
+        key = name + '/' + digest(public)
+        assert key not in fragments, entry
+        fragments[key] = formal
         sealed.append(entry)
-        return f'{prefix}{marker}*/'.encode()
+        return public
 
     with zipfile.ZipFile(io.BytesIO(payload)) as source:
         if backend == 'native':
@@ -96,7 +94,7 @@ def protect_shaders(payload, backend, rules, fragments, seed, prefix):
                 original = (ROOT / 'render-support/native-pack' / entry).read_bytes()
                 assert data.replace(b'\r\n', b'\n') == original.replace(b'\r\n', b'\n'), entry
                 protected, mapping[entry] = renamed_shader(data, symbols, entry)
-                changed[entry] = seal(entry, strip_notes(protected))
+                changed[entry] = with_public_source(entry, strip_notes(protected), basic.native_shader(name, data))
         else:
             entries = [name for name in source.namelist() if name.endswith(MOTION_SUFFIX)]
             assert len(entries) == 1, entries
@@ -105,15 +103,14 @@ def protect_shaders(payload, backend, rules, fragments, seed, prefix):
             fragment = (ROOT / 'render-support/eclipse/shaders/actor-motion.glsl').read_bytes().replace(b'\r\n', b'\n')
             assert data.count(fragment) == 1, 'Eclipse author-owned motion fragment differs from the built package'
             protected, mapping[entry] = renamed_shader(fragment, rules['eclipse_motion_local_symbols'], entry)
-            marker = seal(entry, strip_notes(protected))
-            changed[entry] = data.replace(fragment, marker, 1)
-            assert changed[entry].replace(marker, fragment, 1) == data
+            changed[entry] = with_public_source(entry, data.replace(fragment, strip_notes(protected), 1),
+                                                data.replace(fragment, basic.ECLIPSE_COMPOSITE, 1))
             shader_root = entry.removesuffix('dimensions/composite6.fsh')
             bootstrap = json.loads(source.read(GF2_MANIFEST))
             probe = bootstrap['native_probe']
             indexed = {row['path']: row for row in [probe, *bootstrap['kernels'].values()]}
 
-            def seal_kernel(entry, prefix, fragment, original):
+            def seal_kernel(entry, prefix, fragment, original, public):
                 row = indexed[entry.removeprefix(shader_root)]
                 assert len(original) == row['bytes'] and digest(original) == row['sha256'], entry
                 code = prefix + fragment
@@ -123,16 +120,17 @@ def protect_shaders(payload, backend, rules, fragments, seed, prefix):
                 assert target == entry or target not in source.namelist()
                 row.update(path=path, sha256=fingerprint, bytes=len(code))
                 relocated[entry] = target
-                changed[entry] = prefix + seal(target, fragment)
+                changed[entry] = with_public_source(target, code, public)
+                public_kernels[path] = changed[entry]
 
             for name in rules['eclipse_owned_files']:
                 owned = shader_root + name
                 code = source.read(owned)
                 if name.startswith('gf2/data/'):
                     assert digest(code) == Path(name).stem, owned
-                    seal_kernel(owned, b'', strip_notes(code), code)
+                    seal_kernel(owned, b'', strip_notes(code), code, basic.eclipse_shader(owned, code, bootstrap['kernels']))
                 else:
-                    changed[owned] = seal(owned, strip_notes(code))
+                    changed[owned] = with_public_source(owned, strip_notes(code), basic.eclipse_shader(owned, code, bootstrap['kernels']))
 
             entry = shader_root + probe['path']
             data = source.read(entry)
@@ -140,7 +138,7 @@ def protect_shaders(payload, backend, rules, fragments, seed, prefix):
             split = data.index(PROBE_FRAGMENT_START)
             author_fragment = data[split:]
             assert digest(author_fragment) == rules['eclipse_probe_fragment_sha256'], entry
-            seal_kernel(entry, data[:split], strip_notes(author_fragment), data)
+            seal_kernel(entry, data[:split], strip_notes(author_fragment), data, basic.eclipse_probe(data[:split]))
 
         manifest = [name for name in source.namelist() if name.endswith('shaders/gf2/manifest.json')]
         assert len(manifest) == 1, manifest
@@ -150,9 +148,12 @@ def protect_shaders(payload, backend, rules, fragments, seed, prefix):
             data = (json.dumps(bootstrap, indent=2) + '\n').encode()
         else:
             bootstrap = json.loads(data)
-        public = {key: bootstrap[key] for key in ('format', 'pipeline', 'addon_runtime', 'character_catalog')}
-        public['input'] = seal(entry, data).decode()
-        changed[entry] = (json.dumps(public, separators=(',', ':')) + '\n').encode()
+        public = basic.public_manifest(json.loads(data))
+        if backend == 'eclipse':
+            for row in [public['native_probe'], *public['kernels'].values()]:
+                source_bytes = public_kernels[row['path']]
+                row.update(sha256=digest(source_bytes), bytes=len(source_bytes))
+        changed[entry] = with_public_source(entry, data, (json.dumps(public, indent=2) + '\n').encode())
         output = io.BytesIO()
         with zipfile.ZipFile(output, 'w') as target:
             for name in source.namelist():
@@ -257,7 +258,7 @@ def release_context(seed, loader_name, private, config):
         return hmac.digest(seed, label.encode(), 'sha256')
 
     layout = random.Random(part('layout'))
-    prefix, resource = seal_names(seed)
+    resource = seal_names(seed)
     dispatcher_name = 'z' + part('dispatcher')[:5].hex()
     carrier_names = ['x' + part(f'class/{i}')[:4].hex() for i in range(4)]
     assert len(set(carrier_names)) == len(carrier_names)
@@ -342,11 +343,8 @@ final class {dispatcher_name} {{
 
     template = ROOT / 'render-support/java' / (LOADER + '.java')
     loader = template.read_text('utf8')
-    loader = re.sub(r'(?m)^    private static final Pattern MARKER = .*;$',
-                    lambda _: r'    private static final Pattern MARKER = Pattern.compile(Pattern.quote(PREFIX) + "([0-9a-f]{16})\\*/");', loader)
     replacements = {
         '"/' + SEALED_RESOURCE + '"': hidden('/' + resource, 'resource-text'),
-        '"/*r116$"': hidden(prefix, 'marker-text'),
         '"SHA-256"': hidden('SHA-256', 'digest-text'),
         '"AES/GCM/NoPadding"': hidden('AES/GCM/NoPadding', 'cipher-text'),
         '"AES"': hidden('AES', 'key-type-text'),
@@ -383,7 +381,7 @@ def seal_archive(seed, loader_name, fragments, private, config):
     tool_classes = private / 'sealer-classes'
     compile_java(config, [tool], tool_classes, [])
     context, key = release_context(seed, loader_name, private, config)
-    _, resource = seal_names(seed)
+    resource = seal_names(seed)
     sealed = private / Path(resource).name
     java = Path(config['game_root']) / 'jre64/bin/java.exe'
     run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',
@@ -413,7 +411,6 @@ def package(output, proguard, metadata, seed_from=None):
     seed = seed_from.read_bytes() if seed_from else secrets.token_bytes(32)
     assert len(seed) == 32, 'Expected a 32-byte private build seed'
     (private / 'seed.bin').write_bytes(seed)
-    prefix, _ = seal_names(seed)
 
     origin = json.loads((ROOT / 'provenance/render-support.json').read_text('utf8'))
     workshop_id = origin['workshop_id']
@@ -437,7 +434,7 @@ def package(output, proguard, metadata, seed_from=None):
             entry = row['shader_payload']
             data = source.read(entry)
             assert digest(data) == row['shader_sha256']
-            shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments, seed, prefix)
+            shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments)
             shader_report[backend] = {'sha256': digest(shaders[entry]), 'sealed_entries': sorted(sealed)}
         loader = Path(names[LOADER + '.class']).stem
         context, resource, sealed_resource = seal_archive(seed, loader, fragments, private, config)
@@ -471,7 +468,7 @@ def package(output, proguard, metadata, seed_from=None):
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
          shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=digest(sealed_resource),
-         sealed_resource=resource, marker_prefix=prefix, loader_class=loader,
+         sealed_resource=resource, public_source_view=True, loader_class=loader,
          dispatcher_class=Path(list(context)[len(LOADER_PARTS)]).stem,
          seal_tool_sha256=sha(ROOT / 'tools/java/SealRenderResources.java'), generated_context_classes=len(context),
          randomized_context=True, private_mapping_bundled=False, installed=False, uploaded=False))
