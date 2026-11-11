@@ -9,6 +9,7 @@ import random
 import secrets
 import re
 import shutil
+import struct
 import subprocess
 import zipfile
 
@@ -20,6 +21,8 @@ from common import BUILD, ROOT, environment, save, settings, sha
 
 BRIDGE = 'aimoh/gf2/bridge/'
 SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
+LOADER = BRIDGE + 'AimohSealedSources'
+LOADER_PARTS = ('', '$Payload', '$Watch')
 MOTION_SUFFIX = '/shaders/dimensions/composite6.fsh'
 PROBE_FRAGMENT_START = b'uniform vec3 uSceneOrigin;\nfloat authorSkyVisibility('
 TOKEN = re.compile(r'^[ \t]*#[^\r\n]*|/\*[\s\S]*?\*/|//[^\r\n]*|"(?:\\.|[^"\\])*"|\.[ \t]*[A-Za-z_]\w*|\b[A-Za-z_]\w*\b', re.M | re.ASCII)
@@ -62,18 +65,28 @@ def strip_notes(data):
     return COMMENTS.sub(hide, data)
 
 
-def protect_shaders(payload, backend, rules, fragments):
+def seal_names(seed):
+    token = hmac.digest(seed, b'shader-marker', 'sha256')[:6].hex()
+    resource = hmac.digest(seed, b'archive-entry', 'sha256')[:12].hex()
+    return f'/*{token}$', BRIDGE + resource
+
+
+def seal_marker(seed, original):
+    return hmac.digest(seed, original.encode(), 'sha256')[:8].hex()
+
+
+def protect_shaders(payload, backend, rules, fragments, seed, prefix):
     changed = {}
     mapping = {}
     sealed = []
     relocated = {}
 
     def seal(entry, data):
-        marker = digest(f'{backend}/{entry}'.encode())[:16]
+        marker = seal_marker(seed, digest(f'{backend}/{entry}'.encode())[:16])
         assert marker not in fragments and b'/*r116$' not in data, entry
         fragments[marker] = data
         sealed.append(entry)
-        return f'/*r116${marker}*/'.encode()
+        return f'{prefix}{marker}*/'.encode()
 
     with zipfile.ZipFile(io.BytesIO(payload)) as source:
         if backend == 'native':
@@ -239,11 +252,13 @@ def protect_classes(source, private, rules, proguard_zip, config):
     return output, names, renamed_members
 
 
-def release_context(seed, raw, owned, names, private, config):
+def release_context(seed, loader_name, private, config):
     def part(label):
         return hmac.digest(seed, label.encode(), 'sha256')
 
     layout = random.Random(part('layout'))
+    prefix, resource = seal_names(seed)
+    dispatcher_name = 'z' + part('dispatcher')[:5].hex()
     carrier_names = ['x' + part(f'class/{i}')[:4].hex() for i in range(4)]
     assert len(set(carrier_names)) == len(carrier_names)
     carriers = {name: [] for name in carrier_names}
@@ -253,10 +268,25 @@ def release_context(seed, raw, owned, names, private, config):
     for i, owner in enumerate(order):
         method = 'a' + part(f'method/{i}')[:4].hex()
         values = part(f'fragment/{i}')[:16]
-        carriers[owner].append((method, values))
         calls.append((owner, method, values))
     layout.shuffle(calls)
     layout.shuffle(carrier_names)
+
+    # The next dispatch label depends on the decoded words of the current row.
+    # Packager and generated loader perform the same unsigned 32-bit arithmetic.
+    mask = 0xffffffff
+    labels = layout.sample(range(1, 2**31), len(calls) + 1)
+    initial = state = layout.getrandbits(32)
+    salt = layout.getrandbits(32)
+    shift = layout.randrange(3, 30)
+    for index, (owner, method, values) in enumerate(calls):
+        row = []
+        for word in struct.unpack('<4I', values):
+            row.append(word ^ state)
+            combined = (state + word) & mask
+            state = (((combined << shift) | (combined >> (32 - shift))) & mask) ^ salt
+        row.append(labels[index + 1] ^ state)
+        carriers[owner].append((method, row))
 
     generated = private / 'context-sources'
     generated.mkdir()
@@ -264,35 +294,101 @@ def release_context(seed, raw, owned, names, private, config):
     for name, methods in carriers.items():
         layout.shuffle(methods)
         lines = ['package aimoh.gf2.bridge;', f'final class {name} {{']
-        for method, values in methods:
-            signed = ', '.join(str(v if v < 128 else v - 256) for v in values)
-            lines.append(f'    static void {method}(java.security.MessageDigest d) {{ d.update(new byte[] {{{signed}}}); }}')
+        for method, row in methods:
+            words = ', '.join(hex(word) for word in row)
+            lines.append(f'    static int[] {method}() {{ return new int[] {{{words}}}; }}')
         file = generated / f'{name}.java'
         file.write_text('\n'.join([*lines, '}']) + '\n', 'utf8')
         sources.append(file)
 
-    classes = ', '.join(f'{name}.class' for name in ['K', *carrier_names])
-    lines = ['package aimoh.gf2.bridge;', 'final class K {',
-             f'    static Class<?>[] types() {{ return new Class<?>[] {{{classes}}}; }}',
-             '    static void mix(java.security.MessageDigest d) {']
-    lines.extend(f'        {owner}.{method}(d);' for owner, method, _ in calls)
-    dispatcher = generated / 'K.java'
-    dispatcher.write_text('\n'.join([*lines, '    }', '}']) + '\n', 'utf8')
+    classes = ', '.join(f'{name}.class' for name in [dispatcher_name, *carrier_names])
+    cases = [f'                case {label} -> {owner}.{method}();'
+             for label, (owner, method, _) in zip(labels, calls)]
+    layout.shuffle(cases)
+    case_lines = '\n'.join(cases)
+    dispatcher = generated / f'{dispatcher_name}.java'
+    dispatcher.write_text(f'''package aimoh.gf2.bridge;
+final class {dispatcher_name} {{
+    static Class<?>[] a() {{ return new Class<?>[] {{{classes}}}; }}
+    static void b(java.security.MessageDigest digest) {{
+        int state = {hex(initial)}, slot = {labels[0]};
+        for (int remaining = {len(calls)}; remaining > 0; remaining--) {{
+            int[] row = switch (slot) {{
+{case_lines}
+                default -> throw new IllegalStateException();
+            }};
+            for (int i = 0; i < 4; i++) {{
+                int word = row[i] ^ state;
+                for (int bit = 0; bit < 32; bit += 8) digest.update((byte)(word >>> bit));
+                state = Integer.rotateLeft(state + word, {shift}) ^ {hex(salt)};
+            }}
+            slot = row[4] ^ state;
+        }}
+        if (slot != {labels[-1]}) throw new IllegalStateException();
+    }}
+    static String c(int mask, int[] words) {{
+        char[] text = new char[words.length];
+        for (int i = 0; i < words.length; i++) text[i] = (char)(words[i] ^ Integer.rotateLeft(mask, i));
+        return new String(text);
+    }}
+}}
+''', 'utf8')
+
+    def hidden(text, label):
+        word = int.from_bytes(part(label)[:4], 'big')
+        bits = f'{word:032b}'
+        encoded = [hex(ord(char) ^ int(bits[i % 32:] + bits[:i % 32], 2)) for i, char in enumerate(text)]
+        return f'{dispatcher_name}.c({hex(word)}, new int[] {{{", ".join(encoded)}}})'
+
+    template = ROOT / 'render-support/java' / (LOADER + '.java')
+    loader = template.read_text('utf8')
+    loader = re.sub(r'(?m)^    private static final Pattern MARKER = .*;$',
+                    lambda _: r'    private static final Pattern MARKER = Pattern.compile(Pattern.quote(PREFIX) + "([0-9a-f]{16})\\*/");', loader)
+    replacements = {
+        '"/' + SEALED_RESOURCE + '"': hidden('/' + resource, 'resource-text'),
+        '"/*r116$"': hidden(prefix, 'marker-text'),
+        '"SHA-256"': hidden('SHA-256', 'digest-text'),
+        '"AES/GCM/NoPadding"': hidden('AES/GCM/NoPadding', 'cipher-text'),
+        '"AES"': hidden('AES', 'key-type-text'),
+        'K.types()': dispatcher_name + '.a()',
+        'K.mix(context)': dispatcher_name + '.b(context)',
+    }
+    for old, new in replacements.items():
+        assert old in loader, old
+        loader = loader.replace(old, new)
+    loader = loader.replace('AimohSealedSources', loader_name)
+    loader_file = generated / f'{loader_name}.java'
+    loader_file.write_text(loader, 'utf8')
+
     output = private / 'context-classes'
-    compile_java(config, [dispatcher, *sources], output, [raw])
-    rows = {BRIDGE + name + '.class': (output / BRIDGE / (name + '.class')).read_bytes()
-            for name in ['K', *carrier_names]}
+    compile_java(config, [loader_file, dispatcher, *sources], output, [])
+    order = [*(loader_name + part_name for part_name in LOADER_PARTS), dispatcher_name, *carrier_names]
+    rows = {BRIDGE + name + '.class': (output / BRIDGE / (name + '.class')).read_bytes() for name in order}
 
     key = hashlib.sha256()
-    with zipfile.ZipFile(owned) as archive:
-        for tail in ('', '$Payload', '$Watch'):
-            entry = names[BRIDGE + 'AimohSealedSources' + tail + '.class']
-            key.update(hashlib.sha256(archive.read(entry)).digest())
     for data in rows.values():
         key.update(hashlib.sha256(data).digest())
     for _, _, values in calls:
         key.update(values)
     return rows, key.digest()
+
+
+def seal_archive(seed, loader_name, fragments, private, config):
+    source_archive = private / 'render-inputs.zip'
+    with zipfile.ZipFile(source_archive, 'w') as archive:
+        for name, data in sorted(fragments.items()):
+            write(archive, name, data)
+    nonce = hmac.digest(seed, b'nonce/' + hashlib.sha256(source_archive.read_bytes()).digest(), 'sha256')[:12]
+    tool = ROOT / 'tools/java/SealRenderResources.java'
+    tool_classes = private / 'sealer-classes'
+    compile_java(config, [tool], tool_classes, [])
+    context, key = release_context(seed, loader_name, private, config)
+    _, resource = seal_names(seed)
+    sealed = private / Path(resource).name
+    java = Path(config['game_root']) / 'jre64/bin/java.exe'
+    run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',
+              str(source_archive), str(sealed)], private / 'sealer.log', key + nonce)
+    return context, resource, sealed.read_bytes()
 
 
 def package(output, proguard, metadata, seed_from=None):
@@ -317,6 +413,7 @@ def package(output, proguard, metadata, seed_from=None):
     seed = seed_from.read_bytes() if seed_from else secrets.token_bytes(32)
     assert len(seed) == 32, 'Expected a 32-byte private build seed'
     (private / 'seed.bin').write_bytes(seed)
+    prefix, _ = seal_names(seed)
 
     origin = json.loads((ROOT / 'provenance/render-support.json').read_text('utf8'))
     workshop_id = origin['workshop_id']
@@ -340,27 +437,19 @@ def package(output, proguard, metadata, seed_from=None):
             entry = row['shader_payload']
             data = source.read(entry)
             assert digest(data) == row['shader_sha256']
-            shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments)
+            shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments, seed, prefix)
             shader_report[backend] = {'sha256': digest(shaders[entry]), 'sealed_entries': sorted(sealed)}
-        source_archive = private / 'render-inputs.zip'
-        with zipfile.ZipFile(source_archive, 'w') as fragment_archive:
-            for name, data in sorted(fragments.items()):
-                write(fragment_archive, name, data)
-        context, key = release_context(seed, raw, protected, names, private, config)
-        nonce = hmac.digest(seed, b'nonce/' + hashlib.sha256(source_archive.read_bytes()).digest(), 'sha256')[:12]
-        tool = ROOT / 'tools/java/SealRenderResources.java'
-        tool_classes = private / 'sealer-classes'
-        compile_java(config, [tool], tool_classes, [])
-        sealed_resource = private / 'render-inputs.bin'
-        java = Path(config['game_root']) / 'jre64/bin/java.exe'
-        run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',
-                  str(source_archive), str(sealed_resource)], private / 'sealer.log', key + nonce)
+        loader = Path(names[LOADER + '.class']).stem
+        context, resource, sealed_resource = seal_archive(seed, loader, fragments, private, config)
+        replaced = {LOADER + part + '.class' for part in LOADER_PARTS} | {BRIDGE + 'K.class'}
+        added = set(context) | {resource}
+        assert not added & ((set(source.namelist()) - replaced) | (set(names.values()) - {names[n] for n in replaced if n in names}))
         with zipfile.ZipFile(protected) as owned, zipfile.ZipFile(jar, 'w') as target:
             assert {n for n in owned.namelist() if n.endswith('.class')} == set(names.values())
             for name in source.namelist():
                 if name.endswith('/'):
                     continue
-                if name in context:
+                if name in replaced:
                     continue
                 if name in names:
                     write(target, names[name], owned.read(names[name]))
@@ -368,14 +457,12 @@ def package(output, proguard, metadata, seed_from=None):
                     write(target, name, shaders[name])
                 else:
                     write(target, name, source.read(name))
-            assert set(context) & set(source.namelist()) == {BRIDGE + 'K.class'}
-            assert not set(context) & set(names.values())
             for name, data in sorted(context.items()):
                 write(target, name, data)
-            assert SEALED_RESOURCE not in source.namelist()
-            write(target, SEALED_RESOURCE, sealed_resource.read_bytes())
+            write(target, resource, sealed_resource)
         with zipfile.ZipFile(jar) as result:
-            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in result.namelist() if name not in names.values() and name not in shaders and name not in context and name != SEALED_RESOURCE)
+            unchanged = set(result.namelist()) - set(names.values()) - set(shaders) - added
+            assert result.testzip() is None and all(result.read(name) == source.read(name) for name in unchanged)
     assert all(sha(path) == value for path, value in inputs.items())
     save(private / 'GLSL-MAPPING.json', shader_mapping)
     save(output / 'protection-report.json', dict(status='PROTECTED_REVIEW_BUILD', version=report['version'],
@@ -383,8 +470,11 @@ def package(output, proguard, metadata, seed_from=None):
          protection_rules_sha256=sha(rules_file), protection_script_sha256=sha(Path(__file__)),
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
-         shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=sha(sealed_resource),
-         seal_tool_sha256=sha(tool), generated_context_classes=len(context), randomized_context=True, private_mapping_bundled=False, installed=False, uploaded=False))
+         shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=digest(sealed_resource),
+         sealed_resource=resource, marker_prefix=prefix, loader_class=loader,
+         dispatcher_class=Path(list(context)[len(LOADER_PARTS)]).stem,
+         seal_tool_sha256=sha(ROOT / 'tools/java/SealRenderResources.java'), generated_context_classes=len(context),
+         randomized_context=True, private_mapping_bundled=False, installed=False, uploaded=False))
     print(f'Protected review JAR: {jar}', flush=True)
 
 

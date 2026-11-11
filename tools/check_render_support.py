@@ -29,7 +29,8 @@ if __name__=='__main__':
         for row in backends.values():
             assert hashlib.sha256(z.read(row['shader_payload'])).hexdigest()==row['shader_sha256']
         if a.protected_report:
-            assert hashlib.sha256(z.read('aimoh/gf2/bridge/render-inputs.bin')).hexdigest()==protected['sealed_payload_sha256']
+            resource=protected.get('sealed_resource','aimoh/gf2/bridge/render-inputs.bin')
+            assert hashlib.sha256(z.read(resource)).hexdigest()==protected['sealed_payload_sha256']
         if not eclipse:
             display=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
             expected_display=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
@@ -57,7 +58,8 @@ if __name__=='__main__':
              '-Duser.home='+str(out/'home'),'-Djava.io.tmpdir='+str(BUILD/'tmp'),
              '-javaagent:'+str(agent)+'='+str(jar),'-cp',
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out),a.backend]
-    if a.protected_report:command.append('sealed')
+    if a.protected_report:
+        command.extend(('sealed',protected.get('marker_prefix','/*r116$'),protected.get('dispatcher_class','K')))
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
     (out/'startup.log').write_text(result.stdout+result.stderr,'utf8')
     if result.returncode:print((result.stdout+result.stderr)[-7000:],flush=True)

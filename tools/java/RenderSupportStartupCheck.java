@@ -21,6 +21,8 @@ public final class RenderSupportStartupCheck {
         boolean eclipse=args.length>1&&args[1].equals("eclipse");
         boolean combined=args.length>1&&args[1].equals("combined");
         boolean sealed=args.length>2&&args[2].equals("sealed");
+        String markerPrefix=args.length>3?args[3]:"/*r116$";
+        String dispatcher=args.length>4?args[4]:"K";
         boolean protectedTrial=args.length>2;
         long eclipseLoad=0;
         long start=System.nanoTime();
@@ -40,7 +42,7 @@ public final class RenderSupportStartupCheck {
             if(sealed)try(var raw=new ZipFile(pack.toFile())){
                 var manifest=raw.stream().filter(entry->entry.getName().endsWith("/gf2/manifest.json")).findFirst().orElseThrow();
                 String text=new String(raw.getInputStream(manifest).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
-                require(text.contains("/*r116$")&&!text.contains("camera_local_direction"),"Installed Eclipse calibration is plaintext");
+                require(text.contains(markerPrefix)&&!text.contains("camera_local_direction"),"Installed Eclipse calibration is plaintext");
             }
             long eclipseStart=System.nanoTime();
             var discover=viewpoint.platform.IrisPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,pack.getParent().toFile());
@@ -62,7 +64,7 @@ public final class RenderSupportStartupCheck {
                     String path=probe.getString("path");
                     var entry=raw.stream().filter(e->e.getName().endsWith("/"+path)).findFirst().orElseThrow();
                     String text=new String(raw.getInputStream(entry).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
-                    require(text.contains("/*r116$")&&!text.contains("authorSkyVisibility"),
+                    require(text.contains(markerPrefix)&&!text.contains("authorSkyVisibility"),
                         "Eclipse native probe author fragment is plaintext");
                 }
             }
@@ -143,7 +145,7 @@ public final class RenderSupportStartupCheck {
         if(sealed){
             for(String name:List.of("manifest.json","native_light.comp","native_main.glsl","native_local.glsl","native_motion.comp","native_indirect.glsl","native_cube.comp","native_prefilter.comp","cube_faces.glsl")){
                 String raw=Files.readString(folder.resolve("shaders/gf2").resolve(name));
-                require(raw.contains("/*r116$")&&!raw.contains("imageStore")&&!raw.contains("camera_local_direction"),"Native shader or calibration is plaintext: "+name);
+                require(raw.contains(markerPrefix)&&!raw.contains("imageStore")&&!raw.contains("camera_local_direction"),"Native shader or calibration is plaintext: "+name);
             }
         }
         long nativeStart=System.nanoTime();
@@ -172,7 +174,7 @@ public final class RenderSupportStartupCheck {
         require(section.get(declare.invoke(selected.option("contrast"),"test.contrast","Graphics/Shader Options")).equals("Graphics/Shader Options"),"Scene option moved");
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(strength))==.5f,"Preset changed shared display default: "+preset);
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Math.abs(Float.parseFloat(selected.preset(preset).valueFor(fill))-.08f)<1e-6f,"Preset changed the subtle fill default: "+preset);
-        if(sealed) checkSealedRetransform(selected);
+        if(sealed) checkSealedRetransform(selected,dispatcher);
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");
         try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("(aimoh-native|r116)-bundled-.*")),"Embedded payload temp leaked");}
         String status=combined?"NORMAL_COMBINED_EMBEDDED_INSTALL_DISCOVERY_PASS":"NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS";
@@ -182,8 +184,8 @@ public final class RenderSupportStartupCheck {
         Files.writeString(root.resolve("startup.json"),result.toString(2));System.out.println(result.toString());
     }
 
-    private static void checkSealedRetransform(viewpoint.platform.ShaderPack pack)throws Exception{
-        var types=Class.forName("aimoh.gf2.bridge.K").getDeclaredMethod("types");
+    private static void checkSealedRetransform(viewpoint.platform.ShaderPack pack,String dispatcher)throws Exception{
+        var types=Class.forName("aimoh.gf2.bridge."+dispatcher).getDeclaredMethod(dispatcher.equals("K")?"types":"a");
         types.setAccessible(true);
         Class<?> carrier=((Class<?>[])types.invoke(null))[1];
         var agent=RenderSupportTestAgent.agent;
@@ -196,7 +198,7 @@ public final class RenderSupportStartupCheck {
                 reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
                     @Override public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] errors){
                         MethodVisitor base=super.visitMethod(access,name,desc,sig,errors);
-                        if(!desc.equals("(Ljava/security/MessageDigest;)V"))return base;
+                        if(!desc.equals(dispatcher.equals("K")?"(Ljava/security/MessageDigest;)V":"()[I"))return base;
                         return new MethodVisitor(Opcodes.ASM9,base){
                             @Override public void visitCode(){
                                 super.visitCode();
