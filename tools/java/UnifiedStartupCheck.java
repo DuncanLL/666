@@ -6,6 +6,10 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.ProtectionDomain;
 import java.util.*;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 import net.bytebuddy.jar.asm.*;
 import org.json.JSONObject;
 import viewpoint.iris.IrisPack;
@@ -73,6 +77,21 @@ public final class UnifiedStartupCheck {
         return pack;
     }
 
+    private static Path installOldEclipse(Path user) throws Exception {
+        Path archive = user.resolve("old-managed-eclipse.zip");
+        try (var zip = new ZipOutputStream(Files.newOutputStream(archive))) {
+            zip.putNextEntry(new ZipEntry("shaders/gf2/manifest.json"));
+            zip.write("{\"pipeline\":\"gf2-original-eclipse\"}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            zip.closeEntry();
+            zip.putNextEntry(new ZipEntry("shaders/world0/gbuffers_terrain.gsh"));
+            zip.write("layout(triangle_strip,max_vertices=24) out;".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            zip.closeEntry();
+        }
+        var installed = aimoh.gf2.bridge.ManagedShaderPack.install(archive, user);
+        require(installed.action().equals("INSTALLED"), "Could not seed an old managed Eclipse pack");
+        return archive;
+    }
+
     public static void main(String[] args) throws Exception {
         Path root = Files.createDirectories(Path.of(args[0]));
         Path user = Files.createTempDirectory(root, "玩家 空目录-");
@@ -85,18 +104,37 @@ public final class UnifiedStartupCheck {
         Path custom = folder.resolve("PlayerCustom.zip");
         Files.write(custom, new byte[]{7,8,9});
         boolean legacy = args[2].equals("legacy");
+        boolean lateHost = args[2].equals("late-host");
         Instrumentation agent = RenderSupportTestAgent.agent;
+        Path oldEclipse = lateHost ? installOldEclipse(user) : null;
+        Path installedEclipse = folder.resolve("Aimoh-Eclipse-GF2.zip");
+        if (lateHost) require(UnifiedStartupCheck.class.getClassLoader().getResource(MODEL_PASS + ".class") == null,
+            "Late-host case already exposes Viewpoint");
         apply("aimoh.pmxpreview", agent);
+        if (lateHost) {
+            require(Files.mismatch(oldEclipse, installedEclipse) == -1, "Shader install ran before Viewpoint was added");
+            agent.appendToSystemClassLoaderSearch(new JarFile(args[3]));
+            apply("viewpoint", agent);
+        }
         if (legacy) apply("aimoh.gf2.bridge", agent);
         List<String> early = ORDER.subList(0,2);
         var before = drawOrder(agent);
         require(before.equals(early), "Character advice not registered exactly once before first draw: "+before);
-        JSONObject report = new JSONObject().put("legacy_duplicate", legacy).put("normal_zombiebuddy_dispatch", true);
+        JSONObject report = new JSONObject().put("legacy_duplicate", legacy).put("normal_zombiebuddy_dispatch", true)
+            .put("viewpoint_added_after_character", lateHost);
         if (legacy) {
             prepare();
             require(drawOrder(agent).equals(early), "Legacy coexistence applied a duplicate renderer");
             require(!Files.exists(folder.resolve("Aimoh-Eclipse-GF2.zip")), "Duplicate renderer touched the user's packs");
         } else {
+            if (lateHost) {
+                require(Files.mismatch(oldEclipse, installedEclipse) != -1, "Stale managed Eclipse was not upgraded");
+                try (var zip = new ZipFile(installedEclipse.toFile())) {
+                    require(zip.stream().noneMatch(e -> e.getName().endsWith("/gbuffers_terrain.gsh")),
+                        "Managed Eclipse still contains the old terrain geometry shader");
+                }
+                report.put("stale_eclipse_geometry_upgraded", true);
+            }
             var iris = (IrisPack)find("IrisPacks", folder.toFile(), "minecraft-Aimoh-Eclipse-GF2");
             var manifest = new JSONObject(iris.source.read("gf2/manifest.json"));
             var probe = manifest.getJSONObject("native_probe");

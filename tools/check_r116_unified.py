@@ -29,7 +29,7 @@ def check(project, legacy):
     with zipfile.ZipFile(agent,'w',zipfile.ZIP_DEFLATED) as archive:
         archive.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: RenderSupportTestAgent\nCan-Retransform-Classes: true\nCan-Redefine-Classes: true\n\n')
         archive.write(classes/'RenderSupportTestAgent.class','RenderSupportTestAgent.class')
-    cases = {'fresh': [jar]}
+    cases = {'fresh': [jar], 'late-host': [jar]}
     if legacy:
         legacy = legacy.resolve(strict=True)
         cases.update({'unified-first':[jar,legacy],'legacy-first':[legacy,jar]})
@@ -37,11 +37,13 @@ def check(project, legacy):
     for name, jars in cases.items():
         case = out/'checks'/name
         case.mkdir(parents=True,exist_ok=True)
+        classpath = deps[1:] if name == 'late-host' else deps
+        mode = name if name in ('fresh', 'late-host') else 'legacy'
         cmd = [str(game/'jre64/bin/java.exe'),'-ea','-Xverify:all','--enable-native-access=ALL-UNNAMED',
                '--add-opens=java.base/java.lang=ALL-UNNAMED','-Duser.home='+str(case/'home'),
                '-Dstdout.encoding=UTF-8','-Dstderr.encoding=UTF-8','-javaagent:'+str(agent)+'='+str(jar),
-               '-cp',';'.join(map(str,[classes,*jars,*deps])),'UnifiedStartupCheck',str(case),str(project),
-               'fresh' if name=='fresh' else 'legacy']
+               '-cp',';'.join(map(str,[classes,*jars,*classpath])),'UnifiedStartupCheck',str(case),str(project),
+               mode,str(deps[0])]
         result = subprocess.run(cmd,env=environment(),cwd=game,capture_output=True,encoding='utf8',errors='replace',timeout=120)
         (case/'startup.log').write_text(result.stdout+result.stderr,'utf8')
         if result.returncode:

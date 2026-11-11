@@ -13,8 +13,15 @@ public final class UnifiedStartup {
     public static synchronized void start() {
         if (started) return;
         try {
-            // Load the stock class before ZombieBuddy scans this package and retransforms its advice targets.
             Class.forName(MODEL_PASS.replace('/', '.'), false, UnifiedStartup.class.getClassLoader());
+        } catch (ClassNotFoundException waitingForViewpoint) {
+            // ViewpointStartupPatch retries when ZombieBuddy dispatches the host package.
+            return;
+        } catch (LinkageError failure) {
+            System.err.println("[R116] Bundled light startup: " + failure);
+            return;
+        }
+        try {
             VerifiedViewpoint.verify();
             Instrumentation agent = Main.instrumentation();
             Main.installPacks();
