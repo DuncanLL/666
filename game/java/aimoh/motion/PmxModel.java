@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +22,11 @@ public final class PmxModel implements AutoCloseable {
     private final ModelAppearance appearance;
     private final ChestSoftBody chest;
     private boolean closed;
+    private long lastRetargetNanos,lastChestNanos;
+    private long motion,motionRevision;
+    private boolean motionPaused,motionRestorePhysics;
+    private float motionFrame,motionEnd,motionSpeed=1f;
+    private String motionName="";
 
     private static final class Profile {
         int format, bones, source_root, target_root, source_motion;
@@ -73,11 +79,13 @@ public final class PmxModel implements AutoCloseable {
         }
     }
 
-    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile) throws IOException {
+    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile, Path modelPath) throws IOException {
         this.api = api; this.handle = handle; this.core = core; this.profile = profile;
         appearance=new ModelAppearance(api,handle);
         if (profile.appearance!=null) appearance.configure(profile.appearance.toString(),profile.appearance_controls==null?Wardrobe.empty():profile.appearance_controls.toString());
-        chest=ChestSoftBody.load(api,handle,new JSONObject().put("pmx_sha256",profile.pmx_sha256).put("unit_scale",profile.unit_scale).put("bones",profile.bones).put("vertices",profile.vertices));
+        JSONObject chestProfile=new JSONObject().put("pmx_sha256",profile.pmx_sha256).put("unit_scale",profile.unit_scale)
+            .put("bones",profile.bones).put("vertices",profile.vertices);
+        chest=ChestSoftBody.load(api,handle,chestProfile,modelPath.resolveSibling("chest.bin"));
     }
 
     public static PmxModel load(NativeFunc api, Path pmx, Path generatedProfile) throws IOException {
@@ -108,7 +116,7 @@ public final class PmxModel implements AutoCloseable {
                 p.palm_target_hands, p.palm_target_knuckles);
             core.apply(p.source_bend); core.calibrateGripAxes(p.target_arms);
             core.setPhysicsEnabled(p.physics_enabled);
-            return new PmxModel(api, handle, core, p);
+            return new PmxModel(api, handle, core, p, modelPath);
         } catch (IOException | RuntimeException | Error e) {
             api.DeleteModel(handle);
             throw e;
@@ -123,16 +131,87 @@ public final class PmxModel implements AutoCloseable {
         return apply(finalSourcePose,grip,seconds,-1,-1);
     }
     public synchronized WorldPoseRetargeter.GripResult[] apply(float[] finalSourcePose,OzzGrip grip,float seconds,int sourceAnchor,int targetAnchor) {
-        if (closed) throw new IllegalStateException("Closed PMX model");
-        WorldPoseRetargeter.GripResult[] result;
-        if (grip != null && profile.palm_ready)
-            result=core.applyWithGrip(finalSourcePose, grip, profile.source_arms, profile.target_arms, .97f,seconds,sourceAnchor,targetAnchor);
-        else {core.apply(finalSourcePose,seconds);result=new WorldPoseRetargeter.GripResult[0];}
-        if(chest!=null){chest.enabled(core.physicsEnabled());chest.evaluate(seconds);}
-        return result;
+        return apply(finalSourcePose,grip,seconds,sourceAnchor,targetAnchor,null);
     }
 
+    public synchronized WorldPoseRetargeter.GripResult[] apply(float[] finalSourcePose,OzzGrip grip,float seconds,int sourceAnchor,int targetAnchor,
+            WorldPoseRetargeter.GripAdjustment adjustment) {
+        if (closed) throw new IllegalStateException("Closed PMX model");
+        long started=System.nanoTime();
+        WorldPoseRetargeter.GripResult[] result;
+        if(motion!=0) {
+            seconds=motionPaused||motionEnd<=0?0:seconds*motionSpeed;
+            core.finishNativePose(seconds);
+            // The native VMD layer advances by the same float delta and loops past its final frame.
+            motionFrame+=seconds*30f;
+            if(motionEnd>0&&motionFrame>motionEnd)motionFrame%=motionEnd;
+            result=new WorldPoseRetargeter.GripResult[0];
+        } else if (grip != null && profile.palm_ready) {
+            if(adjustment!=null)adjustment.itemTuning=profile.weapon_tuning.get(adjustment.itemKey);
+            result=core.applyWithGrip(finalSourcePose, grip, profile.source_arms, profile.target_arms,
+                .97f,seconds,sourceAnchor,targetAnchor,adjustment);
+        }
+        else {core.apply(finalSourcePose,seconds);result=new WorldPoseRetargeter.GripResult[0];}
+        long solved=System.nanoTime();lastRetargetNanos=solved-started;
+        if(chest!=null){chest.enabled(core.physicsEnabled());chest.evaluate(seconds);}
+        lastChestNanos=System.nanoTime()-solved;
+        return result;
+    }
+    public synchronized JSONObject stepTiming(){return new JSONObject().put("retarget_rigid_ms",lastRetargetNanos/1e6).put("chest_ms",lastChestNanos/1e6).put("chest_data",chest!=null).put("physics_requested",core.physicsEnabled()).put("chest_strength",chest==null?0:chest.slider(3)).put("chest_error",chest==null?"":chest.error());}
+
     public long handle() { return handle; }
+    public synchronized void playMotion(Path file) throws IOException {
+        if(closed)throw new IllegalStateException("角色已关闭");
+        Set<String> names=VmdInput.inspect(file);
+        long next=api.LoadAnimation(handle,file.toString());
+        if(next==0)throw new IOException("无法读取 VMD 动作");
+        try {
+            stopMotion();
+            motionRestorePhysics=physicsEnabled();motion=next;
+            api.ClearBoneAdditiveTransforms(handle);api.SetPZLegIKSuppressed(handle,false);
+            appearance.setAnimatedMorphs(names);
+            motionName=file.getFileName().toString();motionPaused=false;
+            motionFrame=0;motionEnd=api.GetAnimMaxFrame(next);
+            api.ChangeModelAnim(handle,next,0);api.SetLayerLoop(handle,0,motionEnd>0);
+            motionRevision++;resetPhysics();
+        } catch(RuntimeException|Error e) {
+            if(motion==next)stopMotion();else api.DeleteAnimation(next);
+            throw e;
+        }
+    }
+    public synchronized boolean motionActive() { return motion!=0; }
+    public synchronized boolean motionPaused() { return motion!=0&&motionPaused; }
+    public synchronized String motionName() { return motionName; }
+    public synchronized long motionRevision() { return motionRevision; }
+    public synchronized void toggleMotionPause() { if(motion!=0)motionPaused=!motionPaused; }
+    public synchronized void setMotionSpeed(float speed) {
+        if(!Float.isFinite(speed)||speed<0f||speed>1f)throw new IllegalArgumentException("倍速须在 0～1 之间");
+        if(motion!=0)motionSpeed=speed;
+    }
+    public synchronized JSONObject motionTimeline() {
+        return new JSONObject().put("name",motionName).put("paused",motionPaused())
+            .put("physics",physicsEnabled()).put("frame",motionFrame).put("endFrame",motionEnd).put("speed",motionSpeed)
+            .put("revision",Long.toString(motionRevision));
+    }
+    public synchronized boolean seekMotion(long revision,float fraction) {
+        if(motion==0||motionEnd<=0||motionRevision!=revision||!Float.isFinite(fraction))return false;
+        seekMotionFrame(Math.clamp(fraction,0f,1f)*motionEnd);
+        return true;
+    }
+    private void seekMotionFrame(float frame) {
+        api.SeekLayer(handle,0,frame);motionFrame=frame;motionRevision++;resetPhysics();
+    }
+    public synchronized void restartMotion() {
+        if(motion==0)return;
+        motionPaused=false;seekMotionFrame(0);
+    }
+    public synchronized void stopMotion() {
+        if(motion==0)return;
+        long old=motion;motion=0;motionName="";motionFrame=motionEnd=0;motionRevision++;
+        api.ChangeModelAnim(handle,0,0);api.DeleteAnimation(old);
+        api.SetPZLegIKSuppressed(handle,true);appearance.setAnimatedMorphs(Set.of());
+        setPhysicsEnabled(motionRestorePhysics);resetPhysics();
+    }
     public WorldPoseRetargeter retargeter() { return core; }
     public ModelAppearance appearance() { return appearance; }
     public synchronized void applySettings(String json) {
@@ -144,14 +223,28 @@ public final class PmxModel implements AutoCloseable {
             ItemCalibration.apply(new float[]{1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1},matrix);next.put(key,matrix);
         }
         JSONObject state=settings.getJSONObject("appearance"),controls=settings.optJSONObject("appearance_controls");
-        appearance.configure(state.toString(),controls==null?Wardrobe.empty():controls.toString());
+        ModelAppearance.Prepared prepared=appearance.prepare(state.toString(),controls==null?Wardrobe.empty():controls.toString());
+        JSONObject soft=settings.optJSONObject("chest_physics"),physics=settings.optJSONObject("physics");
+        double[] nextChest=soft==null||chest==null?null:chest.prepareSettings(soft);
+        double[] oldChest=nextChest==null?null:chest.prepareSettings(chest.settings());
+        boolean nextPhysics=physics==null?core.physicsEnabled():physics.optBoolean("enabled",false),oldPhysics=core.physicsEnabled();
+        try{
+            if(nextChest!=null)chest.applySettings(nextChest);
+            core.setPhysicsEnabled(nextPhysics);
+            appearance.apply(prepared);
+        }catch(RuntimeException|Error e){
+            try{if(oldChest!=null)chest.applySettings(oldChest);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+            try{core.setPhysicsEnabled(oldPhysics);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+            throw e;
+        }
         if(tuning!=null){profile.weapon_tuning.clear();profile.weapon_tuning.putAll(next);}
-        JSONObject physics=settings.optJSONObject("physics");if(physics!=null)core.setPhysicsEnabled(physics.optBoolean("enabled",false));
-        JSONObject soft=settings.optJSONObject("chest_physics");if(soft!=null&&chest!=null)chest.settings(soft);
     }
     public synchronized void setPhysicsEnabled(boolean enabled) { core.setPhysicsEnabled(enabled); }
     public synchronized boolean physicsEnabled() { return core.physicsEnabled(); }
-    public synchronized void resetPhysics() { core.resetPhysics();if(chest!=null)chest.reset(); }
+    public synchronized void resetPhysics() {
+        core.resetPhysics();
+        if(chest!=null)chest.reset();
+    }
     public synchronized boolean hasChestPhysics(){return chest!=null&&chest.available();}
     public synchronized JSONObject chestSettings(){return chest==null?null:chest.settings();}
     public synchronized double chestSlider(int index){return chest==null?0:chest.slider(index);}
@@ -171,6 +264,9 @@ public final class PmxModel implements AutoCloseable {
     }
 
     @Override public synchronized void close() {
-        if (!closed) { try{if(chest!=null)chest.close();}finally{api.DeleteModel(handle);closed=true;} }
+        if (!closed) {closed=true;ResourceCleanup.close(this::stopMotion,this::closeChest,()->api.DeleteModel(handle));}
+    }
+    private void closeChest(){
+        ResourceCleanup.close(chest);
     }
 }

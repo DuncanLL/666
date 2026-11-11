@@ -25,9 +25,11 @@ def record(output, jar):
 
 def package(output, verify_existing=False):
     config = settings()
-    from prepare_chest_labels import prepare
-    generated=prepare()
     build = json.loads((BUILD / 'build.json').read_text('utf8'))
+    generated=None
+    if not build.get('release_reference'):
+        from prepare_chest_labels import prepare
+        generated=prepare()
     jar = Path(build['jar'])
     assert sha(jar) == build['jar_sha256']
     for relative, fingerprint in build['source_hashes'].items():
@@ -37,10 +39,20 @@ def package(output, verify_existing=False):
     manifest = json.loads((ROOT / 'resources/manifest.json').read_text('utf8'))['files']
     if verify_existing:
         expected = dict(manifest)
-        expected.update({name: row for name, row in inventory(ROOT / 'game/mod').items() if name != 'common/.gitkeep'})
-        expected.update(inventory(generated))
+        owned = {name: row for name, row in inventory(ROOT / 'game/mod').items() if name != 'common/.gitkeep'}
+        expected.update(owned)
+        if generated is not None:expected.update(inventory(generated))
         expected['42/media/java/client/AimohPMXPreview.jar'] = {'bytes': jar.stat().st_size, 'sha256': sha(jar)}
-        assert inventory(output / 'Contents/mods/AimohPmxPreview') == expected, 'Existing candidate differs from the current source/resources.'
+        mod = output / 'Contents/mods/AimohPmxPreview'
+        actual = inventory(mod)
+        if build.get('release_reference'):
+            for name, row in owned.items():
+                if name not in actual or actual[name]==row or Path(name).suffix not in {'.lua','.json','.txt','.info'}:
+                    continue
+                # Git checks out source text with platform-specific line endings.
+                source_text=(ROOT/'game/mod'/name).read_bytes().replace(b'\r\n',b'\n')
+                if (mod/name).read_bytes().replace(b'\r\n',b'\n')==source_text:actual[name]=row
+        assert actual == expected, 'Existing candidate differs from the current source/resources.'
         assert set(p.name for p in output.iterdir()) == {'Contents', 'workshop.txt', 'preview.png'}
         record(output, jar)
         print('Existing Workshop project verified: ' + str(output), flush=True)
@@ -51,7 +63,11 @@ def package(output, verify_existing=False):
     assert not stage.exists()
     mod = stage / 'Contents/mods/AimohPmxPreview'
     mod.mkdir(parents=True)
+    owned=set(inventory(ROOT/'game/mod'))|{'42/media/java/client/AimohPMXPreview.jar'}
+    if generated is not None:owned.update(inventory(generated))
     for relative, row in manifest.items():
+        # These files come from this checkout, never from the external asset copy.
+        if relative in owned:continue
         path = (source / relative).resolve()
         assert path.is_relative_to(source) and path.is_file(), relative
         assert path.stat().st_size == row['bytes'] and sha(path) == row['sha256'], 'External asset changed: ' + relative
@@ -60,14 +76,18 @@ def package(output, verify_existing=False):
         shutil.copy2(path, dest)
     # The repository owns these configuration, Lua and sound-declaration files.
     shutil.copytree(ROOT / 'game/mod', mod, dirs_exist_ok=True)
-    shutil.copytree(generated,mod,dirs_exist_ok=True)
+    if generated is not None:shutil.copytree(generated,mod,dirs_exist_ok=True)
     runtime = mod / '42/media/java/client/AimohPMXPreview.jar'
     runtime.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(jar, runtime)
-    sys.path.insert(0, config['python_dependencies'])
-    from PIL import Image
-    Image.new('RGB', (256, 256), (32, 32, 32)).save(stage / 'preview.png')
-    (stage / 'workshop.txt').write_text('version=1\ntitle=R116\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
+    if build.get('release_reference'):
+        metadata=Path(config['workshop_targets'][0])
+        for name in ('preview.png','workshop.txt'):shutil.copy2(metadata/name,stage/name)
+    else:
+        sys.path.insert(0, config['python_dependencies'])
+        from PIL import Image
+        Image.new('RGB', (256, 256), (32, 32, 32)).save(stage / 'preview.png')
+        (stage / 'workshop.txt').write_text('version=1\ntitle=R116\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
     (mod / 'common').mkdir(exist_ok=True)
     # .gitkeep is useful in Git only, not in the Workshop payload.
     (mod / 'common/.gitkeep').unlink(missing_ok=True)

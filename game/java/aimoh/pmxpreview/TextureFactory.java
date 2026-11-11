@@ -95,5 +95,9 @@ final class TextureFactory implements AutoCloseable {
         textures.clear();textures.putAll(next);images.clear();images.putAll(decoded);
         version=nextVersion;epoch=nextEpoch;bound=result;liveTextures=textures.size();decodedImages=images.size();return result;
     }
-    public void close() {for(Texture texture:textures.values())texture.destroy();textures.clear();images.clear();bound=null;liveTextures=decodedImages=0;}
+    public void close() {
+        AutoCloseable[] owned=textures.values().stream().map(texture->(AutoCloseable)texture::destroy).toArray(AutoCloseable[]::new);
+        textures.clear();images.clear();bound=null;liveTextures=decodedImages=0;
+        aimoh.motion.ResourceCleanup.close(owned);
+    }
 }

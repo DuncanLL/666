@@ -1,0 +1,370 @@
+{
+  "version": "0.3.11",
+  "status": "INDEPENDENT_CANDIDATE_CHECKED_NOT_INSTALLED",
+  "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+  "baseline_sha256": "36472ccb7845d3200bdd8e14ca8bb627d15d0542bfd26681e53441020f0eb5e1",
+  "sources_uncommitted": true,
+  "changed_nonclass_payloads": [
+    "aimoh/pmxpreview/native/windows-x64/AimohChestSoftBody.dll",
+    "aimoh/pmxpreview/native/windows-x64/index.properties"
+  ],
+  "chest_bindings_byte_identical": 7,
+  "main_mmd_core_byte_identical": true,
+  "installed_roots_unchanged": 2,
+  "performance": [
+    {
+      "id": "pmx-293917f24c2bd387",
+      "label": "芙玲 / 体操服",
+      "before_total_ms": 8.4394,
+      "after_total_ms": 3.379,
+      "before_chest_ms": 6.6089,
+      "after_chest_ms": 1.2933,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-225af1a054faefb0",
+      "label": "春田 / 长裙",
+      "before_total_ms": 8.8034,
+      "after_total_ms": 3.7656,
+      "before_chest_ms": 6.4939,
+      "after_chest_ms": 1.2272,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-b0dd2e3cfd1ab80c",
+      "label": "阿斯缇亚 / 冬夜星途（JK）",
+      "before_total_ms": 10.8431,
+      "after_total_ms": 6.3109,
+      "before_chest_ms": 6.5657,
+      "after_chest_ms": 1.3031,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-c7270af966e8aaf8",
+      "label": "克莱妲 / 濯浪焦点",
+      "before_total_ms": 8.1546,
+      "after_total_ms": 3.1483,
+      "before_chest_ms": 6.6306,
+      "after_chest_ms": 1.2636,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-782f06826adb1307",
+      "label": "OTs-14 / 默认",
+      "before_total_ms": 7.922,
+      "after_total_ms": 2.6751,
+      "before_chest_ms": 6.7006,
+      "after_chest_ms": 1.3448,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-f5b2807685b18a60",
+      "label": "妮基塔 / 无垢契约",
+      "before_total_ms": 8.4716,
+      "after_total_ms": 3.7115,
+      "before_chest_ms": 6.3677,
+      "after_chest_ms": 1.3464,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    },
+    {
+      "id": "pmx-4818f3bdda4ec18d",
+      "label": "芙洛伦 / 翠雀媚",
+      "before_total_ms": 8.5891,
+      "after_total_ms": 3.755,
+      "before_chest_ms": 6.513,
+      "after_chest_ms": 1.3743,
+      "scope": "isolated model update and snapshot, not gameplay FPS"
+    }
+  ],
+  "checks": {
+    "streaming": {
+      "models": [
+        {
+          "hidden_parts_skipped": 16,
+          "actual_wardrobe_options": 11,
+          "id": "pmx-0af216265749a22d",
+          "default_uploaded_vertices": 36410,
+          "all_part_vertices": 66946
+        },
+        {
+          "hidden_parts_skipped": 4,
+          "actual_wardrobe_options": 18,
+          "id": "pmx-c7270af966e8aaf8",
+          "default_uploaded_vertices": 41350,
+          "all_part_vertices": 46869
+        },
+        {
+          "hidden_parts_skipped": 22,
+          "actual_wardrobe_options": 11,
+          "id": "pmx-f5b2807685b18a60",
+          "default_uploaded_vertices": 57555,
+          "all_part_vertices": 92860
+        },
+        {
+          "hidden_parts_skipped": 25,
+          "actual_wardrobe_options": 17,
+          "id": "pmx-4818f3bdda4ec18d",
+          "default_uploaded_vertices": 43644,
+          "all_part_vertices": 98215
+        }
+      ],
+      "game_started": false,
+      "remaining_native": {
+        "models": 0,
+        "worlds": 0,
+        "bodies": 0,
+        "shapes": 0,
+        "motion_states": 0,
+        "constraints": 0
+      },
+      "actual_gameplay_tested": false,
+      "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677"
+    },
+    "lifecycle": {
+      "replacement_cycles": 4,
+      "real_hidden_gpu_context": true,
+      "real_render_queue": true,
+      "game_started": false,
+      "assertions": 42,
+      "actor_identity_substituted": true,
+      "remaining_chest_worlds": 0,
+      "remaining_native_objects": {
+        "models": 0,
+        "worlds": 0,
+        "bodies": 0,
+        "shapes": 0,
+        "motion_states": 0,
+        "constraints": 0
+      },
+      "status": "PASS_STAGED_SWITCH_FAILURE_SETTINGS_AND_RETIREMENT",
+      "actual_gameplay_tested": false,
+      "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677"
+    },
+    "mesh_readiness": {
+      "game_started": false,
+      "status": "PASS_READY_TOPOLOGY_AND_CAPTURED_STREAM_LIFETIME",
+      "profile_switches": 12,
+      "real_session_queue_and_retirement_checked": true,
+      "actual_gameplay_tested": false,
+      "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677"
+    },
+    "deformed_motion": {
+      "cases": [
+        {
+          "pipeline": "native",
+          "error": 0,
+          "case": "static_clean"
+        },
+        {
+          "pipeline": "native",
+          "error": 0,
+          "case": "static_inherited_pmx_attribute"
+        },
+        {
+          "pipeline": "native",
+          "error": 0,
+          "case": "pmx_deformation"
+        },
+        {
+          "pipeline": "native",
+          "error": 0,
+          "case": "vanilla_skinning"
+        },
+        {
+          "pipeline": "iris",
+          "error": 0,
+          "case": "static_clean"
+        },
+        {
+          "pipeline": "iris",
+          "error": 0,
+          "case": "static_inherited_pmx_attribute"
+        },
+        {
+          "pipeline": "iris",
+          "error": 2.9802322387695312e-08,
+          "case": "pmx_deformation"
+        },
+        {
+          "pipeline": "iris",
+          "error": 0,
+          "case": "vanilla_skinning"
+        }
+      ],
+      "game_started": false,
+      "normal_sdk_shader_reader": true,
+      "gpu": "AMD Radeon RX 9070 XT",
+      "status": "PASS_OWNED_DEFORMATION_AND_STATIC_ISOLATION",
+      "max_error": 2.9802322387695312e-08,
+      "nvidia_gameplay_tested": false,
+      "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "host_sha256": "605476ba5f676fe1ac597d2e0adce49e45aac67be10e3c06defe9eaa32d4382f"
+    },
+    "chest_runtime": {
+      "status": "PASS_PACKAGED_JAVA_NATIVE_MODEL_COMPONENT_CHAIN",
+      "models": [
+        {
+          "id": "pmx-abe3eaaaa9d04264",
+          "label": "莱娅 / 原皮",
+          "chest": false,
+          "peak_deformation_model_units": 0.0,
+          "component_median_ms": 4.087599998456426,
+          "settings_restored": false,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-48650a04a35b40e0",
+          "label": "夏安 / 原皮",
+          "chest": false,
+          "peak_deformation_model_units": 0.0,
+          "component_median_ms": 4.716700001154095,
+          "settings_restored": false,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-0af216265749a22d",
+          "label": "莱娅 / 热力运动",
+          "chest": false,
+          "peak_deformation_model_units": 0.0,
+          "component_median_ms": 1.1598999990383163,
+          "settings_restored": false,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-293917f24c2bd387",
+          "label": "芙玲 / 体操服",
+          "chest": true,
+          "peak_deformation_model_units": 0.11786365509033203,
+          "component_median_ms": 3.232800001569558,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-225af1a054faefb0",
+          "label": "春田 / 长裙",
+          "chest": true,
+          "peak_deformation_model_units": 0.21271297335624695,
+          "component_median_ms": 3.7549000007857103,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-412bd037301ebe18",
+          "label": "阿斯缇亚 / 原皮",
+          "chest": false,
+          "peak_deformation_model_units": 0.0,
+          "component_median_ms": 3.9499999984400347,
+          "settings_restored": false,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-b0dd2e3cfd1ab80c",
+          "label": "阿斯缇亚 / 冬夜星途（JK）",
+          "chest": true,
+          "peak_deformation_model_units": 0.15158462524414062,
+          "component_median_ms": 6.236099998204736,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-6eb458b3d9c9a094",
+          "label": "莱娅 / 热力运动（旧存档）",
+          "chest": false,
+          "peak_deformation_model_units": 0.0,
+          "component_median_ms": 1.0694000011426397,
+          "settings_restored": false,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-c7270af966e8aaf8",
+          "label": "克莱妲 / 濯浪焦点",
+          "chest": true,
+          "peak_deformation_model_units": 0.20133399963378906,
+          "component_median_ms": 2.8003499974147417,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-782f06826adb1307",
+          "label": "OTs-14 / 默认",
+          "chest": true,
+          "peak_deformation_model_units": 0.1712665557861328,
+          "component_median_ms": 2.5919499967130832,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-f5b2807685b18a60",
+          "label": "妮基塔 / 无垢契约",
+          "chest": true,
+          "peak_deformation_model_units": 0.2600393295288086,
+          "component_median_ms": 3.639000002294779,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        },
+        {
+          "id": "pmx-4818f3bdda4ec18d",
+          "label": "芙洛伦 / 翠雀媚",
+          "chest": true,
+          "peak_deformation_model_units": 0.13349151611328125,
+          "component_median_ms": 3.5567000013543293,
+          "settings_restored": true,
+          "source_model_unchanged": true
+        }
+      ],
+      "remaining_objects": {
+        "bodies": 0,
+        "constraints": 0,
+        "models": 0,
+        "motion_states": 0,
+        "shapes": 0,
+        "worlds": 0
+      },
+      "remaining_chest_worlds": 0,
+      "game_started": false,
+      "actual_gameplay_tested": false,
+      "uploaded": false
+    },
+    "workshop": {
+      "status": "PASS_WORKSHOP_VALIDATOR_AND_NATIVE_MODEL_COMPONENTS",
+      "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "models": [
+        "pmx-abe3eaaaa9d04264",
+        "pmx-48650a04a35b40e0",
+        "pmx-0af216265749a22d",
+        "pmx-293917f24c2bd387",
+        "pmx-225af1a054faefb0",
+        "pmx-412bd037301ebe18",
+        "pmx-b0dd2e3cfd1ab80c",
+        "pmx-6eb458b3d9c9a094",
+        "pmx-c7270af966e8aaf8",
+        "pmx-782f06826adb1307",
+        "pmx-f5b2807685b18a60",
+        "pmx-4818f3bdda4ec18d"
+      ],
+      "remaining_objects": {
+        "bodies": 0,
+        "constraints": 0,
+        "models": 0,
+        "motion_states": 0,
+        "shapes": 0,
+        "worlds": 0
+      },
+      "game_started": false,
+      "workshop_uploaded": false,
+      "actual_gameplay_tested": false
+    }
+  },
+  "sizes": {
+    "baseline_jar": 8413172,
+    "candidate_jar": 8413532,
+    "jar_delta": 360,
+    "workshop_bytes": 1486136131
+  },
+  "game_started": false,
+  "actual_gameplay_tested": false,
+  "visual_user_accepted": false,
+  "nvidia_gameplay_tested": false,
+  "installed": false,
+  "uploaded": false
+}

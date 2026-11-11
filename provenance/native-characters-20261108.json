@@ -1,0 +1,87 @@
+{
+  "old_model_count": 10,
+  "new_model_count": 12,
+  "old_material_count": 148,
+  "new_material_count": 196,
+  "new_bytes": 163547060,
+  "core_unchanged": true,
+  "old_roles_preserved": true,
+  "distribution_bytes": 1319457162,
+  "character_mod_version": "0.3.7",
+  "core_version": "0.3.6",
+  "core_sha256": "8174ec13c2c961b3ac98880c3c6800788fa3875d57817f9380d507340fc0f8be",
+  "source_inputs": [
+    {
+      "id": "pmx-293917f24c2bd387",
+      "pmx_sha256": "36b7d4301dfff825d446bb5ac7e2a1c8bf4b5c9e329ffbcde763d16062351738",
+      "prefab": "ce94030005a0a4bb2f92d8fdd054ef53.bundle",
+      "parts": 61,
+      "gpu_outfit_combinations": 36
+    },
+    {
+      "id": "pmx-225af1a054faefb0",
+      "pmx_sha256": "f5b2382912711eba6fbb390d0e601b6c15254402fdb722f44c3ab8492e16b37f",
+      "prefab": "b9ffdd232c98972375c3432f36041ef4.bundle",
+      "parts": 34,
+      "gpu_outfit_combinations": 32
+    }
+  ],
+  "new_original_programs": 0,
+  "new_resource_files": 108,
+  "springfield_chest_component": {
+    "id": "pmx-225af1a054faefb0",
+    "supported": true,
+    "physics": true,
+    "settings": {
+      "inertia": 50,
+      "strength": 100,
+      "damping": 11.764705882352935,
+      "softness": 44.776119402985074
+    },
+    "unit_scale": 21.344096232746896,
+    "peak_model_units": 0.2136821746826172,
+    "peak_world_units": 0.0100113011276054,
+    "errors": [],
+    "game_started": false,
+    "actual_gameplay_tested": false
+  },
+  "native_format_support": {
+    "unity_format": 12,
+    "name": "DXT5/BC3",
+    "source_payload_bytes": 48,
+    "mips": 3,
+    "original_bytes_preserved": true,
+    "linear_and_srgb_gpu_tested": true,
+    "truncated_mip_rejected": true,
+    "per_character_branch": false
+  },
+  "physics_audit": {
+    "active_chest_implementation": "ChestSoftBody FEM",
+    "legacy_secondary_chest_runtime_present": false,
+    "authored_hair_cloth_and_collision_retained": true,
+    "engine_and_binding_binaries_changed": false
+  },
+  "installed": true,
+  "game_started": false,
+  "gameplay_tested": false,
+  "nvidia_tested": false,
+  "multiplayer_tested": false,
+  "workshop_uploaded": false,
+  "eclipse_pack_changed": false,
+  "references": [
+    "https://docs.unity.com/en-us/engine/6000.3/script-reference/unityengine/textureformat/dxt5",
+    "https://github.com/KhronosGroup/3D-Formats-Guidelines/blob/main/KTXDeveloperGuide.md"
+  ],
+  "native_source_commit": "828a8105fc0805e6767049d2f648b1c7f91db431",
+  "native_source_branch": "main",
+  "native_source_scope": "Only AimohGf2OriginalTexture.java was committed; other in-progress Native changes excluded.",
+  "package_text_line_endings_normalized": 46,
+  "installed_other_role_files_unchanged": true,
+  "original_catalog": {
+    "name": "catalog_main_29186.bin",
+    "sha256": "7b205275e5b4c0c332b7996ac55528b87f12f52ed149b3c73d1cc4c7d5b8b44c"
+  },
+  "installation_targets_verified": 4,
+  "native_support_targets_verified": 3,
+  "source_contracts_after_install": "CONTRACTS_OK_GAMEPLAY_UNVERIFIED"
+}

@@ -1,6 +1,7 @@
 local key = "AimohPMXPreview"
 local window = require "AimohPMXWindow"
 local started = false
+local awaiting = {}
 
 local function problem(player, message)
     if message and message ~= "" then
@@ -41,8 +42,19 @@ local function enable(player, index)
     if previous and previous.model and previous.settings then profiles[previous.model]=previous.settings end
     if problem(player, AimohPMXPreview.enableWithSettings(player,index,profiles[AimohPMXPreview.modelIdAt(index)] or "")) then return false end
     local saved=player:getModData()[key] or {};saved.profiles=profiles;player:getModData()[key]=saved
-    remember(player);return true
+    awaiting[player]=true;return true
 end
+
+Events.OnTick.Add(function()
+    for player in pairs(awaiting) do
+        if AimohPMXPreview.hasModelFailure(player) then
+            awaiting[player]=nil
+            problem(player,AimohPMXPreview.status());voiceChanged(player)
+        elseif AimohPMXPreview.isReady(player) then
+            awaiting[player]=nil;remember(player)
+        end
+    end
+end)
 
 local function choice(player, group, option)
     if problem(player, AimohPMXPreview.setChoice(player, group, option)) then return false end
@@ -74,7 +86,8 @@ end
 
 local function chestPhysics(player,index,value)
     if problem(player,AimohPMXPreview.setChestPhysicsSlider(player,index,value))then return false end
-    remember(player,true);return true
+    remember(player,true)
+    return true
 end
 local function chestDefaults(player)
     if problem(player,AimohPMXPreview.resetChestPhysicsSettings(player))then return false end
@@ -82,6 +95,7 @@ local function chestDefaults(player)
 end
 
 local function disable(player)
+    awaiting[player]=nil
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
     player:getModData()[key] = saved and {profiles=saved.profiles} or nil
@@ -110,7 +124,8 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults})
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults,
+        expressionRemember=function(p)remember(p,true)end})
 end
 
 local function menu(playerIndex, context, worldObjects, test)
@@ -127,6 +142,7 @@ end
 
 Events.OnFillWorldObjectContextMenu.Add(menu)
 Events.OnGameStart.Add(function()
+    awaiting={}
     window.closeAll()
     started = true
     if not AimohPMXPreview then return end
@@ -139,6 +155,7 @@ Events.OnCreatePlayer.Add(function(index, player)
     end
 end)
 Events.OnPlayerDeath.Add(function(player)
+    awaiting[player]=nil
     window.closeFor(player)
     if AimohPMXPreview then
         AimohPMXPreview.disable(player)
@@ -148,11 +165,13 @@ end)
 if Events.OnMainMenuEnter then
     Events.OnMainMenuEnter.Add(function()
         started = false
+        awaiting={}
         window.closeAll()
         if AimohPMXPreview then AimohPMXPreview.clear() end
     end)
 end
 Events.OnDisconnect.Add(function()
+    awaiting={}
     window.closeAll()
     started = false
     if AimohPMXPreview then AimohPMXPreview.clear() end

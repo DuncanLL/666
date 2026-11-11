@@ -26,11 +26,13 @@ public class TextureRuntimeCheck {
         if(window==0)throw new AssertionError("Hidden GL context unavailable");
         try {
             GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
+            zombie.core.skinnedmodel.model.VertexBufferObject.funcs=new zombie.core.VBO.GLBufferObject15();
             set(RenderThread.class,"isInitialized",true);set(RenderThread.class,"contextThread",Thread.currentThread());
             set(Main.class,"directory",root);
             Method initialize=Main.class.getDeclaredMethod("nativeRuntime");initialize.setAccessible(true);initialize.invoke(null);
             NativeFunc api=(NativeFunc)get(Main.class,"api");
             JSONArray registry=new JSONObject(Files.readString(root.resolve("media/aimoh_pmx/registry.json"))).getJSONArray("models");
+            int deformMask=0;try{deformMask=PmxDrawMesh.class.getField("DEFORMED").getInt(null);}catch(NoSuchFieldException historical){}
             int checked=0;
             for(int cycle=0;cycle<Integer.parseInt(args[2]);cycle++)for(int r=0;r<registry.length();r++) {
                 JSONObject row=registry.getJSONObject(r);
@@ -47,6 +49,20 @@ public class TextureRuntimeCheck {
                     if(textures.prepare(paths,factors,1,0,shading)!=baked)throw new AssertionError("Stable frame rebuilt bindings");
                     textures.prepare(paths,factors,2,0,shading);
                     if(textures.uploads!=uploads)throw new AssertionError("Unchanged factors uploaded textures again");
+                    if(deformMask!=0){
+                    int n=p.getInt("vertices");var pb=java.nio.ByteBuffer.allocateDirect(n*12);var nb=java.nio.ByteBuffer.allocateDirect(n*12);
+                    api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12);api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12);
+                    float[] points=new float[n*3],normals=new float[n*3];pb.order(java.nio.ByteOrder.nativeOrder()).asFloatBuffer().get(points);nb.order(java.nio.ByteOrder.nativeOrder()).asFloatBuffer().get(normals);
+                    model.deformChest(points,normals);
+                    try(PmxDrawMesh mesh=new PmxDrawMesh(api,model.handle(),baked,model.appearance(),shading)){
+                        var frozen=new PmxDrawMesh.FrameData(points,normals,model.appearance().readMaterials());mesh.upload(frozen);
+                        var draws=new viewpoint.render.ModelDraws();var placement=new org.joml.Matrix4f();
+                        draws.add(null,null,null,placement,-1,-1,0,3);
+                        int added=mesh.submitFrozen(draws,placement,frozen,index->new Object(),model.appearance().readMaterials(false),model.appearance().readBothFaces());
+                        if(added==0||draws.flags(0)!=3)throw new AssertionError("PMX submission changed an unrelated draw");
+                        for(int d=1;d<draws.count();d++)if((draws.flags(d)&deformMask)==0)throw new AssertionError("PMX draw omitted deformation ownership");
+                    }
+                    }
                     int error=GL11.glGetError();if(error!=0)throw new AssertionError("Texture GL error "+error);
                     System.out.println("CHECK "+cycle+" "+row.getString("id")+" "+baked.length);checked++;
                 }
@@ -55,6 +71,7 @@ public class TextureRuntimeCheck {
             JSONObject stats=new JSONObject(api.GetRuntimeStats());
             for(String key:stats.keySet())if(stats.getLong(key)!=0)throw new AssertionError("Leaked native object: "+stats);
             ((OzzGrip)get(Main.class,"grip")).close();
+            if(deformMask!=0)System.out.println("PASS_OWNED_DEFORMATION_FLAGS "+checked);
             System.out.println("PASS_TEXTURE_RUNTIME "+checked);
         } finally {GLFW.glfwDestroyWindow(window);GLFW.glfwTerminate();}
     }
