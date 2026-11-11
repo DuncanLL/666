@@ -21,6 +21,7 @@ from common import BUILD, ROOT, environment, save, settings, sha
 
 BRIDGE = 'aimoh/gf2/bridge/'
 SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
+RELEASE_RENDER_DATA = BRIDGE + 'data/render-resources.bin'
 LOADER = BRIDGE + 'AimohSealedSources'
 LOADER_PARTS = ('', '$Payload', '$Watch')
 ECLIPSE_RUNTIME = 'viewpoint/render/AimohGf2Runtime.class'
@@ -66,10 +67,6 @@ def strip_notes(data):
     return COMMENTS.sub(hide, data)
 
 
-def seal_names(seed):
-    return BRIDGE + hmac.digest(seed, b'archive-entry', 'sha256')[:12].hex()
-
-
 def protect_shaders(payload, backend, rules, fragments):
     import basic_shader_adapter as basic
     changed = {}
@@ -78,8 +75,11 @@ def protect_shaders(payload, backend, rules, fragments):
     relocated = {}
     public_kernels = {}
 
+    def normalize_public(public):
+        return public.replace(b'\r', b'').rstrip() + b'\n'
+
     def with_public_source(entry, formal, public):
-        public = public.replace(b'\r', b'').rstrip() + b'\n'
+        public = normalize_public(public)
         name = entry.rsplit('shaders/', 1)[1]
         key = name + '/' + digest(public)
         assert key not in fragments, entry
@@ -115,11 +115,11 @@ def protect_shaders(payload, backend, rules, fragments):
                 row = indexed[entry.removeprefix(shader_root)]
                 assert len(original) == row['bytes'] and digest(original) == row['sha256'], entry
                 code = prefix + fragment
-                fingerprint = digest(code)
-                path = 'gf2/data/' + fingerprint + '.comp'
+                public = normalize_public(public)
+                path = 'gf2/data/' + digest(public) + '.comp'
                 target = shader_root + path
                 assert target == entry or target not in source.namelist()
-                row.update(path=path, sha256=fingerprint, bytes=len(code))
+                row.update(path=path, sha256=digest(code), bytes=len(code))
                 relocated[entry] = target
                 changed[entry] = with_public_source(target, code, public)
                 public_kernels[path] = changed[entry]
@@ -259,7 +259,7 @@ def release_context(seed, loader_name, private, config):
         return hmac.digest(seed, label.encode(), 'sha256')
 
     layout = random.Random(part('layout'))
-    resource = seal_names(seed)
+    resource = RELEASE_RENDER_DATA
     dispatcher_name = 'z' + part('dispatcher')[:5].hex()
     carrier_names = ['x' + part(f'class/{i}')[:4].hex() for i in range(4)]
     assert len(set(carrier_names)) == len(carrier_names)
@@ -382,7 +382,7 @@ def seal_archive(seed, loader_name, fragments, private, config):
     tool_classes = private / 'sealer-classes'
     compile_java(config, [tool], tool_classes, [])
     context, key = release_context(seed, loader_name, private, config)
-    resource = seal_names(seed)
+    resource = RELEASE_RENDER_DATA
     sealed = private / Path(resource).name
     java = Path(config['game_root']) / 'jre64/bin/java.exe'
     run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',

@@ -151,8 +151,16 @@ vec3 cubeDirection(int face, vec2 uv) {
     prefix, found, _ = source.decode().partition(anchor)
     if not found:
         raise ValueError(f'Native public shader anchor changed: {name}')
+    prefix = public_header(prefix)
     if name == 'native_indirect.glsl':
         prefix = prefix.replace('#include "lib/bounce.glsl"\n', '')
+    if name == 'native_cube.comp':
+        for declaration in ('sampler2D gf2ProbeScene', 'sampler2D gf2ProbeAlbedo',
+                            'mat4 gf2ProbeViewProjection', 'int gf2ProbeSceneOn'):
+            prefix = prefix.replace('uniform ' + declaration + ';\n', '')
+    if name == 'native_motion.comp':
+        for declaration in ('sampler2D gf2TransferLut', 'float gf2TransferStrength'):
+            prefix = prefix.replace('uniform ' + declaration + ';\n', '')
     return (prefix.rstrip() + '\n' + replacement).encode()
 
 
@@ -251,7 +259,16 @@ void main() {
 }
 '''
     key, = (key for key, row in kernels.items() if name.endswith(row['path']))
-    return source.split(b'void main()', 1)[0] + ECLIPSE_KERNELS[key].encode()
+    header, separator, _ = source.decode().partition('void main()')
+    if not separator:
+        raise ValueError(f'Eclipse public shader anchor changed: {name}')
+    return (public_header(header) + ECLIPSE_KERNELS[key]).encode()
+
+
+def public_header(source):
+    return ''.join(line + '\n' for line in source.splitlines()
+                   if not line.lstrip().startswith('//') or any(
+                       label in line.lower() for label in ('spdx', 'copyright', 'license')))
 
 
 def eclipse_probe():
