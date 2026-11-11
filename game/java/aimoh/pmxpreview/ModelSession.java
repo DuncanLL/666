@@ -24,7 +24,6 @@ import zombie.core.skinnedmodel.model.ModelInstance;
 import zombie.core.textures.Texture;
 
 final class ModelSession {
-    private static final boolean GPU_REQUESTED=Boolean.parseBoolean(System.getProperty("r116.gpuDeformation","true"));
     final PmxModel model;
     final IdleHandPose idleHand;
     final PmxShading shading;
@@ -187,7 +186,7 @@ final class ModelSession {
             if(!ready&&!viewpointQueued){viewpointQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,true));}
         } else {
             ready=plainMesh!=null;
-            if((!ready||GPU_REQUESTED&&gpu==null&&!gpuDisabled)&&!plainQueued){
+            if((!ready||gpu==null&&!gpuDisabled)&&!plainQueued){
                 plainQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,false));
             }
         }
@@ -198,7 +197,7 @@ final class ModelSession {
             if(viewpoint){viewpointModel.upload(frame,materials);ready=viewpointModel.ready();}
             else {
                 preparePlainMaterials(materials);plainMesh(frame);ready=true;
-                if(GPU_REQUESTED&&gpu==null&&!gpuDisabled) {
+                if(gpu==null&&!gpuDisabled) {
                     try {gpu=GpuDeformation.create(api,model);gpuDisabled=gpu==null;}
                     catch(RuntimeException|LinkageError failure){disableGpu(failure);}
                 }

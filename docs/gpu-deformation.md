@@ -1,6 +1,6 @@
 # GPU 人物变形候选
 
-原版世界与 3D 人物预览共用同一个 GPU 变形快照。实验开关是 JVM 参数 `-Dr116.gpuDeformation=true`。需要带新原生库的候选 JAR，以及支持 OpenGL 4.3 的绘制上下文。BDEF 模型的静态顶点、骨权重和稀疏顶点 Morph 在显卡上保留。包含 UV Morph、SDEF 或 QDEF 的模型走 CPU。
+原版世界与 3D 人物预览共用同一个 GPU 变形快照。模组自动使用 GPU 变形。绘制上下文需要支持 OpenGL 4.3 和至少 8 个计算着色器存储块；能力不足或初始化失败时使用 CPU。BDEF 模型的静态顶点、骨权重和稀疏顶点 Morph 在显卡上保留。包含 UV Morph、SDEF 或 QDEF 的模型走 CPU。
 
 `UpdateModelPose` 推进一次原有动作、骨骼 Morph、材质 Morph 和刚体物理。胸部 Jolt 随完成的姿态求解。GPU 根据有效 Morph 权重、最终骨矩阵和局部 Jolt 数据生成位置和法线。原版世界与预览直接绑定 GPU 输出。需要 CPU 网格时，`SkinCompletedPose` 可以把同一姿态只生成一次，无需再次推进动作或物理。
 
