@@ -33,29 +33,18 @@ void main() {
         vec4 room = textureLod(gf2ProbeRoom, ray, 0.0);
         colour = mix(colour, room.rgb, room.a);
     }
-    if (gf2ProbeSceneOn != 0) {
-        vec4 clip = gf2ProbeViewProjection * vec4(gf2ProbePosition + ray * 2.0, 1.0);
-        if (clip.w > 0.0) {
-            vec2 screen = clip.xy / clip.w * 0.5 + 0.5;
-            if (all(greaterThan(screen, vec2(0.0))) && all(lessThan(screen, vec2(1.0)))) {
-                vec3 reflected = textureLod(gf2ProbeScene, screen, 0.0).rgb;
-                float opacity = textureLod(gf2ProbeAlbedo, screen, 0.0).a;
-                colour = mix(colour, reflected, 0.2 * (1.0 - opacity));
-            }
-        }
-    }
-    imageStore(sourceCube, p, vec4(max(colour, vec3(0.0)), 1.0));
+    imageStore(sourceCube, p, vec4(max(colour, vec3(0.0)) * 0.25, 1.0));
 }
 '''),
     'native_light.comp': ('void main()', '''
 void main() {
     vec3 sky = max(texelFetch(nativeSkyTexture, ivec2(0), 0).rgb, vec3(0.0));
-    vec3 ambient = mix(max(nativeEngineLight.rgb, vec3(0.0)), sky, clamp(nativeEngineLight.a, 0.0, 1.0));
+    vec3 ambient = mix(max(nativeEngineLight.rgb, vec3(0.0)), sky, clamp(nativeEngineLight.a, 0.0, 1.0)) * 0.42;
     for (int channel = 0; channel < 7; ++channel) sourceSH[channel] = vec4(0.0);
     sourceSH[0].w = ambient.r;
     sourceSH[1].w = ambient.g;
     sourceSH[2].w = ambient.b;
-    sourceMain = vec4(max(nativeRelativeSky, vec3(0.0)) * max(nativePrimaryStrength, 0.0), 1.0);
+    sourceMain = vec4(max(nativeRelativeSky, vec3(0.0)) * max(nativePrimaryStrength, 0.0) * 0.8, 1.0);
 }
 '''),
     'native_local.glsl': ('vec4 gf2NativeLocalColor', '''
@@ -133,7 +122,7 @@ def public_manifest(formal):
     if fill is not None:
         manifest['original_camera_fill'] = {
             'camera_local_direction': [0, 0.6, -0.8],
-            'color': [0.5, 0.5, 0.5, 1.0],
+            'color': [0.12, 0.12, 0.12, 1.0],
             'unity_camera_to_world_z_parity': fill['unity_camera_to_world_z_parity'],
         }
     return manifest
@@ -164,7 +153,7 @@ void main() {
     ivec2 tile = ivec2(gl_FragCoord.xy) / 64;
     float amount = float(tile.x + tile.y * 3) / 5.0;
     vec3 average = sampleSky(vec2(0.5));
-    result = vec4(mix(sampleSky(uv), average, amount * 0.5), 1.0);
+    result = vec4(mix(sampleSky(uv), average, amount * 0.5) * 0.25, 1.0);
 }
 ''',
 }
@@ -229,8 +218,8 @@ uniform samplerBuffer gf2NativeExposure;
 uniform int gf2NativeExposureOffset;
 
 void main() {
-    float visible = nativeSkyAvailable ? 0.8 : 1.0;
-    float ambient = max(nativeMinimumLight.x, 0.0) * 0.02;
+    float visible = nativeSkyAvailable ? 0.45 : 0.6;
+    float ambient = max(nativeMinimumLight.x, 0.0) * 0.01;
     vec3 diffuseReference = vec3(0.25);
     vec3 budgetedLevel = max(uSkyLevel, vec3(0.0));
     vec3 mean = vec3(sourceSH[0].w, sourceSH[1].w, sourceSH[2].w) * visible;
@@ -242,7 +231,7 @@ void main() {
     }
     actorSH[6].w=1;
     reflectionHDR = vec4(visible, 1.0, 0.0, 0.0);
-    cameraLightColor = vec4(vec3(0.45 * visible), 1.0);
+    cameraLightColor = vec4(vec3(0.18 * visible), 1.0);
 }
 '''
 
