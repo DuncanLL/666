@@ -1,0 +1,156 @@
+{
+  "pmx_sha256": "9ee1e4cdb8d7f98560a79f1f4c28156210199373c79122ced0f5ab7241d291dd",
+  "label": "可露凯 / 泳装",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "hat",
+        "label": "帽子",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              15
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "flowers",
+        "label": "花饰",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              16
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "glasses",
+        "label": "泳镜",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              24
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "stopwatch",
+        "label": "挂表",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              19
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "holster",
+        "label": "枪套",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              17
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "sidearm",
+        "label": "腰侧道具",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              18
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "cover",
+        "label": "罩衫",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              11,
+              12,
+              27
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "shoes",
+        "label": "鞋子",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              20
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      }
+    ],
+    "rules": []
+  }
+}

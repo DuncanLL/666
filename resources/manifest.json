@@ -7230,6 +7230,10 @@
     "42/media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png": {
       "bytes": 70729,
       "sha256": "b42f073290efee40eba080a106a3b25e0e3e5cbd4f0d6a83b2d54e42e5d9559f"
+    },
+    "42/media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png": {
+      "bytes": 65810,
+      "sha256": "91cb97f92de12b06065b0e147c5f44a56c1c4e5d64085aa342e00ba63d6f0488"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",
@@ -9271,6 +9275,506 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png": {
           "bytes": 70729,
           "sha256": "b42f073290efee40eba080a106a3b25e0e3e5cbd4f0d6a83b2d54e42e5d9559f"
+        }
+      }
+    },
+    "R116Klukai": {
+      "files": {
+        "42/media/aimoh_gf2/data/03212f52571f8b9bfec38c05bc027de7214f2af09a72f3589b6d835edf3b99c1.bin": {
+          "bytes": 1398128,
+          "sha256": "03212f52571f8b9bfec38c05bc027de7214f2af09a72f3589b6d835edf3b99c1"
+        },
+        "42/media/aimoh_gf2/data/063e9ee16c158f4083b2cadb8a6e627e1962c1318bc3d5caf9ad290f97ff7972.bin": {
+          "bytes": 1398128,
+          "sha256": "063e9ee16c158f4083b2cadb8a6e627e1962c1318bc3d5caf9ad290f97ff7972"
+        },
+        "42/media/aimoh_gf2/data/096f7a327984da1b4faef94ec0482510b5fc6cfc4f124a35bca8eb83328018cc.bin": {
+          "bytes": 1398128,
+          "sha256": "096f7a327984da1b4faef94ec0482510b5fc6cfc4f124a35bca8eb83328018cc"
+        },
+        "42/media/aimoh_gf2/data/0bf0cf56893a3623ab47c24d811cb0186c5a08fa51f2beab5f72402c31a76ddf.bin": {
+          "bytes": 87408,
+          "sha256": "0bf0cf56893a3623ab47c24d811cb0186c5a08fa51f2beab5f72402c31a76ddf"
+        },
+        "42/media/aimoh_gf2/data/0eb7675148578c0fbb88d574ea890659a4459e77643d645f62e82999b616da00.f32": {
+          "bytes": 96,
+          "sha256": "0eb7675148578c0fbb88d574ea890659a4459e77643d645f62e82999b616da00"
+        },
+        "42/media/aimoh_gf2/data/0f8519382a1440ce2af161dae68995602206b261ec4e351e9485ddb7c84fabbc.bin": {
+          "bytes": 174776,
+          "sha256": "0f8519382a1440ce2af161dae68995602206b261ec4e351e9485ddb7c84fabbc"
+        },
+        "42/media/aimoh_gf2/data/1843c69aa89cff55103741828a4adf9913f00581f1f65a256835beb82a156c75.bin": {
+          "bytes": 349552,
+          "sha256": "1843c69aa89cff55103741828a4adf9913f00581f1f65a256835beb82a156c75"
+        },
+        "42/media/aimoh_gf2/data/18846ed00762142b35467af266cfed857b6365714df93c6dfb638e89439ecf82.f32": {
+          "bytes": 544,
+          "sha256": "18846ed00762142b35467af266cfed857b6365714df93c6dfb638e89439ecf82"
+        },
+        "42/media/aimoh_gf2/data/19f32148d13acfbfd8993504f4032011170dd96b24b90c3e77abaa960248817f.bin": {
+          "bytes": 2796216,
+          "sha256": "19f32148d13acfbfd8993504f4032011170dd96b24b90c3e77abaa960248817f"
+        },
+        "42/media/aimoh_gf2/data/1ab63fcfcfdf6a179c4920be887dfa3c55ba5c1e16c95c2035d613c3da9ba859.bin": {
+          "bytes": 174776,
+          "sha256": "1ab63fcfcfdf6a179c4920be887dfa3c55ba5c1e16c95c2035d613c3da9ba859"
+        },
+        "42/media/aimoh_gf2/data/1dd827005298c0f0d2d613eb9cbf5b85120b402d883d4d6e6b8515f9cd2bb395.bin": {
+          "bytes": 32768,
+          "sha256": "1dd827005298c0f0d2d613eb9cbf5b85120b402d883d4d6e6b8515f9cd2bb395"
+        },
+        "42/media/aimoh_gf2/data/20690b3a2ab8d026e73bfd8342a6fa93601007ca58e61e7c42a8ef6866f675fd.bin": {
+          "bytes": 349552,
+          "sha256": "20690b3a2ab8d026e73bfd8342a6fa93601007ca58e61e7c42a8ef6866f675fd"
+        },
+        "42/media/aimoh_gf2/data/2a295b5c74e6eecff8da32186a7ce1adfa711e4de3ce90b553cc8fa325d0fc4f.f32": {
+          "bytes": 96,
+          "sha256": "2a295b5c74e6eecff8da32186a7ce1adfa711e4de3ce90b553cc8fa325d0fc4f"
+        },
+        "42/media/aimoh_gf2/data/2d843a470bcca17a6da515528ef7821f21ba3bb754d8bbd3f259d57e17770ad3.bin": {
+          "bytes": 2796216,
+          "sha256": "2d843a470bcca17a6da515528ef7821f21ba3bb754d8bbd3f259d57e17770ad3"
+        },
+        "42/media/aimoh_gf2/data/315271075216347f75a21dbb09549e28d4ef3aeeba0ff8155d6847fa393e5bce.bin": {
+          "bytes": 349552,
+          "sha256": "315271075216347f75a21dbb09549e28d4ef3aeeba0ff8155d6847fa393e5bce"
+        },
+        "42/media/aimoh_gf2/data/337e3953addc1e66136f45701b1406bec53592eae8715a2295756040cedde381.f32": {
+          "bytes": 144,
+          "sha256": "337e3953addc1e66136f45701b1406bec53592eae8715a2295756040cedde381"
+        },
+        "42/media/aimoh_gf2/data/33b433a5286caebee08db4673b4589c49b25d9c4d7721be2c5585f92cdd88351.f32": {
+          "bytes": 544,
+          "sha256": "33b433a5286caebee08db4673b4589c49b25d9c4d7721be2c5585f92cdd88351"
+        },
+        "42/media/aimoh_gf2/data/39a81973309407fedc3d96918271f5ff2970fa3b01b1730fb72df299db18270a.bin": {
+          "bytes": 174776,
+          "sha256": "39a81973309407fedc3d96918271f5ff2970fa3b01b1730fb72df299db18270a"
+        },
+        "42/media/aimoh_gf2/data/3d8d7361e98b2e2a79e14da2fe5876b58313dc8e07c451a11e56dbb9726abacf.bin": {
+          "bytes": 5592432,
+          "sha256": "3d8d7361e98b2e2a79e14da2fe5876b58313dc8e07c451a11e56dbb9726abacf"
+        },
+        "42/media/aimoh_gf2/data/3e21285e46e8944f0cf0a7971e5e75e99fc6d54d42d982684ac61e3667fa0c87.bin": {
+          "bytes": 174776,
+          "sha256": "3e21285e46e8944f0cf0a7971e5e75e99fc6d54d42d982684ac61e3667fa0c87"
+        },
+        "42/media/aimoh_gf2/data/40b2f2977b7b87f19816047d697b73c7348b03268098a987908c933496c99c33.bin": {
+          "bytes": 349552,
+          "sha256": "40b2f2977b7b87f19816047d697b73c7348b03268098a987908c933496c99c33"
+        },
+        "42/media/aimoh_gf2/data/40f83dd256ee36af625755149424dd862ddc17300f780b27312abba0106f96ee.bin": {
+          "bytes": 699064,
+          "sha256": "40f83dd256ee36af625755149424dd862ddc17300f780b27312abba0106f96ee"
+        },
+        "42/media/aimoh_gf2/data/434ac47ae1d8b2c1d26c5766d5ae106596f604fa6834ba208147b129962a54bc.f32": {
+          "bytes": 544,
+          "sha256": "434ac47ae1d8b2c1d26c5766d5ae106596f604fa6834ba208147b129962a54bc"
+        },
+        "42/media/aimoh_gf2/data/4885b6faa0e0eeac64715355bffbcd6c95d67255f0d5a3007133718aa3867820.bin": {
+          "bytes": 349552,
+          "sha256": "4885b6faa0e0eeac64715355bffbcd6c95d67255f0d5a3007133718aa3867820"
+        },
+        "42/media/aimoh_gf2/data/4a7a85412f161618f903015e763d291ac108618421022ce4a4566749f6d43af0.bin": {
+          "bytes": 32768,
+          "sha256": "4a7a85412f161618f903015e763d291ac108618421022ce4a4566749f6d43af0"
+        },
+        "42/media/aimoh_gf2/data/4ec110ee9cda12b86582ea32aefc57654289b67dcecfc984ce0855584bb3d665.f32": {
+          "bytes": 544,
+          "sha256": "4ec110ee9cda12b86582ea32aefc57654289b67dcecfc984ce0855584bb3d665"
+        },
+        "42/media/aimoh_gf2/data/546f675582ecd965af0bf51b35556efd96651372bfd5934264074ee7191b5dfd.bin": {
+          "bytes": 349552,
+          "sha256": "546f675582ecd965af0bf51b35556efd96651372bfd5934264074ee7191b5dfd"
+        },
+        "42/media/aimoh_gf2/data/571d48cfddefb7474de6ff1db15d675d4bac5ad4bbd6e787e4bcc165bb6b1fd1.bin": {
+          "bytes": 1398128,
+          "sha256": "571d48cfddefb7474de6ff1db15d675d4bac5ad4bbd6e787e4bcc165bb6b1fd1"
+        },
+        "42/media/aimoh_gf2/data/5fbe89812a7c0c81c0fc406657b45aa7eb1eeb8528f0c6e8b6de3fb0a0e46464.f32": {
+          "bytes": 5259264,
+          "sha256": "5fbe89812a7c0c81c0fc406657b45aa7eb1eeb8528f0c6e8b6de3fb0a0e46464"
+        },
+        "42/media/aimoh_gf2/data/6cd3d7a76bdd76afa971f62cd2f26468f1794bb983ad5c02ebfbf14cefbaaf84.bin": {
+          "bytes": 43704,
+          "sha256": "6cd3d7a76bdd76afa971f62cd2f26468f1794bb983ad5c02ebfbf14cefbaaf84"
+        },
+        "42/media/aimoh_gf2/data/6dfc4e5aa04e76b53accf2713c31bc3f99534ec9630a2c1c5b5635ea3599f6b8.bin": {
+          "bytes": 87408,
+          "sha256": "6dfc4e5aa04e76b53accf2713c31bc3f99534ec9630a2c1c5b5635ea3599f6b8"
+        },
+        "42/media/aimoh_gf2/data/74ab779f8aeb5b1c6c585c9a0df4d9ba3dff18304b542a06988ce48d30690c3d.bin": {
+          "bytes": 87408,
+          "sha256": "74ab779f8aeb5b1c6c585c9a0df4d9ba3dff18304b542a06988ce48d30690c3d"
+        },
+        "42/media/aimoh_gf2/data/75c011d7970eef2ffd0c36279fa5bb5f637655b548c9fae06ac370e919d5f346.bin": {
+          "bytes": 1341796,
+          "sha256": "75c011d7970eef2ffd0c36279fa5bb5f637655b548c9fae06ac370e919d5f346"
+        },
+        "42/media/aimoh_gf2/data/75cdbebc7c0c3fd0a81f758b8d20f3ef862557ee427a5898d5eefdef3827f8ff.bin": {
+          "bytes": 5592432,
+          "sha256": "75cdbebc7c0c3fd0a81f758b8d20f3ef862557ee427a5898d5eefdef3827f8ff"
+        },
+        "42/media/aimoh_gf2/data/763f27d863e4e98bb78396b18094cdd4c2a8af0871d64004077cdc85d4439f83.f32": {
+          "bytes": 544,
+          "sha256": "763f27d863e4e98bb78396b18094cdd4c2a8af0871d64004077cdc85d4439f83"
+        },
+        "42/media/aimoh_gf2/data/7c7edc7a2e23bec3a5a7da24dae8e24dd2f7c47c170926b06eba040c1eb06ae9.bin": {
+          "bytes": 174776,
+          "sha256": "7c7edc7a2e23bec3a5a7da24dae8e24dd2f7c47c170926b06eba040c1eb06ae9"
+        },
+        "42/media/aimoh_gf2/data/7dd6b46df1e1c9c0d9144a2cf7f16391822d06cff3f8cd09c6a86d9163d94bb1.f32": {
+          "bytes": 544,
+          "sha256": "7dd6b46df1e1c9c0d9144a2cf7f16391822d06cff3f8cd09c6a86d9163d94bb1"
+        },
+        "42/media/aimoh_gf2/data/7f0c7cf1af884b3695b1903acf0edf40da5b0c013d7f2455d513d076174147d9.bin": {
+          "bytes": 5592432,
+          "sha256": "7f0c7cf1af884b3695b1903acf0edf40da5b0c013d7f2455d513d076174147d9"
+        },
+        "42/media/aimoh_gf2/data/804c808662be616115c94eed55f26460b7e1d739ce8ed254157bff6b9db1482d.bin": {
+          "bytes": 349552,
+          "sha256": "804c808662be616115c94eed55f26460b7e1d739ce8ed254157bff6b9db1482d"
+        },
+        "42/media/aimoh_gf2/data/81498261f554ed077e9a148d8d56e872e48b4562cee916469e1ff1a8a6e0036a.f32": {
+          "bytes": 544,
+          "sha256": "81498261f554ed077e9a148d8d56e872e48b4562cee916469e1ff1a8a6e0036a"
+        },
+        "42/media/aimoh_gf2/data/83b0725d1e9d0ee6758526404bbfe4c031d11384e3e93bc823e2e2148be03f34.bin": {
+          "bytes": 349552,
+          "sha256": "83b0725d1e9d0ee6758526404bbfe4c031d11384e3e93bc823e2e2148be03f34"
+        },
+        "42/media/aimoh_gf2/data/83cdba1132f53f75af8d3b3b3957149fdbf1162231c56628facee9afee652762.bin": {
+          "bytes": 32768,
+          "sha256": "83cdba1132f53f75af8d3b3b3957149fdbf1162231c56628facee9afee652762"
+        },
+        "42/media/aimoh_gf2/data/8dd0371074979b39a6990281a2431341eff13ea2a6c20b7d8fc6d1c35e8e1f9d.f32": {
+          "bytes": 544,
+          "sha256": "8dd0371074979b39a6990281a2431341eff13ea2a6c20b7d8fc6d1c35e8e1f9d"
+        },
+        "42/media/aimoh_gf2/data/96c5e94e40a11ac923ab816d40d79cfbff71f0ed6067308641547ed4fb05a65d.f32": {
+          "bytes": 544,
+          "sha256": "96c5e94e40a11ac923ab816d40d79cfbff71f0ed6067308641547ed4fb05a65d"
+        },
+        "42/media/aimoh_gf2/data/96e8fd81ea09efbed5924191fd107b7d47832c52391efca3221b7e19b63b3fb1.bin": {
+          "bytes": 1398128,
+          "sha256": "96e8fd81ea09efbed5924191fd107b7d47832c52391efca3221b7e19b63b3fb1"
+        },
+        "42/media/aimoh_gf2/data/98790d7033c6c98a5f816b8f03b950d6021c77ec0e08bb41f70541c900015a7b.bin": {
+          "bytes": 349552,
+          "sha256": "98790d7033c6c98a5f816b8f03b950d6021c77ec0e08bb41f70541c900015a7b"
+        },
+        "42/media/aimoh_gf2/data/9c1cc9b2226eea473b410ec81f42f6fd742137f7401b2aafe981425dd1c8d608.bin": {
+          "bytes": 349552,
+          "sha256": "9c1cc9b2226eea473b410ec81f42f6fd742137f7401b2aafe981425dd1c8d608"
+        },
+        "42/media/aimoh_gf2/data/9f6a1ce8937d60960102d5ffb5ac3e97faca32abec1dfc33530425c2ba89d694.bin": {
+          "bytes": 1398128,
+          "sha256": "9f6a1ce8937d60960102d5ffb5ac3e97faca32abec1dfc33530425c2ba89d694"
+        },
+        "42/media/aimoh_gf2/data/a2b5fcd2f54b572ae62f4c31263dacfdb691530c9081b36ee8a441d582ac1968.f32": {
+          "bytes": 544,
+          "sha256": "a2b5fcd2f54b572ae62f4c31263dacfdb691530c9081b36ee8a441d582ac1968"
+        },
+        "42/media/aimoh_gf2/data/ac171a49002e8b52e30ae9b35303a378353b14b954ad84b505d6be50e4b9e1f4.bin": {
+          "bytes": 349552,
+          "sha256": "ac171a49002e8b52e30ae9b35303a378353b14b954ad84b505d6be50e4b9e1f4"
+        },
+        "42/media/aimoh_gf2/data/b5581fc2914052a8468fe31ab37896d31d5dc7b166f9166d453a486e7e770ef1.f32": {
+          "bytes": 544,
+          "sha256": "b5581fc2914052a8468fe31ab37896d31d5dc7b166f9166d453a486e7e770ef1"
+        },
+        "42/media/aimoh_gf2/data/b83c9b13ed636b1719689d52d486dac835a81eb7dfb2ddb9861e79f39309feb7.bin": {
+          "bytes": 87408,
+          "sha256": "b83c9b13ed636b1719689d52d486dac835a81eb7dfb2ddb9861e79f39309feb7"
+        },
+        "42/media/aimoh_gf2/data/b8c697b40c0f7bf6d19746d8a3a8296f53d57dc740248b88e8a0b792229a49e2.bin": {
+          "bytes": 1398128,
+          "sha256": "b8c697b40c0f7bf6d19746d8a3a8296f53d57dc740248b88e8a0b792229a49e2"
+        },
+        "42/media/aimoh_gf2/data/c0e930fcf4c89d34f607d8378a7571ad1719af1ca6ece2be6c4a76cf25cf7d13.bin": {
+          "bytes": 32768,
+          "sha256": "c0e930fcf4c89d34f607d8378a7571ad1719af1ca6ece2be6c4a76cf25cf7d13"
+        },
+        "42/media/aimoh_gf2/data/c7d7467461216bbc946c4d2494b5ac10c2f9c881b45d3d1087a928ddc8b7ab60.bin": {
+          "bytes": 5592432,
+          "sha256": "c7d7467461216bbc946c4d2494b5ac10c2f9c881b45d3d1087a928ddc8b7ab60"
+        },
+        "42/media/aimoh_gf2/data/cf1f89c39a00b951319bfcee7e1146757f4df80c03e936a53559acff42d97283.bin": {
+          "bytes": 1398128,
+          "sha256": "cf1f89c39a00b951319bfcee7e1146757f4df80c03e936a53559acff42d97283"
+        },
+        "42/media/aimoh_gf2/data/db91c26f333b1e244a3fcb777af22228a68bbee956ac6bc79e1a8549281f5c37.bin": {
+          "bytes": 43704,
+          "sha256": "db91c26f333b1e244a3fcb777af22228a68bbee956ac6bc79e1a8549281f5c37"
+        },
+        "42/media/aimoh_gf2/data/ee11d395cbeb1b8a1d446387dac0aeacf7209b439af54e1aaeef409713ac58cc.bin": {
+          "bytes": 349552,
+          "sha256": "ee11d395cbeb1b8a1d446387dac0aeacf7209b439af54e1aaeef409713ac58cc"
+        },
+        "42/media/aimoh_gf2/data/eeef4dcf5c4de45cf4c608a4dae875ea0f57628c6a4e66416ac55554b091520a.f32": {
+          "bytes": 544,
+          "sha256": "eeef4dcf5c4de45cf4c608a4dae875ea0f57628c6a4e66416ac55554b091520a"
+        },
+        "42/media/aimoh_gf2/data/efab66158f1faca8574be76a6314b068a288eb29b696004c0e99cc4fa7509f8d.bin": {
+          "bytes": 32768,
+          "sha256": "efab66158f1faca8574be76a6314b068a288eb29b696004c0e99cc4fa7509f8d"
+        },
+        "42/media/aimoh_gf2/data/efbac744eda2dd570675655bd48acc3f9c03150aa677b475b9a75e040a8f9b6c.bin": {
+          "bytes": 349552,
+          "sha256": "efbac744eda2dd570675655bd48acc3f9c03150aa677b475b9a75e040a8f9b6c"
+        },
+        "42/media/aimoh_gf2/data/f756913d4f041eb0cbef6972670020d0e8acd926cd0339a38e6fac8e56cf7f8f.bin": {
+          "bytes": 174776,
+          "sha256": "f756913d4f041eb0cbef6972670020d0e8acd926cd0339a38e6fac8e56cf7f8f"
+        },
+        "42/media/aimoh_gf2/data/fc4c303ea8c0c51a6301b18356fc47cf3b645e4398a2cdd4718bfc1491bf8777.bin": {
+          "bytes": 1398128,
+          "sha256": "fc4c303ea8c0c51a6301b18356fc47cf3b645e4398a2cdd4718bfc1491bf8777"
+        },
+        "42/media/aimoh_gf2/data/fe2c92bb494efdd200387aec7afe75ed5ca5d963240f4dafcdec1065d092ab2e.bin": {
+          "bytes": 5592432,
+          "sha256": "fe2c92bb494efdd200387aec7afe75ed5ca5d963240f4dafcdec1065d092ab2e"
+        },
+        "42/media/aimoh_gf2/packs/R116Klukai.json": {
+          "bytes": 2504368,
+          "sha256": "dc85c66cca73144591672043f3d0fff5789bf2fd0bc59b08d8c07fb2d52e9c4e"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/body_d.png": {
+          "bytes": 365963,
+          "sha256": "8b5526e31e1ce98f18028437e80e610d45259b51da1e8d05b51e131da10d504c"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_hair_d.png": {
+          "bytes": 1959586,
+          "sha256": "f7c5c2d707ff1bbe84f91c92c18c6de43e44c10f7cd78d3d83dbae923d679ddf"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_P1_body_d.png": {
+          "bytes": 185384,
+          "sha256": "58a99dadd510da9b4c5bda544247a9aa09a4c82843ea19d00e2331fd242d4bcd"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_P1_cloth_d.png": {
+          "bytes": 147984,
+          "sha256": "ff0f9c9685ab72ceeed1b5e7123e6171b821badcbe81e56c7a7dc688377a2c85"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_P1_head_d.png": {
+          "bytes": 45410,
+          "sha256": "c2d916cd8cd680d6c31a9ec7abdb841e971111f8521673293cc600981598ff4b"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_Peijian_d.png": {
+          "bytes": 144606,
+          "sha256": "8d080b7cdbd46bd0d14255c6fa034fea039965c2b05ef7808c550823431592c7"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_cloth1_da.png": {
+          "bytes": 4256263,
+          "sha256": "d30f2e1bc6814d67f3f5673d7a7c7e4154dd70d30a505481981d82e5cf13d0a1"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_cloth2_da.png": {
+          "bytes": 650652,
+          "sha256": "a18c84253e57af6e023f73bd750bf8af9e68c14bcb54dd596844e89f7d319366"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_cloth3_d.png": {
+          "bytes": 237549,
+          "sha256": "a549ff093c834eebbecdbc1e9a69fa54382415f12459728b5377ebb1b1d5f39f"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_glock_d.png": {
+          "bytes": 652057,
+          "sha256": "1d3a9441e58d75ef4d5c7bf29de8779ff668a061a02cab2bbc9635057ac7dfc7"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_head_d.png": {
+          "bytes": 457022,
+          "sha256": "841e6809c97639203dd7d963e04894b5d715fee3e49d34f0e655ccb86556ba42"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_hua_d.png": {
+          "bytes": 192338,
+          "sha256": "122977c75f0fbc4aedec4b76ffcabbcba1a240242c0bcaa43ecd56a21ff2ec91"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_miaobiao_d.png": {
+          "bytes": 275260,
+          "sha256": "1cbdd5fc04b98c1da58d052a773cf52c6729e614caa2a80f0c169d53fcaab53e"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_ClukaySSR0103_slg_truncheon_d.png": {
+          "bytes": 217896,
+          "sha256": "0c48923730ac4aae9dedf36b863f2890ea9298825f82bca43087bd599fbca17a"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_Clukay_eye_d.png": {
+          "bytes": 144716,
+          "sha256": "f01be955b11c79cbd583a1815e8ace441b4daf9ae8fe74ca7eda6daa079f56e2"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_Clukay_eyeblend.png": {
+          "bytes": 36237,
+          "sha256": "49a76a94ce44e19cc59286362555a3e39409883c3d1f64857e22daa789995648"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/c_Clukay_face_d.png": {
+          "bytes": 547447,
+          "sha256": "e01c7201b4a1d08ccc4ac74cc52ad15f11499092029c1ce36b5c7da847fda011"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/extra.png": {
+          "bytes": 385280,
+          "sha256": "b2817a41d8ed4af869f50ae06d5f9cad300acb30aa28f32596c75ede5a360749"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/body_n.png": {
+          "bytes": 2087845,
+          "sha256": "34c328293158660932adce88082cb3b6e16c7d8d9664f3cedcade1bc8175ff24"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/body_rmo.png": {
+          "bytes": 834300,
+          "sha256": "c4556c21b9e20611927b427c4b6d6af6672fcaf9d8d2ffa573d12a791e701e75"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_P1_body_n.png": {
+          "bytes": 288331,
+          "sha256": "08813b7aebcef69dd8ca4c557a11f1ee7953f52df829e05f110b86bfd43a99ec"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_P1_cloth_n.png": {
+          "bytes": 340333,
+          "sha256": "e11f4092dabeb7608850e17db3ef96dc965b4f370b6d2d3388983f45357c267d"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_P1_head_n.png": {
+          "bytes": 169812,
+          "sha256": "6baf4401249d58f276b939ae12d85f64df7cb78a60a2738737b61a13016b5135"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_Peijian_n.png": {
+          "bytes": 171425,
+          "sha256": "3d71f86ecd1417b26cb87f5cd24b7b34b316084005c8ef5a47cbf885d9410771"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_Peijian_rmo.png": {
+          "bytes": 286582,
+          "sha256": "2b854795abafd286973d9110297fb828d46bafb9cbe82e1b947fca7434844bc9"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_cloth1_n.png": {
+          "bytes": 6296791,
+          "sha256": "55cb6328fbb491c6796039dfbeacd0936422259d74c7ff9d157efa9ff396a33c"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_cloth2_n.png": {
+          "bytes": 1214752,
+          "sha256": "3d2d542c40fc03dc8a8471288a8c0bb8fbab8f777f829220cada989a74054c91"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_cloth3_n.png": {
+          "bytes": 1321967,
+          "sha256": "8f90ce2de0cd29779bd2cd9206a7ed81699cf75583f3dfb80780746f31b1a9a2"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_cloth3_rmo.png": {
+          "bytes": 440723,
+          "sha256": "afc5510158e883b423b25f2530d80caa287e51c9e25c1c1c878d287fc10c4346"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_glock_n.png": {
+          "bytes": 1036202,
+          "sha256": "b2a379fd0a558580442ed748908ac9a060861f7aa2ac7e82a676716cca14f3c1"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_glock_rmo.png": {
+          "bytes": 1206250,
+          "sha256": "625bb3348a9f5e2ca9645b02e99b60f876217633054ede4e38abc8b4b304a423"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_head_n.png": {
+          "bytes": 593166,
+          "sha256": "02d038d291149364723a9c8fb471ba2f1307ac7473f85f6362d4e0d250a9eccb"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_hua_n.png": {
+          "bytes": 241793,
+          "sha256": "e2466459fadcc2658d6d28d71ff7e4a0d6d50814a94a89ed65df47b568defed4"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_miaobiao_n.png": {
+          "bytes": 386332,
+          "sha256": "7cb44deaee2123481af9c811cb7e4607060412faded2294eda1ceaa2f928e428"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_surfboard_n.png": {
+          "bytes": 1591771,
+          "sha256": "e9ed34ba2b21fe317d17f49bb9b75ad895653590344de8a6d17317efa7155f0a"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_surfboard_rmo.png": {
+          "bytes": 1194110,
+          "sha256": "c86b0aceecb4c48acf4fd8e460ea39349d0bf6a892a12f7d9e39b74992c07e59"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_ClukaySSR0103_slg_truncheon_n.png": {
+          "bytes": 677537,
+          "sha256": "10fe508fed59453a7ceaf7fbe0945a15d0428d7bb27582289510acdb6a48f926"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_cloth1_rmo_06_12_2025.png": {
+          "bytes": 5388074,
+          "sha256": "f94b34f4cba06d89d1161a4145c01b9ba7efa3af60c5c1230b3ec629f8ed5eb0"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_cloth2_rmo_06_12_2025.png": {
+          "bytes": 992343,
+          "sha256": "97359311963b2c318e3dfe2c478241d3a6d784bb82a193ac8f0fb1222d1961ca"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_head_rmo_06_12_2025.png": {
+          "bytes": 595937,
+          "sha256": "ae57afa7e7020ad76f8d3ed3d438388f542886e09f3436db5b986b443252dc09"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_hua_rmo_06_12_2025.png": {
+          "bytes": 201701,
+          "sha256": "174206969bb5a5f5bb6dadaf7a0152ecbceb2ed1bda739c95e19d7ba86e6ea4d"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_miaobiao_rmo_06_12_2025.png": {
+          "bytes": 339773,
+          "sha256": "214061b17fbba8304bfcd4d1f4376f8f4145110790ab22f1cf97d0be4a2a10b7"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_p1_body_rmo_06_12_2025.png": {
+          "bytes": 190410,
+          "sha256": "c76cae304c928d21b9f7cc05bea1cc37af56ac44587063aa3bd3e368223506a8"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_p1_cloth_rmo_06_12_2025.png": {
+          "bytes": 280777,
+          "sha256": "17df8ffcc58e03535dd38d3d50852ee23104dd6ebf0a9fc88ab712ad478b5ddc"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_p1_head_rmo_06_12_2025.png": {
+          "bytes": 75365,
+          "sha256": "c8878d21464910a12d1ae706666f27e69902a624a967482e9fb1dac5d3ec6e3b"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/Textures/normalmap/c_clukayssr0103_slg_truncheon_rmo_06_12_2025.png": {
+          "bytes": 625381,
+          "sha256": "08418b8d04085675b5f246a2c0787c894569e451996f8020544ef137cf61e3dd"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/chest.bin": {
+          "bytes": 124212,
+          "sha256": "6dc43dcd12fcb9b91721a883d091d50e480be457c5f0f43f1317c4a22651760c"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/model.pmx": {
+          "bytes": 4280016,
+          "sha256": "9ee1e4cdb8d7f98560a79f1f4c28156210199373c79122ced0f5ab7241d291dd"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/SSShine1.png": {
+          "bytes": 2570,
+          "sha256": "d17f942bcd59399dcbef14eef4a04f4eb892363aeaa534e25fea75cf066b9d8c"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/SSShine2.png": {
+          "bytes": 2206,
+          "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/Socks2.png": {
+          "bytes": 52382,
+          "sha256": "a6b2dcb6a14921cf212d03fe165af5c092361725adc2de9f978a92e7f002c92b"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/eyes.png": {
+          "bytes": 13427,
+          "sha256": "5f9aced4edbcd24ed910a61bd31235a02d324162ee348b9ea459227d0a7033f6"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/hair-a.bmp": {
+          "bytes": 1000054,
+          "sha256": "294e409881928fec759188f700819c83981a467135b2d2e489d09ad6a31ca377"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/mwhite.png": {
+          "bytes": 33286,
+          "sha256": "d26c8c8e0bba85d852cd95b93831cdaf2e526b0f113dc55d8d39c3e40a42141f"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/skin.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/spa/skintoon.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-9ee1e4cdb8d7f985/uv1-danrp.f32": {
+          "bytes": 437536,
+          "sha256": "585c5740c0c1e6f44a6fdb8a10f8bc62361687e7db40bace314157ec878d0b11"
+        },
+        "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR03.png": {
+          "bytes": 429480,
+          "sha256": "a204fdcf993bfd5bfe286b9ad54762734d144a51109d5318fee682a9c9f799ec"
+        },
+        "42/media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png": {
+          "bytes": 65810,
+          "sha256": "91cb97f92de12b06065b0e147c5f44a56c1c4e5d64085aa342e00ba63d6f0488"
         }
       }
     }

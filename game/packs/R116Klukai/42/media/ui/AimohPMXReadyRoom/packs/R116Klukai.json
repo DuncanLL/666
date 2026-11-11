@@ -1,0 +1,89 @@
+{
+  "models": {
+    "pmx-9ee1e4cdb8d7f985": {
+      "character": "可露凯",
+      "skin": "泳装",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR03.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "flowers": {
+          "label": "花饰",
+          "display": "花饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glasses": {
+          "label": "泳镜",
+          "display": "泳镜",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "stopwatch": {
+          "label": "挂表",
+          "display": "挂表",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "holster": {
+          "label": "枪套",
+          "display": "枪套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "sidearm": {
+          "label": "腰侧道具",
+          "display": "腰侧道具",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "cover": {
+          "label": "罩衫",
+          "display": "罩衫",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "shoes": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "帽子",
+        "花饰",
+        "泳镜",
+        "挂表",
+        "枪套",
+        "腰侧道具",
+        "罩衫",
+        "鞋子"
+      ],
+      "officialSkin": "泳装",
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Klukai",
+  "models": [
+    {
+      "id": "pmx-9ee1e4cdb8d7f985",
+      "label": "可露凯 / 泳装",
+      "model": "models/pmx-9ee1e4cdb8d7f985/model.pmx",
+      "profile": "models/pmx-9ee1e4cdb8d7f985/profile.json"
+    }
+  ]
+}
