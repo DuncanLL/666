@@ -586,6 +586,12 @@
       "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
       "pack": "R116OTs14"
+    },
+    "pmx-33aa225b75767fcb": {
+      "character": "黛烟",
+      "skin": "玉玲珑",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png",
+      "pack": "R116Daiyan"
     }
   },
   "labels": {
@@ -2671,6 +2677,7 @@
     "pmx-7c5ea1f673f69f12",
     "pmx-225af1a054faefb0",
     "pmx-293917f24c2bd387",
-    "pmx-782f06826adb1307"
+    "pmx-782f06826adb1307",
+    "pmx-33aa225b75767fcb"
   ]
 }

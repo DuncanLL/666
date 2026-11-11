@@ -1,0 +1,14 @@
+{
+  "models": {
+    "pmx-33aa225b75767fcb": {
+      "character": "黛烟",
+      "skin": "玉玲珑",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR03.png",
+      "groups": {},
+      "officialSkin": "玉玲珑",
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

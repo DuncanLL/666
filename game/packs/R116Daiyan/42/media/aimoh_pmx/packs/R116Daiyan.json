@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Daiyan",
+  "models": [
+    {
+      "id": "pmx-33aa225b75767fcb",
+      "label": "黛烟 / 玉玲珑",
+      "model": "models/pmx-33aa225b75767fcb/model.pmx",
+      "profile": "models/pmx-33aa225b75767fcb/profile.json"
+    }
+  ]
+}

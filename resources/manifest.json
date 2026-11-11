@@ -7226,6 +7226,10 @@
     "README.txt": {
       "bytes": 610,
       "sha256": "a9f8060067afb321af514d20fe9047d0fbeb03217c49ef58b9e0fbdd5e0016d8"
+    },
+    "42/media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png": {
+      "bytes": 70729,
+      "sha256": "b42f073290efee40eba080a106a3b25e0e3e5cbd4f0d6a83b2d54e42e5d9559f"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",
@@ -9019,6 +9023,254 @@
         "42/media/aimoh_pmx/models/pmx-225af1a054faefb0/uv1-danrp.f32": {
           "bytes": 422752,
           "sha256": "9a8bcb88b8715abcba13467ff3a80c82a009d80f6304119768cc5369060e97a6"
+        }
+      }
+    },
+    "R116Daiyan": {
+      "files": {
+        "42/media/aimoh_gf2/data/05a7d46561e7b0296e38b3d46c086880a98afe5ac9b89aeff8d0bbe5fc2fa6de.f32": {
+          "bytes": 544,
+          "sha256": "05a7d46561e7b0296e38b3d46c086880a98afe5ac9b89aeff8d0bbe5fc2fa6de"
+        },
+        "42/media/aimoh_gf2/data/10dda284275465e71a2b1ce9bdd4e0904371581614325646d5c9c7a042d96a41.f32": {
+          "bytes": 544,
+          "sha256": "10dda284275465e71a2b1ce9bdd4e0904371581614325646d5c9c7a042d96a41"
+        },
+        "42/media/aimoh_gf2/data/11aa3c6b60cf33a8afb40353c77430be2433bbfe51492d6b6e947b30df1374d4.bin": {
+          "bytes": 5592432,
+          "sha256": "11aa3c6b60cf33a8afb40353c77430be2433bbfe51492d6b6e947b30df1374d4"
+        },
+        "42/media/aimoh_gf2/data/20af89d6f716030b79de939b653b00043782e8792cc31f21ab4262062616ce98.bin": {
+          "bytes": 32768,
+          "sha256": "20af89d6f716030b79de939b653b00043782e8792cc31f21ab4262062616ce98"
+        },
+        "42/media/aimoh_gf2/data/2658e2badd3bba39a9c59a99d7e0a537274145f691dfeef6f684ef59852d1b7d.f32": {
+          "bytes": 544,
+          "sha256": "2658e2badd3bba39a9c59a99d7e0a537274145f691dfeef6f684ef59852d1b7d"
+        },
+        "42/media/aimoh_gf2/data/28e4a31eb8b1f02f3179441f4395357cac04d52ac1f3fa57a6c55254ce00a99d.bin": {
+          "bytes": 2796216,
+          "sha256": "28e4a31eb8b1f02f3179441f4395357cac04d52ac1f3fa57a6c55254ce00a99d"
+        },
+        "42/media/aimoh_gf2/data/2955bea90028dfb10ba4d90f71a944cfda8459a2ad73165eb976d0900589fe13.f32": {
+          "bytes": 4685824,
+          "sha256": "2955bea90028dfb10ba4d90f71a944cfda8459a2ad73165eb976d0900589fe13"
+        },
+        "42/media/aimoh_gf2/data/3ec8d6b835a5eb3b67cae0bf4491a0912d2e8507d2cb43ded708de8d6b77398a.f32": {
+          "bytes": 96,
+          "sha256": "3ec8d6b835a5eb3b67cae0bf4491a0912d2e8507d2cb43ded708de8d6b77398a"
+        },
+        "42/media/aimoh_gf2/data/464bb0b630f2476e1ff69d1ed85196d2487617972dc3245e309a3fefd836bb7e.f32": {
+          "bytes": 544,
+          "sha256": "464bb0b630f2476e1ff69d1ed85196d2487617972dc3245e309a3fefd836bb7e"
+        },
+        "42/media/aimoh_gf2/data/48c288246ad47a41ea06b5921dba0189a17b70c7b58ffbd7152d3c57daad5b10.bin": {
+          "bytes": 2796216,
+          "sha256": "48c288246ad47a41ea06b5921dba0189a17b70c7b58ffbd7152d3c57daad5b10"
+        },
+        "42/media/aimoh_gf2/data/4a63291f5bd0bd2fa8c0694038227765445a25d52b72adc908036ffb88c5fea5.bin": {
+          "bytes": 1398128,
+          "sha256": "4a63291f5bd0bd2fa8c0694038227765445a25d52b72adc908036ffb88c5fea5"
+        },
+        "42/media/aimoh_gf2/data/4bf5535adb013eeb054b86b90b464b1d20d9266fe0c913708a555499d1776afc.bin": {
+          "bytes": 87408,
+          "sha256": "4bf5535adb013eeb054b86b90b464b1d20d9266fe0c913708a555499d1776afc"
+        },
+        "42/media/aimoh_gf2/data/531d464594598e850d6e28ea567e1e3f6f56106c15dc9bc42fd0145baf6f4bf1.f32": {
+          "bytes": 144,
+          "sha256": "531d464594598e850d6e28ea567e1e3f6f56106c15dc9bc42fd0145baf6f4bf1"
+        },
+        "42/media/aimoh_gf2/data/53d7d900a0eb2c824107b8b6731fd0400f931e5e91599a9fed96867182c6b1cb.f32": {
+          "bytes": 544,
+          "sha256": "53d7d900a0eb2c824107b8b6731fd0400f931e5e91599a9fed96867182c6b1cb"
+        },
+        "42/media/aimoh_gf2/data/54b1a27644e237d29c487052bb686579cd801e0a5b6577bf0843980b8ae32d63.bin": {
+          "bytes": 1398128,
+          "sha256": "54b1a27644e237d29c487052bb686579cd801e0a5b6577bf0843980b8ae32d63"
+        },
+        "42/media/aimoh_gf2/data/66fd6e1a58cd09b1134b4804dc99b916d185f8ae02d200f92a022e0be3eae463.bin": {
+          "bytes": 32768,
+          "sha256": "66fd6e1a58cd09b1134b4804dc99b916d185f8ae02d200f92a022e0be3eae463"
+        },
+        "42/media/aimoh_gf2/data/7d6834eb20ed686709bc8dead00cc198f264cdda09957e980205fb46542863a9.bin": {
+          "bytes": 5592432,
+          "sha256": "7d6834eb20ed686709bc8dead00cc198f264cdda09957e980205fb46542863a9"
+        },
+        "42/media/aimoh_gf2/data/84ebe26694b5ba1c10207c6fca9f8f5aa1f355ef2cc7f5445e7db06ec4ee32f7.f32": {
+          "bytes": 544,
+          "sha256": "84ebe26694b5ba1c10207c6fca9f8f5aa1f355ef2cc7f5445e7db06ec4ee32f7"
+        },
+        "42/media/aimoh_gf2/data/8a85e9b23bc8b202ed781146cbd3be8817728e4df5268bcc82a87673f766a9ad.bin": {
+          "bytes": 2796216,
+          "sha256": "8a85e9b23bc8b202ed781146cbd3be8817728e4df5268bcc82a87673f766a9ad"
+        },
+        "42/media/aimoh_gf2/data/909707dd830e9038a38f5c944991c73246b52c857b314a505c74e5efa0f36b15.bin": {
+          "bytes": 5592432,
+          "sha256": "909707dd830e9038a38f5c944991c73246b52c857b314a505c74e5efa0f36b15"
+        },
+        "42/media/aimoh_gf2/data/9ae23d7f019e2f0eb6f7f5e48df112714fa6912701cdf8567e95e3f2c93cf222.f32": {
+          "bytes": 544,
+          "sha256": "9ae23d7f019e2f0eb6f7f5e48df112714fa6912701cdf8567e95e3f2c93cf222"
+        },
+        "42/media/aimoh_gf2/data/ac3e11ebfe0d239568c381bf954c3c247557315d1f40b9711219d66d2e320260.bin": {
+          "bytes": 32768,
+          "sha256": "ac3e11ebfe0d239568c381bf954c3c247557315d1f40b9711219d66d2e320260"
+        },
+        "42/media/aimoh_gf2/data/bfd74af022fa225de784b6ff429af5e78e9a3dbc1b9a76ff12bf2819f9af2ac1.bin": {
+          "bytes": 5592432,
+          "sha256": "bfd74af022fa225de784b6ff429af5e78e9a3dbc1b9a76ff12bf2819f9af2ac1"
+        },
+        "42/media/aimoh_gf2/data/d101d653c1c9ae046b44929a3794a74b77244d2107f7a4b1904d2e48b241369a.bin": {
+          "bytes": 349552,
+          "sha256": "d101d653c1c9ae046b44929a3794a74b77244d2107f7a4b1904d2e48b241369a"
+        },
+        "42/media/aimoh_gf2/data/d49473eb0aec637fafbba2dd20e92183fb4eb43ac3b46933713aff7cfc8be4f4.bin": {
+          "bytes": 32768,
+          "sha256": "d49473eb0aec637fafbba2dd20e92183fb4eb43ac3b46933713aff7cfc8be4f4"
+        },
+        "42/media/aimoh_gf2/data/d7bb3a635ad180a2902cf17876177841d401680375fd28fd9aa0867090ff48fd.bin": {
+          "bytes": 5592432,
+          "sha256": "d7bb3a635ad180a2902cf17876177841d401680375fd28fd9aa0867090ff48fd"
+        },
+        "42/media/aimoh_gf2/data/ddcc7d0e90418cd077f6e6f44f93c5436b8bb48c4bf454045b22e5150ed9dbf8.bin": {
+          "bytes": 32768,
+          "sha256": "ddcc7d0e90418cd077f6e6f44f93c5436b8bb48c4bf454045b22e5150ed9dbf8"
+        },
+        "42/media/aimoh_gf2/data/e1fdecb499516b0e6c02db4e97f7ca4bb154b527977c771589d5d65739f2e20d.bin": {
+          "bytes": 5592432,
+          "sha256": "e1fdecb499516b0e6c02db4e97f7ca4bb154b527977c771589d5d65739f2e20d"
+        },
+        "42/media/aimoh_gf2/data/e9b2a75de9a492019d61e7ea4dd5d9e86678dbe9c07b018e9fba6ffb523336b8.f32": {
+          "bytes": 544,
+          "sha256": "e9b2a75de9a492019d61e7ea4dd5d9e86678dbe9c07b018e9fba6ffb523336b8"
+        },
+        "42/media/aimoh_gf2/data/e9d104c3c1a511de5358d463616d330772ac0ecd0cd4dee65d3c3fa6fe53c4de.bin": {
+          "bytes": 1207376,
+          "sha256": "e9d104c3c1a511de5358d463616d330772ac0ecd0cd4dee65d3c3fa6fe53c4de"
+        },
+        "42/media/aimoh_gf2/data/f21312ab7cca514f77938028910b2109c39983414203596942d3c390fc9f8aa4.f32": {
+          "bytes": 544,
+          "sha256": "f21312ab7cca514f77938028910b2109c39983414203596942d3c390fc9f8aa4"
+        },
+        "42/media/aimoh_gf2/data/fdce498b28e656851456cb97adc01d914779e8049eaba1b94e83673c5aa54d4d.bin": {
+          "bytes": 5592432,
+          "sha256": "fdce498b28e656851456cb97adc01d914779e8049eaba1b94e83673c5aa54d4d"
+        },
+        "42/media/aimoh_gf2/packs/R116Daiyan.json": {
+          "bytes": 1634327,
+          "sha256": "94e2b5bf9cf82b022aac821353b055449d96a2e63a5abda2a15361370c9816af"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_cloth1_d.png": {
+          "bytes": 4737288,
+          "sha256": "783c016abce9209351d02500c88ff6465e0298c55f1afc449b7280e048fb5924"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_cloth2_da.png": {
+          "bytes": 3496746,
+          "sha256": "9b3427d06f703513a30a49c58f86eb171895ec0d556448f3dc3146c3ce509eea"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_hair_d.png": {
+          "bytes": 16799110,
+          "sha256": "39e7de7117940184d1c0807f7eccfa4189712b5a952db6b007ee128bc229eb21"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_shanzi_d.png": {
+          "bytes": 988694,
+          "sha256": "7a6ee9d7f08efc31cd6c21bfdc62e90236252cb56ff24376c887a3468a9417da"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_Daiyan_slg_eye_d.png": {
+          "bytes": 556657,
+          "sha256": "927da765dc13bd2082d5a2fe1d318400e8a44deb8ebc7e82d3af02302953873b"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_Daiyan_slg_eyeblend.png": {
+          "bytes": 32665,
+          "sha256": "681e7be8c59d2e38b97c041d7649d10ed03b90fa1cd55dde5d5b3cdc592a6b7a"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/c_Daiyan_slg_face_d.png": {
+          "bytes": 425044,
+          "sha256": "88a45d024b1198547170b78b9b9f34465ea4601744f33e2c5557970926e850d7"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/cw_FayeeSR01_WL_lod0_d.png": {
+          "bytes": 5922133,
+          "sha256": "d301fee23fdb5aaec0e91b984b2b876c16e06340e37bfa32a0d9a0441cfd3aed"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/extra.png": {
+          "bytes": 385280,
+          "sha256": "b2817a41d8ed4af869f50ae06d5f9cad300acb30aa28f32596c75ede5a360749"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_cloth1_n.png": {
+          "bytes": 7234339,
+          "sha256": "8b2fecd63ff98c7a473ed249103ad0bc4db9cd2fb46611cb42e69f539601dda8"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_cloth2_n.png": {
+          "bytes": 5518386,
+          "sha256": "01328b2059541af8db2baab895ec80bb2441491e20d6b0c0d5bf600ada9b569a"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_cloth2_rmo.png": {
+          "bytes": 4119052,
+          "sha256": "58a9c5a7b3a0f4bb6e10444695a2eb16fbe319057a1382a30c81184d1bc3751d"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_shanzi_n.png": {
+          "bytes": 1385974,
+          "sha256": "e35128425b8020f955b693d3271e04703fbe0c9f697a24ad498663181c7dbff9"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/cw_FayeeSR01_WL_lod0_n.png": {
+          "bytes": 4312586,
+          "sha256": "eba134166484ade4f3c4e4ceee12a778a9a2235635632f74eff320e8678bac69"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/cw_FayeeSR01_WL_lod0_rmo.png": {
+          "bytes": 4857649,
+          "sha256": "78afde889ab61f23f2e828f8f57c105a968a8b12904c45c64becb929c52e8558"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/chest.bin": {
+          "bytes": 73876,
+          "sha256": "2a7d2782491d552126658afc9cc1c9f7f091c34a7ffd56ead813ce84818441bc"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/model.pmx": {
+          "bytes": 3818446,
+          "sha256": "33aa225b75767fcb6615fc548338bcf215bb797f23561efad6df7ccb5e657be2"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/SSShine1.png": {
+          "bytes": 2570,
+          "sha256": "d17f942bcd59399dcbef14eef4a04f4eb892363aeaa534e25fea75cf066b9d8c"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/SSShine2.png": {
+          "bytes": 2206,
+          "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/Socks.png": {
+          "bytes": 5693,
+          "sha256": "a8491184631b92f75807817bf3856512348905505634022800c57e9d11c3567c"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/hd.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/skin.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/skintoon.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/spa-1.bmp": {
+          "bytes": 1000054,
+          "sha256": "294e409881928fec759188f700819c83981a467135b2d2e489d09ad6a31ca377"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/spa/toon-1.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-33aa225b75767fcb/uv1-danrp.f32": {
+          "bytes": 381632,
+          "sha256": "73aa41cefbdc6972ce5731d08161ab7ee07a4ce7ccc395bb5cbdfab108ae4740"
+        },
+        "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR03.png": {
+          "bytes": 499343,
+          "sha256": "2350b3265c8f8f187f16bc0362127d84d5e42be442d31c6cd30018b90bee56c8"
+        },
+        "42/media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png": {
+          "bytes": 70729,
+          "sha256": "b42f073290efee40eba080a106a3b25e0e3e5cbd4f0d6a83b2d54e42e5d9559f"
         }
       }
     }
