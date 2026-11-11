@@ -7,11 +7,10 @@ vec3 characterColour(vec3 colour) {
     float luminance = dot(rgb, vec3(0.2126, 0.7152, 0.0722));
     if (luminance < 0.0001) return rgb;
     float level = luminance / (1.0 + luminance);
-    float band = clamp(floor(level * 5.0 + 0.5) / 5.0, 0.04, 0.94);
-    float exposure = mix(level, band, 0.72);
+    float band = clamp(floor(level * 6.0 + 0.5) / 6.0, 0.04, 0.94);
+    float exposure = mix(level, band, 0.58);
     float gain = (exposure / (1.0 - exposure)) / luminance;
-    vec3 tint = mix(vec3(0.81, 0.88, 1.18), vec3(1.10, 1.00, 0.82), smoothstep(0.25, 0.62, level));
-    return rgb * gain * tint;
+    return rgb * gain;
 }
 '''
 
@@ -119,7 +118,7 @@ void main() {
     ivec2 size = imageSize(filteredCube);
     if (any(greaterThanEqual(pixel.xy, size)) || pixel.z >= 6) return;
     vec2 uv = (vec2(pixel.xy) + 0.5) / vec2(size) * 2.0 - 1.0;
-    float width = sourcePerceptualRoughness * 0.15;
+    float width = sourcePerceptualRoughness * sourcePerceptualRoughness * 0.09;
     vec3 filtered = textureLod(nativeRawCube, cubeDirection(pixel.z, uv), 0.0).rgb * 0.5;
     filtered += textureLod(nativeRawCube, cubeDirection(pixel.z, uv + vec2(width)), 0.0).rgb * 0.25;
     filtered += textureLod(nativeRawCube, cubeDirection(pixel.z, uv - vec2(width)), 0.0).rgb * 0.25;
@@ -145,7 +144,7 @@ def public_manifest(formal):
     if fill is not None:
         manifest['original_camera_fill'] = {
             'camera_local_direction': [0.6, -0.48, -0.64],
-            'color': [0.23, 0.42, 0.46, 1.0],
+            'color': [0.37, 0.37, 0.37, 1.0],
             'unity_camera_to_world_z_parity': fill['unity_camera_to_world_z_parity'],
         }
     return manifest
@@ -188,7 +187,7 @@ void main() {
     ivec2 size = imageSize(destination);
     if (any(greaterThanEqual(p.xy, size)) || p.z >= 6) return;
     vec2 uv = (vec2(p.xy) + 0.5) / vec2(size);
-    int tile = min(level, 5);
+    int tile = clamp(level - 1, 0, 5);
     uv.x = fract((uv.x + float(p.z)) / 6.0);
     vec2 atlas = (vec2(tile % 3, tile / 3) + uv) * 64.0;
     imageStore(destination, p, vec4(textureLod(sourceSky, atlas / vec2(textureSize(sourceSky, 0)), 0.0).rgb, 1.0));
@@ -254,7 +253,7 @@ void main() {
     }
     actorSH[6].w=1;
     reflectionHDR = vec4(visible, 1.0, 0.0, 0.0);
-    cameraLightColor = vec4(vec3(0.28, 0.43, 0.48) * visible, 1.0);
+    cameraLightColor = vec4(vec3(0.39 * visible), 1.0);
 }
 '''
 
