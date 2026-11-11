@@ -277,8 +277,8 @@ public class ReadyRoomPreview {
         final int[] indices,materials,firsts,counts;
         final ByteBuffer upload;
         final float centerX,centerY,centerZ,span;
-        int program,vao,vbo,ibo;
-        boolean closed,failed;
+        int program,vao,vbo,ibo,uvBuffer;
+        boolean closed,failed,gpuLayout;
         private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
             session=s;int count=frame.positions().length/3;
@@ -321,12 +321,30 @@ public class ReadyRoomPreview {
             }finally{GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
             vao=GL30.glGenVertexArrays();GL30.glBindVertexArray(vao);vbo=GL15.glGenBuffers();ibo=GL15.glGenBuffers();
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);GL15.glBufferData(GL15.GL_ARRAY_BUFFER,upload.capacity(),GL15.GL_STREAM_DRAW);
-            for(int i=0;i<3;i++){GL20.glEnableVertexAttribArray(i);GL20.glVertexAttribPointer(i,i==2?2:3,GL11.GL_FLOAT,false,32,i==0?0L:i==1?12L:24L);}
+            for(int i=0;i<3;i++)GL20.glEnableVertexAttribArray(i);
+            bindCpuLayout();
             GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER,ibo);GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER,indices,GL15.GL_STATIC_DRAW);
+        }
+        private void bindCpuLayout() {
+            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);
+            for(int i=0;i<3;i++)GL20.glVertexAttribPointer(i,i==2?2:3,GL11.GL_FLOAT,false,32,i==0?0L:i==1?12L:24L);
+            gpuLayout=false;
         }
         void bindGeometry(PmxDrawMesh.FrameData frame) {
             if(program==0)initialize();
-            GL30.glBindVertexArray(vao);GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);
+            GL30.glBindVertexArray(vao);
+            if(frame.gpuPose()!=null) {
+                GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,frame.gpuPose().vertexBuffer());
+                GL20.glVertexAttribPointer(0,3,GL11.GL_FLOAT,false,32,0L);
+                GL20.glVertexAttribPointer(1,3,GL11.GL_FLOAT,false,32,16L);
+                if(uvBuffer==0){uvBuffer=GL15.glGenBuffers();GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,uvBuffer);
+                    GL15.glBufferData(GL15.GL_ARRAY_BUFFER,uv,GL15.GL_STATIC_DRAW);}
+                else GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,uvBuffer);
+                GL20.glVertexAttribPointer(2,2,GL11.GL_FLOAT,false,8,0L);
+                gpuLayout=true;
+                return;
+            }
+            if(gpuLayout)bindCpuLayout();else GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);
             if(uploaded==frame)return;
             upload.clear();
             float[] p=frame.positions(),n=frame.normals();
@@ -352,7 +370,7 @@ public class ReadyRoomPreview {
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
         }
-        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
@@ -371,7 +389,11 @@ public class ReadyRoomPreview {
                 GL11.glDepthMask(true);GL11.glClearDepth(1);GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
                 mesh.paint(frame,materials,width,height,yaw,zoom);
                 return true;
-            }catch(Exception e){mesh.failed=true;System.err.println("[AimohPMXReadyRoom] Preview draw failed: "+e);return false;}
+            }catch(Exception|LinkageError e){
+                if(frame.gpuPose()!=null)mesh.session.disableGpu(e);
+                else {mesh.failed=true;System.err.println("[AimohPMXReadyRoom] Preview draw failed: "+e);}
+                return false;
+            }
             finally {
                 saved.restore();
                 SpriteRenderer.ringBuffer.restoreVbos=true;SpriteRenderer.ringBuffer.restoreBoundTextures=true;

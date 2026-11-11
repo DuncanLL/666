@@ -1,6 +1,7 @@
 package aimoh.pmxpreview;
 
 import aimoh.motion.OzzGrip;
+import aimoh.motion.GpuDeformation;
 import aimoh.motion.PmxDrawMesh;
 import aimoh.motion.PmxModel;
 import aimoh.motion.PmxShading;
@@ -23,6 +24,7 @@ import zombie.core.skinnedmodel.model.ModelInstance;
 import zombie.core.textures.Texture;
 
 final class ModelSession {
+    private static final boolean GPU_REQUESTED=Boolean.getBoolean("r116.gpuDeformation");
     final PmxModel model;
     final IdleHandPose idleHand;
     final PmxShading shading;
@@ -35,6 +37,8 @@ final class ModelSession {
     final ByteBuffer positions,normals;
     volatile ViewpointModel viewpointModel;
     private ReadyRoomPreview.Mesh plainMesh;
+    private GpuDeformation gpu;
+    private boolean gpuDisabled;
     volatile boolean ready,failed,retired;
     private TextureFactory plainTextures;
     private boolean viewpointQueued,plainQueued;
@@ -107,6 +111,11 @@ final class ModelSession {
     synchronized PmxDrawMesh.FrameData update(long frame,long capturedNanos,AnimationPlayer player,boolean holding,float x,float y,float z,
             boolean hideHead,boolean idleEligible,boolean firstPerson,GripAdjustment adjustment,boolean viewpoint) {
         if(lastFrame==frame) {
+            if(viewpoint&&fullFrame.gpuPose()!=null){
+                if(!model.skinCompletedPose())throw new IllegalStateException("Completed CPU fallback pose unavailable");
+                fullFrame=cpuFrame(model.appearance().readMaterials(false),false);
+                frozen=fullFrame;frozenViewpoint=false;previousFrozen=olderFrozen=null;
+            }
             if(viewpoint&&(!frozenViewpoint||hiddenHead!=hideHead)){
                 if(hiddenHead!=hideHead){api.SetFirstPersonMode(model.handle(),hideHead);hiddenHead=hideHead;}
                 float[] visible=model.appearance().readMaterials();
@@ -128,7 +137,9 @@ final class ModelSession {
         preserveAimWeapon=holding&&firstPerson&&EfzAimCompatibility.keepsWeapon(player.getIsoGameCharacter());
         gripAdjustment=preserveAimWeapon&&adjustment!=null?adjustment.wristsOnly():adjustment;
         // Fit both PMX palms to the posed source hands in the same head frame as the sight.
-        model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
+        boolean useGpu=!viewpoint&&gpu!=null&&!gpuDisabled;
+        if(useGpu)model.applyPose(poseForModel,holding?grip:null,seconds,-1,-1,gripAdjustment);
+        else model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {
             String[] paths=model.appearance().readTextures();
             for(int i=0;i<paths.length;i++)paths[i]=resolveTexture(paths[i]);
@@ -136,24 +147,38 @@ final class ModelSession {
             appearanceRevision=model.appearance().revision();
         }
         if(hiddenHead!=hideHead){api.SetFirstPersonMode(model.handle(),hideHead);hiddenHead=hideHead;}
-        api.CopyDataToByteBuffer(positions,api.GetPoss(model.handle()),positions.capacity());
-        api.CopyDataToByteBuffer(normals,api.GetNormals(model.handle()),normals.capacity());
-        float[] p=new float[positions.capacity()/4],n=new float[p.length];
-        positions.asFloatBuffer().get(p);normals.asFloatBuffer().get(n);
-        model.deformChest(p,n);
         float[] finalMaterials=model.appearance().readMaterials();
-        PmxDrawMesh.FrameData next=new PmxDrawMesh.FrameData(p,n,finalMaterials,
-                !viewpoint||shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
-        fullFrame=hideHead?new PmxDrawMesh.FrameData(p,n,model.appearance().readMaterials(false)):next;
+        PmxDrawMesh.FrameData next=null;
+        if(useGpu)try { next=new PmxDrawMesh.FrameData(finalMaterials,gpu.capture()); }
+        catch(RuntimeException|LinkageError failure) {
+            disableGpu(failure);
+            if(!model.skinCompletedPose())throw new IllegalStateException("GPU pose fallback failed",failure);
+        }
+        if(next==null)next=cpuFrame(finalMaterials,viewpoint);
+        fullFrame=hideHead?new PmxDrawMesh.FrameData(next.positions(),next.normals(),model.appearance().readMaterials(false)):next;
         long cpuNanos=System.nanoTime()-wallNanos,wallGap=lastWallNanos==0?0:wallNanos-lastWallNanos;
         if((cpuNanos>50_000_000L||wallGap>100_000_000L)&&(lastSlowFrame==Long.MIN_VALUE||frame-lastSlowFrame>=300)){
             lastSlowFrame=frame;
             System.out.println("[AimohPMXPreview] Slow model "+entry.id()+" "+model.stepTiming().put("capture_cpu_ms",cpuNanos/1e6).put("capture_gap_ms",wallGap/1e6).put("simulation_dt",seconds));
         }
-        olderFrozen=continuous?previousFrozen:null;previousFrozen=continuous?frozen:null;lastMotionRevision=revision;
+        boolean history=continuous&&frozen!=null&&frozen.gpuPose()==null&&next.gpuPose()==null;
+        olderFrozen=history?previousFrozen:null;previousFrozen=history?frozen:null;lastMotionRevision=revision;
         frozen=next;frozenViewpoint=viewpoint;lastFrame=frame;lastNanos=capturedNanos;lastWallNanos=wallNanos;
         prepareMesh(viewpoint?frozen:fullFrame,viewpoint);
         return viewpoint?frozen:fullFrame;
+    }
+    private PmxDrawMesh.FrameData cpuFrame(float[] finalMaterials,boolean viewpoint) {
+        api.CopyDataToByteBuffer(positions,api.GetPoss(model.handle()),positions.capacity());
+        api.CopyDataToByteBuffer(normals,api.GetNormals(model.handle()),normals.capacity());
+        float[] p=new float[positions.capacity()/4],n=new float[p.length];
+        positions.asFloatBuffer().get(p);normals.asFloatBuffer().get(n);model.deformChest(p,n);
+        return new PmxDrawMesh.FrameData(p,n,finalMaterials,
+            !viewpoint||shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
+    }
+
+    synchronized void disableGpu(Throwable failure) {
+        if(!gpuDisabled)System.err.println("[R116] GPU deformation fallback for "+entry.id()+": "+failure);
+        gpuDisabled=true;
     }
     synchronized void prepareMesh(PmxDrawMesh.FrameData frame,boolean viewpoint) {
         if(viewpoint) {
@@ -162,14 +187,22 @@ final class ModelSession {
             if(!ready&&!viewpointQueued){viewpointQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,true));}
         } else {
             ready=plainMesh!=null;
-            if(!ready&&!plainQueued){plainQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,false));}
+            if((!ready||GPU_REQUESTED&&gpu==null&&!gpuDisabled)&&!plainQueued){
+                plainQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,false));
+            }
         }
     }
     private synchronized void initialize(PmxDrawMesh.FrameData frame,boolean viewpoint) {
         try {
             if(retired||failed)return;
             if(viewpoint){viewpointModel.upload(frame,materials);ready=viewpointModel.ready();}
-            else {preparePlainMaterials(materials);plainMesh(frame);ready=true;}
+            else {
+                preparePlainMaterials(materials);plainMesh(frame);ready=true;
+                if(GPU_REQUESTED&&gpu==null&&!gpuDisabled) {
+                    try {gpu=GpuDeformation.create(api,model);gpuDisabled=gpu==null;}
+                    catch(RuntimeException|LinkageError failure){disableGpu(failure);}
+                }
+            }
         } catch(Throwable e) { fail(e); }
         finally {if(viewpoint)viewpointQueued=false;else plainQueued=false;}
     }
@@ -252,9 +285,9 @@ final class ModelSession {
     synchronized void retire() {
         if(retired)return;retired=true;ready=false;
         ViewpointMode.retire(()->{
-            try{ResourceCleanup.close(viewpointModel,plainMesh,plainTextures,model);}
+            try{ResourceCleanup.close(viewpointModel,plainMesh,plainTextures,gpu,model);}
             catch(Throwable e){Main.error(e);}
-            finally{viewpointModel=null;plainMesh=null;plainTextures=null;frozen=fullFrame=previousFrozen=olderFrozen=null;}
+            finally{viewpointModel=null;plainMesh=null;plainTextures=null;gpu=null;frozen=fullFrame=previousFrozen=olderFrozen=null;}
         });
     }
 }

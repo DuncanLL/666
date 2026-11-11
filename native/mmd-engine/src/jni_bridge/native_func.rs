@@ -206,6 +206,48 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateModel(
     }
 }
 
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateModelPose(
+    _env: JNIEnv, _class: JClass, model: jlong, delta_time: jfloat,
+) {
+    if let Some(model) = MODELS.read().unwrap().get(&model) {
+        model.lock().unwrap().tick_pose_for_gpu(delta_time);
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SkinCompletedPose(
+    _env: JNIEnv, _class: JClass, model: jlong,
+) -> jboolean {
+    MODELS.read().unwrap().get(&model)
+        .is_some_and(|model| model.lock().unwrap().skin_completed_pose()) as jboolean
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuDeformationSource(
+    env: JNIEnv, _class: JClass, model: jlong,
+) -> jni::sys::jbyteArray {
+    let models = MODELS.read().unwrap();
+    let Some(source) = models.get(&model).and_then(|m| m.lock().unwrap().gpu_deformation_source())
+        else { return std::ptr::null_mut(); };
+    env.byte_array_from_slice(&source).map(|array| array.into_raw()).unwrap_or(std::ptr::null_mut())
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuDeformationWeights(
+    env: JNIEnv, _class: JClass, model: jlong, buffer: JByteBuffer,
+) -> jint {
+    let models = MODELS.read().unwrap();
+    let Some(model) = models.get(&model) else { return 0; };
+    let model = model.lock().unwrap();
+    let weights = model.gpu_deformation_weights();
+    let Ok(dst) = env.get_direct_buffer_address(&buffer) else { return 0; };
+    let size = std::mem::size_of_val(weights);
+    if env.get_direct_buffer_capacity(&buffer).unwrap_or(0) < size { return 0; }
+    unsafe { ptr::copy_nonoverlapping(weights.as_ptr().cast::<u8>(), dst, size); }
+    weights.len() as jint
+}
+
 // ============================================================================
 // 顶点数据函数
 // ============================================================================

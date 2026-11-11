@@ -157,6 +157,20 @@ public final class PmxModel implements AutoCloseable {
         lastChestNanos=System.nanoTime()-solved;
         return result;
     }
+
+    /** Run the same frame, including rigid and soft-body simulation, without CPU skinning. */
+    public synchronized WorldPoseRetargeter.GripResult[] applyPose(float[] finalSourcePose,OzzGrip grip,float seconds,
+            int sourceAnchor,int targetAnchor,WorldPoseRetargeter.GripAdjustment adjustment) {
+        core.deferSkinning(true);
+        try { return apply(finalSourcePose,grip,seconds,sourceAnchor,targetAnchor,adjustment); }
+        finally { core.deferSkinning(false); }
+    }
+
+    public synchronized boolean skinCompletedPose() { return !closed&&api.SkinCompletedPose(handle); }
+
+    synchronized ChestSoftBody.GpuOffsets gpuChestOffsets(int vertices) {
+        return chest==null?null:chest.gpuOffsets(vertices);
+    }
     public synchronized JSONObject stepTiming(){return new JSONObject().put("retarget_rigid_ms",lastRetargetNanos/1e6).put("chest_ms",lastChestNanos/1e6).put("chest_data",chest!=null).put("physics_requested",core.physicsEnabled()).put("chest_strength",chest==null?0:chest.slider(3)).put("chest_error",chest==null?"":chest.error());}
 
     public long handle() { return handle; }

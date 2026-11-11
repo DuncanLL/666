@@ -7,6 +7,10 @@ public final class NativeFunc {
     public native long LoadModelPMX(String file, String directory, long layers);
     public native void DeleteModel(long model);
     public native void UpdateModel(long model, float seconds);
+    public native void UpdateModelPose(long model, float seconds);
+    public native boolean SkinCompletedPose(long model);
+    public native byte[] GetGpuDeformationSource(long model);
+    public native int CopyGpuDeformationWeights(long model, ByteBuffer buffer);
     public native void UpdateAnimationOnly(long model, float seconds);
     public native void EvaluateSkeleton(long model);
     public native long GetVertexCount(long model);

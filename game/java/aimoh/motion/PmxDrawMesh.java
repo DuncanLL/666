@@ -57,6 +57,7 @@ public final class PmxDrawMesh implements AutoCloseable {
     /** Arrays belong to this frame and are never mutated after capture. */
     public static final class FrameData {
         private final float[] positions,normals,materials,shadingHead;
+        private final GpuDeformation.Pose gpuPose;
         private final float minX,minY,minZ,maxX,maxY,maxZ;
         public FrameData(float[] positions,float[] normals,float[] materials){this(positions,normals,materials,null);}
         public FrameData(float[] positions,float[] normals,float[] materials,float[] shadingHead) {this(positions,normals,materials,shadingHead,null,null);}
@@ -73,10 +74,16 @@ public final class PmxDrawMesh implements AutoCloseable {
             }
             for(float value:normals)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
             for(float value:materials)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
-            this.positions=positions;this.normals=normals;this.materials=materials;this.shadingHead=shadingHead;
+            this.positions=positions;this.normals=normals;this.materials=materials;this.shadingHead=shadingHead;gpuPose=null;
             minX=a==null?lx:Math.min(a.minX,b.minX);minY=a==null?ly:Math.min(a.minY,b.minY);minZ=a==null?lz:Math.min(a.minZ,b.minZ);
             maxX=a==null?hx:Math.max(a.maxX,b.maxX);maxY=a==null?hy:Math.max(a.maxY,b.maxY);maxZ=a==null?hz:Math.max(a.maxZ,b.maxZ);
         }
+        /** Plain renderers bind the completed GPU mesh directly; no CPU geometry exists in this frame. */
+        public FrameData(float[] materials,GpuDeformation.Pose pose) {
+            positions=normals=shadingHead=null;this.materials=materials;gpuPose=pose;
+            minX=minY=minZ=maxX=maxY=maxZ=0;
+        }
+        public GpuDeformation.Pose gpuPose(){return gpuPose;}
         /** Convex display interpolation stays inside the union of its two validated snapshots. */
         public static FrameData interpolated(float[] p,float[] n,float[] m,float[] h,FrameData a,FrameData b){return new FrameData(p,n,m,h,a,b);}
         public float[] positions(){return positions;}

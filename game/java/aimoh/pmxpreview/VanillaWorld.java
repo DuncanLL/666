@@ -109,7 +109,8 @@ public final class VanillaWorld {
             draw.painted=true;
             return true;
         } catch(Exception | LinkageError failure) {
-            draw.session.fail(failure);
+            if(draw.snapshot.frame().gpuPose()!=null)draw.session.disableGpu(failure);
+            else draw.session.fail(failure);
             return false;
         } finally {
             saved.restore();

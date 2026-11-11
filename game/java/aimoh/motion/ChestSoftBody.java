@@ -43,6 +43,7 @@ public final class ChestSoftBody implements AutoCloseable {
     private final JoltChestMotion motion=new JoltChestMotion();
     private float appliedSignature=-1, appliedStrain;
     private float sideX, sideZ;
+    private int[] gpuSpans,gpuRows;
     private final double[] values=DEFAULT.clone();
     private boolean reset=true,enabled=true,failed,closed;
     private String error="";
@@ -276,6 +277,32 @@ public final class ChestSoftBody implements AutoCloseable {
             }
         }
         for(int vertex:affected){int at=vertex*3;float x=normals[at],y=normals[at+1],z=normals[at+2];float length=(float)Math.sqrt(x*x+y*y+z*z);if(length>1e-8f){normals[at]=x/length;normals[at+1]=y/length;normals[at+2]=z/length;}}
+    }
+
+    record GpuOffsets(int[] spans,float[] rows,float axisX,float axisZ) {}
+
+    GpuOffsets gpuOffsets(int vertices) {
+        if(!enabled||failed||closed||reset||values[3]==0)return null;
+        if(gpuSpans==null) {
+            gpuSpans=new int[vertices+1];
+            for(Region region:regions)for(int id:region.ids)gpuSpans[id+1]++;
+            for(int i=1;i<gpuSpans.length;i++)gpuSpans[i]+=gpuSpans[i-1];
+            int[] next=gpuSpans.clone();gpuRows=new int[gpuSpans[vertices]];
+            int source=0;
+            for(Region region:regions)for(int id:region.ids)gpuRows[source++]=next[id]++;
+        }
+        float[] rows=new float[gpuRows.length*12];
+        float strength=(float)(values[3]/100);int source=0;
+        for(Region region:regions)for(int i=0;i<region.count;i++) {
+            int at=gpuRows[source++]*12;float weight=region.weights[i]*strength;
+            for(int k=0;k<3;k++) {
+                rows[at+k]=weight*region.positions.getAtIndex(JAVA_FLOAT,i*3L+k)/scale;
+                rows[at+4+k]=weight*region.normals.getAtIndex(JAVA_FLOAT,i*3L+k);
+                rows[at+8+k]=region.movingPivot[k];
+            }
+            rows[at+3]=region.angle*region.swingWeights[i]*strength;
+        }
+        return new GpuOffsets(gpuSpans,rows,sideX,sideZ);
     }
     public void close(){
         if(closed)return;closed=true;

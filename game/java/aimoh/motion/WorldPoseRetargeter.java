@@ -427,6 +427,7 @@ public final class WorldPoseRetargeter {
     public synchronized boolean physicsEnabled() { return physics.enabled(); }
     public synchronized void resetPhysics() { physics.reset(); }
     synchronized void finishNativePose(float seconds) { physics.finish(seconds); }
+    synchronized void deferSkinning(boolean defer) { physics.deferSkinning(defer); }
     public synchronized void setModelMotion(float x,float y,float z,float yaw) { physics.motion(x,y,z,yaw); }
     public synchronized long advancingPhysicsFrames() { return physics.advancingFrames(); }
 }
