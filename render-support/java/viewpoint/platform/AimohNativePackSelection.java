@@ -30,7 +30,21 @@ public final class AimohNativePackSelection {
     public static String readData(String path){return GlProgram.pack().pack.shader(path);}
     public static String expanded(String path){return Shaders.load(path,GlProgram.pack()).text;}
     public static viewpoint.iris.SourceFiles files(ShaderPacks.Active active){return path->active.pack.shader(path);}
-    public static GlProgram compute(String name,String path){return GlProgram.compute(name,expanded(path),List.of());}
+    public static GlProgram compute(String name,String path){
+        GlProgram program=GlProgram.compute(name,expanded(path),List.of());
+        if(path.equals("gf2/native_cube.comp")){
+            // Match Viewpoint RC3 FrameUniforms.units for the inherited reflected sky.
+            bindIfPresent(program,"uCloudShape",95);
+            bindIfPresent(program,"uCloudDetail",96);
+            bindIfPresent(program,"uCloudCurl",97);
+            bindIfPresent(program,"uCloudSheets",98);
+            bindIfPresent(program,"uSkyView",103);
+        }
+        return program;
+    }
+    private static void bindIfPresent(GlProgram program,String name,int unit){
+        if(program.has(name))program.sampler(name,unit);
+    }
     public static void use(String folder)throws IOException{
         Map<String,ShaderPack> parents=new HashMap<>();
         ShaderPack library=ShaderPack.parse("library",ShaderPack.jar("library"),id->parents.get(id),true);parents.put("library",library);
