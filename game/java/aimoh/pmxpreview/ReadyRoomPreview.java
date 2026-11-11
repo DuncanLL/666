@@ -2,7 +2,6 @@ package aimoh.pmxpreview;
 
 import aimoh.motion.PmxDrawMesh;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
@@ -10,7 +9,6 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
-import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +20,6 @@ import se.krka.kahlua.vm.KahluaTable;
 import se.krka.kahlua.j2se.J2SEPlatform;
 import zombie.ZomboidFileSystem;
 import org.lwjgl.opengl.*;
-import viewpoint.render.Retirement;
 import zombie.characters.IsoGameCharacter;
 import zombie.characters.IsoPlayer;
 import zombie.core.Core;
@@ -262,37 +259,19 @@ public class ReadyRoomPreview {
         if(value instanceof JSONArray array){KahluaTable t=J2SEPlatform.getInstance().newTable();for(int i=0;i<array.length();i++)t.rawset((double)i+1,lua(array.get(i)));return t;}
         if(value instanceof Number n)return n.doubleValue();return value==JSONObject.NULL?null:value;
     }
-    private static final IdentityHashMap<IsoGameCharacter,Mesh> previews=new IdentityHashMap<>();
-    private static final Field SNAPSHOT;
-    static {
-        try { SNAPSHOT=ModelSession.class.getDeclaredField("frozen");SNAPSHOT.setAccessible(true); }
-        catch(ReflectiveOperationException e){throw new ExceptionInInitializerError(e);}
-    }
     public static synchronized boolean draw(IsoGameCharacter actor,int x,int y,int width,int height,float yaw,float zoom) {
         ModelSession session=Main.session(actor);
         if(session==null||!session.ready||session.retired||session.failed||width<16||height<16)return false;
         try {
-            synchronized(session) {
-                PmxDrawMesh.FrameData frame=(PmxDrawMesh.FrameData)SNAPSHOT.get(session);
-                if(frame==null)return false;
-                Mesh mesh=previews.get(actor);
-                if(mesh==null||mesh.session!=session){
-                    releaseMesh(actor);
-                    mesh=new Mesh(session,frame);previews.put(actor,mesh);
-                }
-                SpriteRenderer.instance.drawGeneric(new Draw(mesh,frame,session.materials,x,y,width,height,Core.height,yaw,zoom));
-                return true;
-            }
+            ModelSession.Snapshot snapshot=session.snapshot();if(snapshot==null)return false;
+            Mesh mesh=session.plainMesh(snapshot.frame());
+            SpriteRenderer.instance.drawGeneric(new Draw(mesh,snapshot.frame(),snapshot.materials(),x,y,width,height,Core.height,yaw,zoom));
+            return true;
         }catch(Exception e){System.err.println("[AimohPMXReadyRoom] Preview unavailable: "+e);return false;}
     }
-    public static synchronized void release(IsoGameCharacter actor) {
-        releaseMesh(actor);
-    }
-    private static void releaseMesh(IsoGameCharacter actor) {
-        Mesh mesh=previews.remove(actor);if(mesh!=null)Retirement.retire(mesh::close);
-    }
+    public static void release(IsoGameCharacter actor) { /* The mesh belongs to ModelSession. */ }
     private static ByteBuffer buffer(int bytes){return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());}
-    static final class Mesh {
+    static final class Mesh implements AutoCloseable {
         final ModelSession session;
         final float[] uv;
         final int[] indices,materials,firsts,counts;
@@ -300,6 +279,7 @@ public class ReadyRoomPreview {
         final float centerX,centerY,centerZ,span;
         int program,vao,vbo,ibo;
         boolean closed,failed;
+        private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
             session=s;int count=frame.positions().length/3;
             ByteBuffer bytes=buffer(count*8);s.api.CopyDataToByteBuffer(bytes,s.api.GetUVs(s.model.handle()),bytes.capacity());
@@ -344,19 +324,25 @@ public class ReadyRoomPreview {
             for(int i=0;i<3;i++){GL20.glEnableVertexAttribArray(i);GL20.glVertexAttribPointer(i,i==2?2:3,GL11.GL_FLOAT,false,32,i==0?0L:i==1?12L:24L);}
             GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER,ibo);GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER,indices,GL15.GL_STATIC_DRAW);
         }
-        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom)throws Exception {
+        void bindGeometry(PmxDrawMesh.FrameData frame) {
             if(program==0)initialize();
-            GL30.glBindVertexArray(vao);GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);upload.clear();
+            GL30.glBindVertexArray(vao);GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);
+            if(uploaded==frame)return;
+            upload.clear();
             float[] p=frame.positions(),n=frame.normals();
             for(int i=0;i<p.length/3;i++)upload.putFloat(p[i*3]).putFloat(p[i*3+1]).putFloat(p[i*3+2]).putFloat(n[i*3]).putFloat(n[i*3+1]).putFloat(n[i*3+2]).putFloat(uv[i*2]).putFloat(uv[i*2+1]);
             upload.flip();GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER,0,upload);
+            uploaded=frame;
+        }
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom)throws Exception {
+            bindGeometry(frame);
             float extent=span/Math.clamp(zoom,.7f,1.5f),aspect=(float)width/height;
             Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
                 .lookAt(centerX,centerY,centerZ+span*3,centerX,centerY,centerZ,0,1,0);
             Matrix4f turn=new Matrix4f().translate(centerX,0,centerZ).rotateY(yaw).translate(-centerX,0,-centerZ);
             GL20.glUseProgram(program);GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"vp"),false,vp.get(new float[16]));
             GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"turn"),false,turn.get(new float[16]));GL20.glUniform1i(GL20.glGetUniformLocation(program,"image"),0);
-            Texture[] textures=session.prepareMaterials(state);
+            Texture[] textures=session.preparePlainMaterials(state);
             GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
             GL11.glEnable(GL11.GL_BLEND);GL14.glBlendEquation(GL14.GL_FUNC_ADD);GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_ONE,GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -366,7 +352,7 @@ public class ReadyRoomPreview {
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
         }
-        void close(){if(closed)return;closed=true;if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
@@ -375,13 +361,17 @@ public class ReadyRoomPreview {
             this.mesh=mesh;this.frame=frame;this.materials=materials;this.x=x;this.y=y;width=w;height=h;screenHeight=sh;this.yaw=yaw;this.zoom=zoom;
         }
         public void render(){
-            if(mesh.closed||mesh.failed||mesh.session.retired)return;
+            paintNow();
+        }
+        boolean paintNow(){
+            if(mesh.closed||mesh.failed||mesh.session.retired)return false;
             State saved=new State();
             try {
                 GL11.glEnable(GL11.GL_SCISSOR_TEST);GL11.glScissor(x,screenHeight-y-height,width,height);GL11.glViewport(x,screenHeight-y-height,width,height);
                 GL11.glDepthMask(true);GL11.glClearDepth(1);GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
                 mesh.paint(frame,materials,width,height,yaw,zoom);
-            }catch(Exception e){mesh.failed=true;System.err.println("[AimohPMXReadyRoom] Preview draw failed: "+e);}
+                return true;
+            }catch(Exception e){mesh.failed=true;System.err.println("[AimohPMXReadyRoom] Preview draw failed: "+e);return false;}
             finally {
                 saved.restore();
                 SpriteRenderer.ringBuffer.restoreVbos=true;SpriteRenderer.ringBuffer.restoreBoundTextures=true;

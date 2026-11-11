@@ -46,7 +46,7 @@ public final class PhysicsStreamingCheck {
                 JSONObject row=(JSONObject)object;if(row.optBoolean("hidden"))continue;
                 Path pmx=assets.resolve(row.getString("model")),profile=assets.resolve(row.getString("profile"));JSONObject data=new JSONObject(Files.readString(profile));
                 if(!Set.of("pmx-0af216265749a22d","pmx-c7270af966e8aaf8","pmx-f5b2807685b18a60","pmx-4818f3bdda4ec18d").contains(row.getString("id")))continue;
-                try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory()){
+                try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory(true)){
                     float[] pose=new float[data.getJSONArray("source_reference").length()];for(int i=0;i<pose.length;i++)pose[i]=data.getJSONArray("source_reference").getFloat(i);
                     for(int i=0;i<8;i++)model.apply(pose,null,1f/60);
                     String[] files=model.appearance().readTextures();for(int i=0;i<files.length;i++)if(!files[i].isBlank())files[i]=pmx.getParent().resolve(files[i]).toString();

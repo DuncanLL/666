@@ -38,7 +38,7 @@ public class TextureRuntimeCheck {
                 JSONObject row=registry.getJSONObject(r);
                 Path base=root.resolve("media/aimoh_pmx"),pmx=base.resolve(row.getString("model")),profile=base.resolve(row.getString("profile"));
                 JSONObject p=new JSONObject(Files.readString(profile));
-                try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory()) {
+                try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory(true)) {
                     var source=p.getJSONArray("source_reference");float[] pose=new float[source.length()];
                     for(int i=0;i<pose.length;i++)pose[i]=source.getFloat(i);
                     for(int f=0;f<8;f++)model.apply(pose,null,1f/60);

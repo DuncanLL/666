@@ -12,18 +12,14 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.IdentityHashMap;
 import org.json.JSONObject;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import viewpoint.core.Frame;
-import viewpoint.render.Retirement;
-import viewpoint.render.ModelDraws;
 import zombie.characters.IsoPlayer;
 import zombie.core.opengl.RenderThread;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.skinnedmodel.model.SkinningData;
-import zombie.core.skinnedmodel.model.ModelMesh;
+import zombie.core.skinnedmodel.model.ModelInstance;
 import zombie.core.textures.Texture;
 
 final class ModelSession {
@@ -37,15 +33,17 @@ final class ModelSession {
     final String[] sourceNames;
     final float[] reference;
     final ByteBuffer positions,normals;
-    volatile PmxDrawMesh mesh,preparedMesh;
+    volatile ViewpointModel viewpointModel;
+    private ReadyRoomPreview.Mesh plainMesh;
     volatile boolean ready,failed,retired;
-    private TextureFactory textures;
-    private boolean queued;
+    private TextureFactory plainTextures;
+    private boolean viewpointQueued,plainQueued;
     private long lastFrame=Long.MIN_VALUE,lastNanos,lastWallNanos,lastSlowFrame=Long.MIN_VALUE;
     private long lastMotionRevision;
     private PmxDrawMesh.FrameData frozen;
+    private boolean frozenViewpoint;
     PmxDrawMesh.FrameData previousFrozen,olderFrozen;
-    final PmxPresentation presentation=new PmxPresentation();
+    private PmxDrawMesh.FrameData fullFrame;
     private float[] sourcePose;
     private GripAdjustment gripAdjustment;
     private boolean preserveAimWeapon;
@@ -56,12 +54,11 @@ final class ModelSession {
     final int sourceHead,targetHead;
     private final int sourcePelvis,targetPelvis;
     record Materials(long version,long epoch,float[] factors,float[] shadow,String[] paths,boolean[] doubleSided) {}
+    record Snapshot(PmxDrawMesh.FrameData frame, Materials materials) {}
     Materials materials;
     final Main.Entry entry;
     private long appearanceRevision=Long.MIN_VALUE,materialVersion,imageEpoch;
     private boolean hiddenHead;
-    private static final class DrawHistory { ModelDraws draws;int index;long frame; }
-    private final IdentityHashMap<ModelMesh,DrawHistory> drawHistory=new IdentityHashMap<>();
 
     ModelSession(NativeFunc api,OzzGrip grip,Main.Entry entry) throws Exception {
         this.api=api;this.grip=grip;this.entry=entry;
@@ -107,26 +104,26 @@ final class ModelSession {
         for(int i=0;i<sourceNames.length;i++)if(sourceIndices[i]>=0)System.arraycopy(actual,sourceIndices[i]*16,result,i*16,16);
         return result;
     }
-    synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead) {
-        return update(frame,player,holding,x,y,z,hideHead,false);
-    }
-    synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead,boolean idleEligible) {
-        return update(frame,player,holding,x,y,z,hideHead,idleEligible,false);
-    }
-    synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead,boolean idleEligible,boolean firstPerson) {
-        return update(frame,player,holding,x,y,z,hideHead,idleEligible,firstPerson,null);
-    }
-    synchronized PmxDrawMesh.FrameData update(Frame frame,AnimationPlayer player,boolean holding,float x,float y,float z,boolean hideHead,
-            boolean idleEligible,boolean firstPerson,GripAdjustment adjustment) {
-        if(lastFrame==frame.number)return frozen;
-        drawHistory.values().removeIf(history->history.frame<frame.number-1);
+    synchronized PmxDrawMesh.FrameData update(long frame,long capturedNanos,AnimationPlayer player,boolean holding,float x,float y,float z,
+            boolean hideHead,boolean idleEligible,boolean firstPerson,GripAdjustment adjustment,boolean viewpoint) {
+        if(lastFrame==frame) {
+            if(viewpoint&&(!frozenViewpoint||hiddenHead!=hideHead)){
+                if(hiddenHead!=hideHead){api.SetFirstPersonMode(model.handle(),hideHead);hiddenHead=hideHead;}
+                float[] visible=model.appearance().readMaterials();
+                frozen=new PmxDrawMesh.FrameData(fullFrame.positions(),fullFrame.normals(),visible,
+                        shading==null?null:shading.freeze(api,model.handle(),visible,fullFrame.positions(),materials.paths()));
+                frozenViewpoint=true;
+            }
+            prepareMesh(viewpoint ? frozen : fullFrame,viewpoint);
+            return viewpoint ? frozen : fullFrame;
+        }
         sourcePose=pose(player);
-        long wallNanos=System.nanoTime(),capturedNanos=DrawAccess.frameNanos(frame);
+        long wallNanos=System.nanoTime();
         float seconds=lastNanos==0?0:Math.clamp((capturedNanos-lastNanos)*1e-9f,0,.08f);
         // The target placement is R_y(-angle); the native inertia API negates its yaw input.
         model.retargeter().setModelMotion(-x*scale/1.5f,z*2.4494896f*scale/1.5f,-y*scale/1.5f,player.getRenderedAngle());
         if(model.motionActive()&&player.getIsoGameCharacter() instanceof IsoPlayer actor&&!ReadyRoomPreview.motionAllowed(actor))model.stopMotion();
-        long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame.number==lastFrame+1;
+        long revision=model.motionRevision();boolean continuous=revision==lastMotionRevision&&frame==lastFrame+1;
         float[] poseForModel=idleHand==null||model.motionActive()?sourcePose:idleHand.apply(sourcePose,sourceIndices,seconds,idleEligible);
         preserveAimWeapon=holding&&firstPerson&&EfzAimCompatibility.keepsWeapon(player.getIsoGameCharacter());
         gripAdjustment=preserveAimWeapon&&adjustment!=null?adjustment.wristsOnly():adjustment;
@@ -145,32 +142,48 @@ final class ModelSession {
         positions.asFloatBuffer().get(p);normals.asFloatBuffer().get(n);
         model.deformChest(p,n);
         float[] finalMaterials=model.appearance().readMaterials();
-        PmxDrawMesh.FrameData next=new PmxDrawMesh.FrameData(p,n,finalMaterials,shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
+        PmxDrawMesh.FrameData next=new PmxDrawMesh.FrameData(p,n,finalMaterials,
+                !viewpoint||shading==null?null:shading.freeze(api,model.handle(),finalMaterials,p,materials.paths()));
+        fullFrame=hideHead?new PmxDrawMesh.FrameData(p,n,model.appearance().readMaterials(false)):next;
         long cpuNanos=System.nanoTime()-wallNanos,wallGap=lastWallNanos==0?0:wallNanos-lastWallNanos;
-        if((cpuNanos>50_000_000L||wallGap>100_000_000L)&&(lastSlowFrame==Long.MIN_VALUE||frame.number-lastSlowFrame>=300)){
-            lastSlowFrame=frame.number;
+        if((cpuNanos>50_000_000L||wallGap>100_000_000L)&&(lastSlowFrame==Long.MIN_VALUE||frame-lastSlowFrame>=300)){
+            lastSlowFrame=frame;
             System.out.println("[AimohPMXPreview] Slow model "+entry.id()+" "+model.stepTiming().put("capture_cpu_ms",cpuNanos/1e6).put("capture_gap_ms",wallGap/1e6).put("simulation_dt",seconds));
         }
         olderFrozen=continuous?previousFrozen:null;previousFrozen=continuous?frozen:null;lastMotionRevision=revision;
-        frozen=next;lastFrame=frame.number;lastNanos=capturedNanos;lastWallNanos=wallNanos;
-        prepareMesh(frozen);
-        return frozen;
+        frozen=next;frozenViewpoint=viewpoint;lastFrame=frame;lastNanos=capturedNanos;lastWallNanos=wallNanos;
+        prepareMesh(viewpoint?frozen:fullFrame,viewpoint);
+        return viewpoint?frozen:fullFrame;
     }
-    synchronized void prepareMesh(PmxDrawMesh.FrameData frame){
-        preparedMesh=mesh==null?null:mesh.readyMesh();ready=preparedMesh!=null;
-        if(!ready&&!queued){queued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame));}
+    synchronized void prepareMesh(PmxDrawMesh.FrameData frame,boolean viewpoint) {
+        if(viewpoint) {
+            if(viewpointModel==null)viewpointModel=new ViewpointModel(this);
+            ready=viewpointModel.ready();
+            if(!ready&&!viewpointQueued){viewpointQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,true));}
+        } else {
+            ready=plainMesh!=null;
+            if(!ready&&!plainQueued){plainQueued=true;RenderThread.queueInvokeOnRenderContext(()->initialize(frame,false));}
+        }
     }
-    private synchronized void initialize(PmxDrawMesh.FrameData frame) {
+    private synchronized void initialize(PmxDrawMesh.FrameData frame,boolean viewpoint) {
         try {
             if(retired||failed)return;
-            if(textures==null)textures=new TextureFactory();Texture[] material=prepareMaterials(materials);
-            boolean first=mesh==null;if(first)mesh=new PmxDrawMesh(api,model.handle(),material,model.appearance(),shading);
-            mesh.upload(frame);preparedMesh=mesh.readyMesh();ready=preparedMesh!=null;
-            if(first)
-            System.out.println("[AimohPMXPreview] GPU ready "+frame.positions().length/3+" vertices, "+material.length+" materials; physics "+model.stepTiming());
-        } catch(Throwable e) { fail(e); }finally{queued=false;}
+            if(viewpoint){viewpointModel.upload(frame,materials);ready=viewpointModel.ready();}
+            else {preparePlainMaterials(materials);plainMesh(frame);ready=true;}
+        } catch(Throwable e) { fail(e); }
+        finally {if(viewpoint)viewpointQueued=false;else plainQueued=false;}
     }
-    Texture[] prepareMaterials(Materials state)throws Exception {Texture[] result=textures.prepare(state.paths(),state.factors(),state.version(),state.epoch(),shading);if(mesh!=null)mesh.updateOutlineTextures(result);return result;}
+    synchronized Snapshot snapshot() {
+        return fullFrame==null||retired||failed?null:new Snapshot(fullFrame,materials);
+    }
+    synchronized ReadyRoomPreview.Mesh plainMesh(PmxDrawMesh.FrameData frame) {
+        if(plainMesh==null)plainMesh=new ReadyRoomPreview.Mesh(this,frame);
+        return plainMesh;
+    }
+    Texture[] preparePlainMaterials(Materials state)throws Exception {
+        if(plainTextures==null)plainTextures=new TextureFactory(false);
+        return plainTextures.prepare(state.paths(),state.factors(),state.version(),state.epoch());
+    }
     private String resolveTexture(String file) {
         if(file.isBlank())return "";
         Path root=entry.model().toAbsolutePath().getParent(),path=Path.of(file);path=(path.isAbsolute()?path:root.resolve(path)).normalize().toAbsolutePath();
@@ -203,16 +216,16 @@ final class ModelSession {
                 throw new IllegalArgumentException("模型或标定已变化，请重新启用人物；纯外观更新不需要重新启用");
         applySettings(next,true);
     }
-    int textureCount(){return textures==null?0:textures.liveTextures;}
-    long textureUploads(){return textures==null?0:textures.uploads;}
-    synchronized boolean retargetsAttachment(DrawAccess.Gear gear){return !preserveAimWeapon||gear.side!=1;}
-    synchronized Matrix4f attachment(DrawAccess.Gear gear,Matrix4f actual,AnimationPlayer player) {
-        if(gear.side==1&&gripAdjustment!=null){
+    int textureCount(){return (plainTextures==null?0:plainTextures.liveTextures)+(viewpointModel==null?0:viewpointModel.textureCount());}
+    long textureUploads(){return (plainTextures==null?0:plainTextures.uploads)+(viewpointModel==null?0:viewpointModel.textureUploads());}
+    synchronized boolean retargetsAttachment(int side){return !preserveAimWeapon||side!=1;}
+    synchronized Matrix4f attachment(ModelInstance root,int side,String key,Matrix4f actual,AnimationPlayer player) {
+        if(side==1&&gripAdjustment!=null){
             Matrix4f locked=gripAdjustment.placement(actual);
             if(locked!=null)return locked;
         }
-        if(gear.side>=0)return new Matrix4f().set(model.remapHeldItem(sourcePose,gear.side==0,actual.get(new float[16]),gear.key));
-        String name=gear.root.parentBoneName;var skin=player.getSkinningData();
+        if(side>=0)return new Matrix4f().set(model.remapHeldItem(sourcePose,side==0,actual.get(new float[16]),key));
+        String name=root.parentBoneName;var skin=player.getSkinningData();
         Integer bone=name==null?null:skin.boneIndices.get(name);
         while(bone!=null&&bone>=0) {
             for(int i=0;i<sourceIds.length;i++)if(sourceIndices[sourceIds[i]]==bone)
@@ -236,24 +249,12 @@ final class ModelSession {
         return new Matrix4f(target).m30(target.m30()+delta.x).m31(target.m31()+delta.y).m32(target.m32()+delta.z);
     }
     void fail(Throwable e) { if(!failed){failed=true;ready=false;Main.error(e);} }
-    synchronized boolean followDraw(ModelDraws draws,int index,long frame) {
-        ModelMesh mesh=DrawAccess.mesh(draws,index);
-        DrawHistory old=drawHistory.get(mesh);
-        if(old==null){old=new DrawHistory();drawHistory.put(mesh,old);}
-        if(old.frame==frame&&old.draws==draws&&old.index==index)return false;
-        // Reuse the host's motion/interpolation contract while keeping immutable upload command keys.
-        boolean continuous=old.draws!=null&&old.frame==frame-1&&old.draws!=draws&&old.index<old.draws.count()&&DrawAccess.mesh(old.draws,old.index)==mesh;
-        if(continuous)draws.motion(index,old.draws,old.index,0,false);
-        old.draws=draws;old.index=index;old.frame=frame;
-        return continuous;
-    }
     synchronized void retire() {
-        if(retired)return;retired=true;ready=false;preparedMesh=null;
-        drawHistory.clear();
-        Retirement.retire(()->{
-            try{ResourceCleanup.close(mesh,textures,model);}
+        if(retired)return;retired=true;ready=false;
+        ViewpointMode.retire(()->{
+            try{ResourceCleanup.close(viewpointModel,plainMesh,plainTextures,model);}
             catch(Throwable e){Main.error(e);}
-            finally{mesh=null;textures=null;frozen=previousFrozen=olderFrozen=null;presentation.clear();}
+            finally{viewpointModel=null;plainMesh=null;plainTextures=null;frozen=fullFrame=previousFrozen=olderFrozen=null;}
         });
     }
 }

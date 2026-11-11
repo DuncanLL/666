@@ -11,12 +11,13 @@ import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.opengl.GL11;
-import viewpoint.render.Retirement;
 import zombie.core.textures.Texture;
 import zombie.core.textures.TextureID;
 
 /** Render-thread image reuse and bounded live bindings; no per-frame file reads. */
 final class TextureFactory implements AutoCloseable {
+    private final boolean viewpoint;
+    TextureFactory(boolean viewpoint) { this.viewpoint = viewpoint; }
     record Pixels(int width,int height,byte[] rgba) {}
     final LinkedHashMap<String,Texture> textures=new LinkedHashMap<>();
     private final LinkedHashMap<String,Pixels> images=new LinkedHashMap<>();
@@ -91,7 +92,10 @@ final class TextureFactory implements AutoCloseable {
                 next.put(key,texture);result[i]=texture;
             }
         } catch(Throwable e) {for(Texture texture:created.values())texture.destroy();throw e;}
-        for(var entry:textures.entrySet())if(!next.containsKey(entry.getKey()))Retirement.retireDrawing(entry.getValue()::destroy);
+        for(var entry:textures.entrySet())if(!next.containsKey(entry.getKey())) {
+            if(viewpoint)ViewpointModel.retireDrawing(entry.getValue()::destroy);
+            else entry.getValue().destroy();
+        }
         textures.clear();textures.putAll(next);images.clear();images.putAll(decoded);
         version=nextVersion;epoch=nextEpoch;bound=result;liveTextures=textures.size();decodedImages=images.size();return result;
     }

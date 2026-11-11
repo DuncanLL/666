@@ -36,7 +36,16 @@ public class Main {
     private static OzzGrip grip;
     private static Path directory;
 
-    public static void main(String[] args) { System.out.println("[AimohPMXPreview] 0.3.20 optional character packs"); }
+    public static void main(String[] args) {
+        // ZombieBuddy retransforms loaded game classes when the package is dispatched.
+        // Resolve these two lazy stock renderer classes before it applies the advice.
+        ClassLoader loader=Main.class.getClassLoader();
+        for(String type:new String[]{"zombie.core.skinnedmodel.model.Model","zombie.ui.UI3DModel$Drawer"}) {
+            try { Class.forName(type,false,loader); }
+            catch(ClassNotFoundException | LinkageError failure) { error(failure); }
+        }
+        System.out.println("[AimohPMXPreview] Shared player appearance");
+    }
 
     private static void refreshPoseOwners() {
         IdentityHashMap<IsoGameCharacter,SourcePoseGuard.AnimationPose> next=new IdentityHashMap<>();
@@ -124,6 +133,7 @@ public class Main {
         grip=new OzzGrip(nativeDirectory.resolve("AimohGripOzz.dll"));api=loaded;
         System.out.println("[AimohPMXPreview] native="+api.GetVersion()+" assets="+directory);
     }
+    static boolean hasAppearance(IsoGameCharacter actor) { return poseOwners.containsKey(actor); }
     static synchronized ModelSession session(IsoGameCharacter actor) { return active.get(actor); }
     static synchronized ModelSession sessionForCapture(IsoGameCharacter actor) {
         Pending request=pending.remove(actor);

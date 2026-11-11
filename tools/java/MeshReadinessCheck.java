@@ -27,7 +27,8 @@ public final class MeshReadinessCheck {
             field(Main.class,"directory").set(null,root);Method init=Main.class.getDeclaredMethod("nativeRuntime");init.setAccessible(true);init.invoke(null);NativeFunc api=(NativeFunc)field(Main.class,"api").get(null);
             Path assets=root.resolve("media/aimoh_pmx");JSONObject row=new JSONObject(Files.readString(assets.resolve("registry.json"))).getJSONArray("models").getJSONObject(0);
             Path pmx=assets.resolve(row.getString("model")),profile=assets.resolve(row.getString("profile"));JSONObject p=new JSONObject(Files.readString(profile));int count=p.getInt("vertices");
-            try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory()){
+            try(PmxModel model=PmxModel.load(api,pmx,profile);
+                    TextureFactory textures=before?TextureFactory.class.getDeclaredConstructor().newInstance():new TextureFactory(true)){
                 var ref=p.getJSONArray("source_reference");float[] pose=new float[ref.length()];for(int i=0;i<pose.length;i++)pose[i]=ref.getFloat(i);model.apply(pose,null,0);
                 String[] paths=model.appearance().readTextures();for(int i=0;i<paths.length;i++)if(!paths[i].isBlank())paths[i]=pmx.getParent().resolve(paths[i]).toString();PmxShading shading=PmxShading.load(pmx,p);
                 var material=textures.prepare(paths,model.appearance().readTextureFactors(),1,0,shading);
@@ -54,15 +55,14 @@ public final class MeshReadinessCheck {
                 if(!before){
                     ModelSession session=new ModelSession(api,(OzzGrip)field(Main.class,"grip").get(null),new Main.Entry(row.getString("id"),row.getString("label"),pmx,profile));
                     try{
-                        Method prepare=ModelSession.class.getDeclaredMethod("prepareMesh",PmxDrawMesh.FrameData.class);prepare.setAccessible(true);Field prepared=field(ModelSession.class,"preparedMesh");
                         session.materials=new ModelSession.Materials(1,0,session.model.appearance().readTextureFactors(),session.model.appearance().readMaterials(false),paths,session.model.appearance().readBothFaces());
-                        prepare.invoke(session,frame);if(!session.ready||session.failed||prepared.get(session)==null)throw new AssertionError("Initial session upload did not complete");
-                        PmxDrawMesh retained=(PmxDrawMesh)prepared.get(session);IrisPacks.linked(new IrisPacks.Active(null,Map.of("VP_DANRP_PIPELINE","true"),30));
+                        session.prepareMesh(frame,true);if(!session.ready||session.failed||session.viewpointModel.prepared==null)throw new AssertionError("Initial session upload did not complete");
+                        PmxDrawMesh retained=session.viewpointModel.prepared;IrisPacks.linked(new IrisPacks.Active(null,Map.of("VP_DANRP_PIPELINE","true"),30));
                         field(RenderThread.class,"contextThread").set(null,new Thread());
-                        try{prepare.invoke(session,frame);prepare.invoke(session,frame);if(session.ready||session.failed||!field(ModelSession.class,"queued").getBoolean(session))throw new AssertionError("Pending GPU work became a failed/ready session");}
+                        try{session.prepareMesh(frame,true);session.prepareMesh(frame,true);if(session.ready||session.failed||!field(ModelSession.class,"viewpointQueued").getBoolean(session))throw new AssertionError("Pending GPU work became a failed/ready session");}
                         finally{field(RenderThread.class,"contextThread").set(null,Thread.currentThread());}
                         Method drain=RenderThread.class.getDeclaredMethod("flushInvokeQueue");drain.setAccessible(true);drain.invoke(null);
-                        if(!session.ready||session.failed||prepared.get(session)==retained||field(ModelSession.class,"queued").getBoolean(session))throw new AssertionError("Queued session did not recover after upload");
+                        if(!session.ready||session.failed||session.viewpointModel.prepared==retained||field(ModelSession.class,"viewpointQueued").getBoolean(session))throw new AssertionError("Queued session did not recover after upload");
                         PmxDrawMesh.class.getMethod("uploadPrepared",PmxDrawMesh.FrameData.class).invoke(retained,frame);
                     }finally{IrisPacks.linked(previous);session.retire();viewpoint.render.Retirement.drawn(10000);GL11.glFinish();viewpoint.render.Retirement.collect();}
                 }

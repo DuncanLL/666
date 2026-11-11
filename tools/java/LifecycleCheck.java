@@ -75,10 +75,10 @@ public final class LifecycleCheck {
             ModelSession original=create(0);stage(original);
             check(Main.session(null)==null&&!Main.isReady(null),"Initial pending model became active");
             check(Main.completeCapture(null,original)==null,"Unprepared initial candidate committed");
-            original.prepareMesh(frame(original,false));check(original.ready,"Initial GPU prepare");
+            original.prepareMesh(frame(original,false),true);check(original.ready,"Initial GPU prepare");
             check(Main.completeCapture(null,original)==original&&Main.isReady(null),"Initial commit");
             String originalId=Main.modelId(null);
-            ModelSession bad=create(softRow);stage(bad);settings(bad);bad.prepareMesh(frame(bad,true));
+            ModelSession bad=create(softRow);stage(bad);settings(bad);bad.prepareMesh(frame(bad,true),true);
             check(bad.failed,"Real missing texture did not fail");
             check(Main.completeCapture(null,bad)==original&&!original.retired&&Main.modelId(null).equals(originalId),"Candidate failure replaced old actor");
             check(Main.hasModelFailure(null)&&bad.retired&&Main.isReady(null),"Failure not reported or old model not ready");drain();
@@ -86,26 +86,26 @@ public final class LifecycleCheck {
             for(int i=0;i<4;i++){
                 ModelSession cancelled=create(softRow);stage(cancelled);var data=frame(cancelled,false);
                 field(RenderThread.class,"contextThread").set(null,new Thread());
-                try{cancelled.prepareMesh(data);}finally{field(RenderThread.class,"contextThread").set(null,Thread.currentThread());}
+                try{cancelled.prepareMesh(data,true);}finally{field(RenderThread.class,"contextThread").set(null,Thread.currentThread());}
                 ModelSession replacement=create(0);stage(replacement);
                 check(cancelled.retired&&Main.completeCapture(null,cancelled)==original,"Superseded candidate revived");
-                drain();check(!cancelled.ready&&cancelled.mesh==null,"Late queued upload resurrected retired candidate");
+                drain();check(!cancelled.ready&&cancelled.viewpointModel==null,"Late queued upload resurrected retired candidate");
                 check(Main.completeCapture(null,replacement)==original,"Replacement committed before GPU ready");
-                replacement.prepareMesh(frame(replacement,false));check(Main.completeCapture(null,replacement)==replacement&&original.retired,"Ready replacement did not commit");
+                replacement.prepareMesh(frame(replacement,false),true);check(Main.completeCapture(null,replacement)==replacement&&original.retired,"Ready replacement did not commit");
                 drain();original=replacement;
             }
             ModelSession cancelling=create(softRow);stage(cancelling);var cancelledFrame=frame(cancelling,false);
             field(RenderThread.class,"contextThread").set(null,new Thread());
-            try{cancelling.prepareMesh(cancelledFrame);}finally{field(RenderThread.class,"contextThread").set(null,Thread.currentThread());}
-            Main.disable(null);drain();check(cancelling.retired&&Main.session(null)==null&&cancelling.mesh==null,"Disable did not cancel pending GPU upload");
+            try{cancelling.prepareMesh(cancelledFrame,true);}finally{field(RenderThread.class,"contextThread").set(null,Thread.currentThread());}
+            Main.disable(null);drain();check(cancelling.retired&&Main.session(null)==null&&cancelling.viewpointModel==null,"Disable did not cancel pending GPU upload");
             int[] released={0};RuntimeException first=new IllegalStateException("injected-first"),second=new IllegalStateException("injected-last");
             try{ResourceCleanup.close(()->{released[0]++;throw first;},()->released[0]++,()->{released[0]++;throw second;});throw new AssertionError("Cleanup error disappeared");}
             catch(RuntimeException e){check(e==first&&e.getSuppressed().length==1&&released[0]==3,"Cleanup skipped later owners or lost failures");}
-            ModelSession release=create(softRow);release.prepareMesh(frame(release,false));
-            TextureFactory textures=(TextureFactory)field(ModelSession.class,"textures").get(release);
+            ModelSession release=create(softRow);release.prepareMesh(frame(release,false),true);
+            TextureFactory textures=(TextureFactory)field(ViewpointModel.class,"textures").get(release.viewpointModel);
             textures.close();textures.textures.put("injected-cleanup-failure",null);
             release.retire();release.retire();drain();
-            check(release.mesh==null&&field(ModelSession.class,"textures").get(release)==null,"Retirement did not clear ownership after injected failure");
+            check(release.viewpointModel==null,"Retirement did not clear ownership after injected failure");
             check(ChestSoftBody.liveWorlds()==0,"Cleanup failure blocked chest release");
             JSONObject stats=new JSONObject(api.GetRuntimeStats());for(String key:stats.keySet())check(stats.getLong(key)==0,"Native leak: "+stats);
             check(GL11.glGetError()==0,"GL error");grip.close();

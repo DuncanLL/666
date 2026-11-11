@@ -8,6 +8,7 @@ import viewpoint.core.Frame;
 import viewpoint.render.ModelDraws;
 import viewpoint.render.SceneData;
 import zombie.characters.IsoGameCharacter;
+import zombie.iso.IsoCamera;
 import zombie.core.skinnedmodel.model.ModelInstance;
 import zombie.core.skinnedmodel.model.ModelSlotRenderData;
 
@@ -39,17 +40,20 @@ public final class Bridge {
             Matrix4f weapon=gun>=0&&inverse!=null
                 ?new Matrix4f(inverse).mul(DrawAccess.matrix(draws,gun)):null;
             PmxDrawMesh.FrameData data=null;
-            try {if(!session.failed)data=session.update(frame,actor.getAnimationPlayer(),holding,
+            long gameFrame=IsoCamera.frameState.frameCount;
+            long captureNanos=DrawAccess.frameNanos(frame);
+            try {if(!session.failed)data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,
                 actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                GripCalibration.request(actor,session.entry.id(),weapon));}catch(Throwable e){session.fail(e);}
+                GripCalibration.request(actor,session.entry.id(),weapon),true);}catch(Throwable e){session.fail(e);}
             ModelSession selected=Main.completeCapture(actor,session);
             if(selected!=session){
                 session=selected;if(session==null||session.failed)return;
-                data=session.update(frame,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                    GripCalibration.request(actor,session.entry.id(),weapon));
+                data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
+                    GripCalibration.request(actor,session.entry.id(),weapon),true);
             }
             if(session.failed||!session.ready)return;
-            PmxDrawMesh prepared=session.preparedMesh;if(prepared==null)return;
+            ViewpointModel backend=session.viewpointModel;
+            PmxDrawMesh prepared=backend==null?null:backend.prepared;if(prepared==null)return;
             if(body<0)return;
             Matrix4f targetPlacement=new Matrix4f(sourcePlacement).scale(1,1,-1).scale(1/session.scale);
             if(slot.inVehicle)targetPlacement=session.vehicleSeatPlacement(sourcePlacement,targetPlacement);
@@ -61,15 +65,15 @@ public final class Bridge {
             draw.customEnd=draws.count();
             boolean continuous=false;
             for(int n=originalEnd;n<draw.customEnd;n++) {
-                DrawAccess.style(draws,body,n);continuous|=session.followDraw(draws,n,frame.number);
+                DrawAccess.style(draws,body,n);continuous|=backend.followDraw(draws,n,frame.number);
                 if(draw.low!=null)draws.bounds(n,targetPlacement,draw.low,draw.high,1);
             }
             for(int n=first;n<originalEnd;n++) {
                 ModelInstance instance=DrawAccess.instance(draws,n);DrawAccess.Gear gear=equipment.get(instance);
                 if(gear==null)DrawAccess.flags(draws,n,0);
-                else if(instance.model.isStatic&&session.retargetsAttachment(gear)) {
+                else if(instance.model.isStatic&&session.retargetsAttachment(gear.side)) {
                     Matrix4f local=new Matrix4f(inverse).mul(DrawAccess.matrix(draws,n));
-                    Matrix4f placement=new Matrix4f(targetPlacement).mul(session.attachment(gear,local,actor.getAnimationPlayer()));
+                    Matrix4f placement=new Matrix4f(targetPlacement).mul(session.attachment(gear.root,gear.side,gear.key,local,actor.getAnimationPlayer()));
                     DrawAccess.matrix(draws,n,placement);
                     var mesh=DrawAccess.mesh(draws,n);draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
                     DrawAccess.ownPlacement(draws,n,originalEnd,continuous);
@@ -85,7 +89,8 @@ public final class Bridge {
         long serial=++preparation;ModelDraws draws=scene.models;
         for(int n=0;n<draws.count();n++)if(draws.key(n) instanceof Part part){
             part.frame.upload(serial,phase,scene.cameraCut);
-            if(!part.frame.session.failed)DrawAccess.texture(draws,n,part.frame.boundTextures[part.material]);
+            if(!part.frame.session.failed&&!part.frame.session.retired&&part.frame.boundTextures!=null)
+                DrawAccess.texture(draws,n,part.frame.boundTextures[part.material]);
         }
     }
     public static void presentationHeaders(ModelDraws draws) {
@@ -123,9 +128,10 @@ public final class Bridge {
         }
         void upload(long serial,float phase,boolean cut) {
             if(preparedSerial==serial)return;preparedSerial=serial;
+            if(session.retired){restore();return;}
             try {
-                if(boundTextures==null)boundTextures=session.prepareMaterials(materials);
-                PmxDrawMesh.FrameData sampled=session.presentation.sample(data,previous,older,phase,cut);
+                if(boundTextures==null)boundTextures=session.viewpointModel.textures(materials);
+                PmxDrawMesh.FrameData sampled=session.viewpointModel.presentation.sample(data,previous,older,phase,cut);
                 mesh.uploadPrepared(sampled,materials.shadow());renderedHeader=sampled.shadingHead();
             }catch(Throwable e){restore();session.fail(e);}
         }
