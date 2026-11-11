@@ -7234,6 +7234,10 @@
     "42/media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png": {
       "bytes": 65810,
       "sha256": "91cb97f92de12b06065b0e147c5f44a56c1c4e5d64085aa342e00ba63d6f0488"
+    },
+    "42/media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png": {
+      "bytes": 71850,
+      "sha256": "a7f454a07aca965dc51b59e96d75f13fbd3ad34db211d10fb0fa13ae45b8bfbb"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",
@@ -9775,6 +9779,186 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png": {
           "bytes": 65810,
           "sha256": "91cb97f92de12b06065b0e147c5f44a56c1c4e5d64085aa342e00ba63d6f0488"
+        }
+      }
+    },
+    "R116Suomi": {
+      "files": {
+        "42/media/aimoh_gf2/data/01d43f11be7aeb35170c831cea54111107e69e07f23bf2b90be684c72b297305.bin": {
+          "bytes": 5592432,
+          "sha256": "01d43f11be7aeb35170c831cea54111107e69e07f23bf2b90be684c72b297305"
+        },
+        "42/media/aimoh_gf2/data/03bd46eef56cce8d202357ff9f2388651f0d1653a8df0b3ee63cb00bca33b292.f32": {
+          "bytes": 544,
+          "sha256": "03bd46eef56cce8d202357ff9f2388651f0d1653a8df0b3ee63cb00bca33b292"
+        },
+        "42/media/aimoh_gf2/data/05811d0446d2022931502202933822a641ab9c0b82ee19c4ed19d8c381c3c124.f32": {
+          "bytes": 544,
+          "sha256": "05811d0446d2022931502202933822a641ab9c0b82ee19c4ed19d8c381c3c124"
+        },
+        "42/media/aimoh_gf2/data/2506064ddc4dca7647d1c193cd2a3510421c34cb0832b00ddfb0ca9b1b919c96.bin": {
+          "bytes": 32768,
+          "sha256": "2506064ddc4dca7647d1c193cd2a3510421c34cb0832b00ddfb0ca9b1b919c96"
+        },
+        "42/media/aimoh_gf2/data/34de8034c739fb11359ffc65c8d11cddeb91e2a7e9eac91b118737b2d7d725d2.bin": {
+          "bytes": 5592432,
+          "sha256": "34de8034c739fb11359ffc65c8d11cddeb91e2a7e9eac91b118737b2d7d725d2"
+        },
+        "42/media/aimoh_gf2/data/3863f6ecdb2e9e288feb8aba895c9f53f9898d08113fc6002f9df59007ca0cce.bin": {
+          "bytes": 32768,
+          "sha256": "3863f6ecdb2e9e288feb8aba895c9f53f9898d08113fc6002f9df59007ca0cce"
+        },
+        "42/media/aimoh_gf2/data/3d4d1a7d20cbd4114916187435e8102939c1402e12f05ede4887be5594e7f966.bin": {
+          "bytes": 5592432,
+          "sha256": "3d4d1a7d20cbd4114916187435e8102939c1402e12f05ede4887be5594e7f966"
+        },
+        "42/media/aimoh_gf2/data/3ec8d6b835a5eb3b67cae0bf4491a0912d2e8507d2cb43ded708de8d6b77398a.f32": {
+          "bytes": 96,
+          "sha256": "3ec8d6b835a5eb3b67cae0bf4491a0912d2e8507d2cb43ded708de8d6b77398a"
+        },
+        "42/media/aimoh_gf2/data/4c11f4288e8534468aecd2e3e22ca6a6fac37744bcb7b653a7c249ebe132785f.bin": {
+          "bytes": 5592432,
+          "sha256": "4c11f4288e8534468aecd2e3e22ca6a6fac37744bcb7b653a7c249ebe132785f"
+        },
+        "42/media/aimoh_gf2/data/6a87c707b24fe5c047335b60797ad071d1235eead04e2076a58a92d36c9f5abc.bin": {
+          "bytes": 32768,
+          "sha256": "6a87c707b24fe5c047335b60797ad071d1235eead04e2076a58a92d36c9f5abc"
+        },
+        "42/media/aimoh_gf2/data/73011d7d394775f86f77c7ba83b066e3265a7b49bfde4d504bb404a1f20f1713.f32": {
+          "bytes": 544,
+          "sha256": "73011d7d394775f86f77c7ba83b066e3265a7b49bfde4d504bb404a1f20f1713"
+        },
+        "42/media/aimoh_gf2/data/7c80f575c518a4a5c06a1092efde4bb38b28eff411ed00d7f25c9604dcc20509.bin": {
+          "bytes": 1398128,
+          "sha256": "7c80f575c518a4a5c06a1092efde4bb38b28eff411ed00d7f25c9604dcc20509"
+        },
+        "42/media/aimoh_gf2/data/7e9435376eca3cd1f11c934dcb841faea2dd37b553cfd9b45670575a0da73ede.bin": {
+          "bytes": 1081488,
+          "sha256": "7e9435376eca3cd1f11c934dcb841faea2dd37b553cfd9b45670575a0da73ede"
+        },
+        "42/media/aimoh_gf2/data/82fa0adb1bc10ee907ec5968e9f3b4ef44ff9b8b957813351ed3dac9d11dba14.bin": {
+          "bytes": 5592432,
+          "sha256": "82fa0adb1bc10ee907ec5968e9f3b4ef44ff9b8b957813351ed3dac9d11dba14"
+        },
+        "42/media/aimoh_gf2/data/a0fcfda8901626a86442fc8be2271991427b3dc53d5832d183045dca96e9e537.bin": {
+          "bytes": 349552,
+          "sha256": "a0fcfda8901626a86442fc8be2271991427b3dc53d5832d183045dca96e9e537"
+        },
+        "42/media/aimoh_gf2/data/af92e99c2c3a772fd15a1b9cba4b0726e505f943135345c02df7411342339d1f.bin": {
+          "bytes": 2796216,
+          "sha256": "af92e99c2c3a772fd15a1b9cba4b0726e505f943135345c02df7411342339d1f"
+        },
+        "42/media/aimoh_gf2/data/ca9d3f87df14ed918c8fcdf94acc8c570478694691bd25b81e454b2638f26da2.bin": {
+          "bytes": 5592432,
+          "sha256": "ca9d3f87df14ed918c8fcdf94acc8c570478694691bd25b81e454b2638f26da2"
+        },
+        "42/media/aimoh_gf2/data/d0b14dbd3630a86bef4c27dfb159fa11783c77efa5cea516fd03cfcc966656f8.f32": {
+          "bytes": 544,
+          "sha256": "d0b14dbd3630a86bef4c27dfb159fa11783c77efa5cea516fd03cfcc966656f8"
+        },
+        "42/media/aimoh_gf2/data/d69c4501085e0d917aefac12d263a06e4580139eb3722d463de475386ada7df1.bin": {
+          "bytes": 1398128,
+          "sha256": "d69c4501085e0d917aefac12d263a06e4580139eb3722d463de475386ada7df1"
+        },
+        "42/media/aimoh_gf2/data/e1579f1ad202001c2fe5e484539b2ce66b942693bca24fbaf9a263c3219b5966.bin": {
+          "bytes": 87408,
+          "sha256": "e1579f1ad202001c2fe5e484539b2ce66b942693bca24fbaf9a263c3219b5966"
+        },
+        "42/media/aimoh_gf2/data/e243d4b5ed2359dc2e7035c557f99ec9479f4136e9b7cac986ce830dc2459852.f32": {
+          "bytes": 3768320,
+          "sha256": "e243d4b5ed2359dc2e7035c557f99ec9479f4136e9b7cac986ce830dc2459852"
+        },
+        "42/media/aimoh_gf2/data/e3c9d57b5e4ae0803e034f89abccfc9131845b6ed0edd205fb873e69e2520a1f.f32": {
+          "bytes": 544,
+          "sha256": "e3c9d57b5e4ae0803e034f89abccfc9131845b6ed0edd205fb873e69e2520a1f"
+        },
+        "42/media/aimoh_gf2/packs/R116Suomi.json": {
+          "bytes": 1385644,
+          "sha256": "0fbe804a6fdbfdedccf9f53b334d52cdbe0cfa6ee68b40857d3a840774e05168"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/B_body_d.png": {
+          "bytes": 1210694,
+          "sha256": "5129cbef2d90f2be2f0d335fe85fa17fdf0ab0a65c5c6637043e76d1c2edc393"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR0101_slg_cloth1_uber_da.png": {
+          "bytes": 1296208,
+          "sha256": "a4d9d08b888793a11f39163c5e5dd2eca247ab7fdb2f65c9504cf06408a3c845"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR0101_slg_hair_d.png": {
+          "bytes": 16798597,
+          "sha256": "e740a1b509d0499d4e7587d3b95d545aec19db4aa75df93841c4ed9be3bd92e5"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR01_eye_d.png": {
+          "bytes": 547387,
+          "sha256": "6cba156b472525f42aea97b36a896c512b3c624c5cc934243641ba8a9e2492b0"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR01_eyeblend.png": {
+          "bytes": 37736,
+          "sha256": "9c967762395ce3a7a13ac28ede65f23eac932f39058ad962cda6f0b57e3de477"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR01_face_d.png": {
+          "bytes": 628499,
+          "sha256": "292333674c44fdbc2cb7d10055b03acf2b1040ac674ae34f24fe2e071903c635"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/extra.png": {
+          "bytes": 385280,
+          "sha256": "b2817a41d8ed4af869f50ae06d5f9cad300acb30aa28f32596c75ede5a360749"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/normalmap/B_body_n.png": {
+          "bytes": 1977532,
+          "sha256": "2d67711deeca2dfe50522558308b0056338db622601bfb6511bcfcae54c8945c"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/normalmap/B_body_rmo.png": {
+          "bytes": 3472568,
+          "sha256": "5dc0af4f6fc40c0cc4933de101cba2cf40f315f0c458952a36d41bd78114c046"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/normalmap/c_SuomiSSR0101_slg_cloth1_uber_n.png": {
+          "bytes": 4455757,
+          "sha256": "7b32dc4ca2737a6051a3bb849286aa75af7419b2cc04a3d3c1591acf8ca3732b"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/Textures/normalmap/c_SuomiSSR0101_slg_cloth1_uber_rmo.png": {
+          "bytes": 2197450,
+          "sha256": "3179a53bd3be5160be89f6f47e4d2655eb968894d43b3b02fef1ae2e1493f8cb"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/chest.bin": {
+          "bytes": 106196,
+          "sha256": "677cca6319748a1ab94bf42616e3d1b9968fc9f028d412ac6cfdf5e75ad67e50"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/model.pmx": {
+          "bytes": 3275071,
+          "sha256": "43ef6f5967a37c8755092370c27279238e677901e2bbebd7f543b181a23c679c"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/spa/SSShine1.png": {
+          "bytes": 2570,
+          "sha256": "d17f942bcd59399dcbef14eef4a04f4eb892363aeaa534e25fea75cf066b9d8c"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/spa/SSShine2.png": {
+          "bytes": 2206,
+          "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/spa/hair0.bmp": {
+          "bytes": 1000054,
+          "sha256": "294e409881928fec759188f700819c83981a467135b2d2e489d09ad6a31ca377"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/spa/skin.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/spa/skintoon.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-43ef6f5967a37c87/uv1-danrp.f32": {
+          "bytes": 316528,
+          "sha256": "eca134488b0cc40eba5cde4c60c33d957c8ebbccf4317a782625ccf0649b3eac"
+        },
+        "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR01.png": {
+          "bytes": 454212,
+          "sha256": "373a936df15373318b7150e8476c79362089e6ececeab50616433cb3e8b19555"
+        },
+        "42/media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png": {
+          "bytes": 71850,
+          "sha256": "a7f454a07aca965dc51b59e96d75f13fbd3ad34db211d10fb0fa13ae45b8bfbb"
         }
       }
     }

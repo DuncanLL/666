@@ -1,0 +1,28 @@
+{
+  "pmx_sha256": "43ef6f5967a37c8755092370c27279238e677901e2bbebd7f543b181a23c679c",
+  "label": "索米 / 灵海游光",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "coat",
+        "label": "外套",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              14
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      }
+    ],
+    "rules": []
+  }
+}

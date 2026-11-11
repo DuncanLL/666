@@ -1,0 +1,26 @@
+{
+  "models": {
+    "pmx-43ef6f5967a37c87": {
+      "character": "索米",
+      "skin": "灵海游光",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR01.png",
+      "groups": {
+        "coat": {
+          "label": "外套",
+          "display": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "外套"
+      ],
+      "officialSkin": "灵海游光",
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

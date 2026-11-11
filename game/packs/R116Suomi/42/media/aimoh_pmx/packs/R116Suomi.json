@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Suomi",
+  "models": [
+    {
+      "id": "pmx-43ef6f5967a37c87",
+      "label": "索米 / 灵海游光",
+      "model": "models/pmx-43ef6f5967a37c87/model.pmx",
+      "profile": "models/pmx-43ef6f5967a37c87/profile.json"
+    }
+  ]
+}

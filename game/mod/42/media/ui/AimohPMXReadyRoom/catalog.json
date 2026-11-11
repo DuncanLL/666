@@ -598,6 +598,12 @@
       "skin": "泳装",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png",
       "pack": "R116Klukai"
+    },
+    "pmx-43ef6f5967a37c87": {
+      "character": "索米",
+      "skin": "灵海游光",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png",
+      "pack": "R116Suomi"
     }
   },
   "labels": {
@@ -2685,6 +2691,7 @@
     "pmx-293917f24c2bd387",
     "pmx-782f06826adb1307",
     "pmx-33aa225b75767fcb",
-    "pmx-9ee1e4cdb8d7f985"
+    "pmx-9ee1e4cdb8d7f985",
+    "pmx-43ef6f5967a37c87"
   ]
 }
