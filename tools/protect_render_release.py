@@ -23,6 +23,7 @@ BRIDGE = 'aimoh/gf2/bridge/'
 SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
 LOADER = BRIDGE + 'AimohSealedSources'
 LOADER_PARTS = ('', '$Payload', '$Watch')
+ECLIPSE_RUNTIME = 'viewpoint/render/AimohGf2Runtime.class'
 MOTION_SUFFIX = '/shaders/dimensions/composite6.fsh'
 PROBE_FRAGMENT_START = b'uniform vec3 uSceneOrigin;\nfloat authorSkyVisibility('
 TOKEN = re.compile(r'^[ \t]*#[^\r\n]*|/\*[\s\S]*?\*/|//[^\r\n]*|"(?:\\.|[^"\\])*"|\.[ \t]*[A-Za-z_]\w*|\b[A-Za-z_]\w*\b', re.M | re.ASCII)
@@ -138,7 +139,7 @@ def protect_shaders(payload, backend, rules, fragments):
             split = data.index(PROBE_FRAGMENT_START)
             author_fragment = data[split:]
             assert digest(author_fragment) == rules['eclipse_probe_fragment_sha256'], entry
-            seal_kernel(entry, data[:split], strip_notes(author_fragment), data, basic.eclipse_probe(data[:split]))
+            seal_kernel(entry, data[:split], strip_notes(author_fragment), data, basic.eclipse_probe())
 
         manifest = [name for name in source.namelist() if name.endswith('shaders/gf2/manifest.json')]
         assert len(manifest) == 1, manifest
@@ -389,6 +390,25 @@ def seal_archive(seed, loader_name, fragments, private, config):
     return context, resource, sealed.read_bytes()
 
 
+def protect_eclipse_calibration(class_bytes, loader, fragments, private, config):
+    directory = private / 'eclipse-calibration'
+    directory.mkdir()
+    source, sealed = (directory / name for name in ('original.class', 'release.class'))
+    source.write_bytes(class_bytes)
+    classes = directory / 'tool'
+    dependency = config['zombiebuddy_jar']
+    compile_java(config, [ROOT / 'tools/java/SealEclipseCalibration.java'], classes, [dependency])
+    java = Path(config['game_root']) / 'jre64/bin/java.exe'
+    run_java([str(java), '-cp', f'{classes};{dependency}', 'SealEclipseCalibration',
+              str(source), str(sealed), str(directory), BRIDGE + loader], private / 'eclipse-calibration.log')
+    patched = sealed.read_bytes()
+    for name in ('key', 'shadow'):
+        text = (directory / name).read_bytes()
+        assert text and text in class_bytes and text not in patched
+        fragments['calibration/' + name] = text
+    return patched
+
+
 def package(output, proguard, metadata, seed_from=None):
     config = settings()
     rules_file = ROOT / 'render-support/release-protection.json'
@@ -437,6 +457,8 @@ def package(output, proguard, metadata, seed_from=None):
             shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments)
             shader_report[backend] = {'sha256': digest(shaders[entry]), 'sealed_entries': sorted(sealed)}
         loader = Path(names[LOADER + '.class']).stem
+        with zipfile.ZipFile(protected) as owned:
+            adjusted = protect_eclipse_calibration(owned.read(names[ECLIPSE_RUNTIME]), loader, fragments, private, config)
         context, resource, sealed_resource = seal_archive(seed, loader, fragments, private, config)
         replaced = {LOADER + part + '.class' for part in LOADER_PARTS} | {BRIDGE + 'K.class'}
         added = set(context) | {resource}
@@ -448,7 +470,9 @@ def package(output, proguard, metadata, seed_from=None):
                     continue
                 if name in replaced:
                     continue
-                if name in names:
+                if name == ECLIPSE_RUNTIME:
+                    write(target, names[name], adjusted)
+                elif name in names:
                     write(target, names[name], owned.read(names[name]))
                 elif name in shaders:
                     write(target, name, shaders[name])
@@ -467,7 +491,7 @@ def package(output, proguard, metadata, seed_from=None):
          protection_rules_sha256=sha(rules_file), protection_script_sha256=sha(Path(__file__)),
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
-         shaders=shader_report, sealed_input_count=len(fragments), sealed_payload_sha256=digest(sealed_resource),
+         shaders=shader_report, sealed_input_count=len(fragments), sealed_calibration_count=2, sealed_payload_sha256=digest(sealed_resource),
          sealed_resource=resource, public_source_view=True, loader_class=loader,
          dispatcher_class=Path(list(context)[len(LOADER_PARTS)]).stem,
          seal_tool_sha256=sha(ROOT / 'tools/java/SealRenderResources.java'), generated_context_classes=len(context),

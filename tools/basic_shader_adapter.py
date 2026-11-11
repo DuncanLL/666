@@ -18,11 +18,12 @@ NATIVE = {
     'native_indirect.glsl': ('void gf2NativeInitIndirect', '''
 void gf2NativeInitIndirect(vec3 position) {
     vec3 normal = texelFetch(gf2NativeNormals, ivec2(gl_FragCoord.xy), 0).xyz;
-    gf2NativeBouncedIrradiance = gf2NativeIndirectOn != 0 && dot(normal, normal) > 0.01
-        ? max(bounceAt(position, normalize(normal)), vec3(0.0)) : vec3(0.0);
+    float upward = dot(normal, normal) > 0.01 ? normalize(normal).y : 0.0;
+    float hemisphere = smoothstep(-0.55, 0.35, upward);
+    gf2NativeBouncedIrradiance = vec3(gf2NativeIndirectOn == 0 ? 1.0 : mix(0.72, 1.10, hemisphere));
 }
 vec4 gf2NativeSH(int channel, vec4 coefficient) {
-    return coefficient + vec4(0.0, 0.0, 0.0, gf2NativeBouncedIrradiance[channel] * 0.5);
+    return coefficient * gf2NativeBouncedIrradiance[channel];
 }
 '''),
     'native_main.glsl': ('// Incident visibility', '''
@@ -31,7 +32,7 @@ float gf2NativeMainVisibility(vec3 position, vec3 normal) {
 #if PIPELINE_SHADOWS || PIPELINE_FAR_SHADOWS
     if (uShadowsOff < 0.5) shade = sunVisibility(position, normal, max(dot(normal, uSunDir), 0.0));
 #endif
-    return mix(0.38, 1.0, step(0.55, shade * cloudShadow(position)));
+    return mix(0.38, 1.0, step(0.55, shade));
 }
 '''),
     'native_cube.comp': ('// Current-frame', '''
@@ -130,11 +131,28 @@ void main() {
 
 def native_shader(name, source):
     if name == 'cube_faces.glsl':
-        return source
+        return b'''#ifndef GF2_NATIVE_CUBE_FACES
+#define GF2_NATIVE_CUBE_FACES
+vec3 cubeDirection(int face, vec2 uv) {
+    if (face < 2) {
+        float side = face == 0 ? 1.0 : -1.0;
+        return vec3(side, -uv.y, -side * uv.x);
+    }
+    if (face < 4) {
+        float side = face == 2 ? 1.0 : -1.0;
+        return vec3(uv.x, side, side * uv.y);
+    }
+    float side = face == 4 ? 1.0 : -1.0;
+    return vec3(side * uv.x, -uv.y, side);
+}
+#endif
+'''
     anchor, replacement = NATIVE[name]
     prefix, found, _ = source.decode().partition(anchor)
     if not found:
         raise ValueError(f'Native public shader anchor changed: {name}')
+    if name == 'native_indirect.glsl':
+        prefix = prefix.replace('#include "lib/bounce.glsl"\n', '')
     return (prefix.rstrip() + '\n' + replacement).encode()
 
 
@@ -202,8 +220,13 @@ void main() {
     sh[1] = vec4(0.0, 0.0, 0.0, ambient.g);
     sh[2] = vec4(0.0, 0.0, 0.0, ambient.b);
     for (int i = 3; i < 7; ++i) sh[i] = vec4(0.0);
-    mainLight=vec4(0,0,0,1);
-    if(copyNativeMain)mainLight.rgb=vec3(nativeLightFields[nativeMainFloatOffset],nativeLightFields[nativeMainFloatOffset+1],nativeLightFields[nativeMainFloatOffset+2])*nativeMainScale;
+    vec3 daylight = vec3(0.0);
+    if (copyNativeMain) {
+        for (int channel = 0; channel < 3; ++channel)
+            daylight[channel] = max(nativeLightFields[nativeMainFloatOffset + channel], 0.0);
+    }
+    float strength = max(max(daylight.r, daylight.g), daylight.b);
+    mainLight = vec4(daylight * (nativeMainScale / (1.0 + 0.25 * strength)), 1.0);
 }
 ''',
     'MOTION_DECODE': '''
@@ -222,33 +245,34 @@ def eclipse_shader(name, source, kernels):
     if basename in ECLIPSE_FRAGMENTS:
         return (ECLIPSE_SKY + ECLIPSE_FRAGMENTS[basename]).encode()
     if basename.endswith('.vsh'):
-        return source
+        return b'''#version 430 compatibility
+void main() {
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+}
+'''
     key, = (key for key, row in kernels.items() if name.endswith(row['path']))
     return source.split(b'void main()', 1)[0] + ECLIPSE_KERNELS[key].encode()
 
 
-def eclipse_probe(prefix):
-    return prefix + b'''
-uniform vec3 uSceneOrigin;
+def eclipse_probe():
+    return b'''#version 430
 layout(local_size_x=1) in;
 layout(std430,binding=0) readonly buffer BaseUnitySH { vec4 sourceSH[7]; vec4 sourceMain; };
 layout(std430,binding=1) writeonly buffer ActorUnitySH { vec4 actorSH[7]; vec4 reflectionHDR; vec4 cameraLightColor; };
-uniform vec3 actorAnchor;
 uniform bool nativeSkyAvailable;
 uniform vec3 nativeMinimumLight;
-uniform samplerBuffer gf2NativeExposure;
-uniform int gf2NativeExposureOffset;
 
 void main() {
     float visible = nativeSkyAvailable ? 0.8 : 0.92;
-    float ambient = max(nativeMinimumLight.x, 0.0) * 0.01;
-    vec3 diffuseReference = vec3(0.25);
-    vec3 budgetedLevel = max(uSkyLevel, vec3(0.0));
-    vec3 mean = vec3(sourceSH[0].w, sourceSH[1].w, sourceSH[2].w) * visible;
-    vec3 missing = vec3(ambient);
+    float incident = max(max(sourceMain.r, sourceMain.g), sourceMain.b);
+    float daylight = clamp(incident / (0.5 + max(incident, 0.0)), 0.0, 1.0);
+    float ambient = mix(0.06, 0.18, daylight) + max(nativeMinimumLight.x, 0.0) * 0.02;
     for (int i = 0; i < 7; ++i) {
         vec4 light = sourceSH[i] * visible;
-        if (i < 3) light.w += ambient;
+        if (i < 3) {
+            light.w += ambient;
+            light.y += max(light.w, 0.0) * 0.18;
+        }
         actorSH[i] = light;
     }
     actorSH[6].w=1;

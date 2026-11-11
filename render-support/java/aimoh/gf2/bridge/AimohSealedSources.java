@@ -90,6 +90,19 @@ public final class AimohSealedSources {
         return replacement == null ? raw : replacement;
     }
 
+    public static boolean hasCalibration(String source) {
+        if (!enabled()) return false;
+        requireReady();
+        return Payload.FRAGMENTS.containsValue(source);
+    }
+
+    public static String calibration(String name) {
+        requireReady();
+        String value = Payload.FRAGMENTS.get("calibration/" + name);
+        if (value == null) throw new IllegalStateException("shader pack load failed");
+        return value;
+    }
+
     private static String resourceName(String path) {
         if (path == null) return null;
         String relative = path.replace('\\', '/');
