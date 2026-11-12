@@ -2,7 +2,7 @@
   "models": {
     "pmx-9ee1e4cdb8d7f985": {
       "character": "可露凯",
-      "skin": "泳装",
+      "skin": "蔚蓝轨迹",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR03.png",
       "groups": {
@@ -81,12 +81,13 @@
         "罩衫",
         "鞋子"
       ],
-      "officialSkin": "泳装",
-      "partImages": {}
+      "officialSkin": "蔚蓝轨迹",
+      "partImages": {},
+      "isDefault": false
     },
     "pmx-efe685465097beb2": {
       "character": "可露凯",
-      "skin": "原皮",
+      "skin": "灼目之星",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR.png",
       "groups": {
@@ -123,7 +124,9 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "灼目之星",
+      "isDefault": true
     },
     "pmx-6826e4ccdf1f4ddf": {
       "character": "可露凯",
@@ -156,11 +159,13 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "速度之星",
+      "isDefault": false
     },
     "pmx-a0790aac2b94e352": {
       "character": "可露凯",
-      "skin": "新机车",
+      "skin": "星迹掠芒",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a0790aac2b94e352.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR02.png",
       "groups": {
@@ -197,11 +202,13 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "星迹掠芒",
+      "isDefault": false
     },
     "pmx-8a28434eee27a5ce": {
       "character": "可露凯",
-      "skin": "婚纱礼服",
+      "skin": "绀星绮愿",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8a28434eee27a5ce.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR04.png",
       "groups": {
@@ -262,7 +269,9 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "绀星绮愿",
+      "isDefault": false
     }
   },
   "labels": {}

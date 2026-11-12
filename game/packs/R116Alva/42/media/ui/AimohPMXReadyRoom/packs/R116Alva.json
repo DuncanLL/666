@@ -2,8 +2,8 @@
   "models": {
     "pmx-020abca186c52e7b": {
       "character": "埃芙",
-      "skin": "默认",
-      "officialSkin": "默认",
+      "skin": "人偶扳机",
+      "officialSkin": "人偶扳机",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR.png",
       "primaryCategories": [
@@ -61,11 +61,12 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "isDefault": true
     },
     "pmx-94483c23f678afe3": {
       "character": "埃芙",
-      "skin": "西装",
+      "skin": "安提娅",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-94483c23f678afe3.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR01.png",
       "groups": {
@@ -81,11 +82,13 @@
       "primaryCategories": [
         "眼镜"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "安提娅",
+      "isDefault": false
     },
     "pmx-76a4aa15941b6aa4": {
       "character": "埃芙",
-      "skin": "白色制服",
+      "skin": "紫藤花信",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-76a4aa15941b6aa4.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR02.png",
       "groups": {
@@ -101,7 +104,9 @@
       "primaryCategories": [
         "口罩"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "紫藤花信",
+      "isDefault": false
     }
   },
   "labels": {

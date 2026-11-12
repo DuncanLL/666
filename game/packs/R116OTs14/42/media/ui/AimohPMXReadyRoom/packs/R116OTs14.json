@@ -2,7 +2,7 @@
   "models": {
     "pmx-782f06826adb1307": {
       "character": "OTs-14",
-      "skin": "默认",
+      "skin": "暗昼冽影",
       "officialSkin": "暗昼冽影",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR.png",
@@ -72,11 +72,12 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "isDefault": true
     },
     "pmx-06925f50fb5cb612": {
       "character": "OTs-14",
-      "skin": "SSR0101（改）",
+      "skin": "天意佳人",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-06925f50fb5cb612.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR01.png",
       "primaryCategories": [
@@ -137,11 +138,13 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "天意佳人",
+      "isDefault": false
     },
     "pmx-73625fbf0962e120": {
       "character": "OTs-14",
-      "skin": "SSR0102",
+      "skin": "极夜黎明",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-73625fbf0962e120.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR02.png",
       "primaryCategories": [
@@ -184,7 +187,9 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "极夜黎明",
+      "isDefault": false
     }
   },
   "labels": {

@@ -48,7 +48,8 @@
         }
       },
       "officialSkin": "睡醒的人鱼",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": false
     },
     "pmx-62b44285b57a48e9": {
       "character": "春田",
@@ -95,7 +96,9 @@
         "鞋袜",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "静享芳醇",
+      "isDefault": false
     }
   },
   "labels": {

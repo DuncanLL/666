@@ -149,7 +149,7 @@
   "models": {
     "pmx-abe3eaaaa9d04264": {
       "character": "莱娅",
-      "skin": "默认",
+      "skin": "理性凝望",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png",
       "groups": {
@@ -179,11 +179,12 @@
         }
       },
       "officialSkin": "理性凝望",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": true
     },
     "pmx-48650a04a35b40e0": {
       "character": "夏安",
-      "skin": "默认",
+      "skin": "听风狩影",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png",
       "groups": {
@@ -213,7 +214,8 @@
         }
       },
       "officialSkin": "听风狩影",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": true
     },
     "pmx-0af216265749a22d": {
       "character": "莱娅",
@@ -273,16 +275,18 @@
           "P2 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Head.png",
           "P3 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-412bd037301ebe18": {
       "character": "阿斯缇亚",
-      "skin": "默认",
+      "skin": "追寻者",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png",
       "groups": {},
       "officialSkin": "追寻者",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": true
     },
     "pmx-b0dd2e3cfd1ab80c": {
       "character": "阿斯缇亚",
@@ -366,7 +370,8 @@
           "眼镜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Head.png",
           "猫耳": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Head.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-c7270af966e8aaf8": {
       "character": "克莱妲",
@@ -452,7 +457,8 @@
         "上衣": {
           "穿外套": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_KoledaSSR01_P1_Coat.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-f5b2807685b18a60": {
       "character": "妮基塔",
@@ -513,7 +519,8 @@
           "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Body.png",
           "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Body.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-4818f3bdda4ec18d": {
       "character": "芙洛伦",
@@ -603,83 +610,108 @@
           "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Body.png",
           "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Body.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-020abca186c52e7b": {
       "character": "埃芙",
-      "skin": "默认",
+      "skin": "人偶扳机",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png",
-      "pack": "R116Alva"
+      "pack": "R116Alva",
+      "officialSkin": "人偶扳机",
+      "isDefault": true
     },
     "pmx-7c5ea1f673f69f12": {
       "character": "桑朵莱希",
-      "skin": "泳装",
+      "skin": "和莱希的五十天",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7c5ea1f673f69f12.png",
-      "pack": "R116Centaureissi"
+      "pack": "R116Centaureissi",
+      "officialSkin": "和莱希的五十天",
+      "isDefault": false
     },
     "pmx-225af1a054faefb0": {
       "character": "春田",
       "skin": "睡醒的人鱼",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
-      "pack": "R116Springfield"
+      "pack": "R116Springfield",
+      "officialSkin": "睡醒的人鱼",
+      "isDefault": false
     },
     "pmx-293917f24c2bd387": {
       "character": "芙铃",
       "skin": "忻跃阳炎",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-293917f24c2bd387.png",
-      "pack": "R116Faelynn"
+      "pack": "R116Faelynn",
+      "officialSkin": "忻跃阳炎",
+      "isDefault": false
     },
     "pmx-782f06826adb1307": {
       "character": "OTs-14",
-      "skin": "默认",
+      "skin": "暗昼冽影",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
-      "pack": "R116OTs14"
+      "pack": "R116OTs14",
+      "officialSkin": "暗昼冽影",
+      "isDefault": true
     },
     "pmx-33aa225b75767fcb": {
       "character": "黛烟",
       "skin": "玉玲珑",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png",
-      "pack": "R116Daiyan"
+      "pack": "R116Daiyan",
+      "officialSkin": "玉玲珑",
+      "isDefault": false
     },
     "pmx-9ee1e4cdb8d7f985": {
       "character": "可露凯",
-      "skin": "泳装",
+      "skin": "蔚蓝轨迹",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9ee1e4cdb8d7f985.png",
-      "pack": "R116Klukai"
+      "pack": "R116Klukai",
+      "officialSkin": "蔚蓝轨迹",
+      "isDefault": false
     },
     "pmx-43ef6f5967a37c87": {
       "character": "索米",
       "skin": "灵海游光",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png",
-      "pack": "R116Suomi"
+      "pack": "R116Suomi",
+      "officialSkin": "灵海游光",
+      "isDefault": false
     },
     "pmx-fee7d92be40f96dd": {
       "character": "希丽雅",
-      "skin": "原皮",
+      "skin": "调停者",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-fee7d92be40f96dd.png",
-      "pack": "R116Cecilia"
+      "pack": "R116Cecilia",
+      "officialSkin": "调停者",
+      "isDefault": true
     },
     "pmx-9db646f49c805a1b": {
       "character": "希丽雅",
-      "skin": "女仆",
+      "skin": "暖茶时憩",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9db646f49c805a1b.png",
-      "pack": "R116Cecilia"
+      "pack": "R116Cecilia",
+      "officialSkin": "暖茶时憩",
+      "isDefault": false
     },
     "pmx-94483c23f678afe3": {
       "character": "埃芙",
-      "skin": "西装",
+      "skin": "安提娅",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-94483c23f678afe3.png",
-      "pack": "R116Alva"
+      "pack": "R116Alva",
+      "officialSkin": "安提娅",
+      "isDefault": false
     },
     "pmx-76a4aa15941b6aa4": {
       "character": "埃芙",
-      "skin": "白色制服",
+      "skin": "紫藤花信",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-76a4aa15941b6aa4.png",
-      "pack": "R116Alva"
+      "pack": "R116Alva",
+      "officialSkin": "紫藤花信",
+      "isDefault": false
     },
     "pmx-47a4f99939c55958": {
       "character": "夏安",
-      "skin": "礼服",
+      "skin": "青涩夜会",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-47a4f99939c55958.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR01.png",
       "groups": {
@@ -752,53 +784,69 @@
         "头饰": {
           "显示": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_CheyanneSSR01_P1_Head.png"
         }
-      }
+      },
+      "officialSkin": "青涩夜会",
+      "isDefault": false
     },
     "pmx-06925f50fb5cb612": {
       "character": "OTs-14",
-      "skin": "SSR0101（改）",
+      "skin": "天意佳人",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-06925f50fb5cb612.png",
-      "pack": "R116OTs14"
+      "pack": "R116OTs14",
+      "officialSkin": "天意佳人",
+      "isDefault": false
     },
     "pmx-73625fbf0962e120": {
       "character": "OTs-14",
-      "skin": "SSR0102",
+      "skin": "极夜黎明",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-73625fbf0962e120.png",
-      "pack": "R116OTs14"
+      "pack": "R116OTs14",
+      "officialSkin": "极夜黎明",
+      "isDefault": false
     },
     "pmx-efe685465097beb2": {
       "character": "可露凯",
-      "skin": "原皮",
+      "skin": "灼目之星",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
-      "pack": "R116Klukai"
+      "pack": "R116Klukai",
+      "officialSkin": "灼目之星",
+      "isDefault": true
     },
     "pmx-6826e4ccdf1f4ddf": {
       "character": "可露凯",
       "skin": "速度之星",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-6826e4ccdf1f4ddf.png",
-      "pack": "R116Klukai"
+      "pack": "R116Klukai",
+      "officialSkin": "速度之星",
+      "isDefault": false
     },
     "pmx-a0790aac2b94e352": {
       "character": "可露凯",
-      "skin": "新机车",
+      "skin": "星迹掠芒",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a0790aac2b94e352.png",
-      "pack": "R116Klukai"
+      "pack": "R116Klukai",
+      "officialSkin": "星迹掠芒",
+      "isDefault": false
     },
     "pmx-8a28434eee27a5ce": {
       "character": "可露凯",
-      "skin": "婚纱礼服",
+      "skin": "绀星绮愿",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8a28434eee27a5ce.png",
-      "pack": "R116Klukai"
+      "pack": "R116Klukai",
+      "officialSkin": "绀星绮愿",
+      "isDefault": false
     },
     "pmx-b6fa1b6b340d0fec": {
       "character": "芙铃",
-      "skin": "原皮",
+      "skin": "望归宠儿",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png",
-      "pack": "R116Faelynn"
+      "pack": "R116Faelynn",
+      "officialSkin": "望归宠儿",
+      "isDefault": true
     },
     "pmx-90268b4961c97434": {
       "character": "克莱妲",
-      "skin": "原皮",
+      "skin": "旧年雪",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
       "groups": {
@@ -841,29 +889,37 @@
         "随身枪械",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "旧年雪",
+      "isDefault": true
     },
     "pmx-8c817aa0fdd64f7a": {
       "character": "黛烟",
-      "skin": "原皮",
+      "skin": "烟寻异处",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
-      "pack": "R116Daiyan"
+      "pack": "R116Daiyan",
+      "officialSkin": "烟寻异处",
+      "isDefault": true
     },
     "pmx-8fc5b665a5786924": {
       "character": "桑朵莱希",
-      "skin": "原皮",
+      "skin": "完美招待",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
-      "pack": "R116Centaureissi"
+      "pack": "R116Centaureissi",
+      "officialSkin": "完美招待",
+      "isDefault": true
     },
     "pmx-dd77c173248cb704": {
       "character": "桑朵莱希",
-      "skin": "咖啡厅 SSR0102",
+      "skin": "金牌店员",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-dd77c173248cb704.png",
-      "pack": "R116Centaureissi"
+      "pack": "R116Centaureissi",
+      "officialSkin": "金牌店员",
+      "isDefault": false
     },
     "pmx-78cbbc06c7da39dc": {
       "character": "妮基塔",
-      "skin": "泳装",
+      "skin": "骄阳般起舞",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-78cbbc06c7da39dc.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR01.png",
       "groups": {
@@ -888,11 +944,13 @@
         "鞋袜",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "骄阳般起舞",
+      "isDefault": false
     },
     "pmx-ea3eb50ef5b32295": {
       "character": "妮基塔",
-      "skin": "礼服 SSR0102",
+      "skin": "银湾流转夜",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ea3eb50ef5b32295.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR02.png",
       "groups": {
@@ -926,11 +984,13 @@
         "鞋袜",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "银湾流转夜",
+      "isDefault": false
     },
     "pmx-1c1dd0698118e114": {
       "character": "莱娅",
-      "skin": "女仆",
+      "skin": "狡兔迷踪",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1c1dd0698118e114.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR03.png",
       "groups": {
@@ -991,23 +1051,29 @@
         "鞋袜",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "狡兔迷踪",
+      "isDefault": false
     },
     "pmx-62b44285b57a48e9": {
       "character": "春田",
       "skin": "静享芳醇",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-62b44285b57a48e9.png",
-      "pack": "R116Springfield"
+      "pack": "R116Springfield",
+      "officialSkin": "静享芳醇",
+      "isDefault": false
     },
     "pmx-cb19e5961c38af86": {
       "character": "索米",
-      "skin": "SSR0102",
+      "skin": "雪兔献礼",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cb19e5961c38af86.png",
-      "pack": "R116Suomi"
+      "pack": "R116Suomi",
+      "officialSkin": "雪兔献礼",
+      "isDefault": false
     },
     "pmx-4cdf23692c8709a0": {
       "character": "妮基塔",
-      "skin": "原皮",
+      "skin": "典范制式",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
       "groups": {
@@ -1023,13 +1089,17 @@
       "primaryCategories": [
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "典范制式",
+      "isDefault": true
     },
     "pmx-4019c9450e0e318d": {
       "character": "索米",
-      "skin": "原皮",
+      "skin": "雪映清辉",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
-      "pack": "R116Suomi"
+      "pack": "R116Suomi",
+      "officialSkin": "雪映清辉",
+      "isDefault": true
     }
   },
   "labels": {
@@ -3138,99 +3208,224 @@
     "pmx-4019c9450e0e318d"
   ],
   "skinDescriptions": {
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png": [
-      "莱娅的常见着装。将独特的个性融入象征",
-      "理性的制服设计之中，独行却不逾矩，这",
-      "种矛盾对立的特质，正是莱娅独有的魅力",
-      "。"
+    "pmx-abe3eaaaa9d04264": [
+      "莱娅的常见着装。将独特的个性融入象征理性的制",
+      "服设计之中，独行却不逾矩，这种矛盾对立的特质，",
+      "正是莱娅独有的魅力。"
     ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png": [
-      "夏安的常见着装。黯淡低调，宽大廓形包",
-      "裹着躯干要害，带来满满的安全感。至于",
-      "实力，自然要藏在身后才足以安心。"
+    "pmx-48650a04a35b40e0": [
+      "夏安的常见着装。黯淡低调，宽大廓形包裹着躯干",
+      "要害，带来满满的安全感。至于实力，自然要藏在",
+      "身后才足以安心。"
     ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR02.png": [
-      "“指挥官眼睛，似乎不知道该放哪里的样",
-      "子，需要我来帮你纠正一下吗？”阳光追",
-      "着她的身体曲线，被汗水浸透的衣衫紧贴",
-      "肌肤，呈现着朝气蓬勃的轮廓。"
+    "pmx-0af216265749a22d": [
+      "“指挥官眼睛，似乎不知道该放哪里的样子，需要",
+      "我来帮你纠正一下吗？”",
+      "阳光追着她的身体曲线，被汗水浸透的衣衫紧贴肌",
+      "肤，呈现着朝气蓬勃的轮廓。"
     ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png": [
-      "以常见着装出现的阿斯缇亚，将过去与现",
-      "在相融，在保留原本自我的同时，追寻独",
-      "属于自己的道路。"
+    "pmx-412bd037301ebe18": [
+      "以常见着装出现的阿斯缇亚，将过去与现在相融，",
+      "在保留原本自我的同时，追寻独属于自己的道路。"
     ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR01.png": [
-      "“来到空旷的山顶吹着冷风看星星……指",
-      "挥官，这就是您所谓的浪漫吗？那么，请",
-      "您再靠近我一些吧。”阿斯缇亚注视着比",
-      "星空更为重要的你，默默将围巾绕上你的",
-      "脖颈。"
-    ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR01.png": [
-      "“主人主人，来一起玩吧！这些游戏我很",
-      "擅长哦~”她向你挥动双手，扑面而来的",
-      "活力如同一颗跃动的太阳。"
-    ],
-    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png": [
-      "“指挥官，请牵住我的手，和我一起聆听",
-      "海风的呼唤吧~”春田微笑着压了压帽檐",
-      "，邀你与她共享这段温暖的海岛时光。"
+    "pmx-b0dd2e3cfd1ab80c": [
+      "“来到空旷的山顶吹着冷风看星星……指挥官，这",
+      "就是您所谓的浪漫吗？那么，请您再靠近我一些吧。",
+      "”",
+      "阿斯缇亚注视着比星空更为重要的你，默默将围巾",
+      "绕上你的脖颈。"
     ],
     "pmx-c7270af966e8aaf8": [
-      "“当年那场输掉的排球赛，指挥官到现在还是耿耿于",
-      "怀吗？哼哼，没关系……我愿意再次接受你的挑战哦",
-      "~”",
-      "克莱妲的笑意逐渐加深，惬意地等待着你接下来的表",
-      "现。"
+      "“当年那场输掉的排球赛，指挥官到现在还是耿耿",
+      "于怀吗？哼哼，没关系……我愿意再次接受你的挑",
+      "战哦~”",
+      "克莱妲的笑意逐渐加深，惬意地等待着你接下来的",
+      "表现。"
+    ],
+    "pmx-f5b2807685b18a60": [
+      "“如你所愿，BOSS。今夜的契约已经成立……",
+      "接下来，就请你认真地履行到底吧。”",
+      "妮基塔努力维持着平日的严肃，但微红的耳廓还是",
+      "出卖了她的羞涩。"
+    ],
+    "pmx-4818f3bdda4ec18d": [
+      "“Bonne année chinoise！",
+      " 哎呀，指挥官你这个表情~难道又想和我玩点刺",
+      "激的活动吗？放心这次不是烟花哦~”",
+      "芙洛伦毫不避讳地从背后抱住你，准备与你一同去",
+      "追寻全新的刺激。"
+    ],
+    "pmx-020abca186c52e7b": [
+      "埃芙的常见着装。几乎全无装饰性意义的专业特种",
+      "作战制服，便于行动的同时具备在任何环境下高强",
+      "度作战的功能。"
+    ],
+    "pmx-7c5ea1f673f69f12": [
+      "“长官，夏季的冷饮刨冰虽可口，但也请不要吃得",
+      "太多。”",
+      "躺椅、阳伞、沙滩，她做好了海边度假的一切准备，",
+      "为你带来夏日的美好闲暇。"
     ],
     "pmx-225af1a054faefb0": [
-      "“指挥官，请牵住我的手，和我一起聆听海风的呼唤",
-      "吧~”",
-      "春田微笑着压了压帽檐，邀你与她共享这段温暖的海",
-      "岛时光。"
+      "“指挥官，请牵住我的手，和我一起聆听海风的呼",
+      "唤吧~”",
+      "春田微笑着压了压帽檐，邀你与她共享这段温暖的",
+      "海岛时光。"
+    ],
+    "pmx-293917f24c2bd387": [
+      "“主人主人，来一起玩吧！这些游戏我很擅长哦~”",
+      "她向你挥动双手，扑面而来的活力如同一颗跃动的",
+      "太阳。"
+    ],
+    "pmx-782f06826adb1307": [
+      "OTs-14的常见着装。冷冽的色调隐匿锋芒，",
+      "比起指引众人的道标，她更愿化作仅属于你一人的",
+      "暗影。"
+    ],
+    "pmx-33aa225b75767fcb": [
+      "配色素雅如美玉无瑕，贴身剪裁更突显穿着之人的",
+      "玲珑曲线。"
     ],
     "pmx-9ee1e4cdb8d7f985": [
-      "“要试试新的水上活动吗？既然如此就和我一起去冲",
-      "浪吧。就算是玩水，只要和我在一起就绝对不会让你",
-      "失望的。”",
-      "她踏浪而来，向你伸出手。指挥官准备好回应那期待",
-      "的眼神了吗？"
+      "“要试试新的水上活动吗？既然如此就和我一起去",
+      "冲浪吧。就算是玩水，只要和我在一起就绝对不会",
+      "让你失望的。”",
+      "她踏浪而来，向你伸出手。指挥官准备好回应那期",
+      "待的眼神了吗？"
     ],
-    "pmx-62b44285b57a48e9": [
-      "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还是",
-      "温度……都是您最喜欢的那种哦。”",
-      "如同过去时光里品尝过的每杯咖啡一样，她已经为你",
-      "悉心调制好了最合适的口味。"
+    "pmx-43ef6f5967a37c87": [
+      "索米的海滨着装。斑斓的飘带设计如同游鱼之尾，",
+      "穿上它的索米将成为大海中最快乐的小精灵。"
     ],
-    "pmx-1c1dd0698118e114": [
-      "“哎呀，指挥官确定要跟着我吗？万一迷路了，我可",
-      "是不负责的哦~”",
-      "莱娅露出游刃有余的笑容，试图把你引入更深的迷途",
-      "之中。"
+    "pmx-fee7d92be40f96dd": [
+      "希丽雅的常见着装。冷峻与专业的外衣包裹之下，",
+      "是温柔又体贴的内里。"
+    ],
+    "pmx-9db646f49c805a1b": [
+      "“工作辛苦了呢，指挥官！快来休息一下吧，今天",
+      "我为您准备的是热红茶哦~”",
+      "希丽雅露出温和的笑容，将最温暖的下午茶，奉献",
+      "给最重要的你。"
+    ],
+    "pmx-94483c23f678afe3": [
+      "“指挥官，周边无异常。我现在是您的助理，安提",
+      "娅……真没想到我会再次用到这个名字。”",
+      "出于乔装护卫的需要，她紧紧跟在你身边，贴得比",
+      "平时更近。"
+    ],
+    "pmx-76a4aa15941b6aa4": [
+      "“如果未来的某一天，我们不再需要战斗……或许，",
+      "我会很期待和您共度学院的时光。”",
+      "她将被风吹起的裙角轻轻抚平，温柔的眼眸中倒映",
+      "出你的身影。"
+    ],
+    "pmx-47a4f99939c55958": [
+      "“抱歉，我不擅长这样的社交活动。指挥官，请教",
+      "导我……该怎么做……”",
+      "脸颊的红晕并非出自情动，不自在的举止出卖着她",
+      "的懵懂。夏安湿润的眼睛望向你，像一只向你求助",
+      "的惊惶小鹿。"
+    ],
+    "pmx-06925f50fb5cb612": [
+      "“你是值得我托付信念的指挥官，让我们永远地并",
+      "肩同行吧……”",
+      "OTs-14缓缓向你走来，曾在心智中重演无数",
+      "次的情景，如今终于真切地触手可及。"
+    ],
+    "pmx-73625fbf0962e120": [
+      "“无论我变成何种模样，过去，现在，将来，我始",
+      "终都是您的OTs-14。”",
+      "OTs-14的眼中没有一丝迷惘，那份坚定守护",
+      "的意志已经满溢而出。"
+    ],
+    "pmx-efe685465097beb2": [
+      "可露凯的常见着装。群青色的外套是战场上最醒目",
+      "的存在，可露凯从不惧怕成为敌人的焦点——不如",
+      "说，这才是她选择这件衣服的目的。"
     ],
     "pmx-6826e4ccdf1f4ddf": [
-      "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。像",
-      "是疾风或是雷霆，银芒四射的骑士向您发出邀约。上",
-      "车，兜个风！"
+      "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。",
+      "像是疾风或是雷霆，银芒四射的骑士向您发出邀约。",
+      "上车，兜个风！"
     ],
     "pmx-a0790aac2b94e352": [
-      "可露凯的战术骑手服，兼具防护与作战功能，让可露",
-      "凯犹如一道蓝色闪光在前线穿梭。"
+      "可露凯的战术骑手服，兼具防护与作战功能，让可",
+      "露凯犹如一道蓝色闪光在前线穿梭。"
     ],
     "pmx-8a28434eee27a5ce": [
-      "“我说过，有我一个就够了。现在，做好用余生来验",
-      "证这句话的准备了吗？”",
-      "绀星夜幕之下，那袭如霜雪洁白的纱裙，此刻正为您",
-      "一人闪耀。她坚定地扣紧您的十指，目光灼灼——名",
-      "为“完美”的未来，已在您手中。"
+      "“我说过，有我一个就够了。现在，做好用余生来",
+      "验证这句话的准备了吗？”",
+      "绀星夜幕之下，那袭如霜雪洁白的纱裙，此刻正为",
+      "您一人闪耀。她坚定地扣紧您的十指，目光灼灼—",
+      "—名为“完美”的未来，已在您手中。"
+    ],
+    "pmx-b6fa1b6b340d0fec": [
+      "芙铃的常见着装，舍弃了大部分日常装饰，只为尽",
+      "可能发挥出战斗性能。在漫长的守望途中，她把思",
+      "念化为战斗的动力。"
+    ],
+    "pmx-90268b4961c97434": [
+      "经过埃芙的细心处理，为克莱妲的新素体粉饰得最",
+      "接近往日风采的装束，尽管内核已迥然不同，但她",
+      "依然是她。"
+    ],
+    "pmx-8c817aa0fdd64f7a": [
+      "黛烟的常见着装。别致的剪裁搭配飘逸的纹饰，彰",
+      "显出她高雅的品味。"
+    ],
+    "pmx-8fc5b665a5786924": [
+      "桑朵莱希的常见着装。一尘不染的工作服下暗藏枪",
+      "带，优秀的女仆不仅能冲泡可口的咖啡，还能做可",
+      "靠的护卫。"
+    ],
+    "pmx-dd77c173248cb704": [
+      "“既然得到了表彰，我就有责任为您献上与之相配",
+      "的服务。长官，请品尝。”",
+      "她为你斟满了咖啡，期待着这杯充满心意的特调，",
+      "能够换来你的肯定。"
+    ],
+    "pmx-78cbbc06c7da39dc": [
+      "“加油！加油！Fight ON！ 这是根据以",
+      "前我给孩子们设计的衣服改良而来的。这件衣服见",
+      "证了孩子们……以及我的成长。”",
+      "她如骄阳般起舞，用活力和温柔鼓舞人心。"
+    ],
+    "pmx-ea3eb50ef5b32295": [
+      "“Boss，靠近些，让、让我挽着您的手……”",
+      "深蓝色的礼服，如同夜色中的海湾。但这一刻，海",
+      "面上却掀起了绯红的波澜。"
+    ],
+    "pmx-1c1dd0698118e114": [
+      "“哎呀，指挥官确定要跟着我吗？万一迷路了，我",
+      "可是不负责的哦~”",
+      "莱娅露出游刃有余的笑容，试图把你引入更深的迷",
+      "途之中。"
+    ],
+    "pmx-62b44285b57a48e9": [
+      "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还",
+      "是温度……都是您最喜欢的那种哦。”",
+      "如同过去时光里品尝过的每杯咖啡一样，她已经为",
+      "你悉心调制好了最合适的口味。"
+    ],
+    "pmx-cb19e5961c38af86": [
+      "“指挥官，你的圣诞礼物来啦，要拆开看看吗？”",
+      "索米手上什么都没拿，只是红着脸一味向你走来。"
+    ],
+    "pmx-4cdf23692c8709a0": [
+      "妮基塔的常见着装。蓝色的治安制服一尘不染，勾",
+      "勒出她对待正义的认真态度——要做罪犯的噩梦，",
+      "也要做守护孩子们笑容的典范。"
+    ],
+    "pmx-4019c9450e0e318d": [
+      "索米的常见着装。温暖的冬衣，当然要配上毛领和",
+      "绒球了。"
     ]
   },
   "roomLabels": {
     "OTs-14": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/18fa9fba752aeda5.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9818def0f82a44a4.png",
       "width": 135,
-      "height": 30
+      "height": 40
     },
     "VMD 自带的表情会按动作播放": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/8a2c7dfc9a925917.png",
@@ -3313,9 +3508,9 @@
       "height": 38
     },
     "克莱妲": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ece2fcebdaa201cd.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f7e894bd9c79b24f.png",
       "width": 112,
-      "height": 39
+      "height": 40
     },
     "关闭": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/a22aacd5a607d5c5.png",
@@ -3333,9 +3528,9 @@
       "height": 39
     },
     "冬夜星途": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/cd385f5cde926fd4.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-05d6da5768e4582d.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "切换配件": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/a9d9fe53501d6bde.png",
@@ -3393,14 +3588,14 @@
       "height": 39
     },
     "可露凯": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/78d7442a23c1db85.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-992b191950ac5f8a.png",
       "width": 112,
-      "height": 39
+      "height": 40
     },
     "听风狩影": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/9ac69f9f92817885.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-34c0ae8fd3633645.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "启用该角色": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/706c8f0c8ebaeb97.png",
@@ -3428,14 +3623,14 @@
       "height": 43
     },
     "埃芙": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/dfd2fbc84212356a.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1992d14adb6f3661.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "夏安": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3423f1d3d655fd68.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8f0ec515f32e46fd.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "夏安的常见着装。黯淡低调，宽大廓形包": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/1bbb4139fda13fee.png",
@@ -3463,9 +3658,9 @@
       "height": 39
     },
     "妮基塔": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5c41745577857a18.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ef3b284696442060.png",
       "width": 112,
-      "height": 39
+      "height": 40
     },
     "子，需要我来帮你纠正一下吗？”阳光追": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/f26bb35acfd74f2b.png",
@@ -3523,9 +3718,9 @@
       "height": 38
     },
     "希丽雅": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/67e30581df6e029f.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-075b786121012a82.png",
       "width": 112,
-      "height": 38
+      "height": 40
     },
     "当前使用原角色": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/57c322d438abac0f.png",
@@ -3538,9 +3733,9 @@
       "height": 39
     },
     "忻跃阳炎": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ba41d16aa0ab7121.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6881c3a905c682b2.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "恢复原角色": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/54c365580ebbddea.png",
@@ -3638,9 +3833,9 @@
       "height": 39
     },
     "无垢契约": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6784f10ceb058acd.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c5690fa6019eb3d8.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "星空更为重要的你，默默将围巾绕上你的": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/04bdeb60b8fa9310.png",
@@ -3648,9 +3843,9 @@
       "height": 43
     },
     "春田": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/31ac41c3a4ec3348.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-76bcfb8da0da473e.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "暂停": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/f06652390b720a82.png",
@@ -3663,7 +3858,7 @@
       "height": 39
     },
     "暗昼冽影": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/93aab3d70f79fdb7.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ce7cfbf8000816f3.png",
       "width": 148,
       "height": 40
     },
@@ -3693,9 +3888,9 @@
       "height": 39
     },
     "桑朵莱希": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/02584eb42302997a.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-764cc3c7fd1b5f13.png",
       "width": 148,
-      "height": 38
+      "height": 40
     },
     "横向惯性": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/d715a7c23f3bacc0.png",
@@ -3733,19 +3928,19 @@
       "height": 39
     },
     "濯浪焦点": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7db10b51d48fd6b0.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e57aa1e415f1581f.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "灵海游光": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7de693370ef12945.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-780750337defbbfc.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "热力运动": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/83362e7d60cba6bb.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a1ae6937f1b99dae.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "物理控制": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/afc6a2ed43e49c88.png",
@@ -3763,14 +3958,14 @@
       "height": 38
     },
     "玉玲珑": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7386ee4af74c034c.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a5a003115c8befa6.png",
       "width": 112,
       "height": 40
     },
     "理性凝望": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e1136ee5cd110274.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-315ccbd283d0ad0b.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "理性的制服设计之中，独行却不逾矩，这": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/853daf03d0663fd1.png",
@@ -3803,9 +3998,9 @@
       "height": 39
     },
     "睡醒的人鱼": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1c3be7eaaba65c05.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-026c09ef3783dafd.png",
       "width": 184,
-      "height": 39
+      "height": 40
     },
     "种矛盾对立的特质，正是莱娅独有的魅力": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/142f93efefe3ef54.png",
@@ -3838,9 +4033,9 @@
       "height": 40
     },
     "索米": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3e37059025938479.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0029971b315906e1.png",
       "width": 76,
-      "height": 38
+      "height": 40
     },
     "继续播放": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/f5ac79d21d072f14.png",
@@ -3848,9 +4043,9 @@
       "height": 39
     },
     "翠雀媚": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3a3f70fa3ea30af6.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cf562eb4748fa55f.png",
       "width": 112,
-      "height": 38
+      "height": 40
     },
     "肌肤，呈现着朝气蓬勃的轮廓。": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/0800cf88a21033ba.png",
@@ -3868,19 +4063,19 @@
       "height": 39
     },
     "芙洛伦": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2141aef8b150a2a0.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-183a13541d7293ef.png",
       "width": 112,
       "height": 40
     },
     "芙铃": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/61bdc21ea50f1df6.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-fe76754c728b4ff8.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "莱娅": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/52df2b94d66ed71a.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-be0d18e3c36c8db4.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "莱娅的常见着装。将独特的个性融入象征": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/de013e09ad10d1cd.png",
@@ -3968,9 +4163,9 @@
       "height": 39
     },
     "追寻者": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1ed33b2376e06032.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5df93575d382ab6a.png",
       "width": 112,
-      "height": 39
+      "height": 40
     },
     "选择保存位置 · 再点此处取消": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/10bd451d89d15d22.png",
@@ -4003,9 +4198,9 @@
       "height": 39
     },
     "阿斯缇亚": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d87510ab8fe2c07e.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4ca995508eccc824.png",
       "width": 148,
-      "height": 39
+      "height": 40
     },
     "随包示例": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/e3ec0039dfa06f16.png",
@@ -4023,9 +4218,9 @@
       "height": 39
     },
     "黛烟": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3b18c49e8504f75c.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c025dea1cef81b8c.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "，邀你与她共享这段温暖的海岛时光。": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/c6ad2b74d6eff475.png",
@@ -4448,9 +4643,9 @@
       "height": 43
     },
     "蔚蓝轨迹": {
-      "path": "media/ui/AimohPMXReadyRoom/label-950b31b51ad732.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-33acff5985ef637a.png",
+      "width": 148,
+      "height": 40
     },
     "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还是": {
       "path": "media/ui/AimohPMXReadyRoom/label-2e583653369db2.png",
@@ -4473,9 +4668,9 @@
       "height": 43
     },
     "静享芳醇": {
-      "path": "media/ui/AimohPMXReadyRoom/label-c48eeccef46c41.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-93d129b7680588c1.png",
+      "width": 148,
+      "height": 40
     },
     "“哎呀，指挥官确定要跟着我吗？万一迷路了，我可": {
       "path": "media/ui/AimohPMXReadyRoom/label-040a28a595c9e3.png",
@@ -4498,9 +4693,9 @@
       "height": 43
     },
     "狡兔迷踪": {
-      "path": "media/ui/AimohPMXReadyRoom/label-06863afdb6942f.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2d14e0d6de7104ac.png",
+      "width": 148,
+      "height": 40
     },
     "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。像": {
       "path": "media/ui/AimohPMXReadyRoom/label-bd441fddc7ccba.png",
@@ -4518,9 +4713,9 @@
       "height": 43
     },
     "速度之星": {
-      "path": "media/ui/AimohPMXReadyRoom/label-07581ce49acd8d.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b176b251e5710a7d.png",
+      "width": 148,
+      "height": 40
     },
     "可露凯的战术骑手服，兼具防护与作战功能，让可露": {
       "path": "media/ui/AimohPMXReadyRoom/label-eaaec29db33a01.png",
@@ -4533,9 +4728,9 @@
       "height": 43
     },
     "星迹掠芒": {
-      "path": "media/ui/AimohPMXReadyRoom/label-a6f22b740a7d39.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8c3ae2652e747719.png",
+      "width": 148,
+      "height": 40
     },
     "“我说过，有我一个就够了。现在，做好用余生来验": {
       "path": "media/ui/AimohPMXReadyRoom/label-d9fde5c39e0a4f.png",
@@ -4563,9 +4758,9 @@
       "height": 43
     },
     "绀星绮愿": {
-      "path": "media/ui/AimohPMXReadyRoom/label-ea0a13465a06a2.png",
-      "width": 124,
-      "height": 43
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1c7028cead026033.png",
+      "width": 148,
+      "height": 40
     },
     "温柔坚强，善解人意，在不同人群中游走而不露把柄的机": {
       "path": "media/ui/AimohPMXReadyRoom/label-30645cf95d802f.png",
@@ -4621,6 +4816,1296 @@
       "path": "media/ui/AimohPMXReadyRoom/label-e4be27c8d1a46f.png",
       "width": 488,
       "height": 43
+    },
+    "莱娅的常见着装。将独特的个性融入象征理性的制": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bb3d18fb96480b2c.png",
+      "width": 796,
+      "height": 40
+    },
+    "服设计之中，独行却不逾矩，这种矛盾对立的特质，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a97d3ebc40eeb187.png",
+      "width": 832,
+      "height": 40
+    },
+    "正是莱娅独有的魅力。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a14414090959f94c.png",
+      "width": 364,
+      "height": 40
+    },
+    "如果觉得眼前的人形亲切友善，那多半": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-49b53fa006b97643.png",
+      "width": 616,
+      "height": 40
+    },
+    "已经踏入她的陷阱之中了。倘若未能及": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4ac9d3d9cdfceefa.png",
+      "width": 616,
+      "height": 40
+    },
+    "时察觉，接下来的一切损失，莱娅概不": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6c7c5480c5658d0e.png",
+      "width": 616,
+      "height": 40
+    },
+    "负责，除非……这个人是你。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1ba7e0785ef7a072.png",
+      "width": 474,
+      "height": 40
+    },
+    "“指挥官，不会是故意吃亏的吧？哼哼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5e462b0e47cfcd5d.png",
+      "width": 597,
+      "height": 40
+    },
+    "♪那也无所谓，你想让我怎么对你负责": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2d39540b7b1bc7f5.png",
+      "width": 617,
+      "height": 40
+    },
+    "呢？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a4b50abfeed51187.png",
+      "width": 93,
+      "height": 40
+    },
+    "夏安的常见着装。黯淡低调，宽大廓形包裹着躯干": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a2e1925ed73f12b6.png",
+      "width": 796,
+      "height": 40
+    },
+    "要害，带来满满的安全感。至于实力，自然要藏在": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a3f275384b3374c0.png",
+      "width": 796,
+      "height": 40
+    },
+    "身后才足以安心。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-715291f11bd875a4.png",
+      "width": 292,
+      "height": 40
+    },
+    "深藏不露，谨言慎行的战术人形，性格": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7dcc1df9187948c0.png",
+      "width": 616,
+      "height": 40
+    },
+    "内敛，不擅表达，容易害羞。尽管未必": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f2ea7164f0851b11.png",
+      "width": 616,
+      "height": 40
+    },
+    "与当下的职能相关，她依旧秉持着不懈": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7085aa3634cef5ed.png",
+      "width": 616,
+      "height": 40
+    },
+    "的热情探索未知领域，涉猎种种技艺。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d1b4bb939536d59f.png",
+      "width": 616,
+      "height": 40
+    },
+    "这份热情被内向的她深埋于波澜不惊的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1c034cab27534491.png",
+      "width": 616,
+      "height": 40
+    },
+    "表象之下，如蒙尘明珠，只有独具慧眼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c6cfef7d86e637a0.png",
+      "width": 616,
+      "height": 40
+    },
+    "的指挥官发现她独特的光彩。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bd9797adeb517a0b.png",
+      "width": 472,
+      "height": 40
+    },
+    "“……只是略懂而已，不用夸我啦……": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-dafae2eaf696c14c.png",
+      "width": 601,
+      "height": 40
+    },
+    "我只是一名平平无奇的战术人形。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ce2b88d3c4750325.png",
+      "width": 561,
+      "height": 40
+    },
+    "“指挥官眼睛，似乎不知道该放哪里的样子，需要": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-698e1273790aa1f3.png",
+      "width": 777,
+      "height": 40
+    },
+    "我来帮你纠正一下吗？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f22a10c0ce554365.png",
+      "width": 381,
+      "height": 40
+    },
+    "阳光追着她的身体曲线，被汗水浸透的衣衫紧贴肌": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a2dc8f0d522538c7.png",
+      "width": 796,
+      "height": 40
+    },
+    "肤，呈现着朝气蓬勃的轮廓。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8a20e0d9abc800df.png",
+      "width": 472,
+      "height": 40
+    },
+    "以常见着装出现的阿斯缇亚，将过去与现在相融，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1d49c98292c65450.png",
+      "width": 796,
+      "height": 40
+    },
+    "在保留原本自我的同时，追寻独属于自己的道路。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e72aa57e2e7814c7.png",
+      "width": 796,
+      "height": 40
+    },
+    "作为AR小队的成员之一，如今的她相": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-531c1a8014e71064.png",
+      "width": 592,
+      "height": 40
+    },
+    "比过去更加沉着冷静。在先后经历了M": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c231cd75c75ad91e.png",
+      "width": 611,
+      "height": 40
+    },
+    "4离去与同指挥官分别之后，她变得愈": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-98f42d2fd585d9ba.png",
+      "width": 601,
+      "height": 40
+    },
+    "发珍视身边的同伴。她行事以结果为导": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-db882fc446f3bb12.png",
+      "width": 616,
+      "height": 40
+    },
+    "向，不太在意过程；加之少言寡语、不": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-110713c5d610815d.png",
+      "width": 616,
+      "height": 40
+    },
+    "喜辩解，因此常常招致误解。往往直到": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-23f7057d55756f43.png",
+      "width": 616,
+      "height": 40
+    },
+    "她默默付出了许多之后，大家才能发觉": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c0eb57046c894a16.png",
+      "width": 616,
+      "height": 40
+    },
+    "她的良苦用心。而这正是独属于她的、": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a31e3d7a1271f0aa.png",
+      "width": 616,
+      "height": 40
+    },
+    "温柔对待他人的方式。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-565a3d54b67b75fb.png",
+      "width": 364,
+      "height": 40
+    },
+    "“来到空旷的山顶吹着冷风看星星……指挥官，这": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a6ef8aa19dff232c.png",
+      "width": 779,
+      "height": 40
+    },
+    "就是您所谓的浪漫吗？那么，请您再靠近我一些吧。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6e20cd73a98a6ab0.png",
+      "width": 832,
+      "height": 40
+    },
+    "”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d7c970ed071b41f5.png",
+      "width": 21,
+      "height": 40
+    },
+    "阿斯缇亚注视着比星空更为重要的你，默默将围巾": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-13d1cea0455cbe56.png",
+      "width": 796,
+      "height": 40
+    },
+    "绕上你的脖颈。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ed4a86d89c859f13.png",
+      "width": 256,
+      "height": 40
+    },
+    "“当年那场输掉的排球赛，指挥官到现在还是耿耿": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ad669a94b9fdb31b.png",
+      "width": 777,
+      "height": 40
+    },
+    "于怀吗？哼哼，没关系……我愿意再次接受你的挑": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a99d2c3b0711716f.png",
+      "width": 798,
+      "height": 40
+    },
+    "战哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-751ea7fa9303d5d0.png",
+      "width": 114,
+      "height": 40
+    },
+    "克莱妲的笑意逐渐加深，惬意地等待着你接下来的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4a1315e91fd238c6.png",
+      "width": 796,
+      "height": 40
+    },
+    "表现。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cd786d5f90252760.png",
+      "width": 112,
+      "height": 40
+    },
+    "忤逆小队昔日的头狼，在经历最糟糕的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c0372e06b34d6c73.png",
+      "width": 616,
+      "height": 40
+    },
+    "一天后，负起责任带领战友们站好了最": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-95d27b210d361265.png",
+      "width": 616,
+      "height": 40
+    },
+    "后一班岗，最终将首领的责任与头衔交": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-31e5f51058bd995b.png",
+      "width": 616,
+      "height": 40
+    },
+    "付给了值得信赖的同伴，自身则选择了": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-32f7439c96b586de.png",
+      "width": 616,
+      "height": 40
+    },
+    "另一种方式继续战斗，时至今日，她依": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2ea014e2d2cc0fda.png",
+      "width": 616,
+      "height": 40
+    },
+    "然是那个你熟悉的AK-12，但请千": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-03f28d1d70ac4a35.png",
+      "width": 545,
+      "height": 40
+    },
+    "万小心——她如今更加危险了。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9666456fbfbb4278.png",
+      "width": 508,
+      "height": 40
+    },
+    "“一匹优秀的雪狼，会利用白雪为自己": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-24d4407bf1ca3226.png",
+      "width": 597,
+      "height": 40
+    },
+    "隐藏，而我更棒——即便一身雪白，我": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d3187090ba6a9abc.png",
+      "width": 616,
+      "height": 40
+    },
+    "也可以遁入黑暗。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ed22c4c1277d4278.png",
+      "width": 309,
+      "height": 40
+    },
+    "“如你所愿，BOSS。今夜的契约已经成立……": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8a459e5fec4a5e70.png",
+      "width": 728,
+      "height": 40
+    },
+    "接下来，就请你认真地履行到底吧。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3b962e99938a5fbb.png",
+      "width": 597,
+      "height": 40
+    },
+    "妮基塔努力维持着平日的严肃，但微红的耳廓还是": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d5416712454588da.png",
+      "width": 796,
+      "height": 40
+    },
+    "出卖了她的羞涩。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cbfdcb910309981d.png",
+      "width": 292,
+      "height": 40
+    },
+    "坚持正义的治安人员、爱护孩子的温柔": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-16ea3f2bfc315d49.png",
+      "width": 616,
+      "height": 40
+    },
+    "姐姐、花钱不眨眼的月光族——谁说这": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4ca1304ad09961a9.png",
+      "width": 616,
+      "height": 40
+    },
+    "些身份不能是同一个人？奋战于守护正": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-93d6ac4c9cbcbf36.png",
+      "width": 616,
+      "height": 40
+    },
+    "义的一线，妮基塔冷静地践行着自己的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e3eadeea6d72acdd.png",
+      "width": 616,
+      "height": 40
+    },
+    "原则，但在面对你时，她也会流露出特": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6e2aa3c509cad0fe.png",
+      "width": 616,
+      "height": 40
+    },
+    "别的一面。“我的工作告诉我，不要完": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-77ca628d2e427eaf.png",
+      "width": 597,
+      "height": 40
+    },
+    "全相信任何人。不过，BOSS是例外": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c35b126f0c6cccac.png",
+      "width": 565,
+      "height": 40
+    },
+    "了，我们可是一起追逐正义的伙伴呢。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a46f1c05797f9d74.png",
+      "width": 633,
+      "height": 40
+    },
+    "“Bonne année chinoise！": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5fcab3103964e882.png",
+      "width": 423,
+      "height": 40
+    },
+    " 哎呀，指挥官你这个表情~难道又想和我玩点刺": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f6031d1a3d3cadc3.png",
+      "width": 755,
+      "height": 40
+    },
+    "激的活动吗？放心这次不是烟花哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ab58cfa0528fc023.png",
+      "width": 582,
+      "height": 40
+    },
+    "芙洛伦毫不避讳地从背后抱住你，准备与你一同去": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a2801ead2251264a.png",
+      "width": 796,
+      "height": 40
+    },
+    "追寻全新的刺激。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3d70404f46213ab3.png",
+      "width": 292,
+      "height": 40
+    },
+    "热衷于追求刺激与愉悦的医疗人形，性": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-01af0c20fdb2b2ac.png",
+      "width": 616,
+      "height": 40
+    },
+    "格坦率而又擅于引诱。同时兼备高超的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-742dffc605b3c5af.png",
+      "width": 616,
+      "height": 40
+    },
+    "医疗技术与对于药剂调配的热忱，只不": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-69436be056c8f3f2.png",
+      "width": 616,
+      "height": 40
+    },
+    "过，由于其性格原因，这份热情往往令": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-12dee81a9cd5bfd9.png",
+      "width": 616,
+      "height": 40
+    },
+    "人难以承受。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8f82226e84946394.png",
+      "width": 220,
+      "height": 40
+    },
+    "“这颗药，和这支注射器，以及我的惩": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8f3c43d6c93aecba.png",
+      "width": 597,
+      "height": 40
+    },
+    "罚，你想选哪一个呢？不论哪个都会非": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bf86348111b36f64.png",
+      "width": 616,
+      "height": 40
+    },
+    "常舒服的哦。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-67d4be606397a832.png",
+      "width": 237,
+      "height": 40
+    },
+    "埃芙的常见着装。几乎全无装饰性意义的专业特种": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-07eb611ef7c70f1d.png",
+      "width": 796,
+      "height": 40
+    },
+    "作战制服，便于行动的同时具备在任何环境下高强": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f0e54189b776dbcf.png",
+      "width": 796,
+      "height": 40
+    },
+    "度作战的功能。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e6973fc38b4d68ce.png",
+      "width": 256,
+      "height": 40
+    },
+    "外表冷淡，内心纤细的战术人形。虽然": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7fadd89eb128e3cb.png",
+      "width": 616,
+      "height": 40
+    },
+    "可能只是看似随意而无感情的应承，却": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1722ad43cb8b0154.png",
+      "width": 616,
+      "height": 40
+    },
+    "会真的把对方的需求、意见放在心里，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1c2fddf01dbc4f22.png",
+      "width": 616,
+      "height": 40
+    },
+    "并找机会去满足。会注意到容易被忽略": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-888304d55dfb5421.png",
+      "width": 616,
+      "height": 40
+    },
+    "的细小反应和情绪，对环境也比较敏感，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f832f1731515b475.png",
+      "width": 652,
+      "height": 40
+    },
+    "但也因此容易被环境氛围所影响。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e98a2a9ff1c96368.png",
+      "width": 544,
+      "height": 40
+    },
+    "“我以为时间会改变很多事……不过，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c954eefb87b3fde7.png",
+      "width": 599,
+      "height": 40
+    },
+    "现在看来，您没有变，我们也没有变……": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ec5a5affef278ed9.png",
+      "width": 654,
+      "height": 40
+    },
+    "只有世界每天都在变。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e926ea4474dc43e4.png",
+      "width": 381,
+      "height": 40
+    },
+    "人偶扳机": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c114afa7aa8cabad.png",
+      "width": 148,
+      "height": 40
+    },
+    "“长官，夏季的冷饮刨冰虽可口，但也请不要吃得": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-35630383bf071d19.png",
+      "width": 777,
+      "height": 40
+    },
+    "太多。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ca8791baa5328da4.png",
+      "width": 129,
+      "height": 40
+    },
+    "躺椅、阳伞、沙滩，她做好了海边度假的一切准备，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d607f42fecb773db.png",
+      "width": 832,
+      "height": 40
+    },
+    "为你带来夏日的美好闲暇。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-df1ae5d0a863585a.png",
+      "width": 436,
+      "height": 40
+    },
+    "恭谦却又坚守原则的人形。她会调制香": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e1c57c0345440735.png",
+      "width": 616,
+      "height": 40
+    },
+    "气四溢的咖啡，也会坚定地守护咖啡馆": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b14816e35ccb8e10.png",
+      "width": 616,
+      "height": 40
+    },
+    "——这便是“方糖”无可取代的屏障。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-36edfb164a36defc.png",
+      "width": 578,
+      "height": 40
+    },
+    "和莱希的五十天": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-82b0ed3f9defdc86.png",
+      "width": 256,
+      "height": 40
+    },
+    "“指挥官，请牵住我的手，和我一起聆听海风的呼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-798992c841ed5c51.png",
+      "width": 777,
+      "height": 40
+    },
+    "唤吧~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-df26bd7aa5d7d937.png",
+      "width": 114,
+      "height": 40
+    },
+    "春田微笑着压了压帽檐，邀你与她共享这段温暖的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-213fba03eb8dd955.png",
+      "width": 796,
+      "height": 40
+    },
+    "海岛时光。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-06e8fc8cac7864ce.png",
+      "width": 184,
+      "height": 40
+    },
+    "温柔坚强，善解人意，在不同人群中游": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-74240fe2b4eea176.png",
+      "width": 616,
+      "height": 40
+    },
+    "走而不露把柄的机敏人形。包容的背后": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cc28d6a0da0b2eae.png",
+      "width": 616,
+      "height": 40
+    },
+    "是对原则的坚持，而春田的原则只有一": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-755310d20f562347.png",
+      "width": 616,
+      "height": 40
+    },
+    "个——朋友和重要之人，她全都要守护": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b9ce50bec7dd3064.png",
+      "width": 616,
+      "height": 40
+    },
+    "好。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d05c9f6ed8ec36c4.png",
+      "width": 76,
+      "height": 40
+    },
+    "“主人主人，来一起玩吧！这些游戏我很擅长哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4b8f97197ae2aa77.png",
+      "width": 779,
+      "height": 40
+    },
+    "她向你挥动双手，扑面而来的活力如同一颗跃动的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-eaf84944d17b317a.png",
+      "width": 796,
+      "height": 40
+    },
+    "太阳。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0d022ce918b167f0.png",
+      "width": 112,
+      "height": 40
+    },
+    "芙铃的记忆中堆积着沉痛与压抑的秘密，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-72de5b32e704f788.png",
+      "width": 652,
+      "height": 40
+    },
+    "不过她的心智仍然透露出一抹亮色，因": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-85d87ac48f3dbac1.png",
+      "width": 616,
+      "height": 40
+    },
+    "为每一朵乌云都被纯真的暖阳照耀。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-eaf1ebc96365e53e.png",
+      "width": 580,
+      "height": 40
+    },
+    "“主人，无论您离开多久，我……我都": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cc8bbd3c5595e567.png",
+      "width": 599,
+      "height": 40
+    },
+    "会乖乖等着您回家的！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a74c8e8cdfaf323a.png",
+      "width": 381,
+      "height": 40
+    },
+    "OTs-14的常见着装。冷冽的色调隐匿锋芒，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3cc47f661af33b96.png",
+      "width": 706,
+      "height": 40
+    },
+    "比起指引众人的道标，她更愿化作仅属于你一人的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0cdce6083dd130b7.png",
+      "width": 796,
+      "height": 40
+    },
+    "暗影。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-911e0492784f3d4a.png",
+      "width": 112,
+      "height": 40
+    },
+    "冷静严肃、高傲自信的第三代人形。改": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c20992ac46fc5e2a.png",
+      "width": 616,
+      "height": 40
+    },
+    "造为她带来了无与伦比的强大力量，也": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-05b892ffcb532e94.png",
+      "width": 616,
+      "height": 40
+    },
+    "让她比过去更为强硬——这足以将她那": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-23ec7ac1f3296944.png",
+      "width": 616,
+      "height": 40
+    },
+    "隐约的不安与脆弱藏好。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b261a61eceb121bb.png",
+      "width": 400,
+      "height": 40
+    },
+    "“今天的计划制定的如何？指挥官，稍": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3dd9de9d7aaae0cc.png",
+      "width": 597,
+      "height": 40
+    },
+    "微也让我听听吧？“": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1bc85355d9100b63.png",
+      "width": 309,
+      "height": 40
+    },
+    "配色素雅如美玉无瑕，贴身剪裁更突显穿着之人的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b5ce84130a818a69.png",
+      "width": 796,
+      "height": 40
+    },
+    "玲珑曲线。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-81bd55ec93f72f70.png",
+      "width": 184,
+      "height": 40
+    },
+    "温柔内敛的人形，背着古筝与“季风”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0adacacfb71b8c94.png",
+      "width": 578,
+      "height": 40
+    },
+    "乐队的同伴们四处漂泊。拨弄琴弦，唤": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-fede182547dcbea4.png",
+      "width": 616,
+      "height": 40
+    },
+    "起的是听者心中埋藏最深的愿望——她": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-df90f9899b81134a.png",
+      "width": 616,
+      "height": 40
+    },
+    "聆听着一切，也包容着一切。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ed91041e0a44aa02.png",
+      "width": 472,
+      "height": 40
+    },
+    "“要试试新的水上活动吗？既然如此就和我一起去": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4687394a71177b60.png",
+      "width": 777,
+      "height": 40
+    },
+    "冲浪吧。就算是玩水，只要和我在一起就绝对不会": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2cb19e965962cf6f.png",
+      "width": 796,
+      "height": 40
+    },
+    "让你失望的。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4ab46a5506b455d3.png",
+      "width": 237,
+      "height": 40
+    },
+    "她踏浪而来，向你伸出手。指挥官准备好回应那期": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-db8962be13485e50.png",
+      "width": 796,
+      "height": 40
+    },
+    "待的眼神了吗？": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3e22ddfbddceab97.png",
+      "width": 256,
+      "height": 40
+    },
+    "优雅而冷静，拥有绝对自信的人形，励": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8798df7d5a646dbc.png",
+      "width": 616,
+      "height": 40
+    },
+    "志将H.I.D.E. 404全员精": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5eea6b99bea746ad.png",
+      "width": 378,
+      "height": 40
+    },
+    "英化。只有熟悉她的人才知道，在可露": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0ebb625a12a0b125.png",
+      "width": 616,
+      "height": 40
+    },
+    "凯的强势与严苛背后，有着怎样的柔软": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0bf6e184969dc326.png",
+      "width": 616,
+      "height": 40
+    },
+    "与珍惜。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-148f68d397cf9b1a.png",
+      "width": 148,
+      "height": 40
+    },
+    "索米的海滨着装。斑斓的飘带设计如同游鱼之尾，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bcfd242afbcc3fa4.png",
+      "width": 796,
+      "height": 40
+    },
+    "穿上它的索米将成为大海中最快乐的小精灵。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2e3b152f5fb93ec5.png",
+      "width": 724,
+      "height": 40
+    },
+    "善良认真、富有使命感的可爱人形。她": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0d516fbc74379862.png",
+      "width": 616,
+      "height": 40
+    },
+    "会为了社区中的同伴们勇敢出发，也会": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ff703cf9180d48a4.png",
+      "width": 616,
+      "height": 40
+    },
+    "为了寻找珍视之人而漂泊。放心地将事": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b70e34b6f181a27a.png",
+      "width": 616,
+      "height": 40
+    },
+    "情交给她吧，她绝不会辜负你的信任与": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2983dd1c185a52f0.png",
+      "width": 616,
+      "height": 40
+    },
+    "使命。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cd9d49a505f14d8d.png",
+      "width": 112,
+      "height": 40
+    },
+    "希丽雅的常见着装。冷峻与专业的外衣包裹之下，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5e4d91eb48ad9c0d.png",
+      "width": 796,
+      "height": 40
+    },
+    "是温柔又体贴的内里。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cad8fbeb19957086.png",
+      "width": 364,
+      "height": 40
+    },
+    "温柔亲切的战术人形，因性情仁厚憨实": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-048b94ae297b631c.png",
+      "width": 616,
+      "height": 40
+    },
+    "而深得同伴信任。比起战斗，似乎更擅": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-00c7f037ab25d81c.png",
+      "width": 616,
+      "height": 40
+    },
+    "长担任知心妹妹的角色，倾听与开解众": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-55506c41cdaa276d.png",
+      "width": 616,
+      "height": 40
+    },
+    "人的苦恼。离开格里芬之后的多年独自": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5ed2f4c32c86f3a1.png",
+      "width": 616,
+      "height": 40
+    },
+    "历练，使她彻底发挥出了自身的优势，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-672965f747de69c5.png",
+      "width": 616,
+      "height": 40
+    },
+    "让言辞与慧眼成为了她独一无二的武器。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a610944c058f9527.png",
+      "width": 652,
+      "height": 40
+    },
+    "为了支援身陷危机的指挥官，她不惜一": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a3f67ac836df49e9.png",
+      "width": 616,
+      "height": 40
+    },
+    "切代价，以谈判专家的名义踏上了前途": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1a799886cbf90bf9.png",
+      "width": 616,
+      "height": 40
+    },
+    "渺茫的旅程。希丽雅相信，变得更加成": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8faceeb078d11dcf.png",
+      "width": 616,
+      "height": 40
+    },
+    "熟与坚韧的自己，一定能从混沌的局势": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-876483359e6ec686.png",
+      "width": 616,
+      "height": 40
+    },
+    "中抓住那一线重逢的希望。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0e3f0a8efa867220.png",
+      "width": 436,
+      "height": 40
+    },
+    "调停者": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1e0d320e245fd2ed.png",
+      "width": 112,
+      "height": 40
+    },
+    "“工作辛苦了呢，指挥官！快来休息一下吧，今天": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d7a4aec21ff9d254.png",
+      "width": 777,
+      "height": 40
+    },
+    "我为您准备的是热红茶哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9b79340f01641d7d.png",
+      "width": 438,
+      "height": 40
+    },
+    "希丽雅露出温和的笑容，将最温暖的下午茶，奉献": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-96c51e548014df6f.png",
+      "width": 796,
+      "height": 40
+    },
+    "给最重要的你。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-43614d9f6eb40d55.png",
+      "width": 256,
+      "height": 40
+    },
+    "暖茶时憩": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7dc4459f79cfe564.png",
+      "width": 148,
+      "height": 40
+    },
+    "“指挥官，周边无异常。我现在是您的助理，安提": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-efe26e0a37dbfbac.png",
+      "width": 777,
+      "height": 40
+    },
+    "娅……真没想到我会再次用到这个名字。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e86fbcbda7b53bc0.png",
+      "width": 671,
+      "height": 40
+    },
+    "出于乔装护卫的需要，她紧紧跟在你身边，贴得比": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e53d94e07f67e9e6.png",
+      "width": 796,
+      "height": 40
+    },
+    "平时更近。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-efb867e303ca61c7.png",
+      "width": 184,
+      "height": 40
+    },
+    "安提娅": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-27ab8045822a2f8f.png",
+      "width": 112,
+      "height": 40
+    },
+    "“如果未来的某一天，我们不再需要战斗……或许，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3bccd30853dfc81d.png",
+      "width": 815,
+      "height": 40
+    },
+    "我会很期待和您共度学院的时光。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7ec56e9dfa01ea28.png",
+      "width": 561,
+      "height": 40
+    },
+    "她将被风吹起的裙角轻轻抚平，温柔的眼眸中倒映": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-00f87063f8ac2180.png",
+      "width": 796,
+      "height": 40
+    },
+    "出你的身影。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-882192499b76166d.png",
+      "width": 220,
+      "height": 40
+    },
+    "紫藤花信": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1ffe79c901f8ad68.png",
+      "width": 148,
+      "height": 40
+    },
+    "“抱歉，我不擅长这样的社交活动。指挥官，请教": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ee8b79a0638a95f4.png",
+      "width": 777,
+      "height": 40
+    },
+    "导我……该怎么做……”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b16d1ca76fd5881b.png",
+      "width": 385,
+      "height": 40
+    },
+    "脸颊的红晕并非出自情动，不自在的举止出卖着她": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6c8e55cfd12f19ff.png",
+      "width": 796,
+      "height": 40
+    },
+    "的懵懂。夏安湿润的眼睛望向你，像一只向你求助": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a126ea4cea8ca085.png",
+      "width": 796,
+      "height": 40
+    },
+    "的惊惶小鹿。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-fee136a8d95b1f0a.png",
+      "width": 220,
+      "height": 40
+    },
+    "青涩夜会": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e66ca5bb21b962f0.png",
+      "width": 148,
+      "height": 40
+    },
+    "“你是值得我托付信念的指挥官，让我们永远地并": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-659af1e1f4ca1d04.png",
+      "width": 777,
+      "height": 40
+    },
+    "肩同行吧……”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9afd110931e64d81.png",
+      "width": 239,
+      "height": 40
+    },
+    "OTs-14缓缓向你走来，曾在心智中重演无数": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d49c1a94d58cdcea.png",
+      "width": 706,
+      "height": 40
+    },
+    "次的情景，如今终于真切地触手可及。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c77189cfa46be6bb.png",
+      "width": 616,
+      "height": 40
+    },
+    "天意佳人": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f82f172791837611.png",
+      "width": 148,
+      "height": 40
+    },
+    "“无论我变成何种模样，过去，现在，将来，我始": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d3df2df9c848169b.png",
+      "width": 777,
+      "height": 40
+    },
+    "终都是您的OTs-14。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6895878585acf145.png",
+      "width": 363,
+      "height": 40
+    },
+    "OTs-14的眼中没有一丝迷惘，那份坚定守护": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-349ac64760e25355.png",
+      "width": 706,
+      "height": 40
+    },
+    "的意志已经满溢而出。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-82fb6f412745cac4.png",
+      "width": 364,
+      "height": 40
+    },
+    "极夜黎明": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-21454efe0e528e89.png",
+      "width": 148,
+      "height": 40
+    },
+    "可露凯的常见着装。群青色的外套是战场上最醒目": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2d99084de30438f3.png",
+      "width": 796,
+      "height": 40
+    },
+    "的存在，可露凯从不惧怕成为敌人的焦点——不如": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-fb6dca028fd2b423.png",
+      "width": 796,
+      "height": 40
+    },
+    "说，这才是她选择这件衣服的目的。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f8100453da1736e1.png",
+      "width": 580,
+      "height": 40
+    },
+    "灼目之星": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a44cd4bca9709575.png",
+      "width": 148,
+      "height": 40
+    },
+    "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c1e7f82eaf47b0db.png",
+      "width": 796,
+      "height": 40
+    },
+    "像是疾风或是雷霆，银芒四射的骑士向您发出邀约。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0df6a3520c8b3a3d.png",
+      "width": 832,
+      "height": 40
+    },
+    "上车，兜个风！": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2f98ddd80e2513d8.png",
+      "width": 256,
+      "height": 40
+    },
+    "可露凯的战术骑手服，兼具防护与作战功能，让可": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6d5c6ff8e90966e2.png",
+      "width": 796,
+      "height": 40
+    },
+    "露凯犹如一道蓝色闪光在前线穿梭。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2a7a81f6f08a9a1b.png",
+      "width": 580,
+      "height": 40
+    },
+    "“我说过，有我一个就够了。现在，做好用余生来": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e36875b7ab315499.png",
+      "width": 777,
+      "height": 40
+    },
+    "验证这句话的准备了吗？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a6f9e9c4f9e998cd.png",
+      "width": 417,
+      "height": 40
+    },
+    "绀星夜幕之下，那袭如霜雪洁白的纱裙，此刻正为": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8a20aa2ef938a6f2.png",
+      "width": 796,
+      "height": 40
+    },
+    "您一人闪耀。她坚定地扣紧您的十指，目光灼灼—": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c432ce1ffb3ae71b.png",
+      "width": 796,
+      "height": 40
+    },
+    "—名为“完美”的未来，已在您手中。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7275522dfdf5ff78.png",
+      "width": 578,
+      "height": 40
+    },
+    "芙铃的常见着装，舍弃了大部分日常装饰，只为尽": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-dea1be63528944a8.png",
+      "width": 796,
+      "height": 40
+    },
+    "可能发挥出战斗性能。在漫长的守望途中，她把思": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-20af234898762444.png",
+      "width": 796,
+      "height": 40
+    },
+    "念化为战斗的动力。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-26349407cf7f8b6c.png",
+      "width": 328,
+      "height": 40
+    },
+    "望归宠儿": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ff40f7144b2d92e5.png",
+      "width": 148,
+      "height": 40
+    },
+    "经过埃芙的细心处理，为克莱妲的新素体粉饰得最": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5bb80273a9e785e7.png",
+      "width": 796,
+      "height": 40
+    },
+    "接近往日风采的装束，尽管内核已迥然不同，但她": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3456b2194140c73a.png",
+      "width": 796,
+      "height": 40
+    },
+    "依然是她。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-54810dc7ca9be61d.png",
+      "width": 184,
+      "height": 40
+    },
+    "旧年雪": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9671f647519aef16.png",
+      "width": 112,
+      "height": 40
+    },
+    "黛烟的常见着装。别致的剪裁搭配飘逸的纹饰，彰": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1dbe96d604c14879.png",
+      "width": 796,
+      "height": 40
+    },
+    "显出她高雅的品味。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bf8036c111a84b96.png",
+      "width": 328,
+      "height": 40
+    },
+    "烟寻异处": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-52b2a43e6193895c.png",
+      "width": 148,
+      "height": 40
+    },
+    "桑朵莱希的常见着装。一尘不染的工作服下暗藏枪": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2528a6fc71c1f950.png",
+      "width": 796,
+      "height": 40
+    },
+    "带，优秀的女仆不仅能冲泡可口的咖啡，还能做可": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a9e379eaf723ab22.png",
+      "width": 796,
+      "height": 40
+    },
+    "靠的护卫。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d2a6bcd3ffc957cb.png",
+      "width": 184,
+      "height": 40
+    },
+    "完美招待": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8fceeae1261c7c91.png",
+      "width": 148,
+      "height": 40
+    },
+    "“既然得到了表彰，我就有责任为您献上与之相配": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7738846483894eb4.png",
+      "width": 777,
+      "height": 40
+    },
+    "的服务。长官，请品尝。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d5b8d8ff4d613af0.png",
+      "width": 417,
+      "height": 40
+    },
+    "她为你斟满了咖啡，期待着这杯充满心意的特调，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5b144e90cab07f97.png",
+      "width": 796,
+      "height": 40
+    },
+    "能够换来你的肯定。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-693256da57f78176.png",
+      "width": 328,
+      "height": 40
+    },
+    "金牌店员": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-494110fcfe0ba5be.png",
+      "width": 148,
+      "height": 40
+    },
+    "“加油！加油！Fight ON！ 这是根据以": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-019812642c507dab.png",
+      "width": 616,
+      "height": 40
+    },
+    "前我给孩子们设计的衣服改良而来的。这件衣服见": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b02ee446769f072e.png",
+      "width": 796,
+      "height": 40
+    },
+    "证了孩子们……以及我的成长。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-55ca564490cc0293.png",
+      "width": 527,
+      "height": 40
+    },
+    "她如骄阳般起舞，用活力和温柔鼓舞人心。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-fbb0d32e2df04f58.png",
+      "width": 688,
+      "height": 40
+    },
+    "骄阳般起舞": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-33d7ccd0439e077e.png",
+      "width": 184,
+      "height": 40
+    },
+    "“Boss，靠近些，让、让我挽着您的手……”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-39431eeb37644785.png",
+      "width": 695,
+      "height": 40
+    },
+    "深蓝色的礼服，如同夜色中的海湾。但这一刻，海": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-60f4e92365cefa4e.png",
+      "width": 796,
+      "height": 40
+    },
+    "面上却掀起了绯红的波澜。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-87186405a428dbdc.png",
+      "width": 436,
+      "height": 40
+    },
+    "银湾流转夜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7e51ed179095dfe0.png",
+      "width": 184,
+      "height": 40
+    },
+    "“哎呀，指挥官确定要跟着我吗？万一迷路了，我": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-807092d43d1daf49.png",
+      "width": 777,
+      "height": 40
+    },
+    "可是不负责的哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a7d5c1e1ce4f5354.png",
+      "width": 294,
+      "height": 40
+    },
+    "莱娅露出游刃有余的笑容，试图把你引入更深的迷": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bf5dfc0a90df977b.png",
+      "width": 796,
+      "height": 40
+    },
+    "途之中。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5e2b0e14f0c6f4fd.png",
+      "width": 148,
+      "height": 40
+    },
+    "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-943951aeee24838e.png",
+      "width": 777,
+      "height": 40
+    },
+    "是温度……都是您最喜欢的那种哦。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9135573835f054f9.png",
+      "width": 599,
+      "height": 40
+    },
+    "如同过去时光里品尝过的每杯咖啡一样，她已经为": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9d4ceba120309a64.png",
+      "width": 796,
+      "height": 40
+    },
+    "你悉心调制好了最合适的口味。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b9eb941a87d89967.png",
+      "width": 508,
+      "height": 40
+    },
+    "“指挥官，你的圣诞礼物来啦，要拆开看看吗？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2c4a99cd902b3b15.png",
+      "width": 758,
+      "height": 40
+    },
+    "索米手上什么都没拿，只是红着脸一味向你走来。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1babf55ae01e12a8.png",
+      "width": 796,
+      "height": 40
+    },
+    "雪兔献礼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7cd0ba458b0d0b1e.png",
+      "width": 148,
+      "height": 40
+    },
+    "妮基塔的常见着装。蓝色的治安制服一尘不染，勾": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-41fb8facdf967271.png",
+      "width": 796,
+      "height": 40
+    },
+    "勒出她对待正义的认真态度——要做罪犯的噩梦，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-76e5a592586bb427.png",
+      "width": 796,
+      "height": 40
+    },
+    "也要做守护孩子们笑容的典范。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5c87111f308eef61.png",
+      "width": 508,
+      "height": 40
+    },
+    "典范制式": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5e618a4e3554c99c.png",
+      "width": 148,
+      "height": 40
+    },
+    "索米的常见着装。温暖的冬衣，当然要配上毛领和": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8362160e70cb5902.png",
+      "width": 796,
+      "height": 40
+    },
+    "绒球了。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-36be1965a1a82381.png",
+      "width": 148,
+      "height": 40
+    },
+    "雪映清辉": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e09f3267d3c49184.png",
+      "width": 148,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -4922,22 +6407,139 @@
     }
   },
   "roomCharacterDescriptions": {
-    "春田": [
-      "温柔坚强，善解人意，在不同人群中游走而不露把柄的机",
-      "敏人形。包容的背后是对原则的坚持，而春田的原则只有",
-      "一个——朋友和重要之人，她全都要守护好。"
+    "莱娅": [
+      "如果觉得眼前的人形亲切友善，那多半",
+      "已经踏入她的陷阱之中了。倘若未能及",
+      "时察觉，接下来的一切损失，莱娅概不",
+      "负责，除非……这个人是你。",
+      "“指挥官，不会是故意吃亏的吧？哼哼",
+      "♪那也无所谓，你想让我怎么对你负责",
+      "呢？”"
     ],
-    "可露凯": [
-      "优雅而冷静，拥有绝对自信的人形，励志将H.I.D.",
-      "E. 404全员精英化。只有熟悉她的人才知道，在可",
-      "露凯的强势与严苛背后，有着怎样的柔软与珍惜。"
+    "夏安": [
+      "深藏不露，谨言慎行的战术人形，性格",
+      "内敛，不擅表达，容易害羞。尽管未必",
+      "与当下的职能相关，她依旧秉持着不懈",
+      "的热情探索未知领域，涉猎种种技艺。",
+      "这份热情被内向的她深埋于波澜不惊的",
+      "表象之下，如蒙尘明珠，只有独具慧眼",
+      "的指挥官发现她独特的光彩。",
+      "“……只是略懂而已，不用夸我啦……",
+      "我只是一名平平无奇的战术人形。”"
+    ],
+    "阿斯缇亚": [
+      "作为AR小队的成员之一，如今的她相",
+      "比过去更加沉着冷静。在先后经历了M",
+      "4离去与同指挥官分别之后，她变得愈",
+      "发珍视身边的同伴。她行事以结果为导",
+      "向，不太在意过程；加之少言寡语、不",
+      "喜辩解，因此常常招致误解。往往直到",
+      "她默默付出了许多之后，大家才能发觉",
+      "她的良苦用心。而这正是独属于她的、",
+      "温柔对待他人的方式。"
     ],
     "克莱妲": [
-      "忤逆小队昔日的头狼，在经历最糟糕的一天后，负起责任",
-      "带领战友们站好了最后一班岗，最终将首领的责任与头衔",
-      "交付给了值得信赖的同伴，自身则选择了另一种方式继续",
-      "战斗，时至今日，她依然是那个你熟悉的AK-12，但",
-      "请千万小心——她如今更加危险了。"
+      "忤逆小队昔日的头狼，在经历最糟糕的",
+      "一天后，负起责任带领战友们站好了最",
+      "后一班岗，最终将首领的责任与头衔交",
+      "付给了值得信赖的同伴，自身则选择了",
+      "另一种方式继续战斗，时至今日，她依",
+      "然是那个你熟悉的AK-12，但请千",
+      "万小心——她如今更加危险了。",
+      "“一匹优秀的雪狼，会利用白雪为自己",
+      "隐藏，而我更棒——即便一身雪白，我",
+      "也可以遁入黑暗。”"
+    ],
+    "妮基塔": [
+      "坚持正义的治安人员、爱护孩子的温柔",
+      "姐姐、花钱不眨眼的月光族——谁说这",
+      "些身份不能是同一个人？奋战于守护正",
+      "义的一线，妮基塔冷静地践行着自己的",
+      "原则，但在面对你时，她也会流露出特",
+      "别的一面。“我的工作告诉我，不要完",
+      "全相信任何人。不过，BOSS是例外",
+      "了，我们可是一起追逐正义的伙伴呢。”"
+    ],
+    "芙洛伦": [
+      "热衷于追求刺激与愉悦的医疗人形，性",
+      "格坦率而又擅于引诱。同时兼备高超的",
+      "医疗技术与对于药剂调配的热忱，只不",
+      "过，由于其性格原因，这份热情往往令",
+      "人难以承受。",
+      "“这颗药，和这支注射器，以及我的惩",
+      "罚，你想选哪一个呢？不论哪个都会非",
+      "常舒服的哦。”"
+    ],
+    "埃芙": [
+      "外表冷淡，内心纤细的战术人形。虽然",
+      "可能只是看似随意而无感情的应承，却",
+      "会真的把对方的需求、意见放在心里，",
+      "并找机会去满足。会注意到容易被忽略",
+      "的细小反应和情绪，对环境也比较敏感，",
+      "但也因此容易被环境氛围所影响。",
+      "“我以为时间会改变很多事……不过，",
+      "现在看来，您没有变，我们也没有变……",
+      "只有世界每天都在变。”"
+    ],
+    "桑朵莱希": [
+      "恭谦却又坚守原则的人形。她会调制香",
+      "气四溢的咖啡，也会坚定地守护咖啡馆",
+      "——这便是“方糖”无可取代的屏障。"
+    ],
+    "春田": [
+      "温柔坚强，善解人意，在不同人群中游",
+      "走而不露把柄的机敏人形。包容的背后",
+      "是对原则的坚持，而春田的原则只有一",
+      "个——朋友和重要之人，她全都要守护",
+      "好。"
+    ],
+    "芙铃": [
+      "芙铃的记忆中堆积着沉痛与压抑的秘密，",
+      "不过她的心智仍然透露出一抹亮色，因",
+      "为每一朵乌云都被纯真的暖阳照耀。",
+      "“主人，无论您离开多久，我……我都",
+      "会乖乖等着您回家的！”"
+    ],
+    "OTs-14": [
+      "冷静严肃、高傲自信的第三代人形。改",
+      "造为她带来了无与伦比的强大力量，也",
+      "让她比过去更为强硬——这足以将她那",
+      "隐约的不安与脆弱藏好。",
+      "“今天的计划制定的如何？指挥官，稍",
+      "微也让我听听吧？“"
+    ],
+    "黛烟": [
+      "温柔内敛的人形，背着古筝与“季风”",
+      "乐队的同伴们四处漂泊。拨弄琴弦，唤",
+      "起的是听者心中埋藏最深的愿望——她",
+      "聆听着一切，也包容着一切。"
+    ],
+    "可露凯": [
+      "优雅而冷静，拥有绝对自信的人形，励",
+      "志将H.I.D.E. 404全员精",
+      "英化。只有熟悉她的人才知道，在可露",
+      "凯的强势与严苛背后，有着怎样的柔软",
+      "与珍惜。"
+    ],
+    "索米": [
+      "善良认真、富有使命感的可爱人形。她",
+      "会为了社区中的同伴们勇敢出发，也会",
+      "为了寻找珍视之人而漂泊。放心地将事",
+      "情交给她吧，她绝不会辜负你的信任与",
+      "使命。"
+    ],
+    "希丽雅": [
+      "温柔亲切的战术人形，因性情仁厚憨实",
+      "而深得同伴信任。比起战斗，似乎更擅",
+      "长担任知心妹妹的角色，倾听与开解众",
+      "人的苦恼。离开格里芬之后的多年独自",
+      "历练，使她彻底发挥出了自身的优势，",
+      "让言辞与慧眼成为了她独一无二的武器。",
+      "为了支援身陷危机的指挥官，她不惜一",
+      "切代价，以谈判专家的名义踏上了前途",
+      "渺茫的旅程。希丽雅相信，变得更加成",
+      "熟与坚韧的自己，一定能从混沌的局势",
+      "中抓住那一线重逢的希望。"
     ]
   }
 }

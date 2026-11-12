@@ -19,11 +19,12 @@
         "外套"
       ],
       "officialSkin": "灵海游光",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": false
     },
     "pmx-cb19e5961c38af86": {
       "character": "索米",
-      "skin": "SSR0102",
+      "skin": "雪兔献礼",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cb19e5961c38af86.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR02.png",
       "groups": {
@@ -48,11 +49,13 @@
         "披风",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "雪兔献礼",
+      "isDefault": false
     },
     "pmx-4019c9450e0e318d": {
       "character": "索米",
-      "skin": "原皮",
+      "skin": "雪映清辉",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR.png",
       "groups": {
@@ -68,7 +71,9 @@
       "primaryCategories": [
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "雪映清辉",
+      "isDefault": true
     }
   },
   "labels": {}

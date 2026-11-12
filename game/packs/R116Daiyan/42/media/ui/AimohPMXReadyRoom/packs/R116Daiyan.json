@@ -7,11 +7,12 @@
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR03.png",
       "groups": {},
       "officialSkin": "玉玲珑",
-      "partImages": {}
+      "partImages": {},
+      "isDefault": false
     },
     "pmx-8c817aa0fdd64f7a": {
       "character": "黛烟",
-      "skin": "原皮",
+      "skin": "烟寻异处",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR.png",
       "groups": {
@@ -27,7 +28,9 @@
       "primaryCategories": [
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "烟寻异处",
+      "isDefault": true
     }
   },
   "labels": {}

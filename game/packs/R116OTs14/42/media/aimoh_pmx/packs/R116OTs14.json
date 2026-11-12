@@ -4,19 +4,19 @@
   "models": [
     {
       "id": "pmx-782f06826adb1307",
-      "label": "OTs-14 / 默认",
+      "label": "OTs-14 / 暗昼冽影",
       "model": "models/pmx-782f06826adb1307/model.pmx",
       "profile": "models/pmx-782f06826adb1307/profile.json"
     },
     {
       "id": "pmx-06925f50fb5cb612",
-      "label": "OTs-14 / SSR0101（改）",
+      "label": "OTs-14 / 天意佳人",
       "model": "models/pmx-06925f50fb5cb612/model.pmx",
       "profile": "models/pmx-06925f50fb5cb612/profile.json"
     },
     {
       "id": "pmx-73625fbf0962e120",
-      "label": "OTs-14 / SSR0102",
+      "label": "OTs-14 / 极夜黎明",
       "model": "models/pmx-73625fbf0962e120/model.pmx",
       "profile": "models/pmx-73625fbf0962e120/profile.json"
     }

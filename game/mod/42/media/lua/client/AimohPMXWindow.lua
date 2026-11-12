@@ -1281,7 +1281,8 @@ function W:refresh()
         if index==nil then return end
         local entry={id=id,index=index,meta=meta,outfitPool=(data.roomOutfitPools or {})[id]}
         character.locked=false;table.insert(character.skins,entry)
-        local original=not not defaultSkins[meta.skin]
+        local original=meta.isDefault==true or not not defaultSkins[meta.skin]
+        entry.sortOrder=original and 0 or entry.outfitPool and 2 or 1
         if not entry.outfitPool and (not character.baseSkin or (original and not character.baseSkinIsOriginal)) then
             character.baseSkin=entry
             character.baseSkinIsOriginal=original
@@ -1300,6 +1301,10 @@ function W:refresh()
     end
     for _,id in ipairs(optional)do add(id,available[id],data.models[id])end
     for _,character in ipairs(self.characters)do
+        table.sort(character.skins,function(a,b)
+            if a.sortOrder~=b.sortOrder then return a.sortOrder<b.sortOrder end
+            return a.index<b.index
+        end)
         local base=character.baseSkin
         if base then character.portrait=base.meta.portrait or character.portrait end
         for _,skin in ipairs(character.skins)do
@@ -1674,7 +1679,9 @@ function W:prerender()
         local meta=self.browsed.meta
         local pool=self.browsed.outfitPool
         local name=pool and pool.name or meta.officialSkin or meta.skin
-        local y=math.floor(self.height*(inPool and .605 or .668))
+        local descriptions=data.skinDescriptions or {}
+        local text=descriptions[self.browsed.id] or descriptions[meta.card or ""]
+        local y=math.min(math.floor(self.height*(inPool and .605 or .668)),self.height-42-80-#(text or {})*18)
         if inPool and pool then
             local cover=image(pool.banner)
             if cover then
@@ -1685,8 +1692,6 @@ function W:prerender()
         label(self,name,x,y,32,width,.94,.94,.94)
         label(self,self.character,x,y+40,19,width,.78,.78,.77)
         self:drawRect(x,y+64,72,4,1,.875,.620,0)
-        local descriptions=data.skinDescriptions or {}
-        local text=descriptions[self.browsed.id] or descriptions[meta.card or ""]
         description(self,text,x,y+80,width)
         if inPool then
             local misses=self.drawAnimation and self.drawAnimation.misses or economy.outfitMisses(self.player,self.browsed.id)
@@ -1716,9 +1721,10 @@ function W:drawLockedCharacterInfo(character)
     if not card then return end
     local x=math.max(math.floor(self.width*.122),self.sidebar.x+self.sidebar.width+24)
     local biography=(data.roomCharacterDescriptions or {})[character.name]
-    local y=math.floor(self.height*(biography and .55 or .65))
     local width=math.floor(self.width*.164)
     local bannerHeight=math.floor(width/2)
+    local blockHeight=bannerHeight+105+#(biography or {})*18
+    local y=math.min(math.floor(self.height*.65),self.height-42-blockHeight)
     local banner=image(card.banner)
     if banner then
         frosted(self,self,x,y,width,bannerHeight,.80)

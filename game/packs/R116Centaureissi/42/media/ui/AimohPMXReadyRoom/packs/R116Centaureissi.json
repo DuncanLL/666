@@ -2,8 +2,8 @@
   "models": {
     "pmx-7c5ea1f673f69f12": {
       "character": "桑朵莱希",
-      "skin": "泳装",
-      "officialSkin": "泳装",
+      "skin": "和莱希的五十天",
+      "officialSkin": "和莱希的五十天",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7c5ea1f673f69f12.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR01.png",
       "primaryCategories": [
@@ -36,11 +36,12 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "isDefault": false
     },
     "pmx-8fc5b665a5786924": {
       "character": "桑朵莱希",
-      "skin": "原皮",
+      "skin": "完美招待",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR.png",
       "groups": {
@@ -53,11 +54,13 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "完美招待",
+      "isDefault": true
     },
     "pmx-dd77c173248cb704": {
       "character": "桑朵莱希",
-      "skin": "咖啡厅 SSR0102",
+      "skin": "金牌店员",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-dd77c173248cb704.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR02.png",
       "groups": {
@@ -110,7 +113,9 @@
           ]
         }
       },
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "金牌店员",
+      "isDefault": false
     }
   },
   "labels": {

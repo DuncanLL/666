@@ -51,11 +51,12 @@
           "原始": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Hip.png",
           "下着p3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
         }
-      }
+      },
+      "isDefault": false
     },
     "pmx-b6fa1b6b340d0fec": {
       "character": "芙铃",
-      "skin": "原皮",
+      "skin": "望归宠儿",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR.png",
       "groups": {
@@ -98,7 +99,9 @@
         "腰间飘带",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {},
+      "officialSkin": "望归宠儿",
+      "isDefault": true
     }
   },
   "labels": {

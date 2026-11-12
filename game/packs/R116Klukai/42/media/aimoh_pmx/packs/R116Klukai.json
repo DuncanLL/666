@@ -4,13 +4,13 @@
   "models": [
     {
       "id": "pmx-9ee1e4cdb8d7f985",
-      "label": "可露凯 / 泳装",
+      "label": "可露凯 / 蔚蓝轨迹",
       "model": "models/pmx-9ee1e4cdb8d7f985/model.pmx",
       "profile": "models/pmx-9ee1e4cdb8d7f985/profile.json"
     },
     {
       "id": "pmx-efe685465097beb2",
-      "label": "可露凯 / 原皮",
+      "label": "可露凯 / 灼目之星",
       "model": "models/pmx-efe685465097beb2/model.pmx",
       "profile": "models/pmx-efe685465097beb2/profile.json"
     },
@@ -22,13 +22,13 @@
     },
     {
       "id": "pmx-a0790aac2b94e352",
-      "label": "可露凯 / 新机车",
+      "label": "可露凯 / 星迹掠芒",
       "model": "models/pmx-a0790aac2b94e352/model.pmx",
       "profile": "models/pmx-a0790aac2b94e352/profile.json"
     },
     {
       "id": "pmx-8a28434eee27a5ce",
-      "label": "可露凯 / 婚纱礼服",
+      "label": "可露凯 / 绀星绮愿",
       "model": "models/pmx-8a28434eee27a5ce/model.pmx",
       "profile": "models/pmx-8a28434eee27a5ce/profile.json"
     }
