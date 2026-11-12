@@ -4,7 +4,7 @@ require "AimohPMXVoice/Silent"
 require "ISUI/ISEmoteRadialMenu"
 require "ISUI/ISDPadWheels"
 if AimohPMXVoiceEngine then return AimohPMXVoiceEngine end
-AimohPMXVoiceEngine={version="2.2.0-four-voices-head-captions-silence",instances={},order={}}
+AimohPMXVoiceEngine={version="2.3.0-voice-catalogs",instances={},order={}}
 local M=AimohPMXVoiceEngine
 local silentPlayer,silentState,silentSavePending=nil,nil,false
 local silentStates=setmetatable({}, {__mode="k"})
@@ -99,7 +99,7 @@ local function play(player,state,candidate,now,allowAsleep,alreadyEligible)
     state.startedAt=now
     state.currentKind=candidate.kind
     Core.commit(state,candidate,now,clip.duration,cfg)
-    caption(player,state,clip.chinese,now)
+    if clip.chinese and clip.chinese~="" then caption(player,state,clip.chinese,now) end
     print(profile.logTag.." PLAY "..candidate.cue.." "..candidate.kind.." priority="..candidate.priority)
     return true
 end
@@ -156,9 +156,12 @@ function V.afterCallout(player)
     -- Only a real completed vanilla callout with a vocal triggers this replacement.
     -- A blocked Q, open radial menu, vehicle restriction, or instrument is not guessed.
     if not called then return end
-    local state=stateFor(player)
-    local cue=player:isSneaking() and profile.cues.sneakShout or Core.pick(state,profile.cues.shout,"shout")
-    play(player,state,{cue=cue,priority=110,key="shout",kind="manual",chance=1},nowMs(),false)
+    local key=player:isSneaking() and "sneakShout" or "shout"
+    local cue=profile.cues[key]
+    -- Older voice profiles pass the pool as an array. Its first cue names the pool in VoiceCore.
+    if type(cue)=="table" then cue=cue[1] end
+    if not cue then return end
+    play(player,stateFor(player),{cue=cue,priority=110,key=key,kind="manual",chance=1},nowMs(),false)
 end
 
 function V.tick()

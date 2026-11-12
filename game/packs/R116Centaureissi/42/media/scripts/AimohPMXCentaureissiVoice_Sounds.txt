@@ -1,0 +1,2251 @@
+module Base {
+sound AimohPMXCentaureissi_Hungry_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hungry_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hungry_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Thirst_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Thirst_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Tired_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Tired_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Endurance_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Endurance_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Pain_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Pain_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bleeding_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bleeding_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Injured_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Injured_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Panic_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Panic_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Stress_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Stress_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Sick_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Sick_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Bored_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Bored_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Unhappy_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Unhappy_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Wet_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Wet_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HasACold_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HasACold_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_HeavyLoad_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/HeavyLoad_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Drunk_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Drunk_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_FoodEaten_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/FoodEaten_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hyperthermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hyperthermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Hypothermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Hypothermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Windchill_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Windchill_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Uncomfortable_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Uncomfortable_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_NoxiousSmell_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/NoxiousSmell_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_CantSprint_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/CantSprint_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_CantSprint_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/CantSprint_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_CantSprint_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/CantSprint_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Shout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Shout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Shout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Shout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Shout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Shout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_SneakShout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/SneakShout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_SneakShout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/SneakShout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_SneakShout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/SneakShout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_D
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_D.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_E
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_E.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_F
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_F.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_G
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_G.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_H
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_H.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_I
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_I.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXCentaureissi_Kill_J
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXCentaureissi/Kill_J.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+}

@@ -1,0 +1,2251 @@
+module Base {
+sound AimohPMXDaiyan_Hungry_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hungry_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hungry_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Thirst_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Thirst_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Tired_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Tired_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Endurance_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Endurance_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Pain_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Pain_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bleeding_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bleeding_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Injured_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Injured_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Panic_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Panic_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Stress_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Stress_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Sick_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Sick_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Bored_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Bored_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Unhappy_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Unhappy_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Wet_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Wet_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HasACold_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HasACold_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_HeavyLoad_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/HeavyLoad_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Drunk_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Drunk_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_FoodEaten_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/FoodEaten_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hyperthermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hyperthermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Hypothermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Hypothermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Windchill_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Windchill_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Uncomfortable_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Uncomfortable_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_NoxiousSmell_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/NoxiousSmell_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_CantSprint_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/CantSprint_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_CantSprint_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/CantSprint_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_CantSprint_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/CantSprint_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Shout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Shout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Shout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Shout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Shout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Shout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_SneakShout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/SneakShout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_SneakShout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/SneakShout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_SneakShout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/SneakShout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_D
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_D.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_E
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_E.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_F
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_F.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_G
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_G.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_H
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_H.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_I
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_I.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDaiyan_Kill_J
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXDaiyan/Kill_J.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+}
