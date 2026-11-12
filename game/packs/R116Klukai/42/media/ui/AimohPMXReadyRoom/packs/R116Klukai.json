@@ -83,6 +83,186 @@
       ],
       "officialSkin": "泳装",
       "partImages": {}
+    },
+    "pmx-efe685465097beb2": {
+      "character": "可露凯",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR.png",
+      "groups": {
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带配件",
+          "display": "模型自带配件",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "axe": {
+          "label": "随身斧",
+          "display": "随身斧",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
+    },
+    "pmx-6826e4ccdf1f4ddf": {
+      "character": "可露凯",
+      "skin": "速度之星",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-6826e4ccdf1f4ddf.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR01.png",
+      "groups": {
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带配件",
+          "display": "模型自带配件",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
+    },
+    "pmx-a0790aac2b94e352": {
+      "character": "可露凯",
+      "skin": "新机车",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a0790aac2b94e352.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR02.png",
+      "groups": {
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带配件",
+          "display": "模型自带配件",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glasses": {
+          "label": "护目镜",
+          "display": "护目镜",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
+    },
+    "pmx-8a28434eee27a5ce": {
+      "character": "可露凯",
+      "skin": "婚纱礼服",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8a28434eee27a5ce.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR04.png",
+      "groups": {
+        "ring": {
+          "label": "戒指",
+          "display": "戒指",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "choker": {
+          "label": "颈饰",
+          "display": "颈饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hair_trim": {
+          "label": "发饰",
+          "display": "发饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "veil": {
+          "label": "头纱",
+          "display": "头纱",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glove": {
+          "label": "手套",
+          "display": "手套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
     }
   },
   "labels": {}

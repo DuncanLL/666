@@ -7,6 +7,18 @@
       "label": "桑朵莱希 / 泳装",
       "model": "models/pmx-7c5ea1f673f69f12/model.pmx",
       "profile": "models/pmx-7c5ea1f673f69f12/profile.json"
+    },
+    {
+      "id": "pmx-8fc5b665a5786924",
+      "label": "桑朵莱希 / 原皮",
+      "model": "models/pmx-8fc5b665a5786924/model.pmx",
+      "profile": "models/pmx-8fc5b665a5786924/profile.json"
+    },
+    {
+      "id": "pmx-dd77c173248cb704",
+      "label": "桑朵莱希 / 咖啡厅 SSR0102",
+      "model": "models/pmx-dd77c173248cb704/model.pmx",
+      "profile": "models/pmx-dd77c173248cb704/profile.json"
     }
   ]
 }

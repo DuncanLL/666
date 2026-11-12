@@ -49,6 +49,53 @@
       },
       "officialSkin": "睡醒的人鱼",
       "partImages": {}
+    },
+    "pmx-62b44285b57a48e9": {
+      "character": "春田",
+      "skin": "静享芳醇",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-62b44285b57a48e9.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR02.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "apron": {
+          "label": "围裙",
+          "display": "围裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "帽子",
+        "围裙",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {}
     }
   },
   "labels": {

@@ -7,6 +7,12 @@
       "label": "春田 / 长裙",
       "model": "models/pmx-225af1a054faefb0/model.pmx",
       "profile": "models/pmx-225af1a054faefb0/profile.json"
+    },
+    {
+      "id": "pmx-62b44285b57a48e9",
+      "label": "春田 / 静享芳醇",
+      "model": "models/pmx-62b44285b57a48e9/model.pmx",
+      "profile": "models/pmx-62b44285b57a48e9/profile.json"
     }
   ]
 }

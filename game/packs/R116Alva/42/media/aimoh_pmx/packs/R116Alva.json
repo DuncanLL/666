@@ -7,6 +7,18 @@
       "label": "埃芙 / 默认",
       "model": "models/pmx-020abca186c52e7b/model.pmx",
       "profile": "models/pmx-020abca186c52e7b/profile.json"
+    },
+    {
+      "id": "pmx-94483c23f678afe3",
+      "label": "埃芙 / 西装",
+      "model": "models/pmx-94483c23f678afe3/model.pmx",
+      "profile": "models/pmx-94483c23f678afe3/profile.json"
+    },
+    {
+      "id": "pmx-76a4aa15941b6aa4",
+      "label": "埃芙 / 白色制服",
+      "model": "models/pmx-76a4aa15941b6aa4/model.pmx",
+      "profile": "models/pmx-76a4aa15941b6aa4/profile.json"
     }
   ]
 }

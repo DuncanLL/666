@@ -7,6 +7,12 @@
       "label": "黛烟 / 玉玲珑",
       "model": "models/pmx-33aa225b75767fcb/model.pmx",
       "profile": "models/pmx-33aa225b75767fcb/profile.json"
+    },
+    {
+      "id": "pmx-8c817aa0fdd64f7a",
+      "label": "黛烟 / 原皮",
+      "model": "models/pmx-8c817aa0fdd64f7a/model.pmx",
+      "profile": "models/pmx-8c817aa0fdd64f7a/profile.json"
     }
   ]
 }

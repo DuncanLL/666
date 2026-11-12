@@ -1,0 +1,283 @@
+{
+  "format": 1,
+  "date": "2026-11-13",
+  "version": "0.3.76",
+  "source_baseline": "dd4c771304de8895fa2d2341f72d8fdefa157146",
+  "installed_runtime_sha256": "ae6ab9beb1fe67cdc6e72dcc0addfb0c25c7a554d75dafb1cefa1b68a6bdb082",
+  "source_text_files_matched": 177,
+  "java_sources_compiled": 46,
+  "character_classes_compared": 88,
+  "class_comparison": "87 normalized class files equal; Main class header, fields and all 78 methods equal after standard unified entry wiring; method order differs",
+  "core_external_files": 3113,
+  "pack_external_files": {
+    "R116Alva": 302,
+    "R116Centaureissi": 323,
+    "R116Faelynn": 303,
+    "R116OTs14": 308,
+    "R116Springfield": 117,
+    "R116Daiyan": 281,
+    "R116Klukai": 585,
+    "R116Suomi": 196,
+    "R116Cecilia": 118
+  },
+  "models": [
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-abe3eaaaa9d04264",
+      "label": "莱娅 / 原皮",
+      "profile_sha256": "2b356052cfba8aa01910a5e07e4c4b1adaaa30348cf7ecbc148b53e3d8087e56"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-48650a04a35b40e0",
+      "label": "夏安 / 原皮",
+      "profile_sha256": "e95312bf082e68f122042a9e3abac7fc7b717abf8c17ab9ae2b039a1ffcce958"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-47a4f99939c55958",
+      "label": "夏安 / 礼服",
+      "profile_sha256": "ea837c26fbf9ad97965a7501b8c3fc4c68d97d09aa93dcc1b38d02c22fade29f"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-0af216265749a22d",
+      "label": "莱娅 / 热力运动",
+      "profile_sha256": "035dcf8e8715e89a775b6d4d7a499a37476fe9e6805164572cc6bcaaa1b0b7b0"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-412bd037301ebe18",
+      "label": "阿斯缇亚 / 原皮",
+      "profile_sha256": "77fd3d4c3c16fcdb470511495d3ca1e787f7f4f81eb23fbdb66c8921d3cc55d3"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-b0dd2e3cfd1ab80c",
+      "label": "阿斯缇亚 / 冬夜星途（JK）",
+      "profile_sha256": "999ac9975165a3d25e0d4b66f8d8213ca945a13f0be942c2f778669a8626a31c"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-6eb458b3d9c9a094",
+      "label": "莱娅 / 热力运动（旧存档）",
+      "profile_sha256": "343c5aea8d72bd1b7a90fbf94afe1478373f3ef1c1f1496d39701fb20d4d1ef7"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-c7270af966e8aaf8",
+      "label": "克莱妲 / 濯浪焦点",
+      "profile_sha256": "d4dd879f1787dba3c2493b93f3648c022a96ec7f31fed99715085393ef8a56cc"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-f5b2807685b18a60",
+      "label": "妮基塔 / 无垢契约",
+      "profile_sha256": "f44e42ef06c2c0eaeae3d2321ffb8061fb3226771384f73ba025c37e31e0943f"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-4818f3bdda4ec18d",
+      "label": "芙洛伦 / 翠雀媚",
+      "profile_sha256": "9b86a86dd39f1fb469c812a39c810261fd1476254e869a5f68015d6fc375792a"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-90268b4961c97434",
+      "label": "克莱妲 / 原皮",
+      "profile_sha256": "57c8d701783ce4fe826f806bbd5b5088b15bd9b9857f502469921e552de01b1a"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-78cbbc06c7da39dc",
+      "label": "妮基塔 / 泳装",
+      "profile_sha256": "d903d5270159d846639225242b0ca4bad2ea34cb0f15d33b466f52e2e1b964eb"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-ea3eb50ef5b32295",
+      "label": "妮基塔 / 礼服 SSR0102",
+      "profile_sha256": "a0d406ab91870d82d4065104ae7af726879c317590fa26b91844e90406e98f8f"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-1c1dd0698118e114",
+      "label": "莱娅 / 女仆",
+      "profile_sha256": "e1c276be796448df9c2386969b655939093ad15ca67ce05350ad7fdb0d0d4803"
+    },
+    {
+      "mod": "AimohPmxPreview",
+      "id": "pmx-4cdf23692c8709a0",
+      "label": "妮基塔 / 原皮",
+      "profile_sha256": "edccb864809ca87801ba6698e41dbc2876727845abce2da7e66bdb7ff6946ced"
+    },
+    {
+      "mod": "R116Alva",
+      "id": "pmx-020abca186c52e7b",
+      "label": "埃芙 / 默认",
+      "profile_sha256": "0e0c0911b81a47ba0727e7ea73c269f3b60efc99edb92dc75addfe7dbeed0db9"
+    },
+    {
+      "mod": "R116Alva",
+      "id": "pmx-94483c23f678afe3",
+      "label": "埃芙 / 西装",
+      "profile_sha256": "f0444d89ea98ff46a96ad78bac2ccef1316a5f79230e4aea280a43fd717acb5f"
+    },
+    {
+      "mod": "R116Alva",
+      "id": "pmx-76a4aa15941b6aa4",
+      "label": "埃芙 / 白色制服",
+      "profile_sha256": "42d367c21ddb490e66dd2de33e802ff67681165bfb867e953601e2ad109ad3e0"
+    },
+    {
+      "mod": "R116Cecilia",
+      "id": "pmx-fee7d92be40f96dd",
+      "label": "希丽雅 / 原皮",
+      "profile_sha256": "8edaf57d5deca8051e460a072b6c1f192586b6f63e62c8c99f241b8b3d06b98a"
+    },
+    {
+      "mod": "R116Cecilia",
+      "id": "pmx-9db646f49c805a1b",
+      "label": "希丽雅 / 女仆",
+      "profile_sha256": "b78b744576b11d1ad3ae8944ec27f9d37fe3a0fd48ab422ec6e7aa503822a3ce"
+    },
+    {
+      "mod": "R116Centaureissi",
+      "id": "pmx-7c5ea1f673f69f12",
+      "label": "桑朵莱希 / 泳装",
+      "profile_sha256": "03407c8f7c5e39d682c59fedd2dea2d5aa0b72e5d61d5f4161438c6e83cdff7a"
+    },
+    {
+      "mod": "R116Centaureissi",
+      "id": "pmx-8fc5b665a5786924",
+      "label": "桑朵莱希 / 原皮",
+      "profile_sha256": "503e8812e4db3567c40d3da233d27b7f4873b99c9ec5d7d28179928e5135e0ac"
+    },
+    {
+      "mod": "R116Centaureissi",
+      "id": "pmx-dd77c173248cb704",
+      "label": "桑朵莱希 / 咖啡厅 SSR0102",
+      "profile_sha256": "f4e26c44fd1b4162384c017b8ecf4ddb5d28cd0dc2fd66f8dd902cbf14eaf979"
+    },
+    {
+      "mod": "R116Daiyan",
+      "id": "pmx-33aa225b75767fcb",
+      "label": "黛烟 / 玉玲珑",
+      "profile_sha256": "b10646dc8fa6235a91d08a3fd22eb885d298325f01ae68298ce145612d2a7fad"
+    },
+    {
+      "mod": "R116Daiyan",
+      "id": "pmx-8c817aa0fdd64f7a",
+      "label": "黛烟 / 原皮",
+      "profile_sha256": "68f5afd203b9a3195bb7bd2fc5f084194a6f80b0cf44ce4287a27cd857e57788"
+    },
+    {
+      "mod": "R116Faelynn",
+      "id": "pmx-293917f24c2bd387",
+      "label": "芙玲 / 体操服",
+      "profile_sha256": "1ef8b272511e75c2017406ff6f2168de495fbd7843b929c258a70c3d3f130ce5"
+    },
+    {
+      "mod": "R116Faelynn",
+      "id": "pmx-b6fa1b6b340d0fec",
+      "label": "芙铃 / 原皮",
+      "profile_sha256": "d1c39745ba2523933d626a4516640b1a8b03e2744b21979b6000df05302a0c19"
+    },
+    {
+      "mod": "R116Klukai",
+      "id": "pmx-9ee1e4cdb8d7f985",
+      "label": "可露凯 / 泳装",
+      "profile_sha256": "ff7c1423c6645186f6566ed5caaba3995b159130bc7fef6434a8516fbd2ef1c7"
+    },
+    {
+      "mod": "R116Klukai",
+      "id": "pmx-efe685465097beb2",
+      "label": "可露凯 / 原皮",
+      "profile_sha256": "b6432ae533b1ccf68a1eb0bbe9b8bee9409dee1f348c174ddefbe2ef4e2e3871"
+    },
+    {
+      "mod": "R116Klukai",
+      "id": "pmx-6826e4ccdf1f4ddf",
+      "label": "可露凯 / 速度之星",
+      "profile_sha256": "33902220f1d39ded9ffa99bf1a64ffca1bb6374d1d6d2a7fd7ca30883dd9a72c"
+    },
+    {
+      "mod": "R116Klukai",
+      "id": "pmx-a0790aac2b94e352",
+      "label": "可露凯 / 新机车",
+      "profile_sha256": "afc62ac5b33a91d92f5f375a199e1fd09c9f923c393ce72616fa9c6349603f30"
+    },
+    {
+      "mod": "R116Klukai",
+      "id": "pmx-8a28434eee27a5ce",
+      "label": "可露凯 / 婚纱礼服",
+      "profile_sha256": "80ab606e56c0f48b83bcd4f06086f91df9a780969afe3b347d1e688600377d76"
+    },
+    {
+      "mod": "R116OTs14",
+      "id": "pmx-782f06826adb1307",
+      "label": "OTs-14 / 默认",
+      "profile_sha256": "ee682d6a0605430d940515402c9dcb94b732437f28cd78c1f557bac9db500746"
+    },
+    {
+      "mod": "R116OTs14",
+      "id": "pmx-06925f50fb5cb612",
+      "label": "OTs-14 / SSR0101（改）",
+      "profile_sha256": "fae12af7ffb1f47be7e40ee0ab5b11e25a608421b07759453a9a5d9416c512bb"
+    },
+    {
+      "mod": "R116OTs14",
+      "id": "pmx-73625fbf0962e120",
+      "label": "OTs-14 / SSR0102",
+      "profile_sha256": "cff9a4ca448f92c5710e6d5e9f3e9e92cbe51da1029f7964ed181558c14335d8"
+    },
+    {
+      "mod": "R116Springfield",
+      "id": "pmx-225af1a054faefb0",
+      "label": "春田 / 长裙",
+      "profile_sha256": "5a191a46d500bc52dbaf1c614a283be100cd708b427402772378366c8e232217"
+    },
+    {
+      "mod": "R116Springfield",
+      "id": "pmx-62b44285b57a48e9",
+      "label": "春田 / 静享芳醇",
+      "profile_sha256": "7d4c008df1f7cd11b9f6a9cd94362e852bbefa08d2f379fc8cf95461f8255cd4"
+    },
+    {
+      "mod": "R116Suomi",
+      "id": "pmx-43ef6f5967a37c87",
+      "label": "索米 / 灵海游光",
+      "profile_sha256": "c9ddb25d225aa534777a50edde3a872c3f5cbefb872a780ffbb2c8f4aa8d0a09"
+    },
+    {
+      "mod": "R116Suomi",
+      "id": "pmx-cb19e5961c38af86",
+      "label": "索米 / SSR0102",
+      "profile_sha256": "d63374754f2fa23a95cb0d12bbf28b2e996010560a46f8fecf1c9fae3145fbb1"
+    },
+    {
+      "mod": "R116Suomi",
+      "id": "pmx-4019c9450e0e318d",
+      "label": "索米 / 原皮",
+      "profile_sha256": "436b155c070068ca883408e8f776e88aefb08a72399651f5b5587bb63e8cabb0"
+    }
+  ],
+  "checks": {
+    "economy": "PASS_GAME_KAHLUA",
+    "voice_files": 1384,
+    "voice_costume_bindings": 23,
+    "prior_voice_trigger_check": "PASS_GAME_KAHLUA_WITH_ACTOR_SUBSTITUTES",
+    "local_and_author_readback": "PASS"
+  },
+  "pending": [
+    "in-game visual and interaction acceptance",
+    "cross-vendor preview validation",
+    "multiplayer and subscriber cold start",
+    "official outfit base-rate and per-stage increments verification",
+    "remaining character and outfit descriptions"
+  ],
+  "distribution": {
+    "steam_status": "User reports R116 delisted on 2026-11-13",
+    "github_checkpoint": "source and configuration archive"
+  }
+}

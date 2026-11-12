@@ -7,6 +7,12 @@
       "label": "芙玲 / 体操服",
       "model": "models/pmx-293917f24c2bd387/model.pmx",
       "profile": "models/pmx-293917f24c2bd387/profile.json"
+    },
+    {
+      "id": "pmx-b6fa1b6b340d0fec",
+      "label": "芙铃 / 原皮",
+      "model": "models/pmx-b6fa1b6b340d0fec/model.pmx",
+      "profile": "models/pmx-b6fa1b6b340d0fec/profile.json"
     }
   ]
 }

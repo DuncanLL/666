@@ -62,6 +62,46 @@
         }
       },
       "partImages": {}
+    },
+    "pmx-94483c23f678afe3": {
+      "character": "埃芙",
+      "skin": "西装",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-94483c23f678afe3.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR01.png",
+      "groups": {
+        "glasses": {
+          "label": "眼镜",
+          "display": "眼镜",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼镜"
+      ],
+      "partImages": {}
+    },
+    "pmx-76a4aa15941b6aa4": {
+      "character": "埃芙",
+      "skin": "白色制服",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-76a4aa15941b6aa4.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AlvaSSR02.png",
+      "groups": {
+        "mask": {
+          "label": "口罩",
+          "display": "口罩",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "口罩"
+      ],
+      "partImages": {}
     }
   },
   "labels": {

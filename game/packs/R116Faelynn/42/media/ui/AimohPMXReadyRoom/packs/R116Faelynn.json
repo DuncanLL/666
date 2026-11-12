@@ -52,6 +52,53 @@
           "下着p3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
         }
       }
+    },
+    "pmx-b6fa1b6b340d0fec": {
+      "character": "芙铃",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "neck": {
+          "label": "颈链",
+          "display": "颈链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "ribbon": {
+          "label": "腰间飘带",
+          "display": "腰间飘带",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "头饰",
+        "颈链",
+        "腰间飘带",
+        "眼睛"
+      ],
+      "partImages": {}
     }
   },
   "labels": {

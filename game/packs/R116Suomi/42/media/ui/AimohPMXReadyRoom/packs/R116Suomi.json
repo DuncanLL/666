@@ -20,6 +20,55 @@
       ],
       "officialSkin": "灵海游光",
       "partImages": {}
+    },
+    "pmx-cb19e5961c38af86": {
+      "character": "索米",
+      "skin": "SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cb19e5961c38af86.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR02.png",
+      "groups": {
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "披风",
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-4019c9450e0e318d": {
+      "character": "索米",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
     }
   },
   "labels": {}

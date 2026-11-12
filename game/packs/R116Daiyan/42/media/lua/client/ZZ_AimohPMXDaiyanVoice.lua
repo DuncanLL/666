@@ -179,3 +179,4 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Daiyan","pmx-33aa225b75767fcb",clips)
+AimohPMXVoiceIdentity.registerVoice("pmx-8c817aa0fdd64f7a","Daiyan")

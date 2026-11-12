@@ -8,6 +8,26 @@
       "groups": {},
       "officialSkin": "玉玲珑",
       "partImages": {}
+    },
+    "pmx-8c817aa0fdd64f7a": {
+      "character": "黛烟",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
     }
   },
   "labels": {}

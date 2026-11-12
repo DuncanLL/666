@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Cecilia",
+  "models": [
+    {
+      "id": "pmx-fee7d92be40f96dd",
+      "label": "希丽雅 / 原皮",
+      "model": "models/pmx-fee7d92be40f96dd/model.pmx",
+      "profile": "models/pmx-fee7d92be40f96dd/profile.json"
+    },
+    {
+      "id": "pmx-9db646f49c805a1b",
+      "label": "希丽雅 / 女仆",
+      "model": "models/pmx-9db646f49c805a1b/model.pmx",
+      "profile": "models/pmx-9db646f49c805a1b/profile.json"
+    }
+  ]
+}

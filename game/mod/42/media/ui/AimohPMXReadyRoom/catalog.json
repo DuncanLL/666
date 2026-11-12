@@ -41,7 +41,15 @@
     "ChestInertia": "惯性重量",
     "ChestStrength": "效果幅度",
     "ChestSuspended": "已暂停，请重置物理解算",
-    "CharacterPackRequired": "请启用此角色包",
+    "CharacterPackMissing": "该角色模组未启用",
+    "CharacterPackWorkshop": "请到创意工坊订阅并启用",
+    "EnableCharacter": "启用该角色",
+    "CharacterEnabled": "已启用",
+    "RoomBack": "返回",
+    "RoomOutfits": "换装",
+    "RoomPurchase": "购买",
+    "RoomDrawOnce": "访问一次",
+    "RoomDrawTen": "访问十次",
     "RoomAppearance": "外观",
     "RoomMotion": "动作预设",
     "RoomFold": "收起",
@@ -96,7 +104,47 @@
     "ExpressionSave": "保存表情",
     "ExpressionPickSlot": "选择保存位置 · 再点此处取消",
     "ExpressionEmpty": "这套皮肤没有可调表情",
-    "ExpressionVmd": "VMD 自带的表情会按动作播放"
+    "ExpressionVmd": "VMD 自带的表情会按动作播放",
+    "RoomRoster": "已载入人形",
+    "RoomRosterMissing": "未载入人形",
+    "RoomPhysicsShort": "重置物理",
+    "RoomActivateBeforeTools": "请先启用当前预览的外观",
+    "RoomChestUnavailable": "这套皮肤没有配置胸部物理",
+    "RoomPartSwitch": "部件切换",
+    "RoomFacePresets": "常用表情",
+    "RoomFaceNeutral": "自然",
+    "RoomFaceSmile": "微笑",
+    "RoomFaceSurprised": "惊讶",
+    "RoomFaceAngry": "生气",
+    "RoomTargetedPermit": "专访许可",
+    "RoomOutfitPermit": "新装许可",
+    "RoomCredits": "信用币",
+    "RoomCash": "钞票",
+    "RoomCashRate": "1 张钞票兑换 10,000 信用币",
+    "RoomPermitRate": "每张消耗 120 信用币",
+    "RoomExchangeQuantity": "当前购买",
+    "RoomExchangeSpend": "消耗",
+    "RoomExchangeMin": "最小",
+    "RoomExchangeMax": "最大",
+    "RoomExchangeCancel": "取消",
+    "RoomExchangeBuy": "购买",
+    "RoomExchangeDone": "兑换成功",
+    "RoomNotEnough": "可用资源不足",
+    "RoomDaiyanUnlocked": "已解锁黛烟",
+    "RoomDaiyanMiss": "本次未抽到黛烟",
+    "RoomDaiyanShort": "专访许可不足",
+    "RoomDaiyanUntilPity": "距保底（抽）",
+    "RoomDrawUnlocked": "已解锁人形",
+    "RoomDrawMiss": "未抽中",
+    "RoomDrawHit": "抽中",
+    "RoomDrawShort": "专访许可不足",
+    "RoomSharedPity": "共用保底剩余",
+    "RoomOutfitLocked": "未购买",
+    "Buy": "购买",
+    "RoomOutfitProcurement": "新装采购",
+    "RoomOutfitAcquired": "衣装已获得",
+    "RoomOutfitPity": "本池保底剩余",
+    "RoomOutfitDrawShort": "新装许可不足"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
@@ -603,6 +651,384 @@
       "character": "索米",
       "skin": "灵海游光",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-43ef6f5967a37c87.png",
+      "pack": "R116Suomi"
+    },
+    "pmx-fee7d92be40f96dd": {
+      "character": "希丽雅",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-fee7d92be40f96dd.png",
+      "pack": "R116Cecilia"
+    },
+    "pmx-9db646f49c805a1b": {
+      "character": "希丽雅",
+      "skin": "女仆",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9db646f49c805a1b.png",
+      "pack": "R116Cecilia"
+    },
+    "pmx-94483c23f678afe3": {
+      "character": "埃芙",
+      "skin": "西装",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-94483c23f678afe3.png",
+      "pack": "R116Alva"
+    },
+    "pmx-76a4aa15941b6aa4": {
+      "character": "埃芙",
+      "skin": "白色制服",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-76a4aa15941b6aa4.png",
+      "pack": "R116Alva"
+    },
+    "pmx-47a4f99939c55958": {
+      "character": "夏安",
+      "skin": "礼服",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-47a4f99939c55958.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR01.png",
+      "groups": {
+        "hat": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "neck": {
+          "label": "颈饰",
+          "display": "颈饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "bracelet": {
+          "label": "手链",
+          "display": "手链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glove": {
+          "label": "手套",
+          "display": "手套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "legband": {
+          "label": "腿饰",
+          "display": "腿饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "radio": {
+          "label": "对讲机",
+          "display": "对讲机",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {
+        "头饰": {
+          "显示": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_CheyanneSSR01_P1_Head.png"
+        }
+      }
+    },
+    "pmx-06925f50fb5cb612": {
+      "character": "OTs-14",
+      "skin": "SSR0101（改）",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-06925f50fb5cb612.png",
+      "pack": "R116OTs14"
+    },
+    "pmx-73625fbf0962e120": {
+      "character": "OTs-14",
+      "skin": "SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-73625fbf0962e120.png",
+      "pack": "R116OTs14"
+    },
+    "pmx-efe685465097beb2": {
+      "character": "可露凯",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
+      "pack": "R116Klukai"
+    },
+    "pmx-6826e4ccdf1f4ddf": {
+      "character": "可露凯",
+      "skin": "速度之星",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-6826e4ccdf1f4ddf.png",
+      "pack": "R116Klukai"
+    },
+    "pmx-a0790aac2b94e352": {
+      "character": "可露凯",
+      "skin": "新机车",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a0790aac2b94e352.png",
+      "pack": "R116Klukai"
+    },
+    "pmx-8a28434eee27a5ce": {
+      "character": "可露凯",
+      "skin": "婚纱礼服",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8a28434eee27a5ce.png",
+      "pack": "R116Klukai"
+    },
+    "pmx-b6fa1b6b340d0fec": {
+      "character": "芙铃",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png",
+      "pack": "R116Faelynn"
+    },
+    "pmx-90268b4961c97434": {
+      "character": "克莱妲",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
+      "groups": {
+        "mask": {
+          "label": "口罩",
+          "display": "口罩",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "holstered": {
+          "label": "随身枪械",
+          "display": "随身枪械",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "口罩",
+        "披风",
+        "随身枪械",
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-8c817aa0fdd64f7a": {
+      "character": "黛烟",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
+      "pack": "R116Daiyan"
+    },
+    "pmx-8fc5b665a5786924": {
+      "character": "桑朵莱希",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
+      "pack": "R116Centaureissi"
+    },
+    "pmx-dd77c173248cb704": {
+      "character": "桑朵莱希",
+      "skin": "咖啡厅 SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-dd77c173248cb704.png",
+      "pack": "R116Centaureissi"
+    },
+    "pmx-78cbbc06c7da39dc": {
+      "character": "妮基塔",
+      "skin": "泳装",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-78cbbc06c7da39dc.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR01.png",
+      "groups": {
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-ea3eb50ef5b32295": {
+      "character": "妮基塔",
+      "skin": "礼服 SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ea3eb50ef5b32295.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR02.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "帽子",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-1c1dd0698118e114": {
+      "character": "莱娅",
+      "skin": "女仆",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1c1dd0698118e114.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR03.png",
+      "groups": {
+        "hat": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "apron": {
+          "label": "围裙",
+          "display": "围裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "tail": {
+          "label": "尾饰",
+          "display": "尾饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "skirt-accessory": {
+          "label": "裙侧挂饰",
+          "display": "裙侧挂饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "头饰",
+        "围裙",
+        "尾饰",
+        "裙侧挂饰",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-62b44285b57a48e9": {
+      "character": "春田",
+      "skin": "静享芳醇",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-62b44285b57a48e9.png",
+      "pack": "R116Springfield"
+    },
+    "pmx-cb19e5961c38af86": {
+      "character": "索米",
+      "skin": "SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cb19e5961c38af86.png",
+      "pack": "R116Suomi"
+    },
+    "pmx-4cdf23692c8709a0": {
+      "character": "妮基塔",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-4019c9450e0e318d": {
+      "character": "索米",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
       "pack": "R116Suomi"
     }
   },
@@ -2692,6 +3118,1826 @@
     "pmx-782f06826adb1307",
     "pmx-33aa225b75767fcb",
     "pmx-9ee1e4cdb8d7f985",
-    "pmx-43ef6f5967a37c87"
-  ]
+    "pmx-43ef6f5967a37c87",
+    "pmx-fee7d92be40f96dd",
+    "pmx-9db646f49c805a1b",
+    "pmx-94483c23f678afe3",
+    "pmx-76a4aa15941b6aa4",
+    "pmx-06925f50fb5cb612",
+    "pmx-73625fbf0962e120",
+    "pmx-efe685465097beb2",
+    "pmx-6826e4ccdf1f4ddf",
+    "pmx-a0790aac2b94e352",
+    "pmx-8a28434eee27a5ce",
+    "pmx-b6fa1b6b340d0fec",
+    "pmx-8c817aa0fdd64f7a",
+    "pmx-8fc5b665a5786924",
+    "pmx-dd77c173248cb704",
+    "pmx-62b44285b57a48e9",
+    "pmx-cb19e5961c38af86",
+    "pmx-4019c9450e0e318d"
+  ],
+  "skinDescriptions": {
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png": [
+      "莱娅的常见着装。将独特的个性融入象征",
+      "理性的制服设计之中，独行却不逾矩，这",
+      "种矛盾对立的特质，正是莱娅独有的魅力",
+      "。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png": [
+      "夏安的常见着装。黯淡低调，宽大廓形包",
+      "裹着躯干要害，带来满满的安全感。至于",
+      "实力，自然要藏在身后才足以安心。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR02.png": [
+      "“指挥官眼睛，似乎不知道该放哪里的样",
+      "子，需要我来帮你纠正一下吗？”阳光追",
+      "着她的身体曲线，被汗水浸透的衣衫紧贴",
+      "肌肤，呈现着朝气蓬勃的轮廓。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png": [
+      "以常见着装出现的阿斯缇亚，将过去与现",
+      "在相融，在保留原本自我的同时，追寻独",
+      "属于自己的道路。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR01.png": [
+      "“来到空旷的山顶吹着冷风看星星……指",
+      "挥官，这就是您所谓的浪漫吗？那么，请",
+      "您再靠近我一些吧。”阿斯缇亚注视着比",
+      "星空更为重要的你，默默将围巾绕上你的",
+      "脖颈。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FaelynnSSR01.png": [
+      "“主人主人，来一起玩吧！这些游戏我很",
+      "擅长哦~”她向你挥动双手，扑面而来的",
+      "活力如同一颗跃动的太阳。"
+    ],
+    "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png": [
+      "“指挥官，请牵住我的手，和我一起聆听",
+      "海风的呼唤吧~”春田微笑着压了压帽檐",
+      "，邀你与她共享这段温暖的海岛时光。"
+    ],
+    "pmx-c7270af966e8aaf8": [
+      "“当年那场输掉的排球赛，指挥官到现在还是耿耿于",
+      "怀吗？哼哼，没关系……我愿意再次接受你的挑战哦",
+      "~”",
+      "克莱妲的笑意逐渐加深，惬意地等待着你接下来的表",
+      "现。"
+    ],
+    "pmx-225af1a054faefb0": [
+      "“指挥官，请牵住我的手，和我一起聆听海风的呼唤",
+      "吧~”",
+      "春田微笑着压了压帽檐，邀你与她共享这段温暖的海",
+      "岛时光。"
+    ],
+    "pmx-9ee1e4cdb8d7f985": [
+      "“要试试新的水上活动吗？既然如此就和我一起去冲",
+      "浪吧。就算是玩水，只要和我在一起就绝对不会让你",
+      "失望的。”",
+      "她踏浪而来，向你伸出手。指挥官准备好回应那期待",
+      "的眼神了吗？"
+    ],
+    "pmx-62b44285b57a48e9": [
+      "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还是",
+      "温度……都是您最喜欢的那种哦。”",
+      "如同过去时光里品尝过的每杯咖啡一样，她已经为你",
+      "悉心调制好了最合适的口味。"
+    ],
+    "pmx-1c1dd0698118e114": [
+      "“哎呀，指挥官确定要跟着我吗？万一迷路了，我可",
+      "是不负责的哦~”",
+      "莱娅露出游刃有余的笑容，试图把你引入更深的迷途",
+      "之中。"
+    ],
+    "pmx-6826e4ccdf1f4ddf": [
+      "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。像",
+      "是疾风或是雷霆，银芒四射的骑士向您发出邀约。上",
+      "车，兜个风！"
+    ],
+    "pmx-a0790aac2b94e352": [
+      "可露凯的战术骑手服，兼具防护与作战功能，让可露",
+      "凯犹如一道蓝色闪光在前线穿梭。"
+    ],
+    "pmx-8a28434eee27a5ce": [
+      "“我说过，有我一个就够了。现在，做好用余生来验",
+      "证这句话的准备了吗？”",
+      "绀星夜幕之下，那袭如霜雪洁白的纱裙，此刻正为您",
+      "一人闪耀。她坚定地扣紧您的十指，目光灼灼——名",
+      "为“完美”的未来，已在您手中。"
+    ]
+  },
+  "roomLabels": {
+    "OTs-14": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/18fa9fba752aeda5.png",
+      "width": 135,
+      "height": 30
+    },
+    "VMD 自带的表情会按动作播放": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8a2c7dfc9a925917.png",
+      "width": 491,
+      "height": 40
+    },
+    "“主人主人，来一起玩吧！这些游戏我很": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e324b8ad2719e83c.png",
+      "width": 633,
+      "height": 43
+    },
+    "“指挥官眼睛，似乎不知道该放哪里的样": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/dd545e15341672b2.png",
+      "width": 633,
+      "height": 43
+    },
+    "“指挥官，请牵住我的手，和我一起聆听": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/53bfda13f2e2ef58.png",
+      "width": 633,
+      "height": 43
+    },
+    "“来到空旷的山顶吹着冷风看星星……指": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bbc09d83fc5c8f7b.png",
+      "width": 635,
+      "height": 40
+    },
+    "。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0322f799caeb8e70.png",
+      "width": 40,
+      "height": 15
+    },
+    "上下幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/682a501c1c66dc6a.png",
+      "width": 148,
+      "height": 38
+    },
+    "上衣": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/536a6a1bd72653c0.png",
+      "width": 76,
+      "height": 39
+    },
+    "下衣": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/608e8ee4eadf55ac.png",
+      "width": 76,
+      "height": 39
+    },
+    "主手手腕旋转": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/fca54efca6d550c2.png",
+      "width": 220,
+      "height": 40
+    },
+    "主手握点": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/466fe385c8a2d0dc.png",
+      "width": 148,
+      "height": 40
+    },
+    "从头播放": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/79bd777f8c440856.png",
+      "width": 148,
+      "height": 39
+    },
+    "以常见着装出现的阿斯缇亚，将过去与现": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/449e2ce9da51eb55.png",
+      "width": 652,
+      "height": 43
+    },
+    "保存表情": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/056420383e007845.png",
+      "width": 148,
+      "height": 39
+    },
+    "修改已保存": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/263d5eda61ccf8b7.png",
+      "width": 184,
+      "height": 39
+    },
+    "停止": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/04fbc669483611ea.png",
+      "width": 76,
+      "height": 38
+    },
+    "克莱妲": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ece2fcebdaa201cd.png",
+      "width": 112,
+      "height": 39
+    },
+    "关闭": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a22aacd5a607d5c5.png",
+      "width": 76,
+      "height": 38
+    },
+    "其他表情": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c95e7b259012d4e4.png",
+      "width": 148,
+      "height": 39
+    },
+    "其他配件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2195b08f6139d411.png",
+      "width": 148,
+      "height": 39
+    },
+    "冬夜星途": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/cd385f5cde926fd4.png",
+      "width": 148,
+      "height": 39
+    },
+    "切换配件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a9d9fe53501d6bde.png",
+      "width": 148,
+      "height": 40
+    },
+    "刷新": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2f59b043142704fe.png",
+      "width": 76,
+      "height": 39
+    },
+    "前后幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/652eaf80f4337c64.png",
+      "width": 148,
+      "height": 39
+    },
+    "副手手腕旋转": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/80766e367298a185.png",
+      "width": 220,
+      "height": 39
+    },
+    "副手握点": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ae57d9fb6336f0da.png",
+      "width": 148,
+      "height": 39
+    },
+    "动作库": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a80f3cf6d69b1d02.png",
+      "width": 112,
+      "height": 38
+    },
+    "动作目录": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1219f9887258c4ca.png",
+      "width": 148,
+      "height": 39
+    },
+    "动作预设": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f1f6bf574b8b9df0.png",
+      "width": 148,
+      "height": 39
+    },
+    "十连 ×10": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/111aa5a6fb5e9f9a.png",
+      "width": 149,
+      "height": 38
+    },
+    "单抽 ×1": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d746a5ad964f5637.png",
+      "width": 128,
+      "height": 38
+    },
+    "原皮": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e2b5f30ff964e50a.png",
+      "width": 76,
+      "height": 39
+    },
+    "可露凯": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/78d7442a23c1db85.png",
+      "width": 112,
+      "height": 39
+    },
+    "听风狩影": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/9ac69f9f92817885.png",
+      "width": 148,
+      "height": 39
+    },
+    "启用该角色": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/706c8f0c8ebaeb97.png",
+      "width": 184,
+      "height": 39
+    },
+    "嘴型": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bb33d91b6c4cb8a7.png",
+      "width": 76,
+      "height": 39
+    },
+    "回弹缓冲": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c113a2f92d141f2a.png",
+      "width": 148,
+      "height": 39
+    },
+    "回弹阻尼": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/55048d42493a5b96.png",
+      "width": 148,
+      "height": 38
+    },
+    "在相融，在保留原本自我的同时，追寻独": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b042bc965533fbcf.png",
+      "width": 652,
+      "height": 43
+    },
+    "埃芙": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/dfd2fbc84212356a.png",
+      "width": 76,
+      "height": 39
+    },
+    "夏安": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3423f1d3d655fd68.png",
+      "width": 76,
+      "height": 39
+    },
+    "夏安的常见着装。黯淡低调，宽大廓形包": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1bbb4139fda13fee.png",
+      "width": 652,
+      "height": 43
+    },
+    "外观": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b48f6ff04863d7c8.png",
+      "width": 76,
+      "height": 38
+    },
+    "外部动作库": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5dc88ab209c7b2a7.png",
+      "width": 184,
+      "height": 38
+    },
+    "头饰": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/df694d9b710217be.png",
+      "width": 76,
+      "height": 39
+    },
+    "女仆": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3c77cf9374b8af4a.png",
+      "width": 76,
+      "height": 39
+    },
+    "妮基塔": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5c41745577857a18.png",
+      "width": 112,
+      "height": 39
+    },
+    "子，需要我来帮你纠正一下吗？”阳光追": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f26bb35acfd74f2b.png",
+      "width": 633,
+      "height": 42
+    },
+    "实力，自然要藏在身后才足以安心。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3a4f1750c11b0be5.png",
+      "width": 580,
+      "height": 43
+    },
+    "展开": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0500cfce05656494.png",
+      "width": 76,
+      "height": 37
+    },
+    "属于自己的道路。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1b518486f1a0b16a.png",
+      "width": 292,
+      "height": 40
+    },
+    "左右幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/51802b445f490a37.png",
+      "width": 148,
+      "height": 38
+    },
+    "左右拖动选择皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bcf4ee2bf23c29e9.png",
+      "width": 292,
+      "height": 38
+    },
+    "已启用": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d7ff54c85eb45162.png",
+      "width": 112,
+      "height": 39
+    },
+    "已暂停": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/30a265a23881f544.png",
+      "width": 112,
+      "height": 38
+    },
+    "已暂停，请重置物理解算": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/fba84a3174a15683.png",
+      "width": 400,
+      "height": 42
+    },
+    "已载入人形": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8f566d734621155e.png",
+      "width": 184,
+      "height": 39
+    },
+    "已选动作": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e56ec2e0c94b29f9.png",
+      "width": 148,
+      "height": 38
+    },
+    "希丽雅": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/67e30581df6e029f.png",
+      "width": 112,
+      "height": 38
+    },
+    "当前使用原角色": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/57c322d438abac0f.png",
+      "width": 256,
+      "height": 40
+    },
+    "当前穿着": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/29809db2bb1e53ab.png",
+      "width": 148,
+      "height": 39
+    },
+    "忻跃阳炎": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ba41d16aa0ab7121.png",
+      "width": 148,
+      "height": 39
+    },
+    "恢复原角色": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/54c365580ebbddea.png",
+      "width": 184,
+      "height": 39
+    },
+    "恢复默认": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/03a97532540a5b3f.png",
+      "width": 148,
+      "height": 39
+    },
+    "您再靠近我一些吧。”阿斯缇亚注视着比": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c31ba0097b5f9014.png",
+      "width": 633,
+      "height": 39
+    },
+    "惯性伸缩": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/88d17578e500a135.png",
+      "width": 148,
+      "height": 40
+    },
+    "惯性重量": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1d6e91eb9f4fca02.png",
+      "width": 148,
+      "height": 38
+    },
+    "手枪握持": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d150b12f9a0f51d0.png",
+      "width": 148,
+      "height": 38
+    },
+    "拖动旋转 · 滚轮缩放": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bf3b0fa753ddb6a3.png",
+      "width": 331,
+      "height": 40
+    },
+    "挥官，这就是您所谓的浪漫吗？那么，请": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/70ea7fdccebebef9.png",
+      "width": 652,
+      "height": 43
+    },
+    "换装": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/dc2333f92c8b5325.png",
+      "width": 76,
+      "height": 39
+    },
+    "握持校准": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/11c2b2365dcec892.png",
+      "width": 148,
+      "height": 39
+    },
+    "播放中": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a0cd4f9b3b1220af.png",
+      "width": 112,
+      "height": 38
+    },
+    "播放倍速": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/45ce4f625f636f66.png",
+      "width": 148,
+      "height": 39
+    },
+    "播放控制": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1a0481eb501b424d.png",
+      "width": 148,
+      "height": 38
+    },
+    "播放选中动作": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7ecaf2ee14df83c3.png",
+      "width": 220,
+      "height": 38
+    },
+    "擅长哦~”她向你挥动双手，扑面而来的": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/32ee24ac15defc84.png",
+      "width": 618,
+      "height": 43
+    },
+    "操作未应用，请查看日志": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e5b2ef6620e4fa31.png",
+      "width": 400,
+      "height": 42
+    },
+    "收起": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0eef937a2dc1fd50.png",
+      "width": 76,
+      "height": 39
+    },
+    "效果幅度": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ed5d0e02485f5f25.png",
+      "width": 148,
+      "height": 39
+    },
+    "整备室": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6693c8587d06469f.png",
+      "width": 112,
+      "height": 39
+    },
+    "无垢契约": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6784f10ceb058acd.png",
+      "width": 148,
+      "height": 39
+    },
+    "星空更为重要的你，默默将围巾绕上你的": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/04bdeb60b8fa9310.png",
+      "width": 652,
+      "height": 43
+    },
+    "春田": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/31ac41c3a4ec3348.png",
+      "width": 76,
+      "height": 39
+    },
+    "暂停": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f06652390b720a82.png",
+      "width": 76,
+      "height": 38
+    },
+    "暂无图片": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/628c8b697c74914e.png",
+      "width": 148,
+      "height": 39
+    },
+    "暗昼冽影": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/93aab3d70f79fdb7.png",
+      "width": 148,
+      "height": 40
+    },
+    "未启用": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/96f152d5f33f42f3.png",
+      "width": 112,
+      "height": 38
+    },
+    "未播放": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7e67e6d8be16cd32.png",
+      "width": 112,
+      "height": 38
+    },
+    "未载入人形": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f70ae4afe17dacec.png",
+      "width": 184,
+      "height": 39
+    },
+    "材质预设": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f100ab8d323bf12a.png",
+      "width": 148,
+      "height": 39
+    },
+    "柔软程度": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7815822ef54b7b0d.png",
+      "width": 148,
+      "height": 39
+    },
+    "桑朵莱希": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/02584eb42302997a.png",
+      "width": 148,
+      "height": 38
+    },
+    "横向惯性": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d715a7c23f3bacc0.png",
+      "width": 148,
+      "height": 39
+    },
+    "正在准备人物…": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1bd5d37733034c43.png",
+      "width": 257,
+      "height": 39
+    },
+    "泳装": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c032ede34b8bb4b6.png",
+      "width": 76,
+      "height": 40
+    },
+    "活力如同一颗跃动的太阳。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1f0a4e359d3b3d5b.png",
+      "width": 436,
+      "height": 40
+    },
+    "海风的呼唤吧~”春田微笑着压了压帽檐": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c85f11cef9d7a803.png",
+      "width": 618,
+      "height": 40
+    },
+    "添加动作文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d82cccb15f3d0051.png",
+      "width": 256,
+      "height": 38
+    },
+    "添加包含 VMD 的文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/eccebfd24c4d34da.png",
+      "width": 393,
+      "height": 39
+    },
+    "濯浪焦点": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7db10b51d48fd6b0.png",
+      "width": 148,
+      "height": 39
+    },
+    "灵海游光": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7de693370ef12945.png",
+      "width": 148,
+      "height": 39
+    },
+    "热力运动": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/83362e7d60cba6bb.png",
+      "width": 148,
+      "height": 39
+    },
+    "物理控制": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/afc6a2ed43e49c88.png",
+      "width": 148,
+      "height": 38
+    },
+    "物理：关闭": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a65e3864e58b714d.png",
+      "width": 184,
+      "height": 38
+    },
+    "物理：开启": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2d775d0b603fd2ca.png",
+      "width": 184,
+      "height": 38
+    },
+    "玉玲珑": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7386ee4af74c034c.png",
+      "width": 112,
+      "height": 40
+    },
+    "理性凝望": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e1136ee5cd110274.png",
+      "width": 148,
+      "height": 39
+    },
+    "理性的制服设计之中，独行却不逾矩，这": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/853daf03d0663fd1.png",
+      "width": 652,
+      "height": 43
+    },
+    "皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/cd7be90056295045.png",
+      "width": 76,
+      "height": 38
+    },
+    "眉毛": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/13dca30992730680.png",
+      "width": 76,
+      "height": 37
+    },
+    "眼睛": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ec0ba7bb3b802ad4.png",
+      "width": 76,
+      "height": 39
+    },
+    "着她的身体曲线，被汗水浸透的衣衫紧贴": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a38346282eb5c259.png",
+      "width": 652,
+      "height": 43
+    },
+    "睁眼": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3df9b0fb04eec844.png",
+      "width": 76,
+      "height": 39
+    },
+    "睡醒的人鱼": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1c3be7eaaba65c05.png",
+      "width": 184,
+      "height": 39
+    },
+    "种矛盾对立的特质，正是莱娅独有的魅力": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/142f93efefe3ef54.png",
+      "width": 652,
+      "height": 43
+    },
+    "移除文件夹": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/280dc36860ffbd26.png",
+      "width": 184,
+      "height": 39
+    },
+    "穿着": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5429f0189533c7ee.png",
+      "width": 76,
+      "height": 39
+    },
+    "等待人物画面": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/dda4094c33a193ec.png",
+      "width": 220,
+      "height": 38
+    },
+    "粘贴动作文件夹的完整路径": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1a2c2a8cac7e6502.png",
+      "width": 436,
+      "height": 40
+    },
+    "粘贴要移除的文件夹路径": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0f96391c039ce122.png",
+      "width": 400,
+      "height": 40
+    },
+    "索米": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3e37059025938479.png",
+      "width": 76,
+      "height": 38
+    },
+    "继续播放": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f5ac79d21d072f14.png",
+      "width": 148,
+      "height": 39
+    },
+    "翠雀媚": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3a3f70fa3ea30af6.png",
+      "width": 112,
+      "height": 38
+    },
+    "肌肤，呈现着朝气蓬勃的轮廓。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0800cf88a21033ba.png",
+      "width": 508,
+      "height": 43
+    },
+    "胸部物理": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6f769cb281d275f6.png",
+      "width": 148,
+      "height": 39
+    },
+    "脖颈。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/22659cb4f824f9fa.png",
+      "width": 112,
+      "height": 39
+    },
+    "芙洛伦": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2141aef8b150a2a0.png",
+      "width": 112,
+      "height": 40
+    },
+    "芙铃": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/61bdc21ea50f1df6.png",
+      "width": 76,
+      "height": 39
+    },
+    "莱娅": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/52df2b94d66ed71a.png",
+      "width": 76,
+      "height": 39
+    },
+    "莱娅的常见着装。将独特的个性融入象征": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/de013e09ad10d1cd.png",
+      "width": 652,
+      "height": 40
+    },
+    "落地下摆": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b8bf583c8dfc9078.png",
+      "width": 148,
+      "height": 38
+    },
+    "表情": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/065e3c6fbe69ef6c.png",
+      "width": 76,
+      "height": 39
+    },
+    "裹着躯干要害，带来满满的安全感。至于": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/99ed8ba7a9cc649f.png",
+      "width": 652,
+      "height": 43
+    },
+    "该角色模组未启用": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6ba2618db3f5abf3.png",
+      "width": 292,
+      "height": 40
+    },
+    "详细配件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/4b866a311b448866.png",
+      "width": 148,
+      "height": 38
+    },
+    "请从左侧选择": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a9f3a79a689e7ba8.png",
+      "width": 220,
+      "height": 39
+    },
+    "请到创意工坊订阅并启用": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ed04cea336b8c5af.png",
+      "width": 400,
+      "height": 40
+    },
+    "请装备一把枪械": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/cb767e2e5c0e8c6e.png",
+      "width": 256,
+      "height": 40
+    },
+    "请选择角色": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0c2f79041b24f6a3.png",
+      "width": 184,
+      "height": 40
+    },
+    "购买": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ea0fc01e27cc1b96.png",
+      "width": 76,
+      "height": 39
+    },
+    "返回": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1185384f75a99092.png",
+      "width": 76,
+      "height": 37
+    },
+    "返回三栏配件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e962b32a103f6212.png",
+      "width": 220,
+      "height": 38
+    },
+    "返回皮肤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/84902d14d0badf21.png",
+      "width": 148,
+      "height": 38
+    },
+    "这套皮肤没有可切换部件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/96dab8ecf2fdd53d.png",
+      "width": 400,
+      "height": 39
+    },
+    "这套皮肤没有可调表情": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8ccb4fe43e47a407.png",
+      "width": 364,
+      "height": 39
+    },
+    "这套皮肤没有此类部件": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/89bcffeacb0c5652.png",
+      "width": 364,
+      "height": 39
+    },
+    "追寻者": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1ed33b2376e06032.png",
+      "width": 112,
+      "height": 39
+    },
+    "选择保存位置 · 再点此处取消": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/10bd451d89d15d22.png",
+      "width": 475,
+      "height": 39
+    },
+    "重新应用": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b2b3f4b2176d54ce.png",
+      "width": 148,
+      "height": 39
+    },
+    "重置物理": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0653c485bfd16c49.png",
+      "width": 148,
+      "height": 38
+    },
+    "重置物理解算": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/923952b2f28a2e5c.png",
+      "width": 220,
+      "height": 40
+    },
+    "长枪握持": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ac03574d25cb79f6.png",
+      "width": 148,
+      "height": 39
+    },
+    "闭眼": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/32cf459d0675ed70.png",
+      "width": 76,
+      "height": 39
+    },
+    "阿斯缇亚": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d87510ab8fe2c07e.png",
+      "width": 148,
+      "height": 39
+    },
+    "随包示例": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e3ec0039dfa06f16.png",
+      "width": 148,
+      "height": 39
+    },
+    "骨骼跟随范围": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ca3a1a37f1e230ef.png",
+      "width": 220,
+      "height": 39
+    },
+    "默认": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/53c67d1e218fce86.png",
+      "width": 76,
+      "height": 39
+    },
+    "黛烟": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3b18c49e8504f75c.png",
+      "width": 76,
+      "height": 39
+    },
+    "，邀你与她共享这段温暖的海岛时光。": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c6ad2b74d6eff475.png",
+      "width": 616,
+      "height": 43
+    },
+    "请先启用当前预览的外观": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/147c2aa42effd1d5.png",
+      "width": 400,
+      "height": 40
+    },
+    "这套皮肤没有配置胸部物理": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ed7f65adff27e46b.png",
+      "width": 436,
+      "height": 39
+    },
+    "部件切换": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5e273a6def9c93e1.png",
+      "width": 148,
+      "height": 40
+    },
+    "常用表情": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/653eb0079cc65b7f.png",
+      "width": 148,
+      "height": 39
+    },
+    "自然": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7c7bd552635d5029.png",
+      "width": 76,
+      "height": 39
+    },
+    "微笑": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/cd60e98a6d8bd526.png",
+      "width": 76,
+      "height": 39
+    },
+    "惊讶": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/24e43fa15be4fa07.png",
+      "width": 76,
+      "height": 38
+    },
+    "生气": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ab1ca04eaea64296.png",
+      "width": 76,
+      "height": 38
+    },
+    "专访许可": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/9d19672cc990bcd9.png",
+      "width": 148,
+      "height": 39
+    },
+    "新装许可": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7b9d68d18db56e1c.png",
+      "width": 148,
+      "height": 39
+    },
+    "信用币": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/4fdb02bca7f46de6.png",
+      "width": 112,
+      "height": 39
+    },
+    "钞票": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/4e8df2f305faa120.png",
+      "width": 76,
+      "height": 40
+    },
+    "1 张钞票兑换 10,000 信用币": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/f820935f24e210e8.png",
+      "width": 464,
+      "height": 43
+    },
+    "每张消耗 120 信用币": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/89dc8d4f672361f3.png",
+      "width": 342,
+      "height": 39
+    },
+    "当前购买": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8efb5b073de7e101.png",
+      "width": 148,
+      "height": 39
+    },
+    "消耗": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8a982bfe4027c8be.png",
+      "width": 76,
+      "height": 39
+    },
+    "最小": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/048f99a9bb8f7f4a.png",
+      "width": 76,
+      "height": 38
+    },
+    "最大": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/130053b143f5ee3a.png",
+      "width": 76,
+      "height": 39
+    },
+    "取消": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6491b8b0638f4ef5.png",
+      "width": 76,
+      "height": 38
+    },
+    "兑换成功": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d9f78ec37435de2a.png",
+      "width": 148,
+      "height": 40
+    },
+    "可用资源不足": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c60d7222798efb12.png",
+      "width": 220,
+      "height": 39
+    },
+    "访问一次": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0adf2af8e3329b8d.png",
+      "width": 148,
+      "height": 39
+    },
+    "访问十次": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7e1b667c1125abc8.png",
+      "width": 148,
+      "height": 39
+    },
+    "0": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bd38d232c6a283ff.png",
+      "width": 26,
+      "height": 30
+    },
+    "1": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/07b655f72435086d.png",
+      "width": 26,
+      "height": 30
+    },
+    "2": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/5a2d02a8059feb2d.png",
+      "width": 26,
+      "height": 30
+    },
+    "3": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0ade07524abd0e10.png",
+      "width": 26,
+      "height": 30
+    },
+    "4": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d0ad172f1be3b233.png",
+      "width": 26,
+      "height": 30
+    },
+    "5": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/2a39cfb0de614ebb.png",
+      "width": 26,
+      "height": 30
+    },
+    "6": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7c8a936d7dd34c11.png",
+      "width": 26,
+      "height": 30
+    },
+    "7": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3d79a4db98aa13dc.png",
+      "width": 26,
+      "height": 30
+    },
+    "8": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0c417bb45bd99cc8.png",
+      "width": 26,
+      "height": 30
+    },
+    "9": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/9f6cc8eb6ebe9929.png",
+      "width": 26,
+      "height": 30
+    },
+    "×": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b934d1daaa9b1062.png",
+      "width": 26,
+      "height": 26
+    },
+    "已解锁黛烟": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/9b3ad4fd4a7288c4.png",
+      "width": 184,
+      "height": 39
+    },
+    "本次未抽到黛烟": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a1120bf113d1632b.png",
+      "width": 256,
+      "height": 39
+    },
+    "专访许可不足": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6218a4de41af27b0.png",
+      "width": 220,
+      "height": 39
+    },
+    "距保底（抽）": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/629ac817ca50f578.png",
+      "width": 220,
+      "height": 40
+    },
+    "冷凝": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/fecfb804c82e8e52.png",
+      "width": 76,
+      "height": 39
+    },
+    "回稳治疗 / 护盾": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8079cc0627d24ee1.png",
+      "width": 255,
+      "height": 40
+    },
+    "物理": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/e7a1228c08fab168.png",
+      "width": 76,
+      "height": 38
+    },
+    "单体爆发 / 先制反击": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ffe250e856b7aa62.png",
+      "width": 327,
+      "height": 41
+    },
+    "已解锁人形": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d997562ef85d02db.png",
+      "width": 184,
+      "height": 39
+    },
+    "未抽中": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/24df70e70e4ef795.png",
+      "width": 112,
+      "height": 39
+    },
+    "抽中": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/07e2cbef2cbb9dad.png",
+      "width": 76,
+      "height": 39
+    },
+    "共用保底剩余": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c36a3c3cc41e407d.png",
+      "width": 220,
+      "height": 40
+    },
+    "源谐": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/b391877d4f104ebb.png",
+      "width": 76,
+      "height": 39
+    },
+    "累积伤害 / 爆发输出": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/8e69cd94679f45fc.png",
+      "width": 327,
+      "height": 40
+    },
+    "浊刻": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/fd6bead7ababeb21.png",
+      "width": 76,
+      "height": 39
+    },
+    "召唤 / 复合输出 / 范围牵引": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/74ecc98a0d3a610d.png",
+      "width": 434,
+      "height": 40
+    },
+    "酸蚀": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/ab9126fb2e0e37c8.png",
+      "width": 76,
+      "height": 39
+    },
+    "大范围 / 减益 / 叠层": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/c8a0a9b17f54776e.png",
+      "width": 326,
+      "height": 39
+    },
+    "护盾 / 护盾增伤 / 先制反击": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/4d0c322f727ec0d2.png",
+      "width": 434,
+      "height": 41
+    },
+    "全场范围 / 单体输出": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/1de395841209c360.png",
+      "width": 327,
+      "height": 40
+    },
+    "持续输出 / 召唤 / 追击": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/0b2d7eaaa3fe7fac.png",
+      "width": 362,
+      "height": 39
+    },
+    "燃烧": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/178b97b9a37260bf.png",
+      "width": 76,
+      "height": 39
+    },
+    "复合输出 / 协击 / 护盾": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/bb24ceac5ecf070c.png",
+      "width": 362,
+      "height": 40
+    },
+    "回稳治疗 / 召唤 / 溢出增伤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6bd880ef44d1cf11.png",
+      "width": 434,
+      "height": 40
+    },
+    "回稳治疗 / 协击 / 增益": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/d9c3d045f23feea8.png",
+      "width": 362,
+      "height": 40
+    },
+    "群体控制 / 召唤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a3c08e18585c44c8.png",
+      "width": 255,
+      "height": 38
+    },
+    "范围输出 / 追击 / 爆发输出": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/358bca75d2c18aca.png",
+      "width": 434,
+      "height": 40
+    },
+    "电导": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/a0b6641005e1c43b.png",
+      "width": 76,
+      "height": 38
+    },
+    "单体爆发 / 破稳转伤": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/4fe5138ed4a02938.png",
+      "width": 327,
+      "height": 40
+    },
+    "复合增益 / 负防御 / 无视防御": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/3845c431e28fff59.png",
+      "width": 470,
+      "height": 40
+    },
+    "未购买": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/50b0e4960780062b.png",
+      "width": 112,
+      "height": 39
+    },
+    "新装采购": {
+      "path": "media/ui/AimohPMXReadyRoom/label-3a47772d2f067f.png",
+      "width": 124,
+      "height": 43
+    },
+    "衣装已获得": {
+      "path": "media/ui/AimohPMXReadyRoom/label-08e2707d7fbc9f.png",
+      "width": 154,
+      "height": 43
+    },
+    "本池保底剩余": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5d02f835d4ca06.png",
+      "width": 184,
+      "height": 43
+    },
+    "新装许可不足": {
+      "path": "media/ui/AimohPMXReadyRoom/label-22f80f1dc011c4.png",
+      "width": 184,
+      "height": 43
+    },
+    "“当年那场输掉的排球赛，指挥官到现在还是耿耿于": {
+      "path": "media/ui/AimohPMXReadyRoom/label-dda5eaaecd8618.png",
+      "width": 694,
+      "height": 43
+    },
+    "怀吗？哼哼，没关系……我愿意再次接受你的挑战哦": {
+      "path": "media/ui/AimohPMXReadyRoom/label-0f402112899da5.png",
+      "width": 682,
+      "height": 43
+    },
+    "~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07ced7149161e6.png",
+      "width": 56,
+      "height": 43
+    },
+    "克莱妲的笑意逐渐加深，惬意地等待着你接下来的表": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c079fc24cc0812.png",
+      "width": 694,
+      "height": 43
+    },
+    "现。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bea66ea08386dd.png",
+      "width": 64,
+      "height": 43
+    },
+    "“指挥官，请牵住我的手，和我一起聆听海风的呼唤": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e9e6806dcce0da.png",
+      "width": 694,
+      "height": 43
+    },
+    "吧~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e59a09fdeaabe5.png",
+      "width": 86,
+      "height": 43
+    },
+    "春田微笑着压了压帽檐，邀你与她共享这段温暖的海": {
+      "path": "media/ui/AimohPMXReadyRoom/label-03cd0fa4ecba3e.png",
+      "width": 694,
+      "height": 43
+    },
+    "岛时光。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c1564df2d8f10b.png",
+      "width": 124,
+      "height": 43
+    },
+    "“要试试新的水上活动吗？既然如此就和我一起去冲": {
+      "path": "media/ui/AimohPMXReadyRoom/label-cb976b1b8cb449.png",
+      "width": 694,
+      "height": 43
+    },
+    "浪吧。就算是玩水，只要和我在一起就绝对不会让你": {
+      "path": "media/ui/AimohPMXReadyRoom/label-99e2b8f2dc20fb.png",
+      "width": 694,
+      "height": 43
+    },
+    "失望的。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ab7f298952c0eb.png",
+      "width": 154,
+      "height": 43
+    },
+    "她踏浪而来，向你伸出手。指挥官准备好回应那期待": {
+      "path": "media/ui/AimohPMXReadyRoom/label-60c6fb85b4afc3.png",
+      "width": 694,
+      "height": 43
+    },
+    "的眼神了吗？": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6f0f0d78cfdcb8.png",
+      "width": 184,
+      "height": 43
+    },
+    "蔚蓝轨迹": {
+      "path": "media/ui/AimohPMXReadyRoom/label-950b31b51ad732.png",
+      "width": 124,
+      "height": 43
+    },
+    "“辛苦了，指挥官，要来杯咖啡吗？无论是糖度还是": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2e583653369db2.png",
+      "width": 694,
+      "height": 43
+    },
+    "温度……都是您最喜欢的那种哦。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bdbb20f6751fee.png",
+      "width": 472,
+      "height": 43
+    },
+    "如同过去时光里品尝过的每杯咖啡一样，她已经为你": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1e93ee3e56acea.png",
+      "width": 694,
+      "height": 43
+    },
+    "悉心调制好了最合适的口味。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07352ae7e7dfa1.png",
+      "width": 394,
+      "height": 43
+    },
+    "静享芳醇": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c48eeccef46c41.png",
+      "width": 124,
+      "height": 43
+    },
+    "“哎呀，指挥官确定要跟着我吗？万一迷路了，我可": {
+      "path": "media/ui/AimohPMXReadyRoom/label-040a28a595c9e3.png",
+      "width": 694,
+      "height": 43
+    },
+    "是不负责的哦~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8d4ed3b1bcbe8b.png",
+      "width": 236,
+      "height": 43
+    },
+    "莱娅露出游刃有余的笑容，试图把你引入更深的迷途": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ba2cde4175ca7e.png",
+      "width": 694,
+      "height": 43
+    },
+    "之中。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-505f8ed9654192.png",
+      "width": 94,
+      "height": 43
+    },
+    "狡兔迷踪": {
+      "path": "media/ui/AimohPMXReadyRoom/label-06863afdb6942f.png",
+      "width": 124,
+      "height": 43
+    },
+    "可露凯的骑手服。银白紧身衣勾勒出优美的轮廓。像": {
+      "path": "media/ui/AimohPMXReadyRoom/label-bd441fddc7ccba.png",
+      "width": 694,
+      "height": 43
+    },
+    "是疾风或是雷霆，银芒四射的骑士向您发出邀约。上": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f17cc059049190.png",
+      "width": 694,
+      "height": 43
+    },
+    "车，兜个风！": {
+      "path": "media/ui/AimohPMXReadyRoom/label-afd99060cf2efb.png",
+      "width": 184,
+      "height": 43
+    },
+    "速度之星": {
+      "path": "media/ui/AimohPMXReadyRoom/label-07581ce49acd8d.png",
+      "width": 124,
+      "height": 43
+    },
+    "可露凯的战术骑手服，兼具防护与作战功能，让可露": {
+      "path": "media/ui/AimohPMXReadyRoom/label-eaaec29db33a01.png",
+      "width": 694,
+      "height": 43
+    },
+    "凯犹如一道蓝色闪光在前线穿梭。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-817151d21bf4a5.png",
+      "width": 454,
+      "height": 43
+    },
+    "星迹掠芒": {
+      "path": "media/ui/AimohPMXReadyRoom/label-a6f22b740a7d39.png",
+      "width": 124,
+      "height": 43
+    },
+    "“我说过，有我一个就够了。现在，做好用余生来验": {
+      "path": "media/ui/AimohPMXReadyRoom/label-d9fde5c39e0a4f.png",
+      "width": 694,
+      "height": 43
+    },
+    "证这句话的准备了吗？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c1fd37c4decc70.png",
+      "width": 334,
+      "height": 43
+    },
+    "绀星夜幕之下，那袭如霜雪洁白的纱裙，此刻正为您": {
+      "path": "media/ui/AimohPMXReadyRoom/label-9d07e4c3e6240b.png",
+      "width": 694,
+      "height": 43
+    },
+    "一人闪耀。她坚定地扣紧您的十指，目光灼灼——名": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4f0c7a953e8bf0.png",
+      "width": 698,
+      "height": 43
+    },
+    "为“完美”的未来，已在您手中。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4b7be2d9e2ffaa.png",
+      "width": 454,
+      "height": 43
+    },
+    "绀星绮愿": {
+      "path": "media/ui/AimohPMXReadyRoom/label-ea0a13465a06a2.png",
+      "width": 124,
+      "height": 43
+    },
+    "温柔坚强，善解人意，在不同人群中游走而不露把柄的机": {
+      "path": "media/ui/AimohPMXReadyRoom/label-30645cf95d802f.png",
+      "width": 754,
+      "height": 43
+    },
+    "敏人形。包容的背后是对原则的坚持，而春田的原则只有": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e7e602f4b6ad05.png",
+      "width": 754,
+      "height": 43
+    },
+    "一个——朋友和重要之人，她全都要守护好。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-4f688f3fa27330.png",
+      "width": 608,
+      "height": 43
+    },
+    "优雅而冷静，拥有绝对自信的人形，励志将H.I.D.": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e67bbccf4b642b.png",
+      "width": 650,
+      "height": 43
+    },
+    "E. 404全员精英化。只有熟悉她的人才知道，在可": {
+      "path": "media/ui/AimohPMXReadyRoom/label-2ca25d687dd73e.png",
+      "width": 661,
+      "height": 43
+    },
+    "露凯的强势与严苛背后，有着怎样的柔软与珍惜。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-1809fbc46d1306.png",
+      "width": 664,
+      "height": 43
+    },
+    "忤逆小队昔日的头狼，在经历最糟糕的一天后，负起责任": {
+      "path": "media/ui/AimohPMXReadyRoom/label-765c5a1c523823.png",
+      "width": 754,
+      "height": 43
+    },
+    "带领战友们站好了最后一班岗，最终将首领的责任与头衔": {
+      "path": "media/ui/AimohPMXReadyRoom/label-5d4f793c664052.png",
+      "width": 754,
+      "height": 43
+    },
+    "交付给了值得信赖的同伴，自身则选择了另一种方式继续": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8b90c7ceaf91ab.png",
+      "width": 754,
+      "height": 43
+    },
+    "战斗，时至今日，她依然是那个你熟悉的AK-12，但": {
+      "path": "media/ui/AimohPMXReadyRoom/label-772313ba73cb68.png",
+      "width": 693,
+      "height": 43
+    },
+    "请千万小心——她如今更加危险了。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-e4be27c8d1a46f.png",
+      "width": 488,
+      "height": 43
+    }
+  },
+  "roomBlinkLabels": [
+    "闭眼",
+    "闭眼（2）"
+  ],
+  "roomFacialPresets": [
+    [
+      "RoomFaceNeutral"
+    ],
+    [
+      "RoomFaceSmile",
+      [
+        [
+          "嘴角上扬",
+          "口角上げ",
+          0.72
+        ],
+        [
+          "咧嘴笑表情",
+          "Special_Grin",
+          0.56
+        ],
+        [
+          "咧嘴（I）",
+          "い",
+          0.3
+        ]
+      ],
+      [
+        [
+          "笑眼",
+          "笑い",
+          0.35
+        ],
+        [
+          "眯眼微笑",
+          "なごみ",
+          0.24
+        ]
+      ]
+    ],
+    [
+      "RoomFaceSurprised",
+      [
+        [
+          "睁大眼",
+          "びっくり",
+          0.63
+        ],
+        [
+          "惊讶表情",
+          "Special_Suprise",
+          0.6
+        ]
+      ],
+      [
+        [
+          "圆嘴（O）",
+          "お",
+          0.48
+        ],
+        [
+          "张嘴（A）",
+          "あ",
+          0.42
+        ]
+      ],
+      [
+        [
+          "抬眉",
+          "上",
+          0.32
+        ]
+      ]
+    ],
+    [
+      "RoomFaceAngry",
+      [
+        [
+          "怒眉",
+          "怒り",
+          0.67
+        ],
+        [
+          "压眉",
+          "下",
+          0.57
+        ],
+        [
+          "皱眉表情",
+          "Special_Frown",
+          0.62
+        ]
+      ],
+      [
+        [
+          "半眯眼",
+          "じと目",
+          0.22
+        ]
+      ],
+      [
+        [
+          "嘴角下压",
+          "口角下げ",
+          0.31
+        ]
+      ]
+    ]
+  ],
+  "roomRecruitment": {
+    "索米": {
+      "pool": "Suomi",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/suomi.png",
+      "element": "冷凝",
+      "color": [
+        0.25882352941176473,
+        0.8,
+        0.8784313725490196
+      ],
+      "tags": "回稳治疗 / 护盾"
+    },
+    "黛烟": {
+      "pool": "Daiyan",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/daiyan.png",
+      "element": "物理",
+      "color": [
+        0.788235294117647,
+        0.7843137254901961,
+        0.807843137254902
+      ],
+      "tags": "单体爆发 / 先制反击"
+    },
+    "OTs-14": {
+      "pool": "OTs14",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/ots14.png",
+      "element": "源谐",
+      "color": [
+        0.8980392156862745,
+        0.1607843137254902,
+        0.3333333333333333
+      ],
+      "tags": "累积伤害 / 爆发输出"
+    },
+    "克莱妲": {
+      "pool": "Koleda",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/koleda.png",
+      "element": "浊刻",
+      "color": [
+        0.17254901960784313,
+        0.6666666666666666,
+        0.8588235294117647
+      ],
+      "tags": "召唤 / 复合输出 / 范围牵引"
+    },
+    "可露凯": {
+      "pool": "Clukay",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/clukay.png",
+      "element": "酸蚀",
+      "color": [
+        0.5294117647058824,
+        0.47843137254901963,
+        0.9215686274509803
+      ],
+      "tags": "大范围 / 减益 / 叠层"
+    },
+    "埃芙": {
+      "pool": "Alva",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/alva.png",
+      "element": "冷凝",
+      "color": [
+        0.25882352941176473,
+        0.8,
+        0.8784313725490196
+      ],
+      "tags": "护盾 / 护盾增伤 / 先制反击"
+    },
+    "夏安": {
+      "pool": "Cheyanne",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/cheyanne.png",
+      "element": "物理",
+      "color": [
+        0.788235294117647,
+        0.7843137254901961,
+        0.807843137254902
+      ],
+      "tags": "全场范围 / 单体输出"
+    },
+    "妮基塔": {
+      "pool": "Nikketa",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/nikketa.png",
+      "element": "浊刻",
+      "color": [
+        0.17254901960784313,
+        0.6666666666666666,
+        0.8588235294117647
+      ],
+      "tags": "持续输出 / 召唤 / 追击"
+    },
+    "希丽雅": {
+      "pool": "Cecilia",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/cecilia.png",
+      "element": "燃烧",
+      "color": [
+        0.8980392156862745,
+        0.40784313725490196,
+        0.1607843137254902
+      ],
+      "tags": "复合输出 / 协击 / 护盾"
+    },
+    "春田": {
+      "pool": "Springfield",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/springfield.png",
+      "element": "浊刻",
+      "color": [
+        0.17254901960784313,
+        0.6666666666666666,
+        0.8588235294117647
+      ],
+      "tags": "回稳治疗 / 召唤 / 溢出增伤"
+    },
+    "桑朵莱希": {
+      "pool": "Centaureiss",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/centaureiss.png",
+      "element": "燃烧",
+      "color": [
+        0.8980392156862745,
+        0.40784313725490196,
+        0.1607843137254902
+      ],
+      "tags": "回稳治疗 / 协击 / 增益"
+    },
+    "芙洛伦": {
+      "pool": "Florence",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/florence.png",
+      "element": "浊刻",
+      "color": [
+        0.17254901960784313,
+        0.6666666666666666,
+        0.8588235294117647
+      ],
+      "tags": "群体控制 / 召唤"
+    },
+    "芙铃": {
+      "pool": "Faelynn",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/faelynn.png",
+      "element": "酸蚀",
+      "color": [
+        0.5294117647058824,
+        0.47843137254901963,
+        0.9215686274509803
+      ],
+      "tags": "范围输出 / 追击 / 爆发输出"
+    },
+    "莱娅": {
+      "pool": "Leva",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/leva.png",
+      "element": "电导",
+      "color": [
+        0.9215686274509803,
+        0.7490196078431373,
+        0.12941176470588237
+      ],
+      "tags": "单体爆发 / 破稳转伤"
+    },
+    "阿斯缇亚": {
+      "pool": "Asteria",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/asteria.png",
+      "element": "物理",
+      "color": [
+        0.788235294117647,
+        0.7843137254901961,
+        0.807843137254902
+      ],
+      "tags": "复合增益 / 负防御 / 无视防御"
+    }
+  },
+  "roomDefaultUnlocked": {
+    "Leva": true,
+    "Cheyanne": true
+  },
+  "roomDefaultSkinNames": {
+    "默认": true,
+    "原皮": true
+  },
+  "roomOutfitPools": {
+    "pmx-c7270af966e8aaf8": {
+      "name": "濯浪焦点",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/outfit-koleda.png"
+    },
+    "pmx-225af1a054faefb0": {
+      "name": "睡醒的人鱼",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/outfit-springfield.png"
+    },
+    "pmx-9ee1e4cdb8d7f985": {
+      "name": "蔚蓝轨迹",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/outfit-clukay.png"
+    }
+  },
+  "roomCharacterDescriptions": {
+    "春田": [
+      "温柔坚强，善解人意，在不同人群中游走而不露把柄的机",
+      "敏人形。包容的背后是对原则的坚持，而春田的原则只有",
+      "一个——朋友和重要之人，她全都要守护好。"
+    ],
+    "可露凯": [
+      "优雅而冷静，拥有绝对自信的人形，励志将H.I.D.",
+      "E. 404全员精英化。只有熟悉她的人才知道，在可",
+      "露凯的强势与严苛背后，有着怎样的柔软与珍惜。"
+    ],
+    "克莱妲": [
+      "忤逆小队昔日的头狼，在经历最糟糕的一天后，负起责任",
+      "带领战友们站好了最后一班岗，最终将首领的责任与头衔",
+      "交付给了值得信赖的同伴，自身则选择了另一种方式继续",
+      "战斗，时至今日，她依然是那个你熟悉的AK-12，但",
+      "请千万小心——她如今更加危险了。"
+    ]
+  }
 }

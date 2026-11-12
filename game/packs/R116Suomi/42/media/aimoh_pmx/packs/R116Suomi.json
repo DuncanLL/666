@@ -7,6 +7,18 @@
       "label": "索米 / 灵海游光",
       "model": "models/pmx-43ef6f5967a37c87/model.pmx",
       "profile": "models/pmx-43ef6f5967a37c87/profile.json"
+    },
+    {
+      "id": "pmx-cb19e5961c38af86",
+      "label": "索米 / SSR0102",
+      "model": "models/pmx-cb19e5961c38af86/model.pmx",
+      "profile": "models/pmx-cb19e5961c38af86/profile.json"
+    },
+    {
+      "id": "pmx-4019c9450e0e318d",
+      "label": "索米 / 原皮",
+      "model": "models/pmx-4019c9450e0e318d/model.pmx",
+      "profile": "models/pmx-4019c9450e0e318d/profile.json"
     }
   ]
 }

@@ -179,3 +179,5 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Alva","pmx-020abca186c52e7b",clips)
+AimohPMXVoiceIdentity.registerVoice("pmx-94483c23f678afe3","Alva")
+AimohPMXVoiceIdentity.registerVoice("pmx-76a4aa15941b6aa4","Alva")

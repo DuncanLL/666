@@ -179,3 +179,8 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Klukai","pmx-9ee1e4cdb8d7f985",clips)
+
+AimohPMXVoiceIdentity.registerVoice("pmx-efe685465097beb2","Klukai")
+AimohPMXVoiceIdentity.registerVoice("pmx-6826e4ccdf1f4ddf","Klukai")
+AimohPMXVoiceIdentity.registerVoice("pmx-a0790aac2b94e352","Klukai")
+AimohPMXVoiceIdentity.registerVoice("pmx-8a28434eee27a5ce","Klukai")

@@ -73,6 +73,118 @@
         }
       },
       "partImages": {}
+    },
+    "pmx-06925f50fb5cb612": {
+      "character": "OTs-14",
+      "skin": "SSR0101（改）",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-06925f50fb5cb612.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR01.png",
+      "primaryCategories": [
+        "帽饰",
+        "项链",
+        "耳饰",
+        "披风",
+        "鞋袜",
+        "眼睛"
+      ],
+      "groups": {
+        "hat": {
+          "label": "帽饰",
+          "display": "帽饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "necklace": {
+          "label": "项链",
+          "display": "项链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "earrings": {
+          "label": "耳饰",
+          "display": "耳饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
+    },
+    "pmx-73625fbf0962e120": {
+      "character": "OTs-14",
+      "skin": "SSR0102",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-73625fbf0962e120.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_OTs14SSR02.png",
+      "primaryCategories": [
+        "帽饰",
+        "机械臂",
+        "鞋袜",
+        "眼睛"
+      ],
+      "groups": {
+        "hat": {
+          "label": "帽饰",
+          "display": "帽饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "mech_arms": {
+          "label": "机械臂",
+          "display": "机械臂",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {}
     }
   },
   "labels": {

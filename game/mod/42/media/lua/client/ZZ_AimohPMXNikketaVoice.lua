@@ -177,3 +177,6 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Nikketa","pmx-f5b2807685b18a60",clips)
+AimohPMXVoiceIdentity.registerVoice("pmx-78cbbc06c7da39dc","Nikketa")
+AimohPMXVoiceIdentity.registerVoice("pmx-ea3eb50ef5b32295","Nikketa")
+AimohPMXVoiceIdentity.registerVoice("pmx-4cdf23692c8709a0","Nikketa")

@@ -177,3 +177,4 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Klaid","pmx-c7270af966e8aaf8",clips)
+AimohPMXVoiceIdentity.registerVoice("pmx-90268b4961c97434","Klaid")

@@ -179,3 +179,6 @@ local clips={
 }
 
 AimohPMXCatalogVoice.install("Centaureissi","pmx-7c5ea1f673f69f12",clips)
+
+AimohPMXVoiceIdentity.registerVoice("pmx-8fc5b665a5786924","Centaureissi")
+AimohPMXVoiceIdentity.registerVoice("pmx-dd77c173248cb704","Centaureissi")

@@ -153,6 +153,11 @@ public class Main {
         }
         ModelSession next=preparing.get(actor);return next==null?active.get(actor):next;
     }
+    static synchronized ModelSession createRoomPreview(String id) throws Exception {
+        nativeRuntime();
+        return new ModelSession(api,grip,entry(id));
+    }
+
     private static void cancelPreparation(IsoGameCharacter actor) {
         ModelSession previous=preparing.remove(actor);if(previous!=null)previous.retire();refreshPoseOwners();
     }
@@ -212,7 +217,38 @@ public class Main {
         return j;
     }
     private static JSONObject settingsFor(ModelSession session,String value) {
-        return settings(value).put("appearance_controls",session.profile.optJSONObject("appearance_controls"));
+        return restoreMaterialSlots(settings(value),session.profile)
+            .put("appearance_controls",session.profile.optJSONObject("appearance_controls"));
+    }
+    static JSONObject restoreMaterialSlots(JSONObject settings,JSONObject profile) {
+        var previous=profile.optJSONArray("previous_material_slots");
+        if(previous==null)return settings;
+        var appearance=settings.getJSONObject("appearance");
+        if(appearance.getJSONArray("material_visibility").length()!=previous.length())return settings;
+        var defaults=profile.getJSONObject("appearance");
+        for(String key:new String[]{"material_visibility","alpha_overrides","colour_overrides","double_sided","texture_overrides"}) {
+            var saved=appearance.optJSONArray(key);
+            if(saved==null)continue;
+            if(saved.length()!=previous.length())throw new IllegalArgumentException("旧版外观材质数量不一致："+key);
+            var current=new org.json.JSONArray(defaults.getJSONArray(key).toString());
+            for(int old=0;old<previous.length();old++) {
+                int slot=previous.getInt(old);
+                if(slot>=0)current.put(slot,saved.get(old));
+            }
+            appearance.put(key,current);
+        }
+        var savedChoices=appearance.optJSONObject("choices");
+        if(savedChoices!=null) {
+            var choices=new JSONObject();
+            for(Object value:profile.getJSONObject("appearance_controls").getJSONArray("groups")) {
+                var group=(JSONObject)value;
+                String id=group.getString("id"),saved=savedChoices.optString(id);
+                for(Object option:group.getJSONArray("options"))
+                    if(saved.equals(((JSONObject)option).getString("id")))choices.put(id,saved);
+            }
+            appearance.put("choices",choices);
+        }
+        return settings;
     }
     public static synchronized String settingsJson(IsoGameCharacter actor) {
         ModelSession s=active.get(actor);return s==null?"":new JSONObject().put("appearance",new JSONObject(s.model.appearance().stateJson()))
