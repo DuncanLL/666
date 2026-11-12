@@ -1,0 +1,179 @@
+{
+  "version": "0.3.78",
+  "characters": [
+    {
+      "mod": "R116Laiya",
+      "character": "莱娅",
+      "skins": 3,
+      "models": 4,
+      "new_project": true,
+      "bytes": 392130728,
+      "files": 412
+    },
+    {
+      "mod": "R116Cheyanne",
+      "character": "夏安",
+      "skins": 2,
+      "models": 2,
+      "new_project": true,
+      "bytes": 183511724,
+      "files": 311
+    },
+    {
+      "mod": "R116Asteria",
+      "character": "阿斯缇亚",
+      "skins": 2,
+      "models": 2,
+      "new_project": true,
+      "bytes": 301175213,
+      "files": 355
+    },
+    {
+      "mod": "R116Koleda",
+      "character": "克莱妲",
+      "skins": 2,
+      "models": 2,
+      "new_project": true,
+      "bytes": 181163572,
+      "files": 279
+    },
+    {
+      "mod": "R116Nikketa",
+      "character": "妮基塔",
+      "skins": 4,
+      "models": 4,
+      "new_project": true,
+      "bytes": 428545442,
+      "files": 478
+    },
+    {
+      "mod": "R116Florence",
+      "character": "芙洛伦",
+      "skins": 1,
+      "models": 1,
+      "new_project": true,
+      "bytes": 190050504,
+      "files": 333
+    },
+    {
+      "mod": "R116Alva",
+      "character": "埃芙",
+      "skins": 3,
+      "models": 3,
+      "new_project": false,
+      "bytes": 215613949,
+      "files": 313
+    },
+    {
+      "mod": "R116Cecilia",
+      "character": "希丽雅",
+      "skins": 2,
+      "models": 2,
+      "new_project": false,
+      "bytes": 135407465,
+      "files": 125
+    },
+    {
+      "mod": "R116Centaureissi",
+      "character": "桑朵莱希",
+      "skins": 3,
+      "models": 3,
+      "new_project": false,
+      "bytes": 178667886,
+      "files": 334
+    },
+    {
+      "mod": "R116Daiyan",
+      "character": "黛烟",
+      "skins": 2,
+      "models": 2,
+      "new_project": false,
+      "bytes": 224431779,
+      "files": 291
+    },
+    {
+      "mod": "R116Faelynn",
+      "character": "芙铃",
+      "skins": 2,
+      "models": 2,
+      "new_project": false,
+      "bytes": 237892650,
+      "files": 318
+    },
+    {
+      "mod": "R116Klukai",
+      "character": "可露凯",
+      "skins": 5,
+      "models": 5,
+      "new_project": false,
+      "bytes": 543837281,
+      "files": 598
+    },
+    {
+      "mod": "R116OTs14",
+      "character": "OTs-14",
+      "skins": 3,
+      "models": 3,
+      "new_project": false,
+      "bytes": 199061111,
+      "files": 319
+    },
+    {
+      "mod": "R116Springfield",
+      "character": "春田",
+      "skins": 2,
+      "models": 2,
+      "new_project": false,
+      "bytes": 185065402,
+      "files": 124
+    },
+    {
+      "mod": "R116Suomi",
+      "character": "索米",
+      "skins": 3,
+      "models": 3,
+      "new_project": false,
+      "bytes": 273815927,
+      "files": 204
+    }
+  ],
+  "core_bytes": 318740655,
+  "checks": {
+    "status": "PASS",
+    "characters": 15,
+    "visible_skins": 39,
+    "registered_models": 40,
+    "individually_loaded": 15,
+    "renderer_data_equal": true,
+    "workshop_structures": [
+      "R116",
+      "R116Alva",
+      "R116Asteria",
+      "R116Cecilia",
+      "R116Centaureissi",
+      "R116Cheyanne",
+      "R116Daiyan",
+      "R116Faelynn",
+      "R116Florence",
+      "R116Klukai",
+      "R116Koleda",
+      "R116Laiya",
+      "R116Nikketa",
+      "R116OTs14",
+      "R116Springfield",
+      "R116Suomi"
+    ],
+    "game_started": false,
+    "actual_gameplay_tested": false,
+    "shader_program_bytes_changed": false
+  },
+  "enabled_new_mods": [
+    "R116Laiya",
+    "R116Cheyanne",
+    "R116Asteria",
+    "R116Koleda",
+    "R116Nikketa",
+    "R116Florence"
+  ],
+  "date": "2026-11-13"
+}

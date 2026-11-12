@@ -1,0 +1,168 @@
+{
+  "models": {
+    "pmx-abe3eaaaa9d04264": {
+      "character": "莱娅",
+      "skin": "理性凝望",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "头饰"
+        },
+        "equipment": {
+          "label": "随身装备",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "随身装备"
+        },
+        "stockings": {
+          "label": "袜装",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "袜装"
+        }
+      },
+      "officialSkin": "理性凝望",
+      "partImages": {},
+      "isDefault": true
+    },
+    "pmx-0af216265749a22d": {
+      "character": "莱娅",
+      "skin": "热力运动",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0af216265749a22d.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR02.png",
+      "groups": {
+        "head": {
+          "label": "头部配件",
+          "options": [
+            "P1 发饰",
+            "P2 耳饰",
+            "P3 耳饰"
+          ],
+          "display": "头饰"
+        },
+        "top": {
+          "label": "上装",
+          "options": [
+            "P1 上装",
+            "P2 上装",
+            "P3 上装"
+          ],
+          "display": "上衣"
+        },
+        "legs": {
+          "label": "腿部款式",
+          "options": [
+            "P1 腿装",
+            "P2 丝袜",
+            "P3 丝袜"
+          ],
+          "display": "下衣"
+        },
+        "footwear": {
+          "label": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ],
+          "display": "鞋子"
+        }
+      },
+      "officialSkin": "热力运动",
+      "partImages": {
+        "上装": {
+          "P1 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Cloth.png",
+          "P2 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Cloth.png",
+          "P3 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Cloth.png"
+        },
+        "腿部款式": {
+          "P1 腿装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Body.png",
+          "P2 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Body.png",
+          "P3 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Body.png"
+        },
+        "头部配件": {
+          "P2 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Head.png",
+          "P3 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png"
+        }
+      },
+      "isDefault": false
+    },
+    "pmx-1c1dd0698118e114": {
+      "character": "莱娅",
+      "skin": "狡兔迷踪",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1c1dd0698118e114.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR03.png",
+      "groups": {
+        "hat": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "apron": {
+          "label": "围裙",
+          "display": "围裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "tail": {
+          "label": "尾饰",
+          "display": "尾饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "skirt-accessory": {
+          "label": "裙侧挂饰",
+          "display": "裙侧挂饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "头饰",
+        "围裙",
+        "尾饰",
+        "裙侧挂饰",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "狡兔迷踪",
+      "isDefault": false
+    }
+  },
+  "labels": {}
+}

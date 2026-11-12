@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Cheyanne",
+  "models": [
+    {
+      "id": "pmx-48650a04a35b40e0",
+      "label": "夏安 / 听风狩影",
+      "model": "models/pmx-48650a04a35b40e0/model.pmx",
+      "profile": "models/pmx-48650a04a35b40e0/profile.json"
+    },
+    {
+      "id": "pmx-47a4f99939c55958",
+      "label": "夏安 / 青涩夜会",
+      "model": "models/pmx-47a4f99939c55958/model.pmx",
+      "profile": "models/pmx-47a4f99939c55958/profile.json"
+    }
+  ]
+}

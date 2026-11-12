@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "mod": "R116Laiya",
+  "models": [
+    {
+      "id": "pmx-abe3eaaaa9d04264",
+      "label": "莱娅 / 理性凝望",
+      "model": "models/pmx-abe3eaaaa9d04264/model.pmx",
+      "profile": "models/pmx-abe3eaaaa9d04264/profile.json"
+    },
+    {
+      "id": "pmx-0af216265749a22d",
+      "label": "莱娅 / 热力运动",
+      "model": "models/pmx-0af216265749a22d/model.pmx",
+      "profile": "models/pmx-0af216265749a22d/profile.json"
+    },
+    {
+      "label": "莱娅 / 热力运动（旧存档）",
+      "model": "models/swimsuit/model.pmx",
+      "profile": "models/swimsuit/profile.json",
+      "id": "pmx-6eb458b3d9c9a094",
+      "hidden": true
+    },
+    {
+      "id": "pmx-1c1dd0698118e114",
+      "label": "莱娅 / 狡兔迷踪",
+      "model": "models/pmx-1c1dd0698118e114/model.pmx",
+      "profile": "models/pmx-1c1dd0698118e114/profile.json"
+    }
+  ]
+}

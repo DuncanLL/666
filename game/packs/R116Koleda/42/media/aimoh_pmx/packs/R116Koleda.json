@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Koleda",
+  "models": [
+    {
+      "id": "pmx-c7270af966e8aaf8",
+      "label": "克莱妲 / 濯浪焦点",
+      "model": "models/pmx-c7270af966e8aaf8/model.pmx",
+      "profile": "models/pmx-c7270af966e8aaf8/profile.json"
+    },
+    {
+      "id": "pmx-90268b4961c97434",
+      "label": "克莱妲 / 旧年雪",
+      "model": "models/pmx-90268b4961c97434/model.pmx",
+      "profile": "models/pmx-90268b4961c97434/profile.json"
+    }
+  ]
+}

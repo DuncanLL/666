@@ -1,0 +1,100 @@
+{
+  "models": {
+    "pmx-412bd037301ebe18": {
+      "character": "阿斯缇亚",
+      "skin": "追寻者",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png",
+      "groups": {},
+      "officialSkin": "追寻者",
+      "partImages": {},
+      "isDefault": true
+    },
+    "pmx-b0dd2e3cfd1ab80c": {
+      "character": "阿斯缇亚",
+      "skin": "冬夜星途",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b0dd2e3cfd1ab80c.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR01.png",
+      "groups": {
+        "head": {
+          "label": "头部配件",
+          "options": [
+            "无附加头饰",
+            "眼镜",
+            "猫耳"
+          ],
+          "display": "头饰"
+        },
+        "top": {
+          "label": "内搭",
+          "options": [
+            "P1 内搭",
+            "P2 内搭",
+            "P3 内搭"
+          ],
+          "display": "上衣"
+        },
+        "legs": {
+          "label": "下装",
+          "options": [
+            "P1 下装",
+            "P2 下装",
+            "P3 下装"
+          ],
+          "display": "下衣"
+        },
+        "footwear": {
+          "label": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ],
+          "display": "鞋子"
+        },
+        "coat": {
+          "label": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "外套"
+        },
+        "scarf": {
+          "label": "围巾",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "围巾"
+        },
+        "backpack": {
+          "label": "背包与背带",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "背包与背带"
+        }
+      },
+      "officialSkin": "冬夜星途",
+      "partImages": {
+        "内搭": {
+          "P1 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Cloth.png",
+          "P2 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Cloth.png",
+          "P3 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Cloth.png"
+        },
+        "下装": {
+          "P1 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Body.png",
+          "P2 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Body.png",
+          "P3 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Body.png"
+        },
+        "头部配件": {
+          "眼镜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Head.png",
+          "猫耳": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Head.png"
+        }
+      },
+      "isDefault": false
+    }
+  },
+  "labels": {}
+}

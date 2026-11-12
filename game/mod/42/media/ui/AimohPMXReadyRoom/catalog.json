@@ -150,468 +150,66 @@
     "pmx-abe3eaaaa9d04264": {
       "character": "莱娅",
       "skin": "理性凝望",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR.png",
-      "groups": {
-        "hat": {
-          "label": "帽子",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "头饰"
-        },
-        "equipment": {
-          "label": "随身装备",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "随身装备"
-        },
-        "stockings": {
-          "label": "袜装",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "袜装"
-        }
-      },
       "officialSkin": "理性凝望",
-      "partImages": {},
-      "isDefault": true
+      "isDefault": true,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
+      "pack": "R116Laiya"
     },
     "pmx-48650a04a35b40e0": {
       "character": "夏安",
       "skin": "听风狩影",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png",
-      "groups": {
-        "hat": {
-          "label": "帽子",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "头饰"
-        },
-        "jacket": {
-          "label": "外套",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "外套"
-        },
-        "equipment": {
-          "label": "背包与装具",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "背包与装具"
-        }
-      },
       "officialSkin": "听风狩影",
-      "partImages": {},
-      "isDefault": true
+      "isDefault": true,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
+      "pack": "R116Cheyanne"
     },
     "pmx-0af216265749a22d": {
       "character": "莱娅",
       "skin": "热力运动",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0af216265749a22d.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR02.png",
-      "groups": {
-        "head": {
-          "label": "头部配件",
-          "options": [
-            "P1 发饰",
-            "P2 耳饰",
-            "P3 耳饰"
-          ],
-          "display": "头饰"
-        },
-        "top": {
-          "label": "上装",
-          "options": [
-            "P1 上装",
-            "P2 上装",
-            "P3 上装"
-          ],
-          "display": "上衣"
-        },
-        "legs": {
-          "label": "腿部款式",
-          "options": [
-            "P1 腿装",
-            "P2 丝袜",
-            "P3 丝袜"
-          ],
-          "display": "下衣"
-        },
-        "footwear": {
-          "label": "鞋子",
-          "options": [
-            "穿鞋",
-            "脱鞋"
-          ],
-          "display": "鞋子"
-        }
-      },
       "officialSkin": "热力运动",
-      "partImages": {
-        "上装": {
-          "P1 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Cloth.png",
-          "P2 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Cloth.png",
-          "P3 上装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Cloth.png"
-        },
-        "腿部款式": {
-          "P1 腿装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P1_Body.png",
-          "P2 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Body.png",
-          "P3 丝袜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Body.png"
-        },
-        "头部配件": {
-          "P2 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P2_Head.png",
-          "P3 耳饰": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png"
-        }
-      },
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0af216265749a22d.png",
+      "pack": "R116Laiya"
     },
     "pmx-412bd037301ebe18": {
       "character": "阿斯缇亚",
       "skin": "追寻者",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR.png",
-      "groups": {},
       "officialSkin": "追寻者",
-      "partImages": {},
-      "isDefault": true
+      "isDefault": true,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
+      "pack": "R116Asteria"
     },
     "pmx-b0dd2e3cfd1ab80c": {
       "character": "阿斯缇亚",
       "skin": "冬夜星途",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b0dd2e3cfd1ab80c.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_AsteriaSSR01.png",
-      "groups": {
-        "head": {
-          "label": "头部配件",
-          "options": [
-            "无附加头饰",
-            "眼镜",
-            "猫耳"
-          ],
-          "display": "头饰"
-        },
-        "top": {
-          "label": "内搭",
-          "options": [
-            "P1 内搭",
-            "P2 内搭",
-            "P3 内搭"
-          ],
-          "display": "上衣"
-        },
-        "legs": {
-          "label": "下装",
-          "options": [
-            "P1 下装",
-            "P2 下装",
-            "P3 下装"
-          ],
-          "display": "下衣"
-        },
-        "footwear": {
-          "label": "鞋子",
-          "options": [
-            "穿鞋",
-            "脱鞋"
-          ],
-          "display": "鞋子"
-        },
-        "coat": {
-          "label": "外套",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "外套"
-        },
-        "scarf": {
-          "label": "围巾",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "围巾"
-        },
-        "backpack": {
-          "label": "背包与背带",
-          "options": [
-            "显示",
-            "隐藏"
-          ],
-          "display": "背包与背带"
-        }
-      },
       "officialSkin": "冬夜星途",
-      "partImages": {
-        "内搭": {
-          "P1 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Cloth.png",
-          "P2 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Cloth.png",
-          "P3 内搭": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Cloth.png"
-        },
-        "下装": {
-          "P1 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P1_Body.png",
-          "P2 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Body.png",
-          "P3 下装": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Body.png"
-        },
-        "头部配件": {
-          "眼镜": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P2_Head.png",
-          "猫耳": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Head.png"
-        }
-      },
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b0dd2e3cfd1ab80c.png",
+      "pack": "R116Asteria"
     },
     "pmx-c7270af966e8aaf8": {
       "character": "克莱妲",
       "skin": "濯浪焦点",
       "officialSkin": "濯浪焦点",
+      "isDefault": false,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-c7270af966e8aaf8.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR01.png",
-      "groups": {
-        "top": {
-          "label": "上衣",
-          "display": "上衣",
-          "options": [
-            "穿外套",
-            "脱外套"
-          ]
-        },
-        "head": {
-          "label": "头饰",
-          "display": "头饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "watch": {
-          "label": "手表",
-          "display": "手表",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "hairband": {
-          "label": "发带",
-          "display": "发带",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "footwear": {
-          "label": "鞋子",
-          "display": "鞋子",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "knife": {
-          "label": "随身刀具",
-          "display": "随身刀具",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "pistol": {
-          "label": "模型自带手枪",
-          "display": "模型自带手枪",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "silencer": {
-          "label": "模型自带消音器",
-          "display": "模型自带消音器",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "partImages": {
-        "上衣": {
-          "穿外套": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_KoledaSSR01_P1_Coat.png"
-        }
-      },
-      "isDefault": false
+      "pack": "R116Koleda"
     },
     "pmx-f5b2807685b18a60": {
       "character": "妮基塔",
       "skin": "无垢契约",
       "officialSkin": "无垢契约",
+      "isDefault": false,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f5b2807685b18a60.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR03.png",
-      "groups": {
-        "head": {
-          "label": "头饰",
-          "display": "头饰",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "top": {
-          "label": "上衣",
-          "display": "上衣",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "legs": {
-          "label": "下衣",
-          "display": "下衣",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "shoes": {
-          "label": "鞋子",
-          "display": "鞋子",
-          "options": [
-            "穿鞋",
-            "赤脚"
-          ]
-        }
-      },
-      "partImages": {
-        "头饰": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Head.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Head.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Head.png"
-        },
-        "上衣": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Cloth.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Cloth.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Cloth.png"
-        },
-        "下衣": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Body.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Body.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Body.png"
-        }
-      },
-      "isDefault": false
+      "pack": "R116Nikketa"
     },
     "pmx-4818f3bdda4ec18d": {
       "character": "芙洛伦",
       "skin": "翠雀媚",
       "officialSkin": "翠雀媚",
+      "isDefault": false,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4818f3bdda4ec18d.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FlorenceSSR02.png",
-      "primaryCategories": [
-        "手部",
-        "上衣",
-        "下衣"
-      ],
-      "groups": {
-        "hands": {
-          "label": "手部",
-          "display": "手部",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "top": {
-          "label": "上衣",
-          "display": "上衣",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "legs": {
-          "label": "下衣",
-          "display": "下衣",
-          "options": [
-            "P1",
-            "P2",
-            "P3"
-          ]
-        },
-        "footwear": {
-          "label": "鞋子",
-          "display": "鞋子",
-          "options": [
-            "穿鞋",
-            "赤脚"
-          ]
-        },
-        "coat": {
-          "label": "外套",
-          "display": "外套",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "head": {
-          "label": "头部配件",
-          "display": "头部配件",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "weapon": {
-          "label": "模型自带武器",
-          "display": "模型自带武器",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        }
-      },
-      "partImages": {
-        "手部": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Hand.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Hand.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Hand.png"
-        },
-        "上衣": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Cloth.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Cloth.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Cloth.png"
-        },
-        "下衣": {
-          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Body.png",
-          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Body.png",
-          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Body.png"
-        }
-      },
-      "isDefault": false
+      "pack": "R116Florence"
     },
     "pmx-020abca186c52e7b": {
       "character": "埃芙",
@@ -712,81 +310,10 @@
     "pmx-47a4f99939c55958": {
       "character": "夏安",
       "skin": "青涩夜会",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-47a4f99939c55958.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR01.png",
-      "groups": {
-        "hat": {
-          "label": "头饰",
-          "display": "头饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "neck": {
-          "label": "颈饰",
-          "display": "颈饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "bracelet": {
-          "label": "手链",
-          "display": "手链",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "glove": {
-          "label": "手套",
-          "display": "手套",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "legband": {
-          "label": "腿饰",
-          "display": "腿饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "radio": {
-          "label": "对讲机",
-          "display": "对讲机",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "footwear": {
-          "label": "鞋袜",
-          "display": "鞋袜",
-          "options": [
-            "穿鞋",
-            "赤脚"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "partImages": {
-        "头饰": {
-          "显示": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_CheyanneSSR01_P1_Head.png"
-        }
-      },
       "officialSkin": "青涩夜会",
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-47a4f99939c55958.png",
+      "pack": "R116Cheyanne"
     },
     "pmx-06925f50fb5cb612": {
       "character": "OTs-14",
@@ -847,51 +374,10 @@
     "pmx-90268b4961c97434": {
       "character": "克莱妲",
       "skin": "旧年雪",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
-      "groups": {
-        "mask": {
-          "label": "口罩",
-          "display": "口罩",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "cape": {
-          "label": "披风",
-          "display": "披风",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "holstered": {
-          "label": "随身枪械",
-          "display": "随身枪械",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "口罩",
-        "披风",
-        "随身枪械",
-        "眼睛"
-      ],
-      "partImages": {},
       "officialSkin": "旧年雪",
-      "isDefault": true
+      "isDefault": true,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
+      "pack": "R116Koleda"
     },
     "pmx-8c817aa0fdd64f7a": {
       "character": "黛烟",
@@ -920,140 +406,26 @@
     "pmx-78cbbc06c7da39dc": {
       "character": "妮基塔",
       "skin": "骄阳般起舞",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-78cbbc06c7da39dc.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR01.png",
-      "groups": {
-        "footwear": {
-          "label": "鞋袜",
-          "display": "鞋袜",
-          "options": [
-            "穿鞋",
-            "脱鞋"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "鞋袜",
-        "眼睛"
-      ],
-      "partImages": {},
       "officialSkin": "骄阳般起舞",
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-78cbbc06c7da39dc.png",
+      "pack": "R116Nikketa"
     },
     "pmx-ea3eb50ef5b32295": {
       "character": "妮基塔",
       "skin": "银湾流转夜",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ea3eb50ef5b32295.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR02.png",
-      "groups": {
-        "hat": {
-          "label": "帽子",
-          "display": "帽子",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "footwear": {
-          "label": "鞋袜",
-          "display": "鞋袜",
-          "options": [
-            "穿鞋",
-            "脱鞋"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "帽子",
-        "鞋袜",
-        "眼睛"
-      ],
-      "partImages": {},
       "officialSkin": "银湾流转夜",
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ea3eb50ef5b32295.png",
+      "pack": "R116Nikketa"
     },
     "pmx-1c1dd0698118e114": {
       "character": "莱娅",
       "skin": "狡兔迷踪",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1c1dd0698118e114.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR03.png",
-      "groups": {
-        "hat": {
-          "label": "头饰",
-          "display": "头饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "apron": {
-          "label": "围裙",
-          "display": "围裙",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "tail": {
-          "label": "尾饰",
-          "display": "尾饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "skirt-accessory": {
-          "label": "裙侧挂饰",
-          "display": "裙侧挂饰",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "footwear": {
-          "label": "鞋袜",
-          "display": "鞋袜",
-          "options": [
-            "穿鞋",
-            "脱鞋"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "头饰",
-        "围裙",
-        "尾饰",
-        "裙侧挂饰",
-        "鞋袜",
-        "眼睛"
-      ],
-      "partImages": {},
       "officialSkin": "狡兔迷踪",
-      "isDefault": false
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1c1dd0698118e114.png",
+      "pack": "R116Laiya"
     },
     "pmx-62b44285b57a48e9": {
       "character": "春田",
@@ -1074,24 +446,10 @@
     "pmx-4cdf23692c8709a0": {
       "character": "妮基塔",
       "skin": "典范制式",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
-      "groups": {
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "眼睛"
-      ],
-      "partImages": {},
       "officialSkin": "典范制式",
-      "isDefault": true
+      "isDefault": true,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
+      "pack": "R116Nikketa"
     },
     "pmx-4019c9450e0e318d": {
       "character": "索米",
@@ -3181,6 +2539,20 @@
   "background": "media/ui/AimohPMXReadyRoom/room.png",
   "portraitRing": "media/ui/AimohPMXReadyRoom/portrait-ring.png",
   "optionalModels": [
+    "pmx-abe3eaaaa9d04264",
+    "pmx-0af216265749a22d",
+    "pmx-1c1dd0698118e114",
+    "pmx-48650a04a35b40e0",
+    "pmx-47a4f99939c55958",
+    "pmx-412bd037301ebe18",
+    "pmx-b0dd2e3cfd1ab80c",
+    "pmx-c7270af966e8aaf8",
+    "pmx-90268b4961c97434",
+    "pmx-f5b2807685b18a60",
+    "pmx-78cbbc06c7da39dc",
+    "pmx-ea3eb50ef5b32295",
+    "pmx-4cdf23692c8709a0",
+    "pmx-4818f3bdda4ec18d",
     "pmx-020abca186c52e7b",
     "pmx-7c5ea1f673f69f12",
     "pmx-225af1a054faefb0",

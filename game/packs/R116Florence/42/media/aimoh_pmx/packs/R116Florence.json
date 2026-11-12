@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Florence",
+  "models": [
+    {
+      "id": "pmx-4818f3bdda4ec18d",
+      "label": "芙洛伦 / 翠雀媚",
+      "model": "models/pmx-4818f3bdda4ec18d/model.pmx",
+      "profile": "models/pmx-4818f3bdda4ec18d/profile.json"
+    }
+  ]
+}

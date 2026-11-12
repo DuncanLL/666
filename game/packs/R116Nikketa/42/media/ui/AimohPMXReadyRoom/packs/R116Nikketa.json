@@ -1,0 +1,160 @@
+{
+  "models": {
+    "pmx-f5b2807685b18a60": {
+      "character": "妮基塔",
+      "skin": "无垢契约",
+      "officialSkin": "无垢契约",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f5b2807685b18a60.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR03.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "shoes": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        }
+      },
+      "partImages": {
+        "头饰": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Head.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Head.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Head.png"
+        },
+        "上衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Cloth.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Cloth.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Cloth.png"
+        },
+        "下衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P1_Body.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P2_Body.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Body.png"
+        }
+      },
+      "isDefault": false
+    },
+    "pmx-78cbbc06c7da39dc": {
+      "character": "妮基塔",
+      "skin": "骄阳般起舞",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-78cbbc06c7da39dc.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR01.png",
+      "groups": {
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "骄阳般起舞",
+      "isDefault": false
+    },
+    "pmx-ea3eb50ef5b32295": {
+      "character": "妮基塔",
+      "skin": "银湾流转夜",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ea3eb50ef5b32295.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR02.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "帽子",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "银湾流转夜",
+      "isDefault": false
+    },
+    "pmx-4cdf23692c8709a0": {
+      "character": "妮基塔",
+      "skin": "典范制式",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "典范制式",
+      "isDefault": true
+    }
+  },
+  "labels": {}
+}

@@ -1,6 +1,6 @@
-name=R116 - 闪电（OTs-14）
+name=R116 - OTs-14
 id=R116OTs14
 require=\AimohPmxPreview
-modversion=0.3.77
+modversion=0.3.78
 versionMin=42.22
 versionMax=42.22

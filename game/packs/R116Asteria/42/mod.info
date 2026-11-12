@@ -1,0 +1,6 @@
+name=R116 - 阿斯缇亚
+id=R116Asteria
+require=\AimohPmxPreview
+modversion=0.3.78
+versionMin=42.22
+versionMax=42.22

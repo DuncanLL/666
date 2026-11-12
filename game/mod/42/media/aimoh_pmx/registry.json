@@ -1,98 +1,6 @@
 {
   "format": 1,
-  "models": [
-    {
-      "id": "pmx-abe3eaaaa9d04264",
-      "label": "莱娅 / 理性凝望",
-      "model": "models/pmx-abe3eaaaa9d04264/model.pmx",
-      "profile": "models/pmx-abe3eaaaa9d04264/profile.json"
-    },
-    {
-      "id": "pmx-48650a04a35b40e0",
-      "label": "夏安 / 听风狩影",
-      "model": "models/pmx-48650a04a35b40e0/model.pmx",
-      "profile": "models/pmx-48650a04a35b40e0/profile.json"
-    },
-    {
-      "id": "pmx-47a4f99939c55958",
-      "label": "夏安 / 青涩夜会",
-      "model": "models/pmx-47a4f99939c55958/model.pmx",
-      "profile": "models/pmx-47a4f99939c55958/profile.json"
-    },
-    {
-      "id": "pmx-0af216265749a22d",
-      "label": "莱娅 / 热力运动",
-      "model": "models/pmx-0af216265749a22d/model.pmx",
-      "profile": "models/pmx-0af216265749a22d/profile.json"
-    },
-    {
-      "id": "pmx-412bd037301ebe18",
-      "label": "阿斯缇亚 / 追寻者",
-      "model": "models/pmx-412bd037301ebe18/model.pmx",
-      "profile": "models/pmx-412bd037301ebe18/profile.json"
-    },
-    {
-      "id": "pmx-b0dd2e3cfd1ab80c",
-      "label": "阿斯缇亚 / 冬夜星途",
-      "model": "models/pmx-b0dd2e3cfd1ab80c/model.pmx",
-      "profile": "models/pmx-b0dd2e3cfd1ab80c/profile.json"
-    },
-    {
-      "label": "莱娅 / 热力运动（旧存档）",
-      "model": "models/swimsuit/model.pmx",
-      "profile": "models/swimsuit/profile.json",
-      "id": "pmx-6eb458b3d9c9a094",
-      "hidden": true
-    },
-    {
-      "id": "pmx-c7270af966e8aaf8",
-      "label": "克莱妲 / 濯浪焦点",
-      "model": "models/pmx-c7270af966e8aaf8/model.pmx",
-      "profile": "models/pmx-c7270af966e8aaf8/profile.json"
-    },
-    {
-      "id": "pmx-f5b2807685b18a60",
-      "label": "妮基塔 / 无垢契约",
-      "model": "models/pmx-f5b2807685b18a60/model.pmx",
-      "profile": "models/pmx-f5b2807685b18a60/profile.json"
-    },
-    {
-      "id": "pmx-4818f3bdda4ec18d",
-      "label": "芙洛伦 / 翠雀媚",
-      "model": "models/pmx-4818f3bdda4ec18d/model.pmx",
-      "profile": "models/pmx-4818f3bdda4ec18d/profile.json"
-    },
-    {
-      "id": "pmx-90268b4961c97434",
-      "label": "克莱妲 / 旧年雪",
-      "model": "models/pmx-90268b4961c97434/model.pmx",
-      "profile": "models/pmx-90268b4961c97434/profile.json"
-    },
-    {
-      "id": "pmx-78cbbc06c7da39dc",
-      "label": "妮基塔 / 骄阳般起舞",
-      "model": "models/pmx-78cbbc06c7da39dc/model.pmx",
-      "profile": "models/pmx-78cbbc06c7da39dc/profile.json"
-    },
-    {
-      "id": "pmx-ea3eb50ef5b32295",
-      "label": "妮基塔 / 银湾流转夜",
-      "model": "models/pmx-ea3eb50ef5b32295/model.pmx",
-      "profile": "models/pmx-ea3eb50ef5b32295/profile.json"
-    },
-    {
-      "id": "pmx-1c1dd0698118e114",
-      "label": "莱娅 / 狡兔迷踪",
-      "model": "models/pmx-1c1dd0698118e114/model.pmx",
-      "profile": "models/pmx-1c1dd0698118e114/profile.json"
-    },
-    {
-      "id": "pmx-4cdf23692c8709a0",
-      "label": "妮基塔 / 典范制式",
-      "model": "models/pmx-4cdf23692c8709a0/model.pmx",
-      "profile": "models/pmx-4cdf23692c8709a0/profile.json"
-    }
-  ],
+  "models": [],
   "packs": {
     "R116Alva": [
       "pmx-020abca186c52e7b",
@@ -136,6 +44,33 @@
     "R116Cecilia": [
       "pmx-fee7d92be40f96dd",
       "pmx-9db646f49c805a1b"
+    ],
+    "R116Laiya": [
+      "pmx-abe3eaaaa9d04264",
+      "pmx-0af216265749a22d",
+      "pmx-6eb458b3d9c9a094",
+      "pmx-1c1dd0698118e114"
+    ],
+    "R116Cheyanne": [
+      "pmx-48650a04a35b40e0",
+      "pmx-47a4f99939c55958"
+    ],
+    "R116Asteria": [
+      "pmx-412bd037301ebe18",
+      "pmx-b0dd2e3cfd1ab80c"
+    ],
+    "R116Koleda": [
+      "pmx-c7270af966e8aaf8",
+      "pmx-90268b4961c97434"
+    ],
+    "R116Nikketa": [
+      "pmx-f5b2807685b18a60",
+      "pmx-78cbbc06c7da39dc",
+      "pmx-ea3eb50ef5b32295",
+      "pmx-4cdf23692c8709a0"
+    ],
+    "R116Florence": [
+      "pmx-4818f3bdda4ec18d"
     ]
   }
 }

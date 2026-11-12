@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Asteria",
+  "models": [
+    {
+      "id": "pmx-412bd037301ebe18",
+      "label": "阿斯缇亚 / 追寻者",
+      "model": "models/pmx-412bd037301ebe18/model.pmx",
+      "profile": "models/pmx-412bd037301ebe18/profile.json"
+    },
+    {
+      "id": "pmx-b0dd2e3cfd1ab80c",
+      "label": "阿斯缇亚 / 冬夜星途",
+      "model": "models/pmx-b0dd2e3cfd1ab80c/model.pmx",
+      "profile": "models/pmx-b0dd2e3cfd1ab80c/profile.json"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "models": {
+    "pmx-48650a04a35b40e0": {
+      "character": "夏安",
+      "skin": "听风狩影",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "头饰"
+        },
+        "jacket": {
+          "label": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "外套"
+        },
+        "equipment": {
+          "label": "背包与装具",
+          "options": [
+            "显示",
+            "隐藏"
+          ],
+          "display": "背包与装具"
+        }
+      },
+      "officialSkin": "听风狩影",
+      "partImages": {},
+      "isDefault": true
+    },
+    "pmx-47a4f99939c55958": {
+      "character": "夏安",
+      "skin": "青涩夜会",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-47a4f99939c55958.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CheyanneSSR01.png",
+      "groups": {
+        "hat": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "neck": {
+          "label": "颈饰",
+          "display": "颈饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "bracelet": {
+          "label": "手链",
+          "display": "手链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glove": {
+          "label": "手套",
+          "display": "手套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "legband": {
+          "label": "腿饰",
+          "display": "腿饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "radio": {
+          "label": "对讲机",
+          "display": "对讲机",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {
+        "头饰": {
+          "显示": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_CheyanneSSR01_P1_Head.png"
+        }
+      },
+      "officialSkin": "青涩夜会",
+      "isDefault": false
+    }
+  },
+  "labels": {}
+}

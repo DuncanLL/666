@@ -1,0 +1,141 @@
+{
+  "models": {
+    "pmx-c7270af966e8aaf8": {
+      "character": "克莱妲",
+      "skin": "濯浪焦点",
+      "officialSkin": "濯浪焦点",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-c7270af966e8aaf8.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR01.png",
+      "groups": {
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "穿外套",
+            "脱外套"
+          ]
+        },
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "watch": {
+          "label": "手表",
+          "display": "手表",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hairband": {
+          "label": "发带",
+          "display": "发带",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "knife": {
+          "label": "随身刀具",
+          "display": "随身刀具",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带消音器",
+          "display": "模型自带消音器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {
+        "上衣": {
+          "穿外套": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_KoledaSSR01_P1_Coat.png"
+        }
+      },
+      "isDefault": false
+    },
+    "pmx-90268b4961c97434": {
+      "character": "克莱妲",
+      "skin": "旧年雪",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
+      "groups": {
+        "mask": {
+          "label": "口罩",
+          "display": "口罩",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "holstered": {
+          "label": "随身枪械",
+          "display": "随身枪械",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "口罩",
+        "披风",
+        "随身枪械",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "旧年雪",
+      "isDefault": true
+    }
+  },
+  "labels": {}
+}

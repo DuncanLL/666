@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "mod": "R116Nikketa",
+  "models": [
+    {
+      "id": "pmx-f5b2807685b18a60",
+      "label": "妮基塔 / 无垢契约",
+      "model": "models/pmx-f5b2807685b18a60/model.pmx",
+      "profile": "models/pmx-f5b2807685b18a60/profile.json"
+    },
+    {
+      "id": "pmx-78cbbc06c7da39dc",
+      "label": "妮基塔 / 骄阳般起舞",
+      "model": "models/pmx-78cbbc06c7da39dc/model.pmx",
+      "profile": "models/pmx-78cbbc06c7da39dc/profile.json"
+    },
+    {
+      "id": "pmx-ea3eb50ef5b32295",
+      "label": "妮基塔 / 银湾流转夜",
+      "model": "models/pmx-ea3eb50ef5b32295/model.pmx",
+      "profile": "models/pmx-ea3eb50ef5b32295/profile.json"
+    },
+    {
+      "id": "pmx-4cdf23692c8709a0",
+      "label": "妮基塔 / 典范制式",
+      "model": "models/pmx-4cdf23692c8709a0/model.pmx",
+      "profile": "models/pmx-4cdf23692c8709a0/profile.json"
+    }
+  ]
+}

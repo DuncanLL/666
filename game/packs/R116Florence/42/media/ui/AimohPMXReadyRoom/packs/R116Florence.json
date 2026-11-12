@@ -1,0 +1,96 @@
+{
+  "models": {
+    "pmx-4818f3bdda4ec18d": {
+      "character": "芙洛伦",
+      "skin": "翠雀媚",
+      "officialSkin": "翠雀媚",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4818f3bdda4ec18d.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FlorenceSSR02.png",
+      "primaryCategories": [
+        "手部",
+        "上衣",
+        "下衣"
+      ],
+      "groups": {
+        "hands": {
+          "label": "手部",
+          "display": "手部",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "赤脚"
+          ]
+        },
+        "coat": {
+          "label": "外套",
+          "display": "外套",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "head": {
+          "label": "头部配件",
+          "display": "头部配件",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "weapon": {
+          "label": "模型自带武器",
+          "display": "模型自带武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "partImages": {
+        "手部": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Hand.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Hand.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Hand.png"
+        },
+        "上衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Cloth.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Cloth.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Cloth.png"
+        },
+        "下衣": {
+          "P1": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P1_Body.png",
+          "P2": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P2_Body.png",
+          "P3": "media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Body.png"
+        }
+      },
+      "isDefault": false
+    }
+  },
+  "labels": {}
+}
