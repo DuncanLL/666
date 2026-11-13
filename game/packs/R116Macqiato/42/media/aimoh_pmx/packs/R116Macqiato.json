@@ -7,6 +7,12 @@
       "label": "玛绮朵 / 舞会休止符",
       "model": "models/pmx-e524539529b6d56a/model.pmx",
       "profile": "models/pmx-e524539529b6d56a/profile.json"
+    },
+    {
+      "id": "pmx-5efe7392a2315a89",
+      "label": "玛绮朵 / 汤风休日",
+      "model": "models/pmx-5efe7392a2315a89/model.pmx",
+      "profile": "models/pmx-5efe7392a2315a89/profile.json"
     }
   ]
 }

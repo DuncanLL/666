@@ -515,7 +515,8 @@
     },
     "pmx-81a5c871affb4465": {
       "character": "翡图萨",
-      "skin": "皮肤",
+      "skin": "永夜花园的囚徒",
+      "officialSkin": "永夜花园的囚徒",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-81a5c871affb4465.png",
       "isDefault": false,
       "pack": "R116Phaetusa"
@@ -594,6 +595,14 @@
       "character": "玛绮朵",
       "skin": "舞会休止符",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e524539529b6d56a.png",
+      "isDefault": false,
+      "pack": "R116Macqiato"
+    },
+    "pmx-5efe7392a2315a89": {
+      "character": "玛绮朵",
+      "skin": "汤风休日",
+      "officialSkin": "汤风休日",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-5efe7392a2315a89.png",
       "isDefault": false,
       "pack": "R116Macqiato"
     }
@@ -2734,7 +2743,8 @@
     "pmx-cc787cf2d032366b",
     "pmx-23b0b754d23c6fb7",
     "pmx-b6889756cf6c0d5e",
-    "pmx-e524539529b6d56a"
+    "pmx-e524539529b6d56a",
+    "pmx-5efe7392a2315a89"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [

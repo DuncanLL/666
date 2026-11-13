@@ -1,9 +1,136 @@
 {
-  "pmx_sha256": "81a5c871affb44654c6f049f5e1c61b9366e6e266717e1b963a66f4855b449c2",
-  "label": "翡图萨 / 皮肤",
+  "pmx_sha256": "fe8e6fed45ceda3c3456bb7a988e93936ae5cf4cb0b2d456acd03b1e56965ed6",
+  "label": "翡图萨 / 永夜花园的囚徒",
   "controls": {
     "format": 1,
     "groups": [
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "p3",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              65,
+              66,
+              67,
+              70
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              47
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              59
+            ]
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "上衣",
+        "default": "p3",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              23,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              48,
+              49,
+              51,
+              52,
+              53,
+              54,
+              55
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              60,
+              61,
+              62,
+              63,
+              64
+            ]
+          }
+        ]
+      },
+      {
+        "id": "legs",
+        "label": "下衣",
+        "default": "p3",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              35
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              43,
+              44,
+              45,
+              50
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              56,
+              57
+            ]
+          }
+        ]
+      },
+      {
+        "id": "footwear",
+        "label": "鞋子",
+        "default": "shoes",
+        "options": [
+          {
+            "id": "shoes",
+            "label": "穿鞋",
+            "materials": [
+              68,
+              69
+            ]
+          },
+          {
+            "id": "bare",
+            "label": "脱鞋",
+            "materials": []
+          }
+        ]
+      },
       {
         "id": "eyes",
         "label": "眼睛",
@@ -26,7 +153,35 @@
         ]
       }
     ],
-    "rules": []
+    "rules": [
+      {
+        "when": {
+          "legs": "p1",
+          "footwear": "bare"
+        },
+        "materials": [
+          36
+        ]
+      },
+      {
+        "when": {
+          "legs": "p2",
+          "footwear": "bare"
+        },
+        "materials": [
+          46
+        ]
+      },
+      {
+        "when": {
+          "legs": "p3",
+          "footwear": "bare"
+        },
+        "materials": [
+          58
+        ]
+      }
+    ]
   },
   "appearance": {
     "format": 2,
@@ -77,9 +232,57 @@
       null,
       null,
       null,
+      null,
+      null,
+      null,
+      "Textures/c_PhaetusaSSR0101_slg_P2_cloth2_da.png",
+      null,
+      null,
+      null,
+      "Textures/c_PhaetusaSSR0101_slg_clothBaoshi_d.png",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
       null
     ],
     "alpha_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
       null,
       null,
       null,
@@ -175,6 +378,30 @@
       null,
       null,
       null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
       null
     ],
     "double_sided": [
@@ -224,9 +451,57 @@
       null,
       null,
       null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
       null
     ],
     "material_visibility": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
       true,
       true,
       true,
@@ -367,6 +642,10 @@
     ],
     "groups": [],
     "choices": {
+      "head": "p3",
+      "top": "p3",
+      "legs": "p3",
+      "footwear": "shoes",
       "eyes": "open"
     }
   }

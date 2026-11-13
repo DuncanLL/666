@@ -23,11 +23,47 @@
     },
     "pmx-81a5c871affb4465": {
       "character": "翡图萨",
-      "skin": "皮肤",
+      "skin": "永夜花园的囚徒",
+      "officialSkin": "永夜花园的囚徒",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-81a5c871affb4465.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_PhaetusaSSR01.png",
       "isDefault": false,
       "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
         "eyes": {
           "label": "眼睛",
           "display": "眼睛",
@@ -38,6 +74,10 @@
         }
       },
       "primaryCategories": [
+        "头饰",
+        "上衣",
+        "下衣",
+        "鞋子",
         "眼睛"
       ],
       "partImages": {}

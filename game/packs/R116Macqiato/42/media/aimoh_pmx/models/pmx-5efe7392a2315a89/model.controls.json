@@ -1,0 +1,420 @@
+{
+  "pmx_sha256": "5efe7392a2315a89a812abf205ed7dfebe96eae9181712f8bb1bce746b22aa39",
+  "label": "玛绮朵 / 汤风休日",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              21
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              27
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              31,
+              32
+            ]
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "浴巾",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              22
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              28
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              33
+            ]
+          }
+        ]
+      },
+      {
+        "id": "legs",
+        "label": "下衣",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              13,
+              23,
+              24
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              25,
+              26
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              29,
+              30
+            ]
+          }
+        ]
+      },
+      {
+        "id": "footwear",
+        "label": "鞋子",
+        "default": "shoes",
+        "options": [
+          {
+            "id": "shoes",
+            "label": "穿鞋",
+            "materials": [
+              15
+            ]
+          },
+          {
+            "id": "bare",
+            "label": "脱鞋",
+            "materials": []
+          }
+        ]
+      },
+      {
+        "id": "eyes",
+        "label": "眼睛",
+        "default": "open",
+        "options": [
+          {
+            "id": "open",
+            "label": "睁眼",
+            "morphs": {
+              "18": 0
+            }
+          },
+          {
+            "id": "closed",
+            "label": "闭眼",
+            "morphs": {
+              "18": 1
+            }
+          }
+        ]
+      }
+    ],
+    "rules": []
+  },
+  "appearance": {
+    "format": 2,
+    "texture_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "alpha_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "colour_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "double_sided": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "material_visibility": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "morph_weights": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "groups": [],
+    "choices": {
+      "head": "p2",
+      "top": "p2",
+      "legs": "p2",
+      "footwear": "shoes",
+      "eyes": "open"
+    }
+  }
+}
