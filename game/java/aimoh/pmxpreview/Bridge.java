@@ -3,7 +3,6 @@ package aimoh.pmxpreview;
 import aimoh.motion.PmxDrawMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import zombie.characters.IsoPlayer;
 import viewpoint.core.Frame;
 import viewpoint.render.ModelDraws;
 import viewpoint.render.SceneData;
@@ -26,13 +25,13 @@ public final class Bridge {
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
             boolean idle=IdleHandPose.eligible(actor,holding);
             var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
-            boolean calibrating=!slot.inVehicle&&actor instanceof IsoPlayer player&&player.isLocalPlayer()&&actor.getPrimaryHandItem()!=null;
+            int calibrationSide=slot.inVehicle?-1:GripCalibration.heldSide(actor);
             int body=-1, gun=-1;
             for(int n=first;n<originalEnd;n++){
                 ModelInstance instance=DrawAccess.instance(draws,n);
                 DrawAccess.Gear gear=equipment.get(instance);
                 if(body<0&&gear==null)body=n;
-                if(calibrating&&gear!=null&&gear.side==1&&instance.model!=null&&instance.model.isStatic
+                if(calibrationSide>=0&&gear!=null&&gear.side==calibrationSide&&instance.model!=null&&instance.model.isStatic
                     &&(gun<0||instance==gear.root))gun=n;
             }
             Matrix4f sourcePlacement=body<0?null:DrawAccess.matrix(draws,body);

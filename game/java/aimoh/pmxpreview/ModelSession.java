@@ -252,7 +252,7 @@ final class ModelSession {
     long textureUploads(){return (plainTextures==null?0:plainTextures.uploads)+(viewpointModel==null?0:viewpointModel.textureUploads());}
     synchronized boolean retargetsAttachment(int side){return !preserveAimWeapon||side!=1;}
     synchronized Matrix4f attachment(ModelInstance root,int side,String key,Matrix4f actual,AnimationPlayer player) {
-        if(side==1&&gripAdjustment!=null){
+        if(gripAdjustment!=null&&side==gripAdjustment.heldSide()){
             Matrix4f locked=gripAdjustment.placement(actual);
             if(locked!=null)return locked;
         }

@@ -3,6 +3,7 @@ if not isServer() then return end
 local protocol = require "GFL2MultiplayerProtocol"
 local catalog = require "GFL2MultiplayerCatalog"
 local economy = require "AimohPMXRoomEconomy"
+local weapons = require "GFL2SignatureWeapon"
 local online = {}
 local revision = 0
 local modDataKey = "GFL2ExiliumMultiplayerV1"
@@ -69,6 +70,12 @@ local function transact(player, command, args)
         return economy.buy(player, args.target, args.count) and "ok" or "short"
     end
 
+    if command == "DrawWeapon" or command == "ClaimWeapon" then
+        local weapon = weapons.byId[args.target]
+        if not weapon or not getActivatedMods():contains(weapon.mod) then return "unavailable" end
+        if command == "ClaimWeapon" then return economy.claimWeapon(player,weapon) end
+        return economy.drawWeapon(player,weapon,args.count)
+    end
     local model = type(args.target) == "string" and openModel(args.target)
     if not model then return "unavailable" end
     if command == "Wear" then return canWear(player, args.target) and "ok" or "unavailable" end
@@ -130,7 +137,7 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             and previous.signature == state.signature and previous.appearance == state.appearance then return end
         row.appearance = state.model ~= "" and state or nil
         publish(player, state)
-    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" then
+    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" then
         process(player, row, command, args)
     end
 end)

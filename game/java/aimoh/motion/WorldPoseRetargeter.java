@@ -247,6 +247,7 @@ public final class WorldPoseRetargeter {
         private final float[] offsets;
         private final float[] wristAngles;
         final String itemKey;
+        private final int heldSide;
         float[] itemTuning;
         private Matrix4f correction;
 
@@ -255,20 +256,27 @@ public final class WorldPoseRetargeter {
         }
 
         public GripAdjustment(Matrix4f weapon,float[] offsets,float[] wristAngles,String itemKey) {
+            this(weapon,offsets,wristAngles,itemKey,1);
+        }
+
+        public GripAdjustment(Matrix4f weapon,float[] offsets,float[] wristAngles,String itemKey,int heldSide) {
             if(offsets.length!=6||wristAngles.length!=6||!weapon.isFinite()||Math.abs(weapon.determinant())<1e-8f)
                 throw new IllegalArgumentException("Invalid grip calibration input");
             this.weapon=new Matrix4f(weapon);
             this.offsets=offsets.clone();
             this.wristAngles=wristAngles.clone();
             this.itemKey=itemKey;
+            this.heldSide=heldSide;
             for(float value:offsets)if(!Float.isFinite(value)||Math.abs(value)>.12f)
                 throw new IllegalArgumentException("Invalid grip offset");
             for(float value:wristAngles)if(!Float.isFinite(value)||Math.abs(value)>(float)(Math.PI/2))
                 throw new IllegalArgumentException("Invalid wrist angle");
         }
 
+        public int heldSide() { return heldSide; }
+
         public GripAdjustment wristsOnly() {
-            for(float angle:wristAngles)if(angle!=0)return new GripAdjustment(weapon,new float[6],wristAngles,itemKey);
+            for(float angle:wristAngles)if(angle!=0)return new GripAdjustment(weapon,new float[6],wristAngles,itemKey,heldSide);
             return null;
         }
 
@@ -359,7 +367,7 @@ public final class WorldPoseRetargeter {
             GripAdjustment adjustment,Vector3f[] wanted,int[] status) {
         // Freeze the normal gun placement before changing either hand.
         api.EvaluateSkeleton(handle);evaluations++;
-        Matrix4f weapon=new Matrix4f().set(remapHeldItem(sourceWorld,palmSourceHands[1],palmTargetHands[1],
+        Matrix4f weapon=new Matrix4f().set(remapHeldItem(sourceWorld,palmSourceHands[adjustment.heldSide],palmTargetHands[adjustment.heldSide],
             adjustment.weapon.get(new float[16])));
         adjustment.correction=new Matrix4f(weapon).mul(new Matrix4f(adjustment.weapon).invert());
         if(adjustment.itemTuning!=null)weapon.mul(new Matrix4f().set(adjustment.itemTuning));

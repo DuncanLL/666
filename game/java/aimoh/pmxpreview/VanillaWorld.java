@@ -70,8 +70,10 @@ public final class VanillaWorld {
             if(data.modelInstance==actor.secondaryHandModel)secondaryData=data;
         }
         Matrix4f inverseBody=bodyData==null?null:new Matrix4f(bodyData.xfrm).transpose().invert();
-        Matrix4f weapon=primaryData==null||!primaryData.model.isStatic||inverseBody==null?null:
-            new Matrix4f(inverseBody).mul(new Matrix4f(primaryData.xfrm).transpose());
+        int calibrationSide=GripCalibration.heldSide(actor);
+        var heldData=calibrationSide==1?primaryData:calibrationSide==0?secondaryData:null;
+        Matrix4f weapon=heldData==null||!heldData.model.isStatic||inverseBody==null?null:
+            new Matrix4f(inverseBody).mul(new Matrix4f(heldData.xfrm).transpose());
         long frame=IsoCamera.frameState.frameCount,nanos=System.nanoTime();
         boolean idle=IdleHandPose.eligible(actor,holding);
         try {

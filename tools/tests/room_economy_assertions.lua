@@ -50,4 +50,58 @@ assert(E.drawCharacter(player,"Other",10,high)=="miss")
 status,results=E.drawCharacter(player,"Other",10,high)
 assert(status=="unlocked" and #results==3)
 assert(E.characterMisses(player)==0 and E.balance(player,"targeted")==0)
-return "PASS one-time reset, retained purchases, all price tiers and balances, independent outfit pity and shared character pity"
+local globalData={}
+ModData={getOrCreate=function(key)
+    globalData[key]=globalData[key] or {}
+    return globalData[key]
+end}
+function player:getPlayerNum() return 0 end
+
+local blade={id="GFL2.CauseAndEffect",character="Phaetusa"}
+local rifle={id="GFL2.TestRifle",character="Other"}
+wallet.recruitment.owned.Phaetusa=true
+wallet.recruitment.misses=37
+wallet.targeted=12
+wallet.signatureWeapon={misses=59,featured=true,acquired=true,claimed=true}
+assert(E.weaponMisses(player)==59)
+local other={id="GFL2.OtherBlade",character="Phaetusa"}
+status,results=E.drawWeapon(player,other,10,high)
+assert(status=="miss" and #results==10 and E.weaponMisses(player)==69)
+status,results=E.drawWeapon(player,rifle,10,function() error("The 70th pull must not roll") end)
+assert(status=="unlocked" and #results==1 and E.weaponMisses(player)==0)
+assert(wallet.targeted==1 and E.characterMisses(player)==37)
+assert(E.weaponProgress(player,rifle.id).acquired and E.weaponProgress(player,blade.id).claimed)
+local carried={}
+local added=0
+local inventory={}
+function inventory:containsTypeRecurse(id) return carried[id]==true end
+function inventory:AddItem(id)
+    added=added+1
+    carried[id]=true
+    return {}
+end
+function player:getInventory() return inventory end
+assert(E.claimWeapon(player,rifle)=="ok" and added==1)
+assert(E.claimWeapon(player,rifle)=="alreadyCarried" and added==1)
+carried[rifle.id]=nil
+assert(E.claimWeapon(player,rifle)=="ok" and added==2)
+local respawn={data={}}
+function respawn:getPlayerNum() return 0 end
+function respawn:getModData() return self.data end
+local replacement
+function respawn:getInventory()
+    return {containsTypeRecurse=function(_,id)return replacement==id end,
+            AddItem=function(_,id)replacement=id;return {} end}
+end
+assert(E.weaponProgress(respawn,blade.id).acquired and not E.characterUnlocked(respawn,"Phaetusa"))
+assert(E.claimWeapon(respawn,blade)=="ok" and replacement==blade.id)
+assert(E.claimWeapon(respawn,blade)=="alreadyCarried")
+assert(E.claimWeapon(respawn,other)=="unavailable")
+assert(E.balance(respawn,"targeted")==0 and wallet.targeted==1)
+assert(E.grantTestCredits(player) and E.balance(player,"credits")==50000)
+local previousClient=isClient
+isClient=function() return true end
+assert(not E.grantTestCredits(player) and wallet.credits==50000)
+isClient=previousClient
+
+return "PASS wallet, shared character and weapon pity, outfit pity, legacy unlock migration, loss and death recovery, and single-player credits"

@@ -25,13 +25,51 @@ import zombie.characters.IsoGameCharacter;
 import zombie.characters.IsoPlayer;
 import zombie.core.Core;
 import zombie.core.SpriteRenderer;
+import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.textures.Texture;
 import zombie.core.textures.TextureDraw;
 
 /** Displays world snapshots and isolated, single-pose outfit previews. */
 public class ReadyRoomPreview {
     private static final Object motionPathsLock=new Object();
-    private record BrowsePreview(String id,ModelSession session) {}
+    private static final class BrowsePreview {
+        final String id;
+        final ModelSession session;
+        ModelSession appearanceSource;
+        long appearanceRevision=Long.MIN_VALUE;
+        long poseFrame;
+
+        BrowsePreview(String id,ModelSession session) {
+            this.id=id;
+            this.session=session;
+        }
+
+        void update(ModelSession equipped, AnimationPlayer worldPlayer) {
+            long revision=equipped==null?0:equipped.model.appearance().revision();
+            if(poseFrame!=0&&equipped==appearanceSource&&revision==appearanceRevision)return;
+            if(equipped!=null) {
+                var appearance=new JSONObject(equipped.model.appearance().stateJson());
+                session.applySettings(new JSONObject().put("appearance",appearance)
+                    .put("appearance_controls",equipped.profile.optJSONObject("appearance_controls")),false);
+                session.model.appearance().loadExpression(equipped.model.appearance().expressionSnapshot());
+            }
+            // Sample the game's standing idle on a separate player. The live tracks can be
+            // holding a weapon, crouching, or still blending during the first render.
+            var idle=AnimationPlayer.alloc(worldPlayer.getModel());
+            try {
+                var track=idle.play("Bob_Idle",true);
+                if(track==null)return;
+                track.setBlendWeight(1);
+                track.setCurrentTimeValue(track.getDuration()*.25f);
+                idle.Update(0);
+                session.update(poseFrame++,System.nanoTime(),idle,false,0,0,0,false,true,false,null,false);
+            } finally {
+                idle.release();
+            }
+            appearanceSource=equipped;
+            appearanceRevision=revision;
+        }
+    }
     private static final IdentityHashMap<IsoGameCharacter,BrowsePreview> browsePreviews=new IdentityHashMap<>();
     private static final String SAMPLE_PREFIX="sample:";
     private static Path library() {
@@ -138,17 +176,21 @@ public class ReadyRoomPreview {
         return !actor.isDead()&&actor.getVehicle()==null&&!actor.isPlayerMoving()&&!actor.isAiming()&&!actor.isAttackStarted();
     }
     public static String gripFamily(IsoGameCharacter actor) {
-        return Main.isReady(actor)?GripCalibration.family(actor):"";
+        return Main.isReady(actor)?GripCalibration.itemKey(actor):"";
     }
-    public static KahluaTable gripValues(IsoGameCharacter actor,String family) {
+    public static String gripItemName(IsoGameCharacter actor) {
+        var item=GripCalibration.heldItem(actor);
+        return item==null?"":item.getDisplayName();
+    }
+    public static KahluaTable gripValues(IsoGameCharacter actor,String key) {
         ModelSession session=Main.session(actor);
-        if(session==null||family==null||family.isEmpty()||!family.equals(gripFamily(actor)))
+        if(session==null||key==null||key.isEmpty()||!key.equals(gripFamily(actor)))
             return J2SEPlatform.getInstance().newTable();
-        return GripCalibration.sliders(actor,session.entry.id(),family);
+        return GripCalibration.sliders(actor,session.entry.id(),key);
     }
-    public static boolean gripSet(IsoGameCharacter actor,String family,int axis,double value) {
+    public static boolean gripSet(IsoGameCharacter actor,String key,int axis,double value) {
         ModelSession session=Main.session(actor);
-        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),family,axis,value);
+        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),key,axis,value);
     }
     private static ModelSession expressionSession(IsoGameCharacter actor, String id) {
         if (!(actor instanceof IsoPlayer player) || !player.isLocalPlayer() || !Main.isReady(actor)) return null;
@@ -273,29 +315,39 @@ public class ReadyRoomPreview {
         return drawBrowseCamera(actor,id,x,y,width,height,yaw,zoom,0,0,false);
     }
     public static synchronized boolean drawBrowseCamera(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
+        return drawBrowse(actor,id,x,y,width,height,yaw,zoom,pan,focus,locked,false);
+    }
+
+    public static synchronized boolean drawOverviewCamera(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
+        return drawBrowse(actor,id,x,y,width,height,yaw,zoom,pan,focus,locked,true);
+    }
+
+    private static boolean drawBrowse(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,boolean overview) {
         ModelSession equipped=Main.session(actor);
-        if(equipped!=null&&equipped.entry.id().equals(id)) {
-            release(actor);
-            return drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked);
-        }
+        if(equipped!=null&&!equipped.entry.id().equals(id))equipped=null;
+        if(equipped!=null&&!overview)return drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked);
+
+        var worldPlayer=actor.getAnimationPlayer();
+        if(worldPlayer==null||!worldPlayer.isReady())return false;
         BrowsePreview preview=browsePreviews.get(actor);
-        if(preview==null||!preview.id().equals(id)) {
+        if(preview==null||!preview.id.equals(id)||preview.appearanceSource!=null&&equipped==null) {
             release(actor);
-            var player=actor.getAnimationPlayer();
-            if(player==null||player.getSkinningData()==null)return false;
-            ModelSession next=null;
             try {
-                next=Main.createRoomPreview(id);
-                next.update(0,System.nanoTime(),player,false,0,0,0,false,true,false,null,false);
-                preview=new BrowsePreview(id,next);
+                preview=new BrowsePreview(id,Main.createRoomPreview(id));
             }catch(Exception | LinkageError failure){
-                if(next!=null)next.retire();
                 System.err.println("[AimohPMXReadyRoom] Browse preview unavailable: "+failure);
                 preview=new BrowsePreview(id,null);
             }
             browsePreviews.put(actor,preview);
         }
-        return drawSession(preview.session(),x,y,width,height,yaw,zoom,pan,focus,locked);
+        if(preview.session==null||preview.session.failed)return false;
+        try {
+            preview.update(equipped,worldPlayer);
+        }catch(Exception | LinkageError failure){
+            preview.session.fail(failure);
+            return false;
+        }
+        return drawSession(preview.session,x,y,width,height,yaw,zoom,pan,focus,locked);
     }
     private static boolean drawSession(ModelSession session,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
         if(session==null||!session.ready||session.retired||session.failed||width<16||height<16)return false;
@@ -308,7 +360,7 @@ public class ReadyRoomPreview {
     }
     public static synchronized void release(IsoGameCharacter actor) {
         BrowsePreview preview=browsePreviews.remove(actor);
-        if(preview!=null&&preview.session()!=null)preview.session().retire();
+        if(preview!=null&&preview.session!=null)preview.session.retire();
     }
     private record PreviewProgram(int id,int vp,int turn,int image,int locked) {
         // LWJGL keeps these capabilities with their GL context. The context owns the program.

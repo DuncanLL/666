@@ -25,7 +25,7 @@ try:
  for p in media.rglob('*.lua'):
   compiler.loadstring(p.read_text('utf-8-sig'),p.name,env)
  print('PASS Lua compilation',len(list(media.rglob('*.lua'))))
- for name in ('AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog'):
+ for name in ('AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog','GFL2SignatureWeapon'):
   env.rawset(name,run((media/'shared'/f'{name}.lua').read_text('utf8'),name))
  run('function require(name) return _G[name] end','require')
  env.rawset('Economy',env.rawget('AimohPMXRoomEconomy'))

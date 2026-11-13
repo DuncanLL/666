@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2ChernobogShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-1.wav,
+            volume = 0.65,
+            distanceMax = 35,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-2.wav,
+            volume = 0.65,
+            distanceMax = 35,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-3.wav,
+            volume = 0.65,
+            distanceMax = 35,
+        }
+    }
+}

@@ -18,5 +18,20 @@
     "ContextMenu_AimohPMX_Saved": "Changes saved",
     "ContextMenu_AimohPMX_OriginalActive": "Original character active",
     "ContextMenu_AimohPMX_InactivePart": "(inactive in this outfit)",
-    "ContextMenu_AimohPMX_ChoosePreset": "Choose material preset"
+    "ContextMenu_AimohPMX_ChoosePreset": "Choose material preset",
+    "ContextMenu_GFL2_GripEquipItem": "Hold the item you want to calibrate",
+    "ContextMenu_GFL2_WeaponPool": "Signature Weapon",
+    "ContextMenu_GFL2_CauseAndEffect": "Cause and Effect",
+    "ContextMenu_GFL2_Chernobog": "Chernobog",
+    "ContextMenu_GFL2_ChernobogDescription": "Koleda's elite assault rifle with a fixed suppressor.",
+    "ContextMenu_GFL2_AlvaAN94": "AN-94",
+    "ContextMenu_GFL2_AlvaAN94Description": "Alva’s elite assault rifle, modified for greater effective range and stopping power.",
+    "ContextMenu_GFL2_WeaponDescription": "Phaetusa's elite blade.",
+    "ContextMenu_GFL2_PityCounter": " pulls until a guaranteed elite",
+    "ContextMenu_GFL2_ClaimWeapon": "Claim Weapon",
+    "ContextMenu_GFL2_WeaponCarried": "Weapon in your inventory",
+    "ContextMenu_GFL2_ReclaimWeapon": "Reclaim weapon",
+    "ContextMenu_GFL2_WeaponClaimed": "Weapon claimed",
+    "ContextMenu_GFL2_TestCredits": "Received 50,000 credits",
+    "ContextMenu_GFL2_WeaponClaimFailed": "Claim failed. Check your inventory and character pack."
 }

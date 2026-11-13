@@ -3,9 +3,11 @@ require "ISUI/ISScrollingListBox"
 require "ISUI/ISComboBox"
 require "ISUI/ISButton"
 require "ISUI/ISTextBox"
+require "Vehicles/ISUI/ISUI3DScene"
 require "RadioCom/ISUIRadio/ISSliderPanel"
 local loadData=require "AimohPMXRoomData"
 local economy=require "AimohPMXRoomEconomy"
+local signatureWeapons=require "GFL2SignatureWeapon"
 local multiplayer=require "GFL2MultiplayerClient"
 local data
 local textures={}
@@ -321,7 +323,8 @@ function W:createChildren()
         local locked=w.roomPage=="appearance" and character and character.unlockRequired==true
         if w.roomPage=="appearance" then
             if w.browsed and now>=w.previewAt then
-                ok=AimohPMXReadyRoom.drawBrowseCamera(w.player,w.browsed.id,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
+                local draw=w.tab=="overview" and AimohPMXReadyRoom.drawOverviewCamera or AimohPMXReadyRoom.drawBrowseCamera
+                ok=draw(w.player,w.browsed.id,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
             end
         else
             ok=AimohPMXReadyRoom.drawCamera(w.player,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus)
@@ -446,6 +449,33 @@ function W:createChildren()
     self.foldButton.roomFold=true;self.foldButton.roomLook="bare"
     self.foldButton:setTooltip(tr("RoomFold"))
     self:createMotionPage()
+    self.weaponCard=button(self,0,0,160,"",self,function(w)w:setTab("weaponDraw")end)
+    self.weaponCard.prerender=function(b)
+        local hover=b.mouseOver or b.joypadFocused
+        frosted(b,self,0,0,b.width,b.height,.86)
+        b:drawRectBorder(0,0,b.width,b.height,hover and .83 or .34,.80,.76,.61)
+    end
+    self.weaponCard.render=function(b)
+        local signatureWeapon=self.signatureWeapon
+        local owned=economy.weaponProgress(self.player,signatureWeapon.id).acquired
+        local icon=image(signatureWeapon.card)
+        if icon then
+            local width=b.width-44
+            local height=width*icon:getHeight()/icon:getWidth()
+            b:setStencilRect(1,1,b.width-2,b.height-2)
+            b:drawTextureScaled(icon,13,b.height*.43-height/2,width,height,owned and 1 or .64,1,1,1)
+            b:clearStencilRect()
+        end
+        b:drawText(getText(signatureWeapon.name),12,b.height-26,.94,.95,.94,1,UIFont.Small)
+        if not owned then lock(b,b.width-30,7) end
+        chevron(b,b.width-14,b.height/2+8,"right",17,.72)
+        b:drawRect(0,b.height-3,b.width,3,owned and 1 or .63,.96,.66,.13)
+    end
+    self.weaponCard:setVisible(false)
+    self.weaponClaimButton=button(self,0,0,160,getText("ContextMenu_GFL2_ClaimWeapon"),self,function(w)w:claimSignatureWeapon()end)
+    self.weaponClaimButton.roomLook="primary"
+    self.weaponClaimButton:setHeight(43)
+    self.weaponClaimButton:setVisible(false)
     self:createRoomResources()
     self.widgets={};self.tab="overview";self.previewAt=0;self:roomVisibility();self:refresh()
 end
@@ -479,6 +509,36 @@ function W:createRoomResources()
             b:drawRect(6,15,14,4,1,.94,.95,.95)
             b:drawRect(11,10,4,14,1,.94,.95,.95)
         end
+        if key=="credits" and not self.multiplayerSession then
+            local originalDown,originalUp,originalOutside=add.onMouseDown,add.onMouseUp,add.onMouseUpOutside
+            add.onMouseDown=function(b,x,y)
+                originalDown(b,x,y)
+                if b.enable and b:getIsVisible() and not b.creditHold and not b.creditGranted then b.creditHold=getTimestampMs() end
+            end
+            add.onMouseUp=function(b,x,y)
+                b.creditHold=nil
+                if b.creditGranted then b.creditGranted=false;b.pressed=false;return end
+                return originalUp(b,x,y)
+            end
+            add.onMouseUpOutside=function(b,x,y)
+                b.creditHold=nil
+                b.creditGranted=false
+                return originalOutside(b,x,y)
+            end
+            local originalUpdate=add.update
+            add.update=function(b)
+                originalUpdate(b)
+                if not b.creditHold then return end
+                if not b:isMouseOver() or not isMouseButtonDown(0) or self.closed or self.folded or self.foldStart or self.exchange then
+                    b.creditHold=nil
+                elseif getTimestampMs()-b.creditHold>=8000 then
+                    b.creditHold=nil
+                    b.creditGranted=economy.grantTestCredits(self.player)
+                    if b.creditGranted then self.player:Say(getText("ContextMenu_GFL2_TestCredits")) end
+                end
+            end
+            self.creditAddButton=add
+        end
         self.resourceButtons[i]=chip
     end
     self.drawButtons={}
@@ -488,7 +548,9 @@ function W:createRoomResources()
         local right=math.floor(self.width*.963)
         local x=right-width*2-19+(i-1)*(width+19)
         local b=button(self,x,math.floor(self.height*.892),width,tr(key),self,function(w)
-            if w.tab=="outfitDraw" then w:requestOutfitDraw(count) else w:requestCharacterDraw(count) end
+            if w.tab=="outfitDraw" then w:requestOutfitDraw(count)
+            elseif w.tab=="weaponDraw" then w:requestWeaponDraw(count)
+            else w:requestCharacterDraw(count) end
         end)
         b:setHeight(43);b.roomLook=i==1 and "drawOnce" or "drawTen"
         b:setSound("activate","R116RoomDrawStart")
@@ -563,6 +625,41 @@ function W:requestOutfitDraw(count)
     end)
 end
 
+function W:requestWeaponDraw(count)
+    if self.tab~="weaponDraw" or self.exchange or self.drawAnimation then return end
+    local signatureWeapon=self.signatureWeapon
+    if not signatureWeapon then return end
+    local previousMisses=economy.weaponMisses(self.player)
+    self:roomTransaction("DrawWeapon",signatureWeapon.id,count,function()
+        return economy.drawWeapon(self.player,signatureWeapon,count)
+    end,function(status,results)
+        if status=="short" then self.drawNotice=tr("RoomDrawShort");return end
+        if not results then return end
+        self.drawNotice=nil
+        self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
+            weapon=true,portrait=signatureWeapon.icon,misses=previousMisses,button=count==1 and 1 or 2}
+        self:layoutOverview()
+    end)
+end
+
+function W:claimSignatureWeapon()
+    local signatureWeapon=self.signatureWeapon
+    if not signatureWeapon or self.tab~="weaponDraw" then return end
+    self:roomTransaction("ClaimWeapon",signatureWeapon.id,nil,function()
+        return economy.claimWeapon(self.player,signatureWeapon)
+    end,function(status)
+        if status=="ok" then
+            self.drawNotice=nil
+            self.player:Say(getText("ContextMenu_GFL2_WeaponClaimed"))
+        elseif status=="alreadyCarried" then
+            self.drawNotice=getText("ContextMenu_GFL2_WeaponCarried")
+        else
+            self.drawNotice=getText("ContextMenu_GFL2_WeaponClaimFailed")
+        end
+        self:layoutOverview()
+    end)
+end
+
 function W:updateDrawAnimation()
     local a=self.drawAnimation
     if not a then return end
@@ -578,7 +675,7 @@ function W:updateDrawAnimation()
         if a.won then
             if a.outfit then self.tab="skins" end
             self:refresh()
-            self.toolNotice=tr(a.outfit and "RoomOutfitAcquired" or "RoomDrawUnlocked")
+            self.toolNotice=a.weapon and getText("ContextMenu_GFL2_ClaimWeapon") or tr(a.outfit and "RoomOutfitAcquired" or "RoomDrawUnlocked")
         else
             self.drawNotice=tr("RoomDrawMiss")
             self:layoutOverview()
@@ -592,7 +689,7 @@ function W:drawRecruitmentResults()
     local elapsed=getTimestampMs()-a.started
     local button=self.drawButtons[a.button]
     local x=button.x+(button.width-142)/2
-    local portrait=portraitImage(a.portrait)
+    local portrait=a.weapon and image(a.portrait) or portraitImage(a.portrait)
     for i,hit in ipairs(a.results)do
         local age=elapsed-(i-1)*drawStep
         local life=hit and hitLife or missLife
@@ -1050,7 +1147,11 @@ function W:roomVisibility()
     local motions=expanded and self.roomPage=="motions"
     if not motions then self.motionSpeed.dragInside=false end
     local appearance=expanded and not motions
-    self.preview:setVisible(expanded)
+    self.preview:setVisible(expanded and (motions or self.tab~="weaponDraw"))
+    if self.weaponPreview then
+        self.weaponPreview:onMouseUp()
+        self.weaponPreview:setVisible(false)
+    end
     if motions then
         self.preview:setX(self.motionWidth+28);self.preview:setWidth(self.rightX-self.preview.x-14)
         self.preview:setY(56);self.preview:setHeight(self.fullHeight-70)
@@ -1060,7 +1161,7 @@ function W:roomVisibility()
     end
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -1115,6 +1216,46 @@ function W:toggleRoomFold()
     self:roomVisibility()
 end
 
+function W:createWeaponPreview(signatureWeapon)
+    if self.weaponPreview then self:removeChild(self.weaponPreview) end
+    local width=math.floor(self.width*.50)
+    local scene=ISUI3DScene:new(math.floor((self.width-width)/2),64,width,math.floor(self.fullHeight*.70))
+    scene.background=false
+    scene:initialise()
+    scene:instantiate()
+    local java=scene.javaObject
+    local id=signatureWeapon.id
+    scene:setView("UserDefined")
+    java:fromLua3("setViewRotation",-82,0,90)
+    java:fromLua1("setDrawGrid",false)
+    java:fromLua1("setMaxZoom",17)
+    java:fromLua1("setZoom",signatureWeapon.previewZoom or 14)
+    java:fromLua2("createModel",id,id)
+    java:fromLua1("getObjectTranslation",id):set(0,-signatureWeapon.previewCenterY,signatureWeapon.previewCenterZ or 0)
+    scene.onMouseDown=function(p)
+        p.orbit=true
+        p:setCapture(true)
+        return true
+    end
+    scene.onMouseMove=function(p,dx,dy)
+        if not p.orbit then return false end
+        p.pitch=clamp((p.pitch or -82)+dy*.35,-175,-5)
+        p.heading=((p.heading or 0)+dx*.35)%360
+        java:fromLua3("setViewRotation",p.pitch,p.heading,90)
+        return true
+    end
+    scene.onMouseMoveOutside=scene.onMouseMove
+    scene.onMouseUp=function(p)
+        p.orbit=false
+        p:setCapture(false)
+        return true
+    end
+    scene.onMouseUpOutside=scene.onMouseUp
+    self:addChild(scene)
+    scene.weaponId=id
+    self.weaponPreview=scene
+end
+
 function W:layoutOverview()
     local overview=self.tab=="overview"
     local skins=self.tab=="skins"
@@ -1129,10 +1270,32 @@ function W:layoutOverview()
     local outfitDraw=available and self.tab=="outfitDraw" and self.browsed and self.browsed.outfitLocked
         and self.browsed.outfitPool~=nil
     local characterDraw=overview and locked
+    local signatureWeapon=loaded and character.recruitment and signatureWeapons.byCharacter[character.recruitment.pool]
+    if signatureWeapon and not getScriptManager():FindItem(signatureWeapon.id) then signatureWeapon=nil end
+    self.signatureWeapon=signatureWeapon
+    local weaponPage=signatureWeapon and self.tab=="weaponDraw"
+    local progress=signatureWeapon and economy.weaponProgress(self.player,signatureWeapon.id) or {}
+    local weaponDraw=weaponPage and available and not progress.acquired
+    local last=self.drawButtons[2]
+    self.weaponClaimButton:setX(self.drawButtons[1].x)
+    self.weaponClaimButton:setY(last.y)
+    self.weaponClaimButton:setWidth(last.x+last.width-self.drawButtons[1].x)
+    self.weaponClaimButton:setVisible(not not (weaponPage and progress.acquired and not self.drawAnimation))
+    local carried=weaponPage and progress.acquired and economy.hasWeaponInInventory(self.player,signatureWeapon.id)
+    self.weaponClaimButton:setEnable(not carried)
+    self.weaponClaimButton.roomTitle=getText(carried and "ContextMenu_GFL2_WeaponCarried"
+        or progress.claimed and "ContextMenu_GFL2_ReclaimWeapon" or "ContextMenu_GFL2_ClaimWeapon")
+    if weaponPage and (not self.weaponPreview or self.weaponPreview.weaponId~=signatureWeapon.id) then
+        self:createWeaponPreview(signatureWeapon)
+    end
+    if self.weaponPreview then
+        if not weaponPage and self.weaponPreview.orbit then self.weaponPreview:onMouseUp() end
+        self.weaponPreview:setVisible(not not weaponPage)
+    end
     for _,b in ipairs(self.drawButtons)do
         b.roomOutfitDraw=outfitDraw
-        b:setVisible(not not (characterDraw or outfitDraw))
-        b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw))
+        b:setVisible(not not (characterDraw or outfitDraw or weaponDraw))
+        b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw or weaponDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
     local controls={self.chestButton,self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton}
@@ -1151,7 +1314,12 @@ function W:layoutOverview()
     self.restoreButton:setVisible(available and overview and AimohPMXPreview.isEnabled(self.player))
     self.wearButton:setX(x);self.wearButton:setY(math.floor(self.height*.919))
     self.wearButton:setWidth(width);self.wearButton:setHeight(43)
-    self.wearButton:setVisible(available and self.tab~="outfitDraw" and (overview or skins or not self:canEditCurrent()))
+    self.wearButton:setVisible(available and self.tab~="outfitDraw" and not weaponPage and (overview or skins or not self:canEditCurrent()))
+    self.weaponCard:setX(x)
+    self.weaponCard:setWidth(width)
+    self.weaponCard:setHeight(clamp(math.floor(self.fullHeight*.103),56,90))
+    self.weaponCard:setY(self.wearButton.y-self.weaponCard.height-14)
+    self.weaponCard:setVisible(not not (signatureWeapon and overview and (available or progress.acquired)))
     self.skinButton:setWidth(46);self.skinButton:setHeight(43)
     self.skinButton:setX(x-58);self.skinButton:setY(self.wearButton.y)
     self.skinButton:setVisible(available and overview)
@@ -1602,7 +1770,7 @@ function W:refreshControls(keepScroll)
     if self.folded or self.foldStart then return end
     if self.roomPage=="motions" then self:refreshMotionControls();return end
     local editable=self:canEditCurrent()
-    self.preview:setVisible(true)
+    self.preview:setVisible(self.tab~="weaponDraw")
     local scroll=keepScroll and self.content:getYScroll() or 0
     self:clearContent()
     local enabled=AimohPMXPreview.isEnabled(self.player)
@@ -1614,7 +1782,7 @@ function W:refreshControls(keepScroll)
     local y=0;local width=self.rightWidth-18;local showExpressionSlots=false
     if self.tab=="overview" then
         y=0
-    elseif self.tab=="outfitDraw" then
+    elseif self.tab=="outfitDraw" or self.tab=="weaponDraw" then
         y=0
     elseif self.tab=="skins" then
         local character=self.byCharacter[self.character]
@@ -1657,9 +1825,9 @@ function W:refreshControls(keepScroll)
             local family=AimohPMXReadyRoom.gripFamily(self.player)
             self.gripFamily=family
             if family=="" then
-                self:addLabel(tr("GripEquip"),y);y=y+32
+                self:addLabel(getText("ContextMenu_GFL2_GripEquipItem"),y);y=y+32
             else
-                self:addLabel(tr(family=="handgun" and "GripHandgun" or "GripLongGun"),y);y=y+32
+                self:addLabel(AimohPMXReadyRoom.gripItemName(self.player),y);y=y+32
                 local values=AimohPMXReadyRoom.gripValues(self.player,family)
                 local groups={
                     {"GripSupport",0,12,3,""},{"GripSupportWrist",6,90,5,"°"},
@@ -1745,7 +1913,7 @@ function W:refreshControls(keepScroll)
     self.content:setYScroll(clamp(scroll,self.content.height-self.content:getScrollHeight(),0))
     self.status=self.waiting and tr("Loading") or enabled and tr("Saved") or tr("Original")
     self:layoutOverview()
-    self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw")
+    self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw" and self.tab~="weaponDraw")
 end
 function W:selectSkin(entry)
     local character=self.byCharacter[self.character]
@@ -1848,6 +2016,14 @@ function W:update()
         end
     end
     self:updateDrawAnimation()
+    if self.weaponClaimButton:getIsVisible() and self.signatureWeapon then
+        local now=getTimestampMs()
+        if now>=(self.nextWeaponInventoryCheck or 0) then
+            self.nextWeaponInventoryCheck=now+500
+            local carried=economy.hasWeaponInInventory(self.player,self.signatureWeapon.id)
+            if self.weaponClaimButton.enable==carried then self:layoutOverview() end
+        end
+    end
     if self.cameraTransition then
         local t=self.cameraTransition
         local phase=ease((getTimestampMs()-t[1])/235)
@@ -1902,11 +2078,25 @@ function W:prerender()
     surface(self,0,0,self.width,header,.67)
     local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",chest="ChestPhysics",grip="GripCalibration",expression="Expression"}
     local page=self.roomPage=="motions" and "RoomMotion" or titles[self.tab]
-    if page then label(self,tr(page),76,14,23,self.width-180)
+    if self.tab=="weaponDraw" then label(self,getText("ContextMenu_GFL2_WeaponPool"),76,14,23,self.width-180)
+    elseif page then label(self,tr(page),76,14,23,self.width-180)
     else self:drawText(self.title,76,16,.92,.92,.91,1,UIFont.Small) end
     if self.roomPage=="motions" then return end
     local character=self.byCharacter[self.character]
-    if (self.tab=="skins" or self.tab=="outfitDraw") and self.browsed then
+    local signatureWeapon=self.signatureWeapon
+    if self.tab=="weaponDraw" and signatureWeapon then
+        local x,y=math.floor(self.width*.045),math.floor(self.height*.66)
+        self:drawText(getText(signatureWeapon.name),x,y,.97,.97,.95,1,UIFont.Large)
+        self:drawRect(x,y+39,54,3,1,.96,.66,.13)
+        self:drawText(getText(signatureWeapon.description),x,y+51,.83,.87,.87,1,UIFont.Small)
+        local progress=economy.weaponProgress(self.player,signatureWeapon.id)
+        if not progress.acquired or self.drawAnimation then
+            local misses=self.drawAnimation and self.drawAnimation.misses or economy.weaponMisses(self.player)
+            self:drawElitePity(economy.weaponGuarantee-misses)
+        elseif self.drawNotice then
+            label(self,self.drawNotice,self.weaponClaimButton.x,self.weaponClaimButton.y-32,16,self.weaponClaimButton.width)
+        end
+    elseif (self.tab=="skins" or self.tab=="outfitDraw") and self.browsed then
         local x=math.floor(self.width*.045)
         local inPool=self.tab=="outfitDraw"
         local width=math.floor(self.width*.245)
@@ -1978,7 +2168,23 @@ function W:drawLockedCharacterInfo(character)
     end
     description(self,biography,x,y+bannerHeight+headerHeight,width)
     local misses=self.drawAnimation and self.drawAnimation.misses or economy.characterMisses(self.player)
-    self:drawPity("RoomSharedPity",economy.characterGuarantee-misses)
+    self:drawElitePity(economy.characterGuarantee-misses)
+end
+
+function W:drawElitePity(remaining)
+    local first,last=self.drawButtons[1],self.drawButtons[2]
+    local x,y=first.x,first.y-59
+    local width=last.x+last.width-x
+    local count=tostring(remaining)
+    local copy=getText("ContextMenu_GFL2_PityCounter")
+    local tm=getTextManager()
+    local font=UIFont.Medium
+    if tm:MeasureStringX(font,count..copy)>width-20 then font=UIFont.Small end
+    local textY=y+(24-tm:getFontHeight(font))/2
+    self:drawRect(x,y,width,24,.94,.79,.23,.045)
+    self:drawText(count,x+10,textY,1,.82,.26,1,font)
+    self:drawText(copy,x+10+tm:MeasureStringX(font,count),textY,1,.98,.94,1,font)
+    if self.drawNotice then label(self,self.drawNotice,x,y-20,16,width,.96,.87,.73) end
 end
 
 function W:drawPity(title,remaining)
@@ -2007,6 +2213,8 @@ end
 function W:close()
     if self.closed then return end
     self.closed=true
+    if self.creditAddButton then self.creditAddButton.creditHold=nil end
+    if self.weaponPreview and self.weaponPreview.orbit then self.weaponPreview:onMouseUp() end
     self:closeWorkshopPrompt()
     self:closeExchange()
     if W.instances[self.playerIndex]==self then W.instances[self.playerIndex]=nil end

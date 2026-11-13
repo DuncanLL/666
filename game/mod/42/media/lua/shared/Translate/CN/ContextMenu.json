@@ -18,5 +18,20 @@
     "ContextMenu_AimohPMX_Saved": "修改已保存",
     "ContextMenu_AimohPMX_OriginalActive": "当前使用原角色",
     "ContextMenu_AimohPMX_InactivePart": "（当前款式未启用）",
-    "ContextMenu_AimohPMX_ChoosePreset": "选择材质预设"
+    "ContextMenu_AimohPMX_ChoosePreset": "选择材质预设",
+    "ContextMenu_GFL2_GripEquipItem": "请手持要校准的物品",
+    "ContextMenu_GFL2_WeaponPool": "专武抽取",
+    "ContextMenu_GFL2_CauseAndEffect": "因果律理",
+    "ContextMenu_GFL2_Chernobog": "切尔诺伯格",
+    "ContextMenu_GFL2_ChernobogDescription": "克莱妲的精英突击步枪，配备固定消音器。",
+    "ContextMenu_GFL2_AlvaAN94": "AN-94",
+    "ContextMenu_GFL2_AlvaAN94Description": "埃芙配用的精英突击步枪。针对射程和有效杀伤力做了改造。",
+    "ContextMenu_GFL2_WeaponDescription": "翡图萨的精英长剑。",
+    "ContextMenu_GFL2_PityCounter": "次访问后必定获得橙色对象",
+    "ContextMenu_GFL2_ClaimWeapon": "领取专武",
+    "ContextMenu_GFL2_WeaponCarried": "专武已在随身背包",
+    "ContextMenu_GFL2_ReclaimWeapon": "补领专武",
+    "ContextMenu_GFL2_WeaponClaimed": "专武已放入背包",
+    "ContextMenu_GFL2_TestCredits": "获得 50000 信用币",
+    "ContextMenu_GFL2_WeaponClaimFailed": "领取失败，请检查背包和武器模组。"
 }

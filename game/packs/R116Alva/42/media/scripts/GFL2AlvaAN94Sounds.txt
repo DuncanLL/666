@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2AlvaAN94Shoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/AlvaAN94-suppressed-1.wav,
+            volume = 0.65,
+            distanceMax = 45,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/AlvaAN94-suppressed-2.wav,
+            volume = 0.65,
+            distanceMax = 45,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/AlvaAN94-suppressed-3.wav,
+            volume = 0.65,
+            distanceMax = 45,
+        }
+    }
+}

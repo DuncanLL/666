@@ -1,0 +1,68 @@
+module GFL2
+{
+    model CauseAndEffect
+    {
+        mesh = GFL2/CauseAndEffect,
+        texture = GFL2/CauseAndEffect,
+        attachment world
+        {
+            offset = 0.0155 0.2859 0.015,
+            rotate = -180.0 0.0 177.566,
+        }
+        attachment Bip01_Prop2
+        {
+            offset = -0.013 0.0001 0.0025,
+            rotate = -23.8537 -86.6222 -22.0887,
+        }
+    }
+
+    item CauseAndEffect
+    {
+        DisplayCategory = Weapon,
+        ItemType = base:weapon,
+        Weight = 2.0,
+        Icon = GFL2CauseAndEffect,
+        AttachmentType = Sword,
+        BaseSpeed = 1.0,
+        BreakSound = KatanaBreak,
+        Categories = base:longblade,
+        ConditionLowerChanceOneIn = 1000,
+        ConditionMax = 120,
+        CritDmgMultiplier = 6.0,
+        CriticalChance = 35.0,
+        DamageCategory = Slash,
+        DamageMakeHole = true,
+        DoorDamage = 8,
+        DoorHitSound = KatanaHit,
+        DropSound = KatanaDrop,
+        EquipSound = KatanaEquip,
+        HitAngleMod = -30.0,
+        HitFloorSound = KatanaHit,
+        HitSound = KatanaHit,
+        ImpactSound = KatanaHit,
+        KnockBackOnNoDeath = true,
+        KnockdownMod = 0.0,
+        MaxDamage = 8.0,
+        MaxHitcount = 3,
+        MaxRange = 1.4,
+        MinAngle = 0.8,
+        MinDamage = 8.0,
+        MinRange = 0.61,
+        MinimumSwingtime = 3.0,
+        PushBackMod = 0.5,
+        RunAnim = Run_Weapon2,
+        SubCategory = Swinging,
+        SwingAmountBeforeImpact = 0.02,
+        SwingAnim = Bat,
+        SwingSound = KatanaSwing,
+        Swingtime = 3.0,
+        Tags = base:ignorezombiedensity;base:hasmetal;base:fullblade,
+        TreeDamage = 1,
+        UnequipSound = KatanaUnEquip,
+        TwoHandWeapon = true,
+        WeaponLength = 0.4,
+        WeaponSprite = GFL2.CauseAndEffect,
+        WorldStaticModel = GFL2.CauseAndEffect,
+        Sharpness = 1.0,
+    }
+}
