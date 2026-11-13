@@ -27,7 +27,7 @@ public final class RenderSupportStartupCheck {
         boolean protectedTrial=args.length>2;
         long eclipseLoad=0;
         long start=System.nanoTime();
-        byte[] edited={7,8,9};Path player=user.resolve(eclipse||combined?"viewpoint-shaderpacks/PlayerCustom.zip":"viewpoint-shaderpacks/Aimoh-Eclipse-GF2.zip");Files.createDirectories(player.getParent());Files.write(player,edited);
+        byte[] edited={7,8,9};Path player=user.resolve(eclipse||combined?"viewpoint-shaderpacks/PlayerCustom.zip":"viewpoint-shaderpacks/Eclipse GFL 2.zip");Files.createDirectories(player.getParent());Files.write(player,edited);
         Class<?> loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");var field=loader.getDeclaredField("g_instrumentation");field.setAccessible(true);field.set(null,RenderSupportTestAgent.agent);
         Class<?> phase=Class.forName("me.zed_0xff.zombie_buddy.Loader$Phase");Object main=Arrays.stream(phase.getEnumConstants()).filter(v->v.toString().equals("MAIN")).findFirst().orElseThrow();var dispatch=loader.getDeclaredMethod("try_call_main",Class.class,phase);dispatch.setAccessible(true);dispatch.invoke(null,Main.class,main);
         var ready=Main.class.getDeclaredField("hooks");ready.setAccessible(true);
@@ -36,8 +36,8 @@ public final class RenderSupportStartupCheck {
             throw new AssertionError("Normal dispatch failed but direct entry succeeded");
         }
         if(eclipse||combined){
-            Path pack=player.resolveSibling("Aimoh-Eclipse-GF2.zip");
-            try(var embedded=Main.class.getResourceAsStream("/aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip")){
+            Path pack=player.resolveSibling("Eclipse GFL 2.zip");
+            try(var embedded=Main.class.getResourceAsStream("/META-INF/gfl2/rendering/eclipse.zip")){
                 require(embedded!=null&&Arrays.equals(embedded.readAllBytes(),Files.readAllBytes(pack)),"Eclipse payload differs");
             }
             if(sealed)try(var raw=new ZipFile(pack.toFile())){
@@ -49,7 +49,7 @@ public final class RenderSupportStartupCheck {
             long eclipseStart=System.nanoTime();
             var discover=viewpoint.platform.IrisPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,pack.getParent().toFile());
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
-            var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
+            var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Eclipse_GFL_2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
             var manifest=new JSONObject(iris.source.read("gf2/manifest.json"));
             checkReleaseManifest(manifest);
@@ -118,8 +118,8 @@ public final class RenderSupportStartupCheck {
                 &&Set.of("Skin Highlight Tightness","皮肤高光集中度").contains(iris.text("option.characterSkinGloss")),
                 "Eclipse skin labels missing");
             var surfaceOptions=List.of("characterSurfaceDetail","characterSkinGloss","characterOutlineWidth","characterKeyLightStrength");
-            require(surfaceOptions.equals(iris.defaults.screens.get("R116_CHARACTER"))
-                &&iris.defaults.screens.get("").contains("[R116_CHARACTER]"),"Eclipse character options page missing");
+            require(surfaceOptions.equals(iris.defaults.screens.get("GFL2_CHARACTER"))
+                &&iris.defaults.screens.get("").contains("[GFL2_CHARACTER]"),"Eclipse character options page missing");
             for(String id:surfaceOptions){
                 var option=iris.options.get(id);
                 boolean outline=id.equals("characterOutlineWidth");
@@ -144,7 +144,7 @@ public final class RenderSupportStartupCheck {
                 return;
             }
         }
-        Path folder=user.resolve("viewpoint-shaderpacks/Aimoh-Native-GF2");require(Files.isRegularFile(folder.resolve("pack.properties")),"Native payload not unpacked");require(Arrays.equals(edited,Files.readAllBytes(player)),"Player-modified Eclipse cache overwritten");
+        Path folder=user.resolve("viewpoint-shaderpacks/Native-GFL2");require(Files.isRegularFile(folder.resolve("pack.properties")),"Native payload not unpacked");require(Arrays.equals(edited,Files.readAllBytes(player)),"Player-modified Eclipse cache overwritten");
         if(sealed){
             for(String name:List.of("manifest.json","native_light.comp","native_main.glsl","native_local.glsl","native_motion.comp","native_indirect.glsl","native_cube.comp","native_prefilter.comp","cube_faces.glsl")){
                 String raw=Files.readString(folder.resolve("shaders/gf2").resolve(name));
@@ -153,8 +153,8 @@ public final class RenderSupportStartupCheck {
             }
         }
         long nativeStart=System.nanoTime();
-        var discover=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,folder.getParent().toFile());var find=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);require(find.invoke(null,"Aimoh-Native-GF2")!=null,"Official Native discoverer did not find installed folder");
-        var selected=(viewpoint.platform.ShaderPack)find.invoke(null,"Aimoh-Native-GF2");var fill=selected.option("characterSoftFill");
+        var discover=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,folder.getParent().toFile());var find=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);require(find.invoke(null,"Native-GFL2")!=null,"Official Native discoverer did not find installed folder");
+        var selected=(viewpoint.platform.ShaderPack)find.invoke(null,"Native-GFL2");var fill=selected.option("characterSoftFill");
         if(combined){
             var read=viewpoint.platform.ShaderPack.class.getDeclaredMethod("shader",String.class);read.setAccessible(true);
             String data=(String)read.invoke(selected,"gf2/manifest.json");

@@ -17,7 +17,7 @@ import viewpoint.iris.PackSource;
 public final class AimohGf2PackData {
     public static final int EXTERNAL_MOD_RESOURCE_FORMAT=5;
     public static final int EXTERNAL_CHARACTER_CATALOG_FORMAT=6;
-    static final String CATALOG_PATH="media/aimoh_gf2/characters.json";
+    static final String CATALOG_PATH="media/gfl2_rendering/characters.json";
     private static final Set<String> CHARACTER_FIELDS=Set.of("materials","textures","shader_property_defaults","programs","glsl","early_fragments","consumed","models");
     public final JSONObject manifest;
     public final String identity;
@@ -89,7 +89,7 @@ public final class AimohGf2PackData {
                 if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(modId))continue;
                 try{
                     Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(modId)).toAbsolutePath();
-                    String relativePack="media/aimoh_gf2/packs/"+mod+".json";
+                    String relativePack="media/gfl2_rendering/packs/"+mod+".json";
                     Path fragment=modRoot.resolve(relativePack);
                     if(!Files.isRegularFile(fragment))fragment=modRoot.resolve("42").resolve(relativePack);
                     byte[] packBytes=Files.readAllBytes(fragment);
@@ -219,7 +219,7 @@ public final class AimohGf2PackData {
         if(expected==null)throw new IllegalArgumentException("Unregistered GF2 source resource");
         byte[] value;
         if(expected.optString("storage","pack").equals("mod")){
-            String relative="media/aimoh_gf2/"+path.substring("gf2/".length());
+            String relative="media/gfl2_rendering/"+path.substring("gf2/".length());
             Path file=Path.of(ZomboidFileSystem.instance.getString(relative));
             if(!file.isAbsolute()||!Files.isRegularFile(file))throw new IOException("GF2 external character resource missing; enable/update its resource MOD: "+relative);
             if(Files.size(file)!=expected.getLong("bytes"))throw new IOException("GF2 external resource size differs: "+relative);

@@ -20,7 +20,7 @@ public final class AimohGf2AddonContext {
                 JSONObject manifest=new JSONObject(key.source.read("gf2/manifest.json"));
                 JSONObject addon=manifest.optJSONObject("addon_runtime");
                 return "gf2-original-eclipse".equals(manifest.optString("pipeline"))&&addon!=null
-                    &&"AimohGF2Eclipse".equals(addon.optString("id"))&&addon.optInt("format")==1;
+                    &&"GFL2Exilium".equals(addon.optString("id"))&&addon.optInt("format")==1;
             }catch(Exception problem){throw new IllegalArgumentException("GF2 addon bootstrap unreadable",problem);}
         });
     }

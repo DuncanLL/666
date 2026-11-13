@@ -58,7 +58,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
                     @Override public void visitInsn(int op) {
                         if (op == Opcodes.ARETURN) {
                             mv.visitVarInsn(Opcodes.ALOAD, 1);
-                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(AimohSealedSources.class),
+                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(ShaderManifestNames.class),
                                 iris ? "bytes" : "text", "(" + value + path + ")" + value, false);
                             hits[0]++;
                         }

@@ -36,11 +36,11 @@
     ]
   },
   "character_catalog": {
-    "path": "media/aimoh_gf2/characters.json",
+    "path": "media/gfl2_rendering/characters.json",
     "format": 1
   },
   "addon_runtime": {
-    "id": "AimohGF2Eclipse",
+    "id": "GFL2Exilium",
     "format": 1,
     "backend": "native"
   }

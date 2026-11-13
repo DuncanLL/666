@@ -20,7 +20,7 @@ NEW_PACKS = {
 }
 MEDIA = Path("42/media")
 REGISTRY = MEDIA / "aimoh_pmx/registry.json"
-GF2 = MEDIA / "aimoh_gf2/characters.json"
+GF2 = MEDIA / "gfl2_rendering/characters.json"
 ROOM = MEDIA / "ui/AimohPMXReadyRoom/catalog.json"
 JAR = MEDIA / "java/client/AimohPMXPreview.jar"
 
@@ -77,7 +77,7 @@ def build(workshop, output, version):
     retained = catalog_subset(full, residual, material_ids(residual) | unused_materials, True)
     core_data = resources(retained)
     for mod in registry["packs"]:
-        fragment = read(mod_root(workshop,mod)/MEDIA/"aimoh_gf2/packs"/(mod+".json"))
+        fragment = read(mod_root(workshop,mod)/MEDIA/"gfl2_rendering/packs"/(mod+".json"))
         for resource in resources(fragment):
             if not (mod_root(workshop,mod)/resource).exists():
                 assert (source/resource).is_file(), resource
@@ -118,7 +118,7 @@ def build(workshop, output, version):
                 if not chest.is_file() and embedded in archive.namelist():
                     chest.write_bytes(archive.read(embedded))
         save(target/MEDIA/"aimoh_pmx/packs"/(mod+".json"),dict(format=1,mod=mod,models=rows))
-        save(target/MEDIA/"aimoh_gf2/packs"/(mod+".json"),dict(format=1,mod=mod,characters=shards[mod]))
+        save(target/MEDIA/"gfl2_rendering/packs"/(mod+".json"),dict(format=1,mod=mod,characters=shards[mod]))
         save(target/MEDIA/"ui/AimohPMXReadyRoom/packs"/(mod+".json"),dict(models=entries,labels={}))
         for relative in resources(shards[mod]) - core_data:
             copy(source/relative,target/relative)

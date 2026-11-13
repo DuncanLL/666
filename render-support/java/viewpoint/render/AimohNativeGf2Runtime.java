@@ -32,7 +32,7 @@ public final class AimohNativeGf2Runtime {
         var files=AimohNativePackSelection.files(drawn);
         String text=files.read("gf2/manifest.json");if(text==null)return null;
         JSONObject bootstrap=new JSONObject(text);JSONObject addon=bootstrap.optJSONObject("addon_runtime");
-        if(addon==null||!"AimohGF2Eclipse".equals(addon.optString("id"))||addon.optInt("format")!=1||!"native".equals(addon.optString("backend")))return null;
+        if(addon==null||!"GFL2Exilium".equals(addon.optString("id"))||addon.optInt("format")!=1||!"native".equals(addon.optString("backend")))return null;
         return new AimohGf2PackData(files);
     }
     public static synchronized void prepareFrame(){

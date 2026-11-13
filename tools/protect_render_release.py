@@ -181,7 +181,7 @@ def owned_classes(archive):
         root = Path(name).name.split('$', 1)[0].removesuffix('.class')
         source = root.replace('AimohEclipseGf2', 'AimohGf2')
         effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh'))
-        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources', 'UnifiedStartup'}
+        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources', 'ShaderManifestNames', 'UnifiedStartup'}
         if effect or hook:
             assert source in sources or root == 'EclipseHooks', name
             classes.add(name)

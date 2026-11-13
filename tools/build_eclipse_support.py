@@ -5,7 +5,7 @@ from common import ROOT,BUILD,settings,sha,save
 from build import compile_java
 from build_render_support import check_glsl_names,release_bootstrap
 
-SHADER_PAYLOAD='aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'
+SHADER_PAYLOAD='META-INF/gfl2/rendering/eclipse.zip'
 PACK_SHADERS='Eclipse-Shader-Unstable/shaders/'
 SHADERS=PACK_SHADERS+'dimensions/'
 MOTION_PASS=SHADERS+'composite6.fsh'
@@ -153,8 +153,8 @@ if __name__=='__main__':
         ],
         PACK_SHADERS+'shaders.properties':[
             (b'\nsliders = ',b'\nsliders = '+controls+b' '),
-            (b'\nscreen.columns=2\n',b'\nscreen.R116_CHARACTER = '+controls+b'\nscreen.columns=2\n'),
-            (b'\n[Misc_Settings] [Mod_support] \\\n',b'\n[Misc_Settings] [Mod_support] \\\n[R116_CHARACTER] <empty>\n'),
+            (b'\nscreen.columns=2\n',b'\nscreen.GFL2_CHARACTER = '+controls+b'\nscreen.columns=2\n'),
+            (b'\n[Misc_Settings] [Mod_support] \\\n',b'\n[Misc_Settings] [Mod_support] \\\n[GFL2_CHARACTER] <empty>\n'),
         ],
         MOTION_PASS:[
             (b'#ifdef VP_DANRP_PIPELINE\nuniform sampler2D vpDanMotionTex,colortex17;\n#endif\n#include "/lib/settings.glsl"\n',
@@ -184,7 +184,7 @@ if __name__=='__main__':
         ],
     }
     for language,(screen,detail,detail_help,gloss,gloss_help,outline,outline_help,key_light,key_help) in option_labels.items():
-        labels=(f'screen.R116_CHARACTER = {screen}\n'
+        labels=(f'screen.GFL2_CHARACTER = {screen}\n'
                 f'option.characterSurfaceDetail = {detail}\n'
                 f'option.characterSurfaceDetail.comment = {detail_help}\n'
                 f'option.characterSkinGloss = {gloss}\n'

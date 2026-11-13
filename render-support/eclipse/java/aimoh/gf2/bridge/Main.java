@@ -15,10 +15,11 @@ public final class Main {
         // Workshop rejects loose ZIPs; retain the existing installer with a JAR-owned payload.
         Path bundled=Files.createTempFile(user,"aimoh-eclipse-bundled-",".tmp");
         ManagedShaderPack.Result installed;
-        try(InputStream source=Main.class.getResourceAsStream("/aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip")){
+        try(InputStream source=Main.class.getResourceAsStream("/META-INF/gfl2/rendering/eclipse.zip")){
             if(source==null)throw new IllegalStateException("Bundled Eclipse shader is missing");
             Files.copy(source,bundled,StandardCopyOption.REPLACE_EXISTING);
             installed=ManagedShaderPack.install(bundled,user);
+            ManagedShaderPack.migrateSelection(user,installed,true);
         }finally{Files.deleteIfExists(bundled);}
         if(installed.action().equals("USER_FILE_PRESERVED"))throw new IllegalStateException("Same-name user shader was preserved: "+installed.pack());
         Class<?> loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");

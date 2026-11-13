@@ -8,7 +8,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--jar',type=Path,default=BUILD/'render-support/AimohGF2Eclipse.jar');p.add_argument('--tag',default='fixed');p.add_argument('--pmx-reader',action='store_true');a=p.parse_args()
     assert a.tag.isidentifier()
     c=settings();game=Path(c['game_root']);out=BUILD/'shader-link-fix'/a.tag;out.mkdir(parents=True,exist_ok=True)
-    media=Path(c['asset_root'])/'42/media';data=json.loads((media/'aimoh_gf2/characters.json').read_text('utf8'))['characters']
+    media=Path(c['asset_root'])/'42/media';data=json.loads((media/'gfl2_rendering/characters.json').read_text('utf8'))['characters']
     def resource(row):
         assert row['storage']=='mod';path=(media/('aimoh_'+row['path'])).resolve();assert path.is_relative_to(media.resolve())and path.is_file();assert sha(path)==row['sha256'];return str(path)
     groups={}

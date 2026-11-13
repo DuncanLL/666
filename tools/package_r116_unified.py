@@ -106,7 +106,7 @@ def assemble(args):
          project=str(output), jar_sha256=result[CHARACTER_MOD+'/'+CHARACTER_JAR]['sha256'],
          character_sha256=pins[source], render_sha256=pins[addon], host_sha256=pins[host],
          signature_sha256=pins.get(signature), loader_sha256=pins[zombie],
-         catalog_sha256=result[CHARACTER_MOD+'/42/media/aimoh_gf2/characters.json']['sha256'],
+         catalog_sha256=result[CHARACTER_MOD+'/42/media/gfl2_rendering/characters.json']['sha256'],
          character_workshop_files=len(result), changed_character_entries=sorted(ENTRY_CLASSES),
          installed=False, uploaded=False))
     print(f'Unified R116 Workshop project: {output}')

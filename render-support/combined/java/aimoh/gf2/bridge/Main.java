@@ -15,7 +15,7 @@ public final class Main {
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
-        System.out.println("[R116] Native and Eclipse integration ready for official Workshop Viewpoint 0.1.6.2. Select the pack in Viewpoint.");
+        System.out.println("[GFL2] Native and Eclipse integration ready. Select the pack in Viewpoint.");
     }
 
     static Instrumentation instrumentation()throws Exception{
@@ -35,13 +35,14 @@ public final class Main {
     }
 
     private static void install(Path user,String backend,boolean eclipse)throws Exception{
-        String archive="/aimoh/gf2/bridge/Aimoh-"+backend+"-GF2.zip";
-        Path temporary=Files.createTempFile(user,"r116-bundled-",".tmp");
+        String archive="/META-INF/gfl2/rendering/"+backend.toLowerCase(java.util.Locale.ROOT)+".zip";
+        Path temporary=Files.createTempFile(user,"gfl2-bundled-",".tmp");
         try(InputStream payload=Main.class.getResourceAsStream(archive)){
             if(payload==null)throw new IllegalStateException("Bundled "+backend+" shader missing");
             Files.copy(payload,temporary,StandardCopyOption.REPLACE_EXISTING);
             var result=eclipse?ManagedShaderPack.install(temporary,user):ManagedShaderPack.installNative(temporary,user);
-            System.out.println("[R116 "+backend+"] "+result.action()+" "+result.pack());
+            ManagedShaderPack.migrateSelection(user,result,eclipse);
+            System.out.println("[GFL2 "+backend+"] "+result.action()+" "+result.pack());
         }finally{Files.deleteIfExists(temporary);}
     }
 }
