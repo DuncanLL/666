@@ -1,0 +1,31 @@
+{
+  "entry": "META-INF/gfl2/rendering/author-notice.txt",
+  "notice_sha256": "39f0e29f13690cabc08b230ebf99e911af74c34b150c827fb2b6f6d1f0817733",
+  "steam_projects": [
+    {
+      "id": 3838709437,
+      "title": "少前2追放角色框架",
+      "mod_id": "GFL2Exilium",
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "existing_item_updated": true,
+      "description_verified": true,
+      "author_jar_sha256": "7d6fefe846666d745d626be696fe8a953122944c7a61e2fac8cd2c79add7d139",
+      "steam_manifest_id": "1305008533676037874"
+    },
+    {
+      "id": 3838770244,
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "mod_id": "GFL2Exilium",
+      "dependencies": [
+        3619862853
+      ],
+      "existing_item_updated": true,
+      "description_verified": true,
+      "author_jar_sha256": "2c4400fba7c9a5b01d422ec2b052072a88a65897ec1eee713511f1c7fcef1248",
+      "steam_manifest_id": "8205241066038771107"
+    }
+  ]
+}
