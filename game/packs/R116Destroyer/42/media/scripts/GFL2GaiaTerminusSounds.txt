@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2GaiaTerminusShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-1.wav,
+            volume = 0.975,
+            distanceMax = 42,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-2.wav,
+            volume = 0.975,
+            distanceMax = 42,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-3.wav,
+            volume = 0.975,
+            distanceMax = 42,
+        }
+    }
+}

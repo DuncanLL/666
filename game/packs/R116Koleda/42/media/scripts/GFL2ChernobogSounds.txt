@@ -8,19 +8,19 @@ module GFL2
         clip
         {
             file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-1.wav,
-            volume = 0.65,
+            volume = 2.275,
             distanceMax = 35,
         }
         clip
         {
             file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-2.wav,
-            volume = 0.65,
+            volume = 2.275,
             distanceMax = 35,
         }
         clip
         {
             file = media/sound/GFL2SignatureWeapons/Chernobog-suppressed-3.wav,
-            volume = 0.65,
+            volume = 2.275,
             distanceMax = 35,
         }
     }

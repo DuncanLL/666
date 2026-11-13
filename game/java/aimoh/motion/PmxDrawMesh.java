@@ -41,7 +41,7 @@ public final class PmxDrawMesh implements AutoCloseable {
     private final long model;
     private final ModelAppearance appearance;
     private final PmxShading shading;
-    private final Texture[] renderTextures;
+    private volatile Texture[] renderTextures;
     private volatile PmxDrawMesh alternateMesh;
     private final String sourceProfile;
     private final int vertexCount;
@@ -106,7 +106,6 @@ public final class PmxDrawMesh implements AutoCloseable {
         final int material;
         final PmxOriginalInputs.Draw original;
         final int[] source, indices;
-        final Texture texture;
         final ModelMesh mesh;
         final ByteBuffer vertices;
         VertexBufferObject.Vbo handle;
@@ -119,20 +118,19 @@ public final class PmxDrawMesh implements AutoCloseable {
         volatile boolean hullReady;
         boolean continuous, gpuWritten;
         int gpuRemap;
-        Part(int material, int[] source, int[] indices, Texture texture, boolean bothFaces, int ordinal, boolean shading) {
-            this(material,source,indices,texture,bothFaces,ordinal,shading,null,null,0);
+        Part(int material, int[] source, int[] indices, boolean bothFaces, int ordinal, boolean shading) {
+            this(material,source,indices,bothFaces,ordinal,shading,null,null,0);
         }
-        Part(int material,int[] source,int[] indices,Texture texture,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups) {
-            this(material,source,indices,texture,bothFaces,ordinal,shading,weld,edgeWeights,groups,false);
+        Part(int material,int[] source,int[] indices,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups) {
+            this(material,source,indices,bothFaces,ordinal,shading,weld,edgeWeights,groups,false);
         }
-        Part(int material,int[] source,int[] indices,Texture texture,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups,boolean fringe) {
-            this(material,source,indices,texture,bothFaces,ordinal,shading,weld,edgeWeights,groups,fringe,null);
+        Part(int material,int[] source,int[] indices,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups,boolean fringe) {
+            this(material,source,indices,bothFaces,ordinal,shading,weld,edgeWeights,groups,fringe,null);
         }
-        Part(int material,int[] source,int[] indices,Texture texture,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups,boolean fringe,PmxOriginalInputs.Draw original) {
+        Part(int material,int[] source,int[] indices,boolean bothFaces,int ordinal,boolean shading,int[] weld,float[] edgeWeights,int groups,boolean fringe,PmxOriginalInputs.Draw original) {
             this.original=original;
             this.fringe=fringe;
             this.material = material; this.source = source; this.indices = indices;
-            this.texture = texture;
             this.hull=weld!=null;this.weld=weld;this.edgeWeights=edgeWeights;this.smooth=hull?new float[groups*3]:null;
             cull = fringe ? 1029 : hull ? 1028 : bothFaces ? 0 : 1029;
             ModelMesh.MeshAssetParams params = new ModelMesh.MeshAssetParams();
@@ -158,7 +156,7 @@ public final class PmxDrawMesh implements AutoCloseable {
     public PmxDrawMesh(NativeFunc api,long model,Texture[] textures,ModelAppearance appearance){this(api,model,textures,appearance,null);}
     public PmxDrawMesh(NativeFunc api, long model, Texture[] textures, ModelAppearance appearance,PmxShading shading) {
         this.api = api; this.model = model;
-        this.appearance=appearance;this.shading=shading;this.renderTextures=textures;
+        this.appearance=appearance;this.shading=shading;
         if(shading!=null&&shading.ids.length!=textures.length)throw new IllegalArgumentException("Shading material count differs");
         int count = Math.toIntExact(api.GetVertexCount(model));
         if (count <= 0 || textures.length != api.GetMaterialCount(model))
@@ -175,7 +173,7 @@ public final class PmxDrawMesh implements AutoCloseable {
         sourceProfile=original==null?null:original.key;
         if(original!=null){
             int ordinal=0;
-            for(PmxOriginalInputs.Draw draw:original.draws)parts.add(new Part(draw.material(),draw.source(),draw.indices(),textures[draw.material()],api.GetMaterialBothFace(model,draw.material()),ordinal++,true,null,null,0,false,draw));
+            for(PmxOriginalInputs.Draw draw:original.draws)parts.add(new Part(draw.material(),draw.source(),draw.indices(),api.GetMaterialBothFace(model,draw.material()),ordinal++,true,null,null,0,false,draw));
         }
         for (int n = 0; original==null&&n < api.GetSubMeshCount(model); n++) {
             int material = api.GetSubMeshMaterialID(model, n);
@@ -193,7 +191,7 @@ public final class PmxDrawMesh implements AutoCloseable {
                 local[i] = unique.computeIfAbsent(id, key -> unique.size());
             }
             int[] source=unique.keySet().stream().mapToInt(Integer::intValue).toArray();
-            parts.add(new Part(material,source,local,textures[material],api.GetMaterialBothFace(model,material),n,shading!=null));
+            parts.add(new Part(material,source,local,api.GetMaterialBothFace(model,material),n,shading!=null));
             if(shading!=null&&shading.outlineSources[material]!=null){
                 int[] lookup=new int[count];Arrays.fill(lookup,-1);int[] authored=shading.outlineSources[material];
                 for(int i=0;i<authored.length;i++)lookup[authored[i]]=i;
@@ -204,11 +202,11 @@ public final class PmxDrawMesh implements AutoCloseable {
                 }
                 // The source winding is retained: the actual host culls its front
                 // faces, leaving the thin back-facing shell around the actor.
-                parts.add(new Part(material,source,local,textures[material],true,n+10000,true,weld,weights,shading.outlineGroupCount[material]));
+                parts.add(new Part(material,source,local,true,n+10000,true,weld,weights,shading.outlineGroupCount[material]));
             }
         }
         if(original==null&&shading!=null&&shading.danrp&&shading.fringeMeshSource.length>0)
-            parts.add(new Part(shading.fringeMeshMaterial,shading.fringeMeshSource,shading.fringeMeshIndices,textures[shading.fringeMeshMaterial],false,20000,true,null,null,0,true));
+            parts.add(new Part(shading.fringeMeshMaterial,shading.fringeMeshSource,shading.fringeMeshIndices,false,20000,true,null,null,0,true));
         updateOutlineTextures(textures);
     }
 
@@ -227,13 +225,14 @@ public final class PmxDrawMesh implements AutoCloseable {
         return candidate!=null&&candidate.shading==selected&&java.util.Objects.equals(candidate.sourceProfile,key)&&candidate.uploaded&&!candidate.closed?candidate:null;
     }
     public void updateOutlineTextures(Texture[] textures){
+        if(renderTextures==textures)return;
         if(alternateMesh!=null)alternateMesh.updateOutlineTextures(textures);
-        if(shading==null)return;
-        for(Part part:parts)if(part.hull){
+        if(shading!=null)for(Part part:parts)if(part.hull){
             Texture texture=textures[part.material];int w=texture.getWidth(),h=texture.getHeight();
             part.hullReady=shading.shaderOutline||w>=8&&h>=8&&shading.markerClearance[part.material]>8f/Math.min(w,h);
             part.inkU=4.5f/w;part.inkV=4.5f/h;
         }
+        renderTextures=textures;
     }
 
     private synchronized boolean outlineEnabled(){
@@ -385,7 +384,8 @@ public final class PmxDrawMesh implements AutoCloseable {
     }
     public int submitPreparedFrozen(ModelDraws draws,Matrix4f placement,FrameData frame,IntFunction<Object> frameKeys,float[] shadowMaterials,boolean[] doubleSided) {
         if (!uploaded || closed) throw new IllegalStateException("Mesh not ready");
-        for (Part part:parts) if (part.texture==null || !part.texture.isReady()) throw new IllegalStateException("Texture not ready");
+        Texture[] textures=renderTextures;
+        for (Part part:parts) if (textures[part.material]==null || !textures[part.material].isReady()) throw new IllegalStateException("Texture not ready");
         Vector3f low=new Vector3f(Float.POSITIVE_INFINITY),high=new Vector3f(Float.NEGATIVE_INFINITY);
         frame.includeBounds(low,high);
         int first=draws.count();
@@ -403,7 +403,7 @@ public final class PmxDrawMesh implements AutoCloseable {
             if(!colour&&!shadow)continue;
             int cull=part.fringe?1029:part.hull?1028:doubleSided==null?part.cull:doubleSided[part.material]?0:1029;
             int flags=(part.hull||part.fringe)?(colour?1:0):(colour?1:0)|(shadow?2:0);
-            int n=draws.add(part.mesh,null,part.texture,placement,shadingPalette,shadingPalette,cull,flags|DEFORMED);
+            int n=draws.add(part.mesh,null,textures[part.material],placement,shadingPalette,shadingPalette,cull,flags|DEFORMED);
             draws.material(n,1,1,1,0);draws.light(n,1,1,1,0);
             draws.bounds(n,placement,part.hull?outlineLow:low,part.hull?outlineHigh:high,1);draws.key(n,frameKeys.apply(part.material));
         }

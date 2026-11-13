@@ -271,6 +271,7 @@ function E.claimWeapon(player,weapon)
     local inventory=player:getInventory()
     local item=inventory:AddItem(weapon.id)
     if not item then return "unavailable" end
+    if weapon.startsWithMagazine then item:setContainsClip(true) end
     progress.claimed=true
     if isServer and isServer() then sendAddItemToContainer(inventory,item) end
     return "ok"

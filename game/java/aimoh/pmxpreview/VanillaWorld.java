@@ -78,13 +78,13 @@ public final class VanillaWorld {
         boolean idle=IdleHandPose.eligible(actor,holding);
         try {
             if(!session.failed)session.update(frame,nanos,slot.animPlayer,holding,actor.getX(),actor.getY(),actor.getZ(),false,idle,false,
-                GripCalibration.request(actor,session.entry.id(),weapon),false);
+                GripCalibration.request(actor,session.entry.id(),weapon,slot.animPlayer),false);
         } catch(Throwable failure) { session.fail(failure); }
         ModelSession selected=Main.completeCapture(actor,session);
         if(selected==null||selected.failed)return;
         try {
             if(selected!=session)selected.update(frame,nanos,slot.animPlayer,holding,actor.getX(),actor.getY(),actor.getZ(),false,idle,false,
-                GripCalibration.request(actor,selected.entry.id(),weapon),false);
+                GripCalibration.request(actor,selected.entry.id(),weapon,slot.animPlayer),false);
             if(!selected.ready)return;
             ModelSession.Snapshot snapshot=selected.snapshot();
             if(snapshot==null)return;

@@ -1,0 +1,129 @@
+module GFL2
+{
+    model MaidsRules
+    {
+        mesh = GFL2/MaidsRules,
+        texture = GFL2/MaidsRules,
+        attachment muzzle
+        {
+            offset = 0.001855 0.519265 0.044704,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.20919 0,
+            rotate = 0 0 90,
+        }
+    }
+
+    model MaidsRulesEmpty
+    {
+        mesh = GFL2/MaidsRulesEmpty,
+        texture = GFL2/MaidsRules,
+        attachment muzzle
+        {
+            offset = 0.001855 0.519265 0.044704,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.20919 0,
+            rotate = 0 0 90,
+        }
+    }
+
+    item MaidsRules
+    {
+        DisplayCategory = Weapon,
+        ItemType = base:weapon,
+        Weight = 4.0,
+        Icon = GFL2MaidsRules,
+        AimingPerkCritModifier = 6,
+        AimingPerkHitChanceModifier = 4,
+        AimingPerkMinAngleModifier = 0.01,
+        AimingPerkRangeModifier = 0,
+        AimReleaseSound = M16AimRelease,
+        Aimingtime = 40,
+        AmmoBox = Base.556Box,
+        AmmoType = base:bullets_556,
+        AttachmentType = Rifle,
+        BreakSound = M16Break,
+        BringToBearSound = M16BringToBear,
+        ClickSound = M16Jam,
+        ConditionLowerChanceOneIn = 2000,
+        ConditionMax = 120,
+        CritDmgMultiplier = 4,
+        CriticalChance = 20,
+        DoorDamage = 5,
+        DropSound = M16Drop,
+        EjectAmmoSound = M16EjectAmmo,
+        EjectAmmoStartSound = M16EjectAmmoStart,
+        EjectAmmoStopSound = M16EjectAmmoStop,
+        EquipSound = M16Equip,
+        FireMode = Auto,
+        FireModePossibilities = Auto/Single,
+        CyclicRateMultiplier = 0.938,
+        HitChance = 48,
+        HitSound = BulletImpact,
+        IdleAnim = Idle_Weapon2,
+        ImpactSound = null,
+        InsertAmmoSound = M16InsertAmmo,
+        InsertAmmoStartSound = M16InsertAmmoStart,
+        InsertAmmoStopSound = M16InsertAmmoStop,
+        IsAimedFirearm = true,
+        JamGunChance = 1,
+        KnockBackOnNoDeath = true,
+        KnockdownMod = 4.0,
+        MagazineType = Base.556Clip,
+        MaxAmmo = 30,
+        MaxDamage = 1.6,
+        MaxHitcount = 2,
+        MaxRange = 30,
+        MinSightRange = 2,
+        MaxSightRange = 10.0,
+        MetalValue = 45.0,
+        MinAngle = 0.965,
+        MinDamage = 1,
+        MinRange = 0.61,
+        MinimumSwingtime = 0.5,
+        ModelWeaponPart = TritiumSights IronSight scope2 scope2,
+        ModelWeaponPart = Laser Laser laser laser,
+        ModelWeaponPart = RecoilPad RecoilPad recoilpad recoilpad,
+        ModelWeaponPart = RedDot RedDot reddot reddot,
+        ModelWeaponPart = x2Scope x2Scope scope2 scope2,
+        ModelWeaponPart = x4Scope x4Scope scope scope,
+        MultipleHitConditionAffected = false,
+        MuzzleFlashModelKey = muzzle_flash_assault_rifle,
+        NPCSoundBoost = 1.5,
+        PiercingBullets = true,
+        Projectilecount = 1,
+        PushBackMod = 0.3,
+        RackSound = M16Rack,
+        Ranged = true,
+        RecoilDelay = 15,
+        Reloadtime = 25,
+        RequiresEquippedBothHands = true,
+        RunAnim = Run_Weapon2,
+        ShellFallSound = M16CartridgeFall,
+        SoundGain = 2.0,
+        SoundRadius = 45,
+        SoundVolume = 16,
+        SplatBloodOnNoDeath = true,
+        SplatNumber = 3,
+        SplatSize = 3,
+        StopPower = 2.0,
+        SubCategory = Firearm,
+        SwingAmountBeforeImpact = 0.0,
+        SwingAnim = Rifle,
+        SwingSound = GFL2MaidsRulesShoot,
+        Swingtime = 0.5,
+        ToHitModifier = 1.5,
+        TwoHandWeapon = true,
+        UnequipSound = M16UnEquip,
+        UseEndurance = false,
+        WeaponReloadType = boltaction,
+        WeaponSprite = GFL2.MaidsRulesEmpty,
+        Tags = base:hasmetal;base:firearm,
+        WorldStaticModel = GFL2.MaidsRulesEmpty,
+    }
+}

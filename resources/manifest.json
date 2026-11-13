@@ -6478,19 +6478,151 @@
     "42/media/ui/AimohPMXReadyRoom/portrait-pmx-7834ce1969baa199.png": {
       "bytes": 31615,
       "sha256": "f91313efb096a51ee947e1a653b6afa441eb4a922675d3e02d4bcb5084bd0c05"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-0ae6adf69cca.png": {
+      "bytes": 12646,
+      "sha256": "55c0de85d88ce4ae86097d2296a372e4615cc87ebef4e3a16559eccd1e1770c3"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-0c0dc4a29f9d.png": {
+      "bytes": 3610,
+      "sha256": "44335df6444db94d30129c6482bd13cbb04f0aa466e0d732c937cf66c05769c0"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-145219e726b8.png": {
+      "bytes": 1806,
+      "sha256": "659157e8dbc2fb6806b235c965abf05ba34149f4c7b9bb982c1433ea88876ef6"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-1bc009fa87e0.png": {
+      "bytes": 999,
+      "sha256": "5880a3e8b7cd1fb579fe09ff8176101ab59321a1f6b5f2a810865bc44d52fee3"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-21527ef68164.png": {
+      "bytes": 10924,
+      "sha256": "6ce232f11dd9e9ec3ebd40c2770a0a300abe8dc2ba7ddaa9c66a95a91561c5d9"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-265a4d3c4eb5.png": {
+      "bytes": 10691,
+      "sha256": "3ce191ff2a02579957ad7609eec1ee2d65d265a7cb4704df5ced42678dc340cc"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-27a6fdea20bc.png": {
+      "bytes": 2907,
+      "sha256": "4cb96bca8bfb51d50c3ca7cc072a1bde6cd7aff4c20d1555ca0ee8673d3c9919"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-36a9e7f1c95b.png": {
+      "bytes": 82,
+      "sha256": "433ebf32e0d94613616f14efaae5ea8e136cd0f2a0e2fa7a2510b956d685f6a0"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-3e7a8de18503.png": {
+      "bytes": 10002,
+      "sha256": "deab2acf7779f94f797ff3a00dac868ec9467fbb7b4d2fdb1964f543eda2c578"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-46af4d1178b5.png": {
+      "bytes": 725,
+      "sha256": "2beedf59d33cff7149bd0de2e9cfc0095646d53a26f697e353c1d4f08b465986"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-46d4ca093fff.png": {
+      "bytes": 10552,
+      "sha256": "f2ff6a37d8ac785b179a09a68f3c43223d18e782aa9ad3c8a4cb7c5feeb2bac6"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-4e1449e7d5e5.png": {
+      "bytes": 999,
+      "sha256": "fe93588ea1f5edfe367ff0ca8239a6d754a9148d304db1f70b983faadfb817b5"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-56fc7db35920.png": {
+      "bytes": 7553,
+      "sha256": "0d92e7cd757cd0d96a0ab1e96b7a5624011395d4dc6ea77e2e5d9e82dc3c7e6f"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-5999f105e56c.png": {
+      "bytes": 9620,
+      "sha256": "13075fce0a457994cff338bbcfde7669d6d52e4c319425c5131be8e8d28bc330"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-71ae85e3f007.png": {
+      "bytes": 1539,
+      "sha256": "04fb5b17e70b27a24dde9c34f43939cc1ac09f05a8331da90d8a2bfa324a0a79"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-8675c591081d.png": {
+      "bytes": 11938,
+      "sha256": "00d676b22e08dce864797c4af2c719f1a298fb2122fa01575fa841f2ae838702"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-9d45d8943988.png": {
+      "bytes": 989,
+      "sha256": "819fdc8540b7f0f79c583e37f27a2bdc4eef190e64d6ccc77dc9d957cab28069"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-c3dfcc566767.png": {
+      "bytes": 1451,
+      "sha256": "2ba7e68c7745a59f59a71b1fe69cce101fcfe9779254a81544da60a3457bf30a"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-cbb289a8767c.png": {
+      "bytes": 2785,
+      "sha256": "840e5159961a01ed5c7fe92e11cddc03e40c75c4f9fb78e963885c9ca55e0d5b"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-de9a5689abb3.png": {
+      "bytes": 1444,
+      "sha256": "3db2053552c0e7f5de60aeac435c9b477030cec02fcc8eabb67cbb2c2aa4eb04"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-e9a5ff5c9688.png": {
+      "bytes": 11316,
+      "sha256": "7d8de90df90379a8f5a558d063df25d2d9a7358098b1d3d139b43f65aaa4abe4"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-f045b9ca8f63.png": {
+      "bytes": 851,
+      "sha256": "ba4d75bcd98b76d7a30ebdaeafdbdffe82d799518ee6e89f72f9c0d16c8fde54"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-qiuhua-f346fb3be812.png": {
+      "bytes": 9064,
+      "sha256": "a38a13f43c2bedb0cb9149ad687fb4fb74cfcb7fa7b8e20f877f76ce9893c1d9"
+    },
+    "42/media/ui/AimohPMXReadyRoom/portrait-pmx-40dbcd572c1fb3f8.png": {
+      "bytes": 35439,
+      "sha256": "1965f5b28005328ee700eb69e6c1fdbd3ec5ca68aee8f527f66d2f91f3972642"
+    },
+    "42/media/ui/AimohPMXReadyRoom/portrait-pmx-7d46f9b7159f3332.png": {
+      "bytes": 33246,
+      "sha256": "da92c3920f2c385b7e7401f404cb90eae6ca1de194edfc71a0aa7121ad7478c3"
+    },
+    "42/media/ui/AimohPMXReadyRoom/recruitment/soppo.png": {
+      "bytes": 31667,
+      "sha256": "9d1889e521624ddff38124c2fe36d5bc4d8ecb991d39d2a05545ea1e092912a8"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",
   "character_packs": {
     "R116Qiuhua": {
       "files": {
+        "42/media/models_X/GFL2/Trailblazer.x": {
+          "bytes": 1416431,
+          "sha256": "1b8bc38914c3f034d57884255081c8c4913d44016183a22a5a0959bb236b551b"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Trailblazer-suppressed-1.wav": {
+          "bytes": 96044,
+          "sha256": "70db50d9fa5b5a9d5880830b1fc5fa19fc3aaf43bfd570789ddecddeed9422b8"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Trailblazer-suppressed-2.wav": {
+          "bytes": 96044,
+          "sha256": "4a59db7adb9acf71531ebda94dd3f3170a0342820ecd12dae1cfbf97ad32c5c0"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Trailblazer-suppressed-3.wav": {
+          "bytes": 96044,
+          "sha256": "e6994777d31faef418ceca626862b71834f3f080017cd037ae036ee992766b71"
+        },
+        "42/media/textures/GFL2/Trailblazer.png": {
+          "bytes": 655075,
+          "sha256": "b1f14bb235c34f212a1fd46449ccf944a0cd140fbfa462ddbb57dec10e56413f"
+        },
+        "42/media/textures/Item_GFL2Trailblazer.png": {
+          "bytes": 48487,
+          "sha256": "4032aece88a64c70693504aa0c1b47c07eda22c59e974ef492f6be0b2f4b20bd"
+        },
+        "42/media/ui/GFL2/TrailblazerCard.png": {
+          "bytes": 95110,
+          "sha256": "313b85de5b500716351d004eed9372ecc044d406704ced912f454263cadeea95"
+        },
         "42/icon.png": {
           "bytes": 86234,
           "sha256": "1cdb7cf5faf4d0b1d8052e95eafac2b6c4e8705a0e399b9b2c706b679cb4bd73"
         },
         "42/mod.info": {
-          "bytes": 139,
-          "sha256": "79ab68186b2c8885cbe846ec0a53d585df4cbe0463ed593473078bb429d74de6"
+          "bytes": 140,
+          "sha256": "e3fddc38856d6da8fff2500ab9e81f31a748e921ce05fbffc8b0cbd7c813a9b3"
         },
         "42/poster.png": {
           "bytes": 239847,
@@ -7384,6 +7516,38 @@
     },
     "R116Laiya": {
       "files": {
+        "42/media/models_X/GFL2/Schlitzohr.x": {
+          "bytes": 2018894,
+          "sha256": "3f408df614aac0453ccdeff68cc9d78df8e6150259ff6bb4229007da3fc6c70c"
+        },
+        "42/media/models_X/GFL2/SchlitzohrEmpty.x": {
+          "bytes": 1880492,
+          "sha256": "d0589fdc15f484e9f37aaf59b861bb00d04f3f15526bf4e88ea7c2e376041e61"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-1.wav": {
+          "bytes": 131168,
+          "sha256": "8daf339a9c7e6c29b9c452f68dde6ee39ffc7e570220cf749f60b61c35f08eeb"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-2.wav": {
+          "bytes": 131168,
+          "sha256": "186dd122e60a4c14304a1c27f95ff482f962b185a4b6d73bb7e4b9ecbe235dde"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-3.wav": {
+          "bytes": 131168,
+          "sha256": "aee9ad8021b95f0b6bd2097919d9fd14f3d822f2027db9995be664e0095c06d8"
+        },
+        "42/media/textures/GFL2/Schlitzohr.png": {
+          "bytes": 694903,
+          "sha256": "3bfea332d354d98e729e230d99005ac0ec7f18fbe3cdc1dd36bd10d571eec2a6"
+        },
+        "42/media/textures/Item_GFL2Schlitzohr.png": {
+          "bytes": 55830,
+          "sha256": "33fa9bfc8c487dc3ce740227e096473daee07f917aab01d000d67a0b9089047a"
+        },
+        "42/media/ui/GFL2/SchlitzohrCard.png": {
+          "bytes": 100487,
+          "sha256": "23283beb69d869478e1d9b9e6638f142289de3cb15ff41a7a4f878fac3eedc4b"
+        },
         "42/icon.png": {
           "bytes": 78857,
           "sha256": "b54ab28c6c89843153b325a61d189c1bfdb4e87b684cec79aea480492aa951cf"
@@ -8982,7 +9146,7 @@
         },
         "42/mod.info": {
           "bytes": 131,
-          "sha256": "49bc7080bb40d4c3fb834a08637cb53cbaca8944cf4fc32a74f0d776ff65c6d0"
+          "sha256": "bf1d94c21b71f31fc8cce18cbdfa24a1bf22bcba218383fea517e4a876610a6f"
         },
         "42/media/lua/client/ZZ_AimohPMXLaiyaVoice.lua": {
           "bytes": 439,
@@ -9268,6 +9432,38 @@
     },
     "R116Cheyanne": {
       "files": {
+        "42/media/models_X/GFL2/NightRoaming.x": {
+          "bytes": 1656266,
+          "sha256": "2b367d04830e01b23b9c12f738866beebc515a48bb8a3dfb3a9852b2247fa79f"
+        },
+        "42/media/models_X/GFL2/NightRoamingEmpty.x": {
+          "bytes": 1568633,
+          "sha256": "1b7762b17e581db99f8dd929b7d6c0c0290d4c0cf52c811d2ab8deae74387ea4"
+        },
+        "42/media/sound/GFL2SignatureWeapons/NightRoaming-suppressed-1.wav": {
+          "bytes": 129644,
+          "sha256": "45cd5f6741dfbec26e4c9e92f1b5f0af3667e06724efe8a7afd786dee1c19024"
+        },
+        "42/media/sound/GFL2SignatureWeapons/NightRoaming-suppressed-2.wav": {
+          "bytes": 143030,
+          "sha256": "e19a54db77f82befa40d331eab834cbbf54e456a0bb47069022ab4d411f3a5ad"
+        },
+        "42/media/sound/GFL2SignatureWeapons/NightRoaming-suppressed-3.wav": {
+          "bytes": 190242,
+          "sha256": "711fc630f95e6f151708bd1c391c1ad201339bf1fdf1c5f5292392ca5889d2bc"
+        },
+        "42/media/textures/GFL2/NightRoaming.png": {
+          "bytes": 547996,
+          "sha256": "947cd3388d00aecbc4357744ee45769c012ac7cd88e3fbd0e5625168d8e79d50"
+        },
+        "42/media/textures/Item_GFL2NightRoaming.png": {
+          "bytes": 49667,
+          "sha256": "df94bac4b18de674592077838426aa933a583cde7ea693cbd97528745f8deb3e"
+        },
+        "42/media/ui/GFL2/NightRoamingCard.png": {
+          "bytes": 89582,
+          "sha256": "02f3fa4a8a6f47ad52e3022e889bf3ba14f69cbfa9dc2dc24d35e86f14bf428b"
+        },
         "42/icon.png": {
           "bytes": 75521,
           "sha256": "5f48e57ea7e3f6801e6f48f47e091d9c73b0de9e35f8316ccb748660df62584a"
@@ -10473,13 +10669,45 @@
           "sha256": "f3e9d2c9d36e58da5cb4df77be70a974f6231fcce4d63121878dca30cae7b91e"
         },
         "42/mod.info": {
-          "bytes": 133,
-          "sha256": "226c3b2d940a41eb97b54036265674f620052b2815eb414fe68e2935fc0e1cdc"
+          "bytes": 142,
+          "sha256": "ca5dd0f134c215f15ba3de79bbeee049758ec8c038d9d423235f8899abb1a7ea"
         }
       }
     },
     "R116Asteria": {
       "files": {
+        "42/media/models_X/GFL2/ConfessionCompass.x": {
+          "bytes": 2472581,
+          "sha256": "7db6c255cd3636e5f44c367e21606bd90ed4341973ca8025802a948fcb937821"
+        },
+        "42/media/models_X/GFL2/ConfessionCompassEmpty.x": {
+          "bytes": 2368179,
+          "sha256": "d9745cf5d2b6b2a9e6105c9e0f4d5ab41ed1c7d9329b446265b6a2f775e1c1a6"
+        },
+        "42/media/sound/GFL2SignatureWeapons/ConfessionCompass-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/ConfessionCompass-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/ConfessionCompass-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/ConfessionCompass.png": {
+          "bytes": 663427,
+          "sha256": "c865b7275297eeb80d347d328237ba89a45e19d22d842d98aa595e2a3e9795bc"
+        },
+        "42/media/textures/Item_GFL2ConfessionCompass.png": {
+          "bytes": 54330,
+          "sha256": "d85283a996146188ff638017c60645b5385b2a84e712d4ccb1a4b00566ee6fa7"
+        },
+        "42/media/ui/GFL2/ConfessionCompassCard.png": {
+          "bytes": 119602,
+          "sha256": "c297d4ca1a6018e7054275344b2c4ec23a7957e3cd8421c58e9c64134d1c199a"
+        },
         "42/icon.png": {
           "bytes": 75600,
           "sha256": "94b31f6c5e2dbd196dea7281557a64b72b8e402067ef8f71b49133f125a22867"
@@ -11857,8 +12085,8 @@
           "sha256": "9931ce442e2b9e25ab87a00a191045321b80126fb6a82943a22ce6b117c44e52"
         },
         "42/mod.info": {
-          "bytes": 138,
-          "sha256": "6c449f1b759d0f19e3db69518aa268178c6ff201954a86a2a398ff8cafda0b3d"
+          "bytes": 147,
+          "sha256": "c30ae5becef9ccc694d16177a5e6bb006bc8d96b6c06a16edd23244851630d0c"
         }
       }
     },
@@ -12969,8 +13197,8 @@
           "sha256": "123a5ed6129e0a598c5f55232c37465819802df01302d1d9fec8ae6abd8749bc"
         },
         "42/mod.info": {
-          "bytes": 134,
-          "sha256": "9e965a333c3615885fb5fce826988f09c162d342f7c9bf9f9ab694c8437fa77a"
+          "bytes": 135,
+          "sha256": "af0a0ab65fcfe913909584832956690ddc76832f30455c56f0b6e3070b72ba13"
         },
         "42/media/lua/client/ZZ_AimohPMXKlaidVoice.lua": {
           "bytes": 71843,
@@ -13000,6 +13228,38 @@
     },
     "R116Nikketa": {
       "files": {
+        "42/media/models_X/GFL2/GuardianSilverwing.x": {
+          "bytes": 1924381,
+          "sha256": "13dd251451accc7d2178b6283829beee72d41872f1e5a0d710555e9e6ff4103a"
+        },
+        "42/media/models_X/GFL2/GuardianSilverwingEmpty.x": {
+          "bytes": 1735839,
+          "sha256": "ebb0dd2b746a27efa5e0013e6395f4c3a963e9edbd144d0c1be7e7ce0baefd3e"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-1.wav": {
+          "bytes": 96512,
+          "sha256": "10ae3bf4e3edbb6f1ae33bfd927317ddfb53093fb0abdcc5453c4964e2ada93d"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-2.wav": {
+          "bytes": 85304,
+          "sha256": "4b5f5237c5926dabe52deba954484925cdbbab4b93b59474aedebde3b537eabd"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-3.wav": {
+          "bytes": 79976,
+          "sha256": "0848fcc973fb267a97f567b3eb6667df101cb763c22edeb9171af30b4df01187"
+        },
+        "42/media/textures/GFL2/GuardianSilverwing.png": {
+          "bytes": 665393,
+          "sha256": "197baf42cfde58b4413a6d69cac032c2d6af9643f5467d3c82882f1132d54ac0"
+        },
+        "42/media/textures/Item_GFL2GuardianSilverwing.png": {
+          "bytes": 61039,
+          "sha256": "537e9b0fcd2461fc43f2a2c5e270ddf3d342496f31524ca666feec89edb21794"
+        },
+        "42/media/ui/GFL2/GuardianSilverwingCard.png": {
+          "bytes": 98720,
+          "sha256": "adc3c2f1d80ef984c935d02445281b9f0c25a38e846611f5ffbef57f4ba71165"
+        },
         "42/icon.png": {
           "bytes": 87003,
           "sha256": "dda658c08a0e91374255d5e24266f4d545cea50caab6f77bf27133fb5c7363ba"
@@ -14881,8 +15141,8 @@
           "sha256": "a3675e4e8d637e9c9bae9b7195c26ac1046afc2d5abc9501a188da3f984a8a7c"
         },
         "42/mod.info": {
-          "bytes": 135,
-          "sha256": "96c1e85d1db690f4d03ec2c5f4d13147406b43a26cfc3abdbb96fd366eba6197"
+          "bytes": 136,
+          "sha256": "0d1c378e02fee4c9e0636205cbafc04fa68e0e63e5a7bed42e94e3260ba55448"
         },
         "42/media/lua/client/ZZ_AimohPMXNikketaVoice.lua": {
           "bytes": 54611,
@@ -14892,13 +15152,45 @@
     },
     "R116Florence": {
       "files": {
+        "42/media/models_X/GFL2/Iaso.x": {
+          "bytes": 989529,
+          "sha256": "45e93a1da8e5cbb8c2a8142fe77234d840ce259d1759db6de31fe3cdec654e32"
+        },
+        "42/media/models_X/GFL2/IasoEmpty.x": {
+          "bytes": 894155,
+          "sha256": "37da9782ffe213a7480eca81b928be53a0f2bc5f7e08ab03539d8b0dbff09c42"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Iaso-suppressed-1.wav": {
+          "bytes": 131168,
+          "sha256": "8daf339a9c7e6c29b9c452f68dde6ee39ffc7e570220cf749f60b61c35f08eeb"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Iaso-suppressed-2.wav": {
+          "bytes": 131168,
+          "sha256": "186dd122e60a4c14304a1c27f95ff482f962b185a4b6d73bb7e4b9ecbe235dde"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Iaso-suppressed-3.wav": {
+          "bytes": 131168,
+          "sha256": "aee9ad8021b95f0b6bd2097919d9fd14f3d822f2027db9995be664e0095c06d8"
+        },
+        "42/media/textures/GFL2/Iaso.png": {
+          "bytes": 516457,
+          "sha256": "fe503219e73b79684461f5d0b2ca12a07d0faa7f3c88ab16243fafa087351293"
+        },
+        "42/media/textures/Item_GFL2Iaso.png": {
+          "bytes": 32346,
+          "sha256": "0e999e0253c516e461bf3f93860094520fe63f0bd5fa4022eca8df6062dfee6b"
+        },
+        "42/media/ui/GFL2/IasoCard.png": {
+          "bytes": 73987,
+          "sha256": "2d4963d30a008072f573449e9c4b85fbb5c3854479b35b122d3afccb51976a07"
+        },
         "42/icon.png": {
           "bytes": 93443,
           "sha256": "cce19a4ee70b1f6a7ec5be264e8e0e9dbc0ab0801a9899e251f2dab8af115b91"
         },
         "42/mod.info": {
-          "bytes": 136,
-          "sha256": "f9c96dce17f11da224a32551d819427ab94a66589621de949f2c516478f5ca0b"
+          "bytes": 137,
+          "sha256": "24945fa580bcc28e956c083f6c27fb85d5108ba3f5826e295f8419d15ee39e24"
         },
         "42/poster.png": {
           "bytes": 250299,
@@ -17913,8 +18205,8 @@
           "sha256": "9cc7151d3b5e21c75e96ef00bc23490c5d53fc7a0a1c69d2af2a6ba40a4d8460"
         },
         "42/mod.info": {
-          "bytes": 129,
-          "sha256": "05baadb5b8ed6fbeb3b9bba606f8badc071bdb0e1b230dcf6140a55b48c0f54c"
+          "bytes": 130,
+          "sha256": "c63d48a2882bfa2707dca11a53cf88f16fbd0e9bf197afab30a9f2fcca5add2d"
         },
         "42/media/lua/client/ZZ_AimohPMXAlvaVoice.lua": {
           "bytes": 72016,
@@ -17924,6 +18216,38 @@
     },
     "R116Cecilia": {
       "files": {
+        "42/media/models_X/GFL2/Snotra.x": {
+          "bytes": 1952640,
+          "sha256": "f36f247d797a5c5ab9199d10784468fc615bf2c78ebe3a93c57978798af81c7b"
+        },
+        "42/media/models_X/GFL2/SnotraEmpty.x": {
+          "bytes": 1779843,
+          "sha256": "e590de933ecc49ee906dfc3dca3ac706288136dbb8effa3a05a1ec3ae8292ba7"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Snotra-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Snotra-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Snotra-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/Snotra.png": {
+          "bytes": 631795,
+          "sha256": "74c6cf355d09f26353e34ca02591b38a00e30c422310116b6cc4e4d8da991732"
+        },
+        "42/media/textures/Item_GFL2Snotra.png": {
+          "bytes": 53912,
+          "sha256": "00bbab0bb2b2d4b1b7554168b2c8d83df9a818f4c6871992a7b2502595668cc7"
+        },
+        "42/media/ui/GFL2/SnotraCard.png": {
+          "bytes": 127992,
+          "sha256": "3af13393ee4716a394266647239b778f10f06c8d22a34c9e3d283890fe58d02c"
+        },
         "42/icon.png": {
           "bytes": 77601,
           "sha256": "1515f0b1fa58960747ae3575411096f3230419159d7912df7e0827136780f728"
@@ -18413,8 +18737,8 @@
           "sha256": "a9a3165f434509dfa254d47f8534a018dd64b3649ff2ea42ccb7232e765b3c9e"
         },
         "42/mod.info": {
-          "bytes": 135,
-          "sha256": "636742615a31044d5ec7ef20db106e2c1db98cb3929f7b89840108e55a7d8ce6"
+          "bytes": 144,
+          "sha256": "ac9ca7cadf15c75d30b64e25b7da06538e7c5fcef6df94699832dc12029f2855"
         },
         "42/media/lua/client/ZZ_AimohPMXCeciliaVoice.lua": {
           "bytes": 62127,
@@ -19124,6 +19448,38 @@
     },
     "R116Centaureissi": {
       "files": {
+        "42/media/models_X/GFL2/MaidsRules.x": {
+          "bytes": 2218158,
+          "sha256": "b776335cc2bcb90209a9be051389879a2590feaa46f9a14b98e0897f162bbc23"
+        },
+        "42/media/models_X/GFL2/MaidsRulesEmpty.x": {
+          "bytes": 1990317,
+          "sha256": "c8c5a340957f9e1b65d9df837e2079a3d01cac3b2fb6febd48452dac7694568b"
+        },
+        "42/media/sound/GFL2SignatureWeapons/MaidsRules-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/MaidsRules-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/MaidsRules-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/MaidsRules.png": {
+          "bytes": 4230783,
+          "sha256": "2a8903c5a9a349c35dfbde3a257f1f0b70ff440d7931071fc6db5056b510879c"
+        },
+        "42/media/textures/Item_GFL2MaidsRules.png": {
+          "bytes": 68029,
+          "sha256": "c14036d18b337a124f0f728e2fc6ee9d88223e81b1efbc4330be06c4ba210c32"
+        },
+        "42/media/ui/GFL2/MaidsRulesCard.png": {
+          "bytes": 107458,
+          "sha256": "548972d498a930e092cd56c156d6ad894912e5eb732e51458807fd8d57171baa"
+        },
         "42/icon.png": {
           "bytes": 85797,
           "sha256": "bfd9a2f5968bfcb6c2874f9072eafd938610f5a3b54c300b3bd5ca43d60e770d"
@@ -20433,8 +20789,8 @@
           "sha256": "5792b00856e357b58f978d0a321290a7f2f306da0ef9130e68b4b6e57b37798d"
         },
         "42/mod.info": {
-          "bytes": 143,
-          "sha256": "79146604a50b15dac2c327b4a1547a11f8096137f86a82bff21f51044e35c55a"
+          "bytes": 152,
+          "sha256": "fc65a5fc18c6a9629a139b7fb8cd78ac8bcde8bd0cb7eda53260a28d65ac17ac"
         },
         "42/media/lua/client/ZZ_AimohPMXCentaureissiVoice.lua": {
           "bytes": 57532,
@@ -20444,6 +20800,38 @@
     },
     "R116Daiyan": {
       "files": {
+        "42/media/models_X/GFL2/HeavyStrings.x": {
+          "bytes": 2212406,
+          "sha256": "abc97ddd9a99b647b0e48d96ba7167664f35041836a13beb63110044190c9e42"
+        },
+        "42/media/models_X/GFL2/HeavyStringsEmpty.x": {
+          "bytes": 2059634,
+          "sha256": "412db9e022e3caebd9e0ef02baa14c7c7d9c92d897e38b9b4ef8fec36e177d39"
+        },
+        "42/media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-1.wav": {
+          "bytes": 96512,
+          "sha256": "10ae3bf4e3edbb6f1ae33bfd927317ddfb53093fb0abdcc5453c4964e2ada93d"
+        },
+        "42/media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-2.wav": {
+          "bytes": 85304,
+          "sha256": "4b5f5237c5926dabe52deba954484925cdbbab4b93b59474aedebde3b537eabd"
+        },
+        "42/media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-3.wav": {
+          "bytes": 79976,
+          "sha256": "0848fcc973fb267a97f567b3eb6667df101cb763c22edeb9171af30b4df01187"
+        },
+        "42/media/textures/GFL2/HeavyStrings.png": {
+          "bytes": 3487401,
+          "sha256": "4daa354e3984aa690ffdc0b23c69fab92be050655fb94cbe98ed4aed60011d53"
+        },
+        "42/media/textures/Item_GFL2HeavyStrings.png": {
+          "bytes": 64874,
+          "sha256": "025e55b5a4823577fe464161fac59afc2a0d98f79374d27f1a1a34315fec1412"
+        },
+        "42/media/ui/GFL2/HeavyStringsCard.png": {
+          "bytes": 134322,
+          "sha256": "acd6f32de23357a2e60f44294630efb9497220a1db23d6149c90a9ec456bd890"
+        },
         "42/icon.png": {
           "bytes": 68359,
           "sha256": "f2ee6a0af02a4a51350b2a8345b781cffcabd4139fd18a2d5af8380852c6bff7"
@@ -21585,8 +21973,8 @@
           "sha256": "a76ba63948d91fe20eb55dcc2ef145d7efb5c29847b366f7f0d5e7ba0f683ee4"
         },
         "42/mod.info": {
-          "bytes": 131,
-          "sha256": "0c6ad1d2ad81070b20929b2db3c6c212e2c1ae51ceb18338515e9bfe86c1325e"
+          "bytes": 140,
+          "sha256": "a163c065ccac474a6332821c9e500570b53c9449e54cf5a6c01dbb9b43e66ae4"
         },
         "42/media/lua/client/ZZ_AimohPMXDaiyanVoice.lua": {
           "bytes": 54085,
@@ -21596,6 +21984,38 @@
     },
     "R116Faelynn": {
       "files": {
+        "42/media/models_X/GFL2/SavageBeast.x": {
+          "bytes": 1809589,
+          "sha256": "702872169bd2ac41acfdd4a3d8ec23d1d0396ccd1a0cfe05c1026dd400c0808c"
+        },
+        "42/media/models_X/GFL2/SavageBeastEmpty.x": {
+          "bytes": 1676929,
+          "sha256": "d00bf499e084b5af58de5b5d8add9ce54d0eae6768c285f3cd66d1a1ad732656"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SavageBeast-suppressed-1.wav": {
+          "bytes": 352844,
+          "sha256": "dc7e021fd07e624d01764bcadcd5fa1dd05a2acf3273d0537150a6c8f0894581"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SavageBeast-suppressed-2.wav": {
+          "bytes": 352844,
+          "sha256": "a5c209431c22f4881103cf11a80950f2e9a1f2e8968244d8982e7b95bc15a1aa"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SavageBeast-suppressed-3.wav": {
+          "bytes": 352844,
+          "sha256": "6e0db5426fa8d17aa8a56506de1fafa04f913e5284998dd9fe112e261d12951b"
+        },
+        "42/media/textures/GFL2/SavageBeast.png": {
+          "bytes": 770274,
+          "sha256": "c777e62b1bd5493be7002de79d8969fdaf572f7c9aef93b6f94f74f442270f32"
+        },
+        "42/media/textures/Item_GFL2SavageBeast.png": {
+          "bytes": 54243,
+          "sha256": "3ee5d04045ac255ac04f4ae81a2c0b674effa5b74ccc12ba3d8e0d6a3b6bbdd2"
+        },
+        "42/media/ui/GFL2/SavageBeastCard.png": {
+          "bytes": 99593,
+          "sha256": "5afb49ab1ae149e73f74252ddb40db215331acbfefbbe1f7e872c6b13bde039b"
+        },
         "42/icon.png": {
           "bytes": 84719,
           "sha256": "857afed1422ba17eae6ddc5454961ff56779a048f8e25b7e464c3782cfeb5ff7"
@@ -22825,13 +23245,45 @@
           "sha256": "e9ec1f894538cad17b9acb1dddf9f686231f88085470a6aa0909ebd137aec912"
         },
         "42/mod.info": {
-          "bytes": 132,
-          "sha256": "864902a3f7ed23dae9ad577afbd7367d3f86d0a8e441944d884ef9fb6250dfd6"
+          "bytes": 141,
+          "sha256": "515fbfcf73bae2d2315dc1ef6ec5f6d355b97a22a97cfca5fb59c95335bdceed"
         }
       }
     },
     "R116Klukai": {
       "files": {
+        "42/media/models_X/GFL2/Scylla.x": {
+          "bytes": 1760000,
+          "sha256": "0ad02232d0f9b6e6c007b03d7627a34f9b0548cdf8a9e6b36f1ca58afaa5a9cc"
+        },
+        "42/media/models_X/GFL2/ScyllaEmpty.x": {
+          "bytes": 1650490,
+          "sha256": "32ce4e65b4c3e623185bd5dd31caa1f80926c12e63f21698b10c547ff9d0c061"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Scylla-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Scylla-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Scylla-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/Scylla.png": {
+          "bytes": 2599547,
+          "sha256": "1b3c806c6b7b0971046445574dbf8234f8d30688fdf5922c5dbcc03566404551"
+        },
+        "42/media/textures/Item_GFL2Scylla.png": {
+          "bytes": 52732,
+          "sha256": "df9c1539fd87b5094976d5a7bf65a635e4c555925a8e72a6d6992f99c95ebc40"
+        },
+        "42/media/ui/GFL2/ScyllaCard.png": {
+          "bytes": 126640,
+          "sha256": "b31a3a41e7565eb22ae5c9dc0560dd7fb6bd3a8f83bca180297f68ac0c2a6bc4"
+        },
         "42/icon.png": {
           "bytes": 59829,
           "sha256": "e13c33cb727793d54bcc1807411d4f67dc4a3d41b724d0bb8cbb5d4a06001181"
@@ -25189,8 +25641,8 @@
           "sha256": "e2c1e1918974421f0154b39088fe920ba5b9ca5ba7b0e79090fcdf6ee91f3772"
         },
         "42/mod.info": {
-          "bytes": 135,
-          "sha256": "50d025b67d8c909003068deebf16b2fe5d5c79ad944691946fbddd48b02a7761"
+          "bytes": 143,
+          "sha256": "4286ac7c0a8815e938d4dbd056cd49d7fc278594aafae11d8b604b742c451d1f"
         },
         "42/media/lua/client/ZZ_AimohPMXKlukaiVoice.lua": {
           "bytes": 62956,
@@ -25772,6 +26224,38 @@
     },
     "R116OTs14": {
       "files": {
+        "42/media/models_X/GFL2/Capitoline.x": {
+          "bytes": 2067742,
+          "sha256": "4a43e8604f73f78593d0adbb8e7d04afebe7439168ff5d7b8aeafcb723eac675"
+        },
+        "42/media/models_X/GFL2/CapitolineEmpty.x": {
+          "bytes": 1871633,
+          "sha256": "b7baf66d4176c5cc1d26e4c97cb7ec9bee26705a21a29794a4c1bb7804044f3a"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Capitoline-suppressed-1.wav": {
+          "bytes": 96512,
+          "sha256": "10ae3bf4e3edbb6f1ae33bfd927317ddfb53093fb0abdcc5453c4964e2ada93d"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Capitoline-suppressed-2.wav": {
+          "bytes": 85304,
+          "sha256": "4b5f5237c5926dabe52deba954484925cdbbab4b93b59474aedebde3b537eabd"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Capitoline-suppressed-3.wav": {
+          "bytes": 79976,
+          "sha256": "0848fcc973fb267a97f567b3eb6667df101cb763c22edeb9171af30b4df01187"
+        },
+        "42/media/textures/GFL2/Capitoline.png": {
+          "bytes": 559265,
+          "sha256": "a2ca56e7c313591c6dbb0edb3f6d1eb6a02bd4894735b4636b31d54c7745e24a"
+        },
+        "42/media/textures/Item_GFL2Capitoline.png": {
+          "bytes": 8690,
+          "sha256": "206c5b838a75bc80e31245b4af3d83853e859c8b1aa21dc642a856e83e7b0102"
+        },
+        "42/media/ui/GFL2/CapitolineCard.png": {
+          "bytes": 92069,
+          "sha256": "cc0b180568ba279c3da7ff0115d253f30b884bb3550c97f61d3676de8bd264b0"
+        },
         "42/icon.png": {
           "bytes": 73793,
           "sha256": "ce334d7f125f997c02b2b8ac3a83bff2938a43d69be7a2a426e9176797a1e2a2"
@@ -27021,8 +27505,8 @@
           "sha256": "1af272077982447cf0b25fd2d3927c463a802ce70546ae2eae37424be69c40e5"
         },
         "42/mod.info": {
-          "bytes": 130,
-          "sha256": "e6919e240fb23cb1aea7ad730b66e4b547f7b222086813a0415ddce5d630e894"
+          "bytes": 139,
+          "sha256": "b046c638d03c5dc3076419df022fa5027829cade5dd96b1ab6da35e909eac553"
         },
         "42/media/lua/client/ZZ_AimohPMXOTs14Voice.lua": {
           "bytes": 54991,
@@ -27032,13 +27516,41 @@
     },
     "R116Springfield": {
       "files": {
+        "42/media/models_X/GFL2/Radiance.x": {
+          "bytes": 1560443,
+          "sha256": "90d1378e49fcf10027d53a95afde79587bdbd671ac7d6fb08dc2179cc8922576"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Radiance-suppressed-1.wav": {
+          "bytes": 129644,
+          "sha256": "45cd5f6741dfbec26e4c9e92f1b5f0af3667e06724efe8a7afd786dee1c19024"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Radiance-suppressed-2.wav": {
+          "bytes": 143030,
+          "sha256": "e19a54db77f82befa40d331eab834cbbf54e456a0bb47069022ab4d411f3a5ad"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Radiance-suppressed-3.wav": {
+          "bytes": 190242,
+          "sha256": "711fc630f95e6f151708bd1c391c1ad201339bf1fdf1c5f5292392ca5889d2bc"
+        },
+        "42/media/textures/GFL2/Radiance.png": {
+          "bytes": 2527405,
+          "sha256": "b81b0fcab38548b4d9704c4a4363b278152f8dac12cafd9def38cc82e539405f"
+        },
+        "42/media/textures/Item_GFL2Radiance.png": {
+          "bytes": 38979,
+          "sha256": "bd1403422a866a654683cbf5a01473aa20b01e818ac973b6aee613b47220673c"
+        },
+        "42/media/ui/GFL2/RadianceCard.png": {
+          "bytes": 87766,
+          "sha256": "8a515ab61c3b9b41dddbb960f1ee41639632dd8c4a9f9f94faaf57f703ee17bb"
+        },
         "42/icon.png": {
           "bytes": 87715,
           "sha256": "733c2b77cbc7eea4066674ad7e6a41ef47d5e37ceddf94105a80269c9d74fb5f"
         },
         "42/mod.info": {
-          "bytes": 136,
-          "sha256": "ebb02a9476956291e88aaf3380daf0d8e14204e6f095e07e0afae3c55398b709"
+          "bytes": 137,
+          "sha256": "882e4b938c64b89ba59b245abe5e8bcac9a5c10980e1902f555897d81086c8dd"
         },
         "42/poster.png": {
           "bytes": 245076,
@@ -28620,6 +29132,38 @@
     },
     "R116Suomi": {
       "files": {
+        "42/media/models_X/GFL2/UnspokenCalling.x": {
+          "bytes": 1531131,
+          "sha256": "becd0e3a90861d4d2dfb0ef609b6f8ce6262c0b730d13ee47eb6a3f3a5793f7c"
+        },
+        "42/media/models_X/GFL2/UnspokenCallingEmpty.x": {
+          "bytes": 1298210,
+          "sha256": "b70f44be93ebe2780010c148a75454ce7d9080f9d36708f5a2d1b43637366569"
+        },
+        "42/media/sound/GFL2SignatureWeapons/UnspokenCalling-suppressed-1.wav": {
+          "bytes": 131168,
+          "sha256": "8daf339a9c7e6c29b9c452f68dde6ee39ffc7e570220cf749f60b61c35f08eeb"
+        },
+        "42/media/sound/GFL2SignatureWeapons/UnspokenCalling-suppressed-2.wav": {
+          "bytes": 131168,
+          "sha256": "186dd122e60a4c14304a1c27f95ff482f962b185a4b6d73bb7e4b9ecbe235dde"
+        },
+        "42/media/sound/GFL2SignatureWeapons/UnspokenCalling-suppressed-3.wav": {
+          "bytes": 131168,
+          "sha256": "aee9ad8021b95f0b6bd2097919d9fd14f3d822f2027db9995be664e0095c06d8"
+        },
+        "42/media/textures/GFL2/UnspokenCalling.png": {
+          "bytes": 2383885,
+          "sha256": "1029526ab19bc064411ff6feca0feb799c3bbd9d417951ca429555fce4a8f4e3"
+        },
+        "42/media/textures/Item_GFL2UnspokenCalling.png": {
+          "bytes": 48736,
+          "sha256": "2c15aa78baf78ef1592a6ee05664b3be76e965176e7e00efe7d1aebda968ca97"
+        },
+        "42/media/ui/GFL2/UnspokenCallingCard.png": {
+          "bytes": 67660,
+          "sha256": "c8dc0099a49c68f66019c492c508b21dc4c13a1e831c826a25d4bf68a9a6c584"
+        },
         "42/icon.png": {
           "bytes": 89691,
           "sha256": "ffc70e30a3f0817c80c1e5608135916aaf685f9e292fff0da065939bac148090"
@@ -29421,8 +29965,8 @@
           "sha256": "6605851d0c27aeb17bca7fba4d81cf501a70a05f425a9fd3fbd6f20b999bb465"
         },
         "42/mod.info": {
-          "bytes": 130,
-          "sha256": "ce1da4b572ce51b6c91e867b45426bc89a5ffac27cef4c30cda6fdbb45667f94"
+          "bytes": 139,
+          "sha256": "c59c0f08d6c5727de6ddf49b5400da21c68eb11df28180b8a328f0a9ce9087cf"
         },
         "42/media/lua/client/ZZ_AimohPMXSuomiVoice.lua": {
           "bytes": 60223,
@@ -30132,13 +30676,45 @@
     },
     "R116Lenna": {
       "files": {
+        "42/media/models_X/GFL2/Lowenjunges.x": {
+          "bytes": 1942121,
+          "sha256": "e1968fabfdee3a27dab67b0d00c279398e74b8b79d40dc6bef7f8846b5aeb0f8"
+        },
+        "42/media/models_X/GFL2/LowenjungesEmpty.x": {
+          "bytes": 1759551,
+          "sha256": "301374615ff218b6e9efa63f9e2beffefe751fddff67b842ddeff2bc1cba26ec"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Lowenjunges-suppressed-1.wav": {
+          "bytes": 131168,
+          "sha256": "8daf339a9c7e6c29b9c452f68dde6ee39ffc7e570220cf749f60b61c35f08eeb"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Lowenjunges-suppressed-2.wav": {
+          "bytes": 131168,
+          "sha256": "186dd122e60a4c14304a1c27f95ff482f962b185a4b6d73bb7e4b9ecbe235dde"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Lowenjunges-suppressed-3.wav": {
+          "bytes": 131168,
+          "sha256": "aee9ad8021b95f0b6bd2097919d9fd14f3d822f2027db9995be664e0095c06d8"
+        },
+        "42/media/textures/GFL2/Lowenjunges.png": {
+          "bytes": 2947641,
+          "sha256": "7f39e5358d3bbb2eff45371030d5c7e8cb521b63e3a35c0fe96f7c57450b758e"
+        },
+        "42/media/textures/Item_GFL2Lowenjunges.png": {
+          "bytes": 52182,
+          "sha256": "1aeccce46b7e7621063bab179880f0e9c14e1c96f62ce2adeba213fdd700dda8"
+        },
+        "42/media/ui/GFL2/LowenjungesCard.png": {
+          "bytes": 84293,
+          "sha256": "d39a3eb5c10e6b0d27eb08666674fa3051b2856ff2ea9f6814f4bd63da5fee51"
+        },
         "42/icon.png": {
           "bytes": 92282,
           "sha256": "6455c689e6c304dc771131d52425fa4cc1df8c9242c0edac0079f2d5fcaebf8b"
         },
         "42/mod.info": {
-          "bytes": 130,
-          "sha256": "81907d8ee39ac1a758feae88ab2996c532e02c43d5920facb3cec1bc2868b5b5"
+          "bytes": 131,
+          "sha256": "b7185de1cdbd8601b516a549df10184e3f590375e5e25c3b0a0301448df97393"
         },
         "42/poster.png": {
           "bytes": 251379,
@@ -31540,13 +32116,45 @@
     },
     "R116Vector": {
       "files": {
+        "42/media/models_X/GFL2/BansheesWhisper.x": {
+          "bytes": 2053667,
+          "sha256": "acc017499c92145e7a39706b0cc58a3f9489c186974a237d112a2f5d609c62ef"
+        },
+        "42/media/models_X/GFL2/BansheesWhisperEmpty.x": {
+          "bytes": 1986933,
+          "sha256": "34a2d44d0a42b47def2bb0d017b2d838c03094e9216e2bc0a9e3ee5f105da700"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BansheesWhisper-suppressed-1.wav": {
+          "bytes": 131168,
+          "sha256": "8daf339a9c7e6c29b9c452f68dde6ee39ffc7e570220cf749f60b61c35f08eeb"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BansheesWhisper-suppressed-2.wav": {
+          "bytes": 131168,
+          "sha256": "186dd122e60a4c14304a1c27f95ff482f962b185a4b6d73bb7e4b9ecbe235dde"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BansheesWhisper-suppressed-3.wav": {
+          "bytes": 131168,
+          "sha256": "aee9ad8021b95f0b6bd2097919d9fd14f3d822f2027db9995be664e0095c06d8"
+        },
+        "42/media/textures/GFL2/BansheesWhisper.png": {
+          "bytes": 733296,
+          "sha256": "73c19ccc70b28607232ac2edd6cc227a9849ed569db6436219381f641b504a40"
+        },
+        "42/media/textures/Item_GFL2BansheesWhisper.png": {
+          "bytes": 53989,
+          "sha256": "fe32bf5cfe43c97d722da38842ff627736e0342d1ede4f5d4ce32d271fda51cc"
+        },
+        "42/media/ui/GFL2/BansheesWhisperCard.png": {
+          "bytes": 144492,
+          "sha256": "01f29ad9f8fc71dca8bbed9419117c0db1b6817be8a9a29d51005742cbe5ebf4"
+        },
         "42/icon.png": {
           "bytes": 78619,
           "sha256": "b06ed66b64ae6ff1d0c689985bf7a4557811c5b1ed1ddcb67d4434b8ef085d0f"
         },
         "42/mod.info": {
-          "bytes": 134,
-          "sha256": "30fc657bdad4b2e1d8faaa34a53f57086f64afa22acd9cd6e218b5444f5e62fd"
+          "bytes": 135,
+          "sha256": "2d3a77553106bbd2dc26ee02e7fbb0805b2ba93c61601f85f41d2ab1d4d51b63"
         },
         "42/poster.png": {
           "bytes": 214840,
@@ -34800,13 +35408,29 @@
     },
     "R116Sextans": {
       "files": {
+        "42/media/models_X/GFL2/TwilightRose.x": {
+          "bytes": 2541850,
+          "sha256": "50b5dd1fda948b47e493b8afc93d19cb1adb1be1770cb70766dc283cdccf48ca"
+        },
+        "42/media/textures/GFL2/TwilightRose.png": {
+          "bytes": 690053,
+          "sha256": "38055cb1c1e4b6ec2cf330a9fa0b95a29f8a779d9d507ff6009cff00711a7229"
+        },
+        "42/media/textures/Item_GFL2TwilightRose.png": {
+          "bytes": 36036,
+          "sha256": "597bcd2339d3d7c21962458e4e5ef078c7cec226f76730fd2aafef2b9a270a6d"
+        },
+        "42/media/ui/GFL2/TwilightRoseCard.png": {
+          "bytes": 51550,
+          "sha256": "c15c2688eb7965123cc31d163088853b0b42fdffc5ea12f886c798fc0a3d45e6"
+        },
         "42/icon.png": {
           "bytes": 75070,
           "sha256": "6ea646f0553cf337931afc3c107e7369de139547733e9b0d026d42c91ee836a6"
         },
         "42/mod.info": {
-          "bytes": 135,
-          "sha256": "78047bb731701b637238f4b1eba552e48a71e77414e5044b44ba887c0c354127"
+          "bytes": 136,
+          "sha256": "6ed3a91b82c2bc9c01c9d11aa2970841917480b5ababf2d79d43d4a7d2c5a5bd"
         },
         "42/poster.png": {
           "bytes": 206565,
@@ -36596,13 +37220,45 @@
     },
     "R116Yohee": {
       "files": {
+        "42/media/models_X/GFL2/SparklingCenterstage.x": {
+          "bytes": 2310585,
+          "sha256": "e37c7e00bb823847e1082756d00b85aa91936b6d591bb5af5fef7f8b1c8179a4"
+        },
+        "42/media/models_X/GFL2/SparklingCenterstageEmpty.x": {
+          "bytes": 2198582,
+          "sha256": "014b5c86126c4cacf29eaee2c8bc71449cc46fddf372c5d72b4794665f4d9e43"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SparklingCenterstage-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SparklingCenterstage-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/SparklingCenterstage-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/SparklingCenterstage.png": {
+          "bytes": 1177633,
+          "sha256": "96520747af6120835428d2a7963050184e41af7cb6bf8028e62e84c5d8928653"
+        },
+        "42/media/textures/Item_GFL2SparklingCenterstage.png": {
+          "bytes": 57651,
+          "sha256": "9b097b2551eaa6e6ee1bd98a41cd245ba8dc00082a23ce9b62eda7098e21dbe8"
+        },
+        "42/media/ui/GFL2/SparklingCenterstageCard.png": {
+          "bytes": 141898,
+          "sha256": "d7441d6a6a2dc2b5af573005ecc0107432d790c68215cef66d9af10d57cd8592"
+        },
         "42/icon.png": {
           "bytes": 80499,
           "sha256": "88bbb366d338b489669b58aea3fc0fc4cb549e9d4a344fd9a34b1bb601731af9"
         },
         "42/mod.info": {
-          "bytes": 130,
-          "sha256": "f2be454f065c06d2dd431f753e47f84cea0e3597820013debff8f806e089f68f"
+          "bytes": 139,
+          "sha256": "739327414c8d60570eef4ad4dd803652280dd6d15abdb30cc0c2d63fed9f359f"
         },
         "42/poster.png": {
           "bytes": 218969,
@@ -37780,13 +38436,41 @@
     },
     "R116Destroyer": {
       "files": {
+        "42/media/models_X/GFL2/GaiaTerminus.x": {
+          "bytes": 2457696,
+          "sha256": "8ff5d62306edbe236964af9817f2eecbc17516e072653a2468675fe621ce46a9"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-1.wav": {
+          "bytes": 96044,
+          "sha256": "70db50d9fa5b5a9d5880830b1fc5fa19fc3aaf43bfd570789ddecddeed9422b8"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-2.wav": {
+          "bytes": 96044,
+          "sha256": "4a59db7adb9acf71531ebda94dd3f3170a0342820ecd12dae1cfbf97ad32c5c0"
+        },
+        "42/media/sound/GFL2SignatureWeapons/GaiaTerminus-suppressed-3.wav": {
+          "bytes": 96044,
+          "sha256": "e6994777d31faef418ceca626862b71834f3f080017cd037ae036ee992766b71"
+        },
+        "42/media/textures/GFL2/GaiaTerminus.png": {
+          "bytes": 494120,
+          "sha256": "0b81b42408b276f8a2eac325653fe9a196b3f13e1944d05a2399b854854460ba"
+        },
+        "42/media/textures/Item_GFL2GaiaTerminus.png": {
+          "bytes": 38335,
+          "sha256": "5fa7543f3e66c3e168d012394f7c006c35f6cfc57112f813cf17e967174d2172"
+        },
+        "42/media/ui/GFL2/GaiaTerminusCard.png": {
+          "bytes": 90831,
+          "sha256": "b9c46489b1b998011b176b1621b37fb2b342ef93533ba812b19a9a9f850dd326"
+        },
         "42/icon.png": {
           "bytes": 89720,
           "sha256": "89154edcdd8b5603b1b71ed11b093416711924de543cad4270180267b14abf3b"
         },
         "42/mod.info": {
-          "bytes": 137,
-          "sha256": "e8da2983e227649a1a0b9a456deb1f477b313a8c4e99df99f309dc09738e1eae"
+          "bytes": 138,
+          "sha256": "b1a2fdb485ba12ecb9f6fbbef5e6fad5811af7ef0b45608683af9c6cf1af0ea4"
         },
         "42/poster.png": {
           "bytes": 253570,
@@ -39124,13 +39808,45 @@
     },
     "R116Macqiato": {
       "files": {
+        "42/media/models_X/GFL2/BittersweetCaramel.x": {
+          "bytes": 1911942,
+          "sha256": "964e12357d22b527a1485c0b453e6a5fc3f5351b7fd3f626cf5c03aae5032824"
+        },
+        "42/media/models_X/GFL2/BittersweetCaramelEmpty.x": {
+          "bytes": 1842829,
+          "sha256": "67c7b67b471cdb69bb804f39426cb94c9b244fee67ebc2227315deb73b93f41f"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-1.wav": {
+          "bytes": 129644,
+          "sha256": "45cd5f6741dfbec26e4c9e92f1b5f0af3667e06724efe8a7afd786dee1c19024"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-2.wav": {
+          "bytes": 143030,
+          "sha256": "e19a54db77f82befa40d331eab834cbbf54e456a0bb47069022ab4d411f3a5ad"
+        },
+        "42/media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-3.wav": {
+          "bytes": 190242,
+          "sha256": "711fc630f95e6f151708bd1c391c1ad201339bf1fdf1c5f5292392ca5889d2bc"
+        },
+        "42/media/textures/GFL2/BittersweetCaramel.png": {
+          "bytes": 3366925,
+          "sha256": "a28f768e115c0a7434837f35577eb9dc5822d8324617569fe8c073c5b9b36d82"
+        },
+        "42/media/textures/Item_GFL2BittersweetCaramel.png": {
+          "bytes": 63371,
+          "sha256": "82c3593ab72a10ce2535afc45722a061174cb474ce2763d4f8f8f344af9a9e0e"
+        },
+        "42/media/ui/GFL2/BittersweetCaramelCard.png": {
+          "bytes": 78890,
+          "sha256": "36fbbc2c0cc37775c64b448d4b890a525236201b980fdd7c999c1ec2411b1a53"
+        },
         "42/icon.png": {
           "bytes": 60168,
           "sha256": "d0c07c8ecd9380dce2f8f7d7abe54c3e2efd41ac77e18e7f9c3c21b9cc2696af"
         },
         "42/mod.info": {
           "bytes": 137,
-          "sha256": "f072887223afc022332c30a2866340182f5d968399d12c019a2e4afa1b51f8d0"
+          "sha256": "da08af1c841f573f8fd8d3ebf4c232b61e89821279296aa143c5b540afca36b8"
         },
         "42/poster.png": {
           "bytes": 167830,
@@ -40191,6 +40907,482 @@
         "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_MacqiatoSSR02.png": {
           "bytes": 422481,
           "sha256": "49fa50296615a5b222ccfad45a923cace64d4fd5869371435944b43af9511610"
+        }
+      }
+    },
+    "R116Soppo": {
+      "files": {
+        "42/media/models_X/GFL2/Skyhowl.x": {
+          "bytes": 1771471,
+          "sha256": "1e52a940b3ffeb166c6b3b88b3777df6d41db1bedd9491d2bf0b292f9f96ada6"
+        },
+        "42/media/models_X/GFL2/SkyhowlEmpty.x": {
+          "bytes": 1699141,
+          "sha256": "61c2af416cb69d01cf2e9d1d8ee9bde3e0fa7629848b1f6358fd8a9db5134ca4"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Skyhowl-suppressed-1.wav": {
+          "bytes": 155772,
+          "sha256": "e3f3d72e55654f6f946e5739bf0327742f7a393055da5fe6237585162a7f1053"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Skyhowl-suppressed-2.wav": {
+          "bytes": 151638,
+          "sha256": "69a550a2e30110ff57008610be42326219b6563502a38161a98c7f86f649ed81"
+        },
+        "42/media/sound/GFL2SignatureWeapons/Skyhowl-suppressed-3.wav": {
+          "bytes": 151638,
+          "sha256": "65c36fe1b0a6ff461140baadacf5457260164fd35f87df2a28e3bdfdf921b42f"
+        },
+        "42/media/textures/GFL2/Skyhowl.png": {
+          "bytes": 668730,
+          "sha256": "0d6a418ab251517080ed3880a9aee14b1f8e559d9fdecf26bd5bf6e99ad7adfa"
+        },
+        "42/media/textures/Item_GFL2Skyhowl.png": {
+          "bytes": 60950,
+          "sha256": "ab032497c4eaecf337c1c66cef19be82302ac90f2faa4ad8f9bc8405fb006ec2"
+        },
+        "42/media/ui/GFL2/SkyhowlCard.png": {
+          "bytes": 148891,
+          "sha256": "fb6981d6bc1c8817c3558214b88001a748c850beaf5930d7f8469f8aa378cc5a"
+        },
+        "42/icon.png": {
+          "bytes": 108610,
+          "sha256": "802b3f04964f280ca67c79b89f0cc0e21685824a40e098268b56b03286d0fc93"
+        },
+        "42/mod.info": {
+          "bytes": 139,
+          "sha256": "1488ce62cc2b6fcdb637a69a3c4834a49a534d2c877aa0f269bbd9d3b6c3bb4e"
+        },
+        "42/poster.png": {
+          "bytes": 310884,
+          "sha256": "edf8c686d95a1144a3707186f2513efdc3662c0c9061cdc49b9e34c0cdb1e220"
+        },
+        "42/media/aimoh_pmx/packs/R116Soppo.json": {
+          "bytes": 486,
+          "sha256": "e9691ef4b74c770976365e0ff427c14bdb14fe4f43ad3625d023e9b20e51bc7e"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/chest.bin": {
+          "bytes": 140852,
+          "sha256": "ff182facdaef17fe1b0d0860555fdabd4a0cd15e1f24a9673630e4f76662be7b"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/model.controls.json": {
+          "bytes": 4436,
+          "sha256": "2045a4a5e664860e5963b5f3dc30b82e010761a341991bc93d11b80b19c51a94"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/model.pmx": {
+          "bytes": 6338518,
+          "sha256": "40dbcd572c1fb3f8f0da8fc7024c1035e9dae2ff873101be26743e4d279f2794"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/profile.json": {
+          "bytes": 74950,
+          "sha256": "0f738280369f9ac616948a1f693a642d85624bb6043461e33f682a8185ce3d11"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/shading-danrp.json": {
+          "bytes": 1204,
+          "sha256": "c91856c38fbc52cbcfd45ccb8b93f6ed3292b1c2f4c4a525b97cc30af36932b0"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/uv1-danrp.f32": {
+          "bytes": 596104,
+          "sha256": "75866caecdc286f7ce8ae8eb74ad0596070bc8200b8290845b5c05cbe3d323ad"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/chest.bin": {
+          "bytes": 43764,
+          "sha256": "bddaee418d29cf4de72db45d543372d437dc9bc5c4018eea335d063c87d0cf6a"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/model.controls.json": {
+          "bytes": 4385,
+          "sha256": "dab9af34bbdae5cc3e45c283fb8a015f3f92c17eca61155c679143d90e67001e"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/model.pmx": {
+          "bytes": 3733150,
+          "sha256": "7d46f9b7159f3332e1ac2947a856f9e6e07ab65be5c1b80b7de60adc9416e1e9"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/profile.json": {
+          "bytes": 70353,
+          "sha256": "b9f4814aa493da51d85f3844a3ad52d37d0763bcc42ae5817e12017cf6fcab17"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/shading-danrp.json": {
+          "bytes": 1170,
+          "sha256": "53ab4114859ce4404a782df1a4e157a9d3ddfb6b642c36574d9255c77b1bc99e"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/uv1-danrp.f32": {
+          "bytes": 376184,
+          "sha256": "d6e2a33256f8b2259bd870c0d6154ea3d682303c9ac4539a49e6af4933711716"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/Eff_MatCap_007.png": {
+          "bytes": 28367,
+          "sha256": "417778911f0ecf601d4cad4545d28d8353752196d744810fff030d4989797b05"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/eyes.png": {
+          "bytes": 13427,
+          "sha256": "5f9aced4edbcd24ed910a61bd31235a02d324162ee348b9ea459227d0a7033f6"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/hair-a.bmp": {
+          "bytes": 1000054,
+          "sha256": "294e409881928fec759188f700819c83981a467135b2d2e489d09ad6a31ca377"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/ref001-b.png": {
+          "bytes": 18517,
+          "sha256": "68ef95e14ff409f83813fafb29d8c8df051b7e082b1ea169d773d9f4322ac644"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/skin.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/skintoon.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/Socks2.png": {
+          "bytes": 52382,
+          "sha256": "a6b2dcb6a14921cf212d03fe165af5c092361725adc2de9f978a92e7f002c92b"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/SSShine1.png": {
+          "bytes": 2570,
+          "sha256": "d17f942bcd59399dcbef14eef4a04f4eb892363aeaa534e25fea75cf066b9d8c"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/SSShine2.png": {
+          "bytes": 2206,
+          "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/spa/SToon01.png": {
+          "bytes": 187,
+          "sha256": "74b16291773b59ca00b433d6bd6a8a695475c406ec17e572d9279cbf74f1e4e6"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/body_d.png": {
+          "bytes": 405617,
+          "sha256": "f0c8300379b083dd9ee7cacf065ab99d527e1b1f63efdbccafbf80746111fd52"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/body_zhijia01_da.png": {
+          "bytes": 25380,
+          "sha256": "6cb8c6be7fd66a1623caa6b0b2848d23fbe109a47cbd5b72c04ed273abc86ae2"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_SoppoSSR01_slg_cloth1_d.png": {
+          "bytes": 2098140,
+          "sha256": "92bff2ec2d874245b0f81b4ee80a684decdd9aefbcc4db107a8d1205f9a3081a"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_SoppoSSR01_slg_cloth2_d.png": {
+          "bytes": 2469893,
+          "sha256": "a688371ea482e2168dd5af7c4339f6df316ef341bfabfe48cecf0f89cbf7f0d5"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_SoppoSSR01_slg_cloth3_d.png": {
+          "bytes": 4422041,
+          "sha256": "c21c4bc4c9a140f7675980ceef7b7f3ff812853673e93bb56e71e91e0cb855ee"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_SoppoSSR01_slg_cloth4_da.png": {
+          "bytes": 28189,
+          "sha256": "aef9fbad153a3ec6971f31f4b75aa12c5e46a59aac60faafc969d095bac8a4fe"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_SoppoSSR01_slg_hair_d.png": {
+          "bytes": 2072755,
+          "sha256": "ed430528360095e03af9c3f9d2cd2c8e924f673bc7c07d43ed05935563b44b1b"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_Soppo_slg_eyeblend.png": {
+          "bytes": 28695,
+          "sha256": "4b97508663df4feaa9a09e3e3dfb9ea0e898e08484c47e0ec488da9457b66e2c"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_Soppo_slg_eye_d.png": {
+          "bytes": 178867,
+          "sha256": "627329817838255739f29de7e319c73761160f630d446452ef2b1eaa16ffe230"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/c_Soppo_slg_face_d.png": {
+          "bytes": 688520,
+          "sha256": "805e8052ae583155f37fd317efa91c15fd6ca2552dd421ea00966c9d60fe0a8d"
+        },
+        "42/media/aimoh_pmx/models/pmx-40dbcd572c1fb3f8/Textures/extra.png": {
+          "bytes": 406242,
+          "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/Eff_MatCap_007.png": {
+          "bytes": 28367,
+          "sha256": "417778911f0ecf601d4cad4545d28d8353752196d744810fff030d4989797b05"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/eyes.png": {
+          "bytes": 13427,
+          "sha256": "5f9aced4edbcd24ed910a61bd31235a02d324162ee348b9ea459227d0a7033f6"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/hair-a.bmp": {
+          "bytes": 1000054,
+          "sha256": "294e409881928fec759188f700819c83981a467135b2d2e489d09ad6a31ca377"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/ref001-b.png": {
+          "bytes": 18517,
+          "sha256": "68ef95e14ff409f83813fafb29d8c8df051b7e082b1ea169d773d9f4322ac644"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/skin.png": {
+          "bytes": 43179,
+          "sha256": "cd89ade6434967faebf2eeefdbab6af717b659c74e89b99e1f6e8dbf2db765ab"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/skintoon.bmp": {
+          "bytes": 7656,
+          "sha256": "ee1b282d68160516ff6d0a82571429b6c369a40795ddde887de310a173dd8ccd"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/Socks2.png": {
+          "bytes": 52382,
+          "sha256": "a6b2dcb6a14921cf212d03fe165af5c092361725adc2de9f978a92e7f002c92b"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/SSShine1.png": {
+          "bytes": 2570,
+          "sha256": "d17f942bcd59399dcbef14eef4a04f4eb892363aeaa534e25fea75cf066b9d8c"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/SSShine2.png": {
+          "bytes": 2206,
+          "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/spa/SToon01.png": {
+          "bytes": 187,
+          "sha256": "74b16291773b59ca00b433d6bd6a8a695475c406ec17e572d9279cbf74f1e4e6"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/body_d.png": {
+          "bytes": 405617,
+          "sha256": "f0c8300379b083dd9ee7cacf065ab99d527e1b1f63efdbccafbf80746111fd52"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/body_zhijia01_da.png": {
+          "bytes": 25380,
+          "sha256": "6cb8c6be7fd66a1623caa6b0b2848d23fbe109a47cbd5b72c04ed273abc86ae2"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR0101_slg_cloth_d.png": {
+          "bytes": 721887,
+          "sha256": "43bb06e0eb1b947e5f34c7e590372aaede36cbafabc33f0cbda29d207d36f1f2"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR0101_slg_cloth_trans_ubertrans_da.png": {
+          "bytes": 286741,
+          "sha256": "2a772b017f161d2587b78d4831b808eb5109838f1f73daec24e75c4d75e67d67"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR0101_slg_P1_body_d.png": {
+          "bytes": 1356365,
+          "sha256": "8f8554a540b9b4f43bec50eb103f394ab79b5a914a8633ef5b5add8562473005"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR0101_slg_P1_cloth1_d.png": {
+          "bytes": 560265,
+          "sha256": "f82f699a9fe6791d1cc20a2c94948b9533250339efe0c17990e90ac68752c228"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR0101_slg_P1_head_da.png": {
+          "bytes": 51631,
+          "sha256": "4213691c5fe35f6f1006c4c9f7dcec9e4cf121c777bb2f5778214f1dcd944aa8"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR01_slg_cloth3_d.png": {
+          "bytes": 4422041,
+          "sha256": "c21c4bc4c9a140f7675980ceef7b7f3ff812853673e93bb56e71e91e0cb855ee"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR01_slg_cloth4_da.png": {
+          "bytes": 28189,
+          "sha256": "aef9fbad153a3ec6971f31f4b75aa12c5e46a59aac60faafc969d095bac8a4fe"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_SoppoSSR01_slg_hair_d.png": {
+          "bytes": 2072755,
+          "sha256": "ed430528360095e03af9c3f9d2cd2c8e924f673bc7c07d43ed05935563b44b1b"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_Soppo_slg_eyeblend.png": {
+          "bytes": 28695,
+          "sha256": "4b97508663df4feaa9a09e3e3dfb9ea0e898e08484c47e0ec488da9457b66e2c"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_Soppo_slg_eye_d.png": {
+          "bytes": 178867,
+          "sha256": "627329817838255739f29de7e319c73761160f630d446452ef2b1eaa16ffe230"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/c_Soppo_slg_face_d.png": {
+          "bytes": 688520,
+          "sha256": "805e8052ae583155f37fd317efa91c15fd6ca2552dd421ea00966c9d60fe0a8d"
+        },
+        "42/media/aimoh_pmx/models/pmx-7d46f9b7159f3332/Textures/extra.png": {
+          "bytes": 406242,
+          "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
+        },
+        "42/media/gfl2_rendering/data/05256c6268ceeb15298a94b2033b1e5201604d5c0fe6296412128532422f0b56.bin": {
+          "bytes": 1398128,
+          "sha256": "05256c6268ceeb15298a94b2033b1e5201604d5c0fe6296412128532422f0b56"
+        },
+        "42/media/gfl2_rendering/data/089d4ef35c5da69e3be21abdc6cb3b68e70cb83a35ab332290f022d7c1784ed4.bin": {
+          "bytes": 1398128,
+          "sha256": "089d4ef35c5da69e3be21abdc6cb3b68e70cb83a35ab332290f022d7c1784ed4"
+        },
+        "42/media/gfl2_rendering/data/094ec42d8a0d9dadddfa72319aa4f611b4cd4f69d3ca2086b137f07f23ac078a.bin": {
+          "bytes": 1398128,
+          "sha256": "094ec42d8a0d9dadddfa72319aa4f611b4cd4f69d3ca2086b137f07f23ac078a"
+        },
+        "42/media/gfl2_rendering/data/12b2a16911e133e997ef01be22e9fb26bf1beb80a9850f73febdbabcc498c76d.f32": {
+          "bytes": 544,
+          "sha256": "12b2a16911e133e997ef01be22e9fb26bf1beb80a9850f73febdbabcc498c76d"
+        },
+        "42/media/gfl2_rendering/data/15f4fdef14bba6b28233ad270ffaf6eba54cfd848f1392d319431bf8d3e7e7d2.bin": {
+          "bytes": 1398128,
+          "sha256": "15f4fdef14bba6b28233ad270ffaf6eba54cfd848f1392d319431bf8d3e7e7d2"
+        },
+        "42/media/gfl2_rendering/data/182540efbe39f41ba6b51d16ee13defc0bfcc78fc28db4020ad350b6bf225752.f32": {
+          "bytes": 6258688,
+          "sha256": "182540efbe39f41ba6b51d16ee13defc0bfcc78fc28db4020ad350b6bf225752"
+        },
+        "42/media/gfl2_rendering/data/320bd0b70056b84b943cebd96f9d681c9b9693ccebe4e3abf843f8de775c8efb.bin": {
+          "bytes": 32768,
+          "sha256": "320bd0b70056b84b943cebd96f9d681c9b9693ccebe4e3abf843f8de775c8efb"
+        },
+        "42/media/gfl2_rendering/data/3302ad6b8a99919255a55470b836dac44befdc0973dca82be69cafa2bc8eb2c0.bin": {
+          "bytes": 349552,
+          "sha256": "3302ad6b8a99919255a55470b836dac44befdc0973dca82be69cafa2bc8eb2c0"
+        },
+        "42/media/gfl2_rendering/data/33afb1a193b66afc433ad00afd508173f5694eea4043c09b7a2daec2b2a86fa0.bin": {
+          "bytes": 2796216,
+          "sha256": "33afb1a193b66afc433ad00afd508173f5694eea4043c09b7a2daec2b2a86fa0"
+        },
+        "42/media/gfl2_rendering/data/358399c18e3dae31b1da917ef7aa167dc24db97db480bc907b87bbdcc2d1609b.bin": {
+          "bytes": 32768,
+          "sha256": "358399c18e3dae31b1da917ef7aa167dc24db97db480bc907b87bbdcc2d1609b"
+        },
+        "42/media/gfl2_rendering/data/392675cd6ff997b6e799474a114b9dd4df1f4e315c5fcbf37a263380a1bda63a.bin": {
+          "bytes": 1956620,
+          "sha256": "392675cd6ff997b6e799474a114b9dd4df1f4e315c5fcbf37a263380a1bda63a"
+        },
+        "42/media/gfl2_rendering/data/4362c93b7be6cf8653fddf7e5ed347563803df9046be4e19e6c5b3faeee51c10.bin": {
+          "bytes": 349552,
+          "sha256": "4362c93b7be6cf8653fddf7e5ed347563803df9046be4e19e6c5b3faeee51c10"
+        },
+        "42/media/gfl2_rendering/data/48b57fb69287f2154f43acd564b5a04e96f23269656cc445c7a96824268fb2fb.bin": {
+          "bytes": 5592432,
+          "sha256": "48b57fb69287f2154f43acd564b5a04e96f23269656cc445c7a96824268fb2fb"
+        },
+        "42/media/gfl2_rendering/data/4ca13552d9ccca989882cbba3530e48059873f652bb39067be527c543d721c7d.bin": {
+          "bytes": 2796216,
+          "sha256": "4ca13552d9ccca989882cbba3530e48059873f652bb39067be527c543d721c7d"
+        },
+        "42/media/gfl2_rendering/data/4dd671314e1299bd75590d251443912fca4a9dae5e320d548308e53e34427764.f32": {
+          "bytes": 544,
+          "sha256": "4dd671314e1299bd75590d251443912fca4a9dae5e320d548308e53e34427764"
+        },
+        "42/media/gfl2_rendering/data/5414b2bf2a96d1380ee8b8d0a54c7dc0ca36ba20a21d5ec637a822c1adcb913c.bin": {
+          "bytes": 5592432,
+          "sha256": "5414b2bf2a96d1380ee8b8d0a54c7dc0ca36ba20a21d5ec637a822c1adcb913c"
+        },
+        "42/media/gfl2_rendering/data/6d4ebc2201c82d718f4a23c62d2472a3827e355608b08d2f3a3499cfb6117884.f32": {
+          "bytes": 544,
+          "sha256": "6d4ebc2201c82d718f4a23c62d2472a3827e355608b08d2f3a3499cfb6117884"
+        },
+        "42/media/gfl2_rendering/data/6fb92073d387eac09ae0ccd81e40c200785aca301e30cc56a319c05606f5e1a8.bin": {
+          "bytes": 1398128,
+          "sha256": "6fb92073d387eac09ae0ccd81e40c200785aca301e30cc56a319c05606f5e1a8"
+        },
+        "42/media/gfl2_rendering/data/7672e1de95a8c29630936e6f86fd84ad36b12efae0641d7fd4fc71744a77e5e2.bin": {
+          "bytes": 349552,
+          "sha256": "7672e1de95a8c29630936e6f86fd84ad36b12efae0641d7fd4fc71744a77e5e2"
+        },
+        "42/media/gfl2_rendering/data/793916d88ceedb5398f4eb68059e5d7e6933f7a069870e10a12a933f092d530c.bin": {
+          "bytes": 1331236,
+          "sha256": "793916d88ceedb5398f4eb68059e5d7e6933f7a069870e10a12a933f092d530c"
+        },
+        "42/media/gfl2_rendering/data/820e10c946748c46fd8eea90076587a923f3ab7518f5f20781c6944639e3a77a.bin": {
+          "bytes": 32768,
+          "sha256": "820e10c946748c46fd8eea90076587a923f3ab7518f5f20781c6944639e3a77a"
+        },
+        "42/media/gfl2_rendering/data/82e5ce8b04147f97983191c48e28db3a62ad2c50e57ece949e01b19ab6821839.bin": {
+          "bytes": 699064,
+          "sha256": "82e5ce8b04147f97983191c48e28db3a62ad2c50e57ece949e01b19ab6821839"
+        },
+        "42/media/gfl2_rendering/data/86d05bd89092e94b327f9d18e6f034539576fe558d5b01c29c1fffa1675d7420.bin": {
+          "bytes": 2796216,
+          "sha256": "86d05bd89092e94b327f9d18e6f034539576fe558d5b01c29c1fffa1675d7420"
+        },
+        "42/media/gfl2_rendering/data/953318acdfaa5e24ed03e8eedd74295961732b4ba702ae5f2c32070aca5a3e6d.bin": {
+          "bytes": 5592432,
+          "sha256": "953318acdfaa5e24ed03e8eedd74295961732b4ba702ae5f2c32070aca5a3e6d"
+        },
+        "42/media/gfl2_rendering/data/960596de6dcfb30315a383456bc4472d3746c3ef3cb0e6ddd950a2ac74a1de54.f32": {
+          "bytes": 8421376,
+          "sha256": "960596de6dcfb30315a383456bc4472d3746c3ef3cb0e6ddd950a2ac74a1de54"
+        },
+        "42/media/gfl2_rendering/data/96f3e0e77f9a2f55419752b15339a8a8449b63028147858ec395af3d2ded3fa6.bin": {
+          "bytes": 87408,
+          "sha256": "96f3e0e77f9a2f55419752b15339a8a8449b63028147858ec395af3d2ded3fa6"
+        },
+        "42/media/gfl2_rendering/data/9a2047dfbff4824952c89612475348d6619abcf37b9d6bdb398ed83d679452ca.bin": {
+          "bytes": 87408,
+          "sha256": "9a2047dfbff4824952c89612475348d6619abcf37b9d6bdb398ed83d679452ca"
+        },
+        "42/media/gfl2_rendering/data/9eec43a960c73f50a3a445f7e112ebe8717656971d5ffef5bdea41afc02cc524.bin": {
+          "bytes": 5592432,
+          "sha256": "9eec43a960c73f50a3a445f7e112ebe8717656971d5ffef5bdea41afc02cc524"
+        },
+        "42/media/gfl2_rendering/data/a0a2276787d19983da4e45d25b691b4453d394a06e5614855b8a266edd8aa79f.bin": {
+          "bytes": 5592432,
+          "sha256": "a0a2276787d19983da4e45d25b691b4453d394a06e5614855b8a266edd8aa79f"
+        },
+        "42/media/gfl2_rendering/data/a710a21a5e68bcb5f6fd388dc24e3658de20b357f1d4b97b5f67d9b1d62c3b51.bin": {
+          "bytes": 5592432,
+          "sha256": "a710a21a5e68bcb5f6fd388dc24e3658de20b357f1d4b97b5f67d9b1d62c3b51"
+        },
+        "42/media/gfl2_rendering/data/b23f2c979b7a3042e413221ffb7e9770041b9c59fde20558349484d9e774bfa9.bin": {
+          "bytes": 2796216,
+          "sha256": "b23f2c979b7a3042e413221ffb7e9770041b9c59fde20558349484d9e774bfa9"
+        },
+        "42/media/gfl2_rendering/data/b540c4f443d269bf371dea09841952d6adbdbfcf97e2f7f2ae0530d01fbab297.bin": {
+          "bytes": 1398128,
+          "sha256": "b540c4f443d269bf371dea09841952d6adbdbfcf97e2f7f2ae0530d01fbab297"
+        },
+        "42/media/gfl2_rendering/data/c0be9bbea9a472a922cf394ee871df48b43a12829ceb2479a29d0b91149e3bdd.f32": {
+          "bytes": 544,
+          "sha256": "c0be9bbea9a472a922cf394ee871df48b43a12829ceb2479a29d0b91149e3bdd"
+        },
+        "42/media/gfl2_rendering/data/c4d1778a917a1c8bcf32436888f39da1ed81dda41b4c50eb85a2a24f49742633.bin": {
+          "bytes": 2796216,
+          "sha256": "c4d1778a917a1c8bcf32436888f39da1ed81dda41b4c50eb85a2a24f49742633"
+        },
+        "42/media/gfl2_rendering/data/c9f9a53e26431a308086232605df56461b1d0f385b4a26dfb1129e0b89dec816.bin": {
+          "bytes": 5592432,
+          "sha256": "c9f9a53e26431a308086232605df56461b1d0f385b4a26dfb1129e0b89dec816"
+        },
+        "42/media/gfl2_rendering/data/d145482a003335ab65fd29e0f7ba668d3cbb49387d32686e3471828b84f8d37e.bin": {
+          "bytes": 1398128,
+          "sha256": "d145482a003335ab65fd29e0f7ba668d3cbb49387d32686e3471828b84f8d37e"
+        },
+        "42/media/gfl2_rendering/data/d5a6b2c24b9897ff2ffcbe985e9b764603c2eacb848724597d406d1437458be0.f32": {
+          "bytes": 8421376,
+          "sha256": "d5a6b2c24b9897ff2ffcbe985e9b764603c2eacb848724597d406d1437458be0"
+        },
+        "42/media/gfl2_rendering/data/e440918c06013b07efab7cf9fa6c701770e5234b8c0af0a0eee21fbe5dd3f924.bin": {
+          "bytes": 1398128,
+          "sha256": "e440918c06013b07efab7cf9fa6c701770e5234b8c0af0a0eee21fbe5dd3f924"
+        },
+        "42/media/gfl2_rendering/data/e62571ade6fbd08bab3669216aab101efa56ae4a5e2bb5044fc0be0d2b0d9b2a.bin": {
+          "bytes": 87408,
+          "sha256": "e62571ade6fbd08bab3669216aab101efa56ae4a5e2bb5044fc0be0d2b0d9b2a"
+        },
+        "42/media/gfl2_rendering/data/e77a01e30009bde0360392aaa594ce26e75e7948ca69bfdf12b1e0f1ae28a30d.f32": {
+          "bytes": 544,
+          "sha256": "e77a01e30009bde0360392aaa594ce26e75e7948ca69bfdf12b1e0f1ae28a30d"
+        },
+        "42/media/gfl2_rendering/data/eb4a99b422c17d1161d96776af4fef42cb65cdedb8856bc638b7da703eb90c0d.bin": {
+          "bytes": 5592432,
+          "sha256": "eb4a99b422c17d1161d96776af4fef42cb65cdedb8856bc638b7da703eb90c0d"
+        },
+        "42/media/gfl2_rendering/data/f26bea0b1f46fae78876b5b1e181cf5bad7de6fcd37ea6e65c9766c441e6a3d2.bin": {
+          "bytes": 349552,
+          "sha256": "f26bea0b1f46fae78876b5b1e181cf5bad7de6fcd37ea6e65c9766c441e6a3d2"
+        },
+        "42/media/gfl2_rendering/data/f343cdc74e3600cf4c66096273dd4b93ae902890d4bd28e6ee4c912322e2544d.bin": {
+          "bytes": 87408,
+          "sha256": "f343cdc74e3600cf4c66096273dd4b93ae902890d4bd28e6ee4c912322e2544d"
+        },
+        "42/media/gfl2_rendering/data/f48d5005dd2ff7dfd03a53b82c8a952263f98e98804a420a97e8dfd9eaef774e.bin": {
+          "bytes": 699064,
+          "sha256": "f48d5005dd2ff7dfd03a53b82c8a952263f98e98804a420a97e8dfd9eaef774e"
+        },
+        "42/media/gfl2_rendering/data/fb816e738a545799ec9552a9f795cf5125537b653fd1d85cff5fca25bcafc867.bin": {
+          "bytes": 1398128,
+          "sha256": "fb816e738a545799ec9552a9f795cf5125537b653fd1d85cff5fca25bcafc867"
+        },
+        "42/media/gfl2_rendering/packs/R116Soppo.json": {
+          "bytes": 1017253,
+          "sha256": "146025e82334a96248d4522998ac4dbc585562e8203162cbd4f335208f8f724c"
+        },
+        "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SoppoSSR.png": {
+          "bytes": 378989,
+          "sha256": "3d421da2704a1ba6b27a7eb3c7f3d42db01bd8553bec544dc125d2d945c44406"
+        },
+        "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SoppoSSR01.png": {
+          "bytes": 440616,
+          "sha256": "f045c8f672d5e5380b8f855868fac406b85e175db316cd1fd6636006cecd1897"
+        },
+        "42/media/ui/AimohPMXReadyRoom/packs/R116Soppo.json": {
+          "bytes": 2044,
+          "sha256": "e19e3febf886c4e8a0875e2c614565009232a07a57e241675bd90b42585888f0"
         }
       }
     }

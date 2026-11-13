@@ -256,7 +256,10 @@ final class ModelSession {
             Matrix4f locked=gripAdjustment.placement(actual);
             if(locked!=null)return locked;
         }
-        if(side>=0)return new Matrix4f().set(model.remapHeldItem(sourcePose,side==0,actual.get(new float[16]),key));
+        if(side>=0){
+            var placed=new Matrix4f().set(model.remapHeldItem(sourcePose,side==0,actual.get(new float[16]),key));
+            return gripAdjustment!=null&&side==gripAdjustment.heldSide()?gripAdjustment.translateItem(placed):placed;
+        }
         String name=root.parentBoneName;var skin=player.getSkinningData();
         Integer bone=name==null?null:skin.boneIndices.get(name);
         while(bone!=null&&bone>=0) {

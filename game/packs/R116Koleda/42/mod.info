@@ -1,7 +1,7 @@
 name=克莱妲
 id=GFL2Koleda
 require=\GFL2Exilium
-modversion=0.3.114
+modversion=0.3.118
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

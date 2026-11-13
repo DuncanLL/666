@@ -669,6 +669,22 @@
       "isDefault": false,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-74fa40dba7e013d6.png",
       "pack": "R116Klukai"
+    },
+    "pmx-7d46f9b7159f3332": {
+      "character": "索普",
+      "skin": "绯红极限",
+      "officialSkin": "绯红极限",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7d46f9b7159f3332.png",
+      "isDefault": false,
+      "pack": "R116Soppo"
+    },
+    "pmx-40dbcd572c1fb3f8": {
+      "character": "索普",
+      "skin": "默认",
+      "officialSkin": "凛霜风暴",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-40dbcd572c1fb3f8.png",
+      "isDefault": true,
+      "pack": "R116Soppo"
     }
   },
   "labels": {
@@ -2811,7 +2827,9 @@
     "pmx-020f2e8bdc65bc5b",
     "pmx-d373f73abd68a3d0",
     "pmx-7834ce1969baa199",
-    "pmx-74fa40dba7e013d6"
+    "pmx-74fa40dba7e013d6",
+    "pmx-40dbcd572c1fb3f8",
+    "pmx-7d46f9b7159f3332"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [
@@ -3171,6 +3189,19 @@
       "上，我当然也是你最正确的选择。”",
       "可露凯微微抬起下巴，自信满满地为你端上了今天",
       "的第一杯红茶。"
+    ],
+    "pmx-7d46f9b7159f3332": [
+      "“指挥官再不上车，我就要忍不住先冲出去啦！”",
+      " ",
+      "足以点燃血液的引擎声浪，将思绪拉回现实。在那",
+      "扑面而来的热浪中，那颗俏皮可爱的虎牙闪闪发",
+      "亮。",
+      "安全带已扣好，您准备好和索普一起领跑全场了",
+      "吗？"
+    ],
+    "pmx-40dbcd572c1fb3f8": [
+      "索普的常见着装。清凉的着装掩盖不了其内心的热",
+      "情，未来的路她早已决心和你共同开创。"
     ]
   },
   "roomLabels": {
@@ -6403,6 +6434,121 @@
       "path": "media/ui/AimohPMXReadyRoom/label-official-dee599914d64ebe9.png",
       "width": 256,
       "height": 40
+    },
+    "索普": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-de9a5689abb3.png",
+      "width": 76,
+      "height": 40
+    },
+    "活泼好动、热爱战斗的人形，心思比较简单，喜欢": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-8675c591081d.png",
+      "width": 796,
+      "height": 40
+    },
+    "直来直往做事，鲜少深度思考，会无条件地相信自": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-e9a5ff5c9688.png",
+      "width": 796,
+      "height": 40
+    },
+    "己的队友，并遵从你的一切命令。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-56fc7db35920.png",
+      "width": 544,
+      "height": 40
+    },
+    "“指挥官，接下来我们去做什么？没想好？那……": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-3e7a8de18503.png",
+      "width": 779,
+      "height": 40
+    },
+    "不如一起去玩吧——”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-0c0dc4a29f9d.png",
+      "width": 345,
+      "height": 40
+    },
+    "凛霜风暴": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-27a6fdea20bc.png",
+      "width": 148,
+      "height": 40
+    },
+    "索普的常见着装。清凉的着装掩盖不了其内心的热": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-21527ef68164.png",
+      "width": 796,
+      "height": 40
+    },
+    "情，未来的路她早已决心和你共同开创。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-f346fb3be812.png",
+      "width": 652,
+      "height": 40
+    },
+    "帽子": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-f045b9ca8f63.png",
+      "width": 76,
+      "height": 40
+    },
+    "显示": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-4e1449e7d5e5.png",
+      "width": 76,
+      "height": 40
+    },
+    "隐藏": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-145219e726b8.png",
+      "width": 76,
+      "height": 40
+    },
+    "背罐": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-c3dfcc566767.png",
+      "width": 76,
+      "height": 40
+    },
+    "绯红极限": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-cbb289a8767c.png",
+      "width": 148,
+      "height": 40
+    },
+    "“指挥官再不上车，我就要忍不住先冲出去啦！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-5999f105e56c.png",
+      "width": 758,
+      "height": 40
+    },
+    " ": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-36a9e7f1c95b.png",
+      "width": 14,
+      "height": 40
+    },
+    "足以点燃血液的引擎声浪，将思绪拉回现实。在那": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-0ae6adf69cca.png",
+      "width": 796,
+      "height": 40
+    },
+    "扑面而来的热浪中，那颗俏皮可爱的虎牙闪闪发": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-265a4d3c4eb5.png",
+      "width": 760,
+      "height": 40
+    },
+    "亮。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-46af4d1178b5.png",
+      "width": 76,
+      "height": 40
+    },
+    "安全带已扣好，您准备好和索普一起领跑全场了": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-46d4ca093fff.png",
+      "width": 760,
+      "height": 40
+    },
+    "吗？": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-9d45d8943988.png",
+      "width": 76,
+      "height": 40
+    },
+    "耳机": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-1bc009fa87e0.png",
+      "width": 76,
+      "height": 40
+    },
+    "墨镜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-71ae85e3f007.png",
+      "width": 76,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -6683,6 +6829,10 @@
     "秋桦": {
       "pool": "R116Qiuhua",
       "banner": "media/ui/AimohPMXReadyRoom/recruitment/qiuhua.png"
+    },
+    "索普": {
+      "pool": "R116Soppo",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/soppo.png"
     }
   },
   "roomDefaultSkinNames": {
@@ -6846,9 +6996,17 @@
     "秋桦": [
       "热情直爽的精英人形，",
       "喜欢钻研厨艺，也爱给同伴做饭。"
+    ],
+    "索普": [
+      "活泼好动、热爱战斗的人形，心思比较简单，喜欢",
+      "直来直往做事，鲜少深度思考，会无条件地相信自",
+      "己的队友，并遵从你的一切命令。",
+      "“指挥官，接下来我们去做什么？没想好？那……",
+      "不如一起去玩吧——”"
     ]
   },
   "roomWorkshopItems": {
+    "索普": "3839180718",
     "莱娅": "3838710183",
     "夏安": "3838710368",
     "阿斯缇亚": "3838710555",
@@ -6909,7 +7067,8 @@
     "pmx-020f2e8bdc65bc5b": 1080,
     "pmx-d373f73abd68a3d0": 1080,
     "pmx-7834ce1969baa199": 1080,
-    "pmx-74fa40dba7e013d6": 1080
+    "pmx-74fa40dba7e013d6": 1080,
+    "pmx-7d46f9b7159f3332": 1080
   },
   "roomStarterSkins": {
     "埃芙": "pmx-020abca186c52e7b",
@@ -6934,6 +7093,7 @@
     "幼熙": "pmx-2689b8bef5ca9503",
     "破坏者": "pmx-d1fc22f957060588",
     "玛绮朵": "pmx-0b80022fae2dbb04",
-    "秋桦": "pmx-e4fe174c77f90d6c"
+    "秋桦": "pmx-e4fe174c77f90d6c",
+    "索普": "pmx-40dbcd572c1fb3f8"
   }
 }

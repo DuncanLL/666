@@ -306,6 +306,14 @@ function W:createChildren()
     self.preview=ISPanel:new(math.floor(self.width*.5-390),50,780,self.height-100);self.preview:initialise();self.preview.background=false
     self.preview.render=function(p)
         local w=p.parent;local ok=false
+        if w.roomPage=="appearance" and w.tab=="grip" then
+            local width,height=math.floor(p.width),math.floor(p.height)
+            surface(p,0,0,width,height,.82)
+            if not AimohPMXReadyRoom.drawGripView(w.player,math.floor(p:getAbsoluteX()),math.floor(p:getAbsoluteY()),width,height,w.gripAiming==true,w.gripYaw,w.gripPitch,w.gripZoom) then
+                label(p,tr("NoPreview"),width/2,height/2,17,width-24,.83,.87,.85,1,true)
+            end
+            return
+        end
         local character=w.byCharacter and w.byCharacter[w.character]
         if w.roomPage=="appearance" and character and character.locked then
             local y=math.floor(p.height*.47)
@@ -338,23 +346,37 @@ function W:createChildren()
             label(p,tr(loading and "Loading" or "NoPreview"),p.width/2,p.height/2,17,p.width-30,.83,.87,.85,1,true)
         end
     end
-    self.preview.onMouseDown=function(p)
+    self.preview.onMouseDown=function(p,x,y)
+        if p.parent.tab=="grip" and p.parent.roomPage=="appearance" then
+            p.gripDrag=true
+            p:setCapture(true)
+            return true
+        end
         local character=p.parent.byCharacter and p.parent.byCharacter[p.parent.character]
         if character and character.locked then return true end
         p.dragging=true;p.parent.cameraTransition=nil;p:setCapture(true);return true
     end
     self.preview.onMouseMove=function(p,dx,dy)
-        if not p.dragging then return false end
         local w=p.parent
+        if p.gripDrag then
+            w.gripYaw=(w.gripYaw+dx*.008)%(2*math.pi)
+            w.gripPitch=clamp(w.gripPitch+dy*.008,-.95,.95)
+            return true
+        end
+        if not p.dragging then return false end
         w.yaw=w.yaw+dx*.008
         w.cameraPan=clamp(w.cameraPan+dy/(p.height*w.zoom),-.8,.8)
         return true
     end
     self.preview.onMouseMoveOutside=self.preview.onMouseMove
-    self.preview.onMouseUp=function(p)p.dragging=false;p:setCapture(false);return true end
+    self.preview.onMouseUp=function(p)p.dragging=false;p.gripDrag=nil;p:setCapture(false);return true end
     self.preview.onMouseUpOutside=self.preview.onMouseUp
     self.preview.onMouseWheel=function(p,d)
         local w=p.parent
+        if w.tab=="grip" and w.roomPage=="appearance" then
+            w.gripZoom=clamp(w.gripZoom*(d>0 and .89 or d<0 and 1.12 or 1),.62,4.2)
+            return true
+        end
         w.cameraTransition=nil
         w.zoom=clamp(w.zoom*(d>0 and .89 or d<0 and 1.12 or 1),.62,4.2)
         return true
@@ -422,6 +444,11 @@ function W:createChildren()
     self.pageButton.roomLook="parts"
     self.chestButton=button(self,0,0,86,tr("ChestPhysics"),self,function(w)w:setTab("chest")end)
     self.gripButton=button(self,0,0,86,tr("GripCalibration"),self,function(w)w:setTab("grip")end)
+    self.gripAimButton=button(self,self.rightX,54,self.rightWidth,getText("ContextMenu_GFL2_GripAim"),self,function(w)
+        w.gripAiming=not w.gripAiming
+        w:refreshControls(true)
+    end)
+    self.gripAimButton:setVisible(false)
     self.expressionButton=button(self,0,0,86,tr("Expression"),self,function(w)w:setTab("expression")end)
     self:createExpressionFooter()
     self.skinButton=button(self,0,0,44,"",self,function(w)w:setTab("skins")end)
@@ -735,7 +762,7 @@ function W:requestWorkshopPage()
     local id=(data.roomWorkshopItems or {})[character.name]
     if type(id)~="string" or not id:match("^%d+$") then return end
     local name=character.name
-    self.preview.dragging=false;self.preview:setCapture(false)
+    self.preview:onMouseUp()
     local overlay=ISPanel:new(0,0,self.width,self.height)
     overlay:initialise();overlay.background=false
     overlay.prerender=function(p)p:drawRect(0,0,p.width,p.height,.72,.04,.07,.08)end
@@ -1142,6 +1169,19 @@ function W:onMotionCommand(command,value)
     self.motionMessage=error~="" and error or nil;self:refreshMotionControls()
 end
 
+function W:layoutPreview()
+    if self.roomPage=="motions" then
+        self.preview:setX(self.motionWidth+28);self.preview:setWidth(self.rightX-self.preview.x-14)
+        self.preview:setY(56);self.preview:setHeight(self.fullHeight-70)
+    elseif self.tab=="grip" then
+        self.preview:setX(18);self.preview:setWidth(self.rightX-32)
+        self.preview:setY(57);self.preview:setHeight(self.fullHeight-77)
+    else
+        self.preview:setX(math.floor(self.width*.23));self.preview:setWidth(math.floor(self.width*.54))
+        self.preview:setY(math.floor(self.fullHeight*.08));self.preview:setHeight(math.floor(self.fullHeight*.86))
+    end
+end
+
 function W:roomVisibility()
     local expanded=not self.folded and not self.foldStart
     local motions=expanded and self.roomPage=="motions"
@@ -1152,13 +1192,8 @@ function W:roomVisibility()
         self.weaponPreview:onMouseUp()
         self.weaponPreview:setVisible(false)
     end
-    if motions then
-        self.preview:setX(self.motionWidth+28);self.preview:setWidth(self.rightX-self.preview.x-14)
-        self.preview:setY(56);self.preview:setHeight(self.fullHeight-70)
-    else
-        self.preview:setX(math.floor(self.width*.23));self.preview:setWidth(math.floor(self.width*.54))
-        self.preview:setY(math.floor(self.fullHeight*.08));self.preview:setHeight(math.floor(self.fullHeight*.86))
-    end
+    self:layoutPreview()
+    self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
         self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton}) do
@@ -1191,8 +1226,9 @@ function W:setRoomPage(page)
     self.pageFade=getTimestampMs()
     if page=="motions" then AimohPMXReadyRoom.release(self.player) end
     self:clearContent()
-    self.preview.dragging=false;self.preview:setCapture(false)
+    self.preview:onMouseUp()
     self.sidebar.roomDown=false;self.sidebar:setCapture(false)
+    self.gripAiming=false
     self.roomPage=page;self:roomVisibility()
     if page=="motions" then self:refreshMotionLibrary() else self:refreshControls() end
 end
@@ -1204,9 +1240,10 @@ function W:toggleRoomFold()
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
     self.folded=not self.folded
-    self.preview.dragging=false;self.preview:setCapture(false)
+    self.preview:onMouseUp()
     self.sidebar.roomDown=false;self.sidebar:setCapture(false)
     if self.folded then
+        self.gripAiming=false
         self:clearContent()
         AimohPMXReadyRoom.release(self.player)
     end
@@ -1695,7 +1732,19 @@ function W:refresh()
     self:refreshControls()
 end
 function W:setTab(tab)
-    if self.tab~=tab then self:closeWorkshopPrompt() end
+    if self.tab~=tab then
+        self:closeWorkshopPrompt()
+        if self.tab=="grip" then
+            self.preview:onMouseUp()
+            AimohPMXReadyRoom.release(self.player)
+        end
+        if tab=="grip" then
+            self.gripAiming=false
+            self.gripYaw=math.rad(-30)
+            self.gripPitch=0
+            self.gripZoom=1.55
+        end
+    end
     if tab=="overview" and self.tab=="skins" and self.browsed and self.browsed.outfitLocked
         and self.browsed.id~=self.currentId then
         local character=self.byCharacter[self.character]
@@ -1770,6 +1819,8 @@ function W:refreshControls(keepScroll)
     if self.folded or self.foldStart then return end
     if self.roomPage=="motions" then self:refreshMotionControls();return end
     local editable=self:canEditCurrent()
+    self:layoutPreview()
+    self.gripAimButton:setVisible(false)
     self.preview:setVisible(self.tab~="weaponDraw")
     local scroll=keepScroll and self.content:getYScroll() or 0
     self:clearContent()
@@ -1827,35 +1878,57 @@ function W:refreshControls(keepScroll)
             if family=="" then
                 self:addLabel(getText("ContextMenu_GFL2_GripEquipItem"),y);y=y+32
             else
+                local canAim=AimohPMXReadyRoom.canAimGrip(self.player)
+                if not canAim then self.gripAiming=false end
+                local aiming=self.gripAiming==true
+                if canAim then
+                    local mode=aiming and "ContextMenu_GFL2_GripStanding" or "ContextMenu_GFL2_GripAim"
+                    self.gripAimButton.roomTitle=getText(mode)
+                    self.gripAimButton.roomActive=aiming
+                    self.gripAimButton:setVisible(true)
+                end
                 self:addLabel(AimohPMXReadyRoom.gripItemName(self.player),y);y=y+32
-                local values=AimohPMXReadyRoom.gripValues(self.player,family)
+                local values=AimohPMXReadyRoom.gripValues(self.player,family,aiming)
                 local groups={
-                    {"GripSupport",0,12,3,""},{"GripSupportWrist",6,90,5,"°"},
-                    {"GripPrimary",3,12,3,""},{"GripPrimaryWrist",9,90,5,"°"},
+                    {getText("ContextMenu_GFL2_GripItemPosition"),12,20,{"X","Y","Z"},""},
+                    {tr("GripSupport"),0,12,{"X","Y","Z"},""},
+                    {tr("GripSupportWrist"),6,90,{"X","Y","Z"},"°"},
+                    {tr("GripPrimary"),3,12,{"X","Y","Z"},""},
+                    {tr("GripPrimaryWrist"),9,90,{"X","Y","Z"},"°"},
+                    {getText("ContextMenu_GFL2_GripCurl"),15,100,
+                        {getText("ContextMenu_GFL2_GripLeftHand"),getText("ContextMenu_GFL2_GripRightHand")},"%"},
                 }
+                local resetWidth=64
                 for _,group in ipairs(groups)do
-                    local label,start,limit,page,unit=unpack(group)
-                    self:addLabel(tr(label),y);y=y+28
-                    for i,axis in ipairs({"X","Y","Z"})do
+                    local title,start,limit,axes,unit=unpack(group)
+                    self:addLabel(title,y);y=y+28
+                    local inset=unit=="%" and 76 or 34
+                    for i,axis in ipairs(axes)do
                         local field=start+i-1
                         self:addLabel(axis,y,17)
-                        local slider=ISSliderPanel:new(34,y+2,width-46,20,self,function(w,value)
-                            if not AimohPMXReadyRoom.gripSet(w.player,family,field,value)then w.status=tr("Error") end
+                        local slider=ISSliderPanel:new(inset,y+2,width-inset-resetWidth-8,20,self,function(w,value)
+                            if not AimohPMXReadyRoom.gripSet(w.player,family,field,value,aiming)then w.status=tr("Error") end
                         end)
-                        slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(-limit,limit,1,page,true)
+                        slider:initialise();slider:instantiate();slider:setDoButtons(true);slider:setValues(-limit,limit,.1,1,true)
                         slider:setCurrentValue(values[field+1] or 0,true)
                         local render=slider.render
                         slider.render=function(s)
                             render(s)
-                            s:drawTextRight(string.format("%+d",s.currentValue)..unit,s.width,20,.81,.88,.92,1,UIFont.Small)
+                            s:drawTextRight(string.format("%+.1f",s.currentValue)..unit,s.width,20,.81,.88,.92,1,UIFont.Small)
                         end
-                        slider.roomSlider=true;self.content:addChild(slider);table.insert(self.widgets,slider);y=y+39
+                        slider.roomSlider=true;self.content:addChild(slider);table.insert(self.widgets,slider)
+                        local reset=button(self.content,width-resetWidth,y,resetWidth,getText("ContextMenu_GFL2_GripResetValue"),self,function(w)
+                            if AimohPMXReadyRoom.gripSet(w.player,family,field,0,aiming) then
+                                slider:setCurrentValue(0,true)
+                            else w.status=tr("Error") end
+                        end)
+                        table.insert(self.widgets,reset);y=y+46
                     end
                 end
-                local b=button(self.content,0,y,width,tr("Reset"),self,function(w)
-                    if AimohPMXReadyRoom.gripSet(w.player,family,-1,0)then w:refreshControls(true) end
+                local b=button(self.content,0,y+4,width,tr("Reset"),self,function(w)
+                    if AimohPMXReadyRoom.gripSet(w.player,family,-1,0,aiming)then w:refreshControls(true) end
                 end)
-                table.insert(self.widgets,b);y=y+38
+                table.insert(self.widgets,b);y=y+42
             end
         elseif self.tab=="chest" then
             self:addLabel("Jolt",y);y=y+32
@@ -2056,6 +2129,7 @@ function W:update()
     if not self.folded and not self.foldStart and self.roomPage=="motions" then self:refreshMotionControls() end
     if not self.folded and not self.foldStart and self.roomPage=="appearance" and self.tab=="grip"
         and self:canEditCurrent() and AimohPMXReadyRoom.gripFamily(self.player)~=(self.gripFamily or "") then
+        self.gripAiming=false
         self:refreshControls(true)
     end
 end
@@ -2227,7 +2301,7 @@ function W:close()
     if self.motionSpeed then self.motionSpeed.dragInside=false end
     self:closeMotionPathDialog()
     if self.carouselPanel then self.carouselPanel.dragging=false;self.carouselPanel:setCapture(false)end
-    self:clearContent();self.preview.dragging=false;self.preview:setCapture(false);self.sidebar.roomDown=false;self.sidebar:setCapture(false)
+    self:clearContent();self.preview:onMouseUp();self.sidebar.roomDown=false;self.sidebar:setCapture(false)
     if AimohPMXReadyRoom then AimohPMXReadyRoom.release(self.player)end
 end
 function W.open(player,actions)

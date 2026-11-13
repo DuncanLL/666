@@ -1,0 +1,8 @@
+name=索普
+id=GFL2Soppo
+require=\GFL2Exilium
+modversion=0.3.119
+versionMin=42.22
+versionMax=42.22
+icon=icon.png
+poster=poster.png

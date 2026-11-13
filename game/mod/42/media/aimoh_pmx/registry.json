@@ -115,6 +115,10 @@
       "pmx-e348ab0b30d7e83a",
       "pmx-020f2e8bdc65bc5b",
       "pmx-d373f73abd68a3d0"
+    ],
+    "R116Soppo": [
+      "pmx-40dbcd572c1fb3f8",
+      "pmx-7d46f9b7159f3332"
     ]
   },
   "pack_mod_ids": {
@@ -140,6 +144,7 @@
     "R116Yohee": "GFL2Yohee",
     "R116Destroyer": "GFL2Destroyer",
     "R116Macqiato": "GFL2Macqiato",
-    "R116Qiuhua": "GFL2Qiuhua"
+    "R116Qiuhua": "GFL2Qiuhua",
+    "R116Soppo": "GFL2Soppo"
   }
 }

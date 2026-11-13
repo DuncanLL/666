@@ -12,7 +12,7 @@ public final class SignatureWeaponModels {
 
     public static String detachableModel(HandWeapon weapon) {
         return switch (weapon.getFullType()) {
-            case "GFL2.Chernobog", "GFL2.AlvaAN94" -> weapon.getFullType();
+            case "GFL2.Chernobog", "GFL2.AlvaAN94", "GFL2.Scylla", "GFL2.UnspokenCalling", "GFL2.NightRoaming", "GFL2.Skyhowl", "GFL2.Snotra", "GFL2.MaidsRules", "GFL2.SparklingCenterstage", "GFL2.ConfessionCompass", "GFL2.HeavyStrings", "GFL2.Capitoline", "GFL2.SavageBeast", "GFL2.Schlitzohr", "GFL2.Lowenjunges", "GFL2.BansheesWhisper", "GFL2.BittersweetCaramel", "GFL2.GuardianSilverwing", "GFL2.Iaso" -> weapon.getFullType();
             default -> null;
         };
     }

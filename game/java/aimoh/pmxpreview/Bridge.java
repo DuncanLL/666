@@ -41,14 +41,15 @@ public final class Bridge {
             PmxDrawMesh.FrameData data=null;
             long gameFrame=IsoCamera.frameState.frameCount;
             long captureNanos=DrawAccess.frameNanos(frame);
-            try {if(!session.failed)data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,
+            var pose=actor.getAnimationPlayer();
+            try {if(!session.failed)data=session.update(gameFrame,captureNanos,pose,holding,
                 actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                GripCalibration.request(actor,session.entry.id(),weapon),true);}catch(Throwable e){session.fail(e);}
+                GripCalibration.request(actor,session.entry.id(),weapon,slot.inVehicle?null:pose),true);}catch(Throwable e){session.fail(e);}
             ModelSession selected=Main.completeCapture(actor,session);
             if(selected!=session){
                 session=selected;if(session==null||session.failed)return;
-                data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                    GripCalibration.request(actor,session.entry.id(),weapon),true);
+                data=session.update(gameFrame,captureNanos,pose,holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
+                    GripCalibration.request(actor,session.entry.id(),weapon,slot.inVehicle?null:pose),true);
             }
             if(session.failed||!session.ready)return;
             ViewpointModel backend=session.viewpointModel;

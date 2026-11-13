@@ -15,6 +15,7 @@ final class ViewpointModel implements AutoCloseable {
     volatile PmxDrawMesh prepared;
     final PmxPresentation presentation = new PmxPresentation();
     private final IdentityHashMap<ModelMesh, DrawHistory> history = new IdentityHashMap<>();
+    private long historyFrame = Long.MIN_VALUE;
 
     private static final class DrawHistory {
         ModelDraws draws;
@@ -46,7 +47,10 @@ final class ViewpointModel implements AutoCloseable {
     long textureUploads() { return textures.uploads; }
 
     synchronized boolean followDraw(ModelDraws draws, int index, long frame) {
-        history.values().removeIf(old -> old.frame < frame - 1);
+        if (historyFrame != frame) {
+            history.values().removeIf(old -> old.frame < frame - 1);
+            historyFrame = frame;
+        }
         ModelMesh mesh = DrawAccess.mesh(draws,index);
         DrawHistory old = history.computeIfAbsent(mesh, ignored -> new DrawHistory());
         if (old.frame == frame && old.draws == draws && old.index == index) return false;

@@ -14,8 +14,7 @@ local function configureWeapon()
     weapon:setAmmoType(donor:getAmmoType())
     weapon:DoParam("MagazineType", efzMagazine)
     weapon:DoParam("AmmoBox", "EscapeFromZomboidFirearms.Box545x39")
-    Magazine.RegisterMagazineProfile("GFL2:Chernobog", {efzMagazine})
-    Magazine.RegisterWeaponWithProfile("GFL2:Chernobog", weaponId)
+    Magazine.RegisterWeaponWithProfile("TW:AK12", weaponId)
     Ammo.RegisterItemWithFamily("TW:ammo:545", weaponId)
 end
 

@@ -182,16 +182,23 @@ public class ReadyRoomPreview {
         var item=GripCalibration.heldItem(actor);
         return item==null?"":item.getDisplayName();
     }
-    public static KahluaTable gripValues(IsoGameCharacter actor,String key) {
+    public static boolean canAimGrip(IsoGameCharacter actor) {
+        return GripCalibration.heldItem(actor)!=null;
+    }
+    public static KahluaTable gripValues(IsoGameCharacter actor,String key,boolean aiming) {
         ModelSession session=Main.session(actor);
         if(session==null||key==null||key.isEmpty()||!key.equals(gripFamily(actor)))
             return J2SEPlatform.getInstance().newTable();
-        return GripCalibration.sliders(actor,session.entry.id(),key);
+        return GripCalibration.sliders(actor,session.entry.id(),key,aiming);
     }
-    public static boolean gripSet(IsoGameCharacter actor,String key,int axis,double value) {
+    public static boolean gripSet(IsoGameCharacter actor,String key,int axis,double value,boolean aiming) {
         ModelSession session=Main.session(actor);
-        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),key,axis,value);
+        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),key,axis,value,aiming);
     }
+    public static synchronized boolean drawGripView(IsoGameCharacter actor,int x,int y,int width,int height,boolean aiming,float yaw,float pitch,float zoom) {
+        return GripRoomPreview.draw(actor,x,y,width,height,aiming,yaw,pitch,zoom);
+    }
+
     private static ModelSession expressionSession(IsoGameCharacter actor, String id) {
         if (!(actor instanceof IsoPlayer player) || !player.isLocalPlayer() || !Main.isReady(actor)) return null;
         ModelSession session = Main.session(actor);
@@ -359,6 +366,7 @@ public class ReadyRoomPreview {
         }catch(Exception e){System.err.println("[AimohPMXReadyRoom] Preview unavailable: "+e);return false;}
     }
     public static synchronized void release(IsoGameCharacter actor) {
+        GripRoomPreview.release(actor);
         BrowsePreview preview=browsePreviews.remove(actor);
         if(preview!=null&&preview.session!=null)preview.session.retire();
     }
@@ -411,7 +419,7 @@ public class ReadyRoomPreview {
         final int[] indices,materials,firsts,counts;
         final ByteBuffer upload;
         final float centerX,centerY,centerZ,span,faceY;
-        int vao,vbo,ibo,uvBuffer;
+        int vao,vbo,ibo,uvBuffer,itemVao;
         boolean closed,failed,gpuLayout;
         private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
@@ -475,13 +483,22 @@ public class ReadyRoomPreview {
             upload.flip();GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER,0,upload);
             uploaded=frame;
         }
-        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked)throws Exception {
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView)throws Exception {
+            paint(frame,state,width,height,yaw,zoom,pan,focus,locked,gripView,0);
+        }
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch)throws Exception {
             bindGeometry(frame);
             float extent=span/Math.clamp(zoom,.62f,4.2f),aspect=(float)width/height;
             float cameraY=centerY+(faceY-centerY)*Math.clamp(focus,0,1)+span*Math.clamp(pan,-.8f,.8f);
+            float cameraX=centerX,cameraZ=centerZ;
+            if(gripView!=null){
+                var point=gripView.center();
+                cameraX=point.x;cameraY=point.y;cameraZ=point.z;
+                extent=span*Math.max(.72f,.90f/aspect)/Math.clamp(zoom,.62f,4.2f);
+            }
             Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
-                .lookAt(centerX,cameraY,centerZ+span*3,centerX,cameraY,centerZ,0,1,0);
-            Matrix4f turn=new Matrix4f().translate(centerX,0,centerZ).rotateY(yaw).translate(-centerX,0,-centerZ);
+                .lookAt(cameraX,cameraY,cameraZ+span*3,cameraX,cameraY,cameraZ,0,1,0);
+            Matrix4f turn=new Matrix4f().translate(cameraX,cameraY,cameraZ).rotateX(pitch).rotateY(yaw).translate(-cameraX,-cameraY,-cameraZ);
             PreviewProgram program=PreviewProgram.current();
             GL20.glUseProgram(program.id());GL20.glUniformMatrix4fv(program.vp(),false,vp.get(new float[16]));
             GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));GL20.glUniform1i(program.image(),0);
@@ -495,16 +512,25 @@ public class ReadyRoomPreview {
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[material].getID());
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
+            if(gripView!=null&&!gripView.parts().isEmpty()){
+                if(itemVao==0)itemVao=GL30.glGenVertexArrays();
+                GripRoomPreview.paintItems(gripView.parts(),itemVao,program.turn(),turn);
+            }
         }
-        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(itemVao!=0)GL30.glDeleteVertexArrays(itemVao);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
-        final int x,y,width,height,screenHeight;final float yaw,zoom,pan,focus;final boolean locked;
+        final int x,y,width,height,screenHeight;final float yaw,zoom,pan,focus,pitch;final boolean locked;
+        final GripRoomPreview.View gripView;
         Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom){
             this(mesh,frame,materials,x,y,w,h,sh,yaw,zoom,0,0,false);
         }
         Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom,float pan,float focus,boolean locked){
+            this(mesh,frame,materials,x,y,w,h,sh,yaw,zoom,pan,focus,locked,null,0);
+        }
+        Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch){
+            this.gripView=gripView;this.pitch=pitch;
             this.mesh=mesh;this.frame=frame;this.materials=materials;this.x=x;this.y=y;width=w;height=h;screenHeight=sh;this.yaw=yaw;this.zoom=zoom;
             this.pan=pan;this.focus=focus;this.locked=locked;
         }
@@ -517,7 +543,7 @@ public class ReadyRoomPreview {
             try {
                 GL11.glEnable(GL11.GL_SCISSOR_TEST);GL11.glScissor(x,screenHeight-y-height,width,height);GL11.glViewport(x,screenHeight-y-height,width,height);
                 GL11.glDepthMask(true);GL11.glClearDepth(1);GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-                mesh.paint(frame,materials,width,height,yaw,zoom,pan,focus,locked);
+                mesh.paint(frame,materials,width,height,yaw,zoom,pan,focus,locked,gripView,pitch);
                 return true;
             }catch(Exception|LinkageError e){
                 if(frame.gpuPose()!=null)mesh.session.disableGpu(e);

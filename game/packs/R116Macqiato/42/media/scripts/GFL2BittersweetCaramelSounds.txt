@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2BittersweetCaramelShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-1.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-2.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-3.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+    }
+}
