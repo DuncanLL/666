@@ -103,6 +103,12 @@ public final class AimohSealedSources {
         return value;
     }
 
+    public static String nativeMain(String hash) {
+        if (!enabled()) return null;
+        requireReady();
+        return Payload.FRAGMENTS.get("native-main/" + hash);
+    }
+
     private static String resourceName(String path) {
         if (path == null) return null;
         String relative = path.replace('\\', '/');

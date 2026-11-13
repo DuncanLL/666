@@ -6,6 +6,7 @@ from build import compile_java
 from build_render_support import check_glsl_names,release_bootstrap
 
 SHADER_PAYLOAD='META-INF/gfl2/rendering/eclipse.zip'
+REFERENCE_SHADER_PAYLOAD='aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'
 PACK_SHADERS='Eclipse-Shader-Unstable/shaders/'
 SHADERS=PACK_SHADERS+'dimensions/'
 MOTION_PASS=SHADERS+'composite6.fsh'
@@ -118,7 +119,8 @@ if __name__=='__main__':
     assert sha(host)==origin['official_host_sha256'],'Unsupported official VP build'
     out=BUILD/'eclipse-support';out.mkdir(exist_ok=True)
     shared=[ROOT/'render-support/java'/name for name in origin['shared_sources']]
-    sources=[*sorted((ROOT/'render-support/eclipse/java').rglob('*.java')),*shared]
+    sources=[*sorted((ROOT/'render-support/eclipse/java').rglob('*.java')),*shared,
+             ROOT/'render-support/java/aimoh/gf2/bridge/ManagedShaderPack.java']
     classes=out/'classes-outline';compile_java(cfg,sources,classes,[reference,host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
     replacements={p.relative_to(classes).as_posix():p.read_bytes()for p in classes.rglob('*.class')}
     jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')
@@ -199,11 +201,11 @@ if __name__=='__main__':
     assert not stock.intersection(replacements),'Official class collision'
     with zipfile.ZipFile(reference)as old,zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as new:
         assert RETIRED_ENTRIES<=set(old.namelist()) and not RETIRED_ENTRIES.intersection(replacements)
-        shader,removed=patch_shaders(old.read(SHADER_PAYLOAD),patches)
+        shader,removed=patch_shaders(old.read(REFERENCE_SHADER_PAYLOAD),patches)
         for name in old.namelist():
             if name not in replacements and name not in RETIRED_ENTRIES:
-                raw=shader if name==SHADER_PAYLOAD else old.read(name)
-                new.writestr(old.getinfo(name),raw)
+                if name==REFERENCE_SHADER_PAYLOAD:new.writestr(SHADER_PAYLOAD,shader)
+                else:new.writestr(old.getinfo(name),old.read(name))
         for name,data in sorted(replacements.items()):
             info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;new.writestr(info,data)
     with zipfile.ZipFile(reference)as old,zipfile.ZipFile(temporary)as new:
@@ -213,9 +215,9 @@ if __name__=='__main__':
                    for name in new.namelist() if name.endswith('.class')
                    for raw in (new.read(name),) for orphan in retired_classes),'Retired Eclipse class is still referenced'
         for name in old.namelist():
-            if name!=SHADER_PAYLOAD and name not in RETIRED_ENTRIES and name not in replacements:
+            if name!=REFERENCE_SHADER_PAYLOAD and name not in RETIRED_ENTRIES and name not in replacements:
                 assert old.read(name)==new.read(name),'Unrelated Eclipse payload changed: '+name
-        with zipfile.ZipFile(io.BytesIO(old.read(SHADER_PAYLOAD)))as old_pack,zipfile.ZipFile(io.BytesIO(new.read(SHADER_PAYLOAD)))as new_pack:
+        with zipfile.ZipFile(io.BytesIO(old.read(REFERENCE_SHADER_PAYLOAD)))as old_pack,zipfile.ZipFile(io.BytesIO(new.read(SHADER_PAYLOAD)))as new_pack:
             assert removed<=set(old_pack.namelist()),'Expected terrain geometry stage missing from the reference'
             assert [name for name in old_pack.namelist() if name not in removed]==new_pack.namelist(),'Eclipse shader pack entries changed'
             assert {name for name in new_pack.namelist() if old_pack.read(name)!=new_pack.read(name)}==patches.keys()

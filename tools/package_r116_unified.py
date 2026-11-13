@@ -29,6 +29,29 @@ def entries(archive):
     return set(names)
 
 
+def trim_material_provenance(catalog):
+    for material in catalog["characters"]["materials"]:
+        material.pop("unresolved_material_fields", None)
+        for binding in material["bindings"]:
+            binding.pop("origin", None)
+            binding.pop("conversion", None)
+
+
+def trim_render_catalogs(project):
+    changed = set()
+    for root in sorted((project / "Contents/mods").glob("*/42/media/gfl2_rendering")):
+        for file in [root / "characters.json", *sorted((root / "packs").glob("*.json"))]:
+            if not file.is_file():
+                continue
+            raw = json.loads(file.read_text("utf-8-sig"))
+            before = json.dumps(raw)
+            trim_material_provenance(raw)
+            if json.dumps(raw) != before:
+                file.write_text(json.dumps(raw, ensure_ascii=False, separators=(",", ":")) + "\n", "utf8")
+                changed.add(file.relative_to(project).as_posix())
+    return changed
+
+
 def assemble(args):
     config = settings()
     game = Path(config['game_root'])
@@ -77,6 +100,7 @@ def assemble(args):
         assert not stage.exists()
         original = inventory(character)
         shutil.copytree(character, stage)
+        trimmed = trim_render_catalogs(stage)
         target = stage / CHARACTER_MOD / CHARACTER_JAR
         temporary = target.with_suffix('.jar.writing')
         notice = (ROOT / 'render-support' / RENDER_NOTICE_SOURCE).read_bytes()
@@ -97,7 +121,7 @@ def assemble(args):
         info.write_text('\n'.join('modversion='+args.version if row==version else row for row in mod_info)+'\n', 'utf8')
         result = inventory(stage)
         expected_changes = {CHARACTER_MOD+'/42/mod.info', CHARACTER_MOD+'/'+CHARACTER_JAR}
-        assert original.keys() == result.keys() and {name for name in original if original[name]!=result[name]} == expected_changes
+        assert original.keys() == result.keys() and {name for name in original if original[name]!=result[name]} == expected_changes | trimmed
         assert pins == {path: sha(path) for path in pins}
         stage.rename(output)
 
@@ -108,6 +132,7 @@ def assemble(args):
          signature_sha256=pins.get(signature), loader_sha256=pins[zombie],
          catalog_sha256=result[CHARACTER_MOD+'/42/media/gfl2_rendering/characters.json']['sha256'],
          character_workshop_files=len(result), changed_character_entries=sorted(ENTRY_CLASSES),
+         trimmed_catalogs=sorted(trimmed),
          installed=False, uploaded=False))
     print(f'Unified R116 Workshop project: {output}')
 

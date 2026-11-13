@@ -124,7 +124,7 @@ public final class AimohGf2PackData {
             int id=old==null?materials.length():old.getInt("id");
             row.put("id",id);remap[i]=id;
             if(old==null){materials.put(row);byName.put(name,row);}
-            else if(!old.similar(row))throw new IllegalArgumentException("Conflicting pack material "+name);
+            else if(!materialForComparison(old).similar(materialForComparison(row)))throw new IllegalArgumentException("Conflicting pack material "+name);
         }
         for(String key:List.of("textures","shader_property_defaults","glsl","early_fragments","consumed")){
             JSONObject target=base.getJSONObject(key),incoming=extra.getJSONObject(key);
@@ -155,6 +155,17 @@ public final class AimohGf2PackData {
             frames.put("materials",updated);models.put(model);
         }
     }
+    private static JSONObject materialForComparison(JSONObject material) {
+        JSONObject copy = new JSONObject(material.toString());
+        copy.remove("unresolved_material_fields");
+        for (Object value : copy.getJSONArray("bindings")) {
+            JSONObject binding = (JSONObject) value;
+            binding.remove("origin");
+            binding.remove("conversion");
+        }
+        return copy;
+    }
+
     private static List<String> programKey(JSONObject row){
         return List.of(row.getString("material"),row.getString("pass"),row.getString("stage"));
     }

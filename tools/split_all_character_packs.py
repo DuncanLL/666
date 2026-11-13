@@ -8,6 +8,7 @@ import shutil
 import zipfile
 
 from common import save, sha
+from package_r116_unified import trim_render_catalogs
 from split_r116_character_packs import catalog_subset, material_ids, resources, ui_files
 
 NEW_PACKS = {
@@ -176,9 +177,11 @@ def build(workshop, output, version):
     assert sha(source/JAR)==sha(target/JAR)
     for summary in summaries:
         root=output/summary["mod"]
+        trim_render_catalogs(root)
         files=[p for p in root.rglob("*") if p.is_file()]
         summary["bytes"]=sum(p.stat().st_size for p in files)
         summary["files"]=len(files)
+    trim_render_catalogs(output/"R116")
     core_files=[p for p in (output/"R116").rglob("*") if p.is_file()]
     save(output.parent/"split-report.json",dict(version=version,characters=summaries,
         core_bytes=sum(p.stat().st_size for p in core_files),core_files=len(core_files),
