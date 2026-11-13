@@ -120,7 +120,8 @@
     "RoomOutfitPermit": "新装许可",
     "RoomCredits": "信用币",
     "RoomCash": "钞票",
-    "RoomCashRate": "1 张钞票兑换 10,000 信用币",
+    "RoomCashRate": "1 张钞票兑换 60 信用币",
+    "RoomTargetedPermitRate": "每张消耗 150 信用币",
     "RoomPermitRate": "每张消耗 120 信用币",
     "RoomExchangeQuantity": "当前购买",
     "RoomExchangeSpend": "消耗",
@@ -3663,10 +3664,15 @@
       "width": 76,
       "height": 40
     },
-    "1 张钞票兑换 10,000 信用币": {
+    "1 张钞票兑换 60 信用币": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/f820935f24e210e8.png",
-      "width": 464,
+      "width": 388,
       "height": 43
+    },
+    "每张消耗 150 信用币": {
+      "path": "media/ui/AimohPMXReadyRoom/gf2-font/7bcd6a0c591f5b95.png",
+      "width": 342,
+      "height": 39
     },
     "每张消耗 120 信用币": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/89dc8d4f672361f3.png",
@@ -5789,6 +5795,11 @@
     "原皮": true
   },
   "roomOutfitPools": {
+    "pmx-0af216265749a22d": {
+      "name": "热力运动",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/outfit-leva.png",
+      "preservePriorPurchase": true
+    },
     "pmx-c7270af966e8aaf8": {
       "name": "濯浪焦点",
       "banner": "media/ui/AimohPMXReadyRoom/recruitment/outfit-koleda.png"

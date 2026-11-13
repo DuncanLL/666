@@ -1884,8 +1884,8 @@
       "sha256": "4bbadeb778a979538d741070def2a19512e057547450aa268b9554fb3c8ecb0b"
     },
     "42/media/ui/AimohPMXReadyRoom/gf2-font/f820935f24e210e8.png": {
-      "bytes": 5309,
-      "sha256": "440c342d73c263f1ee7ed085d17b0013ff6ae2b4e10bae017f5490318ca623ef"
+      "bytes": 5234,
+      "sha256": "e082f383a39e5c6842ca6dabd9bbaf738b14e468358dc1cee78995e18575590e"
     },
     "42/media/ui/AimohPMXReadyRoom/gf2-font/fba84a3174a15683.png": {
       "bytes": 5854,
@@ -5550,6 +5550,14 @@
     "42/media/ui/AimohPMXReadyRoom/label-workshop-ac3fe59c218acb.png": {
       "bytes": 1981,
       "sha256": "786b61e87f2a75881f47a5509fa186dbfebc25ab7dc5ba299115107f8d8266ca"
+    },
+    "42/media/ui/AimohPMXReadyRoom/gf2-font/7bcd6a0c591f5b95.png": {
+      "bytes": 5019,
+      "sha256": "50f707859f49d8d23e5c309ca42d36463ba091ece06f38b592150574b0e94c3e"
+    },
+    "42/media/ui/AimohPMXReadyRoom/recruitment/outfit-leva.png": {
+      "bytes": 87040,
+      "sha256": "5b515f2e0c5dfcc5b39dafebba09c14655beb44e420e2d406b00e0f28a7a4069"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",

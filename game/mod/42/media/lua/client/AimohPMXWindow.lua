@@ -361,7 +361,7 @@ function W:createChildren()
     local renderWear=self.wearButton.render
     self.wearButton.render=function(b)
         if b.roomLook~="outfitPurchase" then return renderWear(b) end
-        local x=b.width/2-24
+        local x=(b.width-33-#tostring(economy.outfitPrice)*23*.63)/2
         local icon=image(art.."credits.png")
         if icon then b:drawTextureScaled(icon,x,7,29,29,1,1,1,1) end
         local affordable=economy.balance(self.player,"credits")>=economy.outfitPrice
@@ -596,7 +596,8 @@ function W:openExchange(key)
     card:initialise();card.background=false;overlay:addChild(card)
     local s={key=key,overlay=overlay,quantity=1}
     local buyingCredits=key=="credits"
-    local cost=buyingCredits and 1 or economy.cost
+    local cost=buyingCredits and 1 or economy.cost[key]
+    local rateLabel=buyingCredits and tr("RoomCashRate") or tr(key=="targeted" and "RoomTargetedPermitRate" or "RoomPermitRate")
     card.prerender=function(p)
         p:drawRect(0,0,p.width,p.height,.98,.86,.89,.89)
         p:drawRect(0,0,p.width,5,.96,.27,.40,.42)
@@ -604,7 +605,7 @@ function W:openExchange(key)
         resourceIcon(p,key,39,53,124)
         label(p,tr(resourceTitles[key]),198,45,29,p.width-280,.07,.13,.15)
         p:drawRect(198,84,p.width-239,1,.41,.28,.40,.43)
-        label(p,tr(buyingCredits and "RoomCashRate" or "RoomPermitRate"),198,94,17,p.width-239,.23,.35,.38)
+        label(p,rateLabel,198,94,17,p.width-239,.23,.35,.38)
         label(p,tr("RoomExchangeQuantity"),p.width/2-90,p.height-154,17,124,.13,.22,.24)
         number(p,s.quantity,p.width/2+40,p.height-154,17,.14,.27,.31)
         label(p,tr("RoomExchangeSpend"),p.width/2-100,p.height-76,17,80,.19,.34,.39)

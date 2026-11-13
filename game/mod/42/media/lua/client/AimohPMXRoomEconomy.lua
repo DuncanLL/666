@@ -1,4 +1,4 @@
-local E={cost=120,creditsPerCash=10000}
+local E={cost={targeted=150,outfit=120},creditsPerCash=60}
 E.keys={"targeted","outfit","credits"}
 
 local function wallet(player)
@@ -22,8 +22,9 @@ end
 
 function E.available(player,key)
     if key=="credits" then return cash(player):size() end
-    if key=="targeted" or key=="outfit" then
-        return math.floor(E.balance(player,"credits")/E.cost)
+    local cost=E.cost[key]
+    if cost then
+        return math.floor(E.balance(player,"credits")/cost)
     end
     return 0
 end
@@ -52,9 +53,10 @@ function E.buy(player,key,count)
         room.credits=total
         return true
     end
-    if key~="targeted" and key~="outfit" then return false end
+    local unitCost=E.cost[key]
+    if not unitCost then return false end
     local balance=E.balance(player,"credits")
-    local cost=count*E.cost
+    local cost=count*unitCost
     if cost>balance then return false end
     local total=E.balance(player,key)+count
     if total>=9007199254740992 then return false end
@@ -65,7 +67,7 @@ end
 
 E.characterGuarantee=80
 E.outfitGuarantee=100
-E.outfitPrice=1
+E.outfitPrice=1080
 
 function E.resetTestDraws(player,outfitPools)
     local room=wallet(player)
@@ -77,7 +79,8 @@ function E.resetTestDraws(player,outfitPools)
     }
     local purchased={}
     for id,value in pairs(room.outfits or {}) do
-        if not outfitPools[id] then purchased[id]=value end
+        local pool=outfitPools[id]
+        if not pool or (pool.preservePriorPurchase and value==true) then purchased[id]=value end
     end
     room.recruitment={owned={},misses=0}
     room.outfits=purchased
