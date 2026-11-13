@@ -10,6 +10,7 @@ mode=sys.argv[1]
 root=Path(sys.argv[2]).resolve(strict=True)/'Contents/mods/AimohPmxPreview'
 jar=root/'42/media/java/client/AimohPMXPreview.jar'
 reg=json.loads((root/'42/media/aimoh_pmx/registry.json').read_text('utf8'))
+mod_ids=reg.get('pack_mod_ids',{})
 assets=Path(sys.argv[3]).resolve(strict=True)
 game_jars=[c['zombiebuddy_jar'],str(game/'projectzomboid.jar')]
 host=Path(sys.argv[4]).resolve(strict=True) if len(sys.argv)>4 else Path(c['viewpoint_jar'])
@@ -22,24 +23,24 @@ try:
  mods=fs.getModIDs()
  runtime=J('aimoh.pmxpreview.Main')
  room=J('aimoh.pmxpreview.ReadyRoomPreview')
- fs.setModIdToDir('AimohPmxPreview',str(root))
+ fs.setModIdToDir('GFL2Exilium',str(root))
  for mod,ids in reg['packs'].items():
   # Simulate the stale metadata that used to hide all packs, while the active map
   # still points at the game-selected version.
-  fs.setModIdToDir(mod,str(BUILD/'stale-mod-root'/mod))
+  fs.setModIdToDir(mod_ids.get(mod,mod),str(BUILD/'stale-mod-root'/mod))
   rel=f'media/aimoh_pmx/packs/{mod}.json'
   active=assets/mod/'Contents/mods'/mod/'42'/rel
   assert active.is_file()
   files.put(rel.lower(),str(active))
  assert runtime.modelCount()==0
- mods.add('R116Laiya')
+ mods.add(mod_ids.get('R116Laiya','R116Laiya'))
  runtime.clear()
  assert runtime.modelCount()==len(reg['packs']['R116Laiya'])
  for mod in reg['packs']:
-  if mod!='R116Laiya': mods.add(mod)
+  if mod!='R116Laiya': mods.add(mod_ids.get(mod,mod))
  runtime.clear()
  expected={ident for values in reg['packs'].values() for ident in values}
- assert runtime.modelCount()==len(expected)==60
+ assert runtime.modelCount()==len(expected)
  assert {runtime.modelIdAt(i) for i in range(runtime.modelCount())}==expected
  models=room.data().rawget('models')
  catalog=json.loads((root/'42/media/ui/AimohPMXReadyRoom/catalog.json').read_text('utf8'))
@@ -65,14 +66,14 @@ try:
  data['models']=[known,dict(id='pmx-unknown-model',label='future outfit',model='absent',profile='absent')]
  older.write_text(json.dumps(data,ensure_ascii=False),'utf8')
  files.put(rel.lower(),str(older))
- mods.clear();mods.add(role)
+ mods.clear();mods.add(mod_ids.get(role,role))
  runtime.clear()
  assert runtime.modelCount()==1 and runtime.modelIdAt(0)==known['id']
  assert runtime.modelListed(0)
  mods.clear()
  runtime.clear()
  assert runtime.modelCount()==0
- result=dict(status='PASS',variant=mode,installed_packs=22,registered_models=60,cold_disabled=0,
+ result=dict(status='PASS',variant=mode,installed_packs=len(reg['packs']),registered_models=len(expected),cold_disabled=0,
              stale_mod_directory='active game file resolution',older_pack_partial_match=True,
              world_switch=True,game_started=False,jar_sha256=hashlib.sha256(jar.read_bytes()).hexdigest())
  (BUILD/f'{mode}-pack-check.json').write_text(json.dumps(result,indent=2)+'\n','utf8')

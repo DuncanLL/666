@@ -8,7 +8,7 @@ game=Path(c['game_root']);jar=BUILD/'AimohPMXPreview.jar'
 jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-UNNAMED',classpath=[str(jar),c['viewpoint_jar'],c['zombiebuddy_jar'],*map(str,game.glob('*.jar'))],convertStrings=True)
 try:
     J=jpype.JClass;fs=J('zombie.ZomboidFileSystem').instance;mapping=fs.getClass().getDeclaredField('modIdToDir');mapping.setAccessible(True)
-    mapping.get(fs).put('AimohPmxPreview',c['asset_root'])
+    mapping.get(fs).put('GFL2Exilium',c['asset_root'])
     room=J('aimoh.pmxpreview.ReadyRoomPreview');first=room.data();first.rawget('models').wipe();first.rawget('text').rawset('Menu','altered-by-old-window')
     second=room.data();models=second.rawget('models');assert models.rawget('pmx-293917f24c2bd387')is not None
     assert second.rawget('text').rawget('Menu')=='整备室'

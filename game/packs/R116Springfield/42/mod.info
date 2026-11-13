@@ -1,6 +1,6 @@
 name=春田
-id=R116Springfield
-require=\AimohPmxPreview
+id=GFL2Springfield
+require=\GFL2Exilium
 modversion=0.3.89
 versionMin=42.22
 versionMax=42.22

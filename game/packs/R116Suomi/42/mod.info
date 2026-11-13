@@ -1,6 +1,6 @@
 name=索米
-id=R116Suomi
-require=\AimohPmxPreview
+id=GFL2Suomi
+require=\GFL2Exilium
 modversion=0.3.89
 versionMin=42.22
 versionMax=42.22

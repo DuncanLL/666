@@ -50,7 +50,7 @@ def assemble(args):
     assert report['status'] == 'PROTECTED_REVIEW_BUILD' and pins[addon] == report['jar_sha256']
     assert pins[host] == report['host_sha256']
     mod_info = (character / CHARACTER_MOD / '42/mod.info').read_text('utf-8-sig').splitlines()
-    assert all(line in mod_info for line in ('id=AimohPmxPreview', 'javaPkgName=aimoh.pmxpreview', 'javaJarFile=media/java/client/AimohPMXPreview.jar'))
+    assert all(line in mod_info for line in ('id=GFL2Exilium', 'javaPkgName=aimoh.pmxpreview', 'javaJarFile=media/java/client/AimohPMXPreview.jar'))
     assert 'require=\\ZombieBuddy' in mod_info
     version, = [line for line in mod_info if line.startswith('modversion=')]
 

@@ -1,6 +1,6 @@
 name=少前2追放渲染支持
 id=AimohGF2Eclipse
-require=\ZombieBuddy,\Viewpoint,\AimohPmxPreview
+require=\ZombieBuddy,\Viewpoint,\GFL2Exilium
 javaJarFile=media/java/client/AimohGF2Eclipse.jar
 javaPkgName=aimoh.gf2.bridge
 ZBVersionMin=2.3.4

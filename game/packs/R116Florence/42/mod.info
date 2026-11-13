@@ -1,6 +1,6 @@
 name=芙洛伦
-id=R116Florence
-require=\AimohPmxPreview
+id=GFL2Florence
+require=\GFL2Exilium
 modversion=0.3.90
 versionMin=42.22
 versionMax=42.22

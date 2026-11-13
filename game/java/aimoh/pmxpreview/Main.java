@@ -18,6 +18,7 @@ import zombie.characters.IsoGameCharacter;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 
 public class Main {
+    static final String MOD_ID="GFL2Exilium";
     public record Entry(String id,String label,Path model,Path profile) {
         public Entry(String label,Path model,Path profile){this(model.toString(),label,model,profile);}
     }
@@ -61,8 +62,8 @@ public class Main {
     }
 
     private static Path locate() throws Exception {
-        String root=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
-        if(root==null)throw new IllegalStateException("游戏尚未登记 AimohPmxPreview 模组目录");
+        String root=ZomboidFileSystem.instance.getModDir(MOD_ID);
+        if(root==null)throw new IllegalStateException("游戏尚未登记 "+MOD_ID+" 模组目录");
         Path[] candidates=new Path[]{Path.of(root),Path.of(root).resolve("42")};
         for (Path p:candidates) if (Files.isRegularFile(p.resolve("media/aimoh_pmx/registry.json"))) return p.toAbsolutePath();
         throw new IllegalStateException("找不到测试 MOD 的模型目录");
@@ -80,8 +81,10 @@ public class Main {
         readEntries(root,registry.getJSONArray("models"),loaded,hidden,null);
         ArrayList<CharacterPack> packs=new ArrayList<>();
         JSONObject declared=registry.optJSONObject("packs");
+        JSONObject modIds=registry.optJSONObject("pack_mod_ids");
         if(declared!=null)for(String mod:declared.keySet().stream().sorted().toList()){
-            if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(mod))continue;
+            String modId=modIds==null?mod:modIds.getString(mod);
+            if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(modId))continue;
             try {
                 String relative="media/aimoh_pmx/packs/"+mod+".json";
                 String activeFile=ZomboidFileSystem.instance.getAbsolutePath(relative);

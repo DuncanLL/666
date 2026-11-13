@@ -82,11 +82,13 @@ public final class AimohGf2PackData {
         try{
             MessageDigest digest=MessageDigest.getInstance("SHA-256");digest.update(text.getBytes(StandardCharsets.UTF_8));digest.update((byte)'\n');digest.update(raw);
             Path registry=file.getParent().getParent().resolve("aimoh_pmx/registry.json");
-            JSONObject packs=Files.isRegularFile(registry)?new JSONObject(Files.readString(registry)).optJSONObject("packs"):null;
+            JSONObject registryData=Files.isRegularFile(registry)?new JSONObject(Files.readString(registry)):new JSONObject();
+            JSONObject packs=registryData.optJSONObject("packs"),modIds=registryData.optJSONObject("pack_mod_ids");
             if(packs!=null)for(String mod:packs.keySet().stream().sorted().toList()){
-                if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(mod))continue;
+                String modId=modIds==null?mod:modIds.getString(mod);
+                if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(modId))continue;
                 try{
-                    Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(mod)).toAbsolutePath();
+                    Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(modId)).toAbsolutePath();
                     String relativePack="media/aimoh_gf2/packs/"+mod+".json";
                     Path fragment=modRoot.resolve(relativePack);
                     if(!Files.isRegularFile(fragment))fragment=modRoot.resolve("42").resolve(relativePack);

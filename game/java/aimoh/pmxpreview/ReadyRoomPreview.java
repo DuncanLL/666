@@ -43,7 +43,7 @@ public class ReadyRoomPreview {
             &&Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);
     }
     private static Path sampleLibrary() {
-        String directory=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
+        String directory=ZomboidFileSystem.instance.getModDir(Main.MOD_ID);
         if(directory==null)throw new IllegalStateException("无法定位 R116 示例动作");
         Path mod=Path.of(directory).toAbsolutePath().normalize();
         Path relative=Path.of("media/aimoh_pmx/motions");
@@ -237,7 +237,7 @@ public class ReadyRoomPreview {
         }
     }
     public static synchronized KahluaTable data() throws Exception {
-        Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
+        Path root=Path.of(ZomboidFileSystem.instance.getModDir(Main.MOD_ID));
         Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
         Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
         // UI tables belong to this Lua/window lifecycle, not to a previous game session.

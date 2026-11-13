@@ -1,6 +1,6 @@
 name=破坏者
-id=R116Destroyer
-require=\AimohPmxPreview
+id=GFL2Destroyer
+require=\GFL2Exilium
 modversion=0.3.90
 versionMin=42.22
 versionMax=42.22

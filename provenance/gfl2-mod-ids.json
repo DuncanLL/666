@@ -1,0 +1,89 @@
+{
+  "id_map": {
+    "AimohPmxPreview": "GFL2Exilium",
+    "R116Alva": "GFL2Alva",
+    "R116Centaureissi": "GFL2Centaureissi",
+    "R116Springfield": "GFL2Springfield",
+    "R116Faelynn": "GFL2Faelynn",
+    "R116OTs14": "GFL2OTs14",
+    "R116Daiyan": "GFL2Daiyan",
+    "R116Klukai": "GFL2Klukai",
+    "R116Suomi": "GFL2Suomi",
+    "R116Cecilia": "GFL2Cecilia",
+    "R116Laiya": "GFL2Laiya",
+    "R116Cheyanne": "GFL2Cheyanne",
+    "R116Asteria": "GFL2Asteria",
+    "R116Koleda": "GFL2Koleda",
+    "R116Nikketa": "GFL2Nikketa",
+    "R116Florence": "GFL2Florence",
+    "R116Lenna": "GFL2Lenna",
+    "R116Vector": "GFL2Vector",
+    "R116Phaetusa": "GFL2Phaetusa",
+    "R116Sextans": "GFL2Sextans",
+    "R116Yohee": "GFL2Yohee",
+    "R116Destroyer": "GFL2Destroyer",
+    "R116Macqiato": "GFL2Macqiato"
+  },
+  "changed_mod_ids": 23,
+  "local_enable_lists_migrated": 22,
+  "game_started": false,
+  "steam_uploaded": false,
+  "checks": [
+    {
+      "variant": "stable",
+      "exact_mod_ids": 23,
+      "runtime_models": 62,
+      "shader_catalogs": [
+        {
+          "shader": "Aimoh-Native-GF2.zip",
+          "merged_model_count": 61
+        },
+        {
+          "shader": "Aimoh-Eclipse-GF2.zip",
+          "merged_model_count": 61
+        }
+      ],
+      "game_started": false
+    },
+    {
+      "status": "PASS",
+      "variant": "stable",
+      "installed_packs": 22,
+      "registered_models": 62,
+      "cold_disabled": 0,
+      "stale_mod_directory": "active game file resolution",
+      "older_pack_partial_match": true,
+      "world_switch": true,
+      "game_started": false,
+      "jar_sha256": "f7464d0016825af492ff7cfc9664f9d88b6df391facb51fcbc13c737cb5534af"
+    },
+    {
+      "variant": "rc4",
+      "exact_mod_ids": 23,
+      "runtime_models": 60,
+      "shader_catalogs": [
+        {
+          "shader": "Aimoh-Native-GF2.zip",
+          "merged_model_count": 61
+        },
+        {
+          "shader": "Aimoh-Eclipse-GF2.zip",
+          "merged_model_count": 61
+        }
+      ],
+      "game_started": false
+    },
+    {
+      "status": "PASS",
+      "variant": "rc4",
+      "installed_packs": 22,
+      "registered_models": 60,
+      "cold_disabled": 0,
+      "stale_mod_directory": "active game file resolution",
+      "older_pack_partial_match": true,
+      "world_switch": true,
+      "game_started": false,
+      "jar_sha256": "4a5a6f78dd3936b35766da3f12d488692777f103741fc25ea495c9903bb7030b"
+    }
+  ]
+}
