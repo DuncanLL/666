@@ -110,6 +110,7 @@ public final class UnifiedStartupCheck {
         Path installedEclipse = folder.resolve("Eclipse GFL 2.zip");
         if (lateHost) require(UnifiedStartupCheck.class.getClassLoader().getResource(MODEL_PASS + ".class") == null,
             "Late-host case already exposes Viewpoint");
+        if (!lateHost && !legacy) apply("viewpoint", agent);
         apply("aimoh.pmxpreview", agent);
         if (lateHost) {
             require(Files.mismatch(oldEclipse, installedEclipse) == -1, "Shader install ran before Viewpoint was added");
