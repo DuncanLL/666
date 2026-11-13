@@ -272,6 +272,71 @@
       "partImages": {},
       "officialSkin": "绀星绮愿",
       "isDefault": false
+    },
+    "pmx-74fa40dba7e013d6": {
+      "character": "可露凯",
+      "skin": "无瑕侍礼",
+      "officialSkin": "无瑕侍礼",
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-74fa40dba7e013d6.png",
+      "pack": "R116Klukai",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR05.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "skirt": {
+          "label": "裙装",
+          "display": "裙装",
+          "options": [
+            "原样",
+            "样式二",
+            "样式三"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "原样",
+            "样式二",
+            "样式三"
+          ]
+        },
+        "headset": {
+          "label": "耳机",
+          "display": "耳机",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "shoes": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "样式一",
+            "样式二",
+            "样式三",
+            "样式一 · 便鞋",
+            "样式二 · 便鞋",
+            "样式三 · 便鞋"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "裙装",
+        "上衣",
+        "耳机",
+        "鞋袜"
+      ],
+      "partImages": {}
     }
   },
   "labels": {}

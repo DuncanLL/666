@@ -55,7 +55,6 @@ UIFont={Small="small",Medium="medium"}
 function getCore()return {getScreenWidth=function()return screenWidth or 1920 end,getScreenHeight=function()return screenHeight or 1080 end}end
 function require(name)
  if name=="AimohPMXWindow" then return AimohPMXWindow end
- if name=="AimohPMXProtocol" then return protocolFixture end
  return {}
 end
 calls={enable=0,choice=0,material=0,preset=0,reset=0,reload=0,restore=0,clear=0,test=0,sent={}}
@@ -123,4 +122,3 @@ function api.refreshLibrary()return ""end
 function api.queueSettings(a,id,s)calls.restore=calls.restore+1;return ""end
 function api.queueRestore(a,id,s)calls.restore=calls.restore+1;return ""end
 function api.clear()calls.clear=calls.clear+1;actor.current=-1 end
-function api.receiveNetwork()return ""end

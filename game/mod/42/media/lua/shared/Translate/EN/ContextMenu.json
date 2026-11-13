@@ -1,4 +1,7 @@
 {
+    "ContextMenu_GFL2_NotOnServer": "Character unavailable on this server",
+    "ContextMenu_GFL2_AskHost": "Ask the host to enable the character pack.",
+    "ContextMenu_GFL2_Connecting": "Connecting to the character framework. Try again shortly.",
     "ContextMenu_AimohPMX_Menu": "GFL2: EXILIUM Character Framework",
     "ContextMenu_AimohPMX_JavaUnavailable": "Java unavailable: approve and restart",
     "ContextMenu_AimohPMX_Refresh": "Refresh list",
@@ -6,7 +9,7 @@
     "ContextMenu_AimohPMX_Presets": "Material presets",
     "ContextMenu_AimohPMX_Reload": "Reapply configuration",
     "ContextMenu_AimohPMX_Disable": "Restore original character",
-    "ContextMenu_AimohPMX_Error": "PMX operation failed; see console.txt",
+    "ContextMenu_AimohPMX_Error": "Character Framework operation failed. See console.txt.",
     "ContextMenu_AimohPMX_Simple": "Outfits",
     "ContextMenu_AimohPMX_Detail": "Parts",
     "ContextMenu_AimohPMX_NoGroups": "No outfit choices; use Parts for available meshes.",

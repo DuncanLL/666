@@ -1,7 +1,7 @@
 -- Voice assignments are model data. Unlisted models do not receive a voice.
 AimohPMXVoiceIdentity=AimohPMXVoiceIdentity or {}
 local I=AimohPMXVoiceIdentity
-local voices={["pmx-412bd037301ebe18"]="Asteria",["pmx-b0dd2e3cfd1ab80c"]="Asteria",["pmx-48650a04a35b40e0"]="Cheyanne",["pmx-47a4f99939c55958"]="Cheyanne",
+local voices={["pmx-74fa40dba7e013d6"]="Klukai",["pmx-7834ce1969baa199"]="Laiya",["pmx-412bd037301ebe18"]="Asteria",["pmx-b0dd2e3cfd1ab80c"]="Asteria",["pmx-48650a04a35b40e0"]="Cheyanne",["pmx-47a4f99939c55958"]="Cheyanne",
  ["pmx-abe3eaaaa9d04264"]="Laiya",["pmx-0af216265749a22d"]="Laiya",["pmx-1c1dd0698118e114"]="Laiya",["pmx-6eb458b3d9c9a094"]="Laiya",["pmx-293917f24c2bd387"]="Faelynn"}
 function I.voiceForModel(id) return voices[id] end
 function I.registerVoice(modelId,voice)

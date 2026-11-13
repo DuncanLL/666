@@ -26,6 +26,12 @@
       "label": "莱娅 / 狡兔迷踪",
       "model": "models/pmx-1c1dd0698118e114/model.pmx",
       "profile": "models/pmx-1c1dd0698118e114/profile.json"
+    },
+    {
+      "id": "pmx-7834ce1969baa199",
+      "label": "莱娅 / 钻石之花",
+      "model": "models/pmx-7834ce1969baa199/model.pmx",
+      "profile": "models/pmx-7834ce1969baa199/profile.json"
     }
   ]
 }

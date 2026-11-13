@@ -6,6 +6,7 @@ require "ISUI/ISTextBox"
 require "RadioCom/ISUIRadio/ISSliderPanel"
 local loadData=require "AimohPMXRoomData"
 local economy=require "AimohPMXRoomEconomy"
+local multiplayer=require "GFL2MultiplayerClient"
 local data
 local textures={}
 local function image(path)
@@ -308,8 +309,10 @@ function W:createChildren()
             local y=math.floor(p.height*.47)
             surface(p,math.floor(p.width*.13),y,math.floor(p.width*.74),62,.91)
             lock(p,math.floor(p.width*.18),y+21)
-            label(p,tr("CharacterPackMissing"),p.width*.53,y+11,19,p.width*.58,.97,.97,.94,1,true)
-            label(p,tr("CharacterPackWorkshop"),p.width*.53,y+36,15,p.width*.58,.79,.85,.84,1,true)
+            local title=w.multiplayerSession and getText("ContextMenu_GFL2_NotOnServer") or tr("CharacterPackMissing")
+            local detail=w.multiplayerSession and getText("ContextMenu_GFL2_AskHost") or tr("CharacterPackWorkshop")
+            label(p,title,p.width*.53,y+11,19,p.width*.58,.97,.97,.94,1,true)
+            label(p,detail,p.width*.53,y+36,15,p.width*.58,.79,.85,.84,1,true)
             return
         end
         local x,y=math.floor(p:getAbsoluteX()),math.floor(p:getAbsoluteY())
@@ -504,19 +507,40 @@ end
 
 local drawStep,missLife,hitLife=215,720,1150
 
+-- Single-player settles immediately. In multiplayer only a server reply can start the animation.
+function W:roomTransaction(command,target,count,localAction,onResult)
+    if not self.multiplayerSession then
+        onResult(localAction())
+        return
+    end
+    if multiplayer.pending(self.player) then return end
+    local sent=multiplayer.transact(self.player,command,target,count,function(result)
+        if self.closed then return end
+        onResult(result.status,result.results,result.misses)
+    end)
+    if not sent then self.drawNotice=getText("ContextMenu_GFL2_Connecting") end
+end
+
 function W:requestCharacterDraw(count)
     local character=self.byCharacter[self.character]
     local card=character and character.recruitment
     if self.drawAnimation or self.exchange or not card or character.locked
         or not character.unlockRequired or self.tab~="overview" then return end
-    local misses=economy.characterMisses(self.player)
-    local status,results=economy.drawCharacter(self.player,card.pool,count)
-    if status=="short" then self.drawNotice=tr("RoomDrawShort");return end
-    if not results then return end
-    self.drawNotice=nil
-    self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
-        character=character.name,portrait=character.portrait,misses=misses,button=count==1 and 1 or 2}
-    self:layoutOverview()
+    local target=character.baseSkin or character.skins[1]
+    if not target then return end
+    local function localDraw()
+        local misses=economy.characterMisses(self.player)
+        local status,results=economy.drawCharacter(self.player,card.pool,count)
+        return status,results,misses
+    end
+    self:roomTransaction("DrawCharacter",target.id,count,localDraw,function(status,results,misses)
+        if status=="short" then self.drawNotice=tr("RoomDrawShort");return end
+        if not results then return end
+        self.drawNotice=nil
+        self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
+            character=character.name,portrait=character.portrait,misses=misses,button=count==1 and 1 or 2}
+        self:layoutOverview()
+    end)
 end
 
 function W:requestOutfitDraw(count)
@@ -524,14 +548,19 @@ function W:requestOutfitDraw(count)
     local entry=self.browsed
     if self.drawAnimation or self.exchange or self.tab~="outfitDraw" or not character or character.unlockRequired
         or not entry or not entry.outfitLocked or not entry.outfitPool or entry.id==self.currentId then return end
-    local misses=economy.outfitMisses(self.player,entry.id)
-    local status,results=economy.drawOutfit(self.player,entry.id,count)
-    if status=="short" then self.drawNotice=tr("RoomOutfitDrawShort");return end
-    if not results then return end
-    self.drawNotice=nil
-    self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",outfit=entry.id,
-        portrait=entry.meta.portrait,misses=misses,button=count==1 and 1 or 2}
-    self:layoutOverview()
+    local function localDraw()
+        local misses=economy.outfitMisses(self.player,entry.id)
+        local status,results=economy.drawOutfit(self.player,entry.id,count)
+        return status,results,misses
+    end
+    self:roomTransaction("DrawOutfit",entry.id,count,localDraw,function(status,results,misses)
+        if status=="short" then self.drawNotice=tr("RoomOutfitDrawShort");return end
+        if not results then return end
+        self.drawNotice=nil
+        self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",outfit=entry.id,
+            portrait=entry.meta.portrait,misses=misses,button=count==1 and 1 or 2}
+        self:layoutOverview()
+    end)
 end
 
 function W:updateDrawAnimation()
@@ -698,10 +727,13 @@ function W:openExchange(key)
     button(card,width-54,14,34,"X",self,function(w)w:closeExchange()end)
     button(card,math.floor(width*.23),height-48,math.floor(width*.24),tr("RoomExchangeCancel"),self,function(w)w:closeExchange()end)
     s.confirm=button(card,math.floor(width*.53),height-48,math.floor(width*.24),tr("RoomExchangeBuy"),self,function(w)
-        if economy.buy(w.player,key,s.quantity) then
-            s.message=tr("RoomExchangeDone")
-        else s.message=tr("RoomNotEnough") end
-        w:updateExchange(s.quantity)
+        w:roomTransaction("Exchange",key,s.quantity,function()
+            return economy.buy(w.player,key,s.quantity) and "ok" or "short"
+        end,function(status)
+            if w.exchange~=s then return end
+            s.message=tr(status=="ok" and "RoomExchangeDone" or "RoomNotEnough")
+            w:updateExchange(s.quantity)
+        end)
     end)
     s.confirm:setSound("activate","R116RoomConfirm")
     self.exchange=s
@@ -760,7 +792,7 @@ function W:useExpressionSlot(index)
         self.expressionSaving=false;self:refreshExpressionSlots(true)
     elseif type(slots[slot])=="string" then
         local error=AimohPMXReadyRoom.expressionLoad(self.player,self.currentId,slots[slot])
-        if error~="" then print("[AimohPMXPreview] "..error);self.status=tr("Error");return end
+        if error~="" then print("[GFL2Exilium] "..error);self.status=tr("Error");return end
         self:refreshControls(true)
     else return end
     self.actions.expressionRemember(self.player)
@@ -1092,7 +1124,8 @@ function W:layoutOverview()
     local available=loaded and not locked
     self.workshopButton:setX(math.floor((self.preview.width-self.workshopButton.width)/2))
     self.workshopButton:setY(math.floor(self.preview.height*.47)+76)
-    self.workshopButton:setVisible(not not (overview and character and character.locked))
+    local workshopItem=character and (data.roomWorkshopItems or {})[character.name]
+    self.workshopButton:setVisible(not not (overview and character and character.locked and workshopItem and not self.multiplayerSession))
     local outfitDraw=available and self.tab=="outfitDraw" and self.browsed and self.browsed.outfitLocked
         and self.browsed.outfitPool~=nil
     local characterDraw=overview and locked
@@ -1413,17 +1446,19 @@ function W:applyBrowse()
     if not entry.outfitLocked then self:selectSkin(entry);return end
     if self.tab~="skins" or entry.id==self.currentId then return end
     if entry.outfitPool then self:setTab("outfitDraw");return end
-    local status=economy.buyOutfit(self.player,entry.id,entry.price)
-    if status=="short" then self:openExchange("credits");return end
-    if status=="unlocked" then
-        entry.outfitLocked=false
-        self:updateWear()
-        self.toolNotice=tr("RoomOutfitAcquired")
-    end
+    self:roomTransaction("BuyOutfit",entry.id,nil,function()
+        return economy.buyOutfit(self.player,entry.id,entry.price)
+    end,function(status)
+        if status=="short" then self:openExchange("credits");return end
+        if status=="unlocked" then
+            self:refresh()
+            self.toolNotice=tr("RoomOutfitAcquired")
+        end
+    end)
 end
 function W:refresh()
     self:closeWorkshopPrompt()
-    economy.resetTestDraws(self.player,data.roomOutfitPools or {})
+    if not self.multiplayerSession then economy.resetTestDraws(self.player,data.roomOutfitPools or {}) end
     self.currentId=AimohPMXPreview.modelId(self.player);self.currentLabel=tr("Choose");self.selected=nil
     self.characters={};self.byCharacter={}
     local equippedCharacter
@@ -1607,7 +1642,7 @@ function W:refreshControls(keepScroll)
                     self:addLabel(row.label,y,18)
                     local slider=ISSliderPanel:new(5,y+24,width-10,20,self,function(w,value)
                         local error=AimohPMXReadyRoom.expressionSet(w.player,id,field,value/100)
-                        if error~="" then print("[AimohPMXPreview] "..error);w.status=tr("Error") end
+                        if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error") end
                     end)
                     slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(0,100,1,10,true)
                     slider:setCurrentValue(row.value*100,true)
@@ -1715,15 +1750,24 @@ end
 function W:selectSkin(entry)
     local character=self.byCharacter[self.character]
     if not character or character.unlockRequired or self.waiting or entry.outfitLocked or self.currentId==entry.id then return false end
-    if self.actions.enable(self.player,entry.index)then
-        self.toolNotice=nil;self.waiting=true;self.yaw=0;self:refresh()
-        return true
+    local function equip()
+        if self.actions.enable(self.player,entry.index) then
+            self.toolNotice=nil;self.waiting=true;self.yaw=0;self:refresh()
+            return true
+        end
+        self.status=tr("Error")
+        return false
     end
-    self.status=tr("Error");return false
+    if not self.multiplayerSession then return equip() end
+    if not multiplayer.ready(self.player) or multiplayer.pending(self.player) then return false end
+    return multiplayer.transact(self.player,"Wear",entry.id,nil,function(result)
+        if self.closed then return end
+        if result.status=="ok" then equip() else self.status=tr("Error") end
+    end)
 end
 
 function W:onCharacter(character)
-    if self.waiting or self.drawAnimation or not character then return end
+    if self.waiting or self.drawAnimation or not character or (self.multiplayerSession and multiplayer.pending(self.player)) then return end
     if self.character~=character.name then
         self:closeWorkshopPrompt()
         roomSound("Select")
@@ -1781,7 +1825,7 @@ function W:drawExpressionPresets(rows,y,width)
             local b=button(self.content,(i-1)*(cell+6),y,cell,tr(preset[1]),self,function(w)
                 if not w:canEditCurrent() then return end
                 local error=AimohPMXReadyRoom.expressionLoad(w.player,w.currentId,payload)
-                if error~="" then print("[AimohPMXPreview] "..error);return end
+                if error~="" then print("[GFL2Exilium] "..error);return end
                 w.actions.expressionRemember(w.player)
                 w:refreshControls(true)
             end)
@@ -1796,6 +1840,13 @@ function W:onReset()if self.actions.reset(self.player)then self:refreshControls(
 function W:onReload()if self.actions.reload(self.player)then self:refreshControls()end end
 function W:update()
     ISCollapsableWindow.update(self)
+    if self.multiplayerSession then
+        local ready=not not multiplayer.ready(self.player)
+        if self.multiplayerReady~=ready then
+            self.multiplayerReady=ready
+            if ready and not self.waiting then self:refresh() end
+        end
+    end
     self:updateDrawAnimation()
     if self.cameraTransition then
         local t=self.cameraTransition
@@ -1986,6 +2037,7 @@ function W.open(player,actions)
     window=ISCollapsableWindow.new(W,math.floor((sw-width)/2),math.floor((sh-height)/2),width,height)
     window.title=getText("ContextMenu_AimohPMX_Menu")
     window.player=player;window.playerIndex=index;window.actions=actions
+    window.multiplayerSession=isClient()
     window.resizable=false;window.drawFrame=false;window.yaw=0;window.zoom=1.03
     window.cameraPan=0;window.cameraFocus=0
     window:initialise();window:addToUIManager();W.instances[index]=window

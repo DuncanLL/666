@@ -653,6 +653,22 @@
       "isDefault": false,
       "officialSkin": "秋林烈兔",
       "pack": "R116Qiuhua"
+    },
+    "pmx-7834ce1969baa199": {
+      "character": "莱娅",
+      "skin": "钻石之花",
+      "officialSkin": "钻石之花",
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7834ce1969baa199.png",
+      "pack": "R116Laiya"
+    },
+    "pmx-74fa40dba7e013d6": {
+      "character": "可露凯",
+      "skin": "无瑕侍礼",
+      "officialSkin": "无瑕侍礼",
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-74fa40dba7e013d6.png",
+      "pack": "R116Klukai"
     }
   },
   "labels": {
@@ -2793,7 +2809,9 @@
     "pmx-e4fe174c77f90d6c",
     "pmx-e348ab0b30d7e83a",
     "pmx-020f2e8bdc65bc5b",
-    "pmx-d373f73abd68a3d0"
+    "pmx-d373f73abd68a3d0",
+    "pmx-7834ce1969baa199",
+    "pmx-74fa40dba7e013d6"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [
@@ -3140,6 +3158,19 @@
       "秋桦的常见着装。如她的性情般热情似火，灵巧轻",
       "盈。方便架锅起灶，为绝境中的人们烹煮一锅“希",
       "望”。"
+    ],
+    "pmx-7834ce1969baa199": [
+      "“和过去相比，我参加宴会的次数是越来越多了。",
+      "不过，我最期待的那一场……至今都没有对我发起",
+      "邀请啊，指挥官~”",
+      "她带有笑意的眼眸紧盯着你，似乎在期待你的回",
+      "答。"
+    ],
+    "pmx-74fa40dba7e013d6": [
+      "“哼……作为最了解你的人形，在女仆这项工作",
+      "上，我当然也是你最正确的选择。”",
+      "可露凯微微抬起下巴，自信满满地为你端上了今天",
+      "的第一杯红茶。"
     ]
   },
   "roomLabels": {
@@ -6317,6 +6348,61 @@
       "path": "media/ui/AimohPMXReadyRoom/label-official-e35a5f3f4029bb39.png",
       "width": 220,
       "height": 40
+    },
+    "钻石之花": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a6bd4bd64b1a6550.png",
+      "width": 148,
+      "height": 40
+    },
+    "“和过去相比，我参加宴会的次数是越来越多了。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d4e937aacafa4a21.png",
+      "width": 777,
+      "height": 40
+    },
+    "不过，我最期待的那一场……至今都没有对我发起": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-43ff4f1d657d72d2.png",
+      "width": 798,
+      "height": 40
+    },
+    "邀请啊，指挥官~”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-dde1f24f33bc0d9c.png",
+      "width": 294,
+      "height": 40
+    },
+    "她带有笑意的眼眸紧盯着你，似乎在期待你的回": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-73ac113620f43ff2.png",
+      "width": 760,
+      "height": 40
+    },
+    "答。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-82417538b1a6708b.png",
+      "width": 76,
+      "height": 40
+    },
+    "无瑕侍礼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-182be65070e1985c.png",
+      "width": 148,
+      "height": 40
+    },
+    "“哼……作为最了解你的人形，在女仆这项工作": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-daf95dba48ce4bc6.png",
+      "width": 743,
+      "height": 40
+    },
+    "上，我当然也是你最正确的选择。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-600acff697e4aa2d.png",
+      "width": 561,
+      "height": 40
+    },
+    "可露凯微微抬起下巴，自信满满地为你端上了今天": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-803bf68435582d91.png",
+      "width": 796,
+      "height": 40
+    },
+    "的第一杯红茶。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-dee599914d64ebe9.png",
+      "width": 256,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -6821,7 +6907,9 @@
     "pmx-d9972c9c00cacbc5": 840,
     "pmx-5efe7392a2315a89": 1200,
     "pmx-020f2e8bdc65bc5b": 1080,
-    "pmx-d373f73abd68a3d0": 1080
+    "pmx-d373f73abd68a3d0": 1080,
+    "pmx-7834ce1969baa199": 1080,
+    "pmx-74fa40dba7e013d6": 1080
   },
   "roomStarterSkins": {
     "埃芙": "pmx-020abca186c52e7b",

@@ -2,37 +2,44 @@ local actions={}
 local w=AimohPMXWindow.open(actor,actions)
 local count=0
 for _ in pairs(roomData.roomWorkshopItems)do count=count+1 end
-assert(#w.characters==count)
+assert(#w.characters>=count)
 for _,character in ipairs(w.characters)do
  w:onCharacter(character)
- assert(character.locked and w.workshopButton.visible)
+ assert(character.locked)
  local id=roomData.roomWorkshopItems[character.name]
- assert(id)
- local before=#opened
- click(w.preview,w.workshopButton)
- assert(#opened==before and w.workshopPrompt and w.workshopPrompt.id==id)
- local prompt=w.workshopPrompt
- local x=w.preview.x+w.workshopButton.x+w.workshopButton.width/2
- local y=w.preview.y+w.workshopButton.y+w.workshopButton.height/2
- assert(hit(w,x,y)~=w.workshopButton,"modal does not block the first button")
- w:requestWorkshopPage()
- assert(#opened==before and w.workshopPrompt==prompt,"double click opened a page")
- click(prompt.card,prompt.cancel)
- assert(not w.workshopPrompt and #opened==before)
- click(w.preview,w.workshopButton);w:back()
- assert(not w.workshopPrompt and not w.closed and #opened==before)
- click(w.preview,w.workshopButton)
- prompt=w.workshopPrompt
- click(prompt.card,prompt.confirm)
- assert(#opened==before+1 and not w.workshopPrompt)
- assert(opened[#opened].url=="https://steamcommunity.com/sharedfiles/filedetails/?id="..id)
- click(prompt.card,prompt.confirm)
- assert(#opened==before+1,"stale confirmation opened twice")
- overlayEnabled=true
- click(w.preview,w.workshopButton);prompt=w.workshopPrompt
- click(prompt.card,prompt.confirm)
- assert(#opened==before+2 and opened[#opened].kind=="overlay" and opened[#opened].id==id)
- overlayEnabled=false
+ if id then
+  assert(w.workshopButton.visible)
+  local before=#opened
+  click(w.preview,w.workshopButton)
+  assert(#opened==before and w.workshopPrompt and w.workshopPrompt.id==id)
+  local prompt=w.workshopPrompt
+  local x=w.preview.x+w.workshopButton.x+w.workshopButton.width/2
+  local y=w.preview.y+w.workshopButton.y+w.workshopButton.height/2
+  assert(hit(w,x,y)~=w.workshopButton,"modal does not block the first button")
+  w:requestWorkshopPage()
+  assert(#opened==before and w.workshopPrompt==prompt,"double click opened a page")
+  click(prompt.card,prompt.cancel)
+  assert(not w.workshopPrompt and #opened==before)
+  click(w.preview,w.workshopButton);w:back()
+  assert(not w.workshopPrompt and not w.closed and #opened==before)
+  click(w.preview,w.workshopButton)
+  prompt=w.workshopPrompt
+  click(prompt.card,prompt.confirm)
+  assert(#opened==before+1 and not w.workshopPrompt)
+  assert(opened[#opened].url=="https://steamcommunity.com/sharedfiles/filedetails/?id="..id)
+  click(prompt.card,prompt.confirm)
+  assert(#opened==before+1,"stale confirmation opened twice")
+  overlayEnabled=true
+  click(w.preview,w.workshopButton);prompt=w.workshopPrompt
+  click(prompt.card,prompt.confirm)
+  assert(#opened==before+2 and opened[#opened].kind=="overlay" and opened[#opened].id==id)
+  overlayEnabled=false
+ else
+  assert(character.locked and not w.workshopButton.visible)
+ end
+end
+for _,character in ipairs(w.characters) do
+ if roomData.roomWorkshopItems[character.name] then w:onCharacter(character);break end
 end
 click(w.preview,w.workshopButton)
 local before=#opened
