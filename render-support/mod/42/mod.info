@@ -1,4 +1,4 @@
-name=R116 渲染支持 光影分发
+name=少前2追放渲染支持
 id=AimohGF2Eclipse
 require=\ZombieBuddy,\Viewpoint,\AimohPmxPreview
 javaJarFile=media/java/client/AimohGF2Eclipse.jar

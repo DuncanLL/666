@@ -84,7 +84,7 @@ if __name__=='__main__':
             J('zombie.ZomboidFileSystem').instance.setCacheDir(str(project.parent.parent))
         item=J('zombie.core.znet.SteamWorkshopItem')(str(project));assert item.readWorkshopTxt()
         assert item.validateContents()is None,str(item.validateContents())
-        assert item.getTitle()=='R116 渲染支持 光影分发'and item.getDescription()=='\u200b'
+        assert item.getTitle()=='少前2追放渲染支持'and item.getDescription()=='\u200b'
     finally:jpype.shutdownJVM()
     report=json.loads((out/'startup.json').read_text('utf8'));report.update(workshop_validator_passed=True,
            jar_sha256=sha(jar),official_host_unchanged=True,uploaded=False,

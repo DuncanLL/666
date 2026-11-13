@@ -1,6 +1,8 @@
-name=R116 - 妮基塔
+name=妮基塔
 id=R116Nikketa
 require=\AimohPmxPreview
-modversion=0.3.78
+modversion=0.3.79
 versionMin=42.22
 versionMax=42.22
+icon=icon.png
+poster=poster.png

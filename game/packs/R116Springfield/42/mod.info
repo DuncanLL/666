@@ -1,6 +1,8 @@
-name=R116 - 春田
+name=春田
 id=R116Springfield
 require=\AimohPmxPreview
-modversion=0.3.78
+modversion=0.3.79
 versionMin=42.22
 versionMax=42.22
+icon=icon.png
+poster=poster.png

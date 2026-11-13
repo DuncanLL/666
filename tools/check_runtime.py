@@ -32,7 +32,7 @@ try:
     item = J('zombie.core.znet.SteamWorkshopItem')(str(project))
     assert item.readWorkshopTxt()
     assert item.validateContents() is None
-    assert item.getTitle() == 'R116' and item.getDescription() == '\u200b'
+    assert item.getTitle() == '少前2追放角色框架' and item.getDescription() == '\u200b'
     J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
     os.chdir(temp)
     main = J('aimoh.pmxpreview.Main')

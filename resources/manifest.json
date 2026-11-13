@@ -15,6 +15,10 @@
     }
   },
   "files": {
+    "42/icon.png": {
+      "bytes": 5566,
+      "sha256": "72b446d8f6e7675fba428c7a8354295fbd4499a6c32893d5d0578bc2a4dbd9e3"
+    },
     "42/media/aimoh_gf2/characters.json": {
       "bytes": 3183247,
       "sha256": "6e99d37c91bb61d1e969296c19659ffe04891ae4864beec361498edf7cea7446"
@@ -5526,12 +5530,20 @@
     "42/media/ui/AimohPMXReadyRoom/round-pmx-fee7d92be40f96dd.png": {
       "bytes": 27391,
       "sha256": "40b6b92af52f48f0225bda9f152527cde9f181d4f2781e19be82dd1b4a7c60ea"
+    },
+    "42/poster.png": {
+      "bytes": 14345,
+      "sha256": "934b0c8c3f2d4cdb3fa827fcbee011fa2908473c96a023f6bd234fe6a3defc49"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",
   "character_packs": {
     "R116Laiya": {
       "files": {
+        "42/icon.png": {
+          "bytes": 24792,
+          "sha256": "e4d956690c279ab83890380c2473b96ec5d42b0228e0bba60a0161e4e1b2bd0a"
+        },
         "42/media/aimoh_gf2/data/0041875d4c1a71ae532313a2d18aeaae9e59b35d38d53f5b8bc7834cd8efbd2d.f32": {
           "bytes": 544,
           "sha256": "0041875d4c1a71ae532313a2d18aeaae9e59b35d38d53f5b8bc7834cd8efbd2d"
@@ -7111,11 +7123,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_LevaSSR02_P3_Head.png": {
           "bytes": 14309,
           "sha256": "ad1bed8dc307c422413be13375c7b064c3266619106e91d976bf85245d193160"
+        },
+        "42/poster.png": {
+          "bytes": 222463,
+          "sha256": "1824f122189f7049d29efcd1e34b26314296c5b02b8c3faf34602380382c5ee2"
         }
       }
     },
     "R116Cheyanne": {
       "files": {
+        "42/icon.png": {
+          "bytes": 23236,
+          "sha256": "2999eb7e78861cc4643d91b791c9dbad5b3e21085b5d2eb305a787c7eb8ede92"
+        },
         "42/media/aimoh_gf2/data/02bbb067169cdf31094aecd3736a0d6dc73783c0119cab0d4fb28a8e0d03f1c0.bin": {
           "bytes": 87408,
           "sha256": "02bbb067169cdf31094aecd3736a0d6dc73783c0119cab0d4fb28a8e0d03f1c0"
@@ -8303,11 +8323,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_CheyanneSSR01_P1_Head.png": {
           "bytes": 20547,
           "sha256": "12296c9c8929c3b3021d055cc1a9bbfa17fcbedbe63b0dabd7e985c346ff9a04"
+        },
+        "42/poster.png": {
+          "bytes": 209399,
+          "sha256": "aece90517e3a65ce497a7e7b4818ac785539187698c3530dc21eb8148a984be0"
         }
       }
     },
     "R116Asteria": {
       "files": {
+        "42/icon.png": {
+          "bytes": 24148,
+          "sha256": "299e32dbbd03ba7df44b5a45bbfe44e912bb28020190c2062e4e2644b3fcdb5f"
+        },
         "42/media/aimoh_gf2/data/008b58be25d7dafd582fd22fb031e5c1e0f9eeae05c093ada705036154f5ca74.bin": {
           "bytes": 21872,
           "sha256": "008b58be25d7dafd582fd22fb031e5c1e0f9eeae05c093ada705036154f5ca74"
@@ -9667,11 +9695,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_AsteriaSSR01_P3_Head.png": {
           "bytes": 11390,
           "sha256": "48364ae7915889dbbb7275eb2a2565c1bf6c8c6fbcebdf7efb96f48c69faf911"
+        },
+        "42/poster.png": {
+          "bytes": 235531,
+          "sha256": "3cbbd4dba9b2a4c86a5cba4550a2bc43c0c07fdfa7e437c25913d0a3e0338ba7"
         }
       }
     },
     "R116Koleda": {
       "files": {
+        "42/icon.png": {
+          "bytes": 21788,
+          "sha256": "6b190512debe95a965438422ee38d9f93f214455b63ac60362347ce0c7d06795"
+        },
         "42/media/aimoh_gf2/data/24ff0dc21aa4f8e3ba3b9d1b301a80d0c65b6834c462afbdacbfb2dd6eaddf2f.bin": {
           "bytes": 349552,
           "sha256": "24ff0dc21aa4f8e3ba3b9d1b301a80d0c65b6834c462afbdacbfb2dd6eaddf2f"
@@ -10747,11 +10783,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_KoledaSSR01_P1_Coat.png": {
           "bytes": 24241,
           "sha256": "fde79ab79bfc6dccfeda228df7b532d046cd1e7725bf600276ed31713222cc78"
+        },
+        "42/poster.png": {
+          "bytes": 207282,
+          "sha256": "d8b29cc90b159604cf04c32cc5c91a621c36d72fb3eb2b2760ae6a66c7817130"
         }
       }
     },
     "R116Nikketa": {
       "files": {
+        "42/icon.png": {
+          "bytes": 28736,
+          "sha256": "f2e722b87efac94c851436866407ee9f391990fb7895cbefce3271262249e14d"
+        },
         "42/media/aimoh_gf2/data/003d2246c0314ffbcace068ce29c2b8ad150d334c590e606d49cca3381437f28.bin": {
           "bytes": 783176,
           "sha256": "003d2246c0314ffbcace068ce29c2b8ad150d334c590e606d49cca3381437f28"
@@ -12615,11 +12659,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_NikketaSSR03_P3_Head.png": {
           "bytes": 15010,
           "sha256": "64a5b8192b7ecaf4183f88c24ae75fd6db16511246d729bfff5554734be212ff"
+        },
+        "42/poster.png": {
+          "bytes": 269535,
+          "sha256": "d3099a2bf1b2057827a4bc43c0ea8c6c84e411e1cd4ceb58db89a20d8f8a9344"
         }
       }
     },
     "R116Florence": {
       "files": {
+        "42/icon.png": {
+          "bytes": 27393,
+          "sha256": "cf1e6b91899f35d59bbc9b86471fb5c61fc3ab83e5e7e851f819a81a025e53e8"
+        },
         "42/media/aimoh_gf2/data/002e7d7cdea79fc49f06fe4b6144fd608fb892f8c7260e7c4666337312765559.bin": {
           "bytes": 87408,
           "sha256": "002e7d7cdea79fc49f06fe4b6144fd608fb892f8c7260e7c4666337312765559"
@@ -13915,11 +13967,19 @@
         "42/media/ui/AimohPMXReadyRoom/official/Item_ClothesMod_FlorenceSSR02_P3_Hand.png": {
           "bytes": 14277,
           "sha256": "52e7111e6bafbcf12c00601ba00bf0640dcc1f952f032c695d61d7b3d1d7cb85"
+        },
+        "42/poster.png": {
+          "bytes": 241643,
+          "sha256": "0b03985b6377929ac18fe34fa5b36a2af1771ca25966644f578393a527230a4e"
         }
       }
     },
     "R116Alva": {
       "files": {
+        "42/icon.png": {
+          "bytes": 20410,
+          "sha256": "88bf5a62eae7ec121fa880a702f8b6dea322d7d252beff0976fffff620a62484"
+        },
         "42/media/aimoh_gf2/data/0382f945a27c39810b233f38c52a1b10c31ba0a1425f7f98bd142a1f3abd3a57.bin": {
           "bytes": 1398128,
           "sha256": "0382f945a27c39810b233f38c52a1b10c31ba0a1425f7f98bd142a1f3abd3a57"
@@ -15127,11 +15187,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-94483c23f678afe3.png": {
           "bytes": 23622,
           "sha256": "4b141c521a2da3a46f3810db81d7f0e00034651e22a146f4aed379a87a58992a"
+        },
+        "42/poster.png": {
+          "bytes": 192090,
+          "sha256": "7d93d6256ccfb22cf4d36c17ef765efe4410c14f672115c9047523b84a2e576e"
         }
       }
     },
     "R116Cecilia": {
       "files": {
+        "42/icon.png": {
+          "bytes": 24823,
+          "sha256": "6f9012bee77a7b4fbf92aa2c005559e61346e996aba15778c5bb052e647a2b1d"
+        },
         "42/media/aimoh_gf2/data/0517bd7d32a46159b7c6b94eb8869e3b1ab0b79be5e2ee5fb5e9299c465091fe.bin": {
           "bytes": 349552,
           "sha256": "0517bd7d32a46159b7c6b94eb8869e3b1ab0b79be5e2ee5fb5e9299c465091fe"
@@ -15603,11 +15671,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-fee7d92be40f96dd.png": {
           "bytes": 27391,
           "sha256": "40b6b92af52f48f0225bda9f152527cde9f181d4f2781e19be82dd1b4a7c60ea"
+        },
+        "42/poster.png": {
+          "bytes": 234903,
+          "sha256": "5dc1b174e1a6dbde7eccda2c4f1954d0a924ca25d28955325d114ba1c0d5e4c6"
         }
       }
     },
     "R116Centaureissi": {
       "files": {
+        "42/icon.png": {
+          "bytes": 27176,
+          "sha256": "a5876f00d1db50d26363299fda99ccf448106ed6dc90feb383496955f7d7e039"
+        },
         "42/media/aimoh_gf2/data/03261fa451fa10801617b5fa836f36321277398bb464268ec94d03510b539245.bin": {
           "bytes": 32768,
           "sha256": "03261fa451fa10801617b5fa836f36321277398bb464268ec94d03510b539245"
@@ -16899,11 +16975,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-dd77c173248cb704.png": {
           "bytes": 30381,
           "sha256": "6440d8233546a5797b725339b10ee75eac4e7e2dc484b25b8fe4797acdedb860"
+        },
+        "42/poster.png": {
+          "bytes": 254880,
+          "sha256": "22da0aea923e59acd372ccbfb8caa89789d0c9e23abf990343d72f0369c203d3"
         }
       }
     },
     "R116Daiyan": {
       "files": {
+        "42/icon.png": {
+          "bytes": 21286,
+          "sha256": "754b9578f280f5b5bd26b08a695bc2fc53d6499d62b9ac111643b37f509dc37d"
+        },
         "42/media/aimoh_gf2/data/05a7d46561e7b0296e38b3d46c086880a98afe5ac9b89aeff8d0bbe5fc2fa6de.f32": {
           "bytes": 544,
           "sha256": "05a7d46561e7b0296e38b3d46c086880a98afe5ac9b89aeff8d0bbe5fc2fa6de"
@@ -18027,11 +18111,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png": {
           "bytes": 24839,
           "sha256": "c4484998e85eac5786ae1885cd75ea471e102e73ed94b36204d7f67516d04a27"
+        },
+        "42/poster.png": {
+          "bytes": 192122,
+          "sha256": "e62cf055818644996a2ea79bc073f25dcb91e271a7fb100cc755b0b0fd720c63"
         }
       }
     },
     "R116Faelynn": {
       "files": {
+        "42/icon.png": {
+          "bytes": 27572,
+          "sha256": "647cb4eeb950e78fccc140ca780f891fc1f0c958fc2020b8d24cb28bf6af247c"
+        },
         "42/media/aimoh_gf2/data/0034da471090b7ffdae9c41b211b68ae82985295332e8c95ccfcf256efc19949.bin": {
           "bytes": 5592432,
           "sha256": "0034da471090b7ffdae9c41b211b68ae82985295332e8c95ccfcf256efc19949"
@@ -19243,11 +19335,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png": {
           "bytes": 31971,
           "sha256": "a3abe0bbfaf237e3ecab2437434e4f875ccf6cccaf12e016387ee012e5259b73"
+        },
+        "42/poster.png": {
+          "bytes": 259411,
+          "sha256": "57a9b9fdd8f60aca7f3e26afef7c6c8d5627933746cf705a43947df77f5812dc"
         }
       }
     },
     "R116Klukai": {
       "files": {
+        "42/icon.png": {
+          "bytes": 19386,
+          "sha256": "62ddb02f8ef0d7cbb444bbcf0f02f975344d379e096ac9153d7aaa10dc032bb8"
+        },
         "42/media/aimoh_gf2/data/028db6117359825bd19f5e5338143157d22d79f2830ff2888f2d24267773b20f.f32": {
           "bytes": 544,
           "sha256": "028db6117359825bd19f5e5338143157d22d79f2830ff2888f2d24267773b20f"
@@ -21587,11 +21687,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png": {
           "bytes": 21811,
           "sha256": "6d4890c1ec36648310f05868ab39bbb81e6ab40b2807b19eab958cbf4e283e4a"
+        },
+        "42/poster.png": {
+          "bytes": 172079,
+          "sha256": "bcfce23581a448094cbbfd7863cba0c215a20b961680326adbe77b29bb07b3d7"
         }
       }
     },
     "R116OTs14": {
       "files": {
+        "42/icon.png": {
+          "bytes": 23437,
+          "sha256": "0efe1059c67492c4897880b821ab27f9a3575fb6d584cc1ebe1db6f6cebbe439"
+        },
         "42/media/aimoh_gf2/data/00e67dbce83c4f9288db41ee8213aaf142b4a710e0e289b6c914f470bd401d99.f32": {
           "bytes": 544,
           "sha256": "00e67dbce83c4f9288db41ee8213aaf142b4a710e0e289b6c914f470bd401d99"
@@ -22823,11 +22931,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-73625fbf0962e120.png": {
           "bytes": 26269,
           "sha256": "71394a78593be5d718965c36b81ed57cf91f9d98c2a43ea1f815b227622596da"
+        },
+        "42/poster.png": {
+          "bytes": 208265,
+          "sha256": "16a04a809a52640fa1fde6a89fcab1765f9c97392960afe1d1c18d5b179de3d9"
         }
       }
     },
     "R116Springfield": {
       "files": {
+        "42/icon.png": {
+          "bytes": 25244,
+          "sha256": "3a598051efa5884a9fe727fef3a4f0ef3e0cfad1af9d87125dfadbcedfe083a4"
+        },
         "42/media/aimoh_gf2/data/02b0bb091c50330218ee2166624519232c23225dee491466a500f0a88a77cd65.bin": {
           "bytes": 87408,
           "sha256": "02b0bb091c50330218ee2166624519232c23225dee491466a500f0a88a77cd65"
@@ -23295,11 +23411,19 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-62b44285b57a48e9.png": {
           "bytes": 28113,
           "sha256": "7d52a56f452701d66a55d2e8a37bcaeaad3e8416875eef04edb5544f75db391a"
+        },
+        "42/poster.png": {
+          "bytes": 236846,
+          "sha256": "e8dfc1a7b4f75917547acaca231bc79c7523e86abcf8860285a0ba19adb6fb6e"
         }
       }
     },
     "R116Suomi": {
       "files": {
+        "42/icon.png": {
+          "bytes": 24844,
+          "sha256": "ed8ca810d5a052908a2e6df1005d1036a7012a9163e7cf8c06f0ca8feec96d70"
+        },
         "42/media/aimoh_gf2/data/00bbebb5457ab3a25fc5c5c0b8ffc42d796356e2d205856cea044d30c5e149dd.bin": {
           "bytes": 699064,
           "sha256": "00bbebb5457ab3a25fc5c5c0b8ffc42d796356e2d205856cea044d30c5e149dd"
@@ -24083,6 +24207,10 @@
         "42/media/ui/AimohPMXReadyRoom/round-pmx-cb19e5961c38af86.png": {
           "bytes": 28617,
           "sha256": "0185cff0395ce6fe27fadc1ef41e86944e74360c73e0d036033178a32a4c5fcb"
+        },
+        "42/poster.png": {
+          "bytes": 238761,
+          "sha256": "fda7d18d00d28ff046495b4e92783d9825f2abf26648c5c235212e52771afeed"
         }
       }
     }

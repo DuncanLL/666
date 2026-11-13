@@ -39,7 +39,9 @@ def assemble(args):
     report = json.loads(args.render_report.read_text('utf8'))
     assert re.fullmatch(r'\d+\.\d+\.\d+', args.version), 'Use an explicit combined version'
     assert {path.name for path in (character / 'Contents/mods').iterdir()} == {'AimohPmxPreview'}
-    assert 'id=3834454638' in (character / 'workshop.txt').read_text('utf-8-sig').splitlines()
+    metadata = dict(line.split('=', 1) for line in (character / 'workshop.txt').read_text('utf-8-sig').splitlines() if '=' in line)
+    assert metadata.get('title') == '少前2追放角色框架'
+    workshop_id = metadata.get('id')
     assert not source.with_suffix('.jar.zbs').exists(), 'The unified JAR needs fresh approval and cannot carry an old signature'
     pins = {path: sha(path) for path in (source, addon, host, zombie)}
     signature=host.with_suffix('.jar.zbs')
@@ -99,7 +101,7 @@ def assemble(args):
         stage.rename(output)
 
     save(work/'build.json', dict(status='UNIFIED_WORKSHOP_BUILT', version=args.version,
-         character_version=version.split('=',1)[1], render_version=report['version'], workshop_id='3834454638',
+         character_version=version.split('=',1)[1], render_version=report['version'], workshop_id=workshop_id,
          project=str(output), jar_sha256=result[CHARACTER_MOD+'/'+CHARACTER_JAR]['sha256'],
          character_sha256=pins[source], render_sha256=pins[addon], host_sha256=pins[host],
          signature_sha256=pins.get(signature), loader_sha256=pins[zombie],

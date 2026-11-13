@@ -87,7 +87,7 @@ def package(output, verify_existing=False):
         sys.path.insert(0, config['python_dependencies'])
         from PIL import Image
         Image.new('RGB', (256, 256), (32, 32, 32)).save(stage / 'preview.png')
-        (stage / 'workshop.txt').write_text('version=1\ntitle=R116\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
+        (stage / 'workshop.txt').write_text('version=1\ntitle=少前2追放角色框架\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
     (mod / 'common').mkdir(exist_ok=True)
     # .gitkeep is useful in Git only, not in the Workshop payload.
     (mod / 'common/.gitkeep').unlink(missing_ok=True)

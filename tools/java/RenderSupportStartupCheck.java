@@ -172,7 +172,7 @@ public final class RenderSupportStartupCheck {
         var section=viewpoint.platform.LiveSettings.Setting.class.getDeclaredField("section");section.setAccessible(true);
         for(String id:List.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss","characterOutlineWidth")){
             var option=selected.option(id);require(option!=null&&option.kept,"Character option missing: "+id);
-            Object row=declare.invoke(option,"test."+id,"Graphics/Shader Options");require(section.get(row).equals("Graphics/R116 人物效果"),"Character option was not grouped: "+id);
+            Object row=declare.invoke(option,"test."+id,"Graphics/Shader Options");require(section.get(row).equals("Graphics/少前2人物效果"),"Character option was not grouped: "+id);
             if(id.equals("characterSurfaceDetail")||id.equals("characterSkinGloss"))for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(option))==0,"Enhancement changed default");
             if(id.equals("characterOutlineWidth"))for(String preset:viewpoint.platform.PackOption.PRESETS)require(Float.parseFloat(selected.preset(preset).valueFor(option))==1f,"Outline width changed default");
         }

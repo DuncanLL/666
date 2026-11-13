@@ -1,0 +1,237 @@
+{
+  "format": 1,
+  "date": "2026-11-13",
+  "version": "0.3.79",
+  "framework": "少前2追放角色框架",
+  "projects": [
+    {
+      "project": "R116",
+      "mod": "AimohPmxPreview",
+      "title": "少前2追放角色框架",
+      "preview_sha256": "934b0c8c3f2d4cdb3fa827fcbee011fa2908473c96a023f6bd234fe6a3defc49"
+    },
+    {
+      "project": "R116Laiya",
+      "mod": "R116Laiya",
+      "title": "莱娅",
+      "preview_sha256": "1824f122189f7049d29efcd1e34b26314296c5b02b8c3faf34602380382c5ee2",
+      "source_portrait_sha256": "1159fbe0b61d6460ae8461e8eb92931c88988b47f78b60008ed8d14dc4b5ffb5"
+    },
+    {
+      "project": "R116Cheyanne",
+      "mod": "R116Cheyanne",
+      "title": "夏安",
+      "preview_sha256": "aece90517e3a65ce497a7e7b4818ac785539187698c3530dc21eb8148a984be0",
+      "source_portrait_sha256": "b156390eed0ad3533ea9013b336862aba6e94bf0eaf2a551d1be40a1feff6693"
+    },
+    {
+      "project": "R116Asteria",
+      "mod": "R116Asteria",
+      "title": "阿斯缇亚",
+      "preview_sha256": "3cbbd4dba9b2a4c86a5cba4550a2bc43c0c07fdfa7e437c25913d0a3e0338ba7",
+      "source_portrait_sha256": "d74c2d8452197aef8488a153004cdb6ebb0b5adcaa240b0cf9e08a4f178f04ed"
+    },
+    {
+      "project": "R116Koleda",
+      "mod": "R116Koleda",
+      "title": "克莱妲",
+      "preview_sha256": "d8b29cc90b159604cf04c32cc5c91a621c36d72fb3eb2b2760ae6a66c7817130",
+      "source_portrait_sha256": "4a7e34e7abb7d43490e98255580e0b42f7602b8e11cc62a9c4559bea4304f873"
+    },
+    {
+      "project": "R116Nikketa",
+      "mod": "R116Nikketa",
+      "title": "妮基塔",
+      "preview_sha256": "d3099a2bf1b2057827a4bc43c0ea8c6c84e411e1cd4ceb58db89a20d8f8a9344",
+      "source_portrait_sha256": "89b3fe64deb4349cdd020f7371bd48348d78e07e522f44d0b21939092b8edd0d"
+    },
+    {
+      "project": "R116Florence",
+      "mod": "R116Florence",
+      "title": "芙洛伦",
+      "preview_sha256": "0b03985b6377929ac18fe34fa5b36a2af1771ca25966644f578393a527230a4e",
+      "source_portrait_sha256": "c9bc851949ddbea2486f29c0143a276dff3aa8ac5a0497d77822e450773377fe"
+    },
+    {
+      "project": "R116Alva",
+      "mod": "R116Alva",
+      "title": "埃芙",
+      "preview_sha256": "7d93d6256ccfb22cf4d36c17ef765efe4410c14f672115c9047523b84a2e576e",
+      "source_portrait_sha256": "4b141c521a2da3a46f3810db81d7f0e00034651e22a146f4aed379a87a58992a"
+    },
+    {
+      "project": "R116Cecilia",
+      "mod": "R116Cecilia",
+      "title": "希丽雅",
+      "preview_sha256": "5dc1b174e1a6dbde7eccda2c4f1954d0a924ca25d28955325d114ba1c0d5e4c6",
+      "source_portrait_sha256": "40b6b92af52f48f0225bda9f152527cde9f181d4f2781e19be82dd1b4a7c60ea"
+    },
+    {
+      "project": "R116Centaureissi",
+      "mod": "R116Centaureissi",
+      "title": "桑朵莱希",
+      "preview_sha256": "22da0aea923e59acd372ccbfb8caa89789d0c9e23abf990343d72f0369c203d3",
+      "source_portrait_sha256": "e46f451822e7c5d979026f862eb4697794025136e4f19505b8e9763c47e3634a"
+    },
+    {
+      "project": "R116Daiyan",
+      "mod": "R116Daiyan",
+      "title": "黛烟",
+      "preview_sha256": "e62cf055818644996a2ea79bc073f25dcb91e271a7fb100cc755b0b0fd720c63",
+      "source_portrait_sha256": "c4484998e85eac5786ae1885cd75ea471e102e73ed94b36204d7f67516d04a27"
+    },
+    {
+      "project": "R116Faelynn",
+      "mod": "R116Faelynn",
+      "title": "芙铃",
+      "preview_sha256": "57a9b9fdd8f60aca7f3e26afef7c6c8d5627933746cf705a43947df77f5812dc",
+      "source_portrait_sha256": "a3abe0bbfaf237e3ecab2437434e4f875ccf6cccaf12e016387ee012e5259b73"
+    },
+    {
+      "project": "R116Klukai",
+      "mod": "R116Klukai",
+      "title": "可露凯",
+      "preview_sha256": "bcfce23581a448094cbbfd7863cba0c215a20b961680326adbe77b29bb07b3d7",
+      "source_portrait_sha256": "6d4890c1ec36648310f05868ab39bbb81e6ab40b2807b19eab958cbf4e283e4a"
+    },
+    {
+      "project": "R116OTs14",
+      "mod": "R116OTs14",
+      "title": "OTs-14",
+      "preview_sha256": "16a04a809a52640fa1fde6a89fcab1765f9c97392960afe1d1c18d5b179de3d9",
+      "source_portrait_sha256": "71394a78593be5d718965c36b81ed57cf91f9d98c2a43ea1f815b227622596da"
+    },
+    {
+      "project": "R116Springfield",
+      "mod": "R116Springfield",
+      "title": "春田",
+      "preview_sha256": "e8dfc1a7b4f75917547acaca231bc79c7523e86abcf8860285a0ba19adb6fb6e",
+      "source_portrait_sha256": "7d52a56f452701d66a55d2e8a37bcaeaad3e8416875eef04edb5544f75db391a"
+    },
+    {
+      "project": "R116Suomi",
+      "mod": "R116Suomi",
+      "title": "索米",
+      "preview_sha256": "fda7d18d00d28ff046495b4e92783d9825f2abf26648c5c235212e52771afeed",
+      "source_portrait_sha256": "0185cff0395ce6fe27fadc1ef41e86944e74360c73e0d036033178a32a4c5fcb"
+    }
+  ],
+  "shaders": {
+    "before": "ae6ab9beb1fe67cdc6e72dcc0addfb0c25c7a554d75dafb1cefa1b68a6bdb082",
+    "after": "da0242ed722bf5271c810e7244d39102652803f761b00f55c515b325a8809537",
+    "changes": [
+      {
+        "path": "viewpoint/platform/AimohNativeCharacterMenu.class",
+        "text": [
+          [
+            "Graphics/R116 人物效果",
+            "Graphics/少前2人物效果"
+          ]
+        ]
+      },
+      {
+        "path": "aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip!Eclipse-Shader-Unstable/shaders/lang/en_us.lang"
+      },
+      {
+        "path": "aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip!Eclipse-Shader-Unstable/shaders/lang/zh_cn.lang"
+      },
+      {
+        "path": "aimoh/gf2/bridge/Aimoh-Native-GF2.zip!pack.properties"
+      }
+    ]
+  },
+  "checks": {
+    "status": "PASS",
+    "projects": [
+      {
+        "title": "少前2追放角色框架",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "莱娅",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "夏安",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "阿斯缇亚",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "克莱妲",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "妮基塔",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "芙洛伦",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "埃芙",
+        "valid": true,
+        "existing_id": "3837425337"
+      },
+      {
+        "title": "希丽雅",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "桑朵莱希",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "黛烟",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "芙铃",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "可露凯",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "OTs-14",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "春田",
+        "valid": true,
+        "existing_id": null
+      },
+      {
+        "title": "索米",
+        "valid": true,
+        "existing_id": null
+      }
+    ],
+    "shader_installer": true,
+    "game_started": false
+  },
+  "upload_verification": {
+    "projects": 16,
+    "result": "ALL_REMOTE_VERIFIED",
+    "visibility": "unlisted",
+    "previews_pixel_identical": 16,
+    "dependencies_verified": 16
+  }
+}

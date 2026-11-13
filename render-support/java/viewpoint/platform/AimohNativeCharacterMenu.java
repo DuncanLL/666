@@ -6,6 +6,6 @@ import java.util.Set;
 public final class AimohNativeCharacterMenu {
     private static final Set<String> OPTIONS=Set.of("characterSoftFill","characterDisplayStrength","characterSurfaceDetail","characterSkinGloss","characterOutlineWidth");
     public static String section(PackOption option,String fallback){
-        return OPTIONS.contains(option.id)?"Graphics/R116 人物效果":fallback;
+        return OPTIONS.contains(option.id)?"Graphics/少前2人物效果":fallback;
     }
 }
