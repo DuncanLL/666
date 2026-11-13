@@ -1,0 +1,53 @@
+{
+  "version": "0.3.92",
+  "source_commits": {
+    "stock_held_items": "29bb97a",
+    "ready_room_preview": "36a563d",
+    "rc4_renderer": "a7a1238"
+  },
+  "workshop_projects": [
+    {
+      "variant": "stable",
+      "workshop": {
+        "id": 3838709437,
+        "title": "少前2追放角色框架",
+        "dependencies": [
+          3619862853,
+          3809306528
+        ],
+        "sha256_uploaded": "efd5a7f445176735a9883735ae72fa5ea76cb87d5dc13fb7fbaa4d1cc61b4da2",
+        "submit_callback": "OK",
+        "remote_details_verified": true
+      },
+      "previous_jar_sha256": "bd4a7995735bd6ca508cda59091baaf77f2e82c15599f5b7ed808211d6f33dce",
+      "workshop_cover_sha256": "934b0c8c3f2d4cdb3fa827fcbee011fa2908473c96a023f6bd234fe6a3defc49",
+      "workshop_metadata_sha256": "6c84c4413e5f4fa2c2652935568f7d371616f17ec46fc710cf252c0751a6aeb4"
+    },
+    {
+      "variant": "rc4",
+      "workshop": {
+        "id": 3838770244,
+        "title": "少前2追放角色框架（VP RC4 专版）",
+        "dependencies": [
+          3619862853
+        ],
+        "sha256_uploaded": "0fad1ec12e9a13f9745312712549ca8c57d03c1025ee1214efb36bdeddddabc2",
+        "submit_callback": "OK",
+        "remote_details_verified": true
+      },
+      "previous_jar_sha256": "67ab553010fe2ca1b1f109a24b85c5ce38c274d831f903c943226b1437708179",
+      "workshop_cover_sha256": "934b0c8c3f2d4cdb3fa827fcbee011fa2908473c96a023f6bd234fe6a3defc49",
+      "workshop_metadata_sha256": "243961323c99f633ef602fa798d98d9b6e0309af8c9b3c2f730463f660ee96bc"
+    }
+  ],
+  "checks": {
+    "installed_files": 6,
+    "held_items_models_per_variant": 3,
+    "held_items_poses_per_model": 10,
+    "preview_pixel_matches_per_variant": 12,
+    "preview_programs_per_context_before": 6,
+    "preview_programs_per_context_after": 1,
+    "context_isolation": true,
+    "gameplay": false
+  }
+}
