@@ -1,15 +1,19 @@
 R116 自有渲染实现声明
 
-这套渲染接入、光照调校和着色器改动，是我花了大量时间、反复进游戏验证、消耗了大量 AI token 才做出来的。
+这套人物光影是我自己一点点试出来的。每次改一点，我就回游戏里看看效果，然后接着调。最近我发现有人没问过我就用了我的包。说实话，这比我想象的更伤人，到现在我还是很难受。
 
-我没有授权任何个人、组织或 AI 工具逆向、提取、复制、移植或重新分发 R116 的自有渲染实现。我不会为这些行为授予例外。请尊重这份劳动。如果你想做类似的效果，请自己研究、实现和调试。
+我没有授权任何个人或组织提取、复制、移植、修改、重新分发我的渲染代码、参数或预设，也没有授权拿它们当底子做自己的版本。用 AI 帮忙改也一样。哪怕只在自己电脑上用，哪怕只改几个参数，也没有得到我的同意。我不会为这些用途授予例外。
+
+如果你想做类似的效果，请参考网上公开的《少女前线 2：追放》渲染资料，从头做自己的版本。请把我包里的代码和预设留在原处。谢谢你尊重我花在这上面的时间和心力。
 
 本声明针对 R116 自有的渲染接入、着色器改动和调校成果。包内第三方内容适用各自的原有许可。
 
 R116 original rendering work
 
-I built this rendering integration, lighting calibration, and shader work through extensive in-game testing and a great deal of time and AI token usage.
+I spent a lot of time getting these characters to look the way they do. I'd change one little thing, go back into the game to see how it looked, and do it all over again. Recently I found out someone had used my package without asking me. It hurt more than I expected, and I'm still upset about it.
 
-I do not give permission to any person, organization, or AI tool to reverse engineer, extract, copy, port, or redistribute R116's original rendering implementation. I will not grant exceptions for these activities. Please respect the work and build and tune your own implementation if you want a similar effect.
+I haven't given anyone permission to extract, copy, port, modify, or redistribute my rendering code, settings, or presets, or to use them as a starting point for their own version. That goes for AI-assisted edits too, even if the changes stay on your own computer or you only tweak a few settings. I don't make exceptions for those uses.
+
+If you want to make something with a similar look, please use public references on how Girls' Frontline 2: Exilium renders its characters and build your own version from scratch. Please leave the code and presets in this package alone. I'd appreciate you respecting the time and care I put into them.
 
 This notice concerns R116's original integration, shader changes, and tuning. Third-party material remains subject to its original terms.
