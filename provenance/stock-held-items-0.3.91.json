@@ -1,0 +1,37 @@
+{
+  "version": "0.3.91",
+  "jar_sha256": {
+    "stable": "bd4a7995735bd6ca508cda59091baaf77f2e82c15599f5b7ed808211d6f33dce",
+    "rc4": "67ab553010fe2ca1b1f109a24b85c5ce38c274d831f903c943226b1437708179"
+  },
+  "checks": {
+    "game_runtime": "42.22",
+    "models": [
+      "Asteria",
+      "Cheyanne",
+      "Koleda"
+    ],
+    "poses_per_model": 10,
+    "includes": [
+      "idle",
+      "walk",
+      "run",
+      "aim",
+      "swing",
+      "turn"
+    ],
+    "main_and_off_hand": true,
+    "child_transforms": true,
+    "repeated_draw_no_drift": true,
+    "queued_property_matrix_matches": true,
+    "maximum_matrix_error": 7.153e-07,
+    "native_allocations_at_end": 0,
+    "variants": [
+      "stable",
+      "rc4"
+    ],
+    "actual_gameplay": false
+  },
+  "installation": "local mod and both Workshop author folders verified",
+  "steam_uploaded": false
+}
