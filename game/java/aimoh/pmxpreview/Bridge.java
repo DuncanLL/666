@@ -3,7 +3,6 @@ package aimoh.pmxpreview;
 import aimoh.motion.PmxDrawMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import zombie.characters.IsoPlayer;
 import viewpoint.core.Frame;
 import viewpoint.render.ModelDraws;
 import viewpoint.render.SceneData;
@@ -26,13 +25,13 @@ public final class Bridge {
             boolean holding=actor.getPrimaryHandItem()!=null||actor.getSecondaryHandItem()!=null;
             boolean idle=IdleHandPose.eligible(actor,holding);
             var equipment=DrawAccess.equipment(actor,slot.modelSlot,draws,first,originalEnd);
-            boolean calibrating=!slot.inVehicle&&actor instanceof IsoPlayer player&&player.isLocalPlayer()&&actor.getPrimaryHandItem()!=null;
+            int calibrationSide=slot.inVehicle?-1:GripCalibration.heldSide(actor);
             int body=-1, gun=-1;
             for(int n=first;n<originalEnd;n++){
                 ModelInstance instance=DrawAccess.instance(draws,n);
                 DrawAccess.Gear gear=equipment.get(instance);
                 if(body<0&&gear==null)body=n;
-                if(calibrating&&gear!=null&&gear.side==1&&instance.model!=null&&instance.model.isStatic
+                if(calibrationSide>=0&&gear!=null&&gear.side==calibrationSide&&instance.model!=null&&instance.model.isStatic
                     &&(gun<0||instance==gear.root))gun=n;
             }
             Matrix4f sourcePlacement=body<0?null:DrawAccess.matrix(draws,body);
@@ -42,14 +41,15 @@ public final class Bridge {
             PmxDrawMesh.FrameData data=null;
             long gameFrame=IsoCamera.frameState.frameCount;
             long captureNanos=DrawAccess.frameNanos(frame);
-            try {if(!session.failed)data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,
+            var pose=actor.getAnimationPlayer();
+            try {if(!session.failed)data=session.update(gameFrame,captureNanos,pose,holding,
                 actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                GripCalibration.request(actor,session.entry.id(),weapon),true);}catch(Throwable e){session.fail(e);}
+                GripCalibration.request(actor,session.entry.id(),weapon,slot.inVehicle?null:pose),true);}catch(Throwable e){session.fail(e);}
             ModelSession selected=Main.completeCapture(actor,session);
             if(selected!=session){
                 session=selected;if(session==null||session.failed)return;
-                data=session.update(gameFrame,captureNanos,actor.getAnimationPlayer(),holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
-                    GripCalibration.request(actor,session.entry.id(),weapon),true);
+                data=session.update(gameFrame,captureNanos,pose,holding,actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
+                    GripCalibration.request(actor,session.entry.id(),weapon,slot.inVehicle?null:pose),true);
             }
             if(session.failed||!session.ready)return;
             ViewpointModel backend=session.viewpointModel;

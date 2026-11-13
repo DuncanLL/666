@@ -31,6 +31,12 @@
       "label": "可露凯 / 绀星绮愿",
       "model": "models/pmx-8a28434eee27a5ce/model.pmx",
       "profile": "models/pmx-8a28434eee27a5ce/profile.json"
+    },
+    {
+      "id": "pmx-74fa40dba7e013d6",
+      "label": "可露凯 / 无瑕侍礼",
+      "model": "models/pmx-74fa40dba7e013d6/model.pmx",
+      "profile": "models/pmx-74fa40dba7e013d6/profile.json"
     }
   ]
 }

@@ -13,6 +13,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.WeakHashMap;
 import org.joml.Matrix4f;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -24,13 +25,51 @@ import zombie.characters.IsoGameCharacter;
 import zombie.characters.IsoPlayer;
 import zombie.core.Core;
 import zombie.core.SpriteRenderer;
+import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.textures.Texture;
 import zombie.core.textures.TextureDraw;
 
 /** Displays world snapshots and isolated, single-pose outfit previews. */
 public class ReadyRoomPreview {
     private static final Object motionPathsLock=new Object();
-    private record BrowsePreview(String id,ModelSession session) {}
+    private static final class BrowsePreview {
+        final String id;
+        final ModelSession session;
+        ModelSession appearanceSource;
+        long appearanceRevision=Long.MIN_VALUE;
+        long poseFrame;
+
+        BrowsePreview(String id,ModelSession session) {
+            this.id=id;
+            this.session=session;
+        }
+
+        void update(ModelSession equipped, AnimationPlayer worldPlayer) {
+            long revision=equipped==null?0:equipped.model.appearance().revision();
+            if(poseFrame!=0&&equipped==appearanceSource&&revision==appearanceRevision)return;
+            if(equipped!=null) {
+                var appearance=new JSONObject(equipped.model.appearance().stateJson());
+                session.applySettings(new JSONObject().put("appearance",appearance)
+                    .put("appearance_controls",equipped.profile.optJSONObject("appearance_controls")),false);
+                session.model.appearance().loadExpression(equipped.model.appearance().expressionSnapshot());
+            }
+            // Sample the game's standing idle on a separate player. The live tracks can be
+            // holding a weapon, crouching, or still blending during the first render.
+            var idle=AnimationPlayer.alloc(worldPlayer.getModel());
+            try {
+                var track=idle.play("Bob_Idle",true);
+                if(track==null)return;
+                track.setBlendWeight(1);
+                track.setCurrentTimeValue(track.getDuration()*.25f);
+                idle.Update(0);
+                session.update(poseFrame++,System.nanoTime(),idle,false,0,0,0,false,true,false,null,false);
+            } finally {
+                idle.release();
+            }
+            appearanceSource=equipped;
+            appearanceRevision=revision;
+        }
+    }
     private static final IdentityHashMap<IsoGameCharacter,BrowsePreview> browsePreviews=new IdentityHashMap<>();
     private static final String SAMPLE_PREFIX="sample:";
     private static Path library() {
@@ -42,7 +81,7 @@ public class ReadyRoomPreview {
             &&Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);
     }
     private static Path sampleLibrary() {
-        String directory=ZomboidFileSystem.instance.getModDir("AimohPmxPreview");
+        String directory=ZomboidFileSystem.instance.getModDir(Main.MOD_ID);
         if(directory==null)throw new IllegalStateException("无法定位 R116 示例动作");
         Path mod=Path.of(directory).toAbsolutePath().normalize();
         Path relative=Path.of("media/aimoh_pmx/motions");
@@ -137,18 +176,29 @@ public class ReadyRoomPreview {
         return !actor.isDead()&&actor.getVehicle()==null&&!actor.isPlayerMoving()&&!actor.isAiming()&&!actor.isAttackStarted();
     }
     public static String gripFamily(IsoGameCharacter actor) {
-        return Main.isReady(actor)?GripCalibration.family(actor):"";
+        return Main.isReady(actor)?GripCalibration.itemKey(actor):"";
     }
-    public static KahluaTable gripValues(IsoGameCharacter actor,String family) {
+    public static String gripItemName(IsoGameCharacter actor) {
+        var item=GripCalibration.heldItem(actor);
+        return item==null?"":item.getDisplayName();
+    }
+    public static boolean canAimGrip(IsoGameCharacter actor) {
+        return GripCalibration.heldItem(actor)!=null;
+    }
+    public static KahluaTable gripValues(IsoGameCharacter actor,String key,boolean aiming) {
         ModelSession session=Main.session(actor);
-        if(session==null||family==null||family.isEmpty()||!family.equals(gripFamily(actor)))
+        if(session==null||key==null||key.isEmpty()||!key.equals(gripFamily(actor)))
             return J2SEPlatform.getInstance().newTable();
-        return GripCalibration.sliders(actor,session.entry.id(),family);
+        return GripCalibration.sliders(actor,session.entry.id(),key,aiming);
     }
-    public static boolean gripSet(IsoGameCharacter actor,String family,int axis,double value) {
+    public static boolean gripSet(IsoGameCharacter actor,String key,int axis,double value,boolean aiming) {
         ModelSession session=Main.session(actor);
-        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),family,axis,value);
+        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),key,axis,value,aiming);
     }
+    public static synchronized boolean drawGripView(IsoGameCharacter actor,int x,int y,int width,int height,boolean aiming,float yaw,float pitch,float zoom) {
+        return GripRoomPreview.draw(actor,x,y,width,height,aiming,yaw,pitch,zoom);
+    }
+
     private static ModelSession expressionSession(IsoGameCharacter actor, String id) {
         if (!(actor instanceof IsoPlayer player) || !player.isLocalPlayer() || !Main.isReady(actor)) return null;
         ModelSession session = Main.session(actor);
@@ -236,7 +286,7 @@ public class ReadyRoomPreview {
         }
     }
     public static synchronized KahluaTable data() throws Exception {
-        Path root=Path.of(ZomboidFileSystem.instance.getModDir("AimohPmxPreview"));
+        Path root=Path.of(ZomboidFileSystem.instance.getModDir(Main.MOD_ID));
         Path relative=Path.of("media/ui/AimohPMXReadyRoom/catalog.json");
         Path path=Files.isRegularFile(root.resolve(relative))?root.resolve(relative):root.resolve("42").resolve(relative);
         // UI tables belong to this Lua/window lifecycle, not to a previous game session.
@@ -248,7 +298,8 @@ public class ReadyRoomPreview {
                 JSONObject extra=new JSONObject(Files.readString(file)),packModels=extra.getJSONObject("models");
                 for(String id:packModels.keySet()){
                     JSONObject card=models.optJSONObject(id);
-                    if(card!=null&&pack.id().equals(card.optString("pack")))models.put(id,packModels.getJSONObject(id));
+                    if(card!=null&&pack.id().equals(card.optString("pack")))
+                        models.put(id,packModels.getJSONObject(id).put("pack",pack.id()));
                 }
                 JSONObject packLabels=extra.getJSONObject("labels");
                 for(String key:packLabels.keySet())if(!labels.has(key))labels.put(key,packLabels.getJSONObject(key));
@@ -271,29 +322,39 @@ public class ReadyRoomPreview {
         return drawBrowseCamera(actor,id,x,y,width,height,yaw,zoom,0,0,false);
     }
     public static synchronized boolean drawBrowseCamera(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
+        return drawBrowse(actor,id,x,y,width,height,yaw,zoom,pan,focus,locked,false);
+    }
+
+    public static synchronized boolean drawOverviewCamera(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
+        return drawBrowse(actor,id,x,y,width,height,yaw,zoom,pan,focus,locked,true);
+    }
+
+    private static boolean drawBrowse(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,boolean overview) {
         ModelSession equipped=Main.session(actor);
-        if(equipped!=null&&equipped.entry.id().equals(id)) {
-            release(actor);
-            return drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked);
-        }
+        if(equipped!=null&&!equipped.entry.id().equals(id))equipped=null;
+        if(equipped!=null&&!overview)return drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked);
+
+        var worldPlayer=actor.getAnimationPlayer();
+        if(worldPlayer==null||!worldPlayer.isReady())return false;
         BrowsePreview preview=browsePreviews.get(actor);
-        if(preview==null||!preview.id().equals(id)) {
+        if(preview==null||!preview.id.equals(id)||preview.appearanceSource!=null&&equipped==null) {
             release(actor);
-            var player=actor.getAnimationPlayer();
-            if(player==null||player.getSkinningData()==null)return false;
-            ModelSession next=null;
             try {
-                next=Main.createRoomPreview(id);
-                next.update(0,System.nanoTime(),player,false,0,0,0,false,true,false,null,false);
-                preview=new BrowsePreview(id,next);
+                preview=new BrowsePreview(id,Main.createRoomPreview(id));
             }catch(Exception | LinkageError failure){
-                if(next!=null)next.retire();
                 System.err.println("[AimohPMXReadyRoom] Browse preview unavailable: "+failure);
                 preview=new BrowsePreview(id,null);
             }
             browsePreviews.put(actor,preview);
         }
-        return drawSession(preview.session(),x,y,width,height,yaw,zoom,pan,focus,locked);
+        if(preview.session==null||preview.session.failed)return false;
+        try {
+            preview.update(equipped,worldPlayer);
+        }catch(Exception | LinkageError failure){
+            preview.session.fail(failure);
+            return false;
+        }
+        return drawSession(preview.session,x,y,width,height,yaw,zoom,pan,focus,locked);
     }
     private static boolean drawSession(ModelSession session,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
         if(session==null||!session.ready||session.retired||session.failed||width<16||height<16)return false;
@@ -305,8 +366,51 @@ public class ReadyRoomPreview {
         }catch(Exception e){System.err.println("[AimohPMXReadyRoom] Preview unavailable: "+e);return false;}
     }
     public static synchronized void release(IsoGameCharacter actor) {
+        GripRoomPreview.release(actor);
         BrowsePreview preview=browsePreviews.remove(actor);
-        if(preview!=null&&preview.session()!=null)preview.session().retire();
+        if(preview!=null&&preview.session!=null)preview.session.retire();
+    }
+    private record PreviewProgram(int id,int vp,int turn,int image,int locked) {
+        // LWJGL keeps these capabilities with their GL context. The context owns the program.
+        private static final WeakHashMap<GLCapabilities,PreviewProgram> programs=new WeakHashMap<>();
+
+        static synchronized PreviewProgram current() {
+            return programs.computeIfAbsent(GL.getCapabilities(),context->link());
+        }
+
+        private static int shader(int kind,String source){
+            int id=GL20.glCreateShader(kind);GL20.glShaderSource(id,source);GL20.glCompileShader(id);
+            if(GL20.glGetShaderi(id,GL20.GL_COMPILE_STATUS)==0){String error=GL20.glGetShaderInfoLog(id);GL20.glDeleteShader(id);throw new IllegalStateException(error);}return id;
+        }
+
+        private static PreviewProgram link() {
+            int vertex=shader(GL20.GL_VERTEX_SHADER,"""
+                #version 330
+                layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
+                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
+                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
+                """);
+            int fragment=0,program=0;
+            try {
+                fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
+                    #version 330
+                    in vec3 n;in vec2 uv;uniform sampler2D image;uniform bool locked;out vec4 color;
+                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
+                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
+                    if(locked){
+                        float l=dot(c.rgb,vec3(.2126,.7152,.0722));
+                        color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
+                    }else color=vec4(c.rgb*light,c.a);}
+                    """);
+                program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
+                if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
+                return new PreviewProgram(program,GL20.glGetUniformLocation(program,"vp"),GL20.glGetUniformLocation(program,"turn"),
+                    GL20.glGetUniformLocation(program,"image"),GL20.glGetUniformLocation(program,"locked"));
+            } catch(RuntimeException|Error failure) {
+                if(program!=0)GL20.glDeleteProgram(program);
+                throw failure;
+            } finally {GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
+        }
     }
     private static ByteBuffer buffer(int bytes){return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());}
     static final class Mesh implements AutoCloseable {
@@ -315,7 +419,7 @@ public class ReadyRoomPreview {
         final int[] indices,materials,firsts,counts;
         final ByteBuffer upload;
         final float centerX,centerY,centerZ,span,faceY;
-        int program,vao,vbo,ibo,uvBuffer;
+        int vao,vbo,ibo,uvBuffer,itemVao;
         boolean closed,failed,gpuLayout;
         private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
@@ -345,33 +449,7 @@ public class ReadyRoomPreview {
             }
             faceY=head;
         }
-        private static int shader(int kind,String source){
-            int id=GL20.glCreateShader(kind);GL20.glShaderSource(id,source);GL20.glCompileShader(id);
-            if(GL20.glGetShaderi(id,GL20.GL_COMPILE_STATUS)==0){String error=GL20.glGetShaderInfoLog(id);GL20.glDeleteShader(id);throw new IllegalStateException(error);}return id;
-        }
-        void initialize(){
-            int vertex=shader(GL20.GL_VERTEX_SHADER,"""
-                #version 330
-                layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
-                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
-                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
-                """);
-            int fragment=0;
-            try {
-                // Same restrained preview light as the workbench; the world shader pack is untouched.
-                fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
-                    #version 330
-                    in vec3 n;in vec2 uv;uniform sampler2D image;uniform bool locked;out vec4 color;
-                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
-                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
-                    if(locked){
-                        float l=dot(c.rgb,vec3(.2126,.7152,.0722));
-                        color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
-                    }else color=vec4(c.rgb*light,c.a);}
-                    """);
-                program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
-                if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
-            }finally{GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
+        private void initialize(){
             vao=GL30.glGenVertexArrays();GL30.glBindVertexArray(vao);vbo=GL15.glGenBuffers();ibo=GL15.glGenBuffers();
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);GL15.glBufferData(GL15.GL_ARRAY_BUFFER,upload.capacity(),GL15.GL_STREAM_DRAW);
             for(int i=0;i<3;i++)GL20.glEnableVertexAttribArray(i);
@@ -384,7 +462,7 @@ public class ReadyRoomPreview {
             gpuLayout=false;
         }
         void bindGeometry(PmxDrawMesh.FrameData frame) {
-            if(program==0)initialize();
+            if(vao==0)initialize();
             GL30.glBindVertexArray(vao);
             if(frame.gpuPose()!=null) {
                 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,frame.gpuPose().vertexBuffer());
@@ -405,16 +483,26 @@ public class ReadyRoomPreview {
             upload.flip();GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER,0,upload);
             uploaded=frame;
         }
-        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked)throws Exception {
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView)throws Exception {
+            paint(frame,state,width,height,yaw,zoom,pan,focus,locked,gripView,0);
+        }
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch)throws Exception {
             bindGeometry(frame);
             float extent=span/Math.clamp(zoom,.62f,4.2f),aspect=(float)width/height;
             float cameraY=centerY+(faceY-centerY)*Math.clamp(focus,0,1)+span*Math.clamp(pan,-.8f,.8f);
+            float cameraX=centerX,cameraZ=centerZ;
+            if(gripView!=null){
+                var point=gripView.center();
+                cameraX=point.x;cameraY=point.y;cameraZ=point.z;
+                extent=span*Math.max(.72f,.90f/aspect)/Math.clamp(zoom,.62f,4.2f);
+            }
             Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
-                .lookAt(centerX,cameraY,centerZ+span*3,centerX,cameraY,centerZ,0,1,0);
-            Matrix4f turn=new Matrix4f().translate(centerX,0,centerZ).rotateY(yaw).translate(-centerX,0,-centerZ);
-            GL20.glUseProgram(program);GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"vp"),false,vp.get(new float[16]));
-            GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"turn"),false,turn.get(new float[16]));GL20.glUniform1i(GL20.glGetUniformLocation(program,"image"),0);
-            GL20.glUniform1i(GL20.glGetUniformLocation(program,"locked"),locked?1:0);
+                .lookAt(cameraX,cameraY,cameraZ+span*3,cameraX,cameraY,cameraZ,0,1,0);
+            Matrix4f turn=new Matrix4f().translate(cameraX,cameraY,cameraZ).rotateX(pitch).rotateY(yaw).translate(-cameraX,-cameraY,-cameraZ);
+            PreviewProgram program=PreviewProgram.current();
+            GL20.glUseProgram(program.id());GL20.glUniformMatrix4fv(program.vp(),false,vp.get(new float[16]));
+            GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));GL20.glUniform1i(program.image(),0);
+            GL20.glUniform1i(program.locked(),locked?1:0);
             Texture[] textures=session.preparePlainMaterials(state);
             GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
@@ -424,16 +512,25 @@ public class ReadyRoomPreview {
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[material].getID());
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
+            if(gripView!=null&&!gripView.parts().isEmpty()){
+                if(itemVao==0)itemVao=GL30.glGenVertexArrays();
+                GripRoomPreview.paintItems(gripView.parts(),itemVao,program.turn(),turn);
+            }
         }
-        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(itemVao!=0)GL30.glDeleteVertexArrays(itemVao);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
-        final int x,y,width,height,screenHeight;final float yaw,zoom,pan,focus;final boolean locked;
+        final int x,y,width,height,screenHeight;final float yaw,zoom,pan,focus,pitch;final boolean locked;
+        final GripRoomPreview.View gripView;
         Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom){
             this(mesh,frame,materials,x,y,w,h,sh,yaw,zoom,0,0,false);
         }
         Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom,float pan,float focus,boolean locked){
+            this(mesh,frame,materials,x,y,w,h,sh,yaw,zoom,pan,focus,locked,null,0);
+        }
+        Draw(Mesh mesh,PmxDrawMesh.FrameData frame,ModelSession.Materials materials,int x,int y,int w,int h,int sh,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch){
+            this.gripView=gripView;this.pitch=pitch;
             this.mesh=mesh;this.frame=frame;this.materials=materials;this.x=x;this.y=y;width=w;height=h;screenHeight=sh;this.yaw=yaw;this.zoom=zoom;
             this.pan=pan;this.focus=focus;this.locked=locked;
         }
@@ -446,7 +543,7 @@ public class ReadyRoomPreview {
             try {
                 GL11.glEnable(GL11.GL_SCISSOR_TEST);GL11.glScissor(x,screenHeight-y-height,width,height);GL11.glViewport(x,screenHeight-y-height,width,height);
                 GL11.glDepthMask(true);GL11.glClearDepth(1);GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-                mesh.paint(frame,materials,width,height,yaw,zoom,pan,focus,locked);
+                mesh.paint(frame,materials,width,height,yaw,zoom,pan,focus,locked,gripView,pitch);
                 return true;
             }catch(Exception|LinkageError e){
                 if(frame.gpuPose()!=null)mesh.session.disableGpu(e);

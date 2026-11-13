@@ -1,0 +1,129 @@
+module GFL2
+{
+    model SavageBeast
+    {
+        mesh = GFL2/SavageBeast,
+        texture = GFL2/SavageBeast,
+        attachment muzzle
+        {
+            offset = 0.001855 0.558548 0.044654,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.224214 0,
+            rotate = 0 0 90,
+        }
+    }
+
+    model SavageBeastEmpty
+    {
+        mesh = GFL2/SavageBeastEmpty,
+        texture = GFL2/SavageBeast,
+        attachment muzzle
+        {
+            offset = 0.001855 0.558548 0.044654,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.224214 0,
+            rotate = 0 0 90,
+        }
+    }
+
+    item SavageBeast
+    {
+        DisplayCategory = Weapon,
+        ItemType = base:weapon,
+        Weight = 4.5,
+        Icon = GFL2SavageBeast,
+        AimingPerkCritModifier = 6,
+        AimingPerkHitChanceModifier = 4,
+        AimingPerkMinAngleModifier = 0.01,
+        AimingPerkRangeModifier = 0,
+        AimReleaseSound = M14AimRelease,
+        Aimingtime = 50,
+        AmmoBox = Base.556Box,
+        AmmoType = base:bullets_556,
+        AttachmentType = Rifle,
+        BreakSound = M14Break,
+        BringToBearSound = M14BringToBear,
+        ClickSound = M14Jam,
+        ConditionLowerChanceOneIn = 2000,
+        ConditionMax = 120,
+        CritDmgMultiplier = 4,
+        CriticalChance = 35,
+        DoorDamage = 5,
+        DropSound = M14Drop,
+        EjectAmmoSound = M14EjectAmmo,
+        EjectAmmoStartSound = M14EjectAmmoStart,
+        EjectAmmoStopSound = M14EjectAmmoStop,
+        EquipSound = M14Equip,
+        FireMode = Auto,
+        FireModePossibilities = Auto/Single,
+        HitChance = 55,
+        HitSound = BulletImpact,
+        IdleAnim = Idle_Weapon2,
+        ImpactSound = null,
+        InsertAmmoSound = M14InsertAmmo,
+        InsertAmmoStartSound = M14InsertAmmoStart,
+        InsertAmmoStopSound = M14InsertAmmoStop,
+        IsAimedFirearm = true,
+        JamGunChance = 1,
+        KnockBackOnNoDeath = true,
+        KnockdownMod = 2.0,
+        MagazineType = Base.556Clip,
+        MaxAmmo = 30,
+        MaxDamage = 2,
+        MaxHitcount = 1,
+        MaxRange = 40,
+        MinSightRange = 2,
+        MaxSightRange = 10.0,
+        MetalValue = 45.0,
+        MinAngle = 0.95,
+        MinDamage = 1.2,
+        MinRange = 0.61,
+        MinimumSwingtime = 0.5,
+        ModelWeaponPart = TritiumSights IronSight scope2 scope2,
+        ModelWeaponPart = Laser Laser laser laser,
+        ModelWeaponPart = RecoilPad RecoilPad recoilpad recoilpad,
+        ModelWeaponPart = RedDot RedDot reddot reddot,
+        ModelWeaponPart = x2Scope x2Scope scope scope,
+        ModelWeaponPart = x4Scope x4Scope scope scope,
+        MultipleHitConditionAffected = false,
+        MuzzleFlashModelKey = muzzle_flash_assault_rifle02,
+        NPCSoundBoost = 1.5,
+        PiercingBullets = true,
+        Projectilecount = 1,
+        PushBackMod = 0.3,
+        RackSound = M14Rack,
+        Ranged = true,
+        RecoilDelay = 22,
+        Reloadtime = 25,
+        RequiresEquippedBothHands = true,
+        RunAnim = Run_Weapon2,
+        ShellFallSound = M14CartridgeFall,
+        SoundGain = 2.0,
+        SoundRadius = 54,
+        SoundVolume = 14,
+        SplatBloodOnNoDeath = true,
+        SplatNumber = 3,
+        SplatSize = 3,
+        StopPower = 2.0,
+        SubCategory = Firearm,
+        SwingAmountBeforeImpact = 0.0,
+        SwingAnim = Rifle,
+        SwingSound = GFL2SavageBeastShoot,
+        Swingtime = 0.5,
+        ToHitModifier = 1.5,
+        TwoHandWeapon = true,
+        UnequipSound = M14UnEquip,
+        UseEndurance = false,
+        WeaponReloadType = boltaction,
+        WeaponSprite = GFL2.SavageBeastEmpty,
+        Tags = base:hasmetal;base:firearm,
+        WorldStaticModel = GFL2.SavageBeastEmpty,
+        CyclicRateMultiplier = 1.0,
+    }
+}

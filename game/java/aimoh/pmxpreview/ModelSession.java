@@ -252,11 +252,14 @@ final class ModelSession {
     long textureUploads(){return (plainTextures==null?0:plainTextures.uploads)+(viewpointModel==null?0:viewpointModel.textureUploads());}
     synchronized boolean retargetsAttachment(int side){return !preserveAimWeapon||side!=1;}
     synchronized Matrix4f attachment(ModelInstance root,int side,String key,Matrix4f actual,AnimationPlayer player) {
-        if(side==1&&gripAdjustment!=null){
+        if(gripAdjustment!=null&&side==gripAdjustment.heldSide()){
             Matrix4f locked=gripAdjustment.placement(actual);
             if(locked!=null)return locked;
         }
-        if(side>=0)return new Matrix4f().set(model.remapHeldItem(sourcePose,side==0,actual.get(new float[16]),key));
+        if(side>=0){
+            var placed=new Matrix4f().set(model.remapHeldItem(sourcePose,side==0,actual.get(new float[16]),key));
+            return gripAdjustment!=null&&side==gripAdjustment.heldSide()?gripAdjustment.translateItem(placed):placed;
+        }
         String name=root.parentBoneName;var skin=player.getSkinningData();
         Integer bone=name==null?null:skin.boneIndices.get(name);
         while(bone!=null&&bone>=0) {

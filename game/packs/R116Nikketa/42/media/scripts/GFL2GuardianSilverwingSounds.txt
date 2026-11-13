@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2GuardianSilverwingShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-1.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-2.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/GuardianSilverwing-suppressed-3.wav,
+            volume = 0.975,
+            distanceMax = 55,
+        }
+    }
+}

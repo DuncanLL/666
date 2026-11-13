@@ -70,6 +70,7 @@ function E.buy(player,key,count)
 end
 
 E.characterGuarantee=80
+E.weaponGuarantee=70
 E.outfitGuarantee=100
 E.defaultOutfitPrice=1080
 
@@ -194,6 +195,86 @@ function E.drawOutfit(player,id,count,roll)
         outfits(player)[id]=status=="unlocked" or misses
     end
     return status,results
+end
+
+function E.grantTestCredits(player)
+    if (isClient and isClient()) or (isServer and isServer()) then return end
+    wallet(player).credits=math.min(9007199254740991,E.balance(player,"credits")+50000)
+    return true
+end
+
+local legacyWeapon="GFL2.CauseAndEffect"
+
+local function weaponWallet(player)
+    local room=wallet(player)
+    if E.serverWallet or (isClient and isClient()) then return room end
+    local slots=ModData.getOrCreate("GFL2ExiliumSignatureWeapons")
+    local slot=tostring(player:getPlayerNum())
+    local progress=slots[slot]
+    if not progress then
+        progress={
+            signatureWeapons=room.signatureWeapons,
+            signatureWeaponMisses=room.signatureWeaponMisses,
+            signatureWeapon=room.signatureWeapon,
+        }
+        slots[slot]=progress
+    end
+    return progress
+end
+
+function E.weaponProgress(player,id)
+    local room=weaponWallet(player)
+    local owned=room.signatureWeapons and room.signatureWeapons[id]
+    if owned then return owned end
+    if id==legacyWeapon and room.signatureWeapon then return room.signatureWeapon end
+    return {}
+end
+
+function E.weaponMisses(player)
+    local room=weaponWallet(player)
+    local n=room.signatureWeaponMisses
+    if n==nil and room.signatureWeapon then n=room.signatureWeapon.misses end
+    return type(n)=="number" and n>=0 and math.min(E.weaponGuarantee-1,math.floor(n)) or 0
+end
+
+function E.weaponChance(pull)
+    if pull>=E.weaponGuarantee then return 10000 end
+    return 70+math.max(0,pull-50)*500
+end
+
+function E.drawWeapon(player,weapon,count,roll)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
+    if E.weaponProgress(player,weapon.id).acquired or not E.characterUnlocked(player,weapon.character) then return "unavailable" end
+    local tickets=E.balance(player,"targeted")
+    local status,results,misses=draw(count,tickets,E.weaponMisses(player),E.weaponGuarantee,E.weaponChance,roll)
+    if results then
+        wallet(player).targeted=tickets-#results
+        local room=weaponWallet(player)
+        room.signatureWeaponMisses=misses
+        if status=="unlocked" then
+            room.signatureWeapons=room.signatureWeapons or {}
+            room.signatureWeapons[weapon.id]={acquired=true}
+        end
+    end
+    return status,results
+end
+
+function E.hasWeaponInInventory(player,id)
+    return player:getInventory():containsTypeRecurse(id)
+end
+
+function E.claimWeapon(player,weapon)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
+    local progress=E.weaponProgress(player,weapon.id)
+    if not progress.acquired then return "unavailable" end
+    if E.hasWeaponInInventory(player,weapon.id) then return "alreadyCarried" end
+    local inventory=player:getInventory()
+    local item=inventory:AddItem(weapon.id)
+    if not item then return "unavailable" end
+    if weapon.startsWithMagazine then item:setContainsClip(true) end
+    progress.claimed=true
+    if isServer and isServer() then sendAddItemToContainer(inventory,item) end
+    return "ok"
 end
 
 -- The UI reads its last server snapshot through the same wallet functions.

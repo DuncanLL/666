@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Soppo",
+  "models": [
+    {
+      "id": "pmx-40dbcd572c1fb3f8",
+      "label": "索普 / 凛霜风暴",
+      "model": "models/pmx-40dbcd572c1fb3f8/model.pmx",
+      "profile": "models/pmx-40dbcd572c1fb3f8/profile.json"
+    },
+    {
+      "id": "pmx-7d46f9b7159f3332",
+      "label": "索普 / 绯红极限",
+      "model": "models/pmx-7d46f9b7159f3332/model.pmx",
+      "profile": "models/pmx-7d46f9b7159f3332/profile.json"
+    }
+  ]
+}

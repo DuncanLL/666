@@ -162,6 +162,38 @@
       "partImages": {},
       "officialSkin": "狡兔迷踪",
       "isDefault": false
+    },
+    "pmx-7834ce1969baa199": {
+      "character": "莱娅",
+      "skin": "钻石之花",
+      "officialSkin": "钻石之花",
+      "isDefault": false,
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7834ce1969baa199.png",
+      "pack": "R116Laiya",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LevaSSR01.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
     }
   },
   "labels": {}
