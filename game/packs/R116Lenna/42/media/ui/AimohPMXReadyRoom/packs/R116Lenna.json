@@ -2,7 +2,7 @@
   "models": {
     "pmx-f6ac57de07aff8b0": {
       "character": "莱娜",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f6ac57de07aff8b0.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LennaSSR.png",
       "isDefault": true,

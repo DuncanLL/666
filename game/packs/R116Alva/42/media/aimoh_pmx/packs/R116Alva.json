@@ -4,7 +4,7 @@
   "models": [
     {
       "id": "pmx-020abca186c52e7b",
-      "label": "埃芙 / 人偶扳机",
+      "label": "埃芙 / 默认",
       "model": "models/pmx-020abca186c52e7b/model.pmx",
       "profile": "models/pmx-020abca186c52e7b/profile.json"
     },

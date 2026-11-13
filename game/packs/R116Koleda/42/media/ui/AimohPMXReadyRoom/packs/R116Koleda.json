@@ -1,5 +1,54 @@
 {
   "models": {
+    "pmx-90268b4961c97434": {
+      "character": "克莱妲",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
+      "groups": {
+        "mask": {
+          "label": "口罩",
+          "display": "口罩",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "cape": {
+          "label": "披风",
+          "display": "披风",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "holstered": {
+          "label": "随身枪械",
+          "display": "随身枪械",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "口罩",
+        "披风",
+        "随身枪械",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "旧年雪",
+      "isDefault": true
+    },
     "pmx-c7270af966e8aaf8": {
       "character": "克莱妲",
       "skin": "濯浪焦点",
@@ -86,55 +135,6 @@
         }
       },
       "isDefault": false
-    },
-    "pmx-90268b4961c97434": {
-      "character": "克莱妲",
-      "skin": "旧年雪",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_KoledaSSR.png",
-      "groups": {
-        "mask": {
-          "label": "口罩",
-          "display": "口罩",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "cape": {
-          "label": "披风",
-          "display": "披风",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "holstered": {
-          "label": "随身枪械",
-          "display": "随身枪械",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "口罩",
-        "披风",
-        "随身枪械",
-        "眼睛"
-      ],
-      "partImages": {},
-      "officialSkin": "旧年雪",
-      "isDefault": true
     }
   },
   "labels": {}

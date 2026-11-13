@@ -2,7 +2,7 @@
   "models": {
     "pmx-4f5d642f97fc5a9d": {
       "character": "维克托",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4f5d642f97fc5a9d.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_VectorSSR.png",
       "isDefault": true,

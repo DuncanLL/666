@@ -1,5 +1,26 @@
 {
   "models": {
+    "pmx-a030b24c0272893f": {
+      "character": "春田",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a030b24c0272893f.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
     "pmx-225af1a054faefb0": {
       "character": "春田",
       "skin": "睡醒的人鱼",
@@ -99,27 +120,6 @@
       "partImages": {},
       "officialSkin": "静享芳醇",
       "isDefault": false
-    },
-    "pmx-a030b24c0272893f": {
-      "character": "春田",
-      "skin": "原皮",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a030b24c0272893f.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR.png",
-      "isDefault": true,
-      "groups": {
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "眼睛"
-      ],
-      "partImages": {}
     },
     "pmx-cc787cf2d032366b": {
       "character": "春田",

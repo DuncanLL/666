@@ -1,18 +1,8 @@
 {
   "models": {
-    "pmx-33aa225b75767fcb": {
-      "character": "黛烟",
-      "skin": "玉玲珑",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR03.png",
-      "groups": {},
-      "officialSkin": "玉玲珑",
-      "partImages": {},
-      "isDefault": false
-    },
     "pmx-8c817aa0fdd64f7a": {
       "character": "黛烟",
-      "skin": "烟寻异处",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR.png",
       "groups": {
@@ -31,6 +21,16 @@
       "partImages": {},
       "officialSkin": "烟寻异处",
       "isDefault": true
+    },
+    "pmx-33aa225b75767fcb": {
+      "character": "黛烟",
+      "skin": "玉玲珑",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-33aa225b75767fcb.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DaiyanSSR03.png",
+      "groups": {},
+      "officialSkin": "玉玲珑",
+      "partImages": {},
+      "isDefault": false
     }
   },
   "labels": {}

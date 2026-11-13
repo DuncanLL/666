@@ -154,7 +154,7 @@
   "models": {
     "pmx-abe3eaaaa9d04264": {
       "character": "莱娅",
-      "skin": "理性凝望",
+      "skin": "默认",
       "officialSkin": "理性凝望",
       "isDefault": true,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-abe3eaaaa9d04264.png",
@@ -162,7 +162,7 @@
     },
     "pmx-48650a04a35b40e0": {
       "character": "夏安",
-      "skin": "听风狩影",
+      "skin": "默认",
       "officialSkin": "听风狩影",
       "isDefault": true,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-48650a04a35b40e0.png",
@@ -178,7 +178,7 @@
     },
     "pmx-412bd037301ebe18": {
       "character": "阿斯缇亚",
-      "skin": "追寻者",
+      "skin": "默认",
       "officialSkin": "追寻者",
       "isDefault": true,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-412bd037301ebe18.png",
@@ -218,7 +218,7 @@
     },
     "pmx-020abca186c52e7b": {
       "character": "埃芙",
-      "skin": "人偶扳机",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020abca186c52e7b.png",
       "pack": "R116Alva",
       "officialSkin": "人偶扳机",
@@ -250,7 +250,7 @@
     },
     "pmx-782f06826adb1307": {
       "character": "OTs-14",
-      "skin": "暗昼冽影",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-782f06826adb1307.png",
       "pack": "R116OTs14",
       "officialSkin": "暗昼冽影",
@@ -282,7 +282,7 @@
     },
     "pmx-fee7d92be40f96dd": {
       "character": "希丽雅",
-      "skin": "调停者",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-fee7d92be40f96dd.png",
       "pack": "R116Cecilia",
       "officialSkin": "调停者",
@@ -338,7 +338,7 @@
     },
     "pmx-efe685465097beb2": {
       "character": "可露凯",
-      "skin": "灼目之星",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
       "pack": "R116Klukai",
       "officialSkin": "灼目之星",
@@ -370,7 +370,7 @@
     },
     "pmx-b6fa1b6b340d0fec": {
       "character": "芙铃",
-      "skin": "望归宠儿",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6fa1b6b340d0fec.png",
       "pack": "R116Faelynn",
       "officialSkin": "望归宠儿",
@@ -378,7 +378,7 @@
     },
     "pmx-90268b4961c97434": {
       "character": "克莱妲",
-      "skin": "旧年雪",
+      "skin": "默认",
       "officialSkin": "旧年雪",
       "isDefault": true,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-90268b4961c97434.png",
@@ -386,7 +386,7 @@
     },
     "pmx-8c817aa0fdd64f7a": {
       "character": "黛烟",
-      "skin": "烟寻异处",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8c817aa0fdd64f7a.png",
       "pack": "R116Daiyan",
       "officialSkin": "烟寻异处",
@@ -394,7 +394,7 @@
     },
     "pmx-8fc5b665a5786924": {
       "character": "桑朵莱希",
-      "skin": "完美招待",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
       "pack": "R116Centaureissi",
       "officialSkin": "完美招待",
@@ -450,7 +450,7 @@
     },
     "pmx-4cdf23692c8709a0": {
       "character": "妮基塔",
-      "skin": "典范制式",
+      "skin": "默认",
       "officialSkin": "典范制式",
       "isDefault": true,
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
@@ -458,7 +458,7 @@
     },
     "pmx-4019c9450e0e318d": {
       "character": "索米",
-      "skin": "雪映清辉",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
       "pack": "R116Suomi",
       "officialSkin": "雪映清辉",
@@ -466,7 +466,7 @@
     },
     "pmx-f6ac57de07aff8b0": {
       "character": "莱娜",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f6ac57de07aff8b0.png",
       "isDefault": true,
       "pack": "R116Lenna"
@@ -487,7 +487,7 @@
     },
     "pmx-4f5d642f97fc5a9d": {
       "character": "维克托",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4f5d642f97fc5a9d.png",
       "isDefault": true,
       "pack": "R116Vector"
@@ -508,7 +508,7 @@
     },
     "pmx-a3c2d1b094df6ee0": {
       "character": "翡图萨",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a3c2d1b094df6ee0.png",
       "isDefault": true,
       "pack": "R116Phaetusa"
@@ -523,7 +523,7 @@
     },
     "pmx-caaf00b5aa73eb64": {
       "character": "六分仪",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-caaf00b5aa73eb64.png",
       "isDefault": true,
       "pack": "R116Sextans"
@@ -537,7 +537,7 @@
     },
     "pmx-2689b8bef5ca9503": {
       "character": "幼熙",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-2689b8bef5ca9503.png",
       "isDefault": true,
       "pack": "R116Yohee"
@@ -551,7 +551,7 @@
     },
     "pmx-d1fc22f957060588": {
       "character": "破坏者",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d1fc22f957060588.png",
       "isDefault": true,
       "pack": "R116Destroyer"
@@ -565,7 +565,7 @@
     },
     "pmx-a030b24c0272893f": {
       "character": "春田",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a030b24c0272893f.png",
       "isDefault": true,
       "pack": "R116Springfield"
@@ -579,7 +579,7 @@
     },
     "pmx-23b0b754d23c6fb7": {
       "character": "芙洛伦",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-23b0b754d23c6fb7.png",
       "isDefault": true,
       "pack": "R116Florence"
@@ -2693,38 +2693,38 @@
     "pmx-47a4f99939c55958",
     "pmx-412bd037301ebe18",
     "pmx-b0dd2e3cfd1ab80c",
-    "pmx-c7270af966e8aaf8",
     "pmx-90268b4961c97434",
+    "pmx-c7270af966e8aaf8",
+    "pmx-4cdf23692c8709a0",
     "pmx-f5b2807685b18a60",
     "pmx-78cbbc06c7da39dc",
     "pmx-ea3eb50ef5b32295",
-    "pmx-4cdf23692c8709a0",
-    "pmx-4818f3bdda4ec18d",
+    "pmx-23b0b754d23c6fb7",
     "pmx-020abca186c52e7b",
-    "pmx-7c5ea1f673f69f12",
-    "pmx-225af1a054faefb0",
-    "pmx-293917f24c2bd387",
+    "pmx-8fc5b665a5786924",
+    "pmx-a030b24c0272893f",
+    "pmx-b6fa1b6b340d0fec",
     "pmx-782f06826adb1307",
-    "pmx-33aa225b75767fcb",
-    "pmx-9ee1e4cdb8d7f985",
-    "pmx-43ef6f5967a37c87",
+    "pmx-8c817aa0fdd64f7a",
+    "pmx-efe685465097beb2",
+    "pmx-4019c9450e0e318d",
     "pmx-fee7d92be40f96dd",
     "pmx-9db646f49c805a1b",
     "pmx-94483c23f678afe3",
     "pmx-76a4aa15941b6aa4",
     "pmx-06925f50fb5cb612",
     "pmx-73625fbf0962e120",
-    "pmx-efe685465097beb2",
+    "pmx-9ee1e4cdb8d7f985",
     "pmx-6826e4ccdf1f4ddf",
     "pmx-a0790aac2b94e352",
     "pmx-8a28434eee27a5ce",
-    "pmx-b6fa1b6b340d0fec",
-    "pmx-8c817aa0fdd64f7a",
-    "pmx-8fc5b665a5786924",
+    "pmx-293917f24c2bd387",
+    "pmx-33aa225b75767fcb",
+    "pmx-7c5ea1f673f69f12",
     "pmx-dd77c173248cb704",
-    "pmx-62b44285b57a48e9",
+    "pmx-225af1a054faefb0",
+    "pmx-43ef6f5967a37c87",
     "pmx-cb19e5961c38af86",
-    "pmx-4019c9450e0e318d",
     "pmx-f6ac57de07aff8b0",
     "pmx-67f783c2661ce19e",
     "pmx-b8a56876e52dd98e",
@@ -2739,9 +2739,9 @@
     "pmx-9de435d3627c8e6b",
     "pmx-d1fc22f957060588",
     "pmx-d9972c9c00cacbc5",
-    "pmx-a030b24c0272893f",
+    "pmx-62b44285b57a48e9",
     "pmx-cc787cf2d032366b",
-    "pmx-23b0b754d23c6fb7",
+    "pmx-4818f3bdda4ec18d",
     "pmx-b6889756cf6c0d5e",
     "pmx-e524539529b6d56a",
     "pmx-5efe7392a2315a89"
@@ -2958,6 +2958,86 @@
     "pmx-4019c9450e0e318d": [
       "索米的常见着装。温暖的冬衣，当然要配上毛领和",
       "绒球了。"
+    ],
+    "pmx-a030b24c0272893f": [
+      "春田的常见着装。白色长衣配深蓝色肩部和金色饰件，",
+      "长摆和高筒靴保留了制服的利落轮廓。"
+    ],
+    "pmx-cc787cf2d032366b": [
+      "蓝紫色晚礼服搭配垂坠长摆，裙边和胸前饰件",
+      "在灯下泛起亮光，适合正式的晚宴场合。"
+    ],
+    "pmx-23b0b754d23c6fb7": [
+      "芙洛伦的常见着装。浅色发饰和白色短外套搭配深色短裙，",
+      "胸前的蓝色领饰与腿侧装备点亮整套制服。"
+    ],
+    "pmx-b6889756cf6c0d5e": [
+      "浅蓝色睡衣配上轻薄外层与蝴蝶结，",
+      "赤足和宽松裙摆让这套衣装更适合休息时穿。"
+    ],
+    "pmx-f6ac57de07aff8b0": [
+      "莱娜的常见着装。护目镜、深色短夹克和腿部护具，",
+      "搭配醒目的黄色系带，便于轻装行动。"
+    ],
+    "pmx-67f783c2661ce19e": [
+      "白金配色的主题装束，以蓝色饰边、星形装饰",
+      "和蓬松袖口呼应「元气魔法」的舞台造型。"
+    ],
+    "pmx-b8a56876e52dd98e": [
+      "深色短外套配上护目镜和长靴，",
+      "亮色肩带与护具勾出「秘夜猎影」的轮廓。"
+    ],
+    "pmx-4f5d642f97fc5a9d": [
+      "维克托的常见着装。深色外套、贴身护具和橙黄色绑带",
+      "层层扣合，肩侧与腿部保留了装备挂点。"
+    ],
+    "pmx-ba77d8beccf4a49b": [
+      "浅色针织背心配衬衫、领结和格纹短裙。",
+      "外套可以单独切换，鞋袜也有可选搭配。"
+    ],
+    "pmx-1303e831f7fc913d": [
+      "金色上衣搭配深色长袜、护膝和亮色领饰，",
+      "在维克托常用的深色装备上添了一点演出风格。"
+    ],
+    "pmx-a3c2d1b094df6ee0": [
+      "翡图萨的常见着装。以黑色为底，搭配银色护具、",
+      "腿部装甲与蓝紫色细节，保留利落的战斗轮廓。"
+    ],
+    "pmx-81a5c871affb4465": [
+      "深紫裙装以分层蕾丝、缎带和金属饰件叠出层次。",
+      "头饰、上衣与下衣各有三款，能分开搭配。"
+    ],
+    "pmx-caaf00b5aa73eb64": [
+      "六分仪的常见着装。深色短披肩、羽饰帽与橙色花饰",
+      "构成鲜明轮廓，配上长靴和金属装饰。"
+    ],
+    "pmx-e177f4382e37a789": [
+      "黑白裙装搭配围裙、蕾丝和头饰。",
+      "头饰、上衣、下衣各有三款，可随搭配更换鞋袜。"
+    ],
+    "pmx-2689b8bef5ca9503": [
+      "幼熙的常见着装。浅色短裙配深色护腿和橙色细节，",
+      "保留便于活动的作战装备和帽饰。"
+    ],
+    "pmx-9de435d3627c8e6b": [
+      "粉白配色的主题衣装，围裙、蝴蝶结和蕾丝相互呼应。",
+      "头饰、上衣与下衣各有三款，可以分开混搭。"
+    ],
+    "pmx-d1fc22f957060588": [
+      "破坏者的常见着装。黑色作战服搭配机械手臂和护腿，",
+      "腰侧和腿部留有装备挂点，适合随身携带重型装备。"
+    ],
+    "pmx-d9972c9c00cacbc5": [
+      "黑色兔耳头饰搭配贴身演出服、长袜和带饰高跟鞋。",
+      "可切换源模型的随身武器。"
+    ],
+    "pmx-e524539529b6d56a": [
+      "黑金礼服以不对称裙摆和长手套收束线条。",
+      "适合在舞会曲间离开舞池，独自歇一会儿。"
+    ],
+    "pmx-5efe7392a2315a89": [
+      "浴巾、头饰和腿部款式各有三种，可以独立搭配。",
+      "从素色头巾到红边浴巾，都是汤泉休假时的轻便打扮。"
     ]
   },
   "roomLabels": {
@@ -6127,5 +6207,64 @@
     "OTs-14": "3838712515",
     "春田": "3838712707",
     "索米": "3838712796"
+  },
+  "roomOutfitPrices": {
+    "pmx-94483c23f678afe3": 840,
+    "pmx-76a4aa15941b6aa4": 840,
+    "pmx-7c5ea1f673f69f12": 600,
+    "pmx-dd77c173248cb704": 840,
+    "pmx-62b44285b57a48e9": 600,
+    "pmx-cc787cf2d032366b": 840,
+    "pmx-293917f24c2bd387": 1200,
+    "pmx-06925f50fb5cb612": 840,
+    "pmx-73625fbf0962e120": 840,
+    "pmx-33aa225b75767fcb": 840,
+    "pmx-6826e4ccdf1f4ddf": 840,
+    "pmx-a0790aac2b94e352": 840,
+    "pmx-8a28434eee27a5ce": 840,
+    "pmx-43ef6f5967a37c87": 840,
+    "pmx-cb19e5961c38af86": 840,
+    "pmx-9db646f49c805a1b": 600,
+    "pmx-1c1dd0698118e114": 840,
+    "pmx-47a4f99939c55958": 840,
+    "pmx-b0dd2e3cfd1ab80c": 1200,
+    "pmx-f5b2807685b18a60": 1200,
+    "pmx-78cbbc06c7da39dc": 840,
+    "pmx-ea3eb50ef5b32295": 840,
+    "pmx-4818f3bdda4ec18d": 1200,
+    "pmx-b6889756cf6c0d5e": 600,
+    "pmx-67f783c2661ce19e": 840,
+    "pmx-b8a56876e52dd98e": 840,
+    "pmx-ba77d8beccf4a49b": 600,
+    "pmx-1303e831f7fc913d": 840,
+    "pmx-81a5c871affb4465": 1200,
+    "pmx-e177f4382e37a789": 1200,
+    "pmx-9de435d3627c8e6b": 1200,
+    "pmx-d9972c9c00cacbc5": 840,
+    "pmx-5efe7392a2315a89": 1200
+  },
+  "roomStarterSkins": {
+    "埃芙": "pmx-020abca186c52e7b",
+    "桑朵莱希": "pmx-8fc5b665a5786924",
+    "春田": "pmx-a030b24c0272893f",
+    "芙铃": "pmx-b6fa1b6b340d0fec",
+    "OTs-14": "pmx-782f06826adb1307",
+    "黛烟": "pmx-8c817aa0fdd64f7a",
+    "可露凯": "pmx-efe685465097beb2",
+    "索米": "pmx-4019c9450e0e318d",
+    "希丽雅": "pmx-fee7d92be40f96dd",
+    "莱娅": "pmx-abe3eaaaa9d04264",
+    "夏安": "pmx-48650a04a35b40e0",
+    "阿斯缇亚": "pmx-412bd037301ebe18",
+    "克莱妲": "pmx-90268b4961c97434",
+    "妮基塔": "pmx-4cdf23692c8709a0",
+    "芙洛伦": "pmx-23b0b754d23c6fb7",
+    "莱娜": "pmx-f6ac57de07aff8b0",
+    "维克托": "pmx-4f5d642f97fc5a9d",
+    "翡图萨": "pmx-a3c2d1b094df6ee0",
+    "六分仪": "pmx-caaf00b5aa73eb64",
+    "幼熙": "pmx-2689b8bef5ca9503",
+    "破坏者": "pmx-d1fc22f957060588",
+    "玛绮朵": "pmx-e524539529b6d56a"
   }
 }

@@ -4,7 +4,7 @@
   "models": [
     {
       "id": "pmx-a3c2d1b094df6ee0",
-      "label": "翡图萨 / 原皮",
+      "label": "翡图萨 / 默认",
       "model": "models/pmx-a3c2d1b094df6ee0/model.pmx",
       "profile": "models/pmx-a3c2d1b094df6ee0/profile.json"
     },

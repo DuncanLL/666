@@ -1,5 +1,48 @@
 {
   "models": {
+    "pmx-efe685465097beb2": {
+      "character": "可露凯",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR.png",
+      "groups": {
+        "pistol": {
+          "label": "模型自带手枪",
+          "display": "模型自带手枪",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "silencer": {
+          "label": "模型自带配件",
+          "display": "模型自带配件",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "axe": {
+          "label": "随身斧",
+          "display": "随身斧",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {},
+      "officialSkin": "灼目之星",
+      "isDefault": true
+    },
     "pmx-9ee1e4cdb8d7f985": {
       "character": "可露凯",
       "skin": "蔚蓝轨迹",
@@ -84,49 +127,6 @@
       "officialSkin": "蔚蓝轨迹",
       "partImages": {},
       "isDefault": false
-    },
-    "pmx-efe685465097beb2": {
-      "character": "可露凯",
-      "skin": "灼目之星",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-efe685465097beb2.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR.png",
-      "groups": {
-        "pistol": {
-          "label": "模型自带手枪",
-          "display": "模型自带手枪",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "silencer": {
-          "label": "模型自带配件",
-          "display": "模型自带配件",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "axe": {
-          "label": "随身斧",
-          "display": "随身斧",
-          "options": [
-            "显示",
-            "隐藏"
-          ]
-        },
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "partImages": {},
-      "officialSkin": "灼目之星",
-      "isDefault": true
     },
     "pmx-6826e4ccdf1f4ddf": {
       "character": "可露凯",

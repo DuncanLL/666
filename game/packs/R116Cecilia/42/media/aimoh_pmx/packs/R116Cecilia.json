@@ -4,7 +4,7 @@
   "models": [
     {
       "id": "pmx-fee7d92be40f96dd",
-      "label": "希丽雅 / 调停者",
+      "label": "希丽雅 / 默认",
       "model": "models/pmx-fee7d92be40f96dd/model.pmx",
       "profile": "models/pmx-fee7d92be40f96dd/profile.json"
     },

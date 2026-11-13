@@ -2,7 +2,7 @@
   "models": {
     "pmx-a3c2d1b094df6ee0": {
       "character": "翡图萨",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a3c2d1b094df6ee0.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_PhaetusaSSR.png",
       "isDefault": true,

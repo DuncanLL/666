@@ -2,7 +2,7 @@
   "models": {
     "pmx-caaf00b5aa73eb64": {
       "character": "六分仪",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-caaf00b5aa73eb64.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SextansSSR.png",
       "isDefault": true,

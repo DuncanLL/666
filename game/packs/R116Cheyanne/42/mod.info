@@ -1,7 +1,7 @@
 name=夏安
 id=R116Cheyanne
 require=\AimohPmxPreview
-modversion=0.3.79
+modversion=0.3.87
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

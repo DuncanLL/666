@@ -1,7 +1,7 @@
 name=芙洛伦
 id=R116Florence
 require=\AimohPmxPreview
-modversion=0.3.84
+modversion=0.3.87
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

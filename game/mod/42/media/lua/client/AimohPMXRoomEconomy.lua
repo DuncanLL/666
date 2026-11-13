@@ -67,7 +67,7 @@ end
 
 E.characterGuarantee=80
 E.outfitGuarantee=100
-E.outfitPrice=1080
+E.defaultOutfitPrice=1080
 
 function E.resetTestDraws(player,outfitPools)
     local room=wallet(player)
@@ -159,11 +159,11 @@ function E.outfitMisses(player,id)
     return type(n)=="number" and n>=0 and math.min(E.outfitGuarantee-1,math.floor(n)) or 0
 end
 
-function E.buyOutfit(player,id)
-    if E.outfitOwned(player,id) then return "unavailable" end
+function E.buyOutfit(player,id,price)
+    if type(price)~="number" or price<=0 or price%1~=0 or E.outfitOwned(player,id) then return "unavailable" end
     local credits=E.balance(player,"credits")
-    if credits<E.outfitPrice then return "short" end
-    wallet(player).credits=credits-E.outfitPrice
+    if credits<price then return "short" end
+    wallet(player).credits=credits-price
     outfits(player)[id]=true
     return "unlocked"
 end

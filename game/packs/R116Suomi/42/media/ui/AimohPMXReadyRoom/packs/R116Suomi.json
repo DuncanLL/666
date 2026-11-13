@@ -1,5 +1,27 @@
 {
   "models": {
+    "pmx-4019c9450e0e318d": {
+      "character": "索米",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "雪映清辉",
+      "isDefault": true
+    },
     "pmx-43ef6f5967a37c87": {
       "character": "索米",
       "skin": "灵海游光",
@@ -52,28 +74,6 @@
       "partImages": {},
       "officialSkin": "雪兔献礼",
       "isDefault": false
-    },
-    "pmx-4019c9450e0e318d": {
-      "character": "索米",
-      "skin": "雪映清辉",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4019c9450e0e318d.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SuomiSSR.png",
-      "groups": {
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "眼睛"
-      ],
-      "partImages": {},
-      "officialSkin": "雪映清辉",
-      "isDefault": true
     }
   },
   "labels": {}

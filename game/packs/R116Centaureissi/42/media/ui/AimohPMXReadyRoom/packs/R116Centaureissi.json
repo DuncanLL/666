@@ -1,5 +1,24 @@
 {
   "models": {
+    "pmx-8fc5b665a5786924": {
+      "character": "桑朵莱希",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {},
+      "officialSkin": "完美招待",
+      "isDefault": true
+    },
     "pmx-7c5ea1f673f69f12": {
       "character": "桑朵莱希",
       "skin": "和莱希的五十天",
@@ -38,25 +57,6 @@
       },
       "partImages": {},
       "isDefault": false
-    },
-    "pmx-8fc5b665a5786924": {
-      "character": "桑朵莱希",
-      "skin": "完美招待",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-8fc5b665a5786924.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR.png",
-      "groups": {
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "partImages": {},
-      "officialSkin": "完美招待",
-      "isDefault": true
     },
     "pmx-dd77c173248cb704": {
       "character": "桑朵莱希",

@@ -3,16 +3,16 @@
   "mod": "R116Florence",
   "models": [
     {
+      "id": "pmx-23b0b754d23c6fb7",
+      "label": "芙洛伦 / 默认",
+      "model": "models/pmx-23b0b754d23c6fb7/model.pmx",
+      "profile": "models/pmx-23b0b754d23c6fb7/profile.json"
+    },
+    {
       "id": "pmx-4818f3bdda4ec18d",
       "label": "芙洛伦 / 翠雀媚",
       "model": "models/pmx-4818f3bdda4ec18d/model.pmx",
       "profile": "models/pmx-4818f3bdda4ec18d/profile.json"
-    },
-    {
-      "id": "pmx-23b0b754d23c6fb7",
-      "label": "芙洛伦 / 原皮",
-      "model": "models/pmx-23b0b754d23c6fb7/model.pmx",
-      "profile": "models/pmx-23b0b754d23c6fb7/profile.json"
     },
     {
       "id": "pmx-b6889756cf6c0d5e",

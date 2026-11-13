@@ -2,7 +2,7 @@
   "models": {
     "pmx-d1fc22f957060588": {
       "character": "破坏者",
-      "skin": "原皮",
+      "skin": "默认",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d1fc22f957060588.png",
       "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DestroyerSSR.png",
       "isDefault": true,

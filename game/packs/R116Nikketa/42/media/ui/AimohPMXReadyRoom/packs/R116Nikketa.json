@@ -1,5 +1,27 @@
 {
   "models": {
+    "pmx-4cdf23692c8709a0": {
+      "character": "妮基塔",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "典范制式",
+      "isDefault": true
+    },
     "pmx-f5b2807685b18a60": {
       "character": "妮基塔",
       "skin": "无垢契约",
@@ -132,28 +154,6 @@
       "partImages": {},
       "officialSkin": "银湾流转夜",
       "isDefault": false
-    },
-    "pmx-4cdf23692c8709a0": {
-      "character": "妮基塔",
-      "skin": "典范制式",
-      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4cdf23692c8709a0.png",
-      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_NikketaSSR.png",
-      "groups": {
-        "eyes": {
-          "label": "眼睛",
-          "display": "眼睛",
-          "options": [
-            "睁眼",
-            "闭眼"
-          ]
-        }
-      },
-      "primaryCategories": [
-        "眼睛"
-      ],
-      "partImages": {},
-      "officialSkin": "典范制式",
-      "isDefault": true
     }
   },
   "labels": {}

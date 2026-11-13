@@ -1,7 +1,7 @@
 name=阿斯缇亚
 id=R116Asteria
 require=\AimohPmxPreview
-modversion=0.3.79
+modversion=0.3.87
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

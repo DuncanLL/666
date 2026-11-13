@@ -3,16 +3,16 @@
   "mod": "R116Klukai",
   "models": [
     {
+      "id": "pmx-efe685465097beb2",
+      "label": "可露凯 / 默认",
+      "model": "models/pmx-efe685465097beb2/model.pmx",
+      "profile": "models/pmx-efe685465097beb2/profile.json"
+    },
+    {
       "id": "pmx-9ee1e4cdb8d7f985",
       "label": "可露凯 / 蔚蓝轨迹",
       "model": "models/pmx-9ee1e4cdb8d7f985/model.pmx",
       "profile": "models/pmx-9ee1e4cdb8d7f985/profile.json"
-    },
-    {
-      "id": "pmx-efe685465097beb2",
-      "label": "可露凯 / 灼目之星",
-      "model": "models/pmx-efe685465097beb2/model.pmx",
-      "profile": "models/pmx-efe685465097beb2/profile.json"
     },
     {
       "id": "pmx-6826e4ccdf1f4ddf",

@@ -4,7 +4,7 @@
   "models": [
     {
       "id": "pmx-d1fc22f957060588",
-      "label": "破坏者 / 原皮",
+      "label": "破坏者 / 默认",
       "model": "models/pmx-d1fc22f957060588/model.pmx",
       "profile": "models/pmx-d1fc22f957060588/profile.json"
     },

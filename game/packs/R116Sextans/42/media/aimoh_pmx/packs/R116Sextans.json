@@ -4,7 +4,7 @@
   "models": [
     {
       "id": "pmx-caaf00b5aa73eb64",
-      "label": "六分仪 / 原皮",
+      "label": "六分仪 / 默认",
       "model": "models/pmx-caaf00b5aa73eb64/model.pmx",
       "profile": "models/pmx-caaf00b5aa73eb64/profile.json"
     },

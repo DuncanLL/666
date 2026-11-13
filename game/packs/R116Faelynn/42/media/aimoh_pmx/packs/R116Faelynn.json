@@ -3,16 +3,16 @@
   "mod": "R116Faelynn",
   "models": [
     {
+      "id": "pmx-b6fa1b6b340d0fec",
+      "label": "芙铃 / 默认",
+      "model": "models/pmx-b6fa1b6b340d0fec/model.pmx",
+      "profile": "models/pmx-b6fa1b6b340d0fec/profile.json"
+    },
+    {
       "id": "pmx-293917f24c2bd387",
       "label": "芙铃 / 忻跃阳炎",
       "model": "models/pmx-293917f24c2bd387/model.pmx",
       "profile": "models/pmx-293917f24c2bd387/profile.json"
-    },
-    {
-      "id": "pmx-b6fa1b6b340d0fec",
-      "label": "芙铃 / 望归宠儿",
-      "model": "models/pmx-b6fa1b6b340d0fec/model.pmx",
-      "profile": "models/pmx-b6fa1b6b340d0fec/profile.json"
     }
   ]
 }

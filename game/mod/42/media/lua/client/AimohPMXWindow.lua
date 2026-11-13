@@ -55,6 +55,10 @@ local function chevron(p,x,y,direction,size,alpha)
     if glyph then p:drawTextureScaled(glyph,x-size/2,y-size/2,size,size,alpha,.95,.95,.95) end
 end
 local function tr(key) return data.text[key] or key end
+local function outfitName(entry)
+    if entry.isDefault then return tr("Default") end
+    return entry.outfitPool and entry.outfitPool.name or entry.meta.officialSkin or entry.meta.skin
+end
 local function isLocalMotion(file)
     return file~=nil and file:find("[/\\]")~=nil
 end
@@ -361,11 +365,12 @@ function W:createChildren()
     local renderWear=self.wearButton.render
     self.wearButton.render=function(b)
         if b.roomLook~="outfitPurchase" then return renderWear(b) end
-        local x=(b.width-33-#tostring(economy.outfitPrice)*23*.63)/2
+        local price=self.browsed.price
+        local x=(b.width-33-#tostring(price)*23*.63)/2
         local icon=image(art.."credits.png")
         if icon then b:drawTextureScaled(icon,x,7,29,29,1,1,1,1) end
-        local affordable=economy.balance(self.player,"credits")>=economy.outfitPrice
-        number(b,economy.outfitPrice,x+33,10,23,affordable and .09 or .88,affordable and .15 or .24,.12)
+        local affordable=economy.balance(self.player,"credits")>=price
+        number(b,price,x+33,10,23,affordable and .09 or .88,affordable and .15 or .24,.12)
     end
     self.physicsResetButton=button(self,0,0,86,tr("RoomPhysicsShort"),self,self.requestPhysicsReset)
     self.physicsResetButton:setTooltip(tr("PhysicsReset"))
@@ -1216,8 +1221,7 @@ function W:carousel(character)
                 s:drawRectBorder(x+1,y+1,w-2,h-2,1,.99,.51,.19)
             end
             surface(s,x+3,y+h-38,w-6,34,.62)
-            local pool=s.entries[i].outfitPool
-            label(s,pool and pool.name or meta.officialSkin or meta.skin,x+w/2,y+h-31,17,w-14,.96,.96,.94,1,true)
+            label(s,outfitName(s.entries[i]),x+w/2,y+h-31,17,w-14,.96,.96,.94,1,true)
             if s.entries[i].outfitLocked and s.entries[i].id~=self.currentId then
                 s:drawRect(x,y,w,h,.54,.02,.035,.045);lock(s,x+w/2-10,y+h/2-10)
             end
@@ -1280,7 +1284,7 @@ function W:updateWear()
     self.skinButton.roomTitle=""
     local character=self.byCharacter[self.character]
     self.skinButton:setEnable(skins or (self.browsed~=nil and not (character and character.unlockRequired) and not self.waiting))
-    self.wearButton.roomLook=skins and locked and not self.browsed.outfitPool and "outfitPurchase" or "primary"
+    self.wearButton.roomLook=skins and locked and self.browsed.price and "outfitPurchase" or "primary"
     self.wearButton.roomTitle=tr(skins and (wearing and "Wearing" or locked and self.browsed.outfitPool and "RoomOutfitProcurement"
         or locked and "Buy" or "Wear")
         or (wearing and "CharacterEnabled" or "EnableCharacter"))
@@ -1306,7 +1310,7 @@ function W:applyBrowse()
     if not entry.outfitLocked then self:selectSkin(entry);return end
     if self.tab~="skins" or entry.id==self.currentId then return end
     if entry.outfitPool then self:setTab("outfitDraw");return end
-    local status=economy.buyOutfit(self.player,entry.id)
+    local status=economy.buyOutfit(self.player,entry.id,entry.price)
     if status=="short" then self:openExchange("credits");return end
     if status=="unlocked" then
         entry.outfitLocked=false
@@ -1321,6 +1325,8 @@ function W:refresh()
     self.characters={};self.byCharacter={}
     local equippedCharacter
     local defaultSkins=data.roomDefaultSkinNames or {}
+    local prices=data.roomOutfitPrices or {}
+    local starters=data.roomStarterSkins or {}
     local optional=data.optionalModels or {}
     local optionalIds={};local available={}
     for _,id in ipairs(optional)do optionalIds[id]=true end
@@ -1338,12 +1344,14 @@ function W:refresh()
         local entry={id=id,index=index,meta=meta,outfitPool=(data.roomOutfitPools or {})[id]}
         character.locked=false;table.insert(character.skins,entry)
         local original=meta.isDefault==true or not not defaultSkins[meta.skin]
+        entry.isDefault=original
+        local starter=starters[meta.character]
+        entry.price=not original and id~=starter and not entry.outfitPool and (prices[id] or economy.defaultOutfitPrice) or nil
         entry.sortOrder=original and 0 or entry.outfitPool and 2 or 1
-        if not entry.outfitPool and (not character.baseSkin or (original and not character.baseSkinIsOriginal)) then
+        if not entry.outfitPool and (id==starter or not character.baseSkin or (original and not character.baseSkin.isDefault)) then
             character.baseSkin=entry
-            character.baseSkinIsOriginal=original
         end
-        if id==self.currentId then equippedCharacter=meta.character;self.currentLabel=meta.skin;self.selected=entry end
+        if id==self.currentId then equippedCharacter=meta.character;self.currentLabel=outfitName(entry);self.selected=entry end
     end
     for index=0,AimohPMXPreview.modelCount()-1 do
         local id=AimohPMXPreview.modelIdAt(index);local meta=data.models[id]
@@ -1357,11 +1365,12 @@ function W:refresh()
     end
     for _,id in ipairs(optional)do add(id,available[id],data.models[id])end
     for _,character in ipairs(self.characters)do
+        local base=character.baseSkin
         table.sort(character.skins,function(a,b)
+            if (a==base)~=(b==base) then return a==base end
             if a.sortOrder~=b.sortOrder then return a.sortOrder<b.sortOrder end
             return a.index<b.index
         end)
-        local base=character.baseSkin
         if base then character.portrait=base.meta.portrait or character.portrait end
         for _,skin in ipairs(character.skins)do
             skin.outfitLocked=skin~=base and not economy.outfitOwned(self.player,skin.id)
@@ -1736,7 +1745,7 @@ function W:prerender()
         local width=math.floor(self.width*.245)
         local meta=self.browsed.meta
         local pool=self.browsed.outfitPool
-        local name=pool and pool.name or meta.officialSkin or meta.skin
+        local name=outfitName(self.browsed)
         local descriptions=data.skinDescriptions or {}
         local text=descriptions[self.browsed.id] or descriptions[meta.card or ""]
         local y=math.min(math.floor(self.height*(inPool and .605 or .668)),self.height-42-80-#(text or {})*18)

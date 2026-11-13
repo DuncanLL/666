@@ -22,13 +22,19 @@ wallet.recruitment.misses=57
 wallet.outfits.skinB=99
 wallet.outfit=110
 wallet.targeted=23
-wallet.credits=1
+wallet.credits=1199
 local restored={data=player.data,getModData=player.getModData}
 E.resetTestDraws(restored,pools)
 assert(E.characterUnlocked(restored,"Daiyan") and E.characterMisses(restored)==57)
-assert(E.balance(restored,"credits")==1 and E.balance(restored,"targeted")==23)
-assert(E.buyOutfit(restored,"paid")=="unlocked" and E.balance(restored,"credits")==0)
-assert(E.buyOutfit(restored,"paid")=="unavailable" and E.buyOutfit(restored,"other")=="short")
+assert(E.balance(restored,"credits")==1199 and E.balance(restored,"targeted")==23)
+assert(E.buyOutfit(restored,"premium",1200)=="short" and E.balance(restored,"credits")==1199)
+assert(E.buyOutfit(restored,"regular",600)=="unlocked" and E.balance(restored,"credits")==599)
+assert(E.buyOutfit(restored,"regular",600)=="unavailable" and E.balance(restored,"credits")==599)
+assert(E.buyOutfit(restored,"free",0)=="unavailable" and E.balance(restored,"credits")==599)
+wallet.credits=840
+assert(E.buyOutfit(restored,"themed",840)=="unlocked" and E.balance(restored,"credits")==0)
+wallet.credits=1200
+assert(E.buyOutfit(restored,"premium",1200)=="unlocked" and E.balance(restored,"credits")==0)
 
 local high=function()return 9999 end
 local status,results=E.drawOutfit(restored,"skinB",10,high)
@@ -44,4 +50,4 @@ assert(E.drawCharacter(player,"Other",10,high)=="miss")
 status,results=E.drawCharacter(player,"Other",10,high)
 assert(status=="unlocked" and #results==3)
 assert(E.characterMisses(player)==0 and E.balance(player,"targeted")==0)
-return "PASS one-time reset, retained purchases, balances, independent outfit pity and shared character pity"
+return "PASS one-time reset, retained purchases, all price tiers and balances, independent outfit pity and shared character pity"
