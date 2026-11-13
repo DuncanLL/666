@@ -19,6 +19,8 @@ def check_glsl_names(name,data):
 
 def release_bootstrap(data):
     manifest=json.loads(data)
+    manifest['character_catalog']['path']='media/gfl2_rendering/characters.json'
+    manifest['addon_runtime']['id']='GFL2Exilium'
     for field in ('native_backend','environment_unit_adapter','native_grid_address'):
         manifest.pop(field,None)
     fill=manifest['original_camera_fill']
@@ -56,11 +58,11 @@ if __name__=='__main__':
     with zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as z:
         for p in sorted(classes.rglob('*.class')):
             name=p.relative_to(classes).as_posix();assert name not in stock,'Stock VP class collision: '+name;write(z,name,p.read_bytes())
-        write(z,'aimoh/gf2/bridge/Aimoh-Native-GF2.zip',shader)
+        write(z,'META-INF/gfl2/rendering/native.zip',shader)
         write(z,'aimoh/gf2/bridge/gf2-original-display.rgba16f',asset.read_bytes())
     with zipfile.ZipFile(temporary)as z:
-        assert z.testzip()is None;assert not any('Aimoh-Eclipse-GF2.zip'in n for n in z.namelist())
+        assert z.testzip()is None;assert not any('META-INF/gfl2/rendering/eclipse.zip'in n for n in z.namelist())
     os.replace(temporary,jar)
     import hashlib
-    save(out/'build.json',dict(status='BUILT_NATIVE_ONLY_EMBEDDED_SUPPORT',jar=str(jar),jar_sha256=sha(jar),jar_bytes=jar.stat().st_size,shader_sha256=hashlib.sha256(shader).hexdigest(),shader_payload='aimoh/gf2/bridge/Aimoh-Native-GF2.zip',host_sha256=sha(host),backend='native',version=origin['release_version'],source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,*shader_sources,ROOT/'resources/manifest.json',ROOT/'provenance/render-support.json',Path(__file__).resolve()]},original_display_asset_sha256=resources['sha256'],original_host_classes_packaged=0,eclipse_payloads=0,game_started=False,uploaded=False))
+    save(out/'build.json',dict(status='BUILT_NATIVE_ONLY_EMBEDDED_SUPPORT',jar=str(jar),jar_sha256=sha(jar),jar_bytes=jar.stat().st_size,shader_sha256=hashlib.sha256(shader).hexdigest(),shader_payload='META-INF/gfl2/rendering/native.zip',host_sha256=sha(host),backend='native',version=origin['release_version'],source_hashes={p.relative_to(ROOT).as_posix():sha(p)for p in [*sources,*shader_sources,ROOT/'resources/manifest.json',ROOT/'provenance/render-support.json',Path(__file__).resolve()]},original_display_asset_sha256=resources['sha256'],original_host_classes_packaged=0,eclipse_payloads=0,game_started=False,uploaded=False))
     print('Built Native-only support: '+str(jar),flush=True)
