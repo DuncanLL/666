@@ -13,6 +13,18 @@
       "label": "玛绮朵 / 汤风休日",
       "model": "models/pmx-5efe7392a2315a89/model.pmx",
       "profile": "models/pmx-5efe7392a2315a89/profile.json"
+    },
+    {
+      "id": "pmx-0b80022fae2dbb04",
+      "label": "玛绮朵 / 默认",
+      "model": "models/pmx-0b80022fae2dbb04/model.pmx",
+      "profile": "models/pmx-0b80022fae2dbb04/profile.json"
+    },
+    {
+      "id": "pmx-79e7c6a0e60e6f61",
+      "label": "玛绮朵 / 花影重",
+      "model": "models/pmx-79e7c6a0e60e6f61/model.pmx",
+      "profile": "models/pmx-79e7c6a0e60e6f61/profile.json"
     }
   ]
 }

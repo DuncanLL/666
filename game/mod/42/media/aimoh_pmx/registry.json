@@ -104,7 +104,15 @@
     ],
     "R116Macqiato": [
       "pmx-e524539529b6d56a",
-      "pmx-5efe7392a2315a89"
+      "pmx-5efe7392a2315a89",
+      "pmx-0b80022fae2dbb04",
+      "pmx-79e7c6a0e60e6f61"
+    ],
+    "R116Qiuhua": [
+      "pmx-e4fe174c77f90d6c",
+      "pmx-e348ab0b30d7e83a",
+      "pmx-020f2e8bdc65bc5b",
+      "pmx-d373f73abd68a3d0"
     ]
   },
   "pack_mod_ids": {
@@ -129,6 +137,7 @@
     "R116Sextans": "GFL2Sextans",
     "R116Yohee": "GFL2Yohee",
     "R116Destroyer": "GFL2Destroyer",
-    "R116Macqiato": "GFL2Macqiato"
+    "R116Macqiato": "GFL2Macqiato",
+    "R116Qiuhua": "GFL2Qiuhua"
   }
 }

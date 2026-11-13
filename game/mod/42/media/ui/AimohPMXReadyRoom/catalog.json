@@ -1,6 +1,6 @@
 {
   "text": {
-    "Menu": "整备室",
+    "Menu": "少前2:追放人物框架",
     "Skins": "皮肤",
     "Parts": "切换配件",
     "Back": "返回皮肤",
@@ -596,7 +596,8 @@
       "skin": "舞会休止符",
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e524539529b6d56a.png",
       "isDefault": false,
-      "pack": "R116Macqiato"
+      "pack": "R116Macqiato",
+      "included": true
     },
     "pmx-5efe7392a2315a89": {
       "character": "玛绮朵",
@@ -605,6 +606,53 @@
       "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-5efe7392a2315a89.png",
       "isDefault": false,
       "pack": "R116Macqiato"
+    },
+    "pmx-0b80022fae2dbb04": {
+      "character": "玛绮朵",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0b80022fae2dbb04.png",
+      "isDefault": true,
+      "pack": "R116Macqiato"
+    },
+    "pmx-79e7c6a0e60e6f61": {
+      "character": "玛绮朵",
+      "skin": "花影重",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-79e7c6a0e60e6f61.png",
+      "isDefault": false,
+      "officialSkin": "花影重",
+      "pack": "R116Macqiato"
+    },
+    "pmx-e4fe174c77f90d6c": {
+      "character": "秋桦",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e4fe174c77f90d6c.png",
+      "isDefault": true,
+      "pack": "R116Qiuhua"
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "character": "秋桦",
+      "skin": "秋宴龙厨",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e348ab0b30d7e83a.png",
+      "isDefault": false,
+      "included": true,
+      "officialSkin": "秋宴龙厨",
+      "pack": "R116Qiuhua"
+    },
+    "pmx-020f2e8bdc65bc5b": {
+      "character": "秋桦",
+      "skin": "仁心仁术",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020f2e8bdc65bc5b.png",
+      "isDefault": false,
+      "officialSkin": "仁心仁术",
+      "pack": "R116Qiuhua"
+    },
+    "pmx-d373f73abd68a3d0": {
+      "character": "秋桦",
+      "skin": "秋林烈兔",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d373f73abd68a3d0.png",
+      "isDefault": false,
+      "officialSkin": "秋林烈兔",
+      "pack": "R116Qiuhua"
     }
   },
   "labels": {
@@ -1763,11 +1811,6 @@
       "width": 217,
       "height": 50
     },
-    "整备室": {
-      "path": "media/ui/AimohPMXReadyRoom/label-0d2a720dfcff48.png",
-      "width": 116,
-      "height": 43
-    },
     "皮肤": {
       "path": "media/ui/AimohPMXReadyRoom/label-fc0d7cf23b5483.png",
       "width": 84,
@@ -2744,7 +2787,13 @@
     "pmx-4818f3bdda4ec18d",
     "pmx-b6889756cf6c0d5e",
     "pmx-e524539529b6d56a",
-    "pmx-5efe7392a2315a89"
+    "pmx-5efe7392a2315a89",
+    "pmx-0b80022fae2dbb04",
+    "pmx-79e7c6a0e60e6f61",
+    "pmx-e4fe174c77f90d6c",
+    "pmx-e348ab0b30d7e83a",
+    "pmx-020f2e8bdc65bc5b",
+    "pmx-d373f73abd68a3d0"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [
@@ -2960,84 +3009,137 @@
       "绒球了。"
     ],
     "pmx-a030b24c0272893f": [
-      "春田的常见着装。白色长衣配深蓝色肩部和金色饰件，",
-      "长摆和高筒靴保留了制服的利落轮廓。"
+      "春田的常见着装。典雅的配色尽显高贵，让周围人",
+      "不禁对春田心生敬意，但她温暖的微笑，总能化解",
+      "一切拘谨。"
     ],
     "pmx-cc787cf2d032366b": [
-      "蓝紫色晚礼服搭配垂坠长摆，裙边和胸前饰件",
-      "在灯下泛起亮光，适合正式的晚宴场合。"
+      "灯火下的她，比任何宝石都要更加璀璨夺目，即便",
+      "只是温柔的笑意，也足以占据眼前人的所有视线。"
     ],
     "pmx-23b0b754d23c6fb7": [
-      "芙洛伦的常见着装。浅色发饰和白色短外套搭配深色短裙，",
-      "胸前的蓝色领饰与腿侧装备点亮整套制服。"
+      "芙洛伦的常见着装。象征纯洁与专业的白色与沉稳",
+      "的黑色相间，既方便行动，又能衬托出芙洛伦的成",
+      "熟魅力。"
     ],
     "pmx-b6889756cf6c0d5e": [
-      "浅蓝睡衣缀着蝴蝶结，薄纱随步子轻轻摆动。",
-      "芙洛伦准备了山药饼，还想在睡前再和你玩一局。"
+      "“指挥官，还记得我们一起吃过的山药饼吗？这次",
+      "也来边玩游戏边吃吧。嘿嘿……和上次一样，输给",
+      "我会有惩罚哦～”",
+      "芙洛伦准备好了，期待和你度过心跳加速的睡前时",
+      "间。"
     ],
     "pmx-f6ac57de07aff8b0": [
-      "莱娜的常见着装。护目镜、深色短夹克和腿部护具，",
-      "搭配醒目的黄色系带，便于轻装行动。"
+      "莱娜的常见着装。不论是夜间潜行，还是前线作",
+      "战，穿它准没错。"
     ],
     "pmx-67f783c2661ce19e": [
-      "白金配色的主题装束，以蓝色饰边、星形装饰",
-      "和蓬松袖口呼应「元气魔法」的舞台造型。"
+      "莱娜从指挥官处得到的礼物，不管是可爱的花朵还",
+      "是俏皮的蝴蝶结，都与莱娜十分相配。"
     ],
     "pmx-b8a56876e52dd98e": [
-      "深色短外套配上护目镜和长靴，",
-      "亮色肩带与护具勾出「秘夜猎影」的轮廓。"
+      "她将身形与秘密一同藏于夜色，用无声的守护保障",
+      "着她所爱的一切。"
     ],
     "pmx-4f5d642f97fc5a9d": [
-      "维克托的常见着装。深色外套、贴身护具和橙黄色绑带",
-      "层层扣合，肩侧与腿部保留了装备挂点。"
+      "维克托的常见着装。低调的配色便于隐藏踪迹，让",
+      "维克托总能在作战中掌握先机。"
     ],
     "pmx-ba77d8beccf4a49b": [
-      "针织背心、衬衫与格纹裙勾勒出清爽的学院风。",
-      "维克托认真地等着指挥官对这身新衣提出建议。"
+      "“我仍然有许多需要提升的地方。指挥官，任何建",
+      "议你都可以和我直说。”",
+      "她看向你的眼神中满是诚恳，却还是隐约有些担",
+      "忧。"
     ],
     "pmx-1303e831f7fc913d": [
-      "金色衣身配深色长袜和护膝，演出服里仍留着战术装备的痕迹。",
-      "维克托换上了这套行头，心里还在琢磨这次的作战任务。"
+      "“长官……这服装究竟是为了什么作战准备的？话",
+      "说……我似乎听到了乌琪的尖叫声？”",
+      "维克托以兔耳阻碍战斗为理由，拒绝了该装饰。"
     ],
     "pmx-a3c2d1b094df6ee0": [
-      "翡图萨的常见着装。以黑色为底，搭配银色护具、",
-      "腿部装甲与蓝紫色细节，保留利落的战斗轮廓。"
+      "翡图萨的常见着装。利落飒爽、方便行动，带着些",
+      "许过去的印记，与你一起并肩跨进新的时代。"
     ],
     "pmx-81a5c871affb4465": [
-      "层叠的深紫蕾丝在裙摆铺开，缎带与金属饰件收住了轮廓。",
-      "如同夜色中的花园，幽深而静谧。"
+      "“指挥官，日安~我能邀请您一起参加接下来的茶",
+      "会吗？今天的饮品，是我亲自采摘的玫瑰红茶哦",
+      "~”",
+      "她在花丛间向你伸出手，想要将你拉入那抹独属于",
+      "她的馥郁幽影。"
     ],
     "pmx-caaf00b5aa73eb64": [
-      "六分仪的常见着装。深色短披肩、羽饰帽与橙色花饰",
-      "构成鲜明轮廓，配上长靴和金属装饰。"
+      "六分仪的常见着装。十分方便在暗处行动，务必要",
+      "小心来自她的夜袭。"
     ],
     "pmx-e177f4382e37a789": [
-      "黑白裙装缀着蕾丝与围裙，六分仪将头饰理得一丝不苟。",
-      "今夜微凉，她向你伸出手，邀你与她同行。"
+      "“阁下……这套衣装还令您满意吗？今夜虽有些",
+      "冷，可您的手如此温暖，可以让我牵您的手吗？”",
+      "六分仪的眼角透出一抹魅惑的笑容。"
     ],
     "pmx-2689b8bef5ca9503": [
-      "幼熙的常见着装。浅色短裙配深色护腿和橙色细节，",
-      "保留便于活动的作战装备和帽饰。"
+      "幼熙的常见着装。青春洋溢着活力，灵巧而不失轻",
+      "盈。她不拘泥于特定的风格，却执着于将生活的激",
+      "情传递给每一位观众。"
     ],
     "pmx-9de435d3627c8e6b": [
-      "粉白裙装缀着蝴蝶结与蕾丝，幼熙提起裙摆轻快地转了个圈。",
-      "她准备了一个小小的惊喜，等着看你露出笑容。"
+      "“指挥官，接下来我要给您施加变得快乐的魔法哦",
+      "~“",
+      "她的双眸之中只有你的存在，渴望着能看到你的笑",
+      "颜。"
     ],
     "pmx-d1fc22f957060588": [
-      "破坏者的常见着装。黑色作战服搭配机械手臂和护腿，",
-      "腰侧和腿部留有装备挂点，适合随身携带重型装备。"
+      "破坏者的常见着装。漆黑的战斗服勾勒出娇小的身",
+      "形，宛如蛰伏于阴影的猎犬，时刻做好了撕碎猎物",
+      "的准备。"
     ],
     "pmx-d9972c9c00cacbc5": [
-      "乌黑衣身映衬着浅色绒饰，兔耳与深色长袜勾出俏皮的轮廓。",
-      "破坏者照例昂着头，等着你对她的新装作出评价。"
+      "“竟然让破坏者大人侍奉你……做好觉悟吧！",
+      "等……等等，尾巴不能摸！”",
+      "破坏者傲慢地昂起头，晃动的尾巴却出卖了她真实",
+      "的心意。"
     ],
     "pmx-e524539529b6d56a": [
-      "黑金礼服以不对称裙摆和长手套收束线条。",
-      "适合在舞会曲间离开舞池，独自歇一会儿。"
+      "玛绮朵在舞会上穿着的礼服。素雅的款式配上了那",
+      "条熟悉的缎带，想必玛绮朵一定是在暗自期待那位",
+      "舞伴能够尽快发现自己吧。"
     ],
     "pmx-5efe7392a2315a89": [
-      "柔软的浴巾搭上素色头巾，红边在水汽里格外醒目。",
-      "泡完汤泉，玛绮朵还有一整个下午可以慢慢消磨。"
+      "“什……什么一起泡啊！我都泡完了！欸……不",
+      "过，倒是也可以再泡一次。真是的，刚才怎么等你",
+      "都不来……”",
+      "——刚穿好浴袍的玛绮朵，说完这句话，就体力不",
+      "支地倒了下去。"
+    ],
+    "pmx-79e7c6a0e60e6f61": [
+      "——“别看过来啊，笨、笨蛋。”",
+      "只可惜，无论是声音还是表情，她都满怀期待。"
+    ],
+    "pmx-e348ab0b30d7e83a": [
+      "“大功告成！这可是只存在传说中的料理哦！快来",
+      "尝尝！”",
+      "她端着那盘如黄金般的炒饭向你递来，笑容一如既",
+      "往的耀眼自信。"
+    ],
+    "pmx-020f2e8bdc65bc5b": [
+      "“除了要注意休息外，长官还得重视饮食结构哦。",
+      "一定要按照我安排的食谱用餐！”",
+      "精准的营养配比与美味完美融合，这份调理身体的",
+      "药膳蕴含着秋桦对你的心意。"
+    ],
+    "pmx-d373f73abd68a3d0": [
+      "“长官，你的脸好红啊。咋样，这一桌饭菜和我，",
+      "哪一个更令你心动呢？”",
+      "在一片升腾的氤氲中，兔子小姐为你揭开了色香味",
+      "俱全的晚宴。"
+    ],
+    "pmx-0b80022fae2dbb04": [
+      "玛绮朵的常见着装。玛绮朵一般不打开她的琴盒—",
+      "—毕竟放在盒子里的，是她最为珍惜的武器。"
+    ],
+    "pmx-e4fe174c77f90d6c": [
+      "秋桦的常见着装。如她的性情般热情似火，灵巧轻",
+      "盈。方便架锅起灶，为绝境中的人们烹煮一锅“希",
+      "望”。"
     ]
   },
   "roomLabels": {
@@ -3444,11 +3546,6 @@
     "效果幅度": {
       "path": "media/ui/AimohPMXReadyRoom/gf2-font/ed5d0e02485f5f25.png",
       "width": 148,
-      "height": 39
-    },
-    "整备室": {
-      "path": "media/ui/AimohPMXReadyRoom/gf2-font/6693c8587d06469f.png",
-      "width": 112,
       "height": 39
     },
     "无垢契约": {
@@ -5750,6 +5847,476 @@
       "path": "media/ui/AimohPMXReadyRoom/label-workshop-ac3fe59c218acb.png",
       "width": 148,
       "height": 40
+    },
+    "花影重": {
+      "path": "media/ui/AimohPMXReadyRoom/label-macqiato-c0957dbf0c1f.png",
+      "width": 112,
+      "height": 38
+    },
+    "玛绮朵的新春苏绣衣装。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-macqiato-90afd00f01f5.png",
+      "width": 400,
+      "height": 40
+    },
+    "秋桦": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-8325ef976ddf.png",
+      "width": 76,
+      "height": 39
+    },
+    "秋宴龙厨": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-23b5bda4d993.png",
+      "width": 148,
+      "height": 39
+    },
+    "秋桦为大展厨艺准备的衣装。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-c3b746cc458d.png",
+      "width": 472,
+      "height": 40
+    },
+    "金线绣纹点缀在红色厨服上。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-6492360e1678.png",
+      "width": 472,
+      "height": 40
+    },
+    "仁心仁术": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-364f37dffdc4.png",
+      "width": 148,
+      "height": 39
+    },
+    "红白相间的护士风衣装。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-fc3443e0305d.png",
+      "width": 400,
+      "height": 40
+    },
+    "流苏细节是为秋桦量身设计的。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-2f13b8151e09.png",
+      "width": 508,
+      "height": 40
+    },
+    "秋林烈兔": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-ad6f7520ed48.png",
+      "width": 148,
+      "height": 39
+    },
+    "兔耳头饰搭配红黑衣装。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-8c49ce7059db.png",
+      "width": 400,
+      "height": 40
+    },
+    "秋桦化身兔子小姐，为指挥官端上晚宴。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-c3ca25fee116.png",
+      "width": 652,
+      "height": 41
+    },
+    "热情直爽的精英人形，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-93856c3abab6.png",
+      "width": 364,
+      "height": 40
+    },
+    "喜欢钻研厨艺，也爱给同伴做饭。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-80e037c701e7.png",
+      "width": 544,
+      "height": 41
+    },
+    "春田的常见着装。典雅的配色尽显高贵，让周围人": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2d6b352f0c9d2e31.png",
+      "width": 796,
+      "height": 40
+    },
+    "不禁对春田心生敬意，但她温暖的微笑，总能化解": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7bbd515de39990ab.png",
+      "width": 796,
+      "height": 40
+    },
+    "一切拘谨。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-254a60eadbcbde61.png",
+      "width": 184,
+      "height": 40
+    },
+    "灯火下的她，比任何宝石都要更加璀璨夺目，即便": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-4bb81faedfac6243.png",
+      "width": 796,
+      "height": 40
+    },
+    "只是温柔的笑意，也足以占据眼前人的所有视线。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e66275e6e66161d0.png",
+      "width": 796,
+      "height": 40
+    },
+    "芙洛伦的常见着装。象征纯洁与专业的白色与沉稳": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-ae7651cf1546abb8.png",
+      "width": 796,
+      "height": 40
+    },
+    "的黑色相间，既方便行动，又能衬托出芙洛伦的成": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8150154e1ca2e1f0.png",
+      "width": 796,
+      "height": 40
+    },
+    "熟魅力。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-78d7bb95d3f5474f.png",
+      "width": 148,
+      "height": 40
+    },
+    "“指挥官，还记得我们一起吃过的山药饼吗？这次": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d20a6d6ab20158e8.png",
+      "width": 777,
+      "height": 40
+    },
+    "也来边玩游戏边吃吧。嘿嘿……和上次一样，输给": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-138050d6a4110680.png",
+      "width": 798,
+      "height": 40
+    },
+    "我会有惩罚哦～”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1e17c810395f160d.png",
+      "width": 273,
+      "height": 40
+    },
+    "芙洛伦准备好了，期待和你度过心跳加速的睡前时": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1b2c20e02221495e.png",
+      "width": 796,
+      "height": 40
+    },
+    "间。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e29e4c027d6cf09e.png",
+      "width": 76,
+      "height": 40
+    },
+    "莱娜的常见着装。不论是夜间潜行，还是前线作": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-34b6ecb6c8e1685d.png",
+      "width": 760,
+      "height": 40
+    },
+    "战，穿它准没错。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c3c19c9c4eb803e2.png",
+      "width": 292,
+      "height": 40
+    },
+    "莱娜从指挥官处得到的礼物，不管是可爱的花朵还": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bb6498eee9439cb3.png",
+      "width": 796,
+      "height": 40
+    },
+    "是俏皮的蝴蝶结，都与莱娜十分相配。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-42aee65ad72672ac.png",
+      "width": 616,
+      "height": 40
+    },
+    "她将身形与秘密一同藏于夜色，用无声的守护保障": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3b5a4211c6a7d7f4.png",
+      "width": 796,
+      "height": 40
+    },
+    "着她所爱的一切。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-83a13e428396c909.png",
+      "width": 292,
+      "height": 40
+    },
+    "维克托的常见着装。低调的配色便于隐藏踪迹，让": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-71420708dd721633.png",
+      "width": 796,
+      "height": 40
+    },
+    "维克托总能在作战中掌握先机。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-59eb342b5db73303.png",
+      "width": 508,
+      "height": 40
+    },
+    "“我仍然有许多需要提升的地方。指挥官，任何建": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-87c19767bf5f8587.png",
+      "width": 777,
+      "height": 40
+    },
+    "议你都可以和我直说。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3a5bb16be384b2bd.png",
+      "width": 381,
+      "height": 40
+    },
+    "她看向你的眼神中满是诚恳，却还是隐约有些担": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bb09a48766c1e8dd.png",
+      "width": 760,
+      "height": 40
+    },
+    "忧。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a415af6eabc26367.png",
+      "width": 76,
+      "height": 40
+    },
+    "“长官……这服装究竟是为了什么作战准备的？话": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8af77ca447b8fdd7.png",
+      "width": 779,
+      "height": 40
+    },
+    "说……我似乎听到了乌琪的尖叫声？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-03a3e89ee2662217.png",
+      "width": 599,
+      "height": 40
+    },
+    "维克托以兔耳阻碍战斗为理由，拒绝了该装饰。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-86571e8e7d919b9e.png",
+      "width": 760,
+      "height": 40
+    },
+    "翡图萨的常见着装。利落飒爽、方便行动，带着些": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-55be0af9ec192649.png",
+      "width": 796,
+      "height": 40
+    },
+    "许过去的印记，与你一起并肩跨进新的时代。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c63a4a691d44125d.png",
+      "width": 724,
+      "height": 40
+    },
+    "“指挥官，日安~我能邀请您一起参加接下来的茶": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-60c60c0171cea8f1.png",
+      "width": 762,
+      "height": 40
+    },
+    "会吗？今天的饮品，是我亲自采摘的玫瑰红茶哦": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6a34f7b6e31e421f.png",
+      "width": 760,
+      "height": 40
+    },
+    "她在花丛间向你伸出手，想要将你拉入那抹独属于": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e0648fcbcebfe9c1.png",
+      "width": 796,
+      "height": 40
+    },
+    "她的馥郁幽影。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bd51291fcb18d3db.png",
+      "width": 256,
+      "height": 40
+    },
+    "六分仪的常见着装。十分方便在暗处行动，务必要": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2e4ac617c4ecba83.png",
+      "width": 796,
+      "height": 40
+    },
+    "小心来自她的夜袭。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-88e29cad1709e377.png",
+      "width": 328,
+      "height": 40
+    },
+    "“阁下……这套衣装还令您满意吗？今夜虽有些": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a6f7e72c9f81d54b.png",
+      "width": 743,
+      "height": 40
+    },
+    "冷，可您的手如此温暖，可以让我牵您的手吗？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-c5d7676ed96f6a55.png",
+      "width": 777,
+      "height": 40
+    },
+    "六分仪的眼角透出一抹魅惑的笑容。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3c85f8297d635197.png",
+      "width": 580,
+      "height": 40
+    },
+    "幼熙的常见着装。青春洋溢着活力，灵巧而不失轻": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-74d5a127dd957353.png",
+      "width": 796,
+      "height": 40
+    },
+    "盈。她不拘泥于特定的风格，却执着于将生活的激": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9e2e08223e0d603d.png",
+      "width": 796,
+      "height": 40
+    },
+    "情传递给每一位观众。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0841fec8d9a611af.png",
+      "width": 364,
+      "height": 40
+    },
+    "“指挥官，接下来我要给您施加变得快乐的魔法哦": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b2c2c5500ee1d869.png",
+      "width": 777,
+      "height": 40
+    },
+    "~“": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0b08e6278c829181.png",
+      "width": 42,
+      "height": 40
+    },
+    "她的双眸之中只有你的存在，渴望着能看到你的笑": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-387f3ae5d4de2640.png",
+      "width": 796,
+      "height": 40
+    },
+    "颜。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-0c6ae944a84343c6.png",
+      "width": 76,
+      "height": 40
+    },
+    "破坏者的常见着装。漆黑的战斗服勾勒出娇小的身": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-870383c1500a7303.png",
+      "width": 796,
+      "height": 40
+    },
+    "形，宛如蛰伏于阴影的猎犬，时刻做好了撕碎猎物": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d40a4f8aee1490bf.png",
+      "width": 796,
+      "height": 40
+    },
+    "的准备。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-aa81a127899fe2ea.png",
+      "width": 148,
+      "height": 40
+    },
+    "“竟然让破坏者大人侍奉你……做好觉悟吧！": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9e130ce088b609cc.png",
+      "width": 707,
+      "height": 40
+    },
+    "等……等等，尾巴不能摸！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7c2a8663e2f691cf.png",
+      "width": 455,
+      "height": 40
+    },
+    "破坏者傲慢地昂起头，晃动的尾巴却出卖了她真实": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-8de323434798c8b8.png",
+      "width": 796,
+      "height": 40
+    },
+    "的心意。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-1179b0357dcdfebb.png",
+      "width": 148,
+      "height": 40
+    },
+    "玛绮朵在舞会上穿着的礼服。素雅的款式配上了那": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-b7441c30de3e69f6.png",
+      "width": 796,
+      "height": 40
+    },
+    "条熟悉的缎带，想必玛绮朵一定是在暗自期待那位": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-2be9ac4a294ce8ab.png",
+      "width": 796,
+      "height": 40
+    },
+    "舞伴能够尽快发现自己吧。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-12130df770c17393.png",
+      "width": 436,
+      "height": 40
+    },
+    "“什……什么一起泡啊！我都泡完了！欸……不": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9a43e91840c7be9a.png",
+      "width": 745,
+      "height": 40
+    },
+    "过，倒是也可以再泡一次。真是的，刚才怎么等你": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7cfffb7e0abe7e39.png",
+      "width": 796,
+      "height": 40
+    },
+    "都不来……”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-11f4d015e8a5ea47.png",
+      "width": 203,
+      "height": 40
+    },
+    "——刚穿好浴袍的玛绮朵，说完这句话，就体力不": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5114880e290e94d7.png",
+      "width": 796,
+      "height": 40
+    },
+    "支地倒了下去。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-32b1dbe40403fca3.png",
+      "width": 256,
+      "height": 40
+    },
+    "玛绮朵的常见着装。玛绮朵一般不打开她的琴盒—": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-cc4cf7dac01f70f8.png",
+      "width": 796,
+      "height": 40
+    },
+    "—毕竟放在盒子里的，是她最为珍惜的武器。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-6ad959e9e25e494e.png",
+      "width": 724,
+      "height": 40
+    },
+    "——“别看过来啊，笨、笨蛋。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f54ab19833add0f1.png",
+      "width": 506,
+      "height": 40
+    },
+    "只可惜，无论是声音还是表情，她都满怀期待。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5195159775c1c7c9.png",
+      "width": 760,
+      "height": 40
+    },
+    "秋桦的常见着装。如她的性情般热情似火，灵巧轻": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-bf4f394d8ad08503.png",
+      "width": 796,
+      "height": 40
+    },
+    "盈。方便架锅起灶，为绝境中的人们烹煮一锅“希": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-d9ea24608161501e.png",
+      "width": 777,
+      "height": 40
+    },
+    "望”。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-f356ae3b0b6d9275.png",
+      "width": 93,
+      "height": 40
+    },
+    "“大功告成！这可是只存在传说中的料理哦！快来": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-05cdf36171f29c9c.png",
+      "width": 777,
+      "height": 40
+    },
+    "尝尝！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-a71d40efa5c139c4.png",
+      "width": 129,
+      "height": 40
+    },
+    "她端着那盘如黄金般的炒饭向你递来，笑容一如既": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9b5dafa1ab12235c.png",
+      "width": 796,
+      "height": 40
+    },
+    "往的耀眼自信。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-5e9bb99e97eeb422.png",
+      "width": 256,
+      "height": 40
+    },
+    "“除了要注意休息外，长官还得重视饮食结构哦。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-56a8ee48d615e8fa.png",
+      "width": 777,
+      "height": 40
+    },
+    "一定要按照我安排的食谱用餐！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-9771bd6124f29980.png",
+      "width": 525,
+      "height": 40
+    },
+    "精准的营养配比与美味完美融合，这份调理身体的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-42648c9aacb6cd48.png",
+      "width": 796,
+      "height": 40
+    },
+    "药膳蕴含着秋桦对你的心意。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-7b91df3df62e54e9.png",
+      "width": 472,
+      "height": 40
+    },
+    "“长官，你的脸好红啊。咋样，这一桌饭菜和我，": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e7cd3559f950e10b.png",
+      "width": 777,
+      "height": 40
+    },
+    "哪一个更令你心动呢？”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-3f6c6a4df70868d8.png",
+      "width": 381,
+      "height": 40
+    },
+    "在一片升腾的氤氲中，兔子小姐为你揭开了色香味": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-523d903bc1ed22e2.png",
+      "width": 796,
+      "height": 40
+    },
+    "俱全的晚宴。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-official-e35a5f3f4029bb39.png",
+      "width": 220,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -6026,6 +6593,10 @@
         0.807843137254902
       ],
       "tags": "复合增益 / 负防御 / 无视防御"
+    },
+    "秋桦": {
+      "pool": "R116Qiuhua",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/qiuhua.png"
     }
   },
   "roomDefaultSkinNames": {
@@ -6185,6 +6756,10 @@
       "渺茫的旅程。希丽雅相信，变得更加成",
       "熟与坚韧的自己，一定能从混沌的局势",
       "中抓住那一线重逢的希望。"
+    ],
+    "秋桦": [
+      "热情直爽的精英人形，",
+      "喜欢钻研厨艺，也爱给同伴做饭。"
     ]
   },
   "roomWorkshopItems": {
@@ -6244,7 +6819,9 @@
     "pmx-e177f4382e37a789": 1200,
     "pmx-9de435d3627c8e6b": 1200,
     "pmx-d9972c9c00cacbc5": 840,
-    "pmx-5efe7392a2315a89": 1200
+    "pmx-5efe7392a2315a89": 1200,
+    "pmx-020f2e8bdc65bc5b": 1080,
+    "pmx-d373f73abd68a3d0": 1080
   },
   "roomStarterSkins": {
     "埃芙": "pmx-020abca186c52e7b",
@@ -6268,6 +6845,7 @@
     "六分仪": "pmx-caaf00b5aa73eb64",
     "幼熙": "pmx-2689b8bef5ca9503",
     "破坏者": "pmx-d1fc22f957060588",
-    "玛绮朵": "pmx-e524539529b6d56a"
+    "玛绮朵": "pmx-0b80022fae2dbb04",
+    "秋桦": "pmx-e4fe174c77f90d6c"
   }
 }

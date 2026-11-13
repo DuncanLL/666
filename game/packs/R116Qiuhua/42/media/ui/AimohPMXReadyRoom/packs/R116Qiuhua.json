@@ -1,0 +1,111 @@
+{
+  "models": {
+    "pmx-e4fe174c77f90d6c": {
+      "character": "秋桦",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e4fe174c77f90d6c.png",
+      "isDefault": true,
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_QiuhuaSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "character": "秋桦",
+      "skin": "秋宴龙厨",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e348ab0b30d7e83a.png",
+      "isDefault": false,
+      "included": true,
+      "officialSkin": "秋宴龙厨",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_QiuhuaSSR02.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    },
+    "pmx-020f2e8bdc65bc5b": {
+      "character": "秋桦",
+      "skin": "仁心仁术",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-020f2e8bdc65bc5b.png",
+      "isDefault": false,
+      "officialSkin": "仁心仁术",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_QiuhuaSSR01.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-d373f73abd68a3d0": {
+      "character": "秋桦",
+      "skin": "秋林烈兔",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d373f73abd68a3d0.png",
+      "isDefault": false,
+      "officialSkin": "秋林烈兔",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_QiuhuaSSR03.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

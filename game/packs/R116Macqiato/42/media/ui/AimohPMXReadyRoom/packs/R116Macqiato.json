@@ -28,7 +28,8 @@
         "眼睛",
         "源模型武器"
       ],
-      "partImages": {}
+      "partImages": {},
+      "included": true
     },
     "pmx-5efe7392a2315a89": {
       "character": "玛绮朵",
@@ -88,6 +89,67 @@
         "下衣",
         "鞋子",
         "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-0b80022fae2dbb04": {
+      "character": "玛绮朵",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-0b80022fae2dbb04.png",
+      "isDefault": true,
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_MacqiatoSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    },
+    "pmx-79e7c6a0e60e6f61": {
+      "character": "玛绮朵",
+      "skin": "花影重",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-79e7c6a0e60e6f61.png",
+      "isDefault": false,
+      "officialSkin": "花影重",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_MacqiatoSSR02.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
       ],
       "partImages": {}
     }
