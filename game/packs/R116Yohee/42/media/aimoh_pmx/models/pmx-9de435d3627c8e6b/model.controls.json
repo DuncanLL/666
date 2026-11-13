@@ -1,0 +1,548 @@
+{
+  "pmx_sha256": "9de435d3627c8e6b055d410df13a5ef03aaa9c91c3cc05b4dc2dcc2496c9971c",
+  "label": "幼熙 / 皮肤",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "eyes",
+        "label": "眼睛",
+        "default": "open",
+        "options": [
+          {
+            "id": "open",
+            "label": "睁眼",
+            "morphs": {
+              "29": 0
+            }
+          },
+          {
+            "id": "closed",
+            "label": "闭眼",
+            "morphs": {
+              "29": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              39
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              40
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              41
+            ]
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "上衣",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              14,
+              15
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              16,
+              17
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              18,
+              19
+            ]
+          }
+        ]
+      },
+      {
+        "id": "legs",
+        "label": "下衣",
+        "default": "p1",
+        "options": [
+          {
+            "id": "p1",
+            "label": "P1",
+            "materials": [
+              22,
+              25
+            ]
+          },
+          {
+            "id": "p2",
+            "label": "P2",
+            "materials": [
+              28
+            ]
+          },
+          {
+            "id": "p3",
+            "label": "P3",
+            "materials": [
+              31
+            ]
+          }
+        ]
+      },
+      {
+        "id": "footwear",
+        "label": "鞋袜",
+        "default": "shoes",
+        "options": [
+          {
+            "id": "shoes",
+            "label": "穿鞋",
+            "materials": [
+              13
+            ]
+          },
+          {
+            "id": "bare",
+            "label": "脱鞋",
+            "materials": []
+          }
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "when": {
+          "legs": "p1",
+          "footwear": "shoes"
+        },
+        "materials": [
+          23,
+          26
+        ]
+      },
+      {
+        "when": {
+          "legs": "p1",
+          "footwear": "bare"
+        },
+        "materials": [
+          24,
+          27
+        ]
+      },
+      {
+        "when": {
+          "legs": "p2",
+          "footwear": "shoes"
+        },
+        "materials": [
+          29
+        ]
+      },
+      {
+        "when": {
+          "legs": "p2",
+          "footwear": "bare"
+        },
+        "materials": [
+          30
+        ]
+      },
+      {
+        "when": {
+          "legs": "p3",
+          "footwear": "shoes"
+        },
+        "materials": [
+          32
+        ]
+      },
+      {
+        "when": {
+          "legs": "p3",
+          "footwear": "bare"
+        },
+        "materials": [
+          33
+        ]
+      }
+    ]
+  },
+  "appearance": {
+    "format": 2,
+    "texture_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "alpha_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null,
+      null,
+      null,
+      1,
+      null,
+      null,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      1,
+      null,
+      null,
+      null,
+      null
+    ],
+    "colour_overrides": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "double_sided": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "material_visibility": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "morph_weights": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "groups": [],
+    "choices": {
+      "eyes": "open",
+      "head": "p1",
+      "top": "p1",
+      "legs": "p1",
+      "footwear": "shoes"
+    }
+  }
+}

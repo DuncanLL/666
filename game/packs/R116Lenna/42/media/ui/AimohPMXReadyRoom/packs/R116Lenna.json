@@ -1,0 +1,77 @@
+{
+  "models": {
+    "pmx-f6ac57de07aff8b0": {
+      "character": "莱娜",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f6ac57de07aff8b0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LennaSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-67f783c2661ce19e": {
+      "character": "莱娜",
+      "skin": "元气魔法",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-67f783c2661ce19e.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LennaSSR05.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "goggles": {
+          "label": "护目镜",
+          "display": "护目镜",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "护目镜"
+      ],
+      "partImages": {}
+    },
+    "pmx-b8a56876e52dd98e": {
+      "character": "莱娜",
+      "skin": "秘夜猎影",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b8a56876e52dd98e.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_LennaSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

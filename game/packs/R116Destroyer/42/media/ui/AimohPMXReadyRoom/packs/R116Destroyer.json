@@ -1,0 +1,65 @@
+{
+  "models": {
+    "pmx-d1fc22f957060588": {
+      "character": "破坏者",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d1fc22f957060588.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DestroyerSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapons": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    },
+    "pmx-d9972c9c00cacbc5": {
+      "character": "破坏者",
+      "skin": "SSR0101",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d9972c9c00cacbc5.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_DestroyerSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapons": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

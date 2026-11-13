@@ -14,7 +14,9 @@
     ],
     "R116Springfield": [
       "pmx-225af1a054faefb0",
-      "pmx-62b44285b57a48e9"
+      "pmx-62b44285b57a48e9",
+      "pmx-a030b24c0272893f",
+      "pmx-cc787cf2d032366b"
     ],
     "R116Faelynn": [
       "pmx-293917f24c2bd387",
@@ -70,7 +72,38 @@
       "pmx-4cdf23692c8709a0"
     ],
     "R116Florence": [
-      "pmx-4818f3bdda4ec18d"
+      "pmx-4818f3bdda4ec18d",
+      "pmx-23b0b754d23c6fb7",
+      "pmx-b6889756cf6c0d5e"
+    ],
+    "R116Lenna": [
+      "pmx-f6ac57de07aff8b0",
+      "pmx-67f783c2661ce19e",
+      "pmx-b8a56876e52dd98e"
+    ],
+    "R116Vector": [
+      "pmx-4f5d642f97fc5a9d",
+      "pmx-ba77d8beccf4a49b",
+      "pmx-1303e831f7fc913d"
+    ],
+    "R116Phaetusa": [
+      "pmx-a3c2d1b094df6ee0",
+      "pmx-81a5c871affb4465"
+    ],
+    "R116Sextans": [
+      "pmx-caaf00b5aa73eb64",
+      "pmx-e177f4382e37a789"
+    ],
+    "R116Yohee": [
+      "pmx-2689b8bef5ca9503",
+      "pmx-9de435d3627c8e6b"
+    ],
+    "R116Destroyer": [
+      "pmx-d1fc22f957060588",
+      "pmx-d9972c9c00cacbc5"
+    ],
+    "R116Macqiato": [
+      "pmx-e524539529b6d56a"
     ]
   }
 }

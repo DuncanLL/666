@@ -13,6 +13,18 @@
       "label": "春田 / 静享芳醇",
       "model": "models/pmx-62b44285b57a48e9/model.pmx",
       "profile": "models/pmx-62b44285b57a48e9/profile.json"
+    },
+    {
+      "id": "pmx-a030b24c0272893f",
+      "label": "春田 / 原皮",
+      "model": "models/pmx-a030b24c0272893f/model.pmx",
+      "profile": "models/pmx-a030b24c0272893f/profile.json"
+    },
+    {
+      "id": "pmx-cc787cf2d032366b",
+      "label": "春田 / 灯火下的女王",
+      "model": "models/pmx-cc787cf2d032366b/model.pmx",
+      "profile": "models/pmx-cc787cf2d032366b/profile.json"
     }
   ]
 }

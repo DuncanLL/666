@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Phaetusa",
+  "models": [
+    {
+      "id": "pmx-a3c2d1b094df6ee0",
+      "label": "翡图萨 / 原皮",
+      "model": "models/pmx-a3c2d1b094df6ee0/model.pmx",
+      "profile": "models/pmx-a3c2d1b094df6ee0/profile.json"
+    },
+    {
+      "id": "pmx-81a5c871affb4465",
+      "label": "翡图萨 / 皮肤",
+      "model": "models/pmx-81a5c871affb4465/model.pmx",
+      "profile": "models/pmx-81a5c871affb4465/profile.json"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "mod": "R116Vector",
+  "models": [
+    {
+      "id": "pmx-4f5d642f97fc5a9d",
+      "label": "维克托 / 原皮",
+      "model": "models/pmx-4f5d642f97fc5a9d/model.pmx",
+      "profile": "models/pmx-4f5d642f97fc5a9d/profile.json"
+    },
+    {
+      "id": "pmx-ba77d8beccf4a49b",
+      "label": "维克托 / 校园皮",
+      "model": "models/pmx-ba77d8beccf4a49b/model.pmx",
+      "profile": "models/pmx-ba77d8beccf4a49b/profile.json"
+    },
+    {
+      "id": "pmx-1303e831f7fc913d",
+      "label": "维克托 / 新皮肤",
+      "model": "models/pmx-1303e831f7fc913d/model.pmx",
+      "profile": "models/pmx-1303e831f7fc913d/profile.json"
+    }
+  ]
+}

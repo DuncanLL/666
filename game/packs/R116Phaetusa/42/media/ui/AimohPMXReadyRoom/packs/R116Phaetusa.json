@@ -1,0 +1,47 @@
+{
+  "models": {
+    "pmx-a3c2d1b094df6ee0": {
+      "character": "翡图萨",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a3c2d1b094df6ee0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_PhaetusaSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-81a5c871affb4465": {
+      "character": "翡图萨",
+      "skin": "皮肤",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-81a5c871affb4465.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_PhaetusaSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

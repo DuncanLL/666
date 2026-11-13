@@ -1,0 +1,95 @@
+{
+  "models": {
+    "pmx-2689b8bef5ca9503": {
+      "character": "幼熙",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-2689b8bef5ca9503.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_YooHeeSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "hat": {
+          "label": "帽饰",
+          "display": "帽饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "帽饰"
+      ],
+      "partImages": {}
+    },
+    "pmx-9de435d3627c8e6b": {
+      "character": "幼熙",
+      "skin": "皮肤",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9de435d3627c8e6b.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_YooHeeSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "头饰",
+        "上衣",
+        "下衣",
+        "鞋袜"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

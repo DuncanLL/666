@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "mod": "R116Lenna",
+  "models": [
+    {
+      "id": "pmx-f6ac57de07aff8b0",
+      "label": "莱娜 / 原皮",
+      "model": "models/pmx-f6ac57de07aff8b0/model.pmx",
+      "profile": "models/pmx-f6ac57de07aff8b0/profile.json"
+    },
+    {
+      "id": "pmx-67f783c2661ce19e",
+      "label": "莱娜 / 元气魔法",
+      "model": "models/pmx-67f783c2661ce19e/model.pmx",
+      "profile": "models/pmx-67f783c2661ce19e/profile.json"
+    },
+    {
+      "id": "pmx-b8a56876e52dd98e",
+      "label": "莱娜 / 秘夜猎影",
+      "model": "models/pmx-b8a56876e52dd98e/model.pmx",
+      "profile": "models/pmx-b8a56876e52dd98e/profile.json"
+    }
+  ]
+}

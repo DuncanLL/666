@@ -1,0 +1,35 @@
+{
+  "models": {
+    "pmx-e524539529b6d56a": {
+      "character": "玛绮朵",
+      "skin": "舞会休止符",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e524539529b6d56a.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_MacqiatoSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "weapon": {
+          "label": "源模型武器",
+          "display": "源模型武器",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "源模型武器"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

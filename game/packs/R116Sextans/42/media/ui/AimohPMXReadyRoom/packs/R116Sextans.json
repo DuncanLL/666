@@ -1,0 +1,113 @@
+{
+  "models": {
+    "pmx-caaf00b5aa73eb64": {
+      "character": "六分仪",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-caaf00b5aa73eb64.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SextansSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "cape": {
+          "label": "披肩",
+          "display": "披肩",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "hat": {
+          "label": "帽饰",
+          "display": "帽饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "披肩",
+        "帽饰"
+      ],
+      "partImages": {}
+    },
+    "pmx-e177f4382e37a789": {
+      "character": "六分仪",
+      "skin": "夜莺时魅",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e177f4382e37a789.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SextansSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "top": {
+          "label": "上衣",
+          "display": "上衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "legs": {
+          "label": "下衣",
+          "display": "下衣",
+          "options": [
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "skirt": {
+          "label": "外裙",
+          "display": "外裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "头饰",
+        "上衣",
+        "下衣",
+        "鞋袜",
+        "外裙"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

@@ -463,6 +463,139 @@
       "pack": "R116Suomi",
       "officialSkin": "雪映清辉",
       "isDefault": true
+    },
+    "pmx-f6ac57de07aff8b0": {
+      "character": "莱娜",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-f6ac57de07aff8b0.png",
+      "isDefault": true,
+      "pack": "R116Lenna"
+    },
+    "pmx-67f783c2661ce19e": {
+      "character": "莱娜",
+      "skin": "元气魔法",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-67f783c2661ce19e.png",
+      "isDefault": false,
+      "pack": "R116Lenna"
+    },
+    "pmx-b8a56876e52dd98e": {
+      "character": "莱娜",
+      "skin": "秘夜猎影",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b8a56876e52dd98e.png",
+      "isDefault": false,
+      "pack": "R116Lenna"
+    },
+    "pmx-4f5d642f97fc5a9d": {
+      "character": "维克托",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-4f5d642f97fc5a9d.png",
+      "isDefault": true,
+      "pack": "R116Vector"
+    },
+    "pmx-ba77d8beccf4a49b": {
+      "character": "维克托",
+      "skin": "校园皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-ba77d8beccf4a49b.png",
+      "isDefault": false,
+      "pack": "R116Vector"
+    },
+    "pmx-1303e831f7fc913d": {
+      "character": "维克托",
+      "skin": "新皮肤",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-1303e831f7fc913d.png",
+      "isDefault": false,
+      "pack": "R116Vector"
+    },
+    "pmx-a3c2d1b094df6ee0": {
+      "character": "翡图萨",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a3c2d1b094df6ee0.png",
+      "isDefault": true,
+      "pack": "R116Phaetusa"
+    },
+    "pmx-81a5c871affb4465": {
+      "character": "翡图萨",
+      "skin": "皮肤",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-81a5c871affb4465.png",
+      "isDefault": false,
+      "pack": "R116Phaetusa"
+    },
+    "pmx-caaf00b5aa73eb64": {
+      "character": "六分仪",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-caaf00b5aa73eb64.png",
+      "isDefault": true,
+      "pack": "R116Sextans"
+    },
+    "pmx-e177f4382e37a789": {
+      "character": "六分仪",
+      "skin": "夜莺时魅",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e177f4382e37a789.png",
+      "isDefault": false,
+      "pack": "R116Sextans"
+    },
+    "pmx-2689b8bef5ca9503": {
+      "character": "幼熙",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-2689b8bef5ca9503.png",
+      "isDefault": true,
+      "pack": "R116Yohee"
+    },
+    "pmx-9de435d3627c8e6b": {
+      "character": "幼熙",
+      "skin": "皮肤",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-9de435d3627c8e6b.png",
+      "isDefault": false,
+      "pack": "R116Yohee"
+    },
+    "pmx-d1fc22f957060588": {
+      "character": "破坏者",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d1fc22f957060588.png",
+      "isDefault": true,
+      "pack": "R116Destroyer"
+    },
+    "pmx-d9972c9c00cacbc5": {
+      "character": "破坏者",
+      "skin": "SSR0101",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-d9972c9c00cacbc5.png",
+      "isDefault": false,
+      "pack": "R116Destroyer"
+    },
+    "pmx-a030b24c0272893f": {
+      "character": "春田",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a030b24c0272893f.png",
+      "isDefault": true,
+      "pack": "R116Springfield"
+    },
+    "pmx-cc787cf2d032366b": {
+      "character": "春田",
+      "skin": "灯火下的女王",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cc787cf2d032366b.png",
+      "isDefault": false,
+      "pack": "R116Springfield"
+    },
+    "pmx-23b0b754d23c6fb7": {
+      "character": "芙洛伦",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-23b0b754d23c6fb7.png",
+      "isDefault": true,
+      "pack": "R116Florence"
+    },
+    "pmx-b6889756cf6c0d5e": {
+      "character": "芙洛伦",
+      "skin": "睡衣",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6889756cf6c0d5e.png",
+      "isDefault": false,
+      "pack": "R116Florence"
+    },
+    "pmx-e524539529b6d56a": {
+      "character": "玛绮朵",
+      "skin": "舞会休止符",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-e524539529b6d56a.png",
+      "isDefault": false,
+      "pack": "R116Macqiato"
     }
   },
   "labels": {
@@ -2582,7 +2715,26 @@
     "pmx-dd77c173248cb704",
     "pmx-62b44285b57a48e9",
     "pmx-cb19e5961c38af86",
-    "pmx-4019c9450e0e318d"
+    "pmx-4019c9450e0e318d",
+    "pmx-f6ac57de07aff8b0",
+    "pmx-67f783c2661ce19e",
+    "pmx-b8a56876e52dd98e",
+    "pmx-4f5d642f97fc5a9d",
+    "pmx-ba77d8beccf4a49b",
+    "pmx-1303e831f7fc913d",
+    "pmx-a3c2d1b094df6ee0",
+    "pmx-81a5c871affb4465",
+    "pmx-caaf00b5aa73eb64",
+    "pmx-e177f4382e37a789",
+    "pmx-2689b8bef5ca9503",
+    "pmx-9de435d3627c8e6b",
+    "pmx-d1fc22f957060588",
+    "pmx-d9972c9c00cacbc5",
+    "pmx-a030b24c0272893f",
+    "pmx-cc787cf2d032366b",
+    "pmx-23b0b754d23c6fb7",
+    "pmx-b6889756cf6c0d5e",
+    "pmx-e524539529b6d56a"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [

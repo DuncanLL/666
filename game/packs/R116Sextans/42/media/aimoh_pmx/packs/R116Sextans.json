@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Sextans",
+  "models": [
+    {
+      "id": "pmx-caaf00b5aa73eb64",
+      "label": "六分仪 / 原皮",
+      "model": "models/pmx-caaf00b5aa73eb64/model.pmx",
+      "profile": "models/pmx-caaf00b5aa73eb64/profile.json"
+    },
+    {
+      "id": "pmx-e177f4382e37a789",
+      "label": "六分仪 / 夜莺时魅",
+      "model": "models/pmx-e177f4382e37a789/model.pmx",
+      "profile": "models/pmx-e177f4382e37a789/profile.json"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "R116Macqiato",
+  "models": [
+    {
+      "id": "pmx-e524539529b6d56a",
+      "label": "玛绮朵 / 舞会休止符",
+      "model": "models/pmx-e524539529b6d56a/model.pmx",
+      "profile": "models/pmx-e524539529b6d56a/profile.json"
+    }
+  ]
+}

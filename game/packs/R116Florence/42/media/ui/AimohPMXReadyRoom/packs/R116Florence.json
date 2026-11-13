@@ -90,6 +90,48 @@
         }
       },
       "isDefault": false
+    },
+    "pmx-23b0b754d23c6fb7": {
+      "character": "芙洛伦",
+      "skin": "原皮",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-23b0b754d23c6fb7.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FlorenceSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-b6889756cf6c0d5e": {
+      "character": "芙洛伦",
+      "skin": "睡衣",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-b6889756cf6c0d5e.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_FlorenceSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
     }
   },
   "labels": {}

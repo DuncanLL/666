@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "R116Destroyer",
+  "models": [
+    {
+      "id": "pmx-d1fc22f957060588",
+      "label": "破坏者 / 原皮",
+      "model": "models/pmx-d1fc22f957060588/model.pmx",
+      "profile": "models/pmx-d1fc22f957060588/profile.json"
+    },
+    {
+      "id": "pmx-d9972c9c00cacbc5",
+      "label": "破坏者 / SSR0101",
+      "model": "models/pmx-d9972c9c00cacbc5/model.pmx",
+      "profile": "models/pmx-d9972c9c00cacbc5/profile.json"
+    }
+  ]
+}
