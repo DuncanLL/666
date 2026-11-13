@@ -144,7 +144,11 @@
     "RoomOutfitProcurement": "新装采购",
     "RoomOutfitAcquired": "衣装已获得",
     "RoomOutfitPity": "本池保底剩余",
-    "RoomOutfitDrawShort": "新装许可不足"
+    "RoomOutfitDrawShort": "新装许可不足",
+    "RoomWorkshopOpen": "前往角色工坊",
+    "RoomWorkshopConfirm": "打开角色模组页面？",
+    "RoomWorkshopDestination": "Steam 创意工坊",
+    "RoomWorkshopAccept": "确定打开"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
@@ -5478,6 +5482,26 @@
       "path": "media/ui/AimohPMXReadyRoom/label-official-e09f3267d3c49184.png",
       "width": 148,
       "height": 40
+    },
+    "前往角色工坊": {
+      "path": "media/ui/AimohPMXReadyRoom/label-workshop-8fd18855787c75.png",
+      "width": 220,
+      "height": 40
+    },
+    "打开角色模组页面？": {
+      "path": "media/ui/AimohPMXReadyRoom/label-workshop-a1a5b6fb6fb82a.png",
+      "width": 328,
+      "height": 40
+    },
+    "Steam 创意工坊": {
+      "path": "media/ui/AimohPMXReadyRoom/label-workshop-51df4b28c958ae.png",
+      "width": 267,
+      "height": 40
+    },
+    "确定打开": {
+      "path": "media/ui/AimohPMXReadyRoom/label-workshop-ac3fe59c218acb.png",
+      "width": 148,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -5913,5 +5937,22 @@
       "熟与坚韧的自己，一定能从混沌的局势",
       "中抓住那一线重逢的希望。"
     ]
+  },
+  "roomWorkshopItems": {
+    "莱娅": "3838710183",
+    "夏安": "3838710368",
+    "阿斯缇亚": "3838710555",
+    "克莱妲": "3838710666",
+    "妮基塔": "3838710868",
+    "芙洛伦": "3838711148",
+    "埃芙": "3837425337",
+    "希丽雅": "3838711420",
+    "桑朵莱希": "3838711556",
+    "黛烟": "3838711736",
+    "芙铃": "3838711981",
+    "可露凯": "3838712165",
+    "OTs-14": "3838712515",
+    "春田": "3838712707",
+    "索米": "3838712796"
   }
 }

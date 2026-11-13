@@ -5534,6 +5534,22 @@
     "42/poster.png": {
       "bytes": 14345,
       "sha256": "934b0c8c3f2d4cdb3fa827fcbee011fa2908473c96a023f6bd234fe6a3defc49"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-workshop-8fd18855787c75.png": {
+      "bytes": 2838,
+      "sha256": "4c1b39ab430d8ec2fcbcf18a97da3ef069f4a74fb813b9895544ee1333b19885"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-workshop-a1a5b6fb6fb82a.png": {
+      "bytes": 4161,
+      "sha256": "927b6b10f652e9b83bc8d9a83c84413f7d757c3b7405e7ffe663761618385574"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-workshop-51df4b28c958ae.png": {
+      "bytes": 3719,
+      "sha256": "43de0f18d4c2c1f7a1945e7efbd27ff8d9fc869b57553caa73aa7600a2e83d90"
+    },
+    "42/media/ui/AimohPMXReadyRoom/label-workshop-ac3fe59c218acb.png": {
+      "bytes": 1981,
+      "sha256": "786b61e87f2a75881f47a5509fa186dbfebc25ab7dc5ba299115107f8d8266ca"
     }
   },
   "scope": "External character assets; resource bytes remain outside Git.",

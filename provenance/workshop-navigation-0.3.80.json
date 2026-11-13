@@ -1,0 +1,38 @@
+{
+  "version": "0.3.80",
+  "core_workshop_id": "3838709437",
+  "characters": {
+    "莱娅": "3838710183",
+    "夏安": "3838710368",
+    "阿斯缇亚": "3838710555",
+    "克莱妲": "3838710666",
+    "妮基塔": "3838710868",
+    "芙洛伦": "3838711148",
+    "埃芙": "3837425337",
+    "希丽雅": "3838711420",
+    "桑朵莱希": "3838711556",
+    "黛烟": "3838711736",
+    "芙铃": "3838711981",
+    "可露凯": "3838712165",
+    "OTs-14": "3838712515",
+    "春田": "3838712707",
+    "索米": "3838712796"
+  },
+  "game_ui_check": {
+    "status": "PASS all 15 missing modules: first click, cancel, back, confirmed browser/overlay destination, stale clicks, modal hit blocking; loaded modules hide action",
+    "roles": 15,
+    "game_started": false,
+    "actual_browser_opened": false
+  },
+  "steam_gallery": {
+    "rows": 3,
+    "columns": 5,
+    "linked_portraits": 15,
+    "server_html_verified": true
+  },
+  "upload": {
+    "id": 3838709437,
+    "result": 1,
+    "legal_required": false
+  }
+}

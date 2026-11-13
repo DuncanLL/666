@@ -279,6 +279,8 @@ function W:createChildren()
         end
     end
     self.preview.onMouseDown=function(p)
+        local character=p.parent.byCharacter and p.parent.byCharacter[p.parent.character]
+        if character and character.locked then return true end
         p.dragging=true;p.parent.cameraTransition=nil;p:setCapture(true);return true
     end
     self.preview.onMouseMove=function(p,dx,dy)
@@ -298,6 +300,9 @@ function W:createChildren()
         return true
     end
     self:addChild(self.preview)
+    self.workshopButton=button(self.preview,0,0,256,tr("RoomWorkshopOpen"),self,function(w)w:requestWorkshopPage()end)
+    self.workshopButton:setHeight(43);self.workshopButton.roomLook="primary"
+    self.workshopButton:setVisible(false)
     self.railWidth=115;self.gridWidth=math.min(365,math.floor(self.width*.255))
     self.rightWidth=math.max(270,math.floor(self.width*.30));self.rightX=self.width-self.rightWidth-16
     self.overviewX=math.floor(self.width*.77);self.overviewWidth=math.floor(self.width*.193)
@@ -520,6 +525,49 @@ function W:closeExchange()
     self.exchange=nil
     exchange.slider.dragInside=false;exchange.slider:setCapture(false)
     self:removeChild(exchange.overlay)
+end
+
+function W:closeWorkshopPrompt()
+    local prompt=self.workshopPrompt
+    if not prompt then return end
+    self.workshopPrompt=nil
+    self:removeChild(prompt.overlay)
+end
+
+function W:requestWorkshopPage()
+    local character=self.byCharacter and self.byCharacter[self.character]
+    if self.closed or self.folded or self.foldStart or self.exchange or self.workshopPrompt
+        or self.roomPage~="appearance" or self.tab~="overview" or not character or not character.locked then return end
+    local id=(data.roomWorkshopItems or {})[character.name]
+    if type(id)~="string" or not id:match("^%d+$") then return end
+    local name=character.name
+    self.preview.dragging=false;self.preview:setCapture(false)
+    local overlay=ISPanel:new(0,0,self.width,self.height)
+    overlay:initialise();overlay.background=false
+    overlay.prerender=function(p)p:drawRect(0,0,p.width,p.height,.72,.04,.07,.08)end
+    overlay.onMouseDown=function()return true end
+    overlay.onMouseUp=overlay.onMouseDown;overlay.onMouseWheel=overlay.onMouseDown
+    local width=math.min(560,self.width-80)
+    local card=ISPanel:new(math.floor((self.width-width)/2),math.floor((self.height-240)/2),width,240)
+    card:initialise();card.background=false;overlay:addChild(card)
+    card.prerender=function(p)
+        surface(p,0,0,p.width,p.height,.98)
+        label(p,tr("RoomWorkshopConfirm"),p.width/2,28,26,p.width-48,.96,.96,.94,1,true)
+        label(p,name,p.width/2,91,31,p.width-48,.95,.81,.51,1,true)
+        label(p,tr("RoomWorkshopDestination"),p.width/2,137,16,p.width-48,.80,.85,.86,1,true)
+    end
+    local prompt={overlay=overlay,card=card,id=id,name=name}
+    local buttonWidth=math.floor((width-72)/2)
+    prompt.cancel=button(card,24,184,buttonWidth,tr("RoomExchangeCancel"),self,function(w)w:closeWorkshopPrompt()end)
+    prompt.confirm=button(card,48+buttonWidth,184,buttonWidth,tr("RoomWorkshopAccept"),self,function(w)
+        if w.workshopPrompt~=prompt then return end
+        w:closeWorkshopPrompt()
+        if isSteamOverlayEnabled() then activateSteamOverlayToWorkshopItem(id)
+        else openUrl("https://steamcommunity.com/sharedfiles/filedetails/?id="..id) end
+    end)
+    prompt.cancel:setHeight(36);prompt.confirm:setHeight(36);prompt.confirm.roomLook="primary"
+    self.workshopPrompt=prompt
+    self:addChild(overlay)
 end
 
 function W:updateExchange(quantity)
@@ -911,7 +959,7 @@ function W:roomVisibility()
     end
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -922,6 +970,7 @@ function W:roomVisibility()
 end
 
 function W:back()
+    if self.workshopPrompt then self:closeWorkshopPrompt();return end
     if self.exchange then self:closeExchange();return end
     if self.drawAnimation then return end
     if self.folded or self.foldStart then self:close()
@@ -934,6 +983,7 @@ end
 
 function W:setRoomPage(page)
     if self.roomPage==page or self.folded or self.foldStart then return end
+    self:closeWorkshopPrompt()
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
     self.pageFade=getTimestampMs()
@@ -947,6 +997,7 @@ end
 
 function W:toggleRoomFold()
     if self.drawAnimation then return end
+    self:closeWorkshopPrompt()
     self:closeExchange()
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
@@ -970,6 +1021,9 @@ function W:layoutOverview()
     local loaded=character~=nil and not character.locked
     local locked=loaded and character.unlockRequired==true
     local available=loaded and not locked
+    self.workshopButton:setX(math.floor((self.preview.width-self.workshopButton.width)/2))
+    self.workshopButton:setY(math.floor(self.preview.height*.47)+76)
+    self.workshopButton:setVisible(not not (overview and character and character.locked))
     local outfitDraw=available and self.tab=="outfitDraw" and self.browsed and self.browsed.outfitLocked
         and self.browsed.outfitPool~=nil
     local characterDraw=overview and locked
@@ -1260,6 +1314,7 @@ function W:applyBrowse()
     end
 end
 function W:refresh()
+    self:closeWorkshopPrompt()
     economy.resetTestDraws(self.player,data.roomOutfitPools or {})
     self.currentId=AimohPMXPreview.modelId(self.player);self.currentLabel=tr("Choose");self.selected=nil
     self.characters={};self.byCharacter={}
@@ -1325,6 +1380,7 @@ function W:refresh()
     self:refreshControls()
 end
 function W:setTab(tab)
+    if self.tab~=tab then self:closeWorkshopPrompt() end
     if tab=="overview" and self.tab=="skins" and self.browsed and self.browsed.outfitLocked
         and self.browsed.id~=self.currentId then
         local character=self.byCharacter[self.character]
@@ -1545,6 +1601,7 @@ end
 function W:onCharacter(character)
     if self.waiting or self.drawAnimation or not character then return end
     if self.character~=character.name then
+        self:closeWorkshopPrompt()
         roomSound("Select")
         self.character=character.name
         self.drawNotice=nil
@@ -1769,6 +1826,7 @@ end
 function W:close()
     if self.closed then return end
     self.closed=true
+    self:closeWorkshopPrompt()
     self:closeExchange()
     if W.instances[self.playerIndex]==self then W.instances[self.playerIndex]=nil end
     self:setVisible(false)
