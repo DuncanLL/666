@@ -16,6 +16,7 @@ import zipfile
 from build import compile_java
 from build_render_support import check_glsl_names, write
 from build_eclipse_support import GF2_MANIFEST, RETIRED_ENTRIES
+from check_release_leaks import audit, read_references
 from common import BUILD, ROOT, environment, save, settings, sha
 
 
@@ -409,7 +410,7 @@ def protect_eclipse_calibration(class_bytes, loader, fragments, private, config)
     return patched
 
 
-def package(output, proguard, metadata, seed_from=None):
+def package(output, proguard, metadata, seed_from=None, leak_references=(), shared_references=()):
     config = settings()
     rules_file = ROOT / 'render-support/release-protection.json'
     rules = json.loads(rules_file.read_text('utf8'))
@@ -486,6 +487,11 @@ def package(output, proguard, metadata, seed_from=None):
             assert result.testzip() is None and all(result.read(name) == source.read(name) for name in unchanged)
     assert all(sha(path) == value for path, value in inputs.items())
     save(private / 'GLSL-MAPPING.json', shader_mapping)
+    if leak_references:
+        leak_report = audit([project], read_references(leak_references), read_references(shared_references))
+        save(private / 'release-leak-check.json', leak_report)
+        if leak_report['status'] != 'PASS':
+            raise ValueError(f'Release leak check failed. See {private / "release-leak-check.json"}')
     save(output / 'protection-report.json', dict(status='PROTECTED_REVIEW_BUILD', version=report['version'],
          input_jar_sha256=inputs[raw], jar_sha256=sha(jar), host_sha256=inputs[host], source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, encoding='utf8').strip(),
          protection_rules_sha256=sha(rules_file), protection_script_sha256=sha(Path(__file__)),
@@ -505,5 +511,10 @@ if __name__ == '__main__':
     parser.add_argument('--metadata-from', type=Path, required=True)
     parser.add_argument('--output', type=Path, default=BUILD / 'protected-render-review')
     parser.add_argument('--seed-from', type=Path, help='Private seed for reproducing an exact prior build')
+    parser.add_argument('--leak-reference', action='append', type=Path, default=[], help='Private shader text file, directory or ZIP for leak checking')
+    parser.add_argument('--shared-reference', action='append', type=Path, default=[], help='Reviewed shared GLSL interfaces, for use with --leak-reference')
     args = parser.parse_args()
-    package(args.output, args.proguard_zip.resolve(strict=True), args.metadata_from.resolve(strict=True), args.seed_from)
+    if args.shared_reference and not args.leak_reference:
+        parser.error('--shared-reference requires --leak-reference')
+    package(args.output, args.proguard_zip.resolve(strict=True), args.metadata_from.resolve(strict=True), args.seed_from,
+            args.leak_reference, args.shared_reference)

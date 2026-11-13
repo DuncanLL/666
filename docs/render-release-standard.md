@@ -21,6 +21,14 @@
 
 ## 工具入口
 
+封装发布前可用 `tools/check_release_leaks.py` 同时检查最终工坊目录和空用户目录首次安装后的两套光影。用 `--reference` 指向私有着色源码，用 `--shared` 提供已核对的共用接口片段。报告只记录命中路径和参考指纹，写在被扫描目录之外。检测比较连续的 40 个 GLSL 词元，忽略注释和空白，并扫描 Java 常量池的文本。它的覆盖范围由参考资料决定。
+
+```powershell
+python tools/check_release_leaks.py "<工坊目录>" "<首次安装的光影目录>" --reference "<私有着色参考>" --shared "<已核对的共享接口>" --out "<包外报告.json>"
+```
+
+封装构建也可以向 `tools/protect_render_release.py` 传 `--leak-reference` 和 `--shared-reference`。有命中时该次构建报错，报告留在构建的 `private/`。
+
 普通构建、组件启动和候选目录保持原入口。`check_render_support.py`只代表启动/资源发现，其报告明确标注不能据此认定跨显卡兼容。
 
 Eclipse 启动检查还会用官方 Iris 配置器核对 PZ 材质映射、体积纹理和计算阶段。关闭 LPV 时，不分配体积光照纹理，不启动空的 LPV 计算程序。PZ 水面交互仍可使用自己的小型遮罩。开启 LPV 时，保留计算程序和 16 位体素遮罩。
