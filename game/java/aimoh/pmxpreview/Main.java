@@ -77,24 +77,26 @@ public class Main {
         Path d=locate(),root=d.resolve("media/aimoh_pmx").normalize();
         JSONObject registry=new JSONObject(Files.readString(root.resolve("registry.json")));
         ArrayList<Entry> loaded=new ArrayList<>();HashSet<String> hidden=new HashSet<>();
-        readEntries(root,registry.getJSONArray("models"),loaded,hidden);
+        readEntries(root,registry.getJSONArray("models"),loaded,hidden,null);
         ArrayList<CharacterPack> packs=new ArrayList<>();
         JSONObject declared=registry.optJSONObject("packs");
         if(declared!=null)for(String mod:declared.keySet().stream().sorted().toList()){
             if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(mod))continue;
             try {
-                Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(mod)).toAbsolutePath().normalize();
-                Path media=modRoot.resolve("media");
-                String relative="aimoh_pmx/packs/"+mod+".json";
-                if(!Files.isRegularFile(media.resolve(relative)))media=modRoot.resolve("42/media");
-                Path file=asset(media,relative);
+                String relative="media/aimoh_pmx/packs/"+mod+".json";
+                String activeFile=ZomboidFileSystem.instance.getAbsolutePath(relative);
+                if(activeFile==null)throw new IllegalArgumentException("Active mod is missing "+relative);
+                Path file=Path.of(activeFile).toAbsolutePath().normalize();
+                Path media=file.getParent().getParent().getParent();
                 JSONObject pack=new JSONObject(Files.readString(file));
                 if(pack.getInt("format")!=1||!mod.equals(pack.getString("mod")))throw new IllegalArgumentException("Invalid pack identity");
                 ArrayList<Entry> added=new ArrayList<>();HashSet<String> packHidden=new HashSet<>();
-                readEntries(media.resolve("aimoh_pmx"),pack.getJSONArray("models"),added,packHidden);
+                var expected=new HashSet<>(declared.getJSONArray(mod).toList());
+                readEntries(media.resolve("aimoh_pmx"),pack.getJSONArray("models"),added,packHidden,expected);
                 var ids=added.stream().map(Entry::id).toList();
-                if(ids.isEmpty()||!new HashSet<>(declared.getJSONArray(mod).toList()).equals(new HashSet<>(ids)))
-                    throw new IllegalArgumentException("Unexpected character pack models");
+                if(ids.isEmpty())throw new IllegalArgumentException("No models match the framework registry");
+                if(ids.size()!=expected.size())
+                    System.err.println("[AimohPMXPreview] Character pack "+mod+": registered "+ids.size()+" of "+expected.size()+" expected models");
                 if(loaded.stream().anyMatch(entry->ids.contains(entry.id())))throw new IllegalArgumentException("Duplicate model ID");
                 loaded.addAll(added);hidden.addAll(packHidden);packs.add(new CharacterPack(mod,media));
             }catch(Exception e){System.err.println("[AimohPMXPreview] Character pack "+mod+": "+e);}
@@ -106,9 +108,10 @@ public class Main {
         configure();
         return enabledPacks;
     }
-    private static void readEntries(Path root,JSONArray models,ArrayList<Entry> loaded,HashSet<String> hidden) throws Exception {
+    private static void readEntries(Path root,JSONArray models,ArrayList<Entry> loaded,HashSet<String> hidden,HashSet<Object> expected) throws Exception {
         for (int i=0;i<models.length();i++) {
             JSONObject j=models.getJSONObject(i);
+            if(expected!=null&&!expected.contains(j.optString("id")))continue;
             Path profile=asset(root,j.getString("profile"));
             String id=j.optString("id","pmx-"+new JSONObject(Files.readString(profile)).getString("pmx_sha256").substring(0,16));
             if(loaded.stream().anyMatch(entry->entry.id().equals(id)))throw new IllegalArgumentException("Duplicate model ID");
@@ -356,6 +359,7 @@ public class Main {
     public static synchronized void clear() {
         for(ModelSession session:preparing.values())session.retire();preparing.clear();
         for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();switchFailures.clear();refreshPoseOwners();
+        directory=null;entries.clear();hiddenEntries.clear();enabledPacks=List.of();
     }
     static void error(Throwable e) {
         lastError=e.toString();System.err.println("[AimohPMXPreview] "+lastError);e.printStackTrace();

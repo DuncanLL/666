@@ -1,0 +1,85 @@
+{
+  "version": "0.3.90",
+  "steam": [
+    {
+      "id": 3838709437,
+      "title": "少前2追放角色框架",
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "uploaded": true
+    },
+    {
+      "id": 3838770244,
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "dependencies": [
+        3619862853
+      ],
+      "uploaded": true
+    },
+    {
+      "id": 3838711148,
+      "title": "芙洛伦",
+      "dependencies": [
+        3838709437
+      ],
+      "uploaded": true
+    },
+    {
+      "id": 3838763611,
+      "title": "维克托",
+      "dependencies": [
+        3838709437
+      ],
+      "uploaded": true
+    },
+    {
+      "id": 3838763788,
+      "title": "幼熙",
+      "dependencies": [
+        3838709437
+      ],
+      "uploaded": true
+    },
+    {
+      "id": 3838762173,
+      "title": "破坏者",
+      "dependencies": [
+        3838709437
+      ],
+      "uploaded": true
+    }
+  ],
+  "tested": [
+    {
+      "status": "PASS",
+      "variant": "stable",
+      "installed_packs": 22,
+      "registered_models": 60,
+      "cold_disabled": 0,
+      "stale_mod_directory": "active game file resolution",
+      "older_pack_partial_match": true,
+      "world_switch": true,
+      "game_started": false,
+      "jar_sha256": "aaef87f8399ff6b7916b14d653f10f12c47343b0d049efd97e9224892c9f75ea"
+    },
+    {
+      "status": "PASS",
+      "variant": "rc4",
+      "installed_packs": 22,
+      "registered_models": 60,
+      "cold_disabled": 0,
+      "stale_mod_directory": "active game file resolution",
+      "older_pack_partial_match": true,
+      "world_switch": true,
+      "game_started": false,
+      "jar_sha256": "a606c8f75c3896dbc58de76d006f07e15aa698a314ab9e396073ae65bc268463"
+    }
+  ],
+  "roster_portraits": 22,
+  "outfit_descriptions": 59,
+  "changed_outfit_names": 5,
+  "model_ids_preserved": true,
+  "gameplay_tested": false
+}

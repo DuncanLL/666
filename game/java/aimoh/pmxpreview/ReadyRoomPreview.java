@@ -248,7 +248,8 @@ public class ReadyRoomPreview {
                 JSONObject extra=new JSONObject(Files.readString(file)),packModels=extra.getJSONObject("models");
                 for(String id:packModels.keySet()){
                     JSONObject card=models.optJSONObject(id);
-                    if(card!=null&&pack.id().equals(card.optString("pack")))models.put(id,packModels.getJSONObject(id));
+                    if(card!=null&&pack.id().equals(card.optString("pack")))
+                        models.put(id,packModels.getJSONObject(id).put("pack",pack.id()));
                 }
                 JSONObject packLabels=extra.getJSONObject("labels");
                 for(String key:packLabels.keySet())if(!labels.has(key))labels.put(key,packLabels.getJSONObject(key));

@@ -30,7 +30,8 @@ def table(value):
  if isinstance(value,(int,float)):return J('java.lang.Double')(value)
  return value
 def load(path):
- result=thread.pcall(compiler.loadstring(path.read_text('utf-8-sig'),path.name,env),jpype.JArray(J('java.lang.Object'))(0))
+ reader=J('java.io.StringReader')(path.read_text('utf-8-sig'))
+ result=thread.pcall(compiler.loadis(reader,path.name,env),jpype.JArray(J('java.lang.Object'))(0))
  if not result[0]:raise AssertionError([str(v)for v in result])
  return result[1]if len(result)>1 else None
 try:

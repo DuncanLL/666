@@ -443,7 +443,7 @@ local drawStep,missLife,hitLife=215,720,1150
 
 function W:requestCharacterDraw(count)
     local character=self.byCharacter[self.character]
-    local card=character and data.roomRecruitment[character.name]
+    local card=character and character.recruitment
     if self.drawAnimation or self.exchange or not card or character.locked
         or not character.unlockRequired or self.tab~="overview" then return end
     local misses=economy.characterMisses(self.player)
@@ -1036,8 +1036,7 @@ function W:layoutOverview()
     for _,b in ipairs(self.drawButtons)do
         b.roomOutfitDraw=outfitDraw
         b:setVisible(not not (characterDraw or outfitDraw))
-        b:setEnable(not self.drawAnimation and not not (outfitDraw
-            or (characterDraw and data.roomRecruitment[character.name]~=nil)))
+        b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
     local controls={self.chestButton,self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton}
@@ -1118,7 +1117,7 @@ function W:drawCharacter(y,item,alt)
             local x=4+(i-1)*cell
             local size=cell-7
             local selected=window.character==entry.name
-            local texture=image(entry.portrait)
+            local texture=image(entry.portrait and entry.portrait:gsub("/round%-","/grid-")) or image(entry.portrait)
             self:drawRect(x,y+3,size,size,.96,.76,.76,.79)
             if texture then self:drawTextureScaled(texture,x,y+3,size,size,1,1,1,1) end
             self:drawRect(x,y+size+2,size,18,.96,.110,.149,.169)
@@ -1333,11 +1332,10 @@ function W:refresh()
     local function add(id,index,meta)
         local character=self.byCharacter[meta.character]
         if not character then
-            local card=data.roomRecruitment[meta.character]
-            local locked=card~=nil and not data.roomDefaultUnlocked[card.pool]
-                and not economy.characterUnlocked(self.player,card.pool)
+            local card=data.roomRecruitment[meta.character] or (meta.pack and {pool=meta.pack})
+            local locked=card~=nil and not economy.characterUnlocked(self.player,card.pool)
             if self.drawAnimation and self.drawAnimation.character==meta.character then locked=true end
-            character={name=meta.character,portrait=meta.portrait,skins={},locked=true,unlockRequired=not not locked}
+            character={name=meta.character,portrait=meta.portrait,skins={},locked=true,unlockRequired=not not locked,recruitment=card}
             self.byCharacter[meta.character]=character;table.insert(self.characters,character)
         end
         if index==nil then return end
@@ -1418,12 +1416,23 @@ function W:partRows(extrasOnly)
             for group=0,groups-1 do
                 local name=AimohPMXPreview.groupLabel(self.player,group)
                 local normalized=data.categories[name] or name
-                local row={index=group,label=normalized}
-                if primary[normalized] then categories[normalized]=row else table.insert(extra,row) end
+                local blink=false
+                for option=0,AimohPMXPreview.optionCount(self.player,group)-1 do
+                    local optionLabel=AimohPMXPreview.optionLabel(self.player,group,option)
+                    if optionLabel==tr("EyeOpen") or optionLabel==tr("EyeClosed") then blink=true;break end
+                end
+                if not blink then
+                    local row={index=group,label=normalized}
+                    if primary[normalized] then categories[normalized]=row else table.insert(extra,row) end
+                else
+                    primary[normalized]=nil
+                end
             end
             local ordered={}
             if extrasOnly then ordered=extra else
-                for _,name in ipairs(names)do table.insert(ordered,categories[name] or {label=name})end
+                for _,name in ipairs(names)do
+                    if primary[name] then table.insert(ordered,categories[name] or {label=name}) end
+                end
             end
             return ordered
 end
@@ -1600,7 +1609,8 @@ function W:refreshControls(keepScroll)
     self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw")
 end
 function W:selectSkin(entry)
-    if self.waiting or entry.outfitLocked or self.currentId==entry.id then return false end
+    local character=self.byCharacter[self.character]
+    if not character or character.unlockRequired or self.waiting or entry.outfitLocked or self.currentId==entry.id then return false end
     if self.actions.enable(self.player,entry.index)then
         self.toolNotice=nil;self.waiting=true;self.yaw=0;self:refresh()
         return true
@@ -1784,28 +1794,30 @@ function W:prerender()
     end
 end
 function W:drawLockedCharacterInfo(character)
-    local card=data.roomRecruitment and data.roomRecruitment[character.name]
+    local card=character.recruitment
     if not card then return end
     local x=math.max(math.floor(self.width*.122),self.sidebar.x+self.sidebar.width+24)
     local biography=(data.roomCharacterDescriptions or {})[character.name]
     local width=math.floor(self.width*.164)
-    local bannerHeight=math.floor(width/2)
-    local blockHeight=bannerHeight+105+#(biography or {})*18
-    local y=math.min(math.floor(self.height*.65),self.height-42-blockHeight)
     local banner=image(card.banner)
+    local bannerHeight=banner and math.floor(width/2) or 0
+    local headerHeight=card.element and 105 or 45
+    local blockHeight=bannerHeight+headerHeight+#(biography or {})*18
+    local y=math.min(math.floor(self.height*.65),self.height-42-blockHeight)
     if banner then
         frosted(self,self,x,y,width,bannerHeight,.80)
         self:drawTextureScaled(banner,x,y,width,bannerHeight,1,1,1,1)
         self:drawRectBorder(x,y,width,bannerHeight,.52,.63,.70,.70)
     end
-    local tag=card.element
-    surface(self,x,y+bannerHeight+8,width,28,.70)
-    label(self,tag,x+8,y+bannerHeight+14,17,width-16,card.color[1],card.color[2],card.color[3])
-    label(self,character.name,x,y+bannerHeight+43,30,width,.96,.96,.96)
+    if card.element then
+        surface(self,x,y+bannerHeight+8,width,28,.70)
+        label(self,card.element,x+8,y+bannerHeight+14,17,width-16,card.color[1],card.color[2],card.color[3])
+    end
+    label(self,character.name,x,y+bannerHeight+(card.element and 43 or 0),30,width,.96,.96,.96)
     if card.tags and card.tags~="" then
         label(self,card.tags,x,y+bannerHeight+81,16,width,.89,.92,.92)
     end
-    description(self,biography,x,y+bannerHeight+105,width)
+    description(self,biography,x,y+bannerHeight+headerHeight,width)
     local misses=self.drawAnimation and self.drawAnimation.misses or economy.characterMisses(self.player)
     self:drawPity("RoomSharedPity",economy.characterGuarantee-misses)
 end

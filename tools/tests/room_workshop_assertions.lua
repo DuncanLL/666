@@ -44,8 +44,46 @@ for _,c in ipairs(w.characters)do
  assert(not c.locked)
  w:onCharacter(c)
  assert(not w.workshopButton.visible,"loaded character shows missing-MOD action")
+ assert(c.unlockRequired and c.recruitment and w.drawButtons[1].visible and w.drawButtons[1].enable,
+  c.name.." must start locked and have a working recruitment button")
+ assert(not w:selectSkin(c.baseSkin),c.name.." can be equipped before recruitment")
  w:requestWorkshopPage()
  assert(not w.workshopPrompt)
 end
+local newcomer
+for _,c in ipairs(w.characters)do
+ if not roomData.roomRecruitment[c.name] then newcomer=c;break end
+end
+assert(newcomer and newcomer.recruitment.pool==newcomer.baseSkin.meta.pack)
+w:onCharacter(newcomer)
+actor:getModData().R116ReadyRoomWallet.targeted=1
+function ZombRand()return 0 end
+w:requestCharacterDraw(1)
+assert(w.drawAnimation.won and economy.characterUnlocked(actor,newcomer.recruitment.pool))
+w.drawAnimation=nil
+w:refresh()
+assert(not w.byCharacter[newcomer.name].unlockRequired)
+for _,c in ipairs(w.characters)do
+ if c.name~=newcomer.name then assert(c.unlockRequired) end
+end
+local groupCount,groupLabel,optionCount,optionLabel=AimohPMXPreview.groupCount,AimohPMXPreview.groupLabel,
+ AimohPMXPreview.optionCount,AimohPMXPreview.optionLabel
+AimohPMXPreview.groupCount=function()return 3 end
+AimohPMXPreview.groupLabel=function(_,i)return ({"眼睛",roomData.text.Head,"配饰"})[i+1]end
+AimohPMXPreview.optionCount=function()return 2 end
+AimohPMXPreview.optionLabel=function(_,group,option)
+ if group==0 then return ({roomData.text.EyeOpen,roomData.text.EyeClosed})[option+1] end
+ return "选项"
+end
+local main=w:partRows(false)
+local extra=w:partRows(true)
+local visible={}
+for _,rows in ipairs({main,extra})do
+ for _,row in ipairs(rows)do if row.index then visible[row.index]=true end end
+end
+assert(not visible[0] and visible[1] and visible[2],
+ tostring(visible[0])..","..tostring(visible[1])..","..tostring(visible[2]))
+AimohPMXPreview.groupCount,AimohPMXPreview.groupLabel,AimohPMXPreview.optionCount,AimohPMXPreview.optionLabel=
+ groupCount,groupLabel,optionCount,optionLabel
 w:close()
-return "PASS all missing modules: first click, cancel, back, confirmed browser/overlay destination, stale clicks, modal hit blocking; loaded modules hide action"
+return "PASS Workshop links, fresh locks, recruitment, locked equip guard and accessory filtering"
