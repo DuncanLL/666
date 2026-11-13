@@ -24,15 +24,25 @@ public final class WireUnifiedCharacter {
         }
         ClassWriter writer = new ClassWriter(reader, 0);
         int[] returns = {0};
+        int[] existingHooks = {0};
         reader.accept(new ClassVisitor(Opcodes.ASM9, writer) {
             @Override public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] errors) {
                 MethodVisitor base = super.visitMethod(access, name, desc, signature, errors);
                 if (!name.equals(method) || !desc.equals(descriptor)) return base;
                 if ((access & Opcodes.ACC_STATIC) == 0) throw new IllegalArgumentException("Expected a static character entry");
                 return new MethodVisitor(Opcodes.ASM9, base) {
+                    @Override public void visitMethodInsn(int op, String owner, String called,
+                                                          String desc, boolean isInterface) {
+                        if (op == Opcodes.INVOKESTATIC && owner.equals(STARTUP)
+                            && called.equals(hook) && desc.equals("()V")) {
+                            existingHooks[0]++;
+                        }
+                        super.visitMethodInsn(op, owner, called, desc, isInterface);
+                    }
+
                     @Override public void visitInsn(int op) {
                         if (op == Opcodes.RETURN) {
-                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, STARTUP, hook, "()V", false);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, STARTUP, hook, "()V", false);
                             returns[0]++;
                         }
                         super.visitInsn(op);
@@ -43,6 +53,13 @@ public final class WireUnifiedCharacter {
         if (returns[0] != 1) throw new IllegalArgumentException("Character entry has changed: " + type + "." + method);
         Path file = output.resolve(entry);
         Files.createDirectories(file.getParent());
-        Files.write(file, writer.toByteArray());
+        if (existingHooks[0] > 1) throw new IllegalArgumentException("Duplicate startup hook: " + type + "." + method);
+        if (existingHooks[0] == 1) {
+            try (var original = source.getInputStream(source.getEntry(entry))) {
+                Files.write(file, original.readAllBytes());
+            }
+        } else {
+            Files.write(file, writer.toByteArray());
+        }
     }
 }
