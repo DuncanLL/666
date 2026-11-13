@@ -27,7 +27,7 @@
   "changed_mod_ids": 23,
   "local_enable_lists_migrated": 22,
   "game_started": false,
-  "steam_uploaded": false,
+  "steam_uploaded": true,
   "checks": [
     {
       "variant": "stable",
@@ -84,6 +84,249 @@
       "world_switch": true,
       "game_started": false,
       "jar_sha256": "4a5a6f78dd3936b35766da3f12d488692777f103741fc25ea495c9903bb7030b"
+    }
+  ],
+  "steam_projects": [
+    {
+      "id": 3838709437,
+      "title": "少前2追放角色框架",
+      "mod_id": "GFL2Exilium",
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838770244,
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "mod_id": "GFL2Exilium",
+      "dependencies": [
+        3619862853
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3837425337,
+      "title": "埃芙",
+      "mod_id": "GFL2Alva",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838710555,
+      "title": "阿斯缇亚",
+      "mod_id": "GFL2Asteria",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838711420,
+      "title": "希丽雅",
+      "mod_id": "GFL2Cecilia",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838711556,
+      "title": "桑朵莱希",
+      "mod_id": "GFL2Centaureissi",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838710368,
+      "title": "夏安",
+      "mod_id": "GFL2Cheyanne",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838711736,
+      "title": "黛烟",
+      "mod_id": "GFL2Daiyan",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838762173,
+      "title": "破坏者",
+      "mod_id": "GFL2Destroyer",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838711981,
+      "title": "芙铃",
+      "mod_id": "GFL2Faelynn",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838711148,
+      "title": "芙洛伦",
+      "mod_id": "GFL2Florence",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838712165,
+      "title": "可露凯",
+      "mod_id": "GFL2Klukai",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838710666,
+      "title": "克莱妲",
+      "mod_id": "GFL2Koleda",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838710183,
+      "title": "莱娅",
+      "mod_id": "GFL2Laiya",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838762352,
+      "title": "莱娜",
+      "mod_id": "GFL2Lenna",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838762751,
+      "title": "玛绮朵",
+      "mod_id": "GFL2Macqiato",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838710868,
+      "title": "妮基塔",
+      "mod_id": "GFL2Nikketa",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838712515,
+      "title": "OTs-14",
+      "mod_id": "GFL2OTs14",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838763020,
+      "title": "翡图萨",
+      "mod_id": "GFL2Phaetusa",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838763377,
+      "title": "六分仪",
+      "mod_id": "GFL2Sextans",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838712707,
+      "title": "春田",
+      "mod_id": "GFL2Springfield",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838712796,
+      "title": "索米",
+      "mod_id": "GFL2Suomi",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838763611,
+      "title": "维克托",
+      "mod_id": "GFL2Vector",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
+    },
+    {
+      "id": 3838763788,
+      "title": "幼熙",
+      "mod_id": "GFL2Yohee",
+      "dependencies": [
+        3838709437
+      ],
+      "existing_item_updated": true,
+      "description_verified": true
     }
   ]
 }
