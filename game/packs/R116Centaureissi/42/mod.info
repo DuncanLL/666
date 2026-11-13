@@ -1,7 +1,7 @@
 name=桑朵莱希
-id=R116Centaureissi
-require=\AimohPmxPreview
-modversion=0.3.87
+id=GFL2Centaureissi
+require=\GFL2Exilium
+modversion=0.3.95
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

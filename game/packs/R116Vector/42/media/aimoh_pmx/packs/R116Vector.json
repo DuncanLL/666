@@ -10,13 +10,13 @@
     },
     {
       "id": "pmx-ba77d8beccf4a49b",
-      "label": "维克托 / 校园皮",
+      "label": "维克托 / 学府风尚",
       "model": "models/pmx-ba77d8beccf4a49b/model.pmx",
       "profile": "models/pmx-ba77d8beccf4a49b/profile.json"
     },
     {
       "id": "pmx-1303e831f7fc913d",
-      "label": "维克托 / 新皮肤",
+      "label": "维克托 / 战地兔影",
       "model": "models/pmx-1303e831f7fc913d/model.pmx",
       "profile": "models/pmx-1303e831f7fc913d/profile.json"
     }

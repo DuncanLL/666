@@ -11,7 +11,7 @@ try:
     mapping.get(fs).put('AimohPmxPreview',c['asset_root'])
     room=J('aimoh.pmxpreview.ReadyRoomPreview');first=room.data();first.rawget('models').wipe();first.rawget('text').rawset('Menu','altered-by-old-window')
     second=room.data();models=second.rawget('models');assert models.rawget('pmx-293917f24c2bd387')is not None
-    assert second.rawget('text').rawget('Menu')=='整备室'
+    assert second.rawget('text').rawget('Menu')=='少前2:追放人物框架'
     save(BUILD/'room-loading-0.3.12/catalog-check.json',dict(status='PASS_FRESH_REAL_KAHLUA_CATALOG_AFTER_OLD_TABLE_MUTATION',jar_sha256=sha(jar),assets_modified=False,game_started=False,actual_gameplay_tested=False))
     print('PASS: new window receives complete catalog independent of old Lua tables')
 finally:jpype.shutdownJVM()

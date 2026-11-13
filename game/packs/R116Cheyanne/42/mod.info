@@ -1,7 +1,7 @@
 name=夏安
-id=R116Cheyanne
-require=\AimohPmxPreview
-modversion=0.3.87
+id=GFL2Cheyanne
+require=\GFL2Exilium
+modversion=0.3.89
 versionMin=42.22
 versionMax=42.22
 icon=icon.png

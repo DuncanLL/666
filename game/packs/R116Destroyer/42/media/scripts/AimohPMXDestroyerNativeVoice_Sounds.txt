@@ -1,0 +1,613 @@
+module Base {
+sound AimohPMXDestroyerSilent
+{
+ category=Player,
+ is3D=true,
+ loop=true,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeStab
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeStabOnGround
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeAttackHeavy
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeAttack
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeShove
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMeleeStomp
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromBite
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromGlassCut
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromFallLow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromFallHigh
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromHitBlunt
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromRunIntoWall
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentShoutHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentShoutMegaphoneHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSneezeLight
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSneezeHeavy
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentJumpLow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentJumpHigh
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentDeathAlone
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentDeathEaten
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentWhisperHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentWhisperPsst
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentWhisperMegaphoneHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentWhisperMegaphonePsst
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentClimbWindow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentCough
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentMuffledCough
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSleep
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentVomit
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentApplyBandage
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSighBored
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSighReliefed
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSighSad
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromScratch
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainFromLacerate
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentLureTsk
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentLureCmon
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentDeathFall
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentDrunkHic
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentExercise
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentFreezeShiver
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentSmoke
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentPainMoodle
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentCorpseDragging
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentCorpseHighEffort
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXDestroyerSilentCorpseLowEffort
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXVoice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+}

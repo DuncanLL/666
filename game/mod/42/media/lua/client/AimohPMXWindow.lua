@@ -13,6 +13,10 @@ local function image(path)
     if not textures[path] then textures[path]=getTexture(path) end
     return textures[path]
 end
+local function portraitImage(path)
+    if not path then return nil end
+    return image(path:gsub("/round%-","/portrait-"))
+end
 local art="media/ui/AimohPMXReadyRoom/room-"
 local function roomSound(action)
     getSoundManager():playUISound("R116Room"..action)
@@ -118,7 +122,7 @@ local function number(p,value,x,y,h,r,g,b,right)
     end
 end
 
-local function tile(panel,x,y,w,h,path,title,active)
+local function tile(panel,x,y,w,h,path,title,active,hovered,pressed)
     surface(panel,x,y,w,h,.8)
     local t=image(path)
     if t then panel:drawTextureScaledAspect(t,x+2,y+2,w-4,h-25,1,1,1,1)
@@ -128,8 +132,13 @@ local function tile(panel,x,y,w,h,path,title,active)
     end
     panel:drawRect(x,y+h-25,w,25,.82,.035,.05,.055)
     label(panel,title,x+6,y+h-21,19,w-12)
+    if hovered or pressed then
+        panel:drawRect(x+1,y+1,w-2,h-2,pressed and .22 or .08,.64,.81,.82)
+    end
+    if active or hovered then
+        panel:drawRectBorder(x,y,w,h,active and .90 or .54,active and 1 or .56,active and .71 or .72,active and .38 or .75)
+    end
     if active then
-        panel:drawRectBorder(x,y,w,h,.84,1,.71,.38)
         panel:drawRect(x,y+h-2,w,2,1,1,.71,.38)
     end
 end
@@ -137,8 +146,43 @@ AimohPMXWindow=ISCollapsableWindow:derive("AimohPMXWindow")
 AimohPMXWindow.instances={}
 local W=AimohPMXWindow
 function W:titleBarHeight() return 50 end
+local function rosterCard(window, column, y)
+    local cell = math.floor((window.gridWidth-12)/3)
+    local size = cell-8
+    return 4+(column-1)*cell,y+3,size,size+20
+end
+
+function W:rosterAt(x,y)
+    local rail = self.sidebar
+    local row = rail:rowAt(x,y)
+    local item = rail.items[row]
+    if not item or item.item.header then return nil end
+    local rowY = rail:topOfItem(row)
+    if self.rosterExpanded then
+        local column = math.floor((x-4)/math.floor((self.gridWidth-12)/3))+1
+        local character = item.item[column]
+        if not character then return nil end
+        local left,top,width,height = rosterCard(self,column,rowY)
+        if x>=left and x<left+width and y>=top and y<top+height then return character,row end
+    elseif (x-55)^2+(y-rowY-item.height/2)^2<=46^2 then
+        return item.item,row
+    end
+end
+
+local function hideTooltip(button)
+    local tooltip=button.tooltipUI
+    if tooltip and tooltip:getIsVisible() then
+        tooltip:setVisible(false)
+        tooltip:removeFromUIManager()
+    end
+end
+
 local function button(parent,x,y,w,title,target,callback)
     local b=ISButton:new(x,y,w,28,"",target,callback);b:initialise();b.roomTitle=title;b:setSound("activate","R116RoomSelect")
+    b.setVisible=function(s,visible)
+        if not visible then hideTooltip(s) end
+        ISButton.setVisible(s,visible)
+    end
     b.backgroundColor={r=.149,g=.204,b=.227,a=.84}
     b.borderColor={r=.45,g=.56,b=.60,a=.38}
     b.roomHover=0;b.roomHoverTo=0
@@ -163,14 +207,19 @@ local function button(parent,x,y,w,title,target,callback)
         if s.roomLook=="drawOnce" then c=s.roomOutfitDraw and {r=.29,g=.24,b=.69} or {r=.79,g=.80,b=.82};a=.94 end
         if s.roomLook=="outfitPurchase" then c={r=.84,g=.84,b=.86};a=enabled and .99 or .66 end
         if s.roomLook=="drawTen" then c={r=.82,g=.24,b=.08};a=.94 end
-        local glow=s.roomHover*(s.roomLook=="outfit" and .08 or .047)
+        local glow=s.roomHover*(s.pressed and -.05 or s.roomTile and .115 or .075)
+        if s.roomTile then a=enabled and .92 or .62 end
         local r,g,b=c.r+glow,c.g+glow,c.b+glow
         s:drawRect(0,2,s.width,s.height-4,a,r,g,b)
         s:drawRect(2,0,s.width-4,2,a,r,g,b)
         s:drawRect(2,s.height-2,s.width-4,2,a,r,g,b)
         local glass=image(art.."glass.png")
         if glass then s:drawTextureScaled(glass,0,0,s.width,s.height,a,1,1,1) end
+        if s.roomTile or s.roomLook=="primary" then
+            s:drawRectBorder(0,0,s.width,s.height,(enabled and .26 or .16)+s.roomHover*.30,.63,.76,.76)
+        end
         if s.roomActive then s:drawRect(3,s.height-3,s.width-6,2,.92,.875,.620,0) end
+        if s.tooltip then s:updateTooltip() end
     end
     b.render=function(s)
         local enabled=s.enable~=false
@@ -185,8 +234,9 @@ local function button(parent,x,y,w,title,target,callback)
             return
         end
         if s.roomTile then
-            featureIcon(s,s.roomTile,s.width/2-14.5,10,a)
-            label(s,s.roomTitle,s.width/2,s.height-24,16,s.width-10,.91,.92,.90,a,true)
+            local press=s.pressed and enabled and 1 or 0
+            featureIcon(s,s.roomTile,s.width/2-14.5,math.floor((s.height-50)/2)+press,a)
+            label(s,s.roomTitle,s.width/2,s.height-23+press,16,s.width-12,.91,.92,.90,a,true)
             return
         end
         if s.roomLook=="outfit" then
@@ -309,7 +359,7 @@ function W:createChildren()
     self.workshopButton:setVisible(false)
     self.railWidth=115;self.gridWidth=math.min(365,math.floor(self.width*.255))
     self.rightWidth=math.max(270,math.floor(self.width*.30));self.rightX=self.width-self.rightWidth-16
-    self.overviewX=math.floor(self.width*.77);self.overviewWidth=math.floor(self.width*.193)
+    self.overviewWidth=math.max(228,math.floor(self.width*.193));self.overviewX=self.width-math.floor(self.width*.037)-self.overviewWidth
     self.overviewY=math.floor(self.height*.157)
     local railY=math.floor(self.height*.105)
     self.sidebar=ISScrollingListBox:new(math.floor(self.width*.028),railY,self.railWidth,math.floor(self.height*.80));self.sidebar:initialise()
@@ -319,29 +369,42 @@ function W:createChildren()
     end)
     self.sidebar.doDrawItem=self.drawCharacter
     -- Dragging the rail scrolls; a short click selects only on release.
-    self.sidebar.onMouseDown=function(s,x,y) if s:isMouseOverScrollBar() then return end;s.roomDrag=0;s.roomDown=true;s:setCapture(true);return true end
+    self.sidebar.onMouseDown=function(s,x,y)
+        if s:isMouseOverScrollBar() then return end
+        s.roomDrag=0;s.roomDown=true;s.roomPressed=s.parent:rosterAt(x,y)
+        s:setCapture(true)
+        return true
+    end
     self.sidebar.onMouseMove=function(s,dx,dy)
         if s.roomDown then
             s.roomDrag=s.roomDrag+math.abs(dx)+math.abs(dy)
-            if s.roomDrag>5 then s.smoothScrollTargetY=nil;s:setYScroll(math.max(math.min(0,s.height-s:getScrollHeight()),math.min(0,s:getYScroll()+dy))) end
-        else ISScrollingListBox.onMouseMove(s,dx,dy) end
-    end
-    self.sidebar.onMouseMoveOutside=self.sidebar.onMouseMove
-    self.sidebar.onMouseUp=function(s,x,y)
-        if s.roomDown and s.roomDrag<=5 then
-            local row=s:rowAt(x,y)
-            local item=s.items[row]
-            if item then
-                local w=s.parent
-                local column=math.floor((x-4)/math.floor((w.gridWidth-12)/3))+1
-                local character=w.rosterExpanded and item.item[column] or nil
-                if not w.rosterExpanded then character=item.item end
-                if character then s.selected=row;w:onCharacter(character) end
+            if s.roomDrag>5 then
+                s.roomHoverCharacter=nil;s.smoothScrollTargetY=nil
+                s:setYScroll(clamp(s:getYScroll()+dy,math.min(0,s.height-s:getScrollHeight()),0))
             end
+        else
+            s.roomHoverCharacter=not s:isMouseOverScrollBar() and s.parent:rosterAt(s:getMouseX(),s:getMouseY()) or nil
+            ISScrollingListBox.onMouseMove(s,dx,dy)
         end
-        s.roomDown=false;s:setCapture(false);ISScrollingListBox.onMouseUp(s,x,y);return true
     end
-    self.sidebar.onMouseUpOutside=function(s,x,y) s.roomDown=false;s:setCapture(false);ISScrollingListBox.onMouseUpOutside(s,x,y) end
+    self.sidebar.onMouseMoveOutside=function(s,dx,dy)
+        s.roomHoverCharacter=nil
+        if s.roomDown then s:onMouseMove(dx,dy) else ISScrollingListBox.onMouseMoveOutside(s,dx,dy) end
+    end
+    self.sidebar.onMouseUp=function(s,x,y)
+        local pressed=s.roomDown and s.roomDrag<=5 and s.roomPressed
+        s.roomDown=false;s.roomPressed=nil;s:setCapture(false)
+        if pressed then
+            local character,row=s.parent:rosterAt(x,y)
+            if pressed==character then s.selected=row;s.parent:onCharacter(character) end
+        end
+        ISScrollingListBox.onMouseUp(s,x,y)
+        return true
+    end
+    self.sidebar.onMouseUpOutside=function(s,x,y)
+        s.roomDown=false;s.roomPressed=nil;s:setCapture(false)
+        ISScrollingListBox.onMouseUpOutside(s,x,y)
+    end
     self:addChild(self.sidebar)
     self.rosterToggle=button(self,self.sidebar.x+self.sidebar.width+8,math.floor(self.height*.465),36,"",self,self.toggleRoster)
     self.rosterToggle:setHeight(47)
@@ -443,7 +506,7 @@ local drawStep,missLife,hitLife=215,720,1150
 
 function W:requestCharacterDraw(count)
     local character=self.byCharacter[self.character]
-    local card=character and data.roomRecruitment[character.name]
+    local card=character and character.recruitment
     if self.drawAnimation or self.exchange or not card or character.locked
         or not character.unlockRequired or self.tab~="overview" then return end
     local misses=economy.characterMisses(self.player)
@@ -500,7 +563,7 @@ function W:drawRecruitmentResults()
     local elapsed=getTimestampMs()-a.started
     local button=self.drawButtons[a.button]
     local x=button.x+(button.width-142)/2
-    local portrait=image(a.portrait)
+    local portrait=portraitImage(a.portrait)
     for i,hit in ipairs(a.results)do
         local age=elapsed-(i-1)*drawStep
         local life=hit and hitLife or missLife
@@ -1036,18 +1099,18 @@ function W:layoutOverview()
     for _,b in ipairs(self.drawButtons)do
         b.roomOutfitDraw=outfitDraw
         b:setVisible(not not (characterDraw or outfitDraw))
-        b:setEnable(not self.drawAnimation and not not (outfitDraw
-            or (characterDraw and data.roomRecruitment[character.name]~=nil)))
+        b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
     local controls={self.chestButton,self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton}
     local symbols={"chest","grip","expression","play","restart"}
-    local tileWidth=math.floor((width-22-14)/3)
+    local inset,gap,tileHeight=12,8,64
+    local tileWidth=math.floor((width-inset*2-gap*2)/3)
     for i,b in ipairs(controls) do
         b.roomTile=symbols[i]
-        b:setX(x+11+((i-1)%3)*(tileWidth+7))
-        b:setY(y+77+math.floor((i-1)/3)*73)
-        b:setWidth(tileWidth);b:setHeight(66)
+        b:setX(x+inset+((i-1)%3)*(tileWidth+gap))
+        b:setY(y+76+math.floor((i-1)/3)*(tileHeight+gap))
+        b:setWidth(tileWidth);b:setHeight(tileHeight)
         b:setVisible(available and overview)
     end
     self.restoreButton:setX(x+10);self.restoreButton:setY(y+226)
@@ -1062,13 +1125,14 @@ function W:layoutOverview()
     self.pageButton:setWidth(136);self.pageButton:setHeight(43)
     self.pageButton:setX(x-150);self.pageButton:setY(self.wearButton.y)
     self.pageButton:setVisible(available and skins)
+    if not overview then self.sidebar.roomHoverCharacter=nil end
     self.sidebar:setVisible(overview)
     self.rosterToggle:setVisible(overview)
 end
 
 function W:rebuildRoster()
     local rail=self.sidebar
-    rail:clear();rail.smoothScrollTargetY=nil
+    rail:clear();rail.smoothScrollTargetY=nil;rail.roomHoverCharacter=nil;rail.roomPressed=nil
     rail.itemheight=self.rosterExpanded and math.floor((self.gridWidth-12)/3)+20 or math.max(95,math.floor(self.fullHeight*.108))
     local selected
     if self.rosterExpanded then
@@ -1113,38 +1177,42 @@ function W:drawCharacter(y,item,alt)
             label(self,item.item.header,14,y+4,18,self.width-20,.76,.77,.76)
             return y+item.height
         end
-        local cell=math.floor((window.gridWidth-12)/3)
         for i,entry in ipairs(item.item) do
-            local x=4+(i-1)*cell
-            local size=cell-7
+            local x,top,size,height=rosterCard(window,i,y)
+            local hover=self.roomHoverCharacter==entry
             local selected=window.character==entry.name
-            local texture=image(entry.portrait)
-            self:drawRect(x,y+3,size,size,.96,.76,.76,.79)
-            if texture then self:drawTextureScaled(texture,x,y+3,size,size,1,1,1,1) end
-            self:drawRect(x,y+size+2,size,18,.96,.110,.149,.169)
-            self:drawRect(x,y+size,size,2,.93,.875,.620,0)
-            label(self,entry.name,x+size/2,y+size+4,12,size-6,.94,.94,.93,1,true)
-            if entry.locked or entry.unlockRequired then self:drawRect(x,y+3,size,size,.54,.05,.06,.06);lock(self,x+size-23,y+size-20) end
+            local texture=portraitImage(entry.portrait)
+            self:drawRect(x,top,size,size,.96,.76,.76,.79)
+            if texture then self:drawTextureScaledAspect(texture,x,top,size,size,1,1,1,1) end
+            self:drawRect(x,top+size,size,height-size,.97,.10,.14,.16)
+            label(self,entry.name,x+size/2,top+size+1,17,size-10,.94,.94,.93,1,true)
+            if entry.locked or entry.unlockRequired then
+                self:drawRect(x,top,size,size,.49,.05,.06,.06)
+                lock(self,x+size-24,top+size-24)
+            end
             if selected then
-                self:drawRectBorder(x-1,y+2,size+2,size+20,1,.99,.42,.11)
-                self:drawRectBorder(x,y+3,size,size+18,1,.99,.49,.15)
+                self:drawRectBorder(x,top,size,height,1,.99,.55,.21)
+                self:drawRect(x+1,top+height-2,size-2,2,1,.99,.55,.21)
+            elseif hover then
+                self:drawRectBorder(x,top,size,height,.85,.69,.82,.83)
             end
         end
     else
         local entry=item.item
         local selected=window.character==entry.name
-        local avatar=entry.portrait and entry.portrait:gsub("/round%-","/avatar-")
-        local t=image(avatar) or image(entry.portrait)
+        local t=portraitImage(entry.portrait)
         local shade=(entry.locked or entry.unlockRequired) and .47 or 1
         local cx,cy=55,y+item.height/2
-        local size=selected and 88 or 72
+        local hovered=self.roomHoverCharacter==entry
+        local size=selected and 84 or 76
         if t then self:drawTextureScaled(t,cx-size/2,cy-size/2,size,size,1,shade,shade,shade) end
         local ring=image(data.portraitRing)
         if ring then
             if selected then
                 self:drawTextureScaled(ring,cx-51,cy-51,102,102,.17,.40,.82,.81)
                 self:drawTextureScaled(ring,cx-46,cy-46,92,92,.99,.92,.93,.92)
-            else self:drawTextureScaled(ring,cx-38,cy-38,76,76,.71,.30,.32,.32) end
+            elseif hovered then self:drawTextureScaled(ring,cx-41,cy-41,82,82,.90,.65,.76,.77)
+            else self:drawTextureScaled(ring,cx-40,cy-40,80,80,.68,.37,.42,.43) end
         end
         if selected then
             local phase=getTimestampMs()/475
@@ -1168,6 +1236,7 @@ function W:clearContent()
         widget:setCapture(false)
         if widget.hidePopup then widget:hidePopup() end
         if widget.deactivateToolTip then widget:deactivateToolTip() end
+        hideTooltip(widget)
         self.content:removeChild(widget)
     end
     self.widgets={};self.carouselPanel=nil
@@ -1183,7 +1252,14 @@ end
 function W:addTile(x,y,width,height,title,path,active,callback)
     local b=ISButton:new(x,y,width,height,"",self,callback);b:initialise()
     b.roomTitle=title;b.roomActive=active
-    b.prerender=function(s)tile(s,0,0,s.width,s.height,path,title,active)end;b.render=function()end
+    b:setSound("activate","R116RoomSelect")
+    b:setTooltip(title)
+    b.prerender=function(s)
+        local enabled=s.enable~=false
+        tile(s,0,0,s.width,s.height,path,title,active,enabled and s.mouseOver,enabled and s.pressed)
+        s:updateTooltip()
+    end
+    b.render=function()end
     b:setEnable(not self.waiting);self.content:addChild(b);table.insert(self.widgets,b);return b
 end
 function W:carousel(character)
@@ -1205,32 +1281,56 @@ function W:carousel(character)
             self:setTab("outfitDraw")
         end
     end
+    local function cardRect(s,i,phase)
+        local height=cardHeight(s)
+        local width=height*.505
+        local scale=i==s.index and (.88+.12*phase) or .88
+        local w,h=width*scale,height*scale
+        local x=s.width/2-w/2+(i-s.index)*(width+15)+s.offset+(s.slideFrom or 0)*(1-phase)
+        return x,(s.height-h)/2,w,h
+    end
+    local function phaseAt(s)
+        return s.changedAt and ease((getTimestampMs()-s.changedAt)/180) or 1
+    end
+    local function cardAt(s,x,y,phase)
+        if x<0 or x>=s.width or y<0 or y>=s.height then return nil end
+        for i=1,#s.entries do
+            local left,top,w,h=cardRect(s,i,phase)
+            if x>=left and x<left+w and y>=top and y<top+h then return i end
+        end
+    end
     p.prerender=function(s)
         s:setStencilRect(0,0,s.width,s.height)
-        local height=cardHeight(s);local width=height*.505;local step=width+15
+        local phase=phaseAt(s)
+        local hover=s:isMouseOver() and not s.dragging and cardAt(s,s:getMouseX(),s:getMouseY(),phase)
         local function card(i)
-            local phase=s.changedAt and ease((getTimestampMs()-s.changedAt)/180) or 1
-            local active=i==s.index;local scale=active and (.88+.12*phase) or .88
-            local w,h=width*scale,height*scale
-            local x=s.width/2-w/2+(i-s.index)*step+s.offset+(s.slideFrom or 0)*(1-phase);local y=(s.height-h)/2
+            local active=i==s.index
+            local x,y,w,h=cardRect(s,i,phase)
+            if x+w<=0 or x>=s.width then return end
             local meta=s.entries[i].meta
             local t=image(meta.card)
-            if t then s:drawTextureScaledAspect(t,x,y,w,h,active and 1 or .61,1,1,1)end
-            if active then
-                s:drawRectBorder(x,y,w,h,1,.99,.42,.11)
-                s:drawRectBorder(x+1,y+1,w-2,h-2,1,.99,.51,.19)
-            end
+            if t then s:drawTextureScaledAspect(t,x,y,w,h,active and 1 or hover==i and .85 or .61,1,1,1)end
             surface(s,x+3,y+h-38,w-6,34,.62)
             label(s,outfitName(s.entries[i]),x+w/2,y+h-31,17,w-14,.96,.96,.94,1,true)
             if s.entries[i].outfitLocked and s.entries[i].id~=self.currentId then
-                s:drawRect(x,y,w,h,.54,.02,.035,.045);lock(s,x+w/2-10,y+h/2-10)
+                s:drawRect(x,y,w,h,.43,.02,.035,.045);lock(s,x+w/2-10,y+h/2-10)
+            end
+            if active then
+                s:drawRectBorder(x,y,w,h,1,.99,.55,.21)
+                s:drawRect(x+1,y+h-2,w-2,2,1,.99,.55,.21)
+            elseif hover==i then
+                s:drawRectBorder(x,y,w,h,.88,.69,.82,.83)
             end
         end
         for i=1,#s.entries do if i~=s.index then card(i)end end
         card(s.index)
     end
     p.render=function(s)s:clearStencilRect()end
-    p.onMouseDown=function(s)s.dragging=true;s.offset=0;s:setCapture(true);return true end
+    p.onMouseDown=function(s,x,y)
+        s.pressedCard=cardAt(s,x,y,phaseAt(s))
+        s.dragging=true;s.offset=0;s:setCapture(true)
+        return true
+    end
     p.onMouseMove=function(s,dx,dy)if s.dragging then s.offset=s.offset+dx end;return true end
     p.onMouseMoveOutside=p.onMouseMove
     p.onMouseUp=function(s,x,y)
@@ -1240,10 +1340,13 @@ function W:carousel(character)
             local distance=s.offset;local step=cardHeight(s)*.505+15
             if math.abs(distance)>24 then
                 select(s,s.index+(distance<0 and 1 or -1)*math.max(1,math.floor(math.abs(distance)/step+.5)),true)
-            elseif x then
-                select(s,s.index+math.floor((x-s.width/2)/step+.5),true)
-            else select(s,s.index) end
+            else
+                s.offset=0
+                local clicked=x and y and cardAt(s,x,y,phaseAt(s))
+                if clicked and clicked==s.pressedCard then select(s,clicked,true) end
+            end
         end
+        s.pressedCard=nil
         return true
     end
     p.onMouseUpOutside=p.onMouseUp
@@ -1333,11 +1436,10 @@ function W:refresh()
     local function add(id,index,meta)
         local character=self.byCharacter[meta.character]
         if not character then
-            local card=data.roomRecruitment[meta.character]
-            local locked=card~=nil and not data.roomDefaultUnlocked[card.pool]
-                and not economy.characterUnlocked(self.player,card.pool)
+            local card=data.roomRecruitment[meta.character] or (meta.pack and {pool=meta.pack})
+            local locked=card~=nil and not economy.characterUnlocked(self.player,card.pool)
             if self.drawAnimation and self.drawAnimation.character==meta.character then locked=true end
-            character={name=meta.character,portrait=meta.portrait,skins={},locked=true,unlockRequired=not not locked}
+            character={name=meta.character,portrait=meta.portrait,skins={},locked=true,unlockRequired=not not locked,recruitment=card}
             self.byCharacter[meta.character]=character;table.insert(self.characters,character)
         end
         if index==nil then return end
@@ -1346,7 +1448,7 @@ function W:refresh()
         local original=meta.isDefault==true or not not defaultSkins[meta.skin]
         entry.isDefault=original
         local starter=starters[meta.character]
-        entry.price=not original and id~=starter and not entry.outfitPool and (prices[id] or economy.defaultOutfitPrice) or nil
+        entry.price=not original and not meta.included and id~=starter and not entry.outfitPool and (prices[id] or economy.defaultOutfitPrice) or nil
         entry.sortOrder=original and 0 or entry.outfitPool and 2 or 1
         if not entry.outfitPool and (id==starter or not character.baseSkin or (original and not character.baseSkin.isDefault)) then
             character.baseSkin=entry
@@ -1373,7 +1475,7 @@ function W:refresh()
         end)
         if base then character.portrait=base.meta.portrait or character.portrait end
         for _,skin in ipairs(character.skins)do
-            skin.outfitLocked=skin~=base and not economy.outfitOwned(self.player,skin.id)
+            skin.outfitLocked=skin~=base and not skin.meta.included and not economy.outfitOwned(self.player,skin.id)
             if self.drawAnimation and self.drawAnimation.outfit==skin.id then skin.outfitLocked=true end
         end
     end
@@ -1418,12 +1520,23 @@ function W:partRows(extrasOnly)
             for group=0,groups-1 do
                 local name=AimohPMXPreview.groupLabel(self.player,group)
                 local normalized=data.categories[name] or name
-                local row={index=group,label=normalized}
-                if primary[normalized] then categories[normalized]=row else table.insert(extra,row) end
+                local blink=false
+                for option=0,AimohPMXPreview.optionCount(self.player,group)-1 do
+                    local optionLabel=AimohPMXPreview.optionLabel(self.player,group,option)
+                    if optionLabel==tr("EyeOpen") or optionLabel==tr("EyeClosed") then blink=true;break end
+                end
+                if not blink then
+                    local row={index=group,label=normalized}
+                    if primary[normalized] then categories[normalized]=row else table.insert(extra,row) end
+                else
+                    primary[normalized]=nil
+                end
             end
             local ordered={}
             if extrasOnly then ordered=extra else
-                for _,name in ipairs(names)do table.insert(ordered,categories[name] or {label=name})end
+                for _,name in ipairs(names)do
+                    if primary[name] then table.insert(ordered,categories[name] or {label=name}) end
+                end
             end
             return ordered
 end
@@ -1600,7 +1713,8 @@ function W:refreshControls(keepScroll)
     self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw")
 end
 function W:selectSkin(entry)
-    if self.waiting or entry.outfitLocked or self.currentId==entry.id then return false end
+    local character=self.byCharacter[self.character]
+    if not character or character.unlockRequired or self.waiting or entry.outfitLocked or self.currentId==entry.id then return false end
     if self.actions.enable(self.player,entry.index)then
         self.toolNotice=nil;self.waiting=true;self.yaw=0;self:refresh()
         return true
@@ -1722,6 +1836,7 @@ function W:prerender()
     local header=self:titleBarHeight()
     if self.folded or self.foldStart then
         surface(self,0,0,self.width,math.min(header,self.height),.68)
+        self:drawText(self.title,76,16,.92,.92,.91,1,UIFont.Small)
         return
     end
     local background=image(data.background)
@@ -1736,7 +1851,8 @@ function W:prerender()
     surface(self,0,0,self.width,header,.67)
     local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",chest="ChestPhysics",grip="GripCalibration",expression="Expression"}
     local page=self.roomPage=="motions" and "RoomMotion" or titles[self.tab]
-    if page then label(self,tr(page),76,14,23,self.width-180) end
+    if page then label(self,tr(page),76,14,23,self.width-180)
+    else self:drawText(self.title,76,16,.92,.92,.91,1,UIFont.Small) end
     if self.roomPage=="motions" then return end
     local character=self.byCharacter[self.character]
     if (self.tab=="skins" or self.tab=="outfitDraw") and self.browsed then
@@ -1770,9 +1886,11 @@ function W:prerender()
         self:drawLockedCharacterInfo(character)
     elseif self.tab=="overview" and character then
         local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-        frosted(self,self,x,y,width,258,.72)
-        label(self,self.character,x+11,y+14,33,width-22,.95,.95,.94)
-        self:drawRect(x+11,y+58,25,4,1,.875,.620,0)
+        frosted(self,self,x,y,width,258,.78)
+        self:drawRectBorder(x,y,width,258,.32,.61,.72,.74)
+        label(self,self.character,x+12,y+12,34,width-24,.95,.95,.94)
+        self:drawRect(x+12,y+57,width-24,1,.26,.62,.75,.76)
+        self:drawRect(x+12,y+57,30,2,.96,.99,.55,.21)
         local biography=(data.roomCharacterDescriptions or {})[character.name]
         if self.toolNotice then
             surface(self,x,y+265,width,37,.92)
@@ -1784,28 +1902,30 @@ function W:prerender()
     end
 end
 function W:drawLockedCharacterInfo(character)
-    local card=data.roomRecruitment and data.roomRecruitment[character.name]
+    local card=character.recruitment
     if not card then return end
     local x=math.max(math.floor(self.width*.122),self.sidebar.x+self.sidebar.width+24)
     local biography=(data.roomCharacterDescriptions or {})[character.name]
     local width=math.floor(self.width*.164)
-    local bannerHeight=math.floor(width/2)
-    local blockHeight=bannerHeight+105+#(biography or {})*18
-    local y=math.min(math.floor(self.height*.65),self.height-42-blockHeight)
     local banner=image(card.banner)
+    local bannerHeight=banner and math.floor(width/2) or 0
+    local headerHeight=card.element and 105 or 45
+    local blockHeight=bannerHeight+headerHeight+#(biography or {})*18
+    local y=math.min(math.floor(self.height*.65),self.height-42-blockHeight)
     if banner then
         frosted(self,self,x,y,width,bannerHeight,.80)
         self:drawTextureScaled(banner,x,y,width,bannerHeight,1,1,1,1)
         self:drawRectBorder(x,y,width,bannerHeight,.52,.63,.70,.70)
     end
-    local tag=card.element
-    surface(self,x,y+bannerHeight+8,width,28,.70)
-    label(self,tag,x+8,y+bannerHeight+14,17,width-16,card.color[1],card.color[2],card.color[3])
-    label(self,character.name,x,y+bannerHeight+43,30,width,.96,.96,.96)
+    if card.element then
+        surface(self,x,y+bannerHeight+8,width,28,.70)
+        label(self,card.element,x+8,y+bannerHeight+14,17,width-16,card.color[1],card.color[2],card.color[3])
+    end
+    label(self,character.name,x,y+bannerHeight+(card.element and 43 or 0),30,width,.96,.96,.96)
     if card.tags and card.tags~="" then
         label(self,card.tags,x,y+bannerHeight+81,16,width,.89,.92,.92)
     end
-    description(self,biography,x,y+bannerHeight+105,width)
+    description(self,biography,x,y+bannerHeight+headerHeight,width)
     local misses=self.drawAnimation and self.drawAnimation.misses or economy.characterMisses(self.player)
     self:drawPity("RoomSharedPity",economy.characterGuarantee-misses)
 end
@@ -1841,6 +1961,8 @@ function W:close()
     if W.instances[self.playerIndex]==self then W.instances[self.playerIndex]=nil end
     self:setVisible(false)
     self:removeFromUIManager()
+    for _,child in pairs(self.children) do hideTooltip(child) end
+    hideTooltip(self.workshopButton)
     self:refreshExpressionSlots(false)
     if self.motionSeek then self.motionSeek:cancel() end
     if self.motionSpeed then self.motionSpeed.dragInside=false end
@@ -1862,6 +1984,7 @@ function W.open(player,actions)
     local sw,sh=getCore():getScreenWidth(),getCore():getScreenHeight()
     local width=math.min(1510,sw-48);local height=math.min(880,sh-62)
     window=ISCollapsableWindow.new(W,math.floor((sw-width)/2),math.floor((sh-height)/2),width,height)
+    window.title=getText("ContextMenu_AimohPMX_Menu")
     window.player=player;window.playerIndex=index;window.actions=actions
     window.resizable=false;window.drawFrame=false;window.yaw=0;window.zoom=1.03
     window.cameraPan=0;window.cameraFocus=0

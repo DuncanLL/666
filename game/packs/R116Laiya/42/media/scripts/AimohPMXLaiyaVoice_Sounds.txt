@@ -1,1887 +1,2251 @@
-module Base
+module Base {
+sound AimohPMXLaiya_Hungry_L1_A
 {
-    sound AimohPMXLaiya_Hungry_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hungry_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hungry_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Thirst_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Thirst_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Tired_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Tired_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Endurance_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Endurance_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Pain_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Pain_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bleeding_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bleeding_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Injured_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Injured_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Panic_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Panic_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Stress_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Stress_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Sick_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Sick_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Bored_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Bored_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Unhappy_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Unhappy_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Wet_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Wet_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HasACold_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HasACold_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_HeavyLoad_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/HeavyLoad_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Drunk_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Drunk_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_FoodEaten_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/FoodEaten_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hyperthermia_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hyperthermia_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Hypothermia_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Hypothermia_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Windchill_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Windchill_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_Uncomfortable_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/Uncomfortable_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L2_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L2_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L2_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L2_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L3_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L3_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_NoxiousSmell_L4_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/NoxiousSmell_L4_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_CantSprint_L1_A
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/CantSprint_L1_A.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_CantSprint_L1_B
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/CantSprint_L1_B.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
-    sound AimohPMXLaiya_CantSprint_L1_C
-    {
-        category = Player,
-        is3D = true,
-        loop = false,
-        clip
-        {
-            file = media/sound/AimohPMXLaiya/CantSprint_L1_C.wav,
-            volume = 1.0,
-            distanceMax = 20,
-        }
-    }
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hungry_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hungry_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Thirst_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Thirst_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Tired_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Tired_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Endurance_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Endurance_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Pain_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Pain_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bleeding_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bleeding_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Injured_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Injured_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Panic_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Panic_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Stress_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Stress_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Sick_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Sick_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Bored_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Bored_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Unhappy_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Unhappy_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Wet_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Wet_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HasACold_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HasACold_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_HeavyLoad_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/HeavyLoad_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Drunk_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Drunk_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_FoodEaten_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/FoodEaten_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hyperthermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hyperthermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Hypothermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Hypothermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Windchill_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Windchill_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Uncomfortable_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Uncomfortable_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_NoxiousSmell_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/NoxiousSmell_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_CantSprint_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/CantSprint_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_CantSprint_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/CantSprint_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_CantSprint_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/CantSprint_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Shout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Shout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Shout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Shout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Shout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Shout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_SneakShout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/SneakShout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_SneakShout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/SneakShout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_SneakShout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/SneakShout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_D
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_D.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_E
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_E.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_F
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_F.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_G
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_G.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_H
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_H.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_I
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_I.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
+sound AimohPMXLaiya_Kill_J
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXLaiya/Kill_J.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+
 }
