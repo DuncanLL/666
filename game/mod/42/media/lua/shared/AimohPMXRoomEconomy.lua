@@ -1,7 +1,10 @@
 local E={cost={targeted=150,outfit=120},creditsPerCash=60}
 E.keys={"targeted","outfit","credits"}
+local snapshots=setmetatable({},{__mode="k"})
 
 local function wallet(player)
+    if E.serverWallet then return E.serverWallet(player) end
+    if isClient and isClient() then return snapshots[player] or {} end
     local data=player:getModData()
     local room=data.R116ReadyRoomWallet
     if type(room)~="table" then
@@ -30,6 +33,7 @@ function E.available(player,key)
 end
 
 function E.buy(player,key,count)
+    if isClient and isClient() and not E.serverWallet then return false end
     if type(count)~="number" or count<1 or count%1~=0 then return false end
     local room=wallet(player)
     if key=="credits" then
@@ -70,6 +74,7 @@ E.outfitGuarantee=100
 E.defaultOutfitPrice=1080
 
 function E.resetTestDraws(player,outfitPools)
+    if isClient and isClient() then return end
     local room=wallet(player)
     if room.drawReset20261113 then return end
     room.drawResetBackup20261113={
@@ -132,6 +137,7 @@ local function draw(count,tickets,misses,guarantee,chance,roll)
 end
 
 function E.drawCharacter(player,key,count,roll)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
     if type(key)~="string" or key=="" or E.characterUnlocked(player,key) then return "unavailable" end
     local tickets=E.balance(player,"targeted")
     local status,results,misses=draw(count,tickets,E.characterMisses(player),E.characterGuarantee,E.characterChance,roll)
@@ -160,6 +166,7 @@ function E.outfitMisses(player,id)
 end
 
 function E.buyOutfit(player,id,price)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
     if type(price)~="number" or price<=0 or price%1~=0 or E.outfitOwned(player,id) then return "unavailable" end
     local credits=E.balance(player,"credits")
     if credits<price then return "short" end
@@ -178,6 +185,7 @@ function E.outfitChance(nextPull)
 end
 
 function E.drawOutfit(player,id,count,roll)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
     if E.outfitOwned(player,id) then return "unavailable" end
     local tickets=E.balance(player,"outfit")
     local status,results,misses=draw(count,tickets,E.outfitMisses(player,id),E.outfitGuarantee,E.outfitChance,roll)
@@ -186,6 +194,11 @@ function E.drawOutfit(player,id,count,roll)
         outfits(player)[id]=status=="unlocked" or misses
     end
     return status,results
+end
+
+-- The UI reads its last server snapshot through the same wallet functions.
+function E.setSnapshot(player,snapshot)
+    snapshots[player]=snapshot
 end
 
 return E

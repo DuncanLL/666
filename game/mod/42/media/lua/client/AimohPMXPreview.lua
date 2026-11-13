@@ -1,11 +1,12 @@
 local key = "AimohPMXPreview"
 local window = require "AimohPMXWindow"
+local multiplayer = require "GFL2MultiplayerClient"
 local started = false
 local awaiting = {}
 
 local function problem(player, message)
     if message and message ~= "" then
-        print("[AimohPMXPreview] " .. message)
+        print("[GFL2Exilium] " .. message)
         if player then player:Say(getText("ContextMenu_AimohPMX_Error")) end
         return true
     end
@@ -13,8 +14,7 @@ local function problem(player, message)
 end
 
 local function publish(player, saved)
-    local multiplayer=rawget(_G,"AimohPMXMPClient")
-    if multiplayer then multiplayer.publish(player,saved) end
+    if isClient() then multiplayer.publish(player,saved) end
 end
 
 local function voiceChanged(player)
@@ -105,13 +105,12 @@ end
 
 local function refresh(player)
     if problem(player,AimohPMXPreview.refreshLibrary()) then return false end
-    local multiplayer=rawget(_G,"AimohPMXMPClient")
-    if multiplayer then multiplayer.resync() end
+    if isClient() then multiplayer.resync() end
     return true
 end
 
 local function restore(player)
-    if not player or not AimohPMXPreview then return end
+    if not player or not AimohPMXPreview or isClient() then return end
     local saved = player:getModData()[key]
     if type(saved) == "table" and type(saved.model) == "string" then
         local message
@@ -159,7 +158,6 @@ Events.OnPlayerDeath.Add(function(player)
     window.closeFor(player)
     if AimohPMXPreview then
         AimohPMXPreview.disable(player)
-        if not isClient() or player:isLocalPlayer() then publish(player, nil) end
     end
 end)
 if Events.OnMainMenuEnter then

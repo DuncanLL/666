@@ -32,7 +32,7 @@ try:
             raise AssertionError([str(value) for value in result])
         return result[1]
 
-    environment.rawset("Economy", run(ROOT / "game/mod/42/media/lua/client/AimohPMXRoomEconomy.lua"))
+    environment.rawset("Economy", run(ROOT / "game/mod/42/media/lua/shared/AimohPMXRoomEconomy.lua"))
     print(run(ROOT / "tools/tests/room_economy_assertions.lua"))
 finally:
     jpype.shutdownJVM()

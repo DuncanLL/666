@@ -18,7 +18,7 @@
 | 动作、持物、姿态 | [ModelSession.java](../game/java/aimoh/pmxpreview/ModelSession.java)、[WorldPoseRetargeter.java](../game/java/aimoh/motion/WorldPoseRetargeter.java)、[Ozz 握持桥](../native/ozz/ozz_grip_bridge.cpp) |
 | 头发、衣物、胸部物理 | [PmxModel.java](../game/java/aimoh/motion/PmxModel.java)、[PMX 刚体引擎](../native/mmd-engine/src/physics)、[ChestSoftBody.java](../game/java/aimoh/motion/ChestSoftBody.java)、[胸部体积求解](../native/chest-softbody/softbody.cpp) |
 | 整备室 UI 和预览 | [AimohPMXWindow.lua](../game/mod/42/media/lua/client/AimohPMXWindow.lua)、[AimohPMXRoomData.lua](../game/mod/42/media/lua/client/AimohPMXRoomData.lua)、[ReadyRoomPreview.java](../game/java/aimoh/pmxpreview/ReadyRoomPreview.java) |
-| 语音、联机 | [语音路由](../game/mod/42/media/lua/shared/AimohPMXVoice/VoiceRouting.lua)、[声音定义](../game/mod/42/media/scripts)、[联机协议](../game/mod/42/media/lua/shared/AimohPMXProtocol.lua)、[服务端入口](../game/mod/42/media/lua/server/AimohPMXNetwork.lua) |
+| 语音、联机 | [语音路由](../game/mod/42/media/lua/shared/AimohPMXVoice/VoiceRouting.lua)、[声音定义](../game/mod/42/media/scripts)、[人物框架联机](multiplayer-framework.md)、[服务端入口](../game/mod/42/media/lua/server/AimohPMXNetwork.lua) |
 | 人物网格提交与渲染资料 | [PmxDrawMesh.java](../game/java/aimoh/motion/PmxDrawMesh.java)、[PmxOriginalInputs.java](../game/java/aimoh/motion/PmxOriginalInputs.java)、[外置资源清单](../resources/manifest.json) |
 | Native 渲染与共用代码 | [渲染 Java](../render-support/java)、[Native 光影源](../render-support/native-pack) |
 | Eclipse 渲染与合包 | [Eclipse 覆盖](../render-support/eclipse)、[合包入口源码](../render-support/combined)、[渲染发布标准](render-release-standard.md) |

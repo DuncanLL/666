@@ -15,13 +15,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import zombie.ZomboidFileSystem;
 import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 
 public class Main {
     public record Entry(String id,String label,Path model,Path profile) {
         public Entry(String label,Path model,Path profile){this(model.toString(),label,model,profile);}
     }
-    private record Pending(Entry entry,String settings) {}
+    private record Pending(Entry entry,String settings,boolean remote) {}
     private static final ArrayList<Entry> entries=new ArrayList<>();
     private static final HashSet<String> hiddenEntries=new HashSet<>();
     record CharacterPack(String id,Path media) {}
@@ -44,7 +45,7 @@ public class Main {
             try { Class.forName(type,false,loader); }
             catch(ClassNotFoundException | LinkageError failure) { error(failure); }
         }
-        System.out.println("[AimohPMXPreview] Shared player appearance");
+        System.out.println("[GFL2Exilium] Shared player appearance");
     }
 
     private static void refreshPoseOwners() {
@@ -97,7 +98,7 @@ public class Main {
                     throw new IllegalArgumentException("Unexpected character pack models");
                 if(loaded.stream().anyMatch(entry->ids.contains(entry.id())))throw new IllegalArgumentException("Duplicate model ID");
                 loaded.addAll(added);hidden.addAll(packHidden);packs.add(new CharacterPack(mod,media));
-            }catch(Exception e){System.err.println("[AimohPMXPreview] Character pack "+mod+": "+e);}
+            }catch(Exception e){System.err.println("[GFL2Exilium] Character pack "+mod+": "+e);}
         }
         entries.clear();entries.addAll(loaded);hiddenEntries.clear();hiddenEntries.addAll(hidden);
         enabledPacks=List.copyOf(packs);directory=d;
@@ -131,7 +132,7 @@ public class Main {
         NativeFunc loaded=new NativeFunc();
         if(Files.isRegularFile(nativeDirectory.resolve("AimohChestSoftBody.dll")))ChestSoftBody.initialize(nativeDirectory.resolve("AimohChestSoftBody.dll"));
         grip=new OzzGrip(nativeDirectory.resolve("AimohGripOzz.dll"));api=loaded;
-        System.out.println("[AimohPMXPreview] native="+api.GetVersion()+" assets="+directory);
+        System.out.println("[GFL2Exilium] native="+api.GetVersion()+" assets="+directory);
     }
     static boolean hasAppearance(IsoGameCharacter actor) { return poseOwners.containsKey(actor); }
     static synchronized ModelSession session(IsoGameCharacter actor) { return active.get(actor); }
@@ -147,6 +148,7 @@ public class Main {
                 }
                 nativeRuntime();next=new ModelSession(api,grip,request.entry());
                 next.applySettings(settingsFor(next,request.settings()),false);
+                if(request.remote())next.model.setPhysicsEnabled(false);
                 stage(actor,next);
             } catch(Throwable e){if(next!=null)next.retire();switchFailures.add(actor);error(e);}
             refreshPoseOwners();
@@ -267,16 +269,61 @@ public class Main {
         try{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(entry(id).profile())));}
         catch(Throwable e){error(e);return "";}
     }
-    public static synchronized String receiveNetwork(int id,String model,String signature,String value) {
-        return "旧试验联机接口已停用，请启用独立 AimohPmxPreviewMP 子模组";
+    public static synchronized String networkAppearance(IsoGameCharacter actor) {
+        ModelSession session=active.get(actor);
+        if(session==null)return "";
+        JSONObject state=new JSONObject(session.model.appearance().stateJson());
+        return new JSONObject().put("choices",state.getJSONObject("choices"))
+            .put("material_visibility",state.getJSONArray("material_visibility")).toString();
     }
+
+    public static synchronized String queueRemoteAppearance(IsoPlayer actor,String id,String signature,String value) {
+        if(actor==null||actor.isLocalPlayer())return "Invalid remote player";
+        if(id.isEmpty()){disable(actor);return "";}
+        try {
+            Entry model=entry(id);
+            if(!networkSignature(id).equals(signature))return "Character pack version mismatch";
+            if(value.length()>8192)return "Remote appearance exceeds 8 KiB";
+            JSONObject remote=networkSettings(model,value,"");
+            cancelPreparation(actor);
+            switchFailures.remove(actor);
+            pending.put(actor,new Pending(model,remote.toString(),true));
+            refreshPoseOwners();
+            return "";
+        }catch(Exception failure){return failure.toString();}
+    }
+    public static synchronized String queueOwnedAppearance(IsoPlayer actor,String id,String appearance,String localSettings) {
+        if(actor==null||!actor.isLocalPlayer())return "Invalid local player";
+        try {
+            return queueSettings(actor,id,networkSettings(entry(id),appearance,localSettings).toString());
+        }catch(Exception failure){return failure.toString();}
+    }
+
+    private static JSONObject networkSettings(Entry model,String value,String localSettings) throws Exception {
+        if(value.length()>8192)throw new IllegalArgumentException("Network appearance exceeds 8 KiB");
+        JSONObject profile=new JSONObject(Files.readString(model.profile()));
+        JSONObject base=profile.getJSONObject("appearance");
+        JSONObject result=localSettings.isBlank()
+            ? new JSONObject().put("appearance",base).put("weapon_tuning",profile.optJSONObject("weapon_tuning"))
+            : restoreMaterialSlots(settings(localSettings),profile);
+        JSONObject supplied=new JSONObject(value);
+        JSONArray visibility=supplied.getJSONArray("material_visibility");
+        if(visibility.length()!=base.getJSONArray("material_visibility").length())
+            throw new IllegalArgumentException("Material count mismatch");
+        for(int i=0;i<visibility.length();i++)if(!(visibility.get(i) instanceof Boolean))
+            throw new IllegalArgumentException("Invalid material visibility");
+        // Remote players use local model assets and never receive texture paths or physics parameters.
+        result.getJSONObject("appearance").put("material_visibility",visibility).put("choices",supplied.getJSONObject("choices"));
+        return result;
+    }
+
     public static synchronized String queueRestore(IsoGameCharacter actor,String id,String appearance) {
         return queueSettings(actor,id,savedSettings(id,appearance));
     }
     public static synchronized String queueSettings(IsoGameCharacter actor,String id,String value) {
         try {
             Entry e=entry(id);settings(value);
-            cancelPreparation(actor);switchFailures.remove(actor);pending.put(actor,new Pending(e,value));refreshPoseOwners();return "";
+            cancelPreparation(actor);switchFailures.remove(actor);pending.put(actor,new Pending(e,value,false));refreshPoseOwners();return "";
         }catch(Throwable e){error(e);return lastError;}
     }
     private static ModelSession required(IsoGameCharacter actor){ModelSession s=active.get(actor);if(s==null)throw new IllegalStateException("请先启用人物");return s;}
@@ -347,7 +394,7 @@ public class Main {
             if(saved!=null&&!saved.isBlank())next.applySettings(settingsFor(next,saved),false);
             pending.remove(actor);
             stage(actor,next);lastError="";
-            System.out.println("[AimohPMXPreview] enabled "+entries.get(index).label());return "";
+            System.out.println("[GFL2Exilium] enabled "+entries.get(index).label());return "";
         } catch (Throwable e) { if(next!=null)next.retire();error(e);return lastError; }
     }
     public static synchronized void disable(IsoGameCharacter actor) {
@@ -358,6 +405,6 @@ public class Main {
         for(ModelSession session:active.values()) session.retire();active.clear();pending.clear();switchFailures.clear();refreshPoseOwners();
     }
     static void error(Throwable e) {
-        lastError=e.toString();System.err.println("[AimohPMXPreview] "+lastError);e.printStackTrace();
+        lastError=e.toString();System.err.println("[GFL2Exilium] "+lastError);e.printStackTrace();
     }
 }

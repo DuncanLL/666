@@ -1,4 +1,7 @@
 {
+    "ContextMenu_GFL2_NotOnServer": "本服未开放此角色",
+    "ContextMenu_GFL2_AskHost": "由房主启用人物模块。",
+    "ContextMenu_GFL2_Connecting": "正在连接人物框架服务，请稍后再试。",
     "ContextMenu_AimohPMX_Menu": "少前2:追放人物框架",
     "ContextMenu_AimohPMX_JavaUnavailable": "Java 未加载，请授权并重启",
     "ContextMenu_AimohPMX_Refresh": "刷新列表",
@@ -6,7 +9,7 @@
     "ContextMenu_AimohPMX_Presets": "材质预设",
     "ContextMenu_AimohPMX_Reload": "重新应用配置",
     "ContextMenu_AimohPMX_Disable": "恢复原角色",
-    "ContextMenu_AimohPMX_Error": "PMX 操作未应用，详见 console.txt",
+    "ContextMenu_AimohPMX_Error": "人物框架操作未应用，详见 console.txt",
     "ContextMenu_AimohPMX_Simple": "简单调节",
     "ContextMenu_AimohPMX_Detail": "详细调节",
     "ContextMenu_AimohPMX_NoGroups": "暂无整套配件选项；可切换到详细调节。",
