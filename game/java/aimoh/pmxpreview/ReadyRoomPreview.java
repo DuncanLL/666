@@ -13,6 +13,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.WeakHashMap;
 import org.joml.Matrix4f;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -309,6 +310,48 @@ public class ReadyRoomPreview {
         BrowsePreview preview=browsePreviews.remove(actor);
         if(preview!=null&&preview.session()!=null)preview.session().retire();
     }
+    private record PreviewProgram(int id,int vp,int turn,int image,int locked) {
+        // LWJGL keeps these capabilities with their GL context. The context owns the program.
+        private static final WeakHashMap<GLCapabilities,PreviewProgram> programs=new WeakHashMap<>();
+
+        static synchronized PreviewProgram current() {
+            return programs.computeIfAbsent(GL.getCapabilities(),context->link());
+        }
+
+        private static int shader(int kind,String source){
+            int id=GL20.glCreateShader(kind);GL20.glShaderSource(id,source);GL20.glCompileShader(id);
+            if(GL20.glGetShaderi(id,GL20.GL_COMPILE_STATUS)==0){String error=GL20.glGetShaderInfoLog(id);GL20.glDeleteShader(id);throw new IllegalStateException(error);}return id;
+        }
+
+        private static PreviewProgram link() {
+            int vertex=shader(GL20.GL_VERTEX_SHADER,"""
+                #version 330
+                layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
+                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
+                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
+                """);
+            int fragment=0,program=0;
+            try {
+                fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
+                    #version 330
+                    in vec3 n;in vec2 uv;uniform sampler2D image;uniform bool locked;out vec4 color;
+                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
+                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
+                    if(locked){
+                        float l=dot(c.rgb,vec3(.2126,.7152,.0722));
+                        color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
+                    }else color=vec4(c.rgb*light,c.a);}
+                    """);
+                program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
+                if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
+                return new PreviewProgram(program,GL20.glGetUniformLocation(program,"vp"),GL20.glGetUniformLocation(program,"turn"),
+                    GL20.glGetUniformLocation(program,"image"),GL20.glGetUniformLocation(program,"locked"));
+            } catch(RuntimeException|Error failure) {
+                if(program!=0)GL20.glDeleteProgram(program);
+                throw failure;
+            } finally {GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
+        }
+    }
     private static ByteBuffer buffer(int bytes){return ByteBuffer.allocateDirect(bytes).order(ByteOrder.nativeOrder());}
     static final class Mesh implements AutoCloseable {
         final ModelSession session;
@@ -316,7 +359,7 @@ public class ReadyRoomPreview {
         final int[] indices,materials,firsts,counts;
         final ByteBuffer upload;
         final float centerX,centerY,centerZ,span,faceY;
-        int program,vao,vbo,ibo,uvBuffer;
+        int vao,vbo,ibo,uvBuffer;
         boolean closed,failed,gpuLayout;
         private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
@@ -346,33 +389,7 @@ public class ReadyRoomPreview {
             }
             faceY=head;
         }
-        private static int shader(int kind,String source){
-            int id=GL20.glCreateShader(kind);GL20.glShaderSource(id,source);GL20.glCompileShader(id);
-            if(GL20.glGetShaderi(id,GL20.GL_COMPILE_STATUS)==0){String error=GL20.glGetShaderInfoLog(id);GL20.glDeleteShader(id);throw new IllegalStateException(error);}return id;
-        }
-        void initialize(){
-            int vertex=shader(GL20.GL_VERTEX_SHADER,"""
-                #version 330
-                layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
-                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
-                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
-                """);
-            int fragment=0;
-            try {
-                // Same restrained preview light as the workbench; the world shader pack is untouched.
-                fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
-                    #version 330
-                    in vec3 n;in vec2 uv;uniform sampler2D image;uniform bool locked;out vec4 color;
-                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
-                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
-                    if(locked){
-                        float l=dot(c.rgb,vec3(.2126,.7152,.0722));
-                        color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
-                    }else color=vec4(c.rgb*light,c.a);}
-                    """);
-                program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
-                if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
-            }finally{GL20.glDeleteShader(vertex);if(fragment!=0)GL20.glDeleteShader(fragment);}
+        private void initialize(){
             vao=GL30.glGenVertexArrays();GL30.glBindVertexArray(vao);vbo=GL15.glGenBuffers();ibo=GL15.glGenBuffers();
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,vbo);GL15.glBufferData(GL15.GL_ARRAY_BUFFER,upload.capacity(),GL15.GL_STREAM_DRAW);
             for(int i=0;i<3;i++)GL20.glEnableVertexAttribArray(i);
@@ -385,7 +402,7 @@ public class ReadyRoomPreview {
             gpuLayout=false;
         }
         void bindGeometry(PmxDrawMesh.FrameData frame) {
-            if(program==0)initialize();
+            if(vao==0)initialize();
             GL30.glBindVertexArray(vao);
             if(frame.gpuPose()!=null) {
                 GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,frame.gpuPose().vertexBuffer());
@@ -413,9 +430,10 @@ public class ReadyRoomPreview {
             Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
                 .lookAt(centerX,cameraY,centerZ+span*3,centerX,cameraY,centerZ,0,1,0);
             Matrix4f turn=new Matrix4f().translate(centerX,0,centerZ).rotateY(yaw).translate(-centerX,0,-centerZ);
-            GL20.glUseProgram(program);GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"vp"),false,vp.get(new float[16]));
-            GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(program,"turn"),false,turn.get(new float[16]));GL20.glUniform1i(GL20.glGetUniformLocation(program,"image"),0);
-            GL20.glUniform1i(GL20.glGetUniformLocation(program,"locked"),locked?1:0);
+            PreviewProgram program=PreviewProgram.current();
+            GL20.glUseProgram(program.id());GL20.glUniformMatrix4fv(program.vp(),false,vp.get(new float[16]));
+            GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));GL20.glUniform1i(program.image(),0);
+            GL20.glUniform1i(program.locked(),locked?1:0);
             Texture[] textures=session.preparePlainMaterials(state);
             GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
@@ -426,7 +444,7 @@ public class ReadyRoomPreview {
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
         }
-        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(program!=0)GL20.glDeleteProgram(program);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;
