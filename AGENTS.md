@@ -2,9 +2,9 @@
 
 - 本仓库维护游戏人物 MOD、其独立原生核心、Native及保留的Eclipse渲染支持与构建发布工具。工作台不纳入；不要恢复旧 FBX 人物卡流程。
 - `game/java` 是当前游戏 Java 实现；`game/mod` 是 Lua、声音定义、菜单和人物配置；`native` 是实际使用的 Rust/Bullet 与 Ozz 源码。
-- 按用户2026-11-10指示，R116 只以人物与光影单 MOD 合包交付。用 `tools/package_r116_unified.py` 将已验证的人物发布目录与当前封装光影装成一个 `AimohPmxPreview` MOD，沿用人物工坊项目 3834454638。两套光影随 R116 自动安装，玩家在 Viewpoint 内选择。独立光影构建仅用作构建输入、验证和回退。不自动上传工坊。
+- 本分支维护同一人物核心的 VP RC4 专版。专版独立工坊项目为 3838770244。内部 MOD ID 为 AimohPmxPreview，和正式工坊版共用角色模块及存档身份，使用时启用其中一个框架。
 - 人物还原以整备室为主要观感参考，但人物仍接受VP现场光照与反射。所有角色共用材质/显示接入，不按角色美白、固定布灯或复制房间反射；VP原版环境、天空、雾、曝光和场景后处理保持。新角色沿共同资料契约接入，不另写角色补丁；被否定的调色预设不得恢复。
-- 本分支面向 PZ 42.22 和 Steam 创意工坊正式版 Viewpoint 0.1.6.2。官方文件保持 Steam 清单原字节，换宿主时重新核对实际接口和受控绘制。
+- 本分支面向 PZ 42.22 和官方 nightly Viewpoint 0.1.7-rc4。官方 JAR 和签名保持原字节。
 - Eclipse 专用覆盖源在 `render-support/eclipse`。两份独立后端构建是 `tools/build_combined_render_support.py` 的输入。合包的一个 JAR 只运行一份安装入口和宿主挂接安装器。两后端共用宿主校验、人物骨骼数据、描边和纹理读取。
 - 原生核心直接来源于已记录的 MC-MMD-rust 上游。第三方来源与许可保留在 `provenance`、`licenses`；不导入 PZMMD 作者分支或其成品核心。
 - 模型、贴图、语音及原游着色资源不进 Git，按 `resources/manifest.json` 读回；本机路径只放被忽略的 `.local/paths.json`。

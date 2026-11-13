@@ -4,11 +4,9 @@
   "release_version": "0.3.26",
   "internal_mod_id": "AimohGF2Eclipse",
   "workshop_id": "3834707439",
-  "supported_viewpoint": "official Steam Workshop 0.1.6.2",
-  "official_host_sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e",
-  "official_host_workshop_id": "3809306528",
-  "official_host_workshop_manifest": "559614409211759918",
-  "official_host_signature_sha256": null,
+  "supported_viewpoint": "official nightly 0.1.7-rc4",
+  "official_host_sha256": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32",
+  "official_host_signature_sha256": "bd033c6a002ff62f11683f1096d6524ca10c4a358c9d4559484aebf14dfc5350",
   "source_snapshot": "Native development compatibility-hardening snapshot 2026-11-08",
   "source_snapshot_jar_sha256": "41bffc99dc355506f474c280ff4f3fa7ad9d68602265f4887f449ac8d0804dce",
   "migration": [
@@ -23,6 +21,6 @@
   "nvidia_hardware_acceptance": false,
   "steam_subscription_acceptance": false,
   "compatible_official_hosts": {
-    "0.1.6.2": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e"
+    "0.1.7-rc4": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32"
   }
 }

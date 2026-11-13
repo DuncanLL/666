@@ -12,12 +12,7 @@ MOTION_PASS=SHADERS+'composite6.fsh'
 FOG_FILTER_PASS=SHADERS+'composite4.fsh'
 FOG_RAY_PASS=SHADERS+'composite3.fsh'
 GF2_MANIFEST=PACK_SHADERS+'gf2/manifest.json'
-RETIRED_ENTRIES={
-    'viewpoint/render/AimohGF2Services$Snapshot.class',
-    # Workshop Viewpoint owns glass drawing and has no separate wiper overlay pass.
-    'viewpoint/render/AimohGf2IrisGlass.class',
-    'viewpoint/render/AimohGf2IrisGlass$State.class',
-}
+RETIRED_ENTRIES={'viewpoint/render/AimohGF2Services$Snapshot.class'}
 MC_TREES=('world-1/','world1/','world0_with_aether_flag/','world0_with_twilight_forest_flag/',
           'template/','world0/clrwl_')
 # Official RC3 has no draw or fallback path to these entries.

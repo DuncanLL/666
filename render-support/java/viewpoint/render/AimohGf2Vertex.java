@@ -19,9 +19,9 @@ final class AimohGf2Vertex {
         boolean ssbo=head.contains("readonly buffer ModelPalettes { vec4 uPalettes[]; };")&&head.contains("readonly buffer ModelDraws { vec4 uDraws[]; };");
         if(legacy==ssbo)throw new IllegalArgumentException("Unreviewed GF2 model storage ABI");
         String original=source.substring(split,bridge),tail=source.substring(bridge);
-        if(ssbo)tail=Pattern.compile("\\b(uPalettes|uDraws)\\[([^\\]]+)\\]").matcher(tail).replaceAll("texelFetch($1,$2)");
-        if(tail.contains("uPalettes[")||tail.contains("uDraws["))
-            throw new IllegalArgumentException("Unmapped GF2 Workshop texture-buffer fetch");
+        tail=Pattern.compile("texelFetch\\((uPalettes|uDraws),([^(),]+)\\)").matcher(tail).replaceAll("$1[$2]");
+        if(tail.contains("texelFetch(uPalettes,")||tail.contains("texelFetch(uDraws,"))
+            throw new IllegalArgumentException("Unmapped GF2 native palette fetch");
         return NATIVE+original+tail;
     }
     static Stages bindStages(String vertex,String fragment){

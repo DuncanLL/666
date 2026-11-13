@@ -2,14 +2,12 @@
 // Native lib/sky_light.glsl + default lib/land_light.glsl -> Unity's packed SH9.
 // The source frame uses the existing camera-relative X/Z flip, no artistic parameters.
 layout(local_size_x=1)in;
-uniform sampler2D nativeSkyTexture;
+layout(std140,binding=0)uniform NativeSkyLight{vec4 nativeSky[10];};
 layout(std430,binding=0)buffer GF2NativeLighting{vec4 sourceSH[7];vec4 sourceMain;};
 uniform vec3 nativeRelativeSky;
 uniform float nativePrimaryStrength;
 uniform vec4 nativeEngineLight;
 void main(){
-    vec4 nativeSky[10];
-    for(int i=0;i<10;i++)nativeSky[i]=texelFetch(nativeSkyTexture,ivec2(i,0),0);
     const float k0=3.141593*0.282095,k1=2.094395*0.488603;
     const float k2=0.785398*1.092548,k6=0.785398*0.315392,k8=0.785398*0.546274;
     float share=nativeEngineLight.a;

@@ -57,7 +57,6 @@ public final class AimohGf2OriginalProgram implements AutoCloseable {
             gl.sampler("gf2AuthoredExposure",95);exposureOffsetLocation=GL20.glGetUniformLocation(gl.id(),"gf2AuthoredExposureOffset");
             gl.sampler("gf2NativeSunVisibility",94);sunVisibilityLocation=GL20.glGetUniformLocation(gl.id(),"gf2NativeSunVisibility");
             gl.sampler("uRelief",Gl.UNIT_FAR_RELIEF);gl.sampler("uReliefWater",Gl.UNIT_FAR_RELIEF_WATER);
-            gl.sampler("uReliefWalls",Gl.UNIT_FAR_RELIEF_WALLS);gl.sampler("uReliefFlow",Gl.UNIT_FAR_RELIEF_FLOW);
 
             for(int slot=0;slot<6;slot++){
                 String name=slot<3?"GF2Buffer"+slot:"GF2VSBuffer"+(slot-3);

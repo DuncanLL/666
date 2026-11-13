@@ -286,7 +286,7 @@ public final class AimohGf2Runtime implements AutoCloseable {
     }
 
     private Local localFrame(AimohGf2FrameInputs builder,String root,int actor,int frame,Map<String,float[]> inputs,AimohGf2RuntimeQueue.Frame base,int draw){
-        ModelDraws models=AimohWorkshopRender.draws(AimohGf2SourceHost.models);RootKey key=new RootKey(actor,builder,root);RootPose pose=poses.get(key);
+        ModelDraws models=AimohGf2SourceHost.models.draws();RootKey key=new RootKey(actor,builder,root);RootPose pose=poses.get(key);
         if(pose==null||pose.frame!=frame){double[] current=builder.rootRotation(root,models.palettes,models.palette[draw]*12);double[] previous=pose!=null&&pose.frame==frame-1?pose.current:current;pose=new RootPose(frame,current,previous);poses.put(key,pose);}
         Matrix4d object=matrix(inputs.get("unity_ObjectToWorld")).mul(new Matrix4d().set(new Matrix3d().set(pose.current)));
         Matrix4d previous=matrix(inputs.get("unity_MatrixPreviousM")).mul(new Matrix4d().set(new Matrix3d().set(pose.previous)));if(!base.history())previous.set(object);

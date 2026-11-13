@@ -1,0 +1,54 @@
+{
+  "version": "0.3.88",
+  "viewpoint": "0.1.7-rc4",
+  "framework_baseline": "8f3fd450daad7c96dad0829747f00faec9dad8b1",
+  "workshop_id": 3838770244,
+  "visibility": "unlisted",
+  "dependencies": [
+    3619862853
+  ],
+  "jar_sha256": "643c63ac09e4e7b4eac58e0b46f35fe1344e4416c863dbe9dd511a499b84ae80",
+  "host_sha256": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32",
+  "signature_sha256": "bd033c6a002ff62f11683f1096d6524ca10c4a358c9d4559484aebf14dfc5350",
+  "loader_sha256": "eb79b9876332010733a8e0d7ce4fe0377846059a9e28859029e2a0fb449f6cf2",
+  "component": {
+    "status": "PASS",
+    "modules": 22,
+    "models": 60,
+    "outfits": 59,
+    "pools": 4,
+    "direct_prices": 33,
+    "identical_framework_files": 1428,
+    "economy": "PASS one-time reset, retained purchases, all price tiers and balances, independent outfit pity and shared character pity"
+  },
+  "gpu": {
+    "name": "AMD Radeon RX 9070 XT",
+    "opengl": "4.6.0 Compatibility Profile Context 26.9.1.260806"
+  },
+  "backends": {
+    "native": {
+      "host_expanded_links": 36,
+      "models": [
+        "pmx-412bd037301ebe18",
+        "pmx-48650a04a35b40e0",
+        "pmx-90268b4961c97434",
+        "pmx-81a5c871affb4465",
+        "pmx-5efe7392a2315a89"
+      ],
+      "draw_states": 33
+    },
+    "eclipse": {
+      "host_expanded_links": 73,
+      "models": [
+        "pmx-412bd037301ebe18",
+        "pmx-48650a04a35b40e0",
+        "pmx-90268b4961c97434",
+        "pmx-81a5c871affb4465",
+        "pmx-5efe7392a2315a89"
+      ],
+      "draw_states": 33
+    }
+  },
+  "gameplay_tested": false,
+  "performance_comparison": false
+}

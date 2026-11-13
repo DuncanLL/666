@@ -164,7 +164,7 @@ public final class UnifiedStartupCheck {
         ZomboidFileSystem.instance.setCacheDir(project.getParent().getParent().toString());
         ZomboidFileSystem.instance.init();
         var item = new zombie.core.znet.SteamWorkshopItem(project.toString());
-        require(item.readWorkshopTxt() && item.validateContents()==null && item.getTitle().equals("少前2追放角色框架"),
+        require(item.readWorkshopTxt() && item.validateContents()==null && item.getTitle().equals("少前2追放角色框架（VP RC4 专版）"),
             "Game Workshop validator rejected R116");
         report.put("workshop_validator_passed",true).put("saved_selection_preserved",true)
             .put("custom_pack_preserved",true).put("game_started",false);

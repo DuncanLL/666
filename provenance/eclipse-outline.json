@@ -2,7 +2,7 @@
   "format": 1,
   "base_version": "0.1.2 preserved Eclipse distribution",
   "reference_jar_sha256": "614df4df845c07b935116fbe470fc0f8109ea0b9400f867e2c30584430beb547",
-  "official_host_sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e",
+  "official_host_sha256": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32",
   "shader_change": "Keep the character key-light output write-only and use the official host reserved relief sampler units.",
   "source_adapter_origin": "3127265^:render-support/java/viewpoint/render/AimohGf2Rc2Vertex.java",
   "scope": "Workshop Viewpoint 0.1.6.2 Eclipse character effects with source eye parallax handedness and opaque outlines before transparent character passes (GF2 activity capture 2, events 2562–2651 before 3144–3162). Authored opaque coverage of translucent clothing precedes scene translucency.",
@@ -20,7 +20,9 @@
     "viewpoint/render/AimohGf2PackMaterials.java",
     "viewpoint/render/AimohGf2SurfaceControls.java",
     "viewpoint/render/AimohGf2UnpackScope.java",
-    "viewpoint/render/AimohGf2Vertex.java",
-    "viewpoint/render/AimohWorkshopRender.java"
-  ]
+    "viewpoint/render/AimohGf2Vertex.java"
+  ],
+  "compatible_official_hosts": {
+    "0.1.7-rc4": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32"
+  }
 }

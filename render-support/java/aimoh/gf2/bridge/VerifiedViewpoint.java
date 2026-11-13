@@ -7,7 +7,7 @@ import java.util.*;
 
 /** Both distributions target the same unmodified official host. */
 final class VerifiedViewpoint {
-    static final String SHA256="67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e";
+    static final String SHA256="d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32";
 
     static void verify()throws Exception{
         ClassLoader loader=VerifiedViewpoint.class.getClassLoader();
@@ -21,7 +21,7 @@ final class VerifiedViewpoint {
         Path jar=Path.of(location.getJarFileURL().toURI());
         String actual=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(jar)));
         if(!SHA256.equals(actual))
-            throw new IllegalStateException("R116 requires official Workshop Viewpoint 0.1.6.2. Detected JAR SHA-256: "+actual);
+            throw new IllegalStateException("R116 requires official Viewpoint 0.1.7-rc4. Detected JAR SHA-256: "+actual);
     }
 
     private VerifiedViewpoint(){}

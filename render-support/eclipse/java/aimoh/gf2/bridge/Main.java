@@ -26,6 +26,6 @@ public final class Main {
         Instrumentation agent=(Instrumentation)field.get(null);
         if(agent==null)throw new IllegalStateException("Enable this Java MOD through the normal ZombieBuddy approval");
         RuntimeHooks candidate=new RuntimeHooks();candidate.install(agent);hooks=candidate;
-        System.out.println("[R116 Eclipse] 0.1.28 renderer ready on official Workshop Viewpoint 0.1.6.2; shader "+installed.action()+" at "+installed.pack()+". Select it in Viewpoint to enable.");
+        System.out.println("[R116 Eclipse] 0.1.28 renderer ready on official Viewpoint 0.1.7-rc4; shader "+installed.action()+" at "+installed.pack()+". Select it in Viewpoint to enable.");
     }
 }

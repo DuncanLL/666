@@ -151,7 +151,7 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
         String outputs="layout(location=0)out vec4 gf2NativeAlbedo;layout(location=1)out vec4 gf2NativeNormal;layout(location=2)out vec4 gf2NativeLight;layout(location=3)out vec4 gf2NativeVelocity;";
         fragment+="\nin vec3 gf2NativeWorldNormal;in vec4 gf2NativeClip;in vec4 gf2NativePreviousClip;flat in vec4 vLight;uniform int gf2HistoryEnabled;\n"+outputs+"\n"+
             "vec3 gf2NativeDecode(vec2 e){e=e*2-1;vec3 n=vec3(e,1-abs(e.x)-abs(e.y));if(n.z<=0)n.xy=(1-abs(n.yx))*sign(n.xy);return normalize(n);}\n"+
-            "vec4 gf2NativePack(vec3 n,float outdoors){return vec4(normalize(n),outdoors);}\n"+
+            "vec4 gf2NativePack(vec3 n,float outdoors){n/=max(abs(n.x)+abs(n.y)+abs(n.z),1e-6);vec2 e=n.z>=0?n.xy:(1-abs(n.yx))*vec2(n.x>=0?1:-1,n.y>=0?1:-1);return vec4(e*.5+.5,outdoors,1);}\n"+
             "void main(){gf2OriginalFragment();gf2NativeAlbedo=vec4(0,0,0,31.0/255.0);gf2NativeLight=vLight;gf2NativeNormal=gf2NativePack(("+normal+")*vec3(-1,1,-1),vLight.a>=1?1:0);gf2NativeVelocity=gf2HistoryEnabled==0?vec4(0):vec4((gf2NativeClip.xy/gf2NativeClip.w-gf2NativePreviousClip.xy/gf2NativePreviousClip.w)*.5,gf2NativePreviousClip.w,1);}\n";
         result=new AimohGf2OriginalProgram(vertex,fragment,vs,fs);
         if(result.nativeProgram().has("gf2NativeSunVisibility")){result.close();throw new IllegalArgumentException("Unbridged Native early shadow consumer: "+fs);}
