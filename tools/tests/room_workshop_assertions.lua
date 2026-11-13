@@ -1,6 +1,8 @@
 local actions={}
 local w=AimohPMXWindow.open(actor,actions)
-assert(#w.characters==15)
+local count=0
+for _ in pairs(roomData.roomWorkshopItems)do count=count+1 end
+assert(#w.characters==count)
 for _,character in ipairs(w.characters)do
  w:onCharacter(character)
  assert(character.locked and w.workshopButton.visible)
@@ -46,4 +48,4 @@ for _,c in ipairs(w.characters)do
  assert(not w.workshopPrompt)
 end
 w:close()
-return "PASS all 15 missing modules: first click, cancel, back, confirmed browser/overlay destination, stale clicks, modal hit blocking; loaded modules hide action"
+return "PASS all missing modules: first click, cancel, back, confirmed browser/overlay destination, stale clicks, modal hit blocking; loaded modules hide action"

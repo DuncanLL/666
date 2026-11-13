@@ -11,7 +11,9 @@ reg=[]
 for mod in (repo/'game/packs').iterdir():
  p=mod/'42/media/aimoh_pmx/packs'/f'{mod.name}.json'
  if p.exists():reg.extend({**r,'groups':[]} for r in json.loads(p.read_text('utf8'))['models'])
-assert len(catalog['roomWorkshopItems'])==15
+characters={row["character"] for row in catalog["models"].values()}
+assert set(catalog["roomWorkshopItems"])==characters
+assert len(set(catalog["roomWorkshopItems"].values()))==len(characters)
 os.chdir(game)
 jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-UNNAMED',classpath=[str(game/'projectzomboid.jar')],convertStrings=True)
 J=jpype.JClass
