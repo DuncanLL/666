@@ -8,11 +8,11 @@ local function configureWeapon()
     local scripts = getScriptManager()
     local weapon = scripts:FindItem(weaponId)
     local donor = scripts:FindItem("EscapeFromZomboidFirearms.VECTOR45")
-    if not weapon or not donor or not donor:getAmmoType() or not scripts:FindItem("EscapeFromZomboidFirearms.P_5fb651b52b1b027b1f50bcff") then return end
+    if not weapon or not donor or not donor:getAmmoType() or not scripts:FindItem("EscapeFromZomboidFirearms.P_5fb651dc85f90547f674b6f4") then return end
     weapon:setAmmoType(donor:getAmmoType())
     weapon:DoParam("AmmoBox", "Base.Bullets45Box")
-    weapon:DoParam("MaxAmmo", "25")
-    weapon:DoParam("MagazineType", "EscapeFromZomboidFirearms.P_5fb651b52b1b027b1f50bcff")
+    weapon:DoParam("MaxAmmo", "30")
+    weapon:DoParam("MagazineType", "EscapeFromZomboidFirearms.P_5fb651dc85f90547f674b6f4")
     Magazine.RegisterWeaponWithProfile("TW:VECTOR45", weaponId)
     Ammo.RegisterItemWithFamily("TW:ammo:45", weaponId)
 end
