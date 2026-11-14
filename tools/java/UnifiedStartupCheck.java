@@ -98,7 +98,7 @@ public final class UnifiedStartupCheck {
         ZomboidFileSystem.instance.setCacheDir(user.toString());
         ZomboidFileSystem.instance.init();
         Path selection = user.resolve("viewpoint-live.properties");
-        String chosen = "graphics.pack=minecraft-Aimoh-Eclipse-GF2\n";
+        String chosen = "graphics.pack=minecraft-Eclipse_GFL_2\n";
         Files.writeString(selection, chosen);
         Path folder = Files.createDirectories(user.resolve("viewpoint-shaderpacks"));
         Path custom = folder.resolve("PlayerCustom.zip");
@@ -107,7 +107,7 @@ public final class UnifiedStartupCheck {
         boolean lateHost = args[2].equals("late-host");
         Instrumentation agent = RenderSupportTestAgent.agent;
         Path oldEclipse = lateHost ? installOldEclipse(user) : null;
-        Path installedEclipse = folder.resolve("Aimoh-Eclipse-GF2.zip");
+        Path installedEclipse = folder.resolve("Eclipse GFL 2.zip");
         if (lateHost) require(UnifiedStartupCheck.class.getClassLoader().getResource(MODEL_PASS + ".class") == null,
             "Late-host case already exposes Viewpoint");
         if (!lateHost && !legacy) apply("viewpoint", agent);
@@ -126,7 +126,7 @@ public final class UnifiedStartupCheck {
         if (legacy) {
             prepare();
             require(drawOrder(agent).equals(early), "Legacy coexistence applied a duplicate renderer");
-            require(!Files.exists(folder.resolve("Aimoh-Eclipse-GF2.zip")), "Duplicate renderer touched the user's packs");
+            require(!Files.exists(folder.resolve("Eclipse GFL 2.zip")), "Duplicate renderer touched the user's packs");
         } else {
             if (lateHost) {
                 require(Files.mismatch(oldEclipse, installedEclipse) != -1, "Stale managed Eclipse was not upgraded");
@@ -136,7 +136,7 @@ public final class UnifiedStartupCheck {
                 }
                 report.put("stale_eclipse_geometry_upgraded", true);
             }
-            var iris = (IrisPack)find("IrisPacks", folder.toFile(), "minecraft-Aimoh-Eclipse-GF2");
+            var iris = (IrisPack)find("IrisPacks", folder.toFile(), "minecraft-Eclipse_GFL_2");
             var manifest = new JSONObject(iris.source.read("gf2/manifest.json"));
             var probe = manifest.getJSONObject("native_probe");
             byte[] source = iris.source.readBytes(probe.getString("path"));
@@ -146,7 +146,7 @@ public final class UnifiedStartupCheck {
             var configured = iris.configure(Map.of("TAA","true","VP_DANRP_PIPELINE","true"),macros);
             var post = iris.preprocess(configured,"world0/composite6.fsh",macros);
             require(post.errors().isEmpty() && post.text().contains("vpDanMotionTex"), "Early Eclipse preprocessing failed");
-            Object nativePack = find("ShaderPacks", folder.toFile(), "Aimoh-Native-GF2");
+            Object nativePack = find("ShaderPacks", folder.toFile(), "Native-GFL2");
             var read = nativePack.getClass().getDeclaredMethod("shader",String.class);
             read.setAccessible(true);
             require(new JSONObject((String)read.invoke(nativePack,"gf2/manifest.json")).has("original_camera_fill"),
