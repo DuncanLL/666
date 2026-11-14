@@ -74,8 +74,8 @@ module GFL2
         JamGunChance = 1,
         KnockBackOnNoDeath = true,
         KnockdownMod = 4.0,
-        MagazineType = Base.45Clip,
-        MaxAmmo = 7,
+        MagazineType = GFL2.SchlitzohrMagazine,
+        MaxAmmo = 25,
         MaxDamage = 1.2,
         MaxHitcount = 1,
         MaxRange = 20,
@@ -125,5 +125,20 @@ module GFL2
         WeaponSprite = GFL2.SchlitzohrEmpty,
         Tags = base:hasmetal;base:firearm,
         WorldStaticModel = GFL2.SchlitzohrEmpty,
+    }
+
+    item SchlitzohrMagazine
+    {
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Weight = 0.2,
+        Icon = m16clip,
+        AmmoType = base:bullets_45,
+        CanStack = false,
+        GunType = GFL2.Schlitzohr,
+        MaxAmmo = 25,
+        StaticModel = GunMagazine,
+        WorldStaticModel = gun_magazine_new,
+        Tags = base:hasmetal;base:riflemagazine,
     }
 }

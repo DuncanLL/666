@@ -1,7 +1,7 @@
 name=OTs-14
 id=GFL2OTs14
 require=\GFL2Exilium
-modversion=0.3.119
+modversion=0.7.0
 versionMin=42.22
 versionMax=42.22
 icon=icon.png
