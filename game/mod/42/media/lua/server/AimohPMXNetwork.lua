@@ -70,10 +70,11 @@ local function transact(player, command, args)
         return economy.buy(player, args.target, args.count) and "ok" or "short"
     end
 
-    if command == "DrawWeapon" or command == "ClaimWeapon" then
+    if command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" then
         local weapon = weapons.byId[args.target]
         if not weapon or not getActivatedMods():contains(weapon.mod) then return "unavailable" end
         if command == "ClaimWeapon" then return economy.claimWeapon(player,weapon) end
+        if command == "ClaimMagazine" then return economy.claimMagazine(player,weapon) end
         return economy.drawWeapon(player,weapon,args.count)
     end
     local model = type(args.target) == "string" and openModel(args.target)
@@ -137,7 +138,7 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             and previous.signature == state.signature and previous.appearance == state.appearance then return end
         row.appearance = state.model ~= "" and state or nil
         publish(player, state)
-    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" then
+    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" then
         process(player, row, command, args)
     end
 end)

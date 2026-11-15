@@ -277,6 +277,23 @@ function E.claimWeapon(player,weapon)
     return "ok"
 end
 
+function E.weaponMagazine(weapon)
+    if not weapon or not weapon.startsWithMagazine then return end
+    local magazine=weapon.id.."Magazine"
+    if getScriptManager():FindItem(magazine) then return magazine end
+end
+
+function E.claimMagazine(player,weapon)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
+    local magazine=E.weaponMagazine(weapon)
+    if not magazine or not E.weaponProgress(player,weapon.id).acquired then return "unavailable" end
+    local inventory=player:getInventory()
+    local item=inventory:AddItem(magazine)
+    if not item then return "unavailable" end
+    if isServer and isServer() then sendAddItemToContainer(inventory,item) end
+    return "ok"
+end
+
 -- The UI reads its last server snapshot through the same wallet functions.
 function E.setSnapshot(player,snapshot)
     snapshots[player]=snapshot
