@@ -78,7 +78,7 @@ module GFL2
         MaxAmmo = 30,
         MaxDamage = 1.6,
         MaxHitcount = 2,
-        MaxRange = 30,
+        MaxRange = 60,
         MinSightRange = 2,
         MaxSightRange = 10.0,
         MetalValue = 45.0,
