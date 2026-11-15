@@ -140,10 +140,10 @@ public final class PmxModel implements AutoCloseable {
         long started=System.nanoTime();
         WorldPoseRetargeter.GripResult[] result;
         if(motion!=0) {
-            seconds=motionPaused||motionEnd<=0?0:seconds*motionSpeed;
+            if(motionPaused||motionEnd<=0)seconds=0;
+            // The layer scales VMD time internally. Both physics solvers use the unscaled frame time.
             core.finishNativePose(seconds);
-            // The native VMD layer advances by the same float delta and loops past its final frame.
-            motionFrame+=seconds*30f;
+            motionFrame+=seconds*motionSpeed*30f;
             if(motionEnd>0&&motionFrame>motionEnd)motionFrame%=motionEnd;
             result=new WorldPoseRetargeter.GripResult[0];
         } else if (grip != null && profile.palm_ready) {
@@ -187,6 +187,7 @@ public final class PmxModel implements AutoCloseable {
             motionName=file.getFileName().toString();motionPaused=false;
             motionFrame=0;motionEnd=api.GetAnimMaxFrame(next);
             api.ChangeModelAnim(handle,next,0);api.SetLayerLoop(handle,0,motionEnd>0);
+            api.SetLayerSpeed(handle,0,motionSpeed);
             motionRevision++;resetPhysics();
         } catch(RuntimeException|Error e) {
             if(motion==next)stopMotion();else api.DeleteAnimation(next);
@@ -200,7 +201,10 @@ public final class PmxModel implements AutoCloseable {
     public synchronized void toggleMotionPause() { if(motion!=0)motionPaused=!motionPaused; }
     public synchronized void setMotionSpeed(float speed) {
         if(!Float.isFinite(speed)||speed<0f||speed>1f)throw new IllegalArgumentException("倍速须在 0～1 之间");
-        if(motion!=0)motionSpeed=speed;
+        if(motion!=0){
+            api.SetLayerSpeed(handle,0,speed);
+            motionSpeed=speed;
+        }
     }
     public synchronized JSONObject motionTimeline() {
         return new JSONObject().put("name",motionName).put("paused",motionPaused())
@@ -223,6 +227,7 @@ public final class PmxModel implements AutoCloseable {
         if(motion==0)return;
         long old=motion;motion=0;motionName="";motionFrame=motionEnd=0;motionRevision++;
         api.ChangeModelAnim(handle,0,0);api.DeleteAnimation(old);
+        api.SetLayerSpeed(handle,0,1f);
         api.SetPZLegIKSuppressed(handle,true);appearance.setAnimatedMorphs(Set.of());
         setPhysicsEnabled(motionRestorePhysics);resetPhysics();
     }

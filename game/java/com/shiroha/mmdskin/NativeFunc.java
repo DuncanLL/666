@@ -58,6 +58,7 @@ public final class NativeFunc {
     public native void ChangeModelAnim(long model, long animation, long layer);
     public native float GetAnimMaxFrame(long animation);
     public native void SetLayerLoop(long model, long layer, boolean loop);
+    public native void SetLayerSpeed(long model, long layer, float speed);
     public native void SeekLayer(long model, long layer, float frame);
     public native void SetPZAnimationState(long model, long[] animations, float[] frames,
                                           boolean[] additive, int[] morphs, float[] weights);
