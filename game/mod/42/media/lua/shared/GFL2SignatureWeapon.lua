@@ -18,6 +18,7 @@ local weapons = {{
     previewCenterY = 0.169,
     previewCenterZ = 0.0068,
     previewZoom = 15,
+    startsWithMagazine = true,
 }, {
     id = "GFL2.AlvaAN94",
     mod = "GFL2Alva",
@@ -29,6 +30,7 @@ local weapons = {{
     previewCenterY = 0.171,
     previewCenterZ = 0.041,
     previewZoom = 15,
+    startsWithMagazine = true,
 }, {
     id = "GFL2.Scylla",
     mod = "GFL2Klukai",

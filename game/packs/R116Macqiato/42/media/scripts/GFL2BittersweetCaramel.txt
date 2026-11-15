@@ -73,7 +73,7 @@ module GFL2
         JamGunChance = 1,
         KnockBackOnNoDeath = true,
         KnockdownMod = 2.0,
-        MagazineType = Base.M14Clip,
+        MagazineType = GFL2.BittersweetCaramelMagazine,
         MaxAmmo = 20,
         MaxDamage = 2,
         MaxHitcount = 1,
@@ -124,5 +124,19 @@ module GFL2
         WeaponSprite = GFL2.BittersweetCaramelEmpty,
         Tags = base:hasmetal;base:firearm,
         WorldStaticModel = GFL2.BittersweetCaramelEmpty,
+    }
+    item BittersweetCaramelMagazine
+    {
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Weight = 0.2,
+        Icon = m14clip,
+        AmmoType = base:bullets_308,
+        CanStack = false,
+        GunType = GFL2.BittersweetCaramel,
+        MaxAmmo = 20,
+        StaticModel = GunMagazine,
+        WorldStaticModel = gun_magazine_M14,
+        Tags = base:hasmetal;base:riflemagazine,
     }
 }

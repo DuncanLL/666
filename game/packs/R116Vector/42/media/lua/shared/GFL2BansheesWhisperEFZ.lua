@@ -1,21 +1,3 @@
-if not getActivatedMods():contains("EscapeFromZomboidFirearms") then return end
+local magazines = require "GFL2SignatureMagazines"
 
-local Ammo = require "WeaponSystems/Utils/Ammo"
-local Magazine = require "WeaponSystems/Utils/Magazine"
-local weaponId = "GFL2.BansheesWhisper"
-
-local function configureWeapon()
-    local scripts = getScriptManager()
-    local weapon = scripts:FindItem(weaponId)
-    local donor = scripts:FindItem("EscapeFromZomboidFirearms.VECTOR45")
-    if not weapon or not donor or not donor:getAmmoType() or not scripts:FindItem("EscapeFromZomboidFirearms.P_5fb651dc85f90547f674b6f4") then return end
-    weapon:setAmmoType(donor:getAmmoType())
-    weapon:DoParam("AmmoBox", "Base.Bullets45Box")
-    weapon:DoParam("MaxAmmo", "30")
-    weapon:DoParam("MagazineType", "EscapeFromZomboidFirearms.P_5fb651dc85f90547f674b6f4")
-    Magazine.RegisterWeaponWithProfile("TW:VECTOR45", weaponId)
-    Ammo.RegisterItemWithFamily("TW:ammo:45", weaponId)
-end
-
-Events.OnGameBoot.Add(configureWeapon)
-Events.OnInitGlobalModData.Add(configureWeapon)
+magazines.register("GFL2.BansheesWhisper", "EscapeFromZomboidFirearms.VECTOR45", "TW:ammo:45", "Base.Bullets45Box")
