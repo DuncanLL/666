@@ -70,6 +70,12 @@ local function transact(player, command, args)
         return economy.buy(player, args.target, args.count) and "ok" or "short"
     end
 
+    if command == "WeaponSkin" then
+        local id,skin=(args.target or ""):match("^(GFL2%.%w+):(%d*)$")
+        local weapon=id and weapons.byId[id]
+        if not weapon or not getActivatedMods():contains(weapon.mod) then return "unavailable" end
+        return economy.setWeaponSkin(player,weapon,skin)
+    end
     if command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" then
         local weapon = weapons.byId[args.target]
         if not weapon or not getActivatedMods():contains(weapon.mod) then return "unavailable" end
@@ -138,7 +144,7 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             and previous.signature == state.signature and previous.appearance == state.appearance then return end
         row.appearance = state.model ~= "" and state or nil
         publish(player, state)
-    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" then
+    elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" or command == "WeaponSkin" then
         process(player, row, command, args)
     end
 end)

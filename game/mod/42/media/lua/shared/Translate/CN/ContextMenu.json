@@ -36,6 +36,8 @@
     "ContextMenu_GFL2_WeaponDescription": "翡图萨的精英长剑。",
     "ContextMenu_GFL2_PityCounter": "次访问后必定获得橙色对象",
     "ContextMenu_GFL2_ClaimWeapon": "领取专武",
+    "ContextMenu_GFL2_WeaponSkins": "涂装",
+    "ContextMenu_GFL2_WeaponDefaultSkin": "默认外观",
     "ContextMenu_GFL2_GetMagazine": "获取弹匣 ×1",
     "ContextMenu_GFL2_MagazineClaimed": "弹匣已放入背包",
     "ContextMenu_GFL2_MagazineClaimFailed": "获取弹匣失败。",

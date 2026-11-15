@@ -8,6 +8,7 @@ require "RadioCom/ISUIRadio/ISSliderPanel"
 local loadData=require "AimohPMXRoomData"
 local economy=require "AimohPMXRoomEconomy"
 local signatureWeapons=require "GFL2SignatureWeapon"
+local weaponSkins=require "GFL2WeaponSkins"
 local multiplayer=require "GFL2MultiplayerClient"
 local data
 local textures={}
@@ -507,6 +508,17 @@ function W:createChildren()
     self.magazineClaimButton.roomLook="drawOnce"
     self.magazineClaimButton:setHeight(43)
     self.magazineClaimButton:setVisible(false)
+    self.weaponSkinButton=button(self,0,0,65,getText("ContextMenu_GFL2_WeaponSkins"),self,function(w)
+        w.weaponSkinOpen=not w.weaponSkinOpen
+        w:layoutOverview()
+    end)
+    self.weaponSkinButton.roomLook="drawOnce"
+    self.weaponSkinButton:setHeight(43)
+    self.weaponSkinButton:setVisible(false)
+    self.weaponSkinPanel=panel(self,0,0,230,100)
+    self.weaponSkinPanel.prerender=function(p) frosted(p,self,0,0,p.width,p.height,.84) end
+    self.weaponSkinPanel:setVisible(false)
+    self.weaponSkinRows={}
     self:createRoomResources()
     self.widgets={};self.tab="overview";self.previewAt=0;self:roomVisibility();self:refresh()
 end
@@ -699,6 +711,46 @@ function W:claimSignatureMagazine()
     end,function(status)
         self.drawNotice=getText(status=="ok" and "ContextMenu_GFL2_MagazineClaimed" or "ContextMenu_GFL2_MagazineClaimFailed")
     end)
+end
+
+function W:applyWeaponSkin(skin)
+    local weapon=self.signatureWeapon
+    if not weapon or self.tab~="weaponDraw" or self.drawAnimation or self.exchange then return end
+    self:roomTransaction("WeaponSkin",weapon.id..":"..skin,nil,function()
+        return economy.setWeaponSkin(self.player,weapon,skin)
+    end,function(status)
+        if status=="ok" and self.signatureWeapon==weapon then
+            self.drawNotice=nil
+            self:layoutOverview()
+        end
+    end)
+end
+
+function W:layoutWeaponSkins(weapon,variants,visible,selected)
+    local p=self.weaponSkinPanel
+    p:setVisible(visible)
+    if not visible then return end
+    local width=math.max(160,math.floor(self.width*.205))
+    p:setX(math.floor(self.width*.035));p:setY(106);p:setWidth(width)
+    if p.weaponId~=weapon.id then
+        for _,row in ipairs(self.weaponSkinRows) do p:removeChild(row) end
+        self.weaponSkinRows={}
+        p.weaponId=weapon.id
+        local row=button(p,8,8,width-16,getText("ContextMenu_GFL2_WeaponDefaultSkin"),self,function(w)w:applyWeaponSkin("")end)
+        row.skinId="";self.weaponSkinRows[1]=row
+        for _,skin in ipairs(variants) do
+            local id=skin.id
+            local b=button(p,8,8+#self.weaponSkinRows*39,width-16,skin.name,self,function(w)w:applyWeaponSkin(id)end)
+            b.skinId=id;self.weaponSkinRows[#self.weaponSkinRows+1]=b
+        end
+    end
+    p:setHeight(16+#self.weaponSkinRows*39)
+    p:setScrollHeight(p.height)
+    for _,row in ipairs(self.weaponSkinRows) do
+        row:setWidth(width-16);row:setHeight(34)
+        row.roomLook=row.skinId==selected and "primary" or "drawOnce"
+    end
+    p:bringToTop()
 end
 
 function W:updateDrawAnimation()
@@ -1210,7 +1262,7 @@ function W:roomVisibility()
     self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -1276,12 +1328,13 @@ function W:createWeaponPreview(signatureWeapon)
     scene:instantiate()
     local java=scene.javaObject
     local id=signatureWeapon.id
+    local model=weaponSkins.model(id,economy.weaponProgress(self.player,id).skin) or id
     scene:setView("UserDefined")
     java:fromLua3("setViewRotation",-82,0,90)
     java:fromLua1("setDrawGrid",false)
     java:fromLua1("setMaxZoom",17)
     java:fromLua1("setZoom",signatureWeapon.previewZoom or 14)
-    java:fromLua2("createModel",id,id)
+    java:fromLua2("createModel",id,model)
     java:fromLua1("getObjectTranslation",id):set(0,-signatureWeapon.previewCenterY,signatureWeapon.previewCenterZ or 0)
     scene.onMouseDown=function(p)
         p.orbit=true
@@ -1304,6 +1357,7 @@ function W:createWeaponPreview(signatureWeapon)
     scene.onMouseUpOutside=scene.onMouseUp
     self:addChild(scene)
     scene.weaponId=id
+    scene.skinModel=model
     self.weaponPreview=scene
 end
 
@@ -1323,9 +1377,12 @@ function W:layoutOverview()
     local characterDraw=overview and locked
     local signatureWeapon=loaded and character.recruitment and signatureWeapons.byCharacter[character.recruitment.pool]
     if signatureWeapon and not getScriptManager():FindItem(signatureWeapon.id) then signatureWeapon=nil end
+    local previousWeapon=self.signatureWeapon
     self.signatureWeapon=signatureWeapon
     local weaponPage=signatureWeapon and self.tab=="weaponDraw"
     local progress=signatureWeapon and economy.weaponProgress(self.player,signatureWeapon.id) or {}
+    local variants=weaponPage and weaponSkins.available(signatureWeapon.id) or {}
+    if previousWeapon~=signatureWeapon or not weaponPage then self.weaponSkinOpen=false end
     local weaponDraw=weaponPage and available and not progress.acquired
     local first,last=self.drawButtons[1],self.drawButtons[2]
     local claimVisible=not not (weaponPage and progress.acquired and not self.drawAnimation)
@@ -1344,9 +1401,17 @@ function W:layoutOverview()
     self.weaponClaimButton:setEnable(not carried)
     self.weaponClaimButton.roomTitle=getText(carried and "ContextMenu_GFL2_WeaponCarried"
         or progress.claimed and "ContextMenu_GFL2_ReclaimWeapon" or "ContextMenu_GFL2_ClaimWeapon")
-    if weaponPage and (not self.weaponPreview or self.weaponPreview.weaponId~=signatureWeapon.id) then
+    local showSkins=claimVisible and #variants>0
+    self.weaponSkinButton:setX(first.x-77)
+    self.weaponSkinButton:setY(last.y)
+    self.weaponSkinButton:setVisible(showSkins)
+    local skin=progress.skin or ""
+    local previewModel=weaponPage and (weaponSkins.model(signatureWeapon.id,skin) or signatureWeapon.id)
+    if weaponPage and (not self.weaponPreview or self.weaponPreview.weaponId~=signatureWeapon.id
+            or self.weaponPreview.skinModel~=previewModel) then
         self:createWeaponPreview(signatureWeapon)
     end
+    self:layoutWeaponSkins(signatureWeapon,variants,showSkins and self.weaponSkinOpen==true,skin)
     if self.weaponPreview then
         if not weaponPage and self.weaponPreview.orbit then self.weaponPreview:onMouseUp() end
         self.weaponPreview:setVisible(not not weaponPage)

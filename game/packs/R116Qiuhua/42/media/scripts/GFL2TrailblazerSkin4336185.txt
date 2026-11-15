@@ -1,0 +1,18 @@
+module GFL2
+{
+    model TrailblazerSkin4336185
+    {
+        mesh = GFL2/TrailblazerSkin4336185,
+        texture = GFL2/TrailblazerSkin4336185,
+        attachment muzzle
+        {
+            offset = 0.001855 0.387697 0.037878,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.136243 0,
+            rotate = 0 0 90,
+        }
+    }
+}

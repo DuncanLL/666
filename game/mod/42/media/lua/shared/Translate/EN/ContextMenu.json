@@ -36,6 +36,8 @@
     "ContextMenu_GFL2_WeaponDescription": "Phaetusa's elite blade.",
     "ContextMenu_GFL2_PityCounter": " pulls until a guaranteed elite",
     "ContextMenu_GFL2_ClaimWeapon": "Claim Weapon",
+    "ContextMenu_GFL2_WeaponSkins": "Skins",
+    "ContextMenu_GFL2_WeaponDefaultSkin": "Default",
     "ContextMenu_GFL2_GetMagazine": "Get Magazine ×1",
     "ContextMenu_GFL2_MagazineClaimed": "Magazine added to inventory",
     "ContextMenu_GFL2_MagazineClaimFailed": "Could not get the magazine.",

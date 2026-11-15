@@ -2,10 +2,16 @@ package aimoh.pmxpreview;
 
 import me.zed_0xff.zombie_buddy.Patch;
 import zombie.inventory.types.HandWeapon;
+import zombie.scripting.ScriptManager;
 
 public final class SignatureWeaponModels {
     public static String magazineModel(HandWeapon weapon, String original) {
         String model = detachableModel(weapon);
+        if (weapon.hasModData() && weapon.getModData().rawget("GFL2WeaponSkin") instanceof String skin
+                && skin.startsWith(weapon.getFullType() + "Skin")) {
+            String variant = model != null && !weapon.isContainsClip() ? skin + "Empty" : skin;
+            if (ScriptManager.instance.getModelScript(variant) != null) return variant;
+        }
         if (model == null) return original;
         return weapon.isContainsClip() ? model : model + "Empty";
     }
