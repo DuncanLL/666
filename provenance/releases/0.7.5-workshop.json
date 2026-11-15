@@ -1,0 +1,582 @@
+{
+  "version": "0.7.5",
+  "game": "42.22",
+  "workshop_items": [
+    {
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "id": 3838770244,
+      "mod": "AimohPmxPreview",
+      "version": "0.7.5",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "少前2追放角色框架",
+      "id": 3838709437,
+      "mod": "AimohPmxPreview",
+      "version": "0.7.5",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "埃芙",
+      "id": 3837425337,
+      "mod": "R116Alva",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "阿斯缇亚",
+      "id": 3838710555,
+      "mod": "R116Asteria",
+      "version": "0.7.2",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "希丽雅",
+      "id": 3838711420,
+      "mod": "R116Cecilia",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "桑朵莱希",
+      "id": 3838711556,
+      "mod": "R116Centaureissi",
+      "version": "0.7.1",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "夏安",
+      "id": 3838710368,
+      "mod": "R116Cheyanne",
+      "version": "0.7.2",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "黛烟",
+      "id": 3838711736,
+      "mod": "R116Daiyan",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "破坏者",
+      "id": 3838762173,
+      "mod": "R116Destroyer",
+      "version": "0.7.1",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "芙铃",
+      "id": 3838711981,
+      "mod": "R116Faelynn",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "芙洛伦",
+      "id": 3838711148,
+      "mod": "R116Florence",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "可露凯",
+      "id": 3838712165,
+      "mod": "R116Klukai",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "克莱妲",
+      "id": 3838710666,
+      "mod": "R116Koleda",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "莱娅",
+      "id": 3838710183,
+      "mod": "R116Laiya",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "莱娜",
+      "id": 3838762352,
+      "mod": "R116Lenna",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "玛绮朵",
+      "id": 3838762751,
+      "mod": "R116Macqiato",
+      "version": "0.7.3",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "妮基塔",
+      "id": 3838710868,
+      "mod": "R116Nikketa",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "OTs-14",
+      "id": 3838712515,
+      "mod": "R116OTs14",
+      "version": "0.7.1",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "翡图萨",
+      "id": 3838763020,
+      "mod": "R116Phaetusa",
+      "version": "0.7.2",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "秋桦",
+      "id": 3838935753,
+      "mod": "R116Qiuhua",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "六分仪",
+      "id": 3838763377,
+      "mod": "R116Sextans",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "索普",
+      "id": 3839180718,
+      "mod": "R116Soppo",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "春田",
+      "id": 3838712707,
+      "mod": "R116Springfield",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "索米",
+      "id": 3838712796,
+      "mod": "R116Suomi",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "维克托",
+      "id": 3838763611,
+      "mod": "R116Vector",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    },
+    {
+      "title": "幼熙",
+      "id": 3838763788,
+      "mod": "R116Yohee",
+      "version": "0.7.0",
+      "visibility": "unlisted"
+    }
+  ],
+  "render_profiles": {
+    "standard": {
+      "viewpoint": "0.1.6.2",
+      "native": {
+        "program_links": 28,
+        "controlled_models": 4,
+        "gpu": "AMD Radeon RX 9070 XT",
+        "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+        "host_sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e",
+        "jar_sha256": "994b0a60b40b54ee4ad9027ef6b33580bd37b6e14c3cd9973706dd63a44a0a24",
+        "catalog_sha256": "d85f7a060aea3955c4f05305ead30a9a0fe623bf44ea9a7e441cb03ccaa07996"
+      },
+      "eclipse": {
+        "program_links": 30,
+        "controlled_models": 4,
+        "gpu": "AMD Radeon RX 9070 XT",
+        "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+        "host_sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e",
+        "jar_sha256": "994b0a60b40b54ee4ad9027ef6b33580bd37b6e14c3cd9973706dd63a44a0a24",
+        "catalog_sha256": "d85f7a060aea3955c4f05305ead30a9a0fe623bf44ea9a7e441cb03ccaa07996"
+      }
+    },
+    "rc4": {
+      "viewpoint": "0.1.7-rc4",
+      "native": {
+        "program_links": 24,
+        "controlled_models": 1,
+        "gpu": "AMD Radeon RX 9070 XT",
+        "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+        "host_sha256": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32",
+        "jar_sha256": "5c17224de11e42e3f28d021838ae32e24d7f7833da79cde16c7d7d2fb6f56e9f",
+        "catalog_sha256": "d85f7a060aea3955c4f05305ead30a9a0fe623bf44ea9a7e441cb03ccaa07996"
+      },
+      "eclipse": {
+        "program_links": 24,
+        "controlled_models": 1,
+        "gpu": "AMD Radeon RX 9070 XT",
+        "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+        "host_sha256": "d1c95a9af369aba499fe3d7fe721275bc928c944bd8288ed2da58af3ea801e32",
+        "jar_sha256": "5c17224de11e42e3f28d021838ae32e24d7f7833da79cde16c7d7d2fb6f56e9f",
+        "catalog_sha256": "d85f7a060aea3955c4f05305ead30a9a0fe623bf44ea9a7e441cb03ccaa07996"
+      }
+    }
+  },
+  "artifacts": {
+    "shared_character_packs": 24,
+    "workshop_validator_passed": 26,
+    "render_references_verified": 9776
+  },
+  "hardware_validation": "LIMITED_HARDWARE_VALIDATION",
+  "pending": [
+    "NVIDIA and Intel drivers",
+    "subscriber cold start",
+    "real multiplayer",
+    "in-save gameplay"
+  ],
+  "signature_weapon_balance": [
+    {
+      "name": "切尔诺伯格",
+      "weapon": "Chernobog",
+      "pack": "R116Koleda",
+      "gom_item": "AK74",
+      "before_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      },
+      "after_stats": {
+        "MinDamage": 1.3,
+        "MaxDamage": 1.9,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 30.0,
+        "CritDmgMultiplier": 6.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.3,
+        "MaxDamage": 1.9,
+        "HitChance": 45.0,
+        "AimingPerkHitChanceModifier": 3.0,
+        "CriticalChance": 30.0,
+        "CritDmgMultiplier": 6.0,
+        "AimingPerkCritModifier": 4.0,
+        "MaxRange": 50.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 55.0,
+        "RecoilDelay": 15.0
+      }
+    },
+    {
+      "name": "6P33",
+      "weapon": "AlvaAN94",
+      "pack": "R116Alva",
+      "gom_item": "AK74",
+      "before_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      },
+      "after_stats": {
+        "MinDamage": 1.3,
+        "MaxDamage": 1.9,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 30.0,
+        "CritDmgMultiplier": 6.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.3,
+        "MaxDamage": 1.9,
+        "HitChance": 45.0,
+        "AimingPerkHitChanceModifier": 3.0,
+        "CriticalChance": 30.0,
+        "CritDmgMultiplier": 6.0,
+        "AimingPerkCritModifier": 4.0,
+        "MaxRange": 50.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 55.0,
+        "RecoilDelay": 15.0
+      }
+    },
+    {
+      "name": "未言使命",
+      "weapon": "UnspokenCalling",
+      "pack": "R116Suomi",
+      "gom_item": "MP5",
+      "before_stats": {
+        "MinDamage": 0.6,
+        "MaxDamage": 1.1,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 30.0,
+        "RecoilDelay": 10.0
+      },
+      "after_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 30.0,
+        "RecoilDelay": 10.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 30.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      }
+    },
+    {
+      "name": "狡狐",
+      "weapon": "Schlitzohr",
+      "pack": "R116Laiya",
+      "gom_item": "THOMPSON",
+      "before_stats": {
+        "MinDamage": 0.8,
+        "MaxDamage": 1.2,
+        "HitChance": 53.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 32.0,
+        "RecoilDelay": 11.0
+      },
+      "after_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 53.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 32.0,
+        "RecoilDelay": 11.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 30.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      }
+    },
+    {
+      "name": "幼狮",
+      "weapon": "Lowenjunges",
+      "pack": "R116Lenna",
+      "gom_item": "MP5",
+      "before_stats": {
+        "MinDamage": 0.6,
+        "MaxDamage": 1.1,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 32.0,
+        "RecoilDelay": 10.0
+      },
+      "after_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 40.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 32.0,
+        "RecoilDelay": 10.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.0,
+        "MaxDamage": 1.6,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 20.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 30.0,
+        "MinAngle": 0.965,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 40.0,
+        "RecoilDelay": 15.0
+      }
+    },
+    {
+      "name": "信仰棘光",
+      "weapon": "Radiance",
+      "pack": "R116Springfield",
+      "gom_item": "M1903",
+      "before_stats": {
+        "MinDamage": 1.4,
+        "MaxDamage": 2.2,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 35.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 88.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 60.0,
+        "RecoilDelay": 24.0
+      },
+      "after_stats": {
+        "MinDamage": 1.9,
+        "MaxDamage": 2.2,
+        "HitChance": 60.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 35.0,
+        "CritDmgMultiplier": 5.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 88.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 60.0,
+        "RecoilDelay": 24.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.9,
+        "MaxDamage": 2.2,
+        "HitChance": 60.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 30.0,
+        "CritDmgMultiplier": 5.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 70.0,
+        "RecoilDelay": 18.0
+      }
+    },
+    {
+      "name": "苦涩焦糖",
+      "weapon": "BittersweetCaramel",
+      "pack": "R116Macqiato",
+      "gom_item": "M14",
+      "before_stats": {
+        "MinDamage": 1.2,
+        "MaxDamage": 2.0,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 4.0,
+        "CriticalChance": 35.0,
+        "CritDmgMultiplier": 4.0,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 84.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 50.0,
+        "RecoilDelay": 22.0
+      },
+      "after_stats": {
+        "MinDamage": 1.2,
+        "MaxDamage": 2.2,
+        "HitChance": 55.0,
+        "AimingPerkHitChanceModifier": 5.0,
+        "CriticalChance": 40.0,
+        "CritDmgMultiplier": 4.5,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 84.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 50.0,
+        "RecoilDelay": 22.0
+      },
+      "gom_stats": {
+        "MinDamage": 1.2,
+        "MaxDamage": 2.2,
+        "HitChance": 50.0,
+        "AimingPerkHitChanceModifier": 5.0,
+        "CriticalChance": 40.0,
+        "CritDmgMultiplier": 4.5,
+        "AimingPerkCritModifier": 6.0,
+        "MaxRange": 60.0,
+        "MinAngle": 0.95,
+        "AimingPerkMinAngleModifier": 0.01,
+        "Aimingtime": 60.0,
+        "RecoilDelay": 15.0
+      }
+    }
+  ]
+}

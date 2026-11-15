@@ -1,6 +1,6 @@
 {
   "text": {
-    "Menu": "整备室",
+    "Menu": "少前2:追放人物框架",
     "Skins": "皮肤",
     "Parts": "切换配件",
     "Back": "返回皮肤",
@@ -1819,11 +1819,6 @@
       "path": "media/ui/AimohPMXReadyRoom/label-72ae350476a868.png",
       "width": 217,
       "height": 50
-    },
-    "整备室": {
-      "path": "media/ui/AimohPMXReadyRoom/label-0d2a720dfcff48.png",
-      "width": 116,
-      "height": 43
     },
     "皮肤": {
       "path": "media/ui/AimohPMXReadyRoom/label-fc0d7cf23b5483.png",

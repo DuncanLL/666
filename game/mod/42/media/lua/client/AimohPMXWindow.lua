@@ -359,7 +359,7 @@ function W:prerender()
 
     self:drawRectBorder(0,0,self.width,self.height,.8,.27,.48,.50)
     self:drawRect(16,43,52,2,1,.25,.72,.75)
-    label(self,tr("Menu"),17,10,27,200)
+    label(self,self.title,17,10,27,280)
     if self.tab=="skins" and self.browsed then
         label(self,self.browsed.meta.skin,138,self.height-163,35,self.rightX-156)
     end
@@ -379,6 +379,7 @@ function W.open(player,actions)
         local sw,sh=getCore():getScreenWidth(),getCore():getScreenHeight()
         local width=math.min(1100,sw-64);local height=math.min(670,sh-80)
         window=ISCollapsableWindow.new(W,math.floor((sw-width)/2),math.floor((sh-height)/2),width,height)
+        window.title=getText("ContextMenu_AimohPMX_Menu")
         window.player=player;window.actions=actions;window.resizable=false;window.drawFrame=false;window.yaw=0;window.zoom=1.08
         window:initialise();window:addToUIManager();W.instances[index]=window
     else window.actions=actions;window:addToUIManager();window:refresh()end
