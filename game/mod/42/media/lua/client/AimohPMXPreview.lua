@@ -1,5 +1,6 @@
 local key = "AimohPMXPreview"
 local window = require "AimohPMXWindow"
+local economy = require "AimohPMXRoomEconomy"
 local multiplayer = require "GFL2MultiplayerClient"
 local started = false
 local awaiting = {}
@@ -32,6 +33,7 @@ local function remember(player,quiet)
     }
     profiles[saved.model]=saved.settings
     player:getModData()[key] = saved
+    economy.saveLocal(player)
     publish(player, saved)
     if not quiet then voiceChanged(player) end
 end
@@ -99,6 +101,7 @@ local function disable(player)
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
     player:getModData()[key] = saved and {profiles=saved.profiles} or nil
+    economy.saveLocal(player)
     publish(player, nil)
     voiceChanged(player)
 end
@@ -111,6 +114,7 @@ end
 
 local function restore(player)
     if not player or not AimohPMXPreview or isClient() then return end
+    economy.restoreLocal(player)
     local saved = player:getModData()[key]
     if type(saved) == "table" and type(saved.model) == "string" then
         local message
@@ -153,7 +157,16 @@ Events.OnCreatePlayer.Add(function(index, player)
         restore(player)
     end
 end)
+Events.OnSave.Add(function()
+    if started then
+        for i = 0, 3 do
+            local player = getSpecificPlayer(i)
+            if player and not player:isDead() then economy.saveLocal(player) end
+        end
+    end
+end)
 Events.OnPlayerDeath.Add(function(player)
+    economy.saveLocal(player)
     awaiting[player]=nil
     window.closeFor(player)
     if AimohPMXPreview then

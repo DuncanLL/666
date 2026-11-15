@@ -3,16 +3,49 @@ local E={cost={targeted=150,outfit=120},creditsPerCash=60}
 E.keys={"targeted","outfit","credits"}
 local snapshots=setmetatable({},{__mode="k"})
 
+local walletKey = "R116ReadyRoomWallet"
+local function worldSlot(player)
+    local slots = ModData.getOrCreate("GFL2ExiliumReadyRoomV1")
+    local id = tostring(player:getPlayerNum())
+    if not slots[id] then slots[id] = {} end
+    return slots[id]
+end
+
 local function wallet(player)
     if E.serverWallet then return E.serverWallet(player) end
     if isClient and isClient() then return snapshots[player] or {} end
-    local data=player:getModData()
-    local room=data.R116ReadyRoomWallet
-    if type(room)~="table" then
-        room={}
-        data.R116ReadyRoomWallet=room
+    local data = player:getModData()
+    local slot = worldSlot(player)
+    if not slot.wallet then
+        slot.wallet = type(data[walletKey]) == "table" and data[walletKey] or {}
     end
-    return room
+    data[walletKey] = slot.wallet
+    return slot.wallet
+end
+
+local settingsKeys = {"AimohPMXPreview", "AimohPMXExpressions",
+    "AimohR116GripCalibration", "AimohR116GripCalibrationAim"}
+
+function E.restoreLocal(player)
+    if (isClient and isClient()) or E.serverWallet then return end
+    wallet(player)
+    local slot = worldSlot(player)
+    local data = player:getModData()
+    if not slot.settings then
+        slot.settings = {}
+        for _, key in ipairs(settingsKeys) do slot.settings[key] = data[key] end
+    else
+        for _, key in ipairs(settingsKeys) do data[key] = slot.settings[key] end
+    end
+end
+
+function E.saveLocal(player)
+    if (isClient and isClient()) or E.serverWallet then return end
+    wallet(player)
+    local slot = worldSlot(player)
+    local data = player:getModData()
+    slot.settings = slot.settings or {}
+    for _, key in ipairs(settingsKeys) do slot.settings[key] = data[key] end
 end
 
 function E.balance(player,key)
@@ -74,30 +107,6 @@ E.characterGuarantee=80
 E.weaponGuarantee=70
 E.outfitGuarantee=100
 E.defaultOutfitPrice=1080
-
-function E.resetTestDraws(player,outfitPools)
-    if isClient and isClient() then return end
-    local room=wallet(player)
-    if room.drawReset20261113 then return end
-    room.drawResetBackup20261113={
-        recruitment=room.recruitment,outfits=room.outfits,
-        daiyanUnlocked=room.daiyanUnlocked,daiyanMisses=room.daiyanMisses,
-        credits=room.credits,targeted=room.targeted,outfit=room.outfit,
-    }
-    local purchased={}
-    for id,value in pairs(room.outfits or {}) do
-        local pool=outfitPools[id]
-        if not pool or (pool.preservePriorPurchase and value==true) then purchased[id]=value end
-    end
-    room.recruitment={owned={},misses=0}
-    room.outfits=purchased
-    room.daiyanUnlocked=nil
-    room.daiyanMisses=nil
-    room.credits=0
-    room.targeted=0
-    room.outfit=0
-    room.drawReset20261113=true
-end
 
 local function recruitment(player)
     local room=wallet(player)

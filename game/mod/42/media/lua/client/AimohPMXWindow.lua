@@ -1750,7 +1750,6 @@ function W:applyBrowse()
 end
 function W:refresh()
     self:closeWorkshopPrompt()
-    if not self.multiplayerSession then economy.resetTestDraws(self.player,data.roomOutfitPools or {}) end
     self.currentId=AimohPMXPreview.modelId(self.player);self.currentLabel=tr("Choose");self.selected=nil
     self.characters={};self.byCharacter={}
     local equippedCharacter

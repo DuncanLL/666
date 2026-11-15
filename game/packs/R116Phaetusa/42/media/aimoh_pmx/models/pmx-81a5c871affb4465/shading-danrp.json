@@ -1,7 +1,7 @@
 {
   "format": 1,
   "protocol": "PMX-MAT1",
-  "pmx_sha256": "fe8e6fed45ceda3c3456bb7a988e93936ae5cf4cb0b2d456acd03b1e56965ed6",
+  "pmx_sha256": "3b3ce9e142f6a8e1da05e294f64c0d436acb8fc7ad9bb63648be8a3a132afe8c",
   "vertices": 103955,
   "head_bone": 497,
   "head_origin": [

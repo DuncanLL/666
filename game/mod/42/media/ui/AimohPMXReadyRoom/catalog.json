@@ -5977,9 +5977,9 @@
       "height": 40
     },
     "秋桦": {
-      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-8325ef976ddf.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-8325ef976ddf1556.png",
       "width": 76,
-      "height": 39
+      "height": 40
     },
     "秋宴龙厨": {
       "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-23b5bda4d993.png",
@@ -6492,7 +6492,7 @@
       "height": 40
     },
     "索普": {
-      "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-de9a5689abb3.png",
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-de9a5689abb35404.png",
       "width": 76,
       "height": 40
     },
@@ -6604,6 +6604,371 @@
     "墨镜": {
       "path": "media/ui/AimohPMXReadyRoom/label-qiuhua-71ae85e3f007.png",
       "width": 76,
+      "height": 40
+    },
+    "复合输出 / 叠层 / 协击": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-1cb5442ea4e97c97.png",
+      "width": 362,
+      "height": 40
+    },
+    "热情直爽，豁达乐观的高能量人形。身": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-e1c2ba43bc78b50c.png",
+      "width": 616,
+      "height": 43
+    },
+    "为黄区美食猎人，为改变人们食不果腹": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-64d02c642b2d932c.png",
+      "width": 616,
+      "height": 42
+    },
+    "的困境而努力开发着新食材。路见不平": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-30be4e2953f89e79.png",
+      "width": 616,
+      "height": 40
+    },
+    "拔刀相助是她的日常，绝不让一个话茬": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-0cc46a9a3f434918.png",
+      "width": 616,
+      "height": 43
+    },
+    "子落在地上是她的信条。“虽然我对锅": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-dffdb9bbcaf0d9e1.png",
+      "width": 597,
+      "height": 40
+    },
+    "包肉里加番茄酱还是不能苟同，但如果": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-5aa00629e4d0646a.png",
+      "width": 616,
+      "height": 42
+    },
+    "合你的口味，咱也不是不能忍了。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-67d382a1e615e1fb.png",
+      "width": 561,
+      "height": 43
+    },
+    "范围输出 / 地格 / 灵活作战": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-a3591c608db38fa4.png",
+      "width": 434,
+      "height": 40
+    },
+    "活泼好动、热爱战斗的人形，心思比较": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-b3f999074a857004.png",
+      "width": 616,
+      "height": 43
+    },
+    "简单，喜欢直来直往做事，鲜少深度思": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-4709d5c084c8e986.png",
+      "width": 616,
+      "height": 43
+    },
+    "考，会无条件地相信自己的队友，并遵": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-2843a2e7e5879162.png",
+      "width": 616,
+      "height": 43
+    },
+    "从你的一切命令。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-f50d71b04a755092.png",
+      "width": 292,
+      "height": 40
+    },
+    "“指挥官，接下来我们去做什么？没想": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-933f4e506a06d4a7.png",
+      "width": 597,
+      "height": 42
+    },
+    "好？那……不如一起去玩吧——”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-57f1e5031d6179b9.png",
+      "width": 527,
+      "height": 40
+    },
+    "六分仪": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-70a4db8b6160e2dc.png",
+      "width": 112,
+      "height": 40
+    },
+    "近战输出 / 增益 / 地格": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-0dfeed9f8bdfc586.png",
+      "width": 362,
+      "height": 40
+    },
+    "身形敏捷、精于谋划的人形，权限曾隶": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-fae1bf60f75d0dc0.png",
+      "width": 616,
+      "height": 43
+    },
+    "属于奥尔劳格财团，在重要的任务失败": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-338e416dd6c9d00c.png",
+      "width": 616,
+      "height": 43
+    },
+    "后遭到废弃，心智严重损坏，随后被艾": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-d97c83ba764b3bb3.png",
+      "width": 616,
+      "height": 43
+    },
+    "莫号救助，成为大家可靠的同伴。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-6cd888f9031d33de.png",
+      "width": 544,
+      "height": 43
+    },
+    "“比起我从前的同僚，您身边的人形们": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-e476c48389b7b186.png",
+      "width": 597,
+      "height": 43
+    },
+    "似乎有些……单纯呢。”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-a5d26a4998373cf4.png",
+      "width": 383,
+      "height": 40
+    },
+    "幼熙": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-077f0ca01fc82879.png",
+      "width": 76,
+      "height": 40
+    },
+    "复合增益 / 负防御": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-81828047d02b40c3.png",
+      "width": 291,
+      "height": 40
+    },
+    "热情且有责任心，专注地投身于舞蹈的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-5d25cd36763fdbc4.png",
+      "width": 616,
+      "height": 43
+    },
+    "人形。追随着指挥官的称赞而成为舞": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-f0fa589b6e389a49.png",
+      "width": 580,
+      "height": 40
+    },
+    "者，又为了担起“前辈”的责任而组建火": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-06f63ee02616e1e2.png",
+      "width": 614,
+      "height": 43
+    },
+    "花舞团，向更多的流浪人形提供安身之": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-547bb8a805f39fde.png",
+      "width": 616,
+      "height": 43
+    },
+    "所。在精进舞艺的路上从未懈怠，好学": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-1eb4ce0efc23f42c.png",
+      "width": 616,
+      "height": 43
+    },
+    "自律是她前进的基石，认准目标不服输": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-7389b2179f6ff57e.png",
+      "width": 616,
+      "height": 43
+    },
+    "是她成功的诀窍。不用怀疑，相信她就": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-99175466bfd21476.png",
+      "width": 616,
+      "height": 43
+    },
+    "好。因为答应的事她必定说到做到。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-d599f1dae6dd38c0.png",
+      "width": 580,
+      "height": 40
+    },
+    "“跟上节奏，让我们引爆全场！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-aa43a2e069920021.png",
+      "width": 506,
+      "height": 42
+    },
+    "玛绮朵": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-d050976fa4d342ba.png",
+      "width": 112,
+      "height": 40
+    },
+    "单体输出 / 先制反击": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-5ff997b1b3f9a22d.png",
+      "width": 327,
+      "height": 40
+    },
+    "冷静高傲、不善表达的别扭人形。喜欢": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-b0aafb3093469e99.png",
+      "width": 616,
+      "height": 40
+    },
+    "毛绒绒的小动物，也喜欢糖分超标的玛": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-b0697a071cd2c6c7.png",
+      "width": 616,
+      "height": 43
+    },
+    "奇朵。总是独来独往的她，目光却常常": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-e6aa3ef664e7946e.png",
+      "width": 616,
+      "height": 43
+    },
+    "停留在某一处。到底什么时候，她才能": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-a1e4bf8aa19a346a.png",
+      "width": 616,
+      "height": 42
+    },
+    "获得想要的回应呢？": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-d99f0c50ea72b0ac.png",
+      "width": 328,
+      "height": 40
+    },
+    "破坏者": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-cdaaf705f5f44de9.png",
+      "width": 112,
+      "height": 40
+    },
+    "范围输出 / 爆发输出 / 灵活作战": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-cde3d6863470cac5.png",
+      "width": 506,
+      "height": 40
+    },
+    "毒舌、率真的铁血人形，是被莱柯倾注": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-4c576daef0e90961.png",
+      "width": 616,
+      "height": 43
+    },
+    "特殊情感、赋予“玛利亚”之名的心血之": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-0d69f9be3524b4c9.png",
+      "width": 614,
+      "height": 40
+    },
+    "作。从铁血覆灭的战场，到被漫长放逐": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-6415761ca8d119c8.png",
+      "width": 616,
+      "height": 43
+    },
+    "的红区，心思单纯的她，只会将毫无保": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-1247314cbeb8331a.png",
+      "width": 616,
+      "height": 43
+    },
+    "留的信任，交给她所认定的你。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-549ba549fa042aa9.png",
+      "width": 508,
+      "height": 43
+    },
+    "“我当然会无条件服从指挥官的命令": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-ce9c670d7d1eea49.png",
+      "width": 561,
+      "height": 40
+    },
+    "啊，有什么好奇怪的？你不至于连指挥": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-37fbc80438e36f25.png",
+      "width": 616,
+      "height": 43
+    },
+    "这点小事都做不好吧！”": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-aa1ab825bd2495ad.png",
+      "width": 381,
+      "height": 40
+    },
+    "维克托": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-00603d3b4ef76996.png",
+      "width": 112,
+      "height": 40
+    },
+    "固定伤害 / 地格 / 增益": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-563e13348add52c8.png",
+      "width": 362,
+      "height": 40
+    },
+    "习惯性悲观的人形，但作为 H.I.D.E. 40": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-1fe014be9f9d9a13.png",
+      "width": 619,
+      "height": 43
+    },
+    "4第二分队的队长，无论演算出何等让": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-68bbdf7a2c229c1f.png",
+      "width": 601,
+      "height": 43
+    },
+    "人绝望的结果，维克托也绝对会坚守到": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-dab7600067190c64.png",
+      "width": 616,
+      "height": 43
+    },
+    "最后一刻，与小队一起直面困境。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-0dee6e416cafa012.png",
+      "width": 544,
+      "height": 42
+    },
+    "翡图萨": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-319a310096b96100.png",
+      "width": 112,
+      "height": 40
+    },
+    "群体支援 / 爆发输出": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-cb22abd66341befb.png",
+      "width": 327,
+      "height": 40
+    },
+    "温和包容，如拂面春风；尖锐高傲，像": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-cd9ec6f56629fc54.png",
+      "width": 616,
+      "height": 43
+    },
+    "冰冷的钢铁，前者名为翡图萨，后者名": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-d35ed5979448f03f.png",
+      "width": 616,
+      "height": 43
+    },
+    "为清道夫。这位二心一体的人形，一半": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-32a5123c82a115ac.png",
+      "width": 616,
+      "height": 43
+    },
+    "来自于对人类文明最美好的守护，另一": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-6bfbc910a1cb34cd.png",
+      "width": 616,
+      "height": 43
+    },
+    "边是来自于铁血工造的战争残骸。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-fb3c88754e3b71d0.png",
+      "width": 544,
+      "height": 40
+    },
+    "她们于战火中相遇，互相拯救，并决定": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-75bf5c9f6405f56f.png",
+      "width": 616,
+      "height": 42
+    },
+    "携手在这个动荡的年代开辟属于自己的": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-3dde60a14937724e.png",
+      "width": 616,
+      "height": 40
+    },
+    "道路。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-22ac0e50fa7c0100.png",
+      "width": 112,
+      "height": 40
+    },
+    "莱娜": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-9d0f23d2a7448eeb.png",
+      "width": 76,
+      "height": 40
+    },
+    "群体控制 / 地格 / 隐身": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-af4e15f09e224b02.png",
+      "width": 362,
+      "height": 40
+    },
+    "开朗而有亲和力的人形，倾尽全力守护": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-0ca2397e25aa269e.png",
+      "width": 616,
+      "height": 43
+    },
+    "着珍视的家人。日渐沉稳的她，会在对": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-60f10232ec7c7c42.png",
+      "width": 616,
+      "height": 43
+    },
+    "外沟通中展露完美的笑容，也会在见到": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-5831173183564f72.png",
+      "width": 616,
+      "height": 43
+    },
+    "家人时“强行”献上真诚的拥抱。": {
+      "path": "media/ui/AimohPMXReadyRoom/label-recruitment-278ec1ee204ff325.png",
+      "width": 506,
       "height": 40
     }
   },
@@ -6884,11 +7249,102 @@
     },
     "秋桦": {
       "pool": "R116Qiuhua",
-      "banner": "media/ui/AimohPMXReadyRoom/recruitment/qiuhua.png"
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/qiuhua.png",
+      "element": "燃烧",
+      "color": [
+        0.8980392156862745,
+        0.40784313725490196,
+        0.1607843137254902
+      ],
+      "tags": "复合输出 / 叠层 / 协击"
     },
     "索普": {
       "pool": "R116Soppo",
-      "banner": "media/ui/AimohPMXReadyRoom/recruitment/soppo.png"
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/soppo.png",
+      "element": "冷凝",
+      "color": [
+        0.25882352941176473,
+        0.8,
+        0.8784313725490196
+      ],
+      "tags": "范围输出 / 地格 / 灵活作战"
+    },
+    "六分仪": {
+      "pool": "R116Sextans",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/sextans.png",
+      "element": "电导",
+      "color": [
+        0.9215686274509803,
+        0.7490196078431373,
+        0.12941176470588237
+      ],
+      "tags": "近战输出 / 增益 / 地格"
+    },
+    "幼熙": {
+      "pool": "R116Yohee",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/yohee.png",
+      "element": "物理",
+      "color": [
+        0.788235294117647,
+        0.7843137254901961,
+        0.807843137254902
+      ],
+      "tags": "复合增益 / 负防御"
+    },
+    "玛绮朵": {
+      "pool": "R116Macqiato",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/macqiato.png",
+      "element": "冷凝",
+      "color": [
+        0.25882352941176473,
+        0.8,
+        0.8784313725490196
+      ],
+      "tags": "单体输出 / 先制反击"
+    },
+    "破坏者": {
+      "pool": "R116Destroyer",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/destroyer.png",
+      "element": "冷凝",
+      "color": [
+        0.25882352941176473,
+        0.8,
+        0.8784313725490196
+      ],
+      "tags": "范围输出 / 爆发输出 / 灵活作战"
+    },
+    "维克托": {
+      "pool": "R116Vector",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/vector.png",
+      "element": "燃烧",
+      "color": [
+        0.8980392156862745,
+        0.40784313725490196,
+        0.1607843137254902
+      ],
+      "tags": "固定伤害 / 地格 / 增益"
+    },
+    "翡图萨": {
+      "pool": "R116Phaetusa",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/phaetusa.png",
+      "element": "酸蚀",
+      "color": [
+        0.5294117647058824,
+        0.47843137254901963,
+        0.9215686274509803
+      ],
+      "tags": "群体支援 / 爆发输出"
+    },
+    "莱娜": {
+      "pool": "R116Lenna",
+      "banner": "media/ui/AimohPMXReadyRoom/recruitment/lenna.png",
+      "element": "电导",
+      "color": [
+        0.9215686274509803,
+        0.7490196078431373,
+        0.12941176470588237
+      ],
+      "tags": "群体控制 / 地格 / 隐身"
     }
   },
   "roomDefaultSkinNames": {
@@ -7050,15 +7506,79 @@
       "中抓住那一线重逢的希望。"
     ],
     "秋桦": [
-      "热情直爽的精英人形，",
-      "喜欢钻研厨艺，也爱给同伴做饭。"
+      "热情直爽，豁达乐观的高能量人形。身",
+      "为黄区美食猎人，为改变人们食不果腹",
+      "的困境而努力开发着新食材。路见不平",
+      "拔刀相助是她的日常，绝不让一个话茬",
+      "子落在地上是她的信条。“虽然我对锅",
+      "包肉里加番茄酱还是不能苟同，但如果",
+      "合你的口味，咱也不是不能忍了。”"
     ],
     "索普": [
-      "活泼好动、热爱战斗的人形，心思比较简单，喜欢",
-      "直来直往做事，鲜少深度思考，会无条件地相信自",
-      "己的队友，并遵从你的一切命令。",
-      "“指挥官，接下来我们去做什么？没想好？那……",
-      "不如一起去玩吧——”"
+      "活泼好动、热爱战斗的人形，心思比较",
+      "简单，喜欢直来直往做事，鲜少深度思",
+      "考，会无条件地相信自己的队友，并遵",
+      "从你的一切命令。",
+      "“指挥官，接下来我们去做什么？没想",
+      "好？那……不如一起去玩吧——”"
+    ],
+    "六分仪": [
+      "身形敏捷、精于谋划的人形，权限曾隶",
+      "属于奥尔劳格财团，在重要的任务失败",
+      "后遭到废弃，心智严重损坏，随后被艾",
+      "莫号救助，成为大家可靠的同伴。",
+      "“比起我从前的同僚，您身边的人形们",
+      "似乎有些……单纯呢。”"
+    ],
+    "幼熙": [
+      "热情且有责任心，专注地投身于舞蹈的",
+      "人形。追随着指挥官的称赞而成为舞",
+      "者，又为了担起“前辈”的责任而组建火",
+      "花舞团，向更多的流浪人形提供安身之",
+      "所。在精进舞艺的路上从未懈怠，好学",
+      "自律是她前进的基石，认准目标不服输",
+      "是她成功的诀窍。不用怀疑，相信她就",
+      "好。因为答应的事她必定说到做到。",
+      "“跟上节奏，让我们引爆全场！”"
+    ],
+    "玛绮朵": [
+      "冷静高傲、不善表达的别扭人形。喜欢",
+      "毛绒绒的小动物，也喜欢糖分超标的玛",
+      "奇朵。总是独来独往的她，目光却常常",
+      "停留在某一处。到底什么时候，她才能",
+      "获得想要的回应呢？"
+    ],
+    "破坏者": [
+      "毒舌、率真的铁血人形，是被莱柯倾注",
+      "特殊情感、赋予“玛利亚”之名的心血之",
+      "作。从铁血覆灭的战场，到被漫长放逐",
+      "的红区，心思单纯的她，只会将毫无保",
+      "留的信任，交给她所认定的你。",
+      "“我当然会无条件服从指挥官的命令",
+      "啊，有什么好奇怪的？你不至于连指挥",
+      "这点小事都做不好吧！”"
+    ],
+    "维克托": [
+      "习惯性悲观的人形，但作为 H.I.D.E. 40",
+      "4第二分队的队长，无论演算出何等让",
+      "人绝望的结果，维克托也绝对会坚守到",
+      "最后一刻，与小队一起直面困境。"
+    ],
+    "翡图萨": [
+      "温和包容，如拂面春风；尖锐高傲，像",
+      "冰冷的钢铁，前者名为翡图萨，后者名",
+      "为清道夫。这位二心一体的人形，一半",
+      "来自于对人类文明最美好的守护，另一",
+      "边是来自于铁血工造的战争残骸。",
+      "她们于战火中相遇，互相拯救，并决定",
+      "携手在这个动荡的年代开辟属于自己的",
+      "道路。"
+    ],
+    "莱娜": [
+      "开朗而有亲和力的人形，倾尽全力守护",
+      "着珍视的家人。日渐沉稳的她，会在对",
+      "外沟通中展露完美的笑容，也会在见到",
+      "家人时“强行”献上真诚的拥抱。"
     ]
   },
   "roomWorkshopItems": {
