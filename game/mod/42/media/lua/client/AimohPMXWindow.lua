@@ -503,6 +503,10 @@ function W:createChildren()
     self.weaponClaimButton.roomLook="primary"
     self.weaponClaimButton:setHeight(43)
     self.weaponClaimButton:setVisible(false)
+    self.magazineClaimButton=button(self,0,0,152,getText("ContextMenu_GFL2_GetMagazine"),self,function(w)w:claimSignatureMagazine()end)
+    self.magazineClaimButton.roomLook="drawOnce"
+    self.magazineClaimButton:setHeight(43)
+    self.magazineClaimButton:setVisible(false)
     self:createRoomResources()
     self.widgets={};self.tab="overview";self.previewAt=0;self:roomVisibility();self:refresh()
 end
@@ -684,6 +688,16 @@ function W:claimSignatureWeapon()
             self.drawNotice=getText("ContextMenu_GFL2_WeaponClaimFailed")
         end
         self:layoutOverview()
+    end)
+end
+
+function W:claimSignatureMagazine()
+    local signatureWeapon=self.signatureWeapon
+    if not signatureWeapon or self.tab~="weaponDraw" or self.drawAnimation or self.exchange then return end
+    self:roomTransaction("ClaimMagazine",signatureWeapon.id,nil,function()
+        return economy.claimMagazine(self.player,signatureWeapon)
+    end,function(status)
+        self.drawNotice=getText(status=="ok" and "ContextMenu_GFL2_MagazineClaimed" or "ContextMenu_GFL2_MagazineClaimFailed")
     end)
 end
 
@@ -1196,7 +1210,7 @@ function W:roomVisibility()
     self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -1313,11 +1327,19 @@ function W:layoutOverview()
     local weaponPage=signatureWeapon and self.tab=="weaponDraw"
     local progress=signatureWeapon and economy.weaponProgress(self.player,signatureWeapon.id) or {}
     local weaponDraw=weaponPage and available and not progress.acquired
-    local last=self.drawButtons[2]
-    self.weaponClaimButton:setX(self.drawButtons[1].x)
+    local first,last=self.drawButtons[1],self.drawButtons[2]
+    local claimVisible=not not (weaponPage and progress.acquired and not self.drawAnimation)
+    local magazineVisible=claimVisible and economy.weaponMagazine(signatureWeapon)~=nil
+    local magazineWidth=math.min(first.width,152)
+    local claimX=magazineVisible and first.x+magazineWidth+12 or first.x
+    self.magazineClaimButton:setX(first.x)
+    self.magazineClaimButton:setY(last.y)
+    self.magazineClaimButton:setWidth(magazineWidth)
+    self.magazineClaimButton:setVisible(magazineVisible)
+    self.weaponClaimButton:setX(claimX)
     self.weaponClaimButton:setY(last.y)
-    self.weaponClaimButton:setWidth(last.x+last.width-self.drawButtons[1].x)
-    self.weaponClaimButton:setVisible(not not (weaponPage and progress.acquired and not self.drawAnimation))
+    self.weaponClaimButton:setWidth(last.x+last.width-claimX)
+    self.weaponClaimButton:setVisible(claimVisible)
     local carried=weaponPage and progress.acquired and economy.hasWeaponInInventory(self.player,signatureWeapon.id)
     self.weaponClaimButton:setEnable(not carried)
     self.weaponClaimButton.roomTitle=getText(carried and "ContextMenu_GFL2_WeaponCarried"
@@ -2089,6 +2111,9 @@ function W:update()
         end
     end
     self:updateDrawAnimation()
+    if self.multiplayerSession and self.magazineClaimButton:getIsVisible() then
+        self.magazineClaimButton:setEnable(not multiplayer.pending(self.player))
+    end
     if self.weaponClaimButton:getIsVisible() and self.signatureWeapon then
         local now=getTimestampMs()
         if now>=(self.nextWeaponInventoryCheck or 0) then
@@ -2168,7 +2193,8 @@ function W:prerender()
             local misses=self.drawAnimation and self.drawAnimation.misses or economy.weaponMisses(self.player)
             self:drawElitePity(economy.weaponGuarantee-misses)
         elseif self.drawNotice then
-            label(self,self.drawNotice,self.weaponClaimButton.x,self.weaponClaimButton.y-32,16,self.weaponClaimButton.width)
+            local left=self.drawButtons[1].x
+            label(self,self.drawNotice,left,self.weaponClaimButton.y-32,16,self.weaponClaimButton.x+self.weaponClaimButton.width-left)
         end
     elseif (self.tab=="skins" or self.tab=="outfitDraw") and self.browsed then
         local x=math.floor(self.width*.045)
