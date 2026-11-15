@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/RadianceSkin4333145,
         attachment muzzle
         {
-            offset = 1e-06 0.671435 0.046847,
+            offset = 8.0565278e-07 0.58169908 0.041937904,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.2592 0,
+            offset = -4.489559e-08 0.23107328 0.0020922645,
             rotate = 0 0 90,
         }
     }

@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/CauseAndEffectSkin4337415,
         attachment world
         {
-            offset = 0.0155 0.2859 0.015,
+            offset = 0.01438492 0.2688163 0.014057568,
             rotate = -180.0 0.0 177.566,
         }
         attachment Bip01_Prop2
         {
-            offset = -0.013 0.0001 0.0025,
+            offset = -0.012324458 0.00097278096 0.0023429279,
             rotate = -23.8537 -86.6222 -22.0887,
         }
     }

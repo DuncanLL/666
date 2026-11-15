@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Capitoline,
         attachment muzzle
         {
-            offset = 0.001855 0.292205 0.034178,
+            offset = 0.0015693652 0.2581521 0.031071721,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.047361 0,
+            offset = -7.1352775e-08 0.051000013 0.0021551706,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/Capitoline,
         attachment muzzle
         {
-            offset = 0.001855 0.292205 0.034178,
+            offset = 0.0015693652 0.2581521 0.031071721,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.047361 0,
+            offset = -7.1352775e-08 0.051000013 0.0021551706,
             rotate = 0 0 90,
         }
     }

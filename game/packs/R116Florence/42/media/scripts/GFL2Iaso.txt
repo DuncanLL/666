@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Iaso,
         attachment muzzle
         {
-            offset = -1e-06 0.144827 -0.027894,
+            offset = -9.9023289e-07 0.14371524 -0.027758296,
             rotate = -90 0 0,
         }
         attachment world
         {
-            offset = 0 0.063079 0,
+            offset = 0 0.062765681 -0.00013673953,
             rotate = 0 0 0,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/Iaso,
         attachment muzzle
         {
-            offset = -1e-06 0.144827 -0.027894,
+            offset = -9.9023289e-07 0.14371524 -0.027758296,
             rotate = -90 0 0,
         }
         attachment world
         {
-            offset = 0 0.063079 0,
+            offset = 0 0.062765681 -0.00013673953,
             rotate = 0 0 0,
         }
     }

@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/HeavyStrings,
         attachment muzzle
         {
-            offset = 0.001855 0.354757 0.033947,
+            offset = 0.0014560914 0.30557261 0.029658355,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.113189 0,
+            offset = -7.1092638e-08 0.11594335 0.0030101879,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/HeavyStrings,
         attachment muzzle
         {
-            offset = 0.001855 0.354757 0.033947,
+            offset = 0.0014560914 0.30557261 0.029658355,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.113189 0,
+            offset = -7.1092638e-08 0.11594335 0.0030101879,
             rotate = 0 0 90,
         }
     }

@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/SavageBeastSkin4334605,
         attachment muzzle
         {
-            offset = 0.001855 0.558548 0.044654,
+            offset = 0.0018368874 0.55378637 0.044354622,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.224214 0,
+            offset = 4.2630699e-09 0.22271764 0.00013673509,
             rotate = 0 0 90,
         }
     }
@@ -21,12 +21,12 @@ module GFL2
         texture = GFL2/SavageBeastSkin4334605,
         attachment muzzle
         {
-            offset = 0.001855 0.558548 0.044654,
+            offset = 0.0018368874 0.55378637 0.044354622,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.224214 0,
+            offset = 4.2630699e-09 0.22271764 0.00013673509,
             rotate = 0 0 90,
         }
     }

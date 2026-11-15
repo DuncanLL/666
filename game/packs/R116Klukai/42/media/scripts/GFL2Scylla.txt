@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Scylla,
         attachment muzzle
         {
-            offset = 0.001921 0.428699 0.053471,
+            offset = 0.0017182876 0.39180412 0.05004511,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.158699 0,
+            offset = -3.7981679e-08 0.15029038 0.0022155494,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/Scylla,
         attachment muzzle
         {
-            offset = 0.001921 0.428699 0.053471,
+            offset = 0.0017182876 0.39180412 0.05004511,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.158699 0,
+            offset = -3.7981679e-08 0.15029038 0.0022155494,
             rotate = 0 0 90,
         }
     }

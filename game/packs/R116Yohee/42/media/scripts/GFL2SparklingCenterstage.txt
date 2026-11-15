@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/SparklingCenterstage,
         attachment muzzle
         {
-            offset = 0.001855 0.404891 0.033843,
+            offset = 0.0017938888 0.39389407 0.033189469,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.144811 0,
+            offset = -1.5563735e-08 0.14237998 0.00046111056,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/SparklingCenterstage,
         attachment muzzle
         {
-            offset = 0.001855 0.404891 0.033843,
+            offset = 0.0017938888 0.39389407 0.033189469,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.144811 0,
+            offset = -1.5563735e-08 0.14237998 0.00046111056,
             rotate = 0 0 90,
         }
     }

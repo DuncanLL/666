@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/BansheesWhisper,
         attachment muzzle
         {
-            offset = 2.2e-05 0.347663 0.03712,
+            offset = 2.0499857e-05 0.32851961 0.035520232,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.11929 0,
+            offset = 2.2121322e-08 0.11594861 0.00096870775,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/BansheesWhisper,
         attachment muzzle
         {
-            offset = 2.2e-05 0.347663 0.03712,
+            offset = 2.0499857e-05 0.32851961 0.035520232,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.11929 0,
+            offset = 2.2121322e-08 0.11594861 0.00096870775,
             rotate = 0 0 90,
         }
     }
