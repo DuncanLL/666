@@ -1,3 +1,4 @@
+local weaponSkins=require "GFL2WeaponSkins"
 local E={cost={targeted=150,outfit=120},creditsPerCash=60}
 E.keys={"targeted","outfit","credits"}
 local snapshots=setmetatable({},{__mode="k"})
@@ -272,8 +273,25 @@ function E.claimWeapon(player,weapon)
     local item=inventory:AddItem(weapon.id)
     if not item then return "unavailable" end
     if weapon.startsWithMagazine then item:setContainsClip(true) end
+    item:getModData().GFL2WeaponSkin=weaponSkins.model(weapon.id,progress.skin)
     progress.claimed=true
     if isServer and isServer() then sendAddItemToContainer(inventory,item) end
+    return "ok"
+end
+
+function E.setWeaponSkin(player,weapon,skin)
+    if isClient and isClient() and not E.serverWallet then return "unavailable" end
+    local progress=E.weaponProgress(player,weapon.id)
+    local model=weaponSkins.model(weapon.id,skin)
+    if not progress.acquired or (skin~="" and not model) then return "unavailable" end
+    progress.skin=skin~="" and skin or nil
+    local items=player:getInventory():getAllTypeRecurse(weapon.id)
+    for i=0,items:size()-1 do
+        local item=items:get(i)
+        item:getModData().GFL2WeaponSkin=model
+        if isServer and isServer() then syncItemModData(player,item) end
+    end
+    player:resetEquippedHandsModels()
     return "ok"
 end
 

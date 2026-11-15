@@ -1,0 +1,33 @@
+module GFL2
+{
+    model SkyhowlSkin4332565
+    {
+        mesh = GFL2/SkyhowlSkin4332565,
+        texture = GFL2/SkyhowlSkin4332565,
+        attachment muzzle
+        {
+            offset = 0.001855 0.409348 0.038047,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.148691 0,
+            rotate = 0 0 90,
+        }
+    }
+    model SkyhowlSkin4332565Empty
+    {
+        mesh = GFL2/SkyhowlSkin4332565Empty,
+        texture = GFL2/SkyhowlSkin4332565,
+        attachment muzzle
+        {
+            offset = 0.001855 0.409348 0.038047,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.148691 0,
+            rotate = 0 0 90,
+        }
+    }
+}

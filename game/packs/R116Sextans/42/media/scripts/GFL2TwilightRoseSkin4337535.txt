@@ -1,0 +1,18 @@
+module GFL2
+{
+    model TwilightRoseSkin4337535
+    {
+        mesh = GFL2/TwilightRoseSkin4337535,
+        texture = GFL2/TwilightRoseSkin4337535,
+        attachment Bip01_Prop2
+        {
+            offset = -0.013 0.0001 0.0025,
+            rotate = -23.8537 -86.6222 -22.0887,
+        }
+        attachment world
+        {
+            offset = 0 0.239098 0,
+            rotate = -180 0 177.566,
+        }
+    }
+}

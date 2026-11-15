@@ -1,0 +1,33 @@
+module GFL2
+{
+    model ConfessionCompassSkin4334625
+    {
+        mesh = GFL2/ConfessionCompassSkin4334625,
+        texture = GFL2/ConfessionCompassSkin4334625,
+        attachment muzzle
+        {
+            offset = 0.001855 0.530854 0.038693,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.208794 0,
+            rotate = 0 0 90,
+        }
+    }
+    model ConfessionCompassSkin4334625Empty
+    {
+        mesh = GFL2/ConfessionCompassSkin4334625Empty,
+        texture = GFL2/ConfessionCompassSkin4334625,
+        attachment muzzle
+        {
+            offset = 0.001855 0.530854 0.038693,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.208794 0,
+            rotate = 0 0 90,
+        }
+    }
+}

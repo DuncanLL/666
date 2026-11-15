@@ -1,0 +1,33 @@
+module GFL2
+{
+    model SavageBeastSkin4334605
+    {
+        mesh = GFL2/SavageBeastSkin4334605,
+        texture = GFL2/SavageBeastSkin4334605,
+        attachment muzzle
+        {
+            offset = 0.001855 0.558548 0.044654,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.224214 0,
+            rotate = 0 0 90,
+        }
+    }
+    model SavageBeastSkin4334605Empty
+    {
+        mesh = GFL2/SavageBeastSkin4334605Empty,
+        texture = GFL2/SavageBeastSkin4334605,
+        attachment muzzle
+        {
+            offset = 0.001855 0.558548 0.044654,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.224214 0,
+            rotate = 0 0 90,
+        }
+    }
+}

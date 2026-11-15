@@ -1,0 +1,33 @@
+module GFL2
+{
+    model ChernobogSkin4334615
+    {
+        mesh = GFL2/ChernobogSkin4334615,
+        texture = GFL2/ChernobogSkin4334615,
+        attachment muzzle
+        {
+            offset = 0 0.432 0.0178,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.108 -0.002,
+            rotate = 0 0 90,
+        }
+    }
+    model ChernobogSkin4334615Empty
+    {
+        mesh = GFL2/ChernobogSkin4334615Empty,
+        texture = GFL2/ChernobogSkin4334615,
+        attachment muzzle
+        {
+            offset = 0 0.432 0.0178,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.108 -0.002,
+            rotate = 0 0 90,
+        }
+    }
+}

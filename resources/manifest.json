@@ -7511,6 +7511,18 @@
         "42/media/ui/AimohPMXReadyRoom/packs/R116Qiuhua.json": {
           "bytes": 2929,
           "sha256": "b052d1c60b4fe81c38821ff6d8bc1d5ea5677cf65e388a1f2d30c545865e01f6"
+        },
+        "42/media/models_X/GFL2/TrailblazerSkin4336185.x": {
+          "bytes": 922054,
+          "sha256": "b9dbbe7d134b21dba7bdf95da20f57ab2a1f03f2d2c77a566994041c91796f32"
+        },
+        "42/media/textures/GFL2/TrailblazerSkin4336185.png": {
+          "bytes": 505208,
+          "sha256": "94f33afd3bebd9a9d2ac8412b459f6a3a3d246211ff91eb97deeefb4b979d131"
+        },
+        "42/media/ui/GFL2/TrailblazerSkin4336185.png": {
+          "bytes": 85286,
+          "sha256": "c60e4120c5b559f36eaf0313fdfd88c3004872faee12f6804b1cfb91884fc7fa"
         }
       }
     },
@@ -9427,6 +9439,22 @@
         "42/media/lua/server/GFL2SchlitzohrMagazineLoot.lua": {
           "bytes": 178,
           "sha256": "cc19c5e28653f83204854b1833db9e3da9418e33a5f65798417d8d1fab835f87"
+        },
+        "42/media/models_X/GFL2/SchlitzohrSkin4332235.x": {
+          "bytes": 1071770,
+          "sha256": "e28200e42f6eed961fb95977808cebfc23687436ac9718467344aa1df97c311e"
+        },
+        "42/media/models_X/GFL2/SchlitzohrSkin4332235Empty.x": {
+          "bytes": 1000303,
+          "sha256": "35089d6adab1cb315827b2a62f0c49a4a591b031dd2d667721d0c7667c116142"
+        },
+        "42/media/textures/GFL2/SchlitzohrSkin4332235.png": {
+          "bytes": 738193,
+          "sha256": "f3c4a337a1e4819b970259bcb6cd7f035bd3613148c6383a1701c191347898f5"
+        },
+        "42/media/ui/GFL2/SchlitzohrSkin4332235.png": {
+          "bytes": 92888,
+          "sha256": "b8420b672c543d60c08b9334dea5655ba1010ad2c697ac5238dfd4e06f6f410b"
         }
       }
     },
@@ -10671,6 +10699,22 @@
         "42/mod.info": {
           "bytes": 140,
           "sha256": "13d1670bb45ccccbf76e34fe3f995332cc9cb21c9fd0e3c9eae3c15d31a415d7"
+        },
+        "42/media/models_X/GFL2/NightRoamingSkin4333475.x": {
+          "bytes": 1765710,
+          "sha256": "150e7ce77a2bce28c99ec7e9a7bf53dbb106880c84d1ddc0c3c74c728ec6c7fa"
+        },
+        "42/media/models_X/GFL2/NightRoamingSkin4333475Empty.x": {
+          "bytes": 1695702,
+          "sha256": "e31b6d5b3c69f724091a3792bf4f956b06532b9871d39d79751bab4e23f066bf"
+        },
+        "42/media/textures/GFL2/NightRoamingSkin4333475.png": {
+          "bytes": 494023,
+          "sha256": "2253f4f6808984aba865e5c768f2547df8fc58c2600cd079709df869edcbf399"
+        },
+        "42/media/ui/GFL2/NightRoamingSkin4333475.png": {
+          "bytes": 70202,
+          "sha256": "65ce54e6cb6d7ad3fd531f7a36e7e0fd6182b60ffdf7597ba36cf7b5ee25cf97"
         }
       }
     },
@@ -12087,6 +12131,22 @@
         "42/mod.info": {
           "bytes": 145,
           "sha256": "b3b7ec46a6950cfb3394ac8d7351bb06d14ec1a08c2412cd01aec0064362be53"
+        },
+        "42/media/models_X/GFL2/ConfessionCompassSkin4334625.x": {
+          "bytes": 2797115,
+          "sha256": "e3449b830edc65afa84c14cc62d7478748f5e921817d5ceb684be3dcd80d9085"
+        },
+        "42/media/models_X/GFL2/ConfessionCompassSkin4334625Empty.x": {
+          "bytes": 2686798,
+          "sha256": "9b179658b7ea9b62c2c64ee4034ce02a2a7f2980572d112803266099137705ff"
+        },
+        "42/media/textures/GFL2/ConfessionCompassSkin4334625.png": {
+          "bytes": 749785,
+          "sha256": "636dd263b9b767a3060bb2787f6131ccd3dcb71a65d84980bf5fa5e5c28221bd"
+        },
+        "42/media/ui/GFL2/ConfessionCompassSkin4334625.png": {
+          "bytes": 104273,
+          "sha256": "364fb3087dcd9a071be1e03d16f46157976e4fbdcb47fadefb6682984fb90211"
         }
       }
     },
@@ -13223,6 +13283,22 @@
         "42/media/ui/GFL2/ChernobogCard.png": {
           "bytes": 143783,
           "sha256": "3e7afefc064cdca63804dccc6512f9dbcffbfa8253c1f529f8c56bc6170d62ba"
+        },
+        "42/media/models_X/GFL2/ChernobogSkin4334615.x": {
+          "bytes": 1862506,
+          "sha256": "ee6faf97d13b8eb5f575b20e430eb6f0a99b493e14d9599fcae766f2caa0c10c"
+        },
+        "42/media/models_X/GFL2/ChernobogSkin4334615Empty.x": {
+          "bytes": 1711850,
+          "sha256": "16c002021a01f43b80a6bbfbaa9737220da73d908bef07f06b717b27af338d5c"
+        },
+        "42/media/textures/GFL2/ChernobogSkin4334615.png": {
+          "bytes": 1309599,
+          "sha256": "5e0cb18549350322aa11174dddf99c89b89f8af45ac825b98479cf4092386d83"
+        },
+        "42/media/ui/GFL2/ChernobogSkin4334615.png": {
+          "bytes": 119508,
+          "sha256": "e4caf21f33f4efb4d522844e78094df8ec2176fd14d04a860fed10dfa2b70980"
         }
       }
     },
@@ -15147,6 +15223,22 @@
         "42/media/lua/client/ZZ_AimohPMXNikketaVoice.lua": {
           "bytes": 54611,
           "sha256": "66f33fea9e5d3f5bc63efed9af06447214ce7da95408b438d352eb956aa545fe"
+        },
+        "42/media/models_X/GFL2/GuardianSilverwingSkin4333225.x": {
+          "bytes": 1908284,
+          "sha256": "7454b7e503a23baf662c4d72d4c6cb649287b5ab9134618b25de5a75661ea1e9"
+        },
+        "42/media/models_X/GFL2/GuardianSilverwingSkin4333225Empty.x": {
+          "bytes": 1842257,
+          "sha256": "6e78926d0004ca3beb0f3fc6c4edf94c2f2540079d34385c29b12494d7d02e2f"
+        },
+        "42/media/textures/GFL2/GuardianSilverwingSkin4333225.png": {
+          "bytes": 949851,
+          "sha256": "ec86dfbd0d50c57ae43cb866907ba5169f3b1abcb73f3ba8b6f95a19ca25150a"
+        },
+        "42/media/ui/GFL2/GuardianSilverwingSkin4333225.png": {
+          "bytes": 130556,
+          "sha256": "f7ba33a26db72b11a9ddcaa2b5b7928b872b0381fa1c1a5897b8b4107b365036"
         }
       }
     },
@@ -16943,6 +17035,22 @@
         "42/media/ui/AimohPMXReadyRoom/packs/R116Florence.json": {
           "bytes": 3828,
           "sha256": "8151beee01720994a82e0ea0f8a471a138b8c23956907f06b9744647ff2187e7"
+        },
+        "42/media/models_X/GFL2/IasoSkin4331295.x": {
+          "bytes": 521070,
+          "sha256": "b9b9a596814ff7304096b8ea53178b50dabaf063a2d60bb2b2b84a9a79d38da7"
+        },
+        "42/media/models_X/GFL2/IasoSkin4331295Empty.x": {
+          "bytes": 450646,
+          "sha256": "de198045a5272abc7bcfdf0f6e49fb1581766c22efd0a5957e3d5f5e8b31f67c"
+        },
+        "42/media/textures/GFL2/IasoSkin4331295.png": {
+          "bytes": 662744,
+          "sha256": "2f57134063622fa7b2983a2abe17cfa6451c7066b12d5ba40abb545c28e2bf25"
+        },
+        "42/media/ui/GFL2/IasoSkin4331295.png": {
+          "bytes": 117751,
+          "sha256": "e9f90c10e5861bbdb370743d41df01d61ebba38fc75e7d55029e40f609ce9306"
         }
       }
     },
@@ -18211,6 +18319,22 @@
         "42/media/lua/client/ZZ_AimohPMXAlvaVoice.lua": {
           "bytes": 84808,
           "sha256": "97f57597bdcaced08eb9af0c4123a606c70b46c6f1c34e4681d876697658173b"
+        },
+        "42/media/models_X/GFL2/AlvaAN94Skin4334325.x": {
+          "bytes": 1182584,
+          "sha256": "5cce760f27a446f2b73bf74728f69fa82caa828ae842d4e206a5a1dc996c5030"
+        },
+        "42/media/models_X/GFL2/AlvaAN94Skin4334325Empty.x": {
+          "bytes": 1067333,
+          "sha256": "079ed0a21f62206a73bf739579c49aa918637a450a2302adbf6161ad8b4ad448"
+        },
+        "42/media/textures/GFL2/AlvaAN94Skin4334325.png": {
+          "bytes": 907622,
+          "sha256": "137790ff8d31c127d6d10d1d8263f1b27a9ce063e23b714ad60475a556d193a2"
+        },
+        "42/media/ui/GFL2/AlvaAN94Skin4334325.png": {
+          "bytes": 89717,
+          "sha256": "27ad775802b7b48aac879d2624ef1c40f0c179bcd4e61ef15ec9e4a9b54fb446"
         }
       }
     },
@@ -19443,6 +19567,22 @@
         "42/media/sound/AimohPMXCecilia/Windchill_L4_A.wav": {
           "bytes": 138284,
           "sha256": "cfdc3148ddac97afeb3f696c7eeaf6b69a8a957be6152db549cc41d0939b1275"
+        },
+        "42/media/models_X/GFL2/SnotraSkin4332645.x": {
+          "bytes": 1876021,
+          "sha256": "e50ca025991f94af7ad5bbf5402081de134780bd40dbf2bb66903b241ccb9274"
+        },
+        "42/media/models_X/GFL2/SnotraSkin4332645Empty.x": {
+          "bytes": 1593184,
+          "sha256": "7f1cef9205acee69d3d20448e679d0a3b6dcb30c37b01b9088e3f7856236f8a0"
+        },
+        "42/media/textures/GFL2/SnotraSkin4332645.png": {
+          "bytes": 893954,
+          "sha256": "2fafa198096886c7481b8f20b01b3d0824438f66ef7a7c00012a679eb0c69fd9"
+        },
+        "42/media/ui/GFL2/SnotraSkin4332645.png": {
+          "bytes": 132355,
+          "sha256": "693c8c2b1c577ec77975c03e2bd60510ad3ec379f59ef28f25670ae63a829322"
         }
       }
     },
@@ -20795,6 +20935,22 @@
         "42/media/lua/client/ZZ_AimohPMXCentaureissiVoice.lua": {
           "bytes": 57532,
           "sha256": "72289489790c2c0da12fb400605f87d9e0ecdde27b34acf75342713fd9ed00e1"
+        },
+        "42/media/models_X/GFL2/MaidsRulesSkin4334215.x": {
+          "bytes": 1993278,
+          "sha256": "ab59b1f38af0ba38dfb041014952a148192b5d65763d41141a0b3cb65570abbf"
+        },
+        "42/media/models_X/GFL2/MaidsRulesSkin4334215Empty.x": {
+          "bytes": 1860096,
+          "sha256": "8f1ca04f7e6353067bc9b5316f20673cf16d86f838f65553f4e5db59dd969d8e"
+        },
+        "42/media/textures/GFL2/MaidsRulesSkin4334215.png": {
+          "bytes": 1000114,
+          "sha256": "edf4845489d96621b49430ad88f081ed70af9139d3094fde932d711cc5628bc6"
+        },
+        "42/media/ui/GFL2/MaidsRulesSkin4334215.png": {
+          "bytes": 125785,
+          "sha256": "8d36a2839c2cfe8dca0bfa31291aa37d06affa5e422c8c7d9797c7bec1766a5e"
         }
       }
     },
@@ -21979,6 +22135,22 @@
         "42/media/lua/client/ZZ_AimohPMXDaiyanVoice.lua": {
           "bytes": 54085,
           "sha256": "a8e47357dff878f2903798381234caf43d2013946e11a9ab95ae57f1ec279101"
+        },
+        "42/media/models_X/GFL2/HeavyStringsSkin4334075.x": {
+          "bytes": 1479954,
+          "sha256": "e45ab52834021bed0ed693f61ef4e31a355a12050fe96020a28d61064a0991f3"
+        },
+        "42/media/models_X/GFL2/HeavyStringsSkin4334075Empty.x": {
+          "bytes": 1358129,
+          "sha256": "42fcc4e6754350ec7c5d0a71a116053aba0d64f87acb798694d15291dbb0ce0c"
+        },
+        "42/media/textures/GFL2/HeavyStringsSkin4334075.png": {
+          "bytes": 975324,
+          "sha256": "61301ec587384ed11897ece148eb12e5d8e769f3ca2b5019e3f5555a496175a0"
+        },
+        "42/media/ui/GFL2/HeavyStringsSkin4334075.png": {
+          "bytes": 110948,
+          "sha256": "cc1828d215115fba3af8011636b63dc62d8dcf2f426d87e33723a24c0ad08867"
         }
       }
     },
@@ -23247,6 +23419,22 @@
         "42/mod.info": {
           "bytes": 139,
           "sha256": "c8a8771a994f70dc80aef67e391cab4cdf7fc9ec3791e3b9551f49e6937a0ae8"
+        },
+        "42/media/models_X/GFL2/SavageBeastSkin4334605.x": {
+          "bytes": 1545380,
+          "sha256": "02fe1ae608cb085de824a8fd194ca755396aa60fe6999c3f463e20775085b421"
+        },
+        "42/media/models_X/GFL2/SavageBeastSkin4334605Empty.x": {
+          "bytes": 1420412,
+          "sha256": "08198fcf4b40cff65cc2a7073a177996cd23d426afd8b65e09783bfaa7594b11"
+        },
+        "42/media/textures/GFL2/SavageBeastSkin4334605.png": {
+          "bytes": 814698,
+          "sha256": "858ae8c54112fec997480fd3d84133cbd008695131a7deb4dc46cefa6d86cd22"
+        },
+        "42/media/ui/GFL2/SavageBeastSkin4334605.png": {
+          "bytes": 100278,
+          "sha256": "dce89e8a2cc054e5a3fc60bc11a32571de2b32b9d9c25f48e92b39056798a63c"
         }
       }
     },
@@ -26215,6 +26403,22 @@
         "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_ClukaySSR05.png": {
           "bytes": 307130,
           "sha256": "5b3a7e434296fc2716770f65c879e78313d30f94afe144e236abf58dc6378686"
+        },
+        "42/media/models_X/GFL2/ScyllaSkin4334055.x": {
+          "bytes": 2165541,
+          "sha256": "bc65d75e5d45db7246cf2a313e74e09d8c42be69091cd3ebb1e219d2dff7f3ef"
+        },
+        "42/media/models_X/GFL2/ScyllaSkin4334055Empty.x": {
+          "bytes": 2066345,
+          "sha256": "9934ed0e8da469eade5232b346568cc1d209b57949ccccc29cc4ec386f46a3b7"
+        },
+        "42/media/textures/GFL2/ScyllaSkin4334055.png": {
+          "bytes": 1427684,
+          "sha256": "07a26dd795c0efaf29f96c008c28913a698ec4b4261550d2f6acebcadb1497a7"
+        },
+        "42/media/ui/GFL2/ScyllaSkin4334055.png": {
+          "bytes": 151922,
+          "sha256": "56cc6f13647812b25d67ba6a365ba37cda9caca35cdb3ef1b28918c08bbc3036"
         }
       }
     },
@@ -27507,6 +27711,22 @@
         "42/media/lua/client/ZZ_AimohPMXOTs14Voice.lua": {
           "bytes": 54991,
           "sha256": "2d7d84ee7e3c7455b900c3af1519206a24ca4bb165a78f67302959a93de4b880"
+        },
+        "42/media/models_X/GFL2/CapitolineSkin4334545.x": {
+          "bytes": 1895500,
+          "sha256": "b98ac32e993e3135f1e8aa28abb2e687e7909e9b122e1195bb13920ecc2be9cd"
+        },
+        "42/media/models_X/GFL2/CapitolineSkin4334545Empty.x": {
+          "bytes": 1775606,
+          "sha256": "bec372c042c86ae5cf7dbf81c0cad130a810251de368355dc3778d48ddf70109"
+        },
+        "42/media/textures/GFL2/CapitolineSkin4334545.png": {
+          "bytes": 1017993,
+          "sha256": "ab2587550c35612a88665f6f8b081052b67439578a81efd4f92fdeb9e2e1994c"
+        },
+        "42/media/ui/GFL2/CapitolineSkin4334545.png": {
+          "bytes": 114180,
+          "sha256": "cdd16d62fbeb7f99d0be27a40a7b6c43357bb2d2225e0c433304141f131100c7"
         }
       }
     },
@@ -29123,6 +29343,18 @@
         "42/media/sound/AimohPMXSpringfield/Windchill_L4_A.wav": {
           "bytes": 188204,
           "sha256": "f5f07716a27ecaa6c6fc6c895009100fa678e4076d2441acc54b0099fd0e899c"
+        },
+        "42/media/models_X/GFL2/RadianceSkin4333145.x": {
+          "bytes": 1039406,
+          "sha256": "e6fe5d8c9b43131f1ad61fcf6bbfe696aca494560c59c1fbfb955e06784f9879"
+        },
+        "42/media/textures/GFL2/RadianceSkin4333145.png": {
+          "bytes": 1066978,
+          "sha256": "cc7f85415997ae4b61e65544db03e3b8003850145ce112d40e9de3ff2eb6dd06"
+        },
+        "42/media/ui/GFL2/RadianceSkin4333145.png": {
+          "bytes": 102765,
+          "sha256": "576bbff8ee8a4ff04a786ac7baa20d1b09171939ebf83c3695be3b688871d195"
         }
       }
     },
@@ -30671,6 +30903,22 @@
         "42/media/lua/server/GFL2UnspokenCallingMagazineLoot.lua": {
           "bytes": 183,
           "sha256": "1af5b68a6da3b5cd68e02d7490d98cae448ea5fb5b4691243f6adcc4aec3ea7d"
+        },
+        "42/media/models_X/GFL2/UnspokenCallingSkin4334095.x": {
+          "bytes": 923771,
+          "sha256": "b9d68188f475992430016733baf169102c0ca8a0bf46fb4f2e421c24148c278e"
+        },
+        "42/media/models_X/GFL2/UnspokenCallingSkin4334095Empty.x": {
+          "bytes": 825027,
+          "sha256": "c8c69207865509a87a6cbeee94c07bfb103f34c656f65cd44e3d2b0467b19fcb"
+        },
+        "42/media/textures/GFL2/UnspokenCallingSkin4334095.png": {
+          "bytes": 1102720,
+          "sha256": "23b4c3903ab042fa8a4f8a5e50d2f0751b2eca335c32c32bd34d5985215a382a"
+        },
+        "42/media/ui/GFL2/UnspokenCallingSkin4334095.png": {
+          "bytes": 135830,
+          "sha256": "5a675ddfa67e4d77d184430c1fda326b0857a58b7b0ceadc406e427a769aa375"
         }
       }
     },
@@ -32115,6 +32363,22 @@
         "42/media/lua/server/GFL2LowenjungesMagazineLoot.lua": {
           "bytes": 179,
           "sha256": "2246812d4e7cc81cb0f57857193cff61d47ca7fe697a91e73b5cb39c08e9448d"
+        },
+        "42/media/models_X/GFL2/LowenjungesSkin4332245.x": {
+          "bytes": 1243854,
+          "sha256": "222cb959fabd6b1a5827250e640138256a0b74ff0c41b7c165dd144c7866f633"
+        },
+        "42/media/models_X/GFL2/LowenjungesSkin4332245Empty.x": {
+          "bytes": 1096864,
+          "sha256": "f1611a5dc2fe120a16726d1d3ea8a603ed530a1a624c774264c96f7b61de3f8a"
+        },
+        "42/media/textures/GFL2/LowenjungesSkin4332245.png": {
+          "bytes": 865686,
+          "sha256": "6917d253d39cb231dcb93cb26f2e4dea149688a5bc63e0ae65aabfcdbb692dba"
+        },
+        "42/media/ui/GFL2/LowenjungesSkin4332245.png": {
+          "bytes": 113211,
+          "sha256": "b50bfa2c875794487f0af6230a48b98f9f7d06f9896597d7d29a6eebd180e195"
         }
       }
     },
@@ -33559,6 +33823,22 @@
         "42/media/lua/server/GFL2BansheesWhisperMagazineLoot.lua": {
           "bytes": 183,
           "sha256": "9ec7c6ecd6c2abf91dc970815e55bb6ed686725a9ac9babeb509120815a6412c"
+        },
+        "42/media/models_X/GFL2/BansheesWhisperSkin4332085.x": {
+          "bytes": 1475564,
+          "sha256": "d2228e3ed598faf064b5e24a7716822dc81f1b9d31b1403e4914855eb50d8af2"
+        },
+        "42/media/models_X/GFL2/BansheesWhisperSkin4332085Empty.x": {
+          "bytes": 1394647,
+          "sha256": "943294e1466b817f164a3d36367891bb96c30b3d070a00293556278899339727"
+        },
+        "42/media/textures/GFL2/BansheesWhisperSkin4332085.png": {
+          "bytes": 1056171,
+          "sha256": "1836440430d586e73774d5d4453f2c8393dcd868c060d8406113ec365121540f"
+        },
+        "42/media/ui/GFL2/BansheesWhisperSkin4332085.png": {
+          "bytes": 99180,
+          "sha256": "caa015e0b25698ede192cec15a1c0d64d1e511d31c3da7395a608d3c8bf05573"
         }
       }
     },
@@ -35411,6 +35691,18 @@
         "42/media/ui/GFL2/CauseAndEffectPool.png": {
           "bytes": 1152546,
           "sha256": "83678397bdfb5479851e7de47431d21be93bf9bc681ddc34a642c9ead04683c0"
+        },
+        "42/media/models_X/GFL2/CauseAndEffectSkin4337415.x": {
+          "bytes": 254124,
+          "sha256": "6361591e63935a4070afab9350e6131e0192445f4bafdf4afd6b32902801899c"
+        },
+        "42/media/textures/GFL2/CauseAndEffectSkin4337415.png": {
+          "bytes": 434242,
+          "sha256": "0918c2bdef67ce58510e8eec0b6b10be2d6a132b13b1c7e54eb57d2f58b99801"
+        },
+        "42/media/ui/GFL2/CauseAndEffectSkin4337415.png": {
+          "bytes": 41390,
+          "sha256": "f3d445f8d1ab5fbacbdf240146acd5578c685ed16f43bd2ae428f8d2ea45fdac"
         }
       }
     },
@@ -37223,6 +37515,18 @@
         "42/media/sound/AimohPMXSextans/Windchill_L4_A.wav": {
           "bytes": 212524,
           "sha256": "044dec1ea4988bd1b78ed3db8e7f1b62430dcf8b5a06c531829c9d6bc0cce5e8"
+        },
+        "42/media/models_X/GFL2/TwilightRoseSkin4337535.x": {
+          "bytes": 1450463,
+          "sha256": "898f4399e5270acfb51b85805b90071390da666e3ef49305428194cc5fa64ffa"
+        },
+        "42/media/textures/GFL2/TwilightRoseSkin4337535.png": {
+          "bytes": 712477,
+          "sha256": "3613609aa303469ecf04147452d77daa4db419ee0c20656c3a5e0924591997ea"
+        },
+        "42/media/ui/GFL2/TwilightRoseSkin4337535.png": {
+          "bytes": 33744,
+          "sha256": "8291a69038fac8318a432f869b9d52ec2a6d15118f0767971ac2d4e87df3feee"
         }
       }
     },
@@ -38439,6 +38743,22 @@
         "42/media/sound/AimohPMXYohee/Windchill_L4_A.wav": {
           "bytes": 88364,
           "sha256": "3abf9719a3bb212f41354ffc84e38b74c724a21b4f26735a6d50ffae71aff595"
+        },
+        "42/media/models_X/GFL2/SparklingCenterstageSkin4334195.x": {
+          "bytes": 1238692,
+          "sha256": "ce1e8b35ecaa3503b7b948a2910e9d6402bb460b91c81567e923baca1241c4bb"
+        },
+        "42/media/models_X/GFL2/SparklingCenterstageSkin4334195Empty.x": {
+          "bytes": 1192504,
+          "sha256": "fc6748aa3c19ced7912d7511367fee8292effb92157349c58c68ba61a33cb6f2"
+        },
+        "42/media/textures/GFL2/SparklingCenterstageSkin4334195.png": {
+          "bytes": 1074934,
+          "sha256": "c6605c4fa1bfa57c9a6218edf6bd2cd2b6feefd5d39daaff3073a51521f6f0ba"
+        },
+        "42/media/ui/GFL2/SparklingCenterstageSkin4334195.png": {
+          "bytes": 121889,
+          "sha256": "8382e3d135f96454c8078e0b2247003daf937fa6197dc55fb64f3e311333a25c"
         }
       }
     },
@@ -39811,6 +40131,18 @@
         "42/media/sound/AimohPMXDestroyer/Windchill_L4_A.wav": {
           "bytes": 143404,
           "sha256": "b6136e05eeda088f46d683524a6655ec0ea3093c14e4c65f4e7b54a271b61c67"
+        },
+        "42/media/models_X/GFL2/GaiaTerminusSkin4336675.x": {
+          "bytes": 1617241,
+          "sha256": "9c2e9b094523a8f06e3fbc0a16ed83bef783dedee58eb6d0f77e13b4d2f8369c"
+        },
+        "42/media/textures/GFL2/GaiaTerminusSkin4336675.png": {
+          "bytes": 551154,
+          "sha256": "93f5daa268678acba79ecc75cdd770a0445926348439ff2c6b2646aa2a12275e"
+        },
+        "42/media/ui/GFL2/GaiaTerminusSkin4336675.png": {
+          "bytes": 84349,
+          "sha256": "4c3b9b15f8619dc70ce49c9fa615ae44257aed3bcecff4968b507606e476d648"
         }
       }
     },
@@ -40915,6 +41247,22 @@
         "42/media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_MacqiatoSSR02.png": {
           "bytes": 422481,
           "sha256": "49fa50296615a5b222ccfad45a923cace64d4fd5869371435944b43af9511610"
+        },
+        "42/media/models_X/GFL2/BittersweetCaramelSkin4332115.x": {
+          "bytes": 1591097,
+          "sha256": "66877e74f30b0c846efa8bf9f0137a65a1691f2a792eb3f1635a7d0683e1cdaf"
+        },
+        "42/media/models_X/GFL2/BittersweetCaramelSkin4332115Empty.x": {
+          "bytes": 1484503,
+          "sha256": "2e52b556acb69134fe7a6aca897fb98e4f755fa536647ec27e09a493ad903936"
+        },
+        "42/media/textures/GFL2/BittersweetCaramelSkin4332115.png": {
+          "bytes": 1031623,
+          "sha256": "4b8841687a4d1a5c84f9ffdc998f7254efc7b36ca50234954d80ced7df2f98fc"
+        },
+        "42/media/ui/GFL2/BittersweetCaramelSkin4332115.png": {
+          "bytes": 130379,
+          "sha256": "2251f006bea655c5afb729b290c35360377f536b9bf9fe1700db9bd64f43ed35"
         }
       }
     },
@@ -41391,6 +41739,22 @@
         "42/media/ui/AimohPMXReadyRoom/packs/R116Soppo.json": {
           "bytes": 2044,
           "sha256": "e19e3febf886c4e8a0875e2c614565009232a07a57e241675bd90b42585888f0"
+        },
+        "42/media/models_X/GFL2/SkyhowlSkin4332565.x": {
+          "bytes": 2809052,
+          "sha256": "bddd7a56261c8f45f1bcae4a6a7236338c157dce7d2e176c98b984d6bab9b29c"
+        },
+        "42/media/models_X/GFL2/SkyhowlSkin4332565Empty.x": {
+          "bytes": 2662473,
+          "sha256": "3130a3b1a838c5d512a7917e3eada50ea514c2d627a5345ca510de1967ec7e94"
+        },
+        "42/media/textures/GFL2/SkyhowlSkin4332565.png": {
+          "bytes": 1212742,
+          "sha256": "a69e94655f9921fed8b5f4a16f22a4ac080ea0bf70670faecc3bd1d33b5b3531"
+        },
+        "42/media/ui/GFL2/SkyhowlSkin4332565.png": {
+          "bytes": 142961,
+          "sha256": "a6dee7544517a662da2dd72daecde949b2f717783ce9eb15d9e7455a1320fec0"
         }
       }
     }

@@ -1,0 +1,33 @@
+module GFL2
+{
+    model MaidsRulesSkin4334215
+    {
+        mesh = GFL2/MaidsRulesSkin4334215,
+        texture = GFL2/MaidsRulesSkin4334215,
+        attachment muzzle
+        {
+            offset = 0.001855 0.519265 0.044704,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.20919 0,
+            rotate = 0 0 90,
+        }
+    }
+    model MaidsRulesSkin4334215Empty
+    {
+        mesh = GFL2/MaidsRulesSkin4334215Empty,
+        texture = GFL2/MaidsRulesSkin4334215,
+        attachment muzzle
+        {
+            offset = 0.001855 0.519265 0.044704,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.20919 0,
+            rotate = 0 0 90,
+        }
+    }
+}

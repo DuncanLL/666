@@ -1,0 +1,33 @@
+module GFL2
+{
+    model BittersweetCaramelSkin4332115
+    {
+        mesh = GFL2/BittersweetCaramelSkin4332115,
+        texture = GFL2/BittersweetCaramelSkin4332115,
+        attachment muzzle
+        {
+            offset = 1e-06 0.569653 0.051049,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.201535 0,
+            rotate = 0 0 90,
+        }
+    }
+    model BittersweetCaramelSkin4332115Empty
+    {
+        mesh = GFL2/BittersweetCaramelSkin4332115Empty,
+        texture = GFL2/BittersweetCaramelSkin4332115,
+        attachment muzzle
+        {
+            offset = 1e-06 0.569653 0.051049,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.201535 0,
+            rotate = 0 0 90,
+        }
+    }
+}

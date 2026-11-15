@@ -1,0 +1,33 @@
+module GFL2
+{
+    model NightRoamingSkin4333475
+    {
+        mesh = GFL2/NightRoamingSkin4333475,
+        texture = GFL2/NightRoamingSkin4333475,
+        attachment muzzle
+        {
+            offset = 1e-06 0.635384 0.052506,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.255384 0,
+            rotate = 0 0 90,
+        }
+    }
+    model NightRoamingSkin4333475Empty
+    {
+        mesh = GFL2/NightRoamingSkin4333475Empty,
+        texture = GFL2/NightRoamingSkin4333475,
+        attachment muzzle
+        {
+            offset = 1e-06 0.635384 0.052506,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.255384 0,
+            rotate = 0 0 90,
+        }
+    }
+}
