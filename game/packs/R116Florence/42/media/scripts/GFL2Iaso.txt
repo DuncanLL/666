@@ -71,7 +71,7 @@ module GFL2
         JamGunChance = 1,
         KnockBackOnNoDeath = true,
         KnockdownMod = 2.0,
-        MagazineType = Base.9mmClip,
+        MagazineType = GFL2.IasoMagazine,
         MaxAmmo = 15,
         MaxDamage = 1,
         MaxHitcount = 1,
@@ -115,5 +115,19 @@ module GFL2
         WeaponSprite = GFL2.IasoEmpty,
         Tags = base:hasmetal;base:firearm,
         WorldStaticModel = GFL2.IasoEmpty,
+    }
+    item IasoMagazine
+    {
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Weight = 0.2,
+        Icon = BerettaClip,
+        AmmoType = base:bullets_9mm,
+        CanStack = false,
+        GunType = GFL2.Iaso,
+        MaxAmmo = 15,
+        StaticModel = GunMagazine,
+        WorldStaticModel = Gun_Pistol_Magazine,
+        Tags = base:hasmetal;base:pistolmagazine,
     }
 }

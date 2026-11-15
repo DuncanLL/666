@@ -74,7 +74,7 @@ module GFL2
         JamGunChance = 1,
         KnockBackOnNoDeath = true,
         KnockdownMod = 4.0,
-        MagazineType = Base.556Clip,
+        MagazineType = GFL2.MaidsRulesMagazine,
         MaxAmmo = 30,
         MaxDamage = 1.6,
         MaxHitcount = 2,
@@ -125,5 +125,19 @@ module GFL2
         WeaponSprite = GFL2.MaidsRulesEmpty,
         Tags = base:hasmetal;base:firearm,
         WorldStaticModel = GFL2.MaidsRulesEmpty,
+    }
+    item MaidsRulesMagazine
+    {
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Weight = 0.2,
+        Icon = m16clip,
+        AmmoType = base:bullets_556,
+        CanStack = false,
+        GunType = GFL2.MaidsRules,
+        MaxAmmo = 30,
+        StaticModel = GunMagazine,
+        WorldStaticModel = gun_magazine_new,
+        Tags = base:hasmetal;base:riflemagazine,
     }
 }
