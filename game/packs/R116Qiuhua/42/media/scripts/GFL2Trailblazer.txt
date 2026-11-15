@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Trailblazer,
         attachment muzzle
         {
-            offset = 0.001855 0.387697 0.037878,
+            offset = 0.0016576229 0.35399223 0.035336756,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.136243 0,
+            offset = 4.3107847e-08 0.12929947 0.0014899604,
             rotate = 0 0 90,
         }
     }

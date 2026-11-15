@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Schlitzohr,
         attachment muzzle
         {
-            offset = 1e-06 0.460357 0.055542,
+            offset = 8.8220763e-07 0.41891926 0.0511208,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.175584 0,
+            offset = -1.1366344e-08 0.16445352 0.0014899146,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/Schlitzohr,
         attachment muzzle
         {
-            offset = 1e-06 0.460357 0.055542,
+            offset = 8.8220763e-07 0.41891926 0.0511208,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.175584 0,
+            offset = -1.1366344e-08 0.16445352 0.0014899146,
             rotate = 0 0 90,
         }
     }

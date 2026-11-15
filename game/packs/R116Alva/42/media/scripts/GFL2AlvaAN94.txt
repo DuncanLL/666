@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/AlvaAN94,
         attachment muzzle
         {
-            offset = 0 0.451 0.043,
+            offset = 0 0.44147587 0.041540272,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.172 0.005,
+            offset = 0 0.16915233 0.0044496107,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/AlvaAN94,
         attachment muzzle
         {
-            offset = 0 0.451 0.043,
+            offset = 0 0.44147587 0.041540272,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.172 0.005,
+            offset = 0 0.16915233 0.0044496107,
             rotate = 0 0 90,
         }
     }

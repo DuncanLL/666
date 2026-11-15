@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/UnspokenCallingSkin4334095,
         attachment muzzle
         {
-            offset = 1.27e-06 0.36221698 0.01678263,
+            offset = 1.1135543e-06 0.33310259 0.014221705,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.10221698 0,
+            offset = -4.3446276e-08 0.096236318 -0.0010676758,
             rotate = 0 0 90,
         }
     }
@@ -21,12 +21,12 @@ module GFL2
         texture = GFL2/UnspokenCallingSkin4334095,
         attachment muzzle
         {
-            offset = 1.27e-06 0.36221698 0.01678263,
+            offset = 1.1135543e-06 0.33310259 0.014221705,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.10221698 0,
+            offset = -4.3446276e-08 0.096236318 -0.0010676758,
             rotate = 0 0 90,
         }
     }

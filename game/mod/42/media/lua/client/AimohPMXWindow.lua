@@ -494,7 +494,7 @@ function W:createChildren()
             b:drawTextureScaled(icon,13,b.height*.43-height/2,width,height,owned and 1 or .64,1,1,1)
             b:clearStencilRect()
         end
-        b:drawText(getText(signatureWeapon.name),12,b.height-26,.94,.95,.94,1,UIFont.Small)
+        b:drawText(data.weaponStyle.names[signatureWeapon.id],12,b.height-26,.94,.95,.94,1,UIFont.Small)
         if not owned then lock(b,b.width-30,7) end
         chevron(b,b.width-14,b.height/2+8,"right",17,.72)
         b:drawRect(0,b.height-3,b.width,3,owned and 1 or .63,.96,.66,.13)
@@ -508,7 +508,7 @@ function W:createChildren()
     self.magazineClaimButton.roomLook="drawOnce"
     self.magazineClaimButton:setHeight(43)
     self.magazineClaimButton:setVisible(false)
-    self.weaponSkinButton=button(self,0,0,65,getText("ContextMenu_GFL2_WeaponSkins"),self,function(w)
+    self.weaponSkinButton=button(self,0,0,65,data.weaponStyle.button,self,function(w)
         w.weaponSkinOpen=not w.weaponSkinOpen
         w:layoutOverview()
     end)
@@ -736,11 +736,11 @@ function W:layoutWeaponSkins(weapon,variants,visible,selected)
         for _,row in ipairs(self.weaponSkinRows) do p:removeChild(row) end
         self.weaponSkinRows={}
         p.weaponId=weapon.id
-        local row=button(p,8,8,width-16,getText("ContextMenu_GFL2_WeaponDefaultSkin"),self,function(w)w:applyWeaponSkin("")end)
+        local row=button(p,8,8,width-16,data.weaponStyle.default,self,function(w)w:applyWeaponSkin("")end)
         row.skinId="";self.weaponSkinRows[1]=row
         for _,skin in ipairs(variants) do
             local id=skin.id
-            local b=button(p,8,8+#self.weaponSkinRows*39,width-16,skin.name,self,function(w)w:applyWeaponSkin(id)end)
+            local b=button(p,8,8+#self.weaponSkinRows*39,width-16,data.weaponStyle.skins[id],self,function(w)w:applyWeaponSkin(id)end)
             b.skinId=id;self.weaponSkinRows[#self.weaponSkinRows+1]=b
         end
     end
@@ -2250,7 +2250,7 @@ function W:prerender()
     local signatureWeapon=self.signatureWeapon
     if self.tab=="weaponDraw" and signatureWeapon then
         local x,y=math.floor(self.width*.045),math.floor(self.height*.66)
-        self:drawText(getText(signatureWeapon.name),x,y,.97,.97,.95,1,UIFont.Large)
+        self:drawText(data.weaponStyle.names[signatureWeapon.id],x,y,.97,.97,.95,1,UIFont.Large)
         self:drawRect(x,y+39,54,3,1,.96,.66,.13)
         self:drawText(getText(signatureWeapon.description),x,y+51,.83,.87,.87,1,UIFont.Small)
         local progress=economy.weaponProgress(self.player,signatureWeapon.id)

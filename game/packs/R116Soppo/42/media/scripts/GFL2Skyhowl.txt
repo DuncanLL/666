@@ -6,12 +6,12 @@ module GFL2
         texture = GFL2/Skyhowl,
         attachment muzzle
         {
-            offset = 0.001855 0.409348 0.038047,
+            offset = 0.00165762 0.37333894 0.035487723,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.148691 0,
+            offset = 4.0377982e-08 0.14042264 0.0014899152,
             rotate = 0 0 90,
         }
     }
@@ -22,12 +22,12 @@ module GFL2
         texture = GFL2/Skyhowl,
         attachment muzzle
         {
-            offset = 0.001855 0.409348 0.038047,
+            offset = 0.00165762 0.37333894 0.035487723,
             rotate = -90 0 -180,
         }
         attachment world
         {
-            offset = 0 0.148691 0,
+            offset = 4.0377982e-08 0.14042264 0.0014899152,
             rotate = 0 0 90,
         }
     }
