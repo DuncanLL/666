@@ -173,6 +173,15 @@ if __name__=='__main__':
             (b'vec2 tc = floor(gl_FragCoord.xy)/VL_RENDER_SCALE*texelSize + texelSize*0.5;',
              b'vec2 tc = min(floor(gl_FragCoord.xy)/VL_RENDER_SCALE*texelSize + texelSize*0.5, vec2(1.0)-texelSize*0.5);'),
         ],
+        SHADERS+'all_solid.fsh':[
+            # VP owns the handoff between its near meshes, shells and far boxes.
+            (b'#if defined DISTANT_HORIZONS && DH_CHUNK_FADING > 0',
+             b'#if defined DISTANT_HORIZONS && DH_CHUNK_FADING > 0 && !defined VIEWPOINT'),
+        ],
+        SHADERS+'DH_solid.fsh':[
+            (b'#if DH_CHUNK_FADING > 0',b'#if DH_CHUNK_FADING > 0 && !defined VIEWPOINT'),
+            (b'#ifdef DH_OVERDRAW_PREVENTION',b'#if defined DH_OVERDRAW_PREVENTION && !defined VIEWPOINT'),
+        ],
     }
     for language,(screen,detail,detail_help,gloss,gloss_help,outline,outline_help,key_light,key_help) in option_labels.items():
         labels=(f'screen.R116_CHARACTER = {screen}\n'

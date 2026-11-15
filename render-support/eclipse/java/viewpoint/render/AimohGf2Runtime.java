@@ -107,14 +107,19 @@ public final class AimohGf2Runtime implements AutoCloseable {
 
     private static String sourceKeyLight(String source,float strength){
         if(strength==0f)return source;
-        String output="])*nativeMainScale;";
+        String output="""
+                mainLight=vec4(0,0,0,1);
+                if(copyNativeMain)mainLight.rgb=vec3(nativeLightFields[nativeMainFloatOffset],nativeLightFields[nativeMainFloatOffset+1],nativeLightFields[nativeMainFloatOffset+2])*nativeMainScale;
+            """;
         if(source.indexOf(output)<0||source.indexOf(output)!=source.lastIndexOf(output))
             throw new IllegalArgumentException("Source key light layout differs");
         // The captured GF2 key is 0.9 in the ready room and 1.2 in the activity scene.
-        return source.replace(output,output+"""
+        return source.replace(output,"""
+            vec3 sourceKey=vec3(0.0);
+            if(copyNativeMain)sourceKey=vec3(nativeLightFields[nativeMainFloatOffset],nativeLightFields[nativeMainFloatOffset+1],nativeLightFields[nativeMainFloatOffset+2])*nativeMainScale;
             const float keyStrength=%s;
             const vec3 gf2Luminance=vec3(.2126,.7152,.0722);
-            float keyEnergy=dot(mainLight.rgb,gf2Luminance);
+            float keyEnergy=dot(sourceKey,gf2Luminance);
             float excess=max(keyEnergy-.9,0.0);
             float shoulder=excess/(1.0+excess/.3);
             vec3 skyDiffuse=max(c[0],vec3(0.0));
@@ -123,8 +128,9 @@ public final class AimohGf2Runtime implements AutoCloseable {
             float daylight=smoothstep(.08,.45,keyEnergy);
             float excessFraction=clamp(min(keyStrength,2.0)*excess/max(keyEnergy,1e-6),0.0,1.0);
             if(skyEnergy>1e-6)
-                mainLight.rgb=mix(mainLight.rgb,skyDiffuse*(keyEnergy/skyEnergy),max(excessFraction,highStrength*daylight));
-            mainLight.rgb*=1.0-min(min(keyStrength,2.0)*(excess-shoulder),excess)/max(keyEnergy,1e-6);
+                sourceKey=mix(sourceKey,skyDiffuse*(keyEnergy/skyEnergy),max(excessFraction,highStrength*daylight));
+            sourceKey*=1.0-min(min(keyStrength,2.0)*(excess-shoulder),excess)/max(keyEnergy,1e-6);
+            mainLight=vec4(sourceKey,1.0);
             """.formatted(Float.toString(strength)));
     }
 

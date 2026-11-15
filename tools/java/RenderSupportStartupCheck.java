@@ -23,8 +23,29 @@ public final class RenderSupportStartupCheck {
             var find=viewpoint.platform.IrisPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);
             var iris=(viewpoint.iris.IrisPack)find.invoke(null,"minecraft-Aimoh-Eclipse-GF2");
             require(iris!=null,"Official Iris discoverer did not find installed Eclipse");
+            var environment=new JSONObject(iris.source.read("gf2/manifest.json")).getJSONObject("kernels").getJSONObject("ENVIRONMENT_SH");
+            String keySource=iris.source.read(environment.getString("path"));
+            var adaptKeyLight=Class.forName("viewpoint.render.AimohGf2Runtime").getDeclaredMethod("sourceKeyLight",String.class,float.class);
+            adaptKeyLight.setAccessible(true);
+            require(keySource.equals(adaptKeyLight.invoke(null,keySource,0f)),"Disabled Eclipse key-light adjustment changed the shader");
+            var mainOutput=java.util.regex.Pattern.compile("\\bmainLight\\b");
+            for(float strength:new float[]{1f,10f}){
+                String adjusted=(String)adaptKeyLight.invoke(null,keySource,strength);
+                require(adjusted.contains("writeonly buffer OriginalUnitySH")&&adjusted.contains("mainLight=vec4(sourceKey,1.0);")
+                    &&mainOutput.matcher(adjusted).results().count()==2,"Eclipse key-light must write, never read, mainLight");
+            }
             var macros=viewpoint.iris.IrisMacros.standard(460,"","",
                 Set.of("COMPUTE_SHADERS","CUSTOM_IMAGES","SSBO","FADE_VARIABLE"),true);
+            var distance=iris.configure(Map.of("DISTANT_HORIZONS_SUPPORT","true","DH_CHUNK_FADING","2",
+                "DH_OVERDRAW_PREVENTION","true","DH_NOISE_TEXTURE","true"),macros);
+            var nearTerrain=iris.preprocess(distance,"world0/gbuffers_terrain.fsh",macros);
+            var farTerrain=iris.preprocess(distance,"world0/dh_terrain.fsh",macros);
+            require(nearTerrain.errors().isEmpty()&&farTerrain.errors().isEmpty()
+                &&!nearTerrain.text().contains("smoothstep(0.98 * far")
+                &&!farTerrain.text().contains("float maxOverdrawDistance")
+                &&!farTerrain.text().contains("float ditherFade")
+                &&farTerrain.text().contains("vec4 Albedo = applyNoise"),
+                "Eclipse must leave the near/far handoff to Viewpoint and retain distant surface shading");
             var lpvOff=iris.configure(Map.of("LPV_ENABLED","false","LPV_SIZE","8","WATER_INTERACTION","0",
                 "SHADER_GRASS_SETTING","true","BEACON_FLOODFILL","true"),macros);
             require(Collections.disjoint(lpvOff.properties().images.keySet(),List.of("imgVoxelMask","imgLpv1","imgLpv2")),

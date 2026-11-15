@@ -63,7 +63,10 @@ if __name__=='__main__':
                  '-Djava.io.tmpdir='+str(BUILD/'tmp'),classpath=[str(game),*map(str,game.glob('*.jar'))],convertStrings=True)
     try:
         os.chdir(game)
-        J=jpype.JClass;J('zombie.ZomboidFileSystem').instance.setCacheDir(str(out/'validator-home'));J('zombie.ZomboidFileSystem').instance.init()
+        J=jpype.JClass
+        filesystem=J('zombie.ZomboidFileSystem').instance
+        filesystem.setCacheDir(str(project.parent.parent))
+        filesystem.init()
         item=J('zombie.core.znet.SteamWorkshopItem')(str(project));assert item.readWorkshopTxt()
         assert item.validateContents()is None,str(item.validateContents())
         assert item.getTitle()=='R116 渲染支持 光影分发'and item.getDescription()=='\u200b'

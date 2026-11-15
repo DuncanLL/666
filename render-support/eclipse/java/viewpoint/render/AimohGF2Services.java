@@ -8,6 +8,7 @@ import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
 import viewpoint.iris.*;
+import viewpoint.platform.Gl;
 import viewpoint.platform.GlProgram;
 
 /** Optional pack-owned character stages. Reuses the host's frozen ModelDraws. */
@@ -46,6 +47,19 @@ public final class AimohGF2Services {
             if(unit>=limit)throw new IllegalArgumentException("Eclipse shader "+program+" needs texture unit "+unit+"; driver exposes "+limit+" units");
         }
         return unit;
+    }
+    public static void bindReliefSamplers(IrisProgram program){
+        if(!AimohGf2AddonContext.compiling())return;
+        bindReliefSampler(program,"uRelief",Gl.UNIT_FAR_RELIEF);
+        bindReliefSampler(program,"uReliefWater",Gl.UNIT_FAR_RELIEF_WATER);
+    }
+    private static void bindReliefSampler(IrisProgram program,String name,int unit){
+        int id=program.gl.id(),location=GL20.glGetUniformLocation(id,name);
+        if(location<0)return;
+        // The host binds these textures on its reserved units, even for a shader with no declared sampler mapping.
+        GL41.glProgramUniform1i(id,location,unit);
+        program.units.remove(name);
+        program.samplerTypes.remove(name);
     }
     private static RuntimeException failure(Throwable e){if(e instanceof InvocationTargetException&&e.getCause()!=null)e=e.getCause();return e instanceof RuntimeException?(RuntimeException)e:new IllegalStateException("DanRP character stage",e);}
 
