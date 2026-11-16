@@ -30,6 +30,7 @@ function ZombRand() rolls=rolls+1; return 0 end
 
 local weapon, magazine = "GFL2.Skyhowl", "GFL2.SkyhowlMagazine"
 local items, syncAdded, syncRemoved, syncChanged = {}, {}, {}, {}
+local hands, equippedPackets = {}, {}
 local purse = {}
 local inventory = {}
 local function item(id, container)
@@ -58,6 +59,8 @@ function inventory:Remove(itemToRemove)
 end
 for _=1,3 do purse[#purse+1]=item("Base.Money",inventory) end
 function playerB:getInventory()return inventory end
+function playerB:getPrimaryHandItem()return hands[1] end
+function playerB:getSecondaryHandItem()return hands[2] end
 function playerB:removeFromHands(value)assert(value:getContainer()==inventory) end
 function playerB:resetEquippedHandsModels() end
 function sendAddItemToContainer(container,value)
@@ -68,6 +71,11 @@ function sendRemoveItemFromContainer(container,value)
 end
 function syncItemModData(owner,value)
     assert(owner==playerB);syncChanged[#syncChanged+1]=value
+end
+function sendEquip(owner)
+    assert(owner==playerB)
+    local held=hands[1] or hands[2]
+    equippedPackets[#equippedPackets+1]={held=held,model=held:getModData().GFL2WeaponSkin}
 end
 function getScriptManager()
     return {FindItem=function(_,id) return id==magazine and {} end,
@@ -136,12 +144,20 @@ function verifyServer()
     assert(replies.Transaction.result.status=="ok" and #syncAdded==1)
     request(playerB,"ClaimMagazine",{target=weapon,request=11})
     assert(replies.Transaction.result.status=="ok" and #syncAdded==2 and syncAdded[2]:getFullType()==magazine)
+    hands[1],hands[2]=syncAdded[1],syncAdded[1]
     request(playerB,"WeaponSkin",{target=weapon..":4332565",request=12})
     assert(replies.Transaction.result.status=="ok" and #syncChanged==1)
     assert(syncAdded[1]:getModData().GFL2WeaponSkin==weapon.."Skin4332565")
+    assert(#equippedPackets==1 and equippedPackets[1].model==weapon.."Skin4332565")
+    request(playerB,"WeaponSkin",{target=weapon..":4332565",request=12})
+    assert(#equippedPackets==1 and #syncChanged==1)
+    hands[1]=nil
     request(playerB,"WeaponSkin",{target=weapon..":",request=13})
     assert(replies.Transaction.result.status=="ok" and #syncChanged==2)
-    assert(syncAdded[1]:getModData().GFL2WeaponSkin==nil)
+    assert(#equippedPackets==2 and equippedPackets[2].held==hands[2] and equippedPackets[2].model==nil)
+    hands[2]=nil
+    request(playerB,"WeaponSkin",{target=weapon..":4332565",request=14})
+    assert(#syncChanged==3 and #equippedPackets==2 and syncAdded[1]:getModData().GFL2WeaponSkin==weapon.."Skin4332565")
     enabled=false
     request(player,"Wear",{target=model,request=3})
     assert(replies.Transaction.result.status=="unavailable")
