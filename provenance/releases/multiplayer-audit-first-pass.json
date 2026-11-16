@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-16",
+  "game": "Project Zomboid 42.22",
+  "host": "isolated no-Steam loopback server",
+  "standard_source": "a7b249a",
+  "rc4_source": "0cc837a",
+  "headless_server_variant": "standard",
+  "loaded": [
+    "GFL2Exilium Lua server",
+    "GFL2Soppo",
+    "GFL2Laiya",
+    "GFL2Qiuhua",
+    "Soppo model catalog",
+    "Skyhowl firearm, dedicated magazine and covenant skin"
+  ],
+  "persistence": {
+    "data": "test account in actual server GlobalModData",
+    "fields": [
+      "credits",
+      "targeted tickets",
+      "recruited character",
+      "outfit",
+      "signature weapon skin",
+      "request sequence",
+      "equipped appearance"
+    ],
+    "runs": [
+      {
+        "phase": "write",
+        "valid": true,
+        "excerpt": [
+          "LOG  : Lua          f:0 st:36,057,753> [R116-MP-AUDIT] dedicated Lua, wallet routing, released catalog, items and skin models loaded",
+          "LOG  : Lua          f:0 st:36,057,753> [R116-MP-AUDIT] initialized isolated audit account",
+          "LOG  : Network      f:0 st:36,059,683> *** SERVER STARTED ****",
+          "LOG  : General      f:0 st:36,060,917> Saving GlobalModData"
+        ]
+      },
+      {
+        "phase": "reload",
+        "valid": true,
+        "excerpt": [
+          "LOG  : Lua          f:0 st:36,084,243> [R116-MP-AUDIT] dedicated Lua, wallet routing, released catalog, items and skin models loaded",
+          "LOG  : Lua          f:0 st:36,084,244> [R116-MP-AUDIT] saved account wallet and appearance restored from disk",
+          "LOG  : Network      f:0 st:36,086,144> *** SERVER STARTED ****",
+          "LOG  : General      f:0 st:36,087,228> Saving GlobalModData"
+        ]
+      }
+    ]
+  },
+  "evidence_limitations": [
+    "client connection and gameplay not exercised by server-only test",
+    "item persistence separate from ModData not proven",
+    "Native/Eclipse rendering, animation and audio not observed between two clients"
+  ]
+}
