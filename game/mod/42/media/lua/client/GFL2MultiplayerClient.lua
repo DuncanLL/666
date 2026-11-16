@@ -8,6 +8,7 @@ local slots = {}
 local remote = {}
 local nextUpdate = 0
 local lastSnapshotRevision = 0
+local nextHandshake = 0
 
 local function slot(player)
     local id = player:getOnlineID()
@@ -15,15 +16,17 @@ local function slot(player)
     local state = slots[id]
     if not state or state.player ~= player then
         if state then economy.setSnapshot(state.player, nil) end
-        state = {player = player, request = 0, ready = false, nextSync = 0}
+        nextHandshake = nextHandshake + 1
+        state = {player = player, request = 0, ready = false, nextSync = 0, handshake = nextHandshake}
         slots[id] = state
     end
     return state
 end
 
-local function send(player, command, args)
+local function send(state, command, args)
     args.version = protocol.version
-    sendClientCommand(player, protocol.module, command, args)
+    args.session = state.session
+    sendClientCommand(state.player, protocol.module, command, args)
 end
 
 function M.ready(player)
@@ -41,7 +44,7 @@ function M.transact(player, command, target, count, callback)
     if not state or not state.ready or state.pending then return false end
     local args = {request = state.request + 1, target = target, count = count}
     state.pending = {command = command, args = args, callback = callback, retryAt = getTimestampMs() + 3000}
-    send(player, command, args)
+    send(state, command, args)
     return true
 end
 
@@ -58,7 +61,7 @@ function M.publish(player, saved)
     state.attempt = (state.attempt or 0) + 1
     args.attempt = state.attempt
     state.lastPublished = args
-    send(player, "Appearance", args)
+    send(state, "Appearance", args)
 end
 
 function M.resync()
@@ -76,9 +79,17 @@ local function acceptAppearance(data, fromSnapshot)
     if current and current.revision >= data.revision then return end
     local player = getPlayerByOnlineID(data.player)
     if player and player:isLocalPlayer() then return end
-    if current and current.actor then
-        if current.owner == data.owner then data.actor = current.actor
-        else AimohPMXPreview.disable(current.actor) end
+    if current then
+        local sameSession = current.owner == data.owner and (not current.session or current.session == data.session)
+        if sameSession and current.retired and current.session and data.model ~= "" then return end
+        data.previousActor = current.previousActor
+        if current.actor then
+            if sameSession and not current.actor:isDead() then data.actor = current.actor
+            else
+                AimohPMXPreview.disable(current.actor)
+                data.previousActor = current.actor
+            end
+        end
     end
     remote[data.player] = data
 end
@@ -86,20 +97,23 @@ end
 local function updateRemote()
     for id, state in pairs(remote) do
         local actor = getPlayerByOnlineID(id)
-        if actor and (actor:isLocalPlayer() or actor:getUsername() ~= state.owner) then actor = nil end
+        if actor and (actor == state.previousActor or actor:isLocalPlayer() or actor:isDead()
+                or actor:getUsername() ~= state.owner) then actor = nil end
         if state.actor and state.actor ~= actor then
             AimohPMXPreview.disable(state.actor)
+            state.previousActor = state.actor
             state.actor = nil
             state.applied = false
+            state.retired = true
         end
         if state.actor and state.applied and AimohPMXPreview.hasModelFailure(state.actor) then
             AimohPMXPreview.disable(state.actor)
             state.actor = nil
             state.failed = true
         end
-        if actor and not state.applied and not state.failed then
+        if actor and not state.applied and not state.failed and not state.retired then
             local problem = AimohPMXPreview.queueRemoteAppearance(actor, state.model, state.signature, state.appearance)
-            if problem == "" then state.actor = actor;state.applied = true
+            if problem == "" then state.actor = actor;state.applied = true;state.previousActor = nil
             else
                 state.failed = true
                 print("[GFL2Exilium] Remote appearance: " .. problem)
@@ -140,6 +154,7 @@ local function acceptWallet(state, data)
     local first = not state.ready
     if state.ready and data.request < state.request then return end
     state.ready = true
+    state.session = data.session
     state.request = data.request
     economy.setSnapshot(state.player, data.wallet)
     -- A wallet snapshot may arrive before the transaction reply. Replay that request
@@ -160,6 +175,8 @@ Events.OnServerCommand.Add(function(module, command, data)
     end
     local state = slots[data.player]
     if not state or state.player:isDead() or state.player:getOnlineID() ~= data.player then return end
+    if data.handshake ~= nil and data.handshake ~= state.handshake then return end
+    if state.session ~= nil and state.session ~= data.session then return end
     if command == "Snapshot" then
         if data.revision < lastSnapshotRevision then return end
         lastSnapshotRevision = data.revision
@@ -204,11 +221,11 @@ Events.OnTick.Add(function()
                 state.seenAt = now
                 if now >= state.nextSync then
                     state.nextSync = now + (state.ready and 15000 or 3000)
-                    if not state.pending then send(player, "Request", {}) end
+                    if not state.pending then send(state, "Request", {handshake = state.handshake}) end
                 end
                 if state.pending and now >= state.pending.retryAt then
                     state.pending.retryAt = now + 3000
-                    send(player, state.pending.command, state.pending.args)
+                    send(state, state.pending.command, state.pending.args)
                 end
                 finishRejection(state)
                 if state.restoring then

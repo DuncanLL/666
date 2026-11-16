@@ -15,10 +15,12 @@ function getSpecificPlayer(index) if index==0 then return actor end end
 local peer = {}
 function peer:isLocalPlayer() return false end
 function peer:getUsername() return "remote" end
+function peer:isDead() return self.dead==true end
 function getPlayerByOnlineID(id) if id==4 then return actor elseif id==5 then return peer end end
 local sent = {}
 function sendClientCommand(_,_,command,args)
-    sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance,attempt=args.attempt}
+    sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance,attempt=args.attempt,
+        handshake=args.handshake,session=args.session}
 end
 
 local actions, face, requestedSettings, voiceUpdates
@@ -121,7 +123,7 @@ function verifyAppearanceRejections()
     assert(actor.data.AimohPMXPreview.model==nil and actor.data.AimohPMXPreview.profiles[model]==face)
     return "PASS late appearance rejection leaves the newer model intact, current rejection restores the approved model and its voice"
 end
-local applied, disabled, restoredSettings = 0, 0, nil
+local applied, disabled, cleared, restoredSettings = 0, 0, 0, nil
 local signature = string.rep("a",64)
 AimohPMXPreview = {
     hasModelFailure=function() return false end,
@@ -132,8 +134,9 @@ AimohPMXPreview = {
         return ""
     end,
     queueRemoteAppearance=function(player,model)
-        assert(player==peer and model=="pmx-abe3eaaaa9d04264")
-        applied=applied+1
+        assert(player==peer)
+        if model=="" then cleared=cleared+1
+        else assert(model=="pmx-abe3eaaaa9d04264");applied=applied+1 end
         return ""
     end,
     disable=function(player) assert(player==peer);disabled=disabled+1 end,
@@ -184,6 +187,31 @@ function verifyClient(client,economy)
         signature=string.rep("a",64),appearance="{}"})
     clock=8100;callbacks.tick()
     assert(applied==1)
+    receive("Appearance",{player=5,owner="remote",revision=4,model=model,signature=signature,appearance="{}",session=24})
+    clock=8400;callbacks.tick()
+    assert(applied==2)
+    peer.dead=true
+    clock=8700;callbacks.tick()
+    assert(disabled==2)
+    receive("Appearance",{player=5,owner="remote",revision=5,model=model,signature=signature,appearance="{}",session=24})
+    peer=setmetatable({}, {__index={isLocalPlayer=peer.isLocalPlayer,getUsername=peer.getUsername,isDead=peer.isDead}})
+    clock=9000;callbacks.tick()
+    assert(applied==2,"the new remote survivor inherited the dead actor's appearance")
+    receive("Appearance",{player=5,owner="remote",revision=6,model=model,signature=signature,appearance="{}",session=25})
+    clock=9300;callbacks.tick()
+    assert(applied==3)
+    receive("Appearance",{player=5,owner="remote",revision=7,model=model,signature=signature,appearance="{}",session=26})
+    clock=9600;callbacks.tick()
+    assert(applied==3 and disabled==3,"new appearance was applied to the previous life before the PZ player arrived")
+    peer=setmetatable({}, {__index={isLocalPlayer=peer.isLocalPlayer,getUsername=peer.getUsername,isDead=peer.isDead}})
+    clock=9900;callbacks.tick()
+    assert(applied==4)
+    receive("Appearance",{player=5,owner="remote",revision=8,model="",signature="",appearance="",session=26})
+    clock=10200;callbacks.tick()
+    assert(applied==4 and cleared==1)
+    receive("Appearance",{player=5,owner="remote",revision=9,model=model,signature=signature,appearance="{}",session=26})
+    clock=10500;callbacks.tick()
+    assert(applied==5,"the same live player could not re-enable an appearance")
     callbacks.disconnect()
     assert(not client.ready(actor) and economy.balance(actor,"targeted")==0)
     actor.data.AimohPMXPreview={model="other-model",profiles={[model]="saved settings for that outfit"}}
@@ -192,13 +220,23 @@ function verifyClient(client,economy)
     assert(restoredSettings=="saved settings for that outfit")
     actor.dead=true
     assert(not client.ready(actor))
-    clock=8400;callbacks.tick()
+    clock=10800;callbacks.tick()
     receive("Wallet",{player=4,request=3,wallet={targeted=25}})
     assert(economy.balance(actor,"targeted")==0)
     actor.onlineId=6;actor.dead=false
-    clock=8700;callbacks.tick()
+    local oldHandshake=sent[#sent].handshake
+    clock=11100;callbacks.tick()
     assert(sent[#sent].command=="Request" and not client.ready(actor))
-    receive("Wallet",{player=6,request=3,wallet={targeted=2}})
+    local newHandshake=sent[#sent].handshake
+    assert(oldHandshake and newHandshake and oldHandshake~=newHandshake)
+    receive("Wallet",{player=6,request=9,wallet={targeted=25},handshake=oldHandshake,session=34})
+    assert(not client.ready(actor) and economy.balance(actor,"targeted")==0)
+    receive("Wallet",{player=6,request=3,wallet={targeted=2},handshake=newHandshake,session=35})
     assert(client.ready(actor) and economy.balance(actor,"targeted")==2)
+    assert(client.transact(actor,"DrawCharacter",model,1,onResult) and sent[#sent].session==35)
+    receive("Transaction",{player=6,request=4,wallet={targeted=25},session=34,result={status="unlocked"}})
+    assert(client.pending(actor) and economy.balance(actor,"targeted")==2 and results==2)
+    receive("Transaction",{player=6,request=4,wallet={targeted=1},session=35,result={status="unlocked"}})
+    assert(not client.pending(actor) and economy.balance(actor,"targeted")==1 and results==3)
     return "PASS client handshake, retry after wallet snapshot, stale appearance, per-model restore, disconnect and respawn"
 end

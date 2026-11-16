@@ -2,7 +2,7 @@ local luaEnvironment = {}
 local function event()
     return {Add = function(fn) luaEnvironment[#luaEnvironment+1] = fn end}
 end
-Events = {OnClientCommand=event(), OnPlayerDeath={Add=function() end}}
+Events = {OnClientCommand=event(), OnPlayerDeath=event()}
 function isServer() return true end
 function isClient() return false end
 local saves = {}
@@ -14,12 +14,15 @@ end
 local player = {
     getUsername=function() return "player-a" end,
     getOnlineID=function() return 4 end,
+    isDead=function(self) return self.dead==true end,
 }
 local playerB = {
     getUsername=function() return "player-b" end,
     getOnlineID=function() return 5 end,
+    isDead=function() return false end,
 }
-function getPlayerByOnlineID(id) return id==4 and player or id==5 and playerB or nil end
+local onlineA=player
+function getPlayerByOnlineID(id) return id==4 and onlineA or id==5 and playerB or nil end
 local replies = {}
 function sendServerCommand(first,second,third,fourth)
     if type(first)=="table" then replies[third]=fourth
@@ -93,8 +96,11 @@ function verifyServer()
     end
     local model="pmx-abe3eaaaa9d04264"
     local appearance={model=model,signature=string.rep("a",64),appearance='{"choices":{},"material_visibility":[],"expressions":{"Smile":0.6}}',attempt=1}
-    request(player,"Request",{})
+    request(player,"Request",{handshake=11})
     assert(replies.Wallet.request==0 and replies.Wallet.equipped==nil)
+    local firstSession=replies.Wallet.session
+    assert(firstSession and replies.Wallet.handshake==11 and replies.Snapshot.session==firstSession)
+    appearance.session=firstSession
     saves["player-a"].wallet.targeted=10
     request(player,"Appearance",appearance)
     assert(replies.AppearanceRejected.attempt==1 and replies.Appearance==nil)
@@ -161,6 +167,41 @@ function verifyServer()
     hands[2]=nil
     request(playerB,"WeaponSkin",{target=weapon..":4332565",request=14})
     assert(#syncChanged==3 and #equippedPackets==2 and syncAdded[1]:getModData().GFL2WeaponSkin==weapon.."Skin4332565")
+
+    player.dead=true
+    luaEnvironment[2](player)
+    assert(replies.Appearance.model=="" and saves["player-a"].appearance.model==model)
+    request(player,"Appearance",appearance)
+    assert(replies.Appearance.model=="","a late command republished the dead player's model")
+    request(player,"Wear",{target=model,request=3})
+    assert(saves["player-a"].request==2,"a dead player advanced the account transaction sequence")
+    local retired=player
+    player={getUsername=retired.getUsername,getOnlineID=retired.getOnlineID,isDead=retired.isDead}
+    onlineA=player
+    request(player,"Request",{handshake=12})
+    local newSession=replies.Wallet.session
+    assert(newSession and newSession~=firstSession and replies.Wallet.handshake==12)
+    assert(replies.Wallet.request==2 and replies.Wallet.equipped.model==model)
+    assert(#replies.Snapshot.states==0)
+    request(player,"Wear",{target=model,request=3,session=firstSession})
+    assert(saves["player-a"].request==2,"the previous life changed the new life through its recycled connection slot")
+    request(player,"Appearance",appearance)
+    assert(replies.Appearance.model=="","an old session restored an appearance on the new life")
+    appearance.session=newSession
+    request(player,"Appearance",appearance)
+    assert(replies.Appearance.model==model)
+    luaEnvironment[2](retired)
+    assert(replies.Appearance.model==model,"the old actor's cleanup cleared the new life")
+
+    onlineA={getUsername=retired.getUsername,getOnlineID=retired.getOnlineID,isDead=retired.isDead}
+    request(playerB,"Request",{})
+    assert(#replies.Snapshot.states==0,"the reused ID inherited the disconnected actor's appearance")
+    request(player,"Request",{handshake=13})
+    assert(replies.Wallet.player==5)
+    player=onlineA
+    request(player,"Request",{handshake=14})
+    appearance.session=replies.Wallet.session
+    request(player,"Appearance",appearance)
     enabled=false
     request(player,"Wear",{target=model,request=3})
     assert(replies.Transaction.result.status=="unavailable")
@@ -170,5 +211,5 @@ function verifyServer()
     request(player,"Appearance",appearance)
     assert(replies.AppearanceRejected.attempt==6 and replies.AppearanceRejected.equipped==nil)
     assert(replies.Appearance.model=="" and saves["player-a"].appearance==nil)
-    return "PASS server ownership, replay, separate wallets, Soppo, outfits, cash, tickets, weapons, skins and rejected appearance rollback"
+    return "PASS server economy, outfits, weapons, appearance rollback, death, new-life session and reconnect ownership"
 end

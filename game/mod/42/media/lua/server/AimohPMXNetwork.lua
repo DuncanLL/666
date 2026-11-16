@@ -5,6 +5,9 @@ local catalog = require "GFL2MultiplayerCatalog"
 local economy = require "AimohPMXRoomEconomy"
 local weapons = require "GFL2SignatureWeapon"
 local online = {}
+local onlineActors = setmetatable({}, {__mode = "v"})
+local sessions = setmetatable({}, {__mode = "k"})
+local nextSession = 0
 local revision = 0
 local modDataKey = "GFL2ExiliumMultiplayerV1"
 
@@ -33,6 +36,7 @@ end
 local function reply(player, command, data)
     data.version = protocol.version
     data.player = player:getOnlineID()
+    data.session = sessions[player]
     sendServerCommand(player, protocol.module, command, data)
 end
 
@@ -41,9 +45,10 @@ local function publish(player, state)
     local id = player:getOnlineID()
     local row = {
         version = protocol.version, player = id, owner = player:getUsername(), revision = revision,
-        model = state.model, signature = state.signature, appearance = state.appearance,
+        model = state.model, signature = state.signature, appearance = state.appearance, session = sessions[player],
     }
     online[id] = state.model ~= "" and row or nil
+    onlineActors[id] = online[id] and player or nil
     sendServerCommand(protocol.module, "Appearance", row)
 end
 
@@ -52,18 +57,19 @@ local function equippedAppearance(player, row)
     if equipped and canWear(player, equipped.model) then return equipped end
 end
 
-local function snapshot(player, row)
-    reply(player, "Wallet", {wallet = row.wallet, request = row.request, equipped = equippedAppearance(player, row)})
+local function snapshot(player, row, handshake)
+    reply(player, "Wallet", {wallet = row.wallet, request = row.request, equipped = equippedAppearance(player, row), handshake = handshake})
     local states = {}
     for id, state in pairs(online) do
         local current = getPlayerByOnlineID(id)
-        if current and current:getUsername() == state.owner then
+        if current and current == onlineActors[id] and not current:isDead() then
             states[#states + 1] = state
         else
             online[id] = nil
+            onlineActors[id] = nil
         end
     end
-    reply(player, "Snapshot", {states = states, revision = revision})
+    reply(player, "Snapshot", {states = states, revision = revision, handshake = handshake})
 end
 
 local function transact(player, command, args)
@@ -129,20 +135,27 @@ end
 
 Events.OnClientCommand.Add(function(module, command, player, args)
     if module ~= protocol.module or not player or type(args) ~= "table" or args.version ~= protocol.version then return end
+    local id = player:getOnlineID()
+    if id < 0 or player:isDead() or getPlayerByOnlineID(id) ~= player then return end
+    if command ~= "Request" and args.session ~= nil and args.session ~= sessions[player] then return end
     if args.target ~= nil and (type(args.target) ~= "string" or #args.target > 64) then return end
     if args.count ~= nil and not protocol.integer(args.count, 1, 100000) then return end
     local row = account(player)
     if not row then return end
     if command == "Request" then
-        snapshot(player, row)
+        if not sessions[player] then
+            nextSession = nextSession + 1
+            sessions[player] = nextSession
+        end
+        local handshake = protocol.integer(args.handshake, 1, 2147483647) and args.handshake or nil
+        snapshot(player, row, handshake)
     elseif command == "Appearance" then
         if not protocol.appearance(args) then return end
         if not canWear(player, args.model) then
             local equipped = equippedAppearance(player, row)
             if not equipped and row.appearance then
                 row.appearance = nil
-                local visible = online[player:getOnlineID()]
-                if visible and visible.owner == player:getUsername() then
+                if onlineActors[id] == player then
                     publish(player, {model = "", signature = "", appearance = ""})
                 end
             end
@@ -151,8 +164,8 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             return
         end
         local state = {model = args.model, signature = args.signature, appearance = args.appearance}
-        local previous = online[player:getOnlineID()]
-        if previous and previous.owner == player:getUsername() and previous.model == state.model
+        local previous = online[id]
+        if previous and onlineActors[id] == player and previous.model == state.model
             and previous.signature == state.signature and previous.appearance == state.appearance then return end
         row.appearance = state.model ~= "" and state or nil
         publish(player, state)
@@ -163,8 +176,8 @@ end)
 
 Events.OnPlayerDeath.Add(function(player)
     local id = player:getOnlineID()
-    local current = online[id]
-    if current and current.owner == player:getUsername() then
+    if onlineActors[id] == player then
         publish(player, {model = "", signature = "", appearance = ""})
     end
+    sessions[player] = nil
 end)
