@@ -40,6 +40,8 @@ local function remember(player,quiet)
     if not quiet then voiceChanged(player) end
 end
 
+multiplayer.onRestored=remember
+
 local function flushExpression(player)
     if not expressionEdits[player] then return end
     expressionEdits[player]=nil

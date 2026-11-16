@@ -21,7 +21,7 @@ function sendClientCommand(_,_,command,args)
     sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance}
 end
 
-local actions, face, requestedSettings
+local actions, face, requestedSettings, voiceUpdates
 local model="pmx-abe3eaaaa9d04264"
 local clock=1000
 function getTimestampMs() return clock end
@@ -43,12 +43,23 @@ function prepareExpressionEdits()
         requestedSettings=settings
         return ""
     end
+    voiceUpdates=0
+    AimohPMXVoiceEngine={modelChanged=function(p) assert(p==actor);voiceUpdates=voiceUpdates+1 end}
     actor.data.AimohPMXPreview.profiles["another-model"]="other profile"
 end
 
 function verifyExpressionEdits()
     callbacks.start()
     callbacks.context(0,{addOption=function(_,_,p,open)open(p)end},{},false)
+    callbacks.disconnect()
+    face='{"expressions":{"Smile":0.45}}'
+    callbacks.tick()
+    callbacks.server("GFL2Exilium","Wallet",{version=1,player=6,request=3,wallet={},
+        equipped={model=model,signature=string.rep("a",64),appearance=face}})
+    assert(voiceUpdates==0 and actor.data.AimohPMXPreview.model~=model)
+    clock=clock+250;callbacks.tick()
+    assert(voiceUpdates==1 and actor.data.AimohPMXPreview.model==model)
+    assert(actor.data.AimohPMXPreview.settings==face and sent[#sent].appearance==face)
     local sentBefore=#sent
     face='{"expressions":{"Smile":0.2}}';actions.expressionEdited(actor)
     clock=clock+200;callbacks.previewTick()
@@ -65,7 +76,8 @@ function verifyExpressionEdits()
     assert(actions.enable(actor,1) and requestedSettings=="other profile")
     assert(#sent==sentBefore+2 and sent[#sent].appearance==face)
     assert(actor.data.AimohPMXPreview.profiles[model]==face)
-    return "PASS expression drag waits for a quiet interval, saves the final value once, and flushes before changing outfit"
+    assert(voiceUpdates==1)
+    return "PASS reconnect restores local profile and voice once; expression edits save once and flush before changing outfit"
 end
 local applied, disabled, restoredSettings = 0, 0, nil
 local signature = string.rep("a",64)

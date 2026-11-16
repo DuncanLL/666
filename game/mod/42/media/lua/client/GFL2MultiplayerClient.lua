@@ -190,7 +190,7 @@ Events.OnTick.Add(function()
                 if state.restoring then
                     if AimohPMXPreview.isReady(player) then
                         state.restoring = false
-                        M.publish(player, {model = AimohPMXPreview.modelId(player)})
+                        M.onRestored(player)
                     elseif AimohPMXPreview.hasModelFailure(player) then state.restoring = false end
                 end
             end
