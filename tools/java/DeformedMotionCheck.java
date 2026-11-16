@@ -1,4 +1,5 @@
 import aimoh.pmxpreview.MeshVertexPatch;
+import aimoh.motion.PmxDrawMesh;
 import java.lang.instrument.Instrumentation;
 import java.nio.file.*;
 import java.util.Arrays;
@@ -35,9 +36,19 @@ public final class DeformedMotionCheck {
             if(block!=GL43.GL_INVALID_INDEX)GL43.glShaderStorageBlockBinding(p,block,name.equals("ModelPalettes")?8:9);
         }
         GL20.glUseProgram(p);float[] identity={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
+        int paletteSampler=GL20.glGetUniformLocation(p,"uPalettes");
+        if(paletteSampler>=0)GL20.glUniform1i(paletteSampler,0);
+        int drawSampler=GL20.glGetUniformLocation(p,"uDraws");
+        if(drawSampler>=0)GL20.glUniform1i(drawSampler,1);
         for(String name:new String[]{"uViewProjection","uPlainViewProjection","uPrevViewProjection"}){int loc=GL20.glGetUniformLocation(p,name);if(loc>=0)GL20.glUniformMatrix4fv(loc,false,identity);}
         int loc=GL20.glGetUniformLocation(p,"uMotionPass");if(loc>=0)GL20.glUniform1i(loc,1);
         return p;
+    }
+    static int textureBuffer(int unit,int buffer){
+        int texture=GL11.glGenTextures();GL13.glActiveTexture(GL13.GL_TEXTURE0+unit);
+        GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER,texture);
+        GL31.glTexBuffer(GL31.GL_TEXTURE_BUFFER,GL30.GL_RGBA32F,buffer);
+        return texture;
     }
     static float[] run(int program,int flags,float[] position,float[] weights,boolean skinned,int recordBuffer,int feedback){
         float[] record=new float[68];for(int base:new int[]{0,36})for(int i=0;i<4;i++)record[base+i*5]=1;
@@ -58,6 +69,8 @@ public final class DeformedMotionCheck {
             int vao=GL30.glGenVertexArrays();GL30.glBindVertexArray(vao);
             int records=GL15.glGenBuffers(),palettes=GL15.glGenBuffers(),feedback=GL15.glGenBuffers();
             GL15.glBindBuffer(GL43.GL_SHADER_STORAGE_BUFFER,palettes);GL15.glBufferData(GL43.GL_SHADER_STORAGE_BUFFER,new float[]{1,0,0,0,0,1,0,0,0,0,1,0},GL15.GL_STATIC_DRAW);GL30.glBindBufferBase(GL43.GL_SHADER_STORAGE_BUFFER,8,palettes);
+            GL15.glBindBuffer(GL43.GL_SHADER_STORAGE_BUFFER,records);GL15.glBufferData(GL43.GL_SHADER_STORAGE_BUFFER,68L*Float.BYTES,GL15.GL_DYNAMIC_DRAW);
+            int paletteTexture=textureBuffer(0,palettes),recordTexture=textureBuffer(1,records);
             GL15.glBindBuffer(GL30.GL_TRANSFORM_FEEDBACK_BUFFER,feedback);GL15.glBufferData(GL30.GL_TRANSFORM_FEEDBACK_BUFFER,32L,GL15.GL_DYNAMIC_READ);GL30.glBindBufferBase(GL30.GL_TRANSFORM_FEEDBACK_BUFFER,0,feedback);
             JSONArray cases=new JSONArray();boolean staticFailure=false,irisFailure=false;double maximum=0;
             for(boolean iris:new boolean[]{false,true}){
@@ -67,10 +80,11 @@ public final class DeformedMotionCheck {
                 for(int test=0;test<4;test++){
                     boolean owned=test==2,skin=test==3;float[] pos={.25f,.5f,.75f},prior={-.4f,.2f,.1f};
                     float[] weights=skin?new float[]{1,0,0,0}:test==0?new float[]{0,0,0,0}:new float[]{prior[0],prior[1],prior[2],-1e20f};
-                    int flags=8|(owned?4096:0);float[] got=run(actual,flags,pos,weights,skin,records,feedback);
+                    int flags=8|(owned?PmxDrawMesh.DEFORMED:0);float[] got=run(actual,flags,pos,weights,skin,records,feedback);
                     float[] wanted=run(reference,8,owned?prior:pos,new float[]{0,0,0,0},false,records,feedback);
                     double error=0;for(int i=0;i<4;i++)error=Math.max(error,Math.abs(got[i+4]-wanted[i]));maximum=Math.max(maximum,error);
                     float[] present=run(reference,8,pos,skin?weights:new float[]{0,0,0,0},skin,records,feedback);
+                    if(owned&&Math.abs(present[4]-wanted[4])<.1)throw new AssertionError("Host draw records did not produce distinct reference positions");
                     for(int i=0;i<4;i++)if(Math.abs(got[i]-present[i])>2e-6)throw new AssertionError("Current geometry changed: pipeline="+iris+", case="+test);
                     if(!iris&&test==1&&error>.1)staticFailure=true;if(iris&&owned&&error>.1)irisFailure=true;
                     if(!before&&error>2e-6)throw new AssertionError((iris?"Iris":"Native")+" case="+test+" previous-position error="+error);
@@ -83,6 +97,7 @@ public final class DeformedMotionCheck {
             JSONObject result=new JSONObject().put("status",before?"OLD_STATIC_ATTRIBUTE_AND_IRIS_MOTION_DEFECTS_REPRODUCED":"PASS_OWNED_DEFORMATION_AND_STATIC_ISOLATION").put("cases",cases).put("max_error",maximum).put("normal_sdk_shader_reader",true).put("gpu",GL11.glGetString(GL11.GL_RENDERER)).put("game_started",false).put("nvidia_gameplay_tested",false);
             Files.writeString(out.resolve("result.json"),result.toString(2));System.out.println(result);
             GL15.glDeleteBuffers(records);GL15.glDeleteBuffers(palettes);GL15.glDeleteBuffers(feedback);GL30.glDeleteVertexArrays(vao);
+            GL11.glDeleteTextures(paletteTexture);GL11.glDeleteTextures(recordTexture);
         }finally{GLFW.glfwDestroyWindow(window);GLFW.glfwTerminate();}
     }
 }
