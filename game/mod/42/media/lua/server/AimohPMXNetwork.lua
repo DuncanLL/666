@@ -4,9 +4,7 @@ local protocol = require "GFL2MultiplayerProtocol"
 local catalog = require "GFL2MultiplayerCatalog"
 local economy = require "AimohPMXRoomEconomy"
 local weapons = require "GFL2SignatureWeapon"
-local online = {}
-local onlineActors = setmetatable({}, {__mode = "v"})
-local sessions = setmetatable({}, {__mode = "k"})
+local sessions = {}
 local nextSession = 0
 local revision = 0
 local modDataKey = "GFL2ExiliumMultiplayerV1"
@@ -36,19 +34,18 @@ end
 local function reply(player, command, data)
     data.version = protocol.version
     data.player = player:getOnlineID()
-    data.session = sessions[player]
+    data.session = sessions[data.player].token
     sendServerCommand(player, protocol.module, command, data)
 end
 
-local function publish(player, state)
+local function publish(player, session, state)
     revision = revision + 1
     local id = player:getOnlineID()
     local row = {
         version = protocol.version, player = id, owner = player:getUsername(), revision = revision,
-        model = state.model, signature = state.signature, appearance = state.appearance, session = sessions[player],
+        model = state.model, signature = state.signature, appearance = state.appearance, session = session.token,
     }
-    online[id] = state.model ~= "" and row or nil
-    onlineActors[id] = online[id] and player or nil
+    session.appearance = state.model ~= "" and row or nil
     sendServerCommand(protocol.module, "Appearance", row)
 end
 
@@ -60,13 +57,13 @@ end
 local function snapshot(player, row, handshake)
     reply(player, "Wallet", {wallet = row.wallet, request = row.request, equipped = equippedAppearance(player, row), handshake = handshake})
     local states = {}
-    for id, state in pairs(online) do
+    -- Kahlua object tables do not release disconnected players through weak keys.
+    for id, session in pairs(sessions) do
         local current = getPlayerByOnlineID(id)
-        if current and current == onlineActors[id] and not current:isDead() then
-            states[#states + 1] = state
+        if current == session.player and not current:isDead() then
+            if session.appearance then states[#states + 1] = session.appearance end
         else
-            online[id] = nil
-            onlineActors[id] = nil
+            sessions[id] = nil
         end
     end
     reply(player, "Snapshot", {states = states, revision = revision, handshake = handshake})
@@ -137,15 +134,17 @@ Events.OnClientCommand.Add(function(module, command, player, args)
     if module ~= protocol.module or not player or type(args) ~= "table" or args.version ~= protocol.version then return end
     local id = player:getOnlineID()
     if id < 0 or player:isDead() or getPlayerByOnlineID(id) ~= player then return end
-    if command ~= "Request" and args.session ~= nil and args.session ~= sessions[player] then return end
+    local session = sessions[id]
+    if command ~= "Request" and (not session or session.player ~= player
+            or (args.session ~= nil and args.session ~= session.token)) then return end
     if args.target ~= nil and (type(args.target) ~= "string" or #args.target > 64) then return end
     if args.count ~= nil and not protocol.integer(args.count, 1, 100000) then return end
     local row = account(player)
     if not row then return end
     if command == "Request" then
-        if not sessions[player] then
+        if not session or session.player ~= player then
             nextSession = nextSession + 1
-            sessions[player] = nextSession
+            sessions[id] = {player = player, token = nextSession}
         end
         local handshake = protocol.integer(args.handshake, 1, 2147483647) and args.handshake or nil
         snapshot(player, row, handshake)
@@ -155,8 +154,8 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             local equipped = equippedAppearance(player, row)
             if not equipped and row.appearance then
                 row.appearance = nil
-                if onlineActors[id] == player then
-                    publish(player, {model = "", signature = "", appearance = ""})
+                if session.appearance then
+                    publish(player, session, {model = "", signature = "", appearance = ""})
                 end
             end
             local attempt = protocol.integer(args.attempt, 1, 2147483647) and args.attempt or nil
@@ -164,11 +163,11 @@ Events.OnClientCommand.Add(function(module, command, player, args)
             return
         end
         local state = {model = args.model, signature = args.signature, appearance = args.appearance}
-        local previous = online[id]
-        if previous and onlineActors[id] == player and previous.model == state.model
+        local previous = session.appearance
+        if previous and previous.model == state.model
             and previous.signature == state.signature and previous.appearance == state.appearance then return end
         row.appearance = state.model ~= "" and state or nil
-        publish(player, state)
+        publish(player, session, state)
     elseif command == "Exchange" or command == "DrawCharacter" or command == "BuyOutfit" or command == "DrawOutfit" or command == "Wear" or command == "DrawWeapon" or command == "ClaimWeapon" or command == "ClaimMagazine" or command == "WeaponSkin" then
         process(player, row, command, args)
     end
@@ -176,8 +175,8 @@ end)
 
 Events.OnPlayerDeath.Add(function(player)
     local id = player:getOnlineID()
-    if onlineActors[id] == player then
-        publish(player, {model = "", signature = "", appearance = ""})
-    end
-    sessions[player] = nil
+    local session = sessions[id]
+    if not session or session.player ~= player then return end
+    if session.appearance then publish(player, session, {model = "", signature = "", appearance = ""}) end
+    sessions[id] = nil
 end)
