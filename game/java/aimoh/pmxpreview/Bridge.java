@@ -1,6 +1,7 @@
 package aimoh.pmxpreview;
 
 import aimoh.motion.PmxDrawMesh;
+import java.util.ArrayList;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import viewpoint.core.Frame;
@@ -13,6 +14,8 @@ import zombie.core.skinnedmodel.model.ModelSlotRenderData;
 
 public final class Bridge {
     private static long preparation;
+    private static ModelDraws preparedDraws;
+    private static final ArrayList<Frozen> preparedHeld=new ArrayList<>();
     private static final ThreadLocal<Integer> start=new ThreadLocal<>();
     public static void begin(Frame frame) { start.set(frame.scene.models.count()); }
     public static void end(Frame frame,ModelSlotRenderData slot,IsoGameCharacter actor,boolean hideHead,boolean captured) {
@@ -59,6 +62,7 @@ public final class Bridge {
             if(slot.inVehicle)targetPlacement=session.vehicleSeatPlacement(sourcePlacement,targetPlacement);
             else if(firstPerson)targetPlacement=session.firstPersonHeadPlacement(sourcePlacement,targetPlacement);
             draw=new Frozen(session,prepared,data,draws,first,originalEnd);
+            backend.retainHeldFrames(data,draw.previous,draw.older);
             Frozen command=draw;
             int added=prepared.submitPreparedFrozen(draws,targetPlacement,data,material->new Part(command,material),draw.materials.shadow(),draw.materials.doubleSided());
             if(added==0)return;
@@ -73,10 +77,12 @@ public final class Bridge {
                 if(gear==null)DrawAccess.flags(draws,n,0);
                 else if(instance.model.isStatic&&session.retargetsAttachment(gear.side)) {
                     Matrix4f local=new Matrix4f(inverse).mul(DrawAccess.matrix(draws,n));
-                    Matrix4f placement=new Matrix4f(targetPlacement).mul(session.attachment(gear.root,gear.side,gear.key,local,actor.getAnimationPlayer()));
+                    Matrix4f held=session.attachment(gear.root,gear.side,gear.key,local,pose);
+                    Matrix4f placement=new Matrix4f(targetPlacement).mul(held);
                     DrawAccess.matrix(draws,n,placement);
                     var mesh=DrawAccess.mesh(draws,n);draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
                     DrawAccess.ownPlacement(draws,n,originalEnd,continuous);
+                    draw.addHeld(backend.captureHeld(draw,n,instance,gear,mesh,held));
                 }
             }
         } catch(Throwable e) { if(draw!=null){draw.customEnd=draws.count();draw.restore();}session.fail(e); }
@@ -87,11 +93,22 @@ public final class Bridge {
     }
     public static void prepare(SceneData scene,float phase) {
         long serial=++preparation;ModelDraws draws=scene.models;
+        preparedDraws=draws;preparedHeld.clear();
         for(int n=0;n<draws.count();n++)if(draws.key(n) instanceof Part part){
-            part.frame.upload(serial,phase,scene.cameraCut);
-            if(!part.frame.session.failed&&!part.frame.session.retired&&part.frame.boundTextures!=null)
-                DrawAccess.texture(draws,n,part.frame.boundTextures[part.material]);
+            Frozen frame=part.frame;
+            if(frame.preparedSerial!=serial){
+                frame.upload(serial,phase,scene.cameraCut);
+                if(frame.held!=null&&frame.timing!=null)preparedHeld.add(frame);
+            }
+            if(!frame.session.failed&&!frame.session.retired&&frame.boundTextures!=null)
+                DrawAccess.texture(draws,n,frame.boundTextures[part.material]);
         }
+    }
+    public static void presentHeld(ModelDraws captured,ModelDraws drawn) {
+        if(captured!=preparedDraws)return;
+        preparedDraws=null;
+        for(Frozen frame:preparedHeld)if(!frame.session.failed&&!frame.session.retired)frame.presentHeld(drawn);
+        preparedHeld.clear();
     }
     public static void presentationHeaders(ModelDraws draws) {
         for(int n=0;n<draws.count();n++)if(draws.key(n) instanceof Part part){
@@ -102,12 +119,27 @@ public final class Bridge {
         }
     }
     record Part(Frozen frame,int material) {}
+    record HeldDraw(int index,Matrix4f current,Matrix4f previous,Matrix4f older) {
+        Matrix4f sample(PmxPresentation.Timing timing,PmxDrawMesh.FrameData data,
+                PmxDrawMesh.FrameData previousData,Matrix4f dest) {
+            var a=timing.from()==data?current:timing.from()==previousData?previous:older;
+            var b=timing.to()==data?current:timing.to()==previousData?previous:older;
+            if(a==null||b==null)return dest.set(current);
+            // Blend the grip endpoints with the same weights as the skinned hand vertices.
+            dest.set(a).lerp(b,timing.weight());
+            if(Math.abs(dest.determinant3x3())<1e-5f)
+                dest.set(timing.weight()<.5f?a:b);
+            return dest;
+        }
+    }
     static final class Frozen {
         final ModelSession session;final PmxDrawMesh mesh;final PmxDrawMesh.FrameData data;final ModelDraws draws;
         final PmxDrawMesh.FrameData previous,older;
         final Vector3f low,high;
         final ModelSession.Materials materials;
         zombie.core.textures.Texture[] boundTextures;
+        ArrayList<HeldDraw> held;
+        PmxPresentation.Timing timing;
         final int first,originalEnd;int customEnd;
         final int[] originalFlags,originalMotion;final float[] originalRecords;
         long preparedSerial=Long.MIN_VALUE,headerSerial=Long.MIN_VALUE;ModelDraws headerDraws;float[] renderedHeader;
@@ -126,12 +158,26 @@ public final class Bridge {
             System.arraycopy(DrawAccess.values(draws),first*68,originalRecords,0,originalRecords.length);
             for(int n=first;n<end;n++){originalFlags[n-first]=draws.flags(n);DrawAccess.saveMotion(draws,n,originalMotion,(n-first)*6);}
         }
+        void addHeld(HeldDraw part) {
+            if(held==null)held=new ArrayList<>();
+            held.add(part);
+        }
+        void presentHeld(ModelDraws drawn) {
+            Matrix4f root=DrawAccess.matrix(drawn,originalEnd),local=new Matrix4f(),world=new Matrix4f();
+            for(HeldDraw part:held) {
+                root.mul(part.sample(timing,data,previous,local),world);
+                DrawAccess.matrix(drawn,part.index,world);
+                var mesh=DrawAccess.mesh(drawn,part.index);
+                drawn.bounds(part.index,world,mesh.minXyz,mesh.maxXyz,1);
+            }
+        }
         void upload(long serial,float phase,boolean cut) {
-            if(preparedSerial==serial)return;preparedSerial=serial;
+            if(preparedSerial==serial)return;preparedSerial=serial;timing=null;
             if(session.retired){restore();return;}
             try {
                 if(boundTextures==null)boundTextures=session.viewpointModel.textures(materials);
-                PmxDrawMesh.FrameData sampled=session.viewpointModel.presentation.sample(data,previous,older,phase,cut);
+                timing=PmxPresentation.timing(data,previous,older,phase,cut);
+                PmxDrawMesh.FrameData sampled=session.viewpointModel.presentation.sample(data,timing,cut);
                 mesh.uploadStreamed(sampled,materials.shadow());renderedHeader=sampled.shadingHead();
             }catch(Throwable e){restore();session.fail(e);}
         }
