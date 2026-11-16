@@ -1,7 +1,12 @@
 package aimoh.pmxpreview;
 
+import java.lang.reflect.Field;
 import me.zed_0xff.zombie_buddy.Patch;
+import zombie.characters.IsoPlayer;
 import zombie.inventory.types.HandWeapon;
+import zombie.network.GameClient;
+import zombie.network.fields.ContainerID;
+import zombie.network.packets.SyncItemModDataPacket;
 import zombie.scripting.ScriptManager;
 
 public final class SignatureWeaponModels {
@@ -54,6 +59,40 @@ public final class SignatureWeaponModels {
             if (loaded == weapon.isContainsClip() || detachableModel(weapon)==null) return;
             var owner = weapon.getEquipParent();
             if (owner != null) owner.resetEquippedHandsModels();
+        }
+    }
+
+    @Patch(className="zombie.network.packets.SyncItemModDataPacket", methodName="parse")
+    public static final class ItemDataReceived {
+        private static final Field CONTAINER = field("containerId");
+        private static final Field ITEM = field("itemId");
+
+        private static Field field(String name) {
+            try {
+                Field field = SyncItemModDataPacket.class.getDeclaredField(name);
+                field.setAccessible(true);
+                return field;
+            } catch (ReflectiveOperationException failure) {
+                System.err.println("[GFL2Exilium] Equipped weapon sync: " + failure);
+                return null;
+            }
+        }
+
+        @Patch.OnExit(suppress=IllegalAccessException.class)
+        public static void exit(@Patch.This SyncItemModDataPacket packet) throws IllegalAccessException {
+            if (GameClient.client) refresh(packet);
+        }
+
+        public static void refresh(SyncItemModDataPacket packet) throws IllegalAccessException {
+            if (CONTAINER == null || ITEM == null) return;
+            var inventory = ((ContainerID) CONTAINER.get(packet)).getContainer();
+            if (inventory == null || !(inventory.getItemWithID(ITEM.getInt(packet)) instanceof HandWeapon weapon)
+                    || !weapon.getFullType().startsWith("GFL2.")) return;
+            var owner = weapon.getEquipParent();
+            if (owner instanceof IsoPlayer player && player.isLocalPlayer()
+                    && (weapon == player.getPrimaryHandItem() || weapon == player.getSecondaryHandItem())) {
+                player.resetEquippedHandsModels();
+            }
         }
     }
 }
