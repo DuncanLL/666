@@ -239,8 +239,21 @@ local function button(parent,x,y,w,title,target,callback)
         end
         if s.roomTile then
             local press=s.pressed and enabled and 1 or 0
-            featureIcon(s,s.roomTile,s.width/2-14.5,math.floor((s.height-50)/2)+press,a)
-            label(s,s.roomTitle,s.width/2,s.height-23+press,16,s.width-12,.91,.92,.90,a,true)
+            local x,width=s.width/2,s.width-12
+            if s.roomTitleLines and s.roomTitleWidth>width then
+                local lines,y=s.roomTitleLines,s.height-36
+                if s.roomTitleLineWidth>width then
+                    lines,y=s.roomTitleNarrowLines,math.floor((s.height-48)/2)
+                else
+                    featureIcon(s,s.roomTile,x-14.5,press,a)
+                end
+                for i,line in ipairs(lines) do
+                    label(s,line,x,y+(i-1)*16+press,16,width,.91,.92,.90,a,true)
+                end
+            else
+                featureIcon(s,s.roomTile,x-14.5,math.floor((s.height-50)/2)+press,a)
+                label(s,s.roomTitle,x,s.height-23+press,16,width,.91,.92,.90,a,true)
+            end
             return
         end
         if s.roomLook=="outfit" then
@@ -467,7 +480,12 @@ function W:createChildren()
     end
     self.physicsResetButton=button(self,0,0,86,tr("RoomPhysicsShort"),self,self.requestPhysicsReset)
     self.physicsResetButton:setTooltip(tr("PhysicsReset"))
-    self.chestToggleButton=button(self,0,0,86,tr("ChestPhysics"),self,self.toggleChestPhysics)
+    self.bodyPhysicsButton=button(self,0,0,86,tr("BodyPhysicsToggle"),self,self.toggleBodyPhysics)
+    self.bodyPhysicsButton.roomTitleLines={tr("BodyPhysics"),tr("PhysicsSwitch")}
+    self.bodyPhysicsButton.roomTitleNarrowLines={tr("BodyPhysicsSubject"),tr("BodyPhysicsEffect"),tr("PhysicsSwitch")}
+    local textManager=getTextManager()
+    self.bodyPhysicsButton.roomTitleWidth=textManager:MeasureStringX(UIFont.Small,self.bodyPhysicsButton.roomTitle)
+    self.bodyPhysicsButton.roomTitleLineWidth=textManager:MeasureStringX(UIFont.Small,tr("BodyPhysics"))
     self.restoreButton=button(self,0,0,96,tr("Restore"),self,self.onRestore)
     self.motionTab=button(self,0,0,86,tr("RoomMotion"),self,self.requestMotionPage)
     self.foldButton=button(self,self.width-53,7,34,"",self,function(w)w:toggleRoomFold()end)
@@ -1259,7 +1277,7 @@ function W:roomVisibility()
     self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.chestToggleButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.bodyPhysicsButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -1430,7 +1448,7 @@ function W:layoutOverview()
         b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw or weaponDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-    local controls={self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton,self.chestToggleButton}
+    local controls={self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton,self.bodyPhysicsButton}
     local symbols={"grip","expression","play","restart","chest"}
     local inset,gap,tileHeight=12,8,64
     local tileWidth=math.floor((width-inset*2-gap*2)/3)
@@ -1441,11 +1459,11 @@ function W:layoutOverview()
         b:setWidth(tileWidth);b:setHeight(tileHeight)
         b:setVisible(available and overview)
     end
-    local chestAvailable=available and overview and self:canEditCurrent() and AimohPMXPreview.hasChestPhysics(self.player)
-    self.chestToggleButton:setVisible(not not chestAvailable)
-    local chestOn=chestAvailable and AimohPMXPreview.chestPhysicsEnabled(self.player)
-    self.chestToggleButton.roomActive=not not chestOn
-    self.chestToggleButton.roomTitle=getText(chestOn and "ContextMenu_GFL2_ChestOn" or "ContextMenu_GFL2_ChestOff")
+    local physicsAvailable=available and overview and self:canEditCurrent()
+    self.bodyPhysicsButton:setVisible(not not physicsAvailable)
+    local physicsOn=physicsAvailable and AimohPMXPreview.modelPhysicsEnabled(self.player)
+    self.bodyPhysicsButton.roomActive=not not physicsOn
+    self.bodyPhysicsButton:setTooltip(getText(physicsOn and "ContextMenu_GFL2_BodyPhysicsOn" or "ContextMenu_GFL2_BodyPhysicsOff"))
     self.restoreButton:setX(x+10);self.restoreButton:setY(y+226)
     self.restoreButton.roomLook="bare"
     self.restoreButton:setVisible(available and overview and AimohPMXPreview.isEnabled(self.player))
@@ -1709,9 +1727,9 @@ function W:requestMotionPage()
     else self.toolNotice=self:toolMessage() end
 end
 
-function W:toggleChestPhysics()
-    if not self:canEditCurrent() or not AimohPMXPreview.hasChestPhysics(self.player) then return end
-    if self.actions.chestPhysics(self.player,not AimohPMXPreview.chestPhysicsEnabled(self.player)) then
+function W:toggleBodyPhysics()
+    if not self:canEditCurrent() then return end
+    if self.actions.bodyPhysics(self.player,not AimohPMXPreview.modelPhysicsEnabled(self.player)) then
         self:layoutOverview()
     end
 end

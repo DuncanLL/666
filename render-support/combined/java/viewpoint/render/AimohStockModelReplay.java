@@ -12,7 +12,7 @@ public final class AimohStockModelReplay {
         }
         var pipeline = AimohEclipseGf2SourceHost.pipeline;
         var models = AimohEclipseGf2SourceHost.models;
-        if (pipeline == null || models == null || draws != AimohWorkshopRender.draws(models)) return original;
+        if (pipeline == null || models == null || draws != models.draws()) return original;
         var state = AimohGF2Services.sourceState(pipeline);
         return state == null ? original : index -> original.take(index) && !state.owns(index);
     }

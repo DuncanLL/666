@@ -256,6 +256,7 @@ public final class PmxModel implements AutoCloseable {
             try{core.setPhysicsEnabled(oldPhysics);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
             throw e;
         }
+        if(physics!=null&&motion!=0)motionRestorePhysics=nextPhysics;
         setChestPhysicsEnabled(nextChest);
         if(tuning!=null){profile.weapon_tuning.clear();profile.weapon_tuning.putAll(next);}
     }
@@ -264,6 +265,12 @@ public final class PmxModel implements AutoCloseable {
         if(chest!=null)chest.enabled(chestPhysicsEnabled&&enabled);
     }
     public synchronized boolean physicsEnabled() { return core.physicsEnabled(); }
+    public synchronized boolean bodyPhysicsEnabled(){return motion!=0?motionRestorePhysics:physicsEnabled();}
+    public synchronized void setBodyPhysicsEnabled(boolean enabled){
+        if(enabled)setChestPhysicsEnabled(true);
+        setPhysicsEnabled(enabled);
+        if(motion!=0)motionRestorePhysics=physicsEnabled();
+    }
     public synchronized void resetPhysics() {
         core.resetPhysics();
         if(chest!=null)chest.reset();

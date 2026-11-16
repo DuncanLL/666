@@ -102,8 +102,10 @@ public final class AimohGf2SourceHost {
     }
     public static String option(String name){return pipeline.configured.values().get(name);}
     public static float[] pointLightData(){
-        int count=WorldRenderer.off(3)?0:Math.min(context.scene.lightCount,8);float[] result=new float[count*8];
-        for(int i=0;i<count;i++)System.arraycopy(context.scene.lights,i*12,result,i*8,8);
+        int stride=AimohGf2FrameInputs.SCENE_LIGHT_STRIDE;
+        int count=WorldRenderer.off(3)?0:Math.min(context.scene.lightCount,context.scene.lights.length/stride);
+        float[] result=new float[count*8];
+        for(int i=0;i<count;i++)System.arraycopy(context.scene.lights,i*stride,result,i*8,8);
         return result;
     }
     public static float[] torchLightData(){return Arrays.copyOf(context.lights.torches,Math.min(context.scene.torches.count,8)*11);}

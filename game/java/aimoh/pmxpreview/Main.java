@@ -202,8 +202,11 @@ public class Main {
         catch(Throwable e){error(e);return lastError;}
     }
     public static synchronized String setModelPhysics(IsoGameCharacter actor,boolean enabled) {
-        try {required(actor).model.setPhysicsEnabled(enabled);return "";}
+        try {required(actor).model.setBodyPhysicsEnabled(enabled);return "";}
         catch(Throwable e){error(e);return lastError;}
+    }
+    public static synchronized boolean modelPhysicsEnabled(IsoGameCharacter actor) {
+        ModelSession s=active.get(actor);return s!=null&&s.model.bodyPhysicsEnabled();
     }
     public static synchronized String resetModelPhysics(IsoGameCharacter actor) {
         try {
@@ -234,7 +237,8 @@ public class Main {
     private static JSONObject settings(String value) {
         if(value==null||value.length()>65536)throw new IllegalArgumentException("外观配置超过 64 KiB");
         JSONObject j=new JSONObject(value);j.getJSONObject("appearance");
-        for(String key:j.keySet())if(!key.equals("appearance")&&!key.equals("weapon_tuning")&&!key.equals("chest_physics"))throw new IllegalArgumentException("不支持的同步字段："+key);
+        for(String key:j.keySet())if(!key.equals("appearance")&&!key.equals("weapon_tuning")&&!key.equals("chest_physics")&&!key.equals("physics"))throw new IllegalArgumentException("不支持的同步字段："+key);
+        if(j.has("physics"))j.getJSONObject("physics").getBoolean("enabled");
         return j;
     }
     private static JSONObject settingsFor(ModelSession session,String value) {
@@ -273,7 +277,8 @@ public class Main {
     }
     public static synchronized String settingsJson(IsoGameCharacter actor) {
         ModelSession s=active.get(actor);return s==null?"":new JSONObject().put("appearance",new JSONObject(s.model.appearance().stateJson()))
-            .put("weapon_tuning",s.profile.optJSONObject("weapon_tuning")).put("chest_physics",s.model.chestSettings()).toString();
+            .put("weapon_tuning",s.profile.optJSONObject("weapon_tuning")).put("chest_physics",s.model.chestSettings())
+            .put("physics",new JSONObject().put("enabled",s.model.bodyPhysicsEnabled())).toString();
     }
     public static synchronized String savedSettings(String id,String appearance) {
         try {JSONObject p=new JSONObject(Files.readString(entry(id).profile()));return new JSONObject().put("appearance",appearance==null||appearance.isBlank()?p.getJSONObject("appearance"):new JSONObject(appearance))

@@ -87,8 +87,8 @@ local function resetPhysics(player)
 end
 
 
-local function setChestPhysics(player,enabled)
-    if problem(player,AimohPMXPreview.setChestPhysicsEnabled(player,enabled))then return false end
+local function setBodyPhysics(player,enabled)
+    if problem(player,AimohPMXPreview.setModelPhysics(player,enabled))then return false end
     remember(player,true)
     return true
 end
@@ -124,7 +124,7 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=setChestPhysics,
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,bodyPhysics=setBodyPhysics,
         expressionRemember=function(p)remember(p,true)end})
 end
 

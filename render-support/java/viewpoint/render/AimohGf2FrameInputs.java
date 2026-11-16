@@ -13,6 +13,8 @@ import org.joml.Vector3d;
  * environment bridge after these register placeholders are uploaded.
  */
 public final class AimohGf2FrameInputs {
+    // Steam Workshop Viewpoint 0.1.7 SurfacePass uses 20 floats per scene light.
+    static final int SCENE_LIGHT_STRIDE=20;
     private final Matrix4d affine;
     private final Matrix3d bind,inverseBind;
     private final JSONObject roots,cameraFill;
@@ -73,10 +75,12 @@ public final class AimohGf2FrameInputs {
         for(int i=0;i<torches.length;i+=11){double outer=torches[i+7];records.add(new Light(torches[i],torches[i+1],torches[i+2],torches[i+3],torches[i+8],torches[i+9],torches[i+10],torches[i+4],torches[i+5],torches[i+6],outer,outer+(1-outer)*.3));}
         for(int i=0;i<spots.length;i+=24){if((int)spots[i+7]!=0){unsupported++;continue;}records.add(new Light(spots[i],spots[i+1],spots[i+2],spots[i+3],spots[i+8],spots[i+9],spots[i+10],spots[i+4],spots[i+5],spots[i+6],spots[i+15],Math.cos(spots[i+20])));}
         for(int i=0;i<points.length;i+=8)records.add(new Light(points[i],points[i+1],points[i+2],points[i+3],points[i+4]*points[i+7],points[i+5]*points[i+7],points[i+6]*points[i+7],0,0,1,-1,-1));
+        // The host can leave empty or disabled light slots in the frame.
+        records.removeIf(light->!Float.isFinite(light.radius)||light.radius<=0);
         int available=records.size(),count=Math.min(available,cameraFill==null?8:7),cameraSlot=-1;
         float[] positions=new float[1024],colors=new float[1024],attenuation=new float[1024],directions=new float[1024];
         for(int i=0;i<count;i++){
-            Light light=records.get(i);int at=i*4;if(light.radius<=0)throw new IllegalArgumentException("Native light radius must be positive");
+            Light light=records.get(i);int at=i*4;
             positions[at]=-(light.x-eye[0]);positions[at+1]=light.y-eye[1];positions[at+2]=-(light.z-eye[2]);positions[at+3]=1;
             colors[at]=light.r;colors[at+1]=light.g;colors[at+2]=light.b;colors[at+3]=1;
             attenuation[at]=(float)(1/((double)light.radius*light.radius));attenuation[at+3]=1;
