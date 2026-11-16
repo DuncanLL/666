@@ -31,17 +31,24 @@ def table(value):
  if isinstance(value,bool):return J('java.lang.Boolean')(value)
  if isinstance(value,(int,float)):return J('java.lang.Double')(value)
  return value
-def load(path):
- reader=J('java.io.StringReader')(path.read_text('utf-8-sig'))
- result=thread.pcall(compiler.loadis(reader,path.name,env),jpype.JArray(J('java.lang.Object'))(0))
+def run(source,name):
+ reader=J('java.io.StringReader')(source)
+ result=thread.pcall(compiler.loadis(reader,name,env),jpype.JArray(J('java.lang.Object'))(0))
  if not result[0]:raise AssertionError([str(v)for v in result])
  return result[1]if len(result)>1 else None
+def load(path):
+ return run(path.read_text('utf-8-sig'),path.name)
 try:
  for name in ('ui_fixture.lua','room_fixture.lua','room_hit_fixture.lua'):load(repo/'tools/tests'/name)
  env.rawset('roomData',table(catalog));env.rawset('registryModels',table([]));env.rawset('allModels',table(reg))
+ env.rawset('signatureWeapons',load(repo/'game/mod/42/media/lua/shared/GFL2SignatureWeapon.lua'))
  env.rawset('economy',load(repo/'game/mod/42/media/lua/shared/AimohPMXRoomEconomy.lua'))
  load(game/'media/lua/client/ISUI/ISButton.lua')
  load(repo/'tools/tests/room_workshop_fixture.lua')
+ env.rawset('multiplayerProtocol',load(repo/'game/mod/42/media/lua/shared/GFL2MultiplayerProtocol.lua'))
+ run('client=true','multiplayer-mode')
+ env.rawset('multiplayerRoom',load(repo/'game/mod/42/media/lua/client/GFL2MultiplayerClient.lua'))
+ run('client=false','single-player-mode')
  load(repo/'game/mod/42/media/lua/client/AimohPMXWindow.lua')
  result=load(repo/'tools/tests/room_workshop_assertions.lua');print(result)
 

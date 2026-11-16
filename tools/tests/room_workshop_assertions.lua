@@ -59,7 +59,7 @@ for _,c in ipairs(w.characters)do
 end
 local newcomer
 for _,c in ipairs(w.characters)do
- if not roomData.roomRecruitment[c.name] then newcomer=c;break end
+ if c.recruitment.pool=="R116Soppo" then newcomer=c;break end
 end
 assert(newcomer and newcomer.recruitment.pool==newcomer.baseSkin.meta.pack)
 w:onCharacter(newcomer)
@@ -93,4 +93,37 @@ assert(not visible[0] and visible[1] and visible[2],
 AimohPMXPreview.groupCount,AimohPMXPreview.groupLabel,AimohPMXPreview.optionCount,AimohPMXPreview.optionLabel=
  groupCount,groupLabel,optionCount,optionLabel
 w:close()
-return "PASS Workshop links, fresh locks, recruitment, locked equip guard and accessory filtering"
+
+client=true
+local commands={}
+function sendClientCommand(p,module,command,args)
+ assert(p==actor and module=="GFL2Exilium")
+ commands[#commands+1]={command=command,args=args}
+end
+local equipped=0
+actions.enable=function()equipped=equipped+1;return true end
+w=AimohPMXWindow.open(actor,actions)
+w:onCharacter(w.byCharacter[newcomer.name])
+w:requestCharacterDraw(1)
+assert(#commands==0 and not w.drawAnimation)
+Events.OnTick.handlers[1]()
+assert(commands[1].command=="Request")
+local function server(command,args)
+ args.version=1;args.player=actor:getOnlineID()
+ Events.OnServerCommand.handlers[1]("GFL2Exilium",command,args)
+end
+server("Wallet",{request=0,wallet={targeted=1}})
+w:requestCharacterDraw(1)
+w:requestCharacterDraw(1)
+assert(#commands==2 and commands[2].command=="DrawCharacter" and not w.drawAnimation)
+assert(commands[2].args.target==newcomer.baseSkin.id and commands[2].args.count==1)
+server("Transaction",{request=1,result={status="unlocked",results={true}},
+ wallet={targeted=0,recruitment={owned={R116Soppo=true}}}})
+assert(w.drawAnimation.won and economy.balance(actor,"targeted")==0)
+w.drawAnimation=nil;w:refresh()
+assert(w:selectSkin(w.byCharacter[newcomer.name].baseSkin))
+assert(#commands==3 and commands[3].command=="Wear" and equipped==0)
+server("Transaction",{request=2,result={status="ok"},wallet={recruitment={owned={R116Soppo=true}}}})
+assert(equipped==1)
+w:close()
+return "PASS Workshop links, single-player unlocks and multiplayer room recruitment and equip transactions"
