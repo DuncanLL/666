@@ -90,9 +90,9 @@ public final class PhysicsStreamingCheck {
                         checked.put(new JSONObject().put("id",row.getString("id")).put("hidden_parts_skipped",skipped).put("default_uploaded_vertices",uploadedVertices).put("all_part_vertices",mesh.compactVertexCount()).put("actual_wardrobe_options",choices));
                     }
                     if(model.hasChestPhysics()){
-                        ChestSoftBody chest=(ChestSoftBody)field(PmxModel.class,"chest").get(model);model.chestSlider(3,0);chest.reset();for(int i=0;i<120;i++)model.apply(pose,null,1f/60);
-                        if(!field(ChestSoftBody.class,"reset").getBoolean(chest))throw new AssertionError("Zero strength stepped FEM");
-                        if(!model.chestError().isEmpty())throw new AssertionError(model.chestError());model.chestSlider(3,100);model.apply(pose,null,1f/60);if(!model.chestError().isEmpty()||field(ChestSoftBody.class,"reset").getBoolean(chest))throw new AssertionError("Strength resume");
+                        if(model.chestSettings().getDouble("strength")!=100)throw new AssertionError("Fixed physics strength");
+                        model.resetPhysics();model.apply(pose,null,1f/60);
+                        if(!model.chestError().isEmpty())throw new AssertionError(model.chestError());
                     }
                 }
                 if(ChestSoftBody.liveWorlds()!=0)throw new AssertionError("Soft world leaked");

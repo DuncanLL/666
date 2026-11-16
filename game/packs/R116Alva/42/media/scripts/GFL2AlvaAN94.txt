@@ -99,7 +99,7 @@ module GFL2
         RunAnim = Run_Weapon2,
         ShellFallSound = M16CartridgeFall,
         SoundGain = 2.0,
-        SoundRadius = 150,
+        SoundRadius = 30,
         SoundVolume = 35,
         SplatBloodOnNoDeath = true,
         SplatNumber = 3,

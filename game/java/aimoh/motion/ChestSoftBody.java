@@ -25,9 +25,7 @@ public final class ChestSoftBody implements AutoCloseable {
     }
     private static final String[] KEYS={"softness","damping","inertia","strength","lateral_limit","vertical_limit",
         "depth_limit","cushion","bone_follow","lateral","landing","strain"};
-    private static final double[] DEFAULT={100*(.75-.45)/.67,100*(.045-.035)/.085,50,100,85,105,90,30,0,100,100,100};
-    private static final int[] MIN={0,0,0,0,60,60,60,0,0,0,0,0};
-    private static final int[] MAX={100,100,100,100,140,140,140,60,100,250,200,200};
+    private static final double[] DEFAULT={90,65,80,100,85,105,90,30,0,100,100,100};
     private final Arena arena=Arena.ofShared();
     private final NativeFunc api;
     private final long model;
@@ -37,14 +35,13 @@ public final class ChestSoftBody implements AutoCloseable {
     private final ByteBuffer palette;
     private final MemorySegment frames,quality;
     private MemorySegment handle;
-    private final MethodHandle delete,add,setFrames,step,delta,tune,getQuality,create,destroy,signatureSetter,strainSetter,impulse;
+    private final MethodHandle delete,add,setFrames,step,delta,getQuality,create,destroy,signatureSetter,strainSetter,impulse;
     private MemorySegment solver=MemorySegment.NULL;
     private final MemorySegment impulseVector;
     private final JoltChestMotion motion=new JoltChestMotion();
     private float appliedSignature=-1, appliedStrain;
     private float sideX, sideZ;
     private int[] gpuSpans,gpuRows;
-    private final double[] values=DEFAULT.clone();
     private boolean reset=true,enabled=true,failed,closed;
     private String error="";
     private static final class Region {
@@ -81,7 +78,6 @@ public final class ChestSoftBody implements AutoCloseable {
         setFrames=lib.call("sb_frames",FunctionDescriptor.of(JAVA_INT,ADDRESS,ADDRESS,JAVA_INT));
         step=lib.call("backend_step",FunctionDescriptor.of(JAVA_INT,ADDRESS,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT));
         delta=lib.call("sb_delta",FunctionDescriptor.of(JAVA_INT,ADDRESS,JAVA_INT,ADDRESS,ADDRESS));
-        tune=lib.call("sb_tune",FunctionDescriptor.of(JAVA_INT,ADDRESS,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT));
         getQuality=lib.call("sb_quality",FunctionDescriptor.of(JAVA_INT,ADDRESS,JAVA_INT,ADDRESS));
         ByteBuffer input=ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
         byte[] magic=new byte[8],sha=new byte[32];input.get(magic);input.get(sha);
@@ -115,6 +111,9 @@ public final class ChestSoftBody implements AutoCloseable {
                 region.positions=arena.allocate(JAVA_FLOAT,region.count*3L);region.normals=arena.allocate(JAVA_FLOAT,region.count*3L);driven[r]=region.bone;
             }
             if(input.hasRemaining())throw new IOException("Unexpected chest data tail");
+            var tune=lib.call("sb_tune",FunctionDescriptor.of(JAVA_INT,ADDRESS,JAVA_FLOAT,JAVA_FLOAT,JAVA_FLOAT));
+            int tuned=(int)tune.invokeExact(handle,stiffness(DEFAULT[0]),(float)(.035+.085*DEFAULT[1]/100),(float)(.6+.8*DEFAULT[2]/100));
+            if(tuned!=0)throw new IOException("Cannot apply the chest physics preset");
             affected=used.stream().toArray();
             if(!api.SetAnimationOwnedPhysicsBones(model,driven))throw new IOException("Cannot transfer chest bone ownership");
         }catch(Throwable e){close();if(e instanceof IOException exception)throw exception;throw new IOException("Cannot initialize chest physics",e);}
@@ -144,44 +143,17 @@ public final class ChestSoftBody implements AutoCloseable {
             region.swingWeights[i]=skin*skin*(3-2*skin)*edge*edge*(3-2*edge);
         }
     }
-    public double slider(int index){
-        return index>=0&&index<values.length?values[index]:-1;
-    }
+    float strength(){return (float)DEFAULT[3];}
     public JSONObject settings(){
         JSONObject result=new JSONObject();
-        for(int i=0;i<KEYS.length;i++)result.put(KEYS[i],values[i]);
+        for(int i=0;i<KEYS.length;i++)result.put(KEYS[i],DEFAULT[i]);
         return result;
     }
-    public void settings(JSONObject input){applySettings(prepareSettings(input));}
-    double[] prepareSettings(JSONObject input){
-        double[] next=values.clone();
-        for(String key:input.keySet())if(!Arrays.asList(KEYS).contains(key))throw new IllegalArgumentException("Unknown chest setting: "+key);
-        for(int i=0;i<KEYS.length;i++){
-            if(input.has(KEYS[i]))next[i]=input.getDouble(KEYS[i]);
-            if(!Double.isFinite(next[i])||next[i]<MIN[i]||next[i]>MAX[i])throw new IllegalArgumentException("Invalid chest slider: "+KEYS[i]);
-        }
-        return next;
-    }
-    void applySettings(double[] next){
-        try{
-            if(next[0]!=values[0]||next[1]!=values[1]||next[2]!=values[2]){
-                int result=(int)tune.invokeExact(handle,stiffness(next[0]),(float)(.035+.085*next[1]/100),(float)(.6+.8*next[2]/100));
-                if(result!=0)throw new IllegalStateException("Chest parameter update failed");
-            }
-            if(values[3]==0&&next[3]>0)reset=true;
-            System.arraycopy(next,0,values,0,values.length);
-        }catch(Throwable e){throw new IllegalStateException("Chest parameter update failed",e);}
-    }
     private static float stiffness(double softness){return (float)Math.clamp(.75-.67*softness/100,.08,.75);}
-    public void slider(int index,double value){
-        if(index<0||index>=KEYS.length)throw new IllegalArgumentException("Invalid chest slider");
-        settings(new JSONObject().put(KEYS[index],value));
-    }
-    public void defaults(){applySettings(DEFAULT);}
     public void enabled(boolean value){if(enabled!=value){enabled=value;reset=true;}}
     public void reset(){reset=true;failed=false;error="";}
     public void evaluate(float seconds) {
-        if(!enabled||failed||closed||values[3]==0)return;
+        if(!enabled||failed||closed||DEFAULT[3]==0)return;
         try{
             palette.clear();if(api.CopySkinningMatricesToBuffer(model,palette)!=palette.capacity()/64)throw new IllegalStateException("Incomplete chest palette");
             for(int r=0;r<regions.length;r++)for(int i=0;i<16;i++){
@@ -196,7 +168,7 @@ public final class ChestSoftBody implements AutoCloseable {
             float elapsed=Math.clamp(seconds,0f,.08f);
             evaluateInertia(seconds);
             reset=false;
-            float signature=(float)values[8];
+            float signature=(float)DEFAULT[8];
             if(signature!=appliedSignature){
                 if((int)signatureSetter.invokeExact(handle,solver,2,signature)!=0)throw new IllegalStateException("Jolt bone follow update failed");
                 appliedSignature=signature;
@@ -205,8 +177,8 @@ public final class ChestSoftBody implements AutoCloseable {
                 if((int)strainSetter.invokeExact(solver,motion.strain)!=0)throw new IllegalStateException("Jolt strain update failed");
                 appliedStrain=motion.strain;
             }
-            int result=(int)step.invokeExact(solver,elapsed,stiffness(values[0]),
-                (float)(values[4]/100),(float)(values[5]/100),(float)(values[6]/100),(float)(values[7]/100));
+            int result=(int)step.invokeExact(solver,elapsed,stiffness(DEFAULT[0]),
+                (float)(DEFAULT[4]/100),(float)(DEFAULT[5]/100),(float)(DEFAULT[6]/100),(float)(DEFAULT[7]/100));
             if(result!=0)throw new IllegalStateException("Chest simulation failed");
             for(int r=0;r<regions.length;r++){
                 Region region=regions[r];
@@ -233,7 +205,7 @@ public final class ChestSoftBody implements AutoCloseable {
         float length=(float)Math.sqrt(sideX*sideX+sideZ*sideZ);
         if(length>1e-5f){sideX/=length;sideZ/=length;}
         else sideX=sideZ=0;
-        motion.update(x/regions.length,y/regions.length,z/regions.length,sideX,sideZ,seconds,reset,values[9],values[10],values[11]);
+        motion.update(x/regions.length,y/regions.length,z/regions.length,sideX,sideZ,seconds,reset,DEFAULT[9],DEFAULT[10],DEFAULT[11]);
         if(motion.kickX!=0||motion.kickZ!=0){
             impulseVector.setAtIndex(JAVA_FLOAT,0,motion.kickX);
             impulseVector.setAtIndex(JAVA_FLOAT,2,motion.kickZ);
@@ -259,8 +231,8 @@ public final class ChestSoftBody implements AutoCloseable {
         points[i+2]=z+cosine*pz+sine*sideX*py+projection*sideZ;
     }
     public void deform(float[] positions,float[] normals) {
-        if(!enabled||failed||closed||reset||values[3]==0)return;
-        float strength=(float)(values[3]/100);
+        if(!enabled||failed||closed||reset||DEFAULT[3]==0)return;
+        float strength=(float)(DEFAULT[3]/100);
         for(Region region:regions)for(int i=0;i<region.count;i++) {
             float weight=region.weights[i]*strength;int dst=region.ids[i]*3;
             for(int k=0;k<3;k++) {
@@ -282,7 +254,7 @@ public final class ChestSoftBody implements AutoCloseable {
     record GpuOffsets(int[] spans,float[] rows,float axisX,float axisZ) {}
 
     GpuOffsets gpuOffsets(int vertices) {
-        if(!enabled||failed||closed||reset||values[3]==0)return null;
+        if(!enabled||failed||closed||reset||DEFAULT[3]==0)return null;
         if(gpuSpans==null) {
             gpuSpans=new int[vertices+1];
             for(Region region:regions)for(int id:region.ids)gpuSpans[id+1]++;
@@ -292,7 +264,7 @@ public final class ChestSoftBody implements AutoCloseable {
             for(Region region:regions)for(int id:region.ids)gpuRows[source++]=next[id]++;
         }
         float[] rows=new float[gpuRows.length*12];
-        float strength=(float)(values[3]/100);int source=0;
+        float strength=(float)(DEFAULT[3]/100);int source=0;
         for(Region region:regions)for(int i=0;i<region.count;i++) {
             int at=gpuRows[source++]*12;float weight=region.weights[i]*strength;
             for(int k=0;k<3;k++) {

@@ -42,10 +42,12 @@ try:
     seconds.append((time.perf_counter()-start)*1000)
    if model.hasChestPhysics():
     assert peak>1e-4,(row['label'],peak)
-    saved=str(model.chestSettings());model.chestSlider(2,80.);assert model.chestSlider(2)==80.
-    state=json_class().put('appearance',json_class(model.appearance().stateJson())).put('appearance_controls',json_class(json.dumps(profile.get('appearance_controls',{'format':1,'groups':[]})))).put('chest_physics',json_class(saved))
-    model.applySettings(str(state));assert str(model.chestSettings())==saved
-    before=model.handle();model.resetChestSettings();assert model.handle()==before
+    saved=json.loads(str(model.chestSettings()))
+    assert saved==dict(softness=90,damping=65,inertia=80,strength=100,lateral_limit=85,
+                       vertical_limit=105,depth_limit=90,cushion=30,bone_follow=0,lateral=100,landing=100,strain=100)
+    legacy=dict(saved,softness=20,damping=5,inertia=10,strength=0)
+    state=json_class().put('appearance',json_class(model.appearance().stateJson())).put('appearance_controls',json_class(json.dumps(profile.get('appearance_controls',{'format':1,'groups':[]})))).put('chest_physics',json_class(json.dumps(legacy)))
+    model.applySettings(str(state));assert json.loads(str(model.chestSettings()))==saved
     model.setPhysicsEnabled(False);model.apply(F(poses[30]),None,1/60)
     api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12);api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12)
     raw=np.frombuffer(memoryview(pb),dtype='<f4').copy();p=F(raw);normal=F(np.frombuffer(memoryview(nb),dtype='<f4').copy());model.deformChest(p,normal)

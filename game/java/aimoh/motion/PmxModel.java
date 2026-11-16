@@ -171,7 +171,7 @@ public final class PmxModel implements AutoCloseable {
     synchronized ChestSoftBody.GpuOffsets gpuChestOffsets(int vertices) {
         return chest==null?null:chest.gpuOffsets(vertices);
     }
-    public synchronized JSONObject stepTiming(){return new JSONObject().put("retarget_rigid_ms",lastRetargetNanos/1e6).put("chest_ms",lastChestNanos/1e6).put("chest_data",chest!=null).put("physics_requested",core.physicsEnabled()).put("chest_strength",chest==null?0:chest.slider(3)).put("chest_error",chest==null?"":chest.error());}
+    public synchronized JSONObject stepTiming(){return new JSONObject().put("retarget_rigid_ms",lastRetargetNanos/1e6).put("chest_ms",lastChestNanos/1e6).put("chest_data",chest!=null).put("physics_requested",core.physicsEnabled()).put("chest_strength",chest==null?0:chest.strength()).put("chest_error",chest==null?"":chest.error());}
 
     public long handle() { return handle; }
     public synchronized void playMotion(Path file) throws IOException {
@@ -238,16 +238,13 @@ public final class PmxModel implements AutoCloseable {
         }
         JSONObject state=settings.getJSONObject("appearance"),controls=settings.optJSONObject("appearance_controls");
         ModelAppearance.Prepared prepared=appearance.prepare(state.toString(),controls==null?Wardrobe.empty():controls.toString());
-        JSONObject soft=settings.optJSONObject("chest_physics"),physics=settings.optJSONObject("physics");
-        double[] nextChest=soft==null||chest==null?null:chest.prepareSettings(soft);
-        double[] oldChest=nextChest==null?null:chest.prepareSettings(chest.settings());
+        // Older saves can contain chest_physics. The fixed preset is applied when the model loads.
+        JSONObject physics=settings.optJSONObject("physics");
         boolean nextPhysics=physics==null?core.physicsEnabled():physics.optBoolean("enabled",false),oldPhysics=core.physicsEnabled();
         try{
-            if(nextChest!=null)chest.applySettings(nextChest);
             core.setPhysicsEnabled(nextPhysics);
             appearance.apply(prepared);
         }catch(RuntimeException|Error e){
-            try{if(oldChest!=null)chest.applySettings(oldChest);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
             try{core.setPhysicsEnabled(oldPhysics);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
             throw e;
         }
@@ -261,9 +258,6 @@ public final class PmxModel implements AutoCloseable {
     }
     public synchronized boolean hasChestPhysics(){return chest!=null&&chest.available();}
     public synchronized JSONObject chestSettings(){return chest==null?null:chest.settings();}
-    public synchronized double chestSlider(int index){return chest==null?0:chest.slider(index);}
-    public synchronized void chestSlider(int index,double value){if(chest==null)throw new IllegalStateException("当前模型无胸部物理");chest.slider(index,value);}
-    public synchronized void resetChestSettings(){if(chest!=null)chest.defaults();}
     public synchronized String chestError(){return chest==null?"":chest.error();}
     public synchronized void deformChest(float[] positions,float[] normals){if(chest!=null)chest.deform(positions,normals);}
 
