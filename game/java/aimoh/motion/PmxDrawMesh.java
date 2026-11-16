@@ -56,6 +56,29 @@ public final class PmxDrawMesh implements AutoCloseable {
     private ShaderPacks.Active lastNativeOutlinePack;
     private boolean nativeOutlineSupported;
 
+    /** Closed PMX meshes no longer need their copies in Viewpoint's separate mesh arena. */
+    private static final class HostMeshCache {
+        private static final Field HELD;
+        private static final Method RELEASE;
+        static {
+            Field held=null;
+            Method release=null;
+            try {
+                ClassLoader loader=PmxDrawMesh.class.getClassLoader();
+                Class<?> meshes=Class.forName("viewpoint.render.ModelMeshes",false,loader);
+                Class<?> entry=Class.forName("viewpoint.render.ModelMeshes$Held",false,loader);
+                held=meshes.getDeclaredField("held");held.setAccessible(true);
+                release=meshes.getDeclaredMethod("letGo",entry);release.setAccessible(true);
+            }catch(ReflectiveOperationException | LinkageError unsupported){held=null;release=null;}
+            HELD=held;RELEASE=release;
+        }
+        static void release(ModelMesh mesh) throws ReflectiveOperationException {
+            if(HELD==null)return;
+            Object entry=((java.util.Map<?,?>)HELD.get(null)).remove(mesh);
+            if(entry!=null)RELEASE.invoke(null,entry);
+        }
+    }
+
     /** Arrays belong to this frame and are never mutated after capture. */
     public static final class FrameData {
         private final float[] positions,normals,materials,shadingHead;
@@ -423,7 +446,8 @@ public final class PmxDrawMesh implements AutoCloseable {
             Part part=parts.get(i);
             owned[i+2]=()->{
                 if(part.gpuRemap!=0)GL15.glDeleteBuffers(part.gpuRemap);
-                part.mesh.clear();
+                try{HostMeshCache.release(part.mesh);}
+                finally{part.mesh.clear();}
             };
         }
         ResourceCleanup.close(owned);
