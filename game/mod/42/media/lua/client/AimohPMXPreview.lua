@@ -87,6 +87,12 @@ local function resetPhysics(player)
 end
 
 
+local function setChestPhysics(player,enabled)
+    if problem(player,AimohPMXPreview.setChestPhysicsEnabled(player,enabled))then return false end
+    remember(player,true)
+    return true
+end
+
 local function disable(player)
     awaiting[player]=nil
     AimohPMXPreview.disable(player)
@@ -118,7 +124,7 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=setChestPhysics,
         expressionRemember=function(p)remember(p,true)end})
 end
 

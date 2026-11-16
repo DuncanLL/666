@@ -3,6 +3,8 @@
     "ContextMenu_GFL2_AskHost": "由房主启用人物模块。",
     "ContextMenu_GFL2_Connecting": "正在连接人物框架服务，请稍后再试。",
     "ContextMenu_AimohPMX_Menu": "僵毁少女前线",
+    "ContextMenu_GFL2_ChestOn": "胸部物理：开",
+    "ContextMenu_GFL2_ChestOff": "胸部物理：关",
     "ContextMenu_AimohPMX_JavaUnavailable": "Java 未加载，请授权并重启",
     "ContextMenu_AimohPMX_Refresh": "刷新列表",
     "ContextMenu_AimohPMX_Unavailable": "模型不可用，见 console.txt",

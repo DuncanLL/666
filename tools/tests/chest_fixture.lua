@@ -11,4 +11,10 @@ function recordDraw()end
 local api=AimohPMXPreview
 calls.voice=0;calls.physicsReset=0
 AimohPMXVoiceEngine={modelChanged=function()calls.voice=calls.voice+1 end}
+function api.hasChestPhysics(a)return a.current>=0 and registryModels[a.current+1].chest or false end
+function api.chestPhysicsEnabled(a)return api.hasChestPhysics(a) and calls.chestOn~=false end
+function api.setChestPhysicsEnabled(a,on)
+ assert(api.hasChestPhysics(a))
+ calls.chestOn=on;a.settings=on and "chest-on" or "chest-off";return ""
+end
 function api.resetModelPhysics()calls.physicsReset=calls.physicsReset+1;return ""end

@@ -212,6 +212,19 @@ public class Main {
             s.model.resetPhysics();return "";
         } catch(Throwable e) {error(e);return lastError;}
     }
+    public static synchronized boolean hasChestPhysics(IsoGameCharacter actor) {
+        ModelSession s=active.get(actor);return s!=null&&s.model.hasChestPhysics();
+    }
+    public static synchronized boolean chestPhysicsEnabled(IsoGameCharacter actor) {
+        ModelSession s=active.get(actor);return s!=null&&s.model.chestPhysicsEnabled();
+    }
+    public static synchronized String setChestPhysicsEnabled(IsoGameCharacter actor,boolean enabled) {
+        try {
+            ModelSession s=required(actor);
+            if(!s.model.hasChestPhysics())return "当前造型未配置胸部物理";
+            s.model.setChestPhysicsEnabled(enabled);return "";
+        }catch(Throwable e){error(e);return lastError;}
+    }
     public static synchronized String status() { return lastError; }
     public static synchronized String modelId(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?"":s.entry.id();}
     public static synchronized String appearanceJson(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?"":s.model.appearance().stateJson();}

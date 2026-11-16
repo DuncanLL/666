@@ -1,0 +1,381 @@
+{
+  "version": "0.7.8",
+  "variant": "rc4",
+  "default_chest_enabled": true,
+  "fixed": {
+    "damping": 65,
+    "inertia": 80,
+    "softness": 90
+  },
+  "package": {
+    "models_with_profiles": 69,
+    "with_matching_chest_sidecar": 31,
+    "shared_native_dll_sha256": "93ad7293bf0c54c17af40a9d0754399570569093ed84c05697685eff110fe215"
+  },
+  "captured_poses_viewpoint_frame": {
+    "pmx-020f2e8bdc65bc5b": {
+      "skin": "仁心仁术",
+      "sidecar": false,
+      "phases": [
+        {
+          "chest_on": false,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.0
+        }
+      ]
+    },
+    "pmx-d373f73abd68a3d0": {
+      "skin": "秋林烈兔",
+      "sidecar": true,
+      "phases": [
+        {
+          "chest_on": true,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.15989303588867188
+        },
+        {
+          "chest_on": false,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.0
+        },
+        {
+          "chest_on": true,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.15989303588867188
+        }
+      ]
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "skin": "秋宴龙厨",
+      "sidecar": true,
+      "phases": [
+        {
+          "chest_on": true,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.14877033233642578
+        },
+        {
+          "chest_on": false,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.0
+        },
+        {
+          "chest_on": true,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.14877033233642578
+        }
+      ]
+    },
+    "pmx-e4fe174c77f90d6c": {
+      "skin": "默认",
+      "sidecar": false,
+      "phases": [
+        {
+          "chest_on": false,
+          "rigid_steps": 38,
+          "max_viewpoint_frame_delta": 0.0
+        }
+      ]
+    }
+  },
+  "qiuhua_source_inspection": {
+    "pmx-020f2e8bdc65bc5b": {
+      "skin": "仁心仁术",
+      "chest_sidecar": false,
+      "physics": {
+        "mode": "authored",
+        "available": true,
+        "enabled": true,
+        "rigid_bodies": 141,
+        "dynamic_bodies": 107,
+        "joints": 157,
+        "primary_bone_conflicts": [],
+        "hair_bodies": 35,
+        "garment_bodies": 60
+      },
+      "rigids": 141,
+      "dynamic_rigids": 107,
+      "joints": 157,
+      "chest_bones": [],
+      "eligible": false,
+      "fit": []
+    },
+    "pmx-d373f73abd68a3d0": {
+      "skin": "秋林烈兔",
+      "chest_sidecar": true,
+      "physics": {
+        "mode": "authored",
+        "available": true,
+        "enabled": true,
+        "rigid_bodies": 102,
+        "dynamic_bodies": 73,
+        "joints": 75,
+        "primary_bone_conflicts": [],
+        "hair_bodies": 35,
+        "garment_bodies": 0
+      },
+      "rigids": 102,
+      "dynamic_rigids": 73,
+      "joints": 75,
+      "chest_bones": [
+        [
+          124,
+          "Chest_L",
+          "",
+          1979,
+          [
+            [
+              34,
+              1
+            ]
+          ]
+        ],
+        [
+          125,
+          "Chest_R",
+          "",
+          1977,
+          [
+            [
+              35,
+              1
+            ]
+          ]
+        ]
+      ],
+      "eligible": true,
+      "fit": [
+        {
+          "bone": "Chest_L",
+          "count": 1979,
+          "radius": [
+            0.033063337206840515,
+            0.03905096650123596,
+            0.03151420131325722
+          ]
+        },
+        {
+          "bone": "Chest_R",
+          "count": 1977,
+          "radius": [
+            0.033063337206840515,
+            0.03905096650123596,
+            0.03151420131325722
+          ]
+        }
+      ]
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "skin": "秋宴龙厨",
+      "chest_sidecar": true,
+      "physics": {
+        "mode": "authored",
+        "available": true,
+        "enabled": true,
+        "rigid_bodies": 273,
+        "dynamic_bodies": 241,
+        "joints": 429,
+        "primary_bone_conflicts": [],
+        "hair_bodies": 35,
+        "garment_bodies": 90
+      },
+      "rigids": 273,
+      "dynamic_rigids": 241,
+      "joints": 429,
+      "chest_bones": [
+        [
+          126,
+          "Chest_L",
+          "",
+          447,
+          [
+            [
+              271,
+              1
+            ]
+          ]
+        ],
+        [
+          127,
+          "Chest_R",
+          "",
+          443,
+          [
+            [
+              272,
+              1
+            ]
+          ]
+        ]
+      ],
+      "eligible": true,
+      "fit": [
+        {
+          "bone": "Chest_L",
+          "count": 447,
+          "radius": [
+            0.044100210070610046,
+            0.04793408513069153,
+            0.030159002169966698
+          ]
+        },
+        {
+          "bone": "Chest_R",
+          "count": 443,
+          "radius": [
+            0.04530888423323631,
+            0.047492388635873795,
+            0.03012053295969963
+          ]
+        }
+      ]
+    },
+    "pmx-e4fe174c77f90d6c": {
+      "skin": "默认",
+      "chest_sidecar": false,
+      "physics": {
+        "mode": "authored",
+        "available": true,
+        "enabled": true,
+        "rigid_bodies": 200,
+        "dynamic_bodies": 167,
+        "joints": 267,
+        "primary_bone_conflicts": [],
+        "hair_bodies": 35,
+        "garment_bodies": 112
+      },
+      "rigids": 200,
+      "dynamic_rigids": 167,
+      "joints": 267,
+      "chest_bones": [],
+      "eligible": false,
+      "fit": []
+    }
+  },
+  "rc4_rigid_output_comparison": {
+    "pmx-020f2e8bdc65bc5b": {
+      "skin": "仁心仁术",
+      "rigid_mesh_delta": 11.217351913452148,
+      "coordinates_changed": 206712
+    },
+    "pmx-d373f73abd68a3d0": {
+      "skin": "秋林烈兔",
+      "rigid_mesh_delta": 10.757979393005371,
+      "coordinates_changed": 148544
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "skin": "秋宴龙厨",
+      "rigid_mesh_delta": 9.982309341430664,
+      "coordinates_changed": 98211
+    },
+    "pmx-e4fe174c77f90d6c": {
+      "skin": "默认",
+      "rigid_mesh_delta": 8.592041969299316,
+      "coordinates_changed": 137839
+    }
+  },
+  "toggle_tests": {
+    "R116Daiyan": {
+      "asset": "pmx-33aa225b75767fcb",
+      "peak": 0.048496365547180176,
+      "output_sha256": [
+        "90c8be1158d0c269c97d7c8cd4acfa7f4dfe7991deb6eea745f12f8629075c7c",
+        "29c64c6fe3ef2533264c9901f0275b662ba40c93711874201cf10e709c90b27b",
+        "711ab695565a299477edb755ea55d2009367e392daa57d2ae72fbfb91e632d90"
+      ],
+      "default_on": true,
+      "cpu_off_exact": true,
+      "gpu_off_absent": true,
+      "reenabled": true,
+      "global_physics_unchanged_by_switch": true,
+      "saved_off_after_reload": true
+    },
+    "R116Asteria": {
+      "asset": "pmx-b0dd2e3cfd1ab80c",
+      "peak": 0.034073829650878906,
+      "output_sha256": [
+        "71a5c3978664f1c112a6da8ca3150447b66e5971e919b789e0352ef99adf9d47",
+        "b97975e43941be21350796a071660aa67297c878f578f2a3b22f9619f3ab556d",
+        "e5035af48af54ceb0db16b9af870527be066d0c19f8e41c0fa367414a7553cfe"
+      ],
+      "default_on": true,
+      "cpu_off_exact": true,
+      "gpu_off_absent": true,
+      "reenabled": true,
+      "global_physics_unchanged_by_switch": true,
+      "saved_off_after_reload": true
+    },
+    "R116Suomi": {
+      "asset": "pmx-cb19e5961c38af86",
+      "peak": 0.030817590653896332,
+      "output_sha256": [
+        "3aa6d4446bd04a962d3b775bc34abd9e7c2f0c24744e01cc0a130f973f50c32d",
+        "be25db5b63690147ccb05578788021c6af9d23da25539085a4dab7008da07156",
+        "b9bdd61fbe0fc6b5cd78f062180cdf4ca45578c67951518c4684d4760477a306"
+      ],
+      "default_on": true,
+      "cpu_off_exact": true,
+      "gpu_off_absent": true,
+      "reenabled": true,
+      "global_physics_unchanged_by_switch": true,
+      "saved_off_after_reload": true
+    },
+    "R116Springfield": {
+      "asset": "pmx-225af1a054faefb0",
+      "peak": 0.038338519632816315,
+      "output_sha256": [
+        "631da1f5ba3d04b959266c0944edba7f3c649904dfdc59f9496860d6709752d8",
+        "7fd5e51967405a2c7cc769cf44b3b2d0932cb98c35e803a7ae4ec08288daf996",
+        "0540fc6d43280390c2f93671a19d7802dd67b75a7097eb9c6ba16326d1ac6197"
+      ],
+      "default_on": true,
+      "cpu_off_exact": true,
+      "gpu_off_absent": true,
+      "reenabled": true,
+      "global_physics_unchanged_by_switch": true,
+      "saved_off_after_reload": true
+    }
+  },
+  "ui_widget_fixture": true,
+  "install_readback": [
+    {
+      "target": "rc4-author",
+      "path": "42/mod.info",
+      "previous_sha256": "802369eea2091053314fbd2b475ae40a5e3f36a97949af55922796e4d422edc2",
+      "sha256": "2108b6a480cc151aeda8851e2375c83952c50fcb523ef09f964421a97a8d00a0"
+    },
+    {
+      "target": "rc4-author",
+      "path": "42/media/lua/client/AimohPMXWindow.lua",
+      "previous_sha256": "d069452a833679e19c94f334b4217b7100db7a1b7b91ffe68ed8a6c3775b9d46",
+      "sha256": "01d459e04e7f6cc44f025a3834a5ea5326eb9cc9f25ad1fcdbe5bdcea36a1ad4"
+    },
+    {
+      "target": "rc4-author",
+      "path": "42/media/lua/client/AimohPMXPreview.lua",
+      "previous_sha256": "aa579801e9f1981ba3dee977bcebe3485c5565b2fe86a651c8a29484bbd2d872",
+      "sha256": "e3c03e9565ecbcbc3e98a6eddc37963c3d1cbc10d9ecfcb4fb7d1ff894929e47"
+    },
+    {
+      "target": "rc4-author",
+      "path": "42/media/lua/shared/Translate/CN/ContextMenu.json",
+      "previous_sha256": "d2289319f9570c45ceb46f75da7ec5af2c20418cc8169048513b8822b766502e",
+      "sha256": "11283f3107f5173031fc9abc893d0fe6a5ab25af0d11d60f7bee00a018b71333"
+    },
+    {
+      "target": "rc4-author",
+      "path": "42/media/lua/shared/Translate/EN/ContextMenu.json",
+      "previous_sha256": "efcc73ecfc4f47f5f9ccc18471db1c62e37772d26f6b989ec6edd3e41813160f",
+      "sha256": "40e0f8894bd48067591feaeea30ec1c8b917c089c26e1952340301f1b2d1e257"
+    },
+    {
+      "target": "rc4-author",
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "previous_sha256": "dd4c2f55a8a766ef8b7aea6ec06eac594bf4c3911268a6473274490451504165",
+      "sha256": "524605edd2e16f1ba67a989389e742f6b269ec3497723956dacc77d51572b8de"
+    }
+  ],
+  "gameplay_tested": false,
+  "reviewer_machine_tested": false,
+  "workshop_uploaded": false
+}
