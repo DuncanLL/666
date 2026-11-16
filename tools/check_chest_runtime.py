@@ -44,10 +44,20 @@ try:
     assert peak>1e-4,(row['label'],peak)
     saved=json.loads(str(model.chestSettings()))
     assert saved==dict(softness=90,damping=65,inertia=80,strength=100,lateral_limit=85,
-                       vertical_limit=105,depth_limit=90,cushion=30,bone_follow=0,lateral=100,landing=100,strain=100)
+                       vertical_limit=105,depth_limit=90,cushion=30,bone_follow=0,lateral=100,landing=100,strain=100,enabled=True)
     legacy=dict(saved,softness=20,damping=5,inertia=10,strength=0)
     state=json_class().put('appearance',json_class(model.appearance().stateJson())).put('appearance_controls',json_class(json.dumps(profile.get('appearance_controls',{'format':1,'groups':[]})))).put('chest_physics',json_class(json.dumps(legacy)))
     model.applySettings(str(state));assert json.loads(str(model.chestSettings()))==saved
+    original_physics=model.physicsEnabled()
+    state.getJSONObject('chest_physics').put('enabled',False)
+    model.applySettings(str(state))
+    assert not model.chestPhysicsEnabled() and model.physicsEnabled()==original_physics
+    model.apply(F(poses[30]),None,1/60)
+    api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12)
+    api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12)
+    raw=np.frombuffer(memoryview(pb),dtype='<f4').copy();p=F(raw);normal=F(np.frombuffer(memoryview(nb),dtype='<f4').copy())
+    model.deformChest(p,normal);assert np.array_equal(np.asarray(p),raw)
+    model.setChestPhysicsEnabled(True);assert json.loads(str(model.chestSettings()))==saved
     model.setPhysicsEnabled(False);model.apply(F(poses[30]),None,1/60)
     api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12);api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12)
     raw=np.frombuffer(memoryview(pb),dtype='<f4').copy();p=F(raw);normal=F(np.frombuffer(memoryview(nb),dtype='<f4').copy());model.deformChest(p,normal)
