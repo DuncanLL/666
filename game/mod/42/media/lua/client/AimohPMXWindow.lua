@@ -443,7 +443,6 @@ function W:createChildren()
     self.content=panel(self,self.rightX,105,self.rightWidth,self.height-247)
     self.pageButton=button(self,0,0,136,tr("RoomPartSwitch"),self,function(w)w:setTab("parts")end)
     self.pageButton.roomLook="parts"
-    self.chestButton=button(self,0,0,86,tr("ChestPhysics"),self,function(w)w:setTab("chest")end)
     self.gripButton=button(self,0,0,86,tr("GripCalibration"),self,function(w)w:setTab("grip")end)
     self.gripAimButton=button(self,self.rightX,54,self.rightWidth,getText("ContextMenu_GFL2_GripAim"),self,function(w)
         w.gripAiming=not w.gripAiming
@@ -1261,7 +1260,7 @@ function W:roomVisibility()
     self:layoutPreview()
     self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
-    for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.chestButton,self.gripButton,
+    for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.gripButton,
         self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
         widget:setVisible(false)
     end
@@ -1422,8 +1421,8 @@ function W:layoutOverview()
         b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw or weaponDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-    local controls={self.chestButton,self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton}
-    local symbols={"chest","grip","expression","play","restart"}
+    local controls={self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton}
+    local symbols={"grip","expression","play","restart"}
     local inset,gap,tileHeight=12,8,64
     local tileWidth=math.floor((width-inset*2-gap*2)/3)
     for i,b in ipairs(controls) do
@@ -1719,7 +1718,7 @@ function W:updateWear()
     local pendingUnlock=character and character.unlockRequired
     self.wearButton:setEnable(self.browsed~=nil and not wearing and (not locked or skins) and not pendingUnlock and not self.waiting)
     local available=self.browsed~=nil and not locked and not pendingUnlock
-    for _,button in ipairs({self.pageButton,self.chestButton,self.physicsResetButton,
+    for _,button in ipairs({self.pageButton,self.physicsResetButton,
         self.gripButton,self.expressionButton,self.motionTab}) do button:setEnable(available) end
 end
 function W:previewEntry(entry)
@@ -1927,8 +1926,6 @@ function W:refreshControls(keepScroll)
         y=self.content.height
     elseif not editable then
         self:addLabel(self:toolMessage(),8);y=44
-    elseif self.tab=="chest" and not AimohPMXPreview.hasChestPhysics(self.player) then
-        self:addLabel(tr("RoomChestUnavailable"),8);y=44
     else
         if self.tab=="expression" then
             local id=self.currentId
@@ -2016,33 +2013,6 @@ function W:refreshControls(keepScroll)
                 end)
                 table.insert(self.widgets,b);y=y+42
             end
-        elseif self.tab=="chest" then
-            self:addLabel("Jolt",y);y=y+32
-            local sliders={
-                {"ChestJoltFollow",8,0,100},
-                {"ChestJoltLateral",9,0,250},
-                {"ChestJoltLanding",10,0,200},
-                {"ChestJoltStrain",11,0,200},
-                {"ChestSoftness",0,0,100},{"ChestDamping",1,0,100},
-                {"ChestInertia",2,0,100},{"ChestStrength",3,0,100},
-                {"ChestXpbdVertical",5,60,140},{"ChestXpbdLateral",4,60,140},
-                {"ChestXpbdDepth",6,60,140},{"ChestXpbdCushion",7,0,60},
-            }
-            for _,row in ipairs(sliders)do
-                local key,field,minimum,maximum=row[1],row[2],row[3],row[4]
-                self:addLabel(tr(key),y,24);y=y+32
-                local slider=ISSliderPanel:new(4,y,width-12,24,self,function(w,value,s)
-                    if not w.actions.chestPhysics(w.player,field,value)then w.status=tr("Error")end
-                end)
-                slider:initialise();slider:instantiate();slider:setValues(minimum,maximum,1,10,true)
-                slider:setCurrentValue(AimohPMXPreview.chestPhysicsSlider(self.player,field),true)
-                local base=slider.render
-                slider.render=function(s)base(s);s:drawTextRight(tostring(math.floor(s.currentValue+.5))..(field>=4 and "%" or ""),s.width,-28,1,1,1,1,UIFont.Medium)end
-                slider.roomSlider=true;self.content:addChild(slider);table.insert(self.widgets,slider);y=y+46
-            end
-            local b=button(self.content,0,y,width,tr("Reset"),self,function(w)if w.actions.chestDefaults(w.player)then w:refreshControls()end end)
-            table.insert(self.widgets,b);y=y+36
-            if AimohPMXPreview.chestPhysicsStatus(self.player)~="" then self:addLabel(tr("ChestSuspended"),y);y=y+32 end
         elseif self.tab=="parts" then
             y=self:drawGroups(self:partRows(false),y,width)
             y=self:drawGroups(self:partRows(true),y,width)
@@ -2239,7 +2209,7 @@ function W:prerender()
         self:clearStencilRect()
     end
     surface(self,0,0,self.width,header,.67)
-    local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",chest="ChestPhysics",grip="GripCalibration",expression="Expression"}
+    local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",grip="GripCalibration",expression="Expression"}
     local page=self.roomPage=="motions" and "RoomMotion" or titles[self.tab]
     if self.tab=="weaponDraw" then label(self,getText("ContextMenu_GFL2_WeaponPool"),76,14,23,self.width-180)
     elseif page then label(self,tr(page),76,14,23,self.width-180)

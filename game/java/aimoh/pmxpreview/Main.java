@@ -262,11 +262,6 @@ public class Main {
         ModelSession s=active.get(actor);return s==null?"":new JSONObject().put("appearance",new JSONObject(s.model.appearance().stateJson()))
             .put("weapon_tuning",s.profile.optJSONObject("weapon_tuning")).put("chest_physics",s.model.chestSettings()).toString();
     }
-    public static synchronized boolean hasChestPhysics(IsoGameCharacter actor){ModelSession s=active.get(actor);return s!=null&&s.model.hasChestPhysics();}
-    public static synchronized double chestPhysicsSlider(IsoGameCharacter actor,int index){return required(actor).model.chestSlider(index);}
-    public static synchronized String chestPhysicsStatus(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?"":s.model.chestError();}
-    public static synchronized String setChestPhysicsSlider(IsoGameCharacter actor,int index,double value){try{required(actor).model.chestSlider(index,value);return "";}catch(Throwable e){error(e);return lastError;}}
-    public static synchronized String resetChestPhysicsSettings(IsoGameCharacter actor){try{required(actor).model.resetChestSettings();return "";}catch(Throwable e){error(e);return lastError;}}
     public static synchronized String savedSettings(String id,String appearance) {
         try {JSONObject p=new JSONObject(Files.readString(entry(id).profile()));return new JSONObject().put("appearance",appearance==null||appearance.isBlank()?p.getJSONObject("appearance"):new JSONObject(appearance))
             .put("weapon_tuning",p.optJSONObject("weapon_tuning")).toString();}catch(Throwable e){error(e);return "";}

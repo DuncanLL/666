@@ -86,15 +86,6 @@ local function resetPhysics(player)
     return not problem(player,AimohPMXPreview.resetModelPhysics(player))
 end
 
-local function chestPhysics(player,index,value)
-    if problem(player,AimohPMXPreview.setChestPhysicsSlider(player,index,value))then return false end
-    remember(player,true)
-    return true
-end
-local function chestDefaults(player)
-    if problem(player,AimohPMXPreview.resetChestPhysicsSettings(player))then return false end
-    remember(player,true);return true
-end
 
 local function disable(player)
     awaiting[player]=nil
@@ -127,7 +118,7 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults,
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,
         expressionRemember=function(p)remember(p,true)end})
 end
 
