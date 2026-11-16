@@ -4,7 +4,7 @@
 layout(local_size_x=16,local_size_y=16)in;
 uniform sampler2D sourceNativeMotion;
 layout(rgba16f,binding=0)uniform image2D nativeVelocity;
-layout(rgba16f,binding=1)uniform image2D nativeNormals;
+layout(rgb10_a2,binding=1)uniform image2D nativeNormals;
 layout(rgba16f,binding=2)uniform image2D originalNormals;
 uniform int initializeNormals;
 uniform sampler2D gf2TransferLut;
@@ -35,9 +35,7 @@ void main(){
     vec4 normal=imageLoad(nativeNormals,pixel);
     if(initializeNormals!=0){
         // Original partial MRT1 channel writes preserve the scene normal underneath.
-        vec3 sourceNormal=normal.xyz*vec3(-1,1,-1);
-        vec2 encoded=dot(sourceNormal,sourceNormal)>1e-6?encodeOct(sourceNormal):vec2(0.5);
-        imageStore(originalNormals,pixel,vec4(encoded,0,0));
+        imageStore(originalNormals,pixel,vec4(encodeOct(decodeOct(normal.xy)*vec3(-1,1,-1)),0,0));
         return;
     }
     vec4 motion=texelFetch(sourceNativeMotion,pixel,0);
@@ -45,7 +43,7 @@ void main(){
     vec4 original=imageLoad(originalNormals,pixel);
     // These are original OctWorldNormal tags, not eye/material tags in another component.
     if(abs(original.z-.498)<.0003||abs(original.z-.499)<.0003){
-        normal.xyz=decodeOct(original.xy)*vec3(-1,1,-1);
+        normal.xy=encodeOct(decodeOct(original.xy)*vec3(-1,1,-1));
         imageStore(nativeNormals,pixel,normal);
     }
     // MRT1 was initialized with z=w=0 outside the actual original-character draws.

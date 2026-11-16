@@ -3,7 +3,6 @@ import java.lang.reflect.*;
 import java.util.*;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.*;
-import viewpoint.platform.Gl;
 import viewpoint.platform.GlProgram;
 import viewpoint.platform.AimohNativePackSelection;
 
@@ -24,7 +23,6 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
     public AimohNativeGf2Environment()throws Exception{
         try{
         pack=AimohNativePackSelection.compute("GF2 Native SH register transfer","gf2/native_light.comp");
-        pack.sampler("nativeSkyTexture",Gl.UNIT_SKY_LIGHT);
         reflection=AimohNativePackSelection.compute("GF2 Native default reflection cube","gf2/native_cube.comp");
         reflection.sampler("uDepth",0);reflection.sampler("gf2ProbeScene",4);reflection.sampler("gf2ProbeAlbedo",5);reflection.sampler("gf2ProbeRoom",3);
         // Ultra cloud reflections consume the same weather/noise inputs as the stock sky.
@@ -43,22 +41,24 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
     static Object world(String name)throws Exception{Field f=WorldRenderer.class.getDeclaredField(name);f.setAccessible(true);return f.get(null);}
     static Object field(Object owner,String name)throws Exception{Field f=owner.getClass().getDeclaredField(name);f.setAccessible(true);return f.get(owner);}
     private void find()throws Exception{
-        if(lighting!=null)return;
-        GlProgram program=(GlProgram)field(world("surfaces"),"light");
-        if(!program.has("uEngineLight")||!program.has("uSkyLight"))throw new IllegalStateException("Workshop Native source lighting unavailable");
-        lighting=program;
+        if(lighting!=null)return;Object surface=world("surfaces");
+        for(Field f:surface.getClass().getDeclaredFields())if(f.getType()==GlProgram.class){f.setAccessible(true);GlProgram p=(GlProgram)f.get(surface);if(p.has("uEngineLight")&&GL31.glGetUniformBlockIndex(p.id(),"SkyLight")!=GL31.GL_INVALID_INDEX){lighting=p;break;}}
+        if(lighting==null)throw new IllegalStateException("Native source lighting unavailable");
     }
     private void uniform(String name,float[] result){int location=GL20.glGetUniformLocation(lighting.id(),name);if(location<0)throw new IllegalStateException("Native light uniform absent: "+name);GL20.glGetUniformfv(lighting.id(),location,result);}
     public void update(FrameContext frame)throws Exception{
         find();uniform("uSunDir",direction);uniform("uSkyLevel",level);uniform("uSunColor",sunColor);strength=GL20.glGetUniformf(lighting.id(),GL20.glGetUniformLocation(lighting.id(),"uSunStrength"));
+        int block=GL31.glGetUniformBlockIndex(lighting.id(),"SkyLight"),binding=GL31.glGetActiveUniformBlocki(lighting.id(),block,GL31.GL_UNIFORM_BLOCK_BINDING),sky=GL30.glGetIntegeri(GL31.GL_UNIFORM_BUFFER_BINDING,binding);
+        if(sky==0)throw new IllegalStateException("Actual Native SkyLight UBO is not bound");
         pack.use();pack.set("nativeRelativeSky",level[0],level[1],level[2]);pack.set("nativePrimaryStrength",strength);
+        GL31.glUniformBlockBinding(pack.id(),GL31.glGetUniformBlockIndex(pack.id(),"NativeSkyLight"),binding);
         // The first actor writes the buffer before any copy or draw consumes it.
         lastEngine=null;
         reflection.use();reflection.set("uEye",frame.eyeX,frame.eyeY,frame.eyeZ);reflection.set("uSunDir",direction[0],direction[1],direction[2]);reflection.set("uSunColor",sunColor[0],sunColor[1],sunColor[2]);reflection.set("uSunStrength",strength);
         for(int i=0;i<3;i++){
             float[] matrix=new float[16],params=new float[4];uniform("uShadowMatrix["+i+"]",matrix);uniform("uShadowMaps["+i+"]",params);System.arraycopy(matrix,0,shadowMatrices,i*16,16);System.arraycopy(params,0,shadowParams,i*4,4);
         }
-        Object shadows=world("shadows");shadowViews=(int[])field(shadows,"textures");shadowSize=(Integer)field(shadows,"size");
+        Object shadows=world("shadows");shadowViews=(int[])field(shadows,"views");shadowSize=(Integer)field(shadows,"size");
     }
     public void reflection(FrameContext frame,float[] center,float skyShare,int actor)throws Exception{
         cube=reflectionCubes.computeIfAbsent(actor,k->reflectionCubes.isEmpty()&&cube!=0?cube:environmentCube());
@@ -88,7 +88,7 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
     public record Shadow(int texture,int size,float[] sourceMatrices,boolean enabled){}
     public void prepareDepth(FrameContext frame)throws Exception{
         direction[0]=frame.scene.sunX;direction[1]=frame.scene.sunY;direction[2]=frame.scene.sunZ;strength=frame.sun?frame.scene.sunStrength:0;
-        Object shadows=world("shadows");Matrix4f[] matrices=(Matrix4f[])field(shadows,"matrix");float[] reach=(float[])field(shadows,"reach");shadowViews=(int[])field(shadows,"textures");shadowSize=(Integer)field(shadows,"size");
+        Object shadows=world("shadows");Matrix4f[] matrices=(Matrix4f[])field(shadows,"matrix");float[] reach=(float[])field(shadows,"reach");shadowViews=(int[])field(shadows,"views");shadowSize=(Integer)field(shadows,"size");
         for(int i=0;i<3;i++){matrices[i].get(shadowMatrices,i*16);shadowParams[i*4]=i<frame.pipeline.shadowCascades?2*reach[i]/shadowSize:0;}
     }
     public Shadow shadow(float[] center,float[] eye){
@@ -109,7 +109,7 @@ public final class AimohNativeGf2Environment implements AutoCloseable {
     public void bindIndirect(GlProgram program,FrameContext frame)throws Exception{
         if(!program.has("gf2NativeIndirectOn"))return;
         program.use();program.setInt("gf2NativeIndirectOn",WorldRenderer.off(2)?0:1);program.sampler("gf2NativeNormals",10);
-        AimohWorkshopRender.uniforms(program,frame);Targets targets=(Targets)world("targets");GL13.glActiveTexture(GL13.GL_TEXTURE0+10);GL11.glBindTexture(GL11.GL_TEXTURE_2D,targets.normal);GL33.glBindSampler(10,0);
+        FrameUniforms.apply(program,frame);Targets targets=(Targets)world("targets");GL13.glActiveTexture(GL13.GL_TEXTURE0+10);GL11.glBindTexture(GL11.GL_TEXTURE_2D,targets.normal);GL33.glBindSampler(10,0);
     }
     public void actorLight(float[] engine){
         if(engine.length!=4)throw new IllegalArgumentException("Native actor light record differs");for(int i=0;i<4;i++)if(!Float.isFinite(engine[i])||i<3&&engine[i]<0)throw new IllegalArgumentException("Invalid Native actor light");if(engine[3]<-.0625f||engine[3]>1)throw new IllegalArgumentException("Invalid Native actor sky share");

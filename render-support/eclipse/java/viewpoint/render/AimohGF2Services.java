@@ -52,9 +52,6 @@ public final class AimohGF2Services {
         if(!AimohGf2AddonContext.compiling())return;
         bindReliefSampler(program,"uRelief",Gl.UNIT_FAR_RELIEF);
         bindReliefSampler(program,"uReliefWater",Gl.UNIT_FAR_RELIEF_WATER);
-        bindReliefSampler(program,"uReliefWalls",Gl.UNIT_FAR_RELIEF_WALLS);
-        bindReliefSampler(program,"uReliefFlow",Gl.UNIT_FAR_RELIEF_FLOW);
-        bindReliefSampler(program,"uMuzzleShadow",Gl.UNIT_MUZZLE_SHADOW);
     }
     private static void bindReliefSampler(IrisProgram program,String name,int unit){
         int id=program.gl.id(),location=GL20.glGetUniformLocation(id,name);
@@ -110,7 +107,7 @@ public final class AimohGF2Services {
         } catch(Throwable e){if(b!=null)b.delete();AimohGf2Runtime.releasePrograms(programs);programs.delete();throw failure(e);}
     }
     public static void releasePrograms(IrisPrograms programs){AimohGf2Runtime.releasePrograms(programs);Bundle b=BUNDLES.remove(programs);if(b!=null)b.delete();}
-    public static void release(IrisPipeline pipeline){AimohGf2Runtime.release(pipeline);State s=STATES.remove(pipeline.targets);if(s!=null)s.delete();}
+    public static void release(IrisPipeline pipeline){AimohGf2IrisGlass.release(pipeline);AimohGf2Runtime.release(pipeline);State s=STATES.remove(pipeline.targets);if(s!=null)s.delete();}
     public static void beginFrame(IrisPipeline pipeline,FrameContext frame){
         if(BUNDLES.containsKey(pipeline.programs)&&frame.scene.cameraCut)pipeline.uniforms.reset();
     }
@@ -224,7 +221,7 @@ public final class AimohGF2Services {
             }catch(RuntimeException e){delete();throw e;}
         }
         void collect(ModelPass models,FrameContext frame,AimohGf2PackData data){
-            ModelDraws draws=AimohWorkshopRender.draws(models);
+            ModelDraws draws=models.draws();
             final int[] rank;
             try{rank=(int[])BATCH_RANK.get(models.batches);}
             catch(IllegalAccessException e){throw new IllegalStateException("Eclipse draw ranks unavailable",e);}

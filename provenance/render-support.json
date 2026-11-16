@@ -1,14 +1,14 @@
 {
   "format": 2,
   "backend": "VP_NATIVE",
-  "release_version": "0.3.26",
+  "release_version": "0.3.27",
   "internal_mod_id": "AimohGF2Eclipse",
   "workshop_id": "3834707439",
-  "supported_viewpoint": "official Steam Workshop 0.1.6.2",
-  "official_host_sha256": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e",
+  "supported_viewpoint": "official Steam Workshop 0.1.7",
+  "official_host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
   "official_host_workshop_id": "3809306528",
-  "official_host_workshop_manifest": "559614409211759918",
-  "official_host_signature_sha256": null,
+  "official_host_workshop_manifest": "2666529705518531670",
+  "official_host_signature_sha256": "efbac403ecbcdfd645f0d8b9a5840e0871bfb7911113c4343c508d8f95820c48",
   "source_snapshot": "Native development compatibility-hardening snapshot 2026-11-08",
   "source_snapshot_jar_sha256": "41bffc99dc355506f474c280ff4f3fa7ad9d68602265f4887f449ac8d0804dce",
   "migration": [
@@ -23,6 +23,6 @@
   "nvidia_hardware_acceptance": false,
   "steam_subscription_acceptance": false,
   "compatible_official_hosts": {
-    "0.1.6.2": "67f83b05a27c4112ce9edc596da7c491d51e9015862dccafa8495f0b9352625e"
+    "0.1.7": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f"
   }
 }

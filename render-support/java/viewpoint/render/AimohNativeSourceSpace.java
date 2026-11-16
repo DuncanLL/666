@@ -17,7 +17,7 @@ public final class AimohNativeSourceSpace {
         result.put("gbufferPreviousModelView",(reset?result:previous).get("gbufferModelView").clone());
         result.put("gbufferPreviousProjection",(reset?result:previous).get("gbufferProjection").clone());
         result.put("lightDir",new float[]{-nativeMainDirection[0],nativeMainDirection[1],-nativeMainDirection[2]});
-        result.put("frameTimeCounter",new float[]{frame.scene.time});
+        result.put("frameTimeCounter",new float[]{frame.time});
         return result;
     }
     private AimohNativeSourceSpace(){}
