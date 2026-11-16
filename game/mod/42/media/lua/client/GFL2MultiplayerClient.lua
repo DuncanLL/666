@@ -55,6 +55,8 @@ function M.publish(player, saved)
     local state = slot(player)
     local previous = state.lastPublished
     if previous and previous.model == model and previous.signature == signature and previous.appearance == appearance then return end
+    state.attempt = (state.attempt or 0) + 1
+    args.attempt = state.attempt
     state.lastPublished = args
     send(player, "Appearance", args)
 end
@@ -107,6 +109,33 @@ local function updateRemote()
     end
 end
 
+local function restoreAppearance(state, equipped)
+    if not protocol.appearance(equipped) or equipped.model == "" then return end
+    if AimohPMXPreview.networkSignature(equipped.model) ~= equipped.signature then return end
+    local saved = state.player:getModData().AimohPMXPreview
+    local settings = saved and (saved.model == equipped.model and saved.settings
+        or saved.profiles and saved.profiles[equipped.model]) or ""
+    local result = AimohPMXPreview.queueOwnedAppearance(state.player, equipped.model, equipped.appearance, settings)
+    if result == "" then state.restoring = true
+    else print("[GFL2Exilium] Restore appearance: " .. result) end
+end
+
+local function finishRejection(state)
+    local rejection = state.rejection
+    if not rejection then return end
+    local player = state.player
+    if state.lastPublished ~= rejection.sent or AimohPMXPreview.modelId(player) ~= rejection.sent.model then
+        state.rejection = nil
+        return
+    end
+    if not AimohPMXPreview.isReady(player) and not AimohPMXPreview.hasModelFailure(player) then return end
+    state.rejection = nil
+    state.lastPublished = nil
+    state.restoring = false
+    M.onRejected(player)
+    restoreAppearance(state, rejection.equipped)
+end
+
 local function acceptWallet(state, data)
     local first = not state.ready
     if state.ready and data.request < state.request then return end
@@ -120,16 +149,7 @@ local function acceptWallet(state, data)
         state.pending = nil
         callback({status = "unavailable"})
     end
-    if not first then return end
-    local equipped = data.equipped
-    if not protocol.appearance(equipped) or equipped.model == "" then return end
-    if AimohPMXPreview.networkSignature(equipped.model) ~= equipped.signature then return end
-    local saved = state.player:getModData().AimohPMXPreview
-    local settings = saved and (saved.model == equipped.model and saved.settings
-        or saved.profiles and saved.profiles[equipped.model]) or ""
-    local result = AimohPMXPreview.queueOwnedAppearance(state.player, equipped.model, equipped.appearance, settings)
-    if result == "" then state.restoring = true
-    else print("[GFL2Exilium] Restore appearance: " .. result) end
+    if first then restoreAppearance(state, data.equipped) end
 end
 
 Events.OnServerCommand.Add(function(module, command, data)
@@ -163,8 +183,11 @@ Events.OnServerCommand.Add(function(module, command, data)
         economy.setSnapshot(state.player, data.wallet)
         callback(data.result)
     elseif command == "AppearanceRejected" then
-        state.lastPublished = nil
-        AimohPMXPreview.disable(state.player)
+        local sent = state.lastPublished
+        if sent and (data.attempt == nil or data.attempt == sent.attempt) then
+            state.rejection = {sent = sent, equipped = data.equipped}
+            finishRejection(state)
+        end
     end
 end)
 
@@ -187,6 +210,7 @@ Events.OnTick.Add(function()
                     state.pending.retryAt = now + 3000
                     send(player, state.pending.command, state.pending.args)
                 end
+                finishRejection(state)
                 if state.restoring then
                     if AimohPMXPreview.isReady(player) then
                         state.restoring = false

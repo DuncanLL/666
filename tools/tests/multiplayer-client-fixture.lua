@@ -18,11 +18,12 @@ function peer:getUsername() return "remote" end
 function getPlayerByOnlineID(id) if id==4 then return actor elseif id==5 then return peer end end
 local sent = {}
 function sendClientCommand(_,_,command,args)
-    sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance}
+    sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance,attempt=args.attempt}
 end
 
 local actions, face, requestedSettings, voiceUpdates
 local model="pmx-abe3eaaaa9d04264"
+local renderedModel,renderedReady,queuedModel
 local clock=1000
 function getTimestampMs() return clock end
 function prepareExpressionEdits()
@@ -32,20 +33,31 @@ function prepareExpressionEdits()
     AimohPMXWindow={open=function(p,a) assert(p==actor);actions=a end,closeAll=function()end}
     function getText(key) return key end
     AimohPMXPreview.clear=function()end
-    AimohPMXPreview.isReady=function() return true end
-    AimohPMXPreview.modelId=function() return model end
-    AimohPMXPreview.modelIdAt=function() return "another-model" end
+    renderedModel,renderedReady=model,true
+    AimohPMXPreview.isReady=function() return renderedReady end
+    AimohPMXPreview.modelId=function() return renderedModel end
+    AimohPMXPreview.modelIdAt=function() return "pmx-40dbcd572c1fb3f8" end
+    AimohPMXPreview.disable=function(p)
+        assert(p==actor)
+        renderedModel,renderedReady="",false
+    end
+    AimohPMXPreview.queueOwnedAppearance=function(p,id,appearance,settings)
+        assert(p==actor and id==model)
+        queuedModel=id;requestedSettings=settings
+        return ""
+    end
     AimohPMXPreview.appearanceJson=function() return face end
     AimohPMXPreview.settingsJson=function() return face end
     AimohPMXPreview.networkAppearance=function() return face end
     AimohPMXPreview.enableWithSettings=function(p,id,settings)
         assert(p==actor and id==1)
         requestedSettings=settings
+        renderedReady=false
         return ""
     end
     voiceUpdates=0
     AimohPMXVoiceEngine={modelChanged=function(p) assert(p==actor);voiceUpdates=voiceUpdates+1 end}
-    actor.data.AimohPMXPreview.profiles["another-model"]="other profile"
+    actor.data.AimohPMXPreview.profiles["pmx-40dbcd572c1fb3f8"]="other profile"
 end
 
 function verifyExpressionEdits()
@@ -78,6 +90,36 @@ function verifyExpressionEdits()
     assert(actor.data.AimohPMXPreview.profiles[model]==face)
     assert(voiceUpdates==1)
     return "PASS reconnect restores local profile and voice once; expression edits save once and flush before changing outfit"
+end
+
+function verifyAppearanceRejections()
+    local function reject(attempt,equipped)
+        callbacks.server("GFL2Exilium","AppearanceRejected",{version=1,player=6,attempt=attempt,equipped=equipped})
+    end
+    local older=sent[#sent].attempt or 7
+    reject(older)
+    assert(renderedModel==model and voiceUpdates==1,"an old rejection interrupted a new model load")
+    renderedModel,renderedReady="pmx-40dbcd572c1fb3f8",true
+    callbacks.previewTick()
+    assert(older~=sent[#sent].attempt and actor.data.AimohPMXPreview.model==renderedModel)
+    local current=sent[#sent].attempt
+    reject(older)
+    clock=clock+250;callbacks.tick()
+    assert(renderedModel=="pmx-40dbcd572c1fb3f8" and voiceUpdates==2,"the last authorized model was cleared")
+    local sentBefore=#sent
+    queuedModel=nil
+    local savedProfile=actor.data.AimohPMXPreview.profiles[model]
+    reject(current,{model=model,signature=string.rep("a",64),appearance=face})
+    assert(renderedModel=="" and voiceUpdates==3 and #sent==sentBefore)
+    assert(actor.data.AimohPMXPreview.model==nil and actor.data.AimohPMXPreview.profiles[model]==savedProfile)
+    assert(queuedModel==model and requestedSettings==savedProfile)
+    renderedModel,renderedReady=queuedModel,true
+    clock=clock+250;callbacks.tick()
+    assert(actor.data.AimohPMXPreview.model==model and voiceUpdates==4 and #sent==sentBefore+1)
+    reject(sent[#sent].attempt)
+    assert(renderedModel=="" and voiceUpdates==5 and #sent==sentBefore+1)
+    assert(actor.data.AimohPMXPreview.model==nil and actor.data.AimohPMXPreview.profiles[model]==face)
+    return "PASS late appearance rejection leaves the newer model intact, current rejection restores the approved model and its voice"
 end
 local applied, disabled, restoredSettings = 0, 0, nil
 local signature = string.rep("a",64)

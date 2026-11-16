@@ -40,4 +40,12 @@ try:
  run('GFL2MultiplayerClient=client; prepareExpressionEdits()','expression-fixture')
  run((media/'client/AimohPMXPreview.lua').read_text('utf8'),'preview')
  print(run('return verifyExpressionEdits()','expression-assertions'))
+ print(run('return verifyAppearanceRejections()','appearance-rejection-assertions'))
+ run((test/'multiplayer-voice-fixture.lua').read_text('utf8'),'voice-fixture')
+ for folder, names in [('shared',('VoiceRouting','Identity','NativeVoice','SilentData','Silent','VoiceCore','FullVoiceCore')),
+                      ('client',('VoiceEngine','CatalogVoice'))]:
+  for name in names:
+   module=f'AimohPMXVoice/{name}'
+   env.rawset(module,run((media/folder/f'{module}.lua').read_text('utf8'),module))
+ print(run('return verifyVoiceLifecycle()','voice-assertions'))
 finally:jpype.shutdownJVM()

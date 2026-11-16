@@ -107,15 +107,22 @@ local function setChestPhysics(player,enabled)
     return true
 end
 
-local function disable(player)
-    flushExpression(player)
+local function clearAppearance(player)
+    expressionEdits[player]=nil
     awaiting[player]=nil
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
     player:getModData()[key] = saved and {profiles=saved.profiles} or nil
     economy.saveLocal(player)
-    publish(player, nil)
     voiceChanged(player)
+end
+
+multiplayer.onRejected=clearAppearance
+
+local function disable(player)
+    flushExpression(player)
+    clearAppearance(player)
+    publish(player, nil)
 end
 
 local function refresh(player)

@@ -47,10 +47,13 @@ local function publish(player, state)
     sendServerCommand(protocol.module, "Appearance", row)
 end
 
-local function snapshot(player, row)
+local function equippedAppearance(player, row)
     local equipped = row.appearance
-    if equipped and not canWear(player, equipped.model) then equipped = nil end
-    reply(player, "Wallet", {wallet = row.wallet, request = row.request, equipped = equipped})
+    if equipped and canWear(player, equipped.model) then return equipped end
+end
+
+local function snapshot(player, row)
+    reply(player, "Wallet", {wallet = row.wallet, request = row.request, equipped = equippedAppearance(player, row)})
     local states = {}
     for id, state in pairs(online) do
         local current = getPlayerByOnlineID(id)
@@ -135,7 +138,16 @@ Events.OnClientCommand.Add(function(module, command, player, args)
     elseif command == "Appearance" then
         if not protocol.appearance(args) then return end
         if not canWear(player, args.model) then
-            reply(player, "AppearanceRejected", {})
+            local equipped = equippedAppearance(player, row)
+            if not equipped and row.appearance then
+                row.appearance = nil
+                local visible = online[player:getOnlineID()]
+                if visible and visible.owner == player:getUsername() then
+                    publish(player, {model = "", signature = "", appearance = ""})
+                end
+            end
+            local attempt = protocol.integer(args.attempt, 1, 2147483647) and args.attempt or nil
+            reply(player, "AppearanceRejected", {attempt = attempt, equipped = equipped})
             return
         end
         local state = {model = args.model, signature = args.signature, appearance = args.appearance}

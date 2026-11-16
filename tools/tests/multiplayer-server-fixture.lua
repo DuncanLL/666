@@ -92,12 +92,12 @@ function verifyServer()
         receive("GFL2Exilium",command,owner,args)
     end
     local model="pmx-abe3eaaaa9d04264"
-    local appearance={model=model,signature=string.rep("a",64),appearance='{"choices":{},"material_visibility":[],"expressions":{"Smile":0.6}}'}
+    local appearance={model=model,signature=string.rep("a",64),appearance='{"choices":{},"material_visibility":[],"expressions":{"Smile":0.6}}',attempt=1}
     request(player,"Request",{})
     assert(replies.Wallet.request==0 and replies.Wallet.equipped==nil)
     saves["player-a"].wallet.targeted=10
     request(player,"Appearance",appearance)
-    assert(replies.AppearanceRejected and replies.Appearance==nil)
+    assert(replies.AppearanceRejected.attempt==1 and replies.Appearance==nil)
     request(player,"DrawCharacter",{target=model,count=10,request=1})
     assert(replies.Transaction.result.status=="unlocked")
     assert(saves["player-a"].wallet.targeted==9 and rolls==1)
@@ -115,6 +115,9 @@ function verifyServer()
     request(player,"Request",{})
     assert(replies.Wallet.equipped.model==model and replies.Wallet.equipped.appearance==appearance.appearance)
     local soppo, outfit = "pmx-40dbcd572c1fb3f8", "pmx-7d46f9b7159f3332"
+    request(player,"Appearance",{model=soppo,signature=appearance.signature,appearance="{}",attempt=5})
+    assert(replies.AppearanceRejected.attempt==5 and replies.AppearanceRejected.equipped.model==model)
+    assert(replies.Appearance.model==model and saves["player-a"].appearance.model==model)
     saves["player-b"].wallet.targeted=1
     saves["player-b"].wallet.credits=1080
     request(playerB,"DrawCharacter",{target=soppo,count=1,request=1})
@@ -163,5 +166,9 @@ function verifyServer()
     assert(replies.Transaction.result.status=="unavailable")
     request(player,"Request",{})
     assert(replies.Wallet.equipped==nil)
-    return "PASS server ownership, replay, separate wallets, Soppo, outfits, cash, tickets, signature weapon, magazine, skin and restore"
+    appearance.attempt=6
+    request(player,"Appearance",appearance)
+    assert(replies.AppearanceRejected.attempt==6 and replies.AppearanceRejected.equipped==nil)
+    assert(replies.Appearance.model=="" and saves["player-a"].appearance==nil)
+    return "PASS server ownership, replay, separate wallets, Soppo, outfits, cash, tickets, weapons, skins and rejected appearance rollback"
 end
