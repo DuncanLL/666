@@ -25,9 +25,9 @@ try:
  for p in media.rglob('*.lua'):
   compiler.loadstring(p.read_text('utf-8-sig'),p.name,env)
  print('PASS Lua compilation',len(list(media.rglob('*.lua'))))
- for name in ('AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog','GFL2SignatureWeapon'):
+ run('function require(name) return assert(_G[name], name) end','require')
+ for name in ('GFL2WeaponSkins','AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog','GFL2SignatureWeapon'):
   env.rawset(name,run((media/'shared'/f'{name}.lua').read_text('utf8'),name))
- run('function require(name) return _G[name] end','require')
  env.rawset('Economy',env.rawget('AimohPMXRoomEconomy'))
  print(run((root/'tools/tests/room_economy_assertions.lua').read_text('utf8'),'economy'))
  run((test/'multiplayer-server-fixture.lua').read_text('utf8'),'fixture')

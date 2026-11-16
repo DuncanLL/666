@@ -25,14 +25,20 @@ try:
     thread.debugOwnerThread = J("java.lang.Thread").currentThread()
     compiler = J("se.krka.kahlua.luaj.compiler.LuaCompiler")
 
-    def run(path):
-        closure = compiler.loadstring(path.read_text("utf-8-sig"), path.name, environment)
+    def run_source(text, name):
+        closure = compiler.loadstring(text, name, environment)
         result = thread.pcall(closure, jpype.JArray(J("java.lang.Object"))(0))
         if not result[0]:
             raise AssertionError([str(value) for value in result])
-        return result[1]
+        return result[1] if len(result) > 1 else None
 
-    environment.rawset("Economy", run(ROOT / "game/mod/42/media/lua/shared/AimohPMXRoomEconomy.lua"))
+    def run(path):
+        return run_source(path.read_text("utf-8-sig"), path.name)
+
+    shared = ROOT / "game/mod/42/media/lua/shared"
+    run_source('function require(name) return assert(_G[name], name) end', 'require')
+    environment.rawset("GFL2WeaponSkins", run(shared / "GFL2WeaponSkins.lua"))
+    environment.rawset("Economy", run(shared / "AimohPMXRoomEconomy.lua"))
     print(run(ROOT / "tools/tests/room_economy_assertions.lua"))
 finally:
     jpype.shutdownJVM()

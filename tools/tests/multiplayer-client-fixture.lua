@@ -20,9 +20,16 @@ local sent = {}
 function sendClientCommand(_,_,command,args)
     sent[#sent+1] = {command=command,request=args.request}
 end
-local applied, disabled = 0, 0
+local applied, disabled, restoredSettings = 0, 0, nil
+local signature = string.rep("a",64)
 AimohPMXPreview = {
     hasModelFailure=function() return false end,
+    networkSignature=function() return signature end,
+    queueOwnedAppearance=function(player,model,appearance,settings)
+        assert(player==actor and model=="pmx-abe3eaaaa9d04264")
+        restoredSettings=settings
+        return ""
+    end,
     queueRemoteAppearance=function(player,model)
         assert(player==peer and model=="pmx-abe3eaaaa9d04264")
         applied=applied+1
@@ -54,22 +61,35 @@ function verifyClient(client,economy)
     receive("Transaction",result)
     receive("Transaction",result)
     assert(results==1 and economy.balance(actor,"targeted")==9)
+
+    assert(client.transact(actor,"BuyOutfit","pmx-abe3eaaaa9d04264",nil,onResult))
+    receive("Wallet",{player=4,request=2,wallet={targeted=9}})
+    assert(client.pending(actor) and results==1)
+    clock=7200;callbacks.tick()
+    assert(sent[#sent].command=="BuyOutfit" and sent[#sent].request==2)
+    receive("Transaction",{player=4,request=2,wallet={targeted=9},result={status="unlocked"}})
+    assert(not client.pending(actor) and results==2)
+
     local model="pmx-abe3eaaaa9d04264"
     receive("Appearance",{player=5,owner="remote",revision=2,model=model,
         signature=string.rep("a",64),appearance="{}"})
-    clock=4400;callbacks.tick()
+    clock=7500;callbacks.tick()
     assert(applied==1)
     receive("Appearance",{player=5,owner="remote",revision=1,model=model,
         signature=string.rep("a",64),appearance="{}"})
-    clock=4700;callbacks.tick()
+    clock=7800;callbacks.tick()
     assert(applied==1)
     receive("Snapshot",{player=4,revision=3,states={}})
     assert(disabled==1)
     receive("Appearance",{player=5,owner="remote",revision=2,model=model,
         signature=string.rep("a",64),appearance="{}"})
-    clock=5000;callbacks.tick()
+    clock=8100;callbacks.tick()
     assert(applied==1)
     callbacks.disconnect()
     assert(not client.ready(actor) and economy.balance(actor,"targeted")==0)
-    return "PASS client handshake, same-request retry, duplicate response, stale appearance and disconnect"
+    actor.data.AimohPMXPreview={model="other-model",profiles={[model]="saved settings for that outfit"}}
+    callbacks.tick()
+    receive("Wallet",{player=4,request=2,wallet={},equipped={model=model,signature=signature,appearance="{}"}})
+    assert(restoredSettings=="saved settings for that outfit")
+    return "PASS client handshake, retry after wallet snapshot, stale appearance, disconnect and per-model restore"
 end

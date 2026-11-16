@@ -113,7 +113,9 @@ local function acceptWallet(state, data)
     state.ready = true
     state.request = data.request
     economy.setSnapshot(state.player, data.wallet)
-    if state.pending and state.pending.args.request ~= data.request + 1 then
+    -- A wallet snapshot may arrive before the transaction reply. Replay that request
+    -- to get the cached result instead of reporting a purchase failure.
+    if state.pending and (state.pending.args.request < data.request or state.pending.args.request > data.request + 1) then
         local callback = state.pending.callback
         state.pending = nil
         callback({status = "unavailable"})
@@ -123,7 +125,8 @@ local function acceptWallet(state, data)
     if not protocol.appearance(equipped) or equipped.model == "" then return end
     if AimohPMXPreview.networkSignature(equipped.model) ~= equipped.signature then return end
     local saved = state.player:getModData().AimohPMXPreview
-    local settings = saved and saved.model == equipped.model and saved.settings or ""
+    local settings = saved and (saved.model == equipped.model and saved.settings
+        or saved.profiles and saved.profiles[equipped.model]) or ""
     local result = AimohPMXPreview.queueOwnedAppearance(state.player, equipped.model, equipped.appearance, settings)
     if result == "" then state.restoring = true
     else print("[GFL2Exilium] Restore appearance: " .. result) end
