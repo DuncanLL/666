@@ -297,7 +297,7 @@ local function panel(parent,x,y,w,h)
 end
 function W:createChildren()
     ISCollapsableWindow.createChildren(self)
-    self.fullHeight=self.height;self.roomPage="appearance"
+    self.fullWidth=self.width;self.fullHeight=self.height;self.roomPage="appearance"
     self.closeButton:setX(18);self.closeButton:setY(6)
     self.closeButton:setWidth(42);self.closeButton:setHeight(38)
     self.closeButton.onclick=function(w)w:back()end
@@ -307,7 +307,8 @@ function W:createChildren()
     self.preview=ISPanel:new(math.floor(self.width*.5-390),50,780,self.height-100);self.preview:initialise();self.preview.background=false
     self.preview.render=function(p)
         local w=p.parent;local ok=false
-        if w.roomPage=="appearance" and w.tab=="grip" then
+        if w.roomPage~="appearance" then return end
+        if w.tab=="grip" then
             local width,height=math.floor(p.width),math.floor(p.height)
             surface(p,0,0,width,height,.82)
             if not AimohPMXReadyRoom.drawGripView(w.player,math.floor(p:getAbsoluteX()),math.floor(p:getAbsoluteY()),width,height,w.gripAiming==true,w.gripYaw,w.gripPitch,w.gripZoom) then
@@ -330,13 +331,9 @@ function W:createChildren()
         local width,height=math.floor(p.width),math.floor(p.height)
         local now=getTimestampMs()
         local locked=w.roomPage=="appearance" and character and character.unlockRequired==true
-        if w.roomPage=="appearance" then
-            if w.browsed and now>=w.previewAt then
-                local draw=w.tab=="overview" and AimohPMXReadyRoom.drawOverviewCamera or AimohPMXReadyRoom.drawBrowseCamera
-                ok=draw(w.player,w.browsed.id,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
-            end
-        else
-            ok=AimohPMXReadyRoom.drawCamera(w.player,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus)
+        if w.browsed and now>=w.previewAt then
+            local draw=w.tab=="overview" and AimohPMXReadyRoom.drawOverviewCamera or AimohPMXReadyRoom.drawBrowseCamera
+            ok=draw(w.player,w.browsed.id,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
         end
         if ok and locked then
             local glyph=image(art.."lock-large.png")
@@ -988,9 +985,11 @@ function W:useExpressionSlot(index)
 end
 
 function W:createMotionPage()
-    local height=self.fullHeight-68
-    self.motionWidth=math.min(250,math.floor(self.width*.26))
-    local library=ISPanel:new(14,54,self.motionWidth,height)
+    self.motionPanelWidth=math.min(550,self.fullWidth)
+    self.motionPanelHeight=math.min(450,self.fullHeight)
+    local height=self.motionPanelHeight-64
+    local listWidth=math.floor((self.motionPanelWidth-32)*.45)
+    local library=ISPanel:new(12,54,listWidth,height)
     library:initialise();library.background=false;self:addChild(library);self.motionLibraryBox=library
     library.prerender=function(p)
         surface(p,0,0,p.width,p.height,.95)
@@ -1020,7 +1019,7 @@ function W:createMotionPage()
     self.motionRefresh=button(library,8,height-34,half,tr("MotionRefresh"),self,self.refreshMotionLibrary)
     self.motionRemovePath=button(library,14+half,height-34,width-half-6,tr("MotionRemovePath"),self,self.onRemoveMotionPath)
 
-    local box=ISPanel:new(self.rightX,54,self.rightWidth,height)
+    local box=ISPanel:new(20+listWidth,54,self.motionPanelWidth-32-listWidth,height)
     box:initialise();box.background=false;self:addChild(box);self.motionBox=box
     box.prerender=function(p)
         local w=p.parent
@@ -1235,10 +1234,8 @@ function W:onMotionCommand(command,value)
 end
 
 function W:layoutPreview()
-    if self.roomPage=="motions" then
-        self.preview:setX(self.motionWidth+28);self.preview:setWidth(self.rightX-self.preview.x-14)
-        self.preview:setY(56);self.preview:setHeight(self.fullHeight-70)
-    elseif self.tab=="grip" then
+    if self.roomPage=="motions" then return end
+    if self.tab=="grip" then
         self.preview:setX(18);self.preview:setWidth(self.rightX-32)
         self.preview:setY(57);self.preview:setHeight(self.fullHeight-77)
     else
@@ -1252,7 +1249,7 @@ function W:roomVisibility()
     local motions=expanded and self.roomPage=="motions"
     if not motions then self.motionSpeed.dragInside=false end
     local appearance=expanded and not motions
-    self.preview:setVisible(expanded and (motions or self.tab~="weaponDraw"))
+    self.preview:setVisible(appearance and self.tab~="weaponDraw")
     if self.weaponPreview then
         self.weaponPreview:onMouseUp()
         self.weaponPreview:setVisible(false)
@@ -1265,7 +1262,7 @@ function W:roomVisibility()
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
-    for _,b in ipairs(self.resourceButtons)do b:setVisible(expanded) end
+    for _,b in ipairs(self.resourceButtons)do b:setVisible(appearance) end
     self.closeButton:setVisible(true)
     if appearance then self:layoutOverview()
     else for _,b in ipairs(self.drawButtons)do b:setVisible(false) end end
@@ -1289,12 +1286,22 @@ function W:setRoomPage(page)
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
     self.pageFade=getTimestampMs()
-    if page=="motions" then AimohPMXReadyRoom.release(self.player) end
+    self:closeExchange()
+    if page=="motions" then
+        AimohPMXReadyRoom.release(self.player)
+        self.appearanceX,self.appearanceY=self:getX(),self:getY()
+        self:setX(self.appearanceX+self.fullWidth-self.motionPanelWidth)
+        self:setWidth(self.motionPanelWidth)
+        self:setHeight(self.motionPanelHeight)
+    else
+        self:setX(self.appearanceX);self:setY(self.appearanceY)
+        self:setWidth(self.fullWidth);self:setHeight(self.fullHeight)
+    end
     self:clearContent()
     self.preview:onMouseUp()
     self.sidebar.roomDown=false;self.sidebar:setCapture(false)
     self.gripAiming=false
-    self.roomPage=page;self:roomVisibility()
+    self.roomPage=page;self.foldButton:setX(self.width-53);self:roomVisibility()
     if page=="motions" then self:refreshMotionLibrary() else self:refreshControls() end
 end
 
@@ -1313,7 +1320,8 @@ function W:toggleRoomFold()
         AimohPMXReadyRoom.release(self.player)
     end
     self.foldFrom=self.height;self.foldStart=getTimestampMs()
-    self.foldTo=self.folded and self:titleBarHeight() or self.fullHeight
+    local height=self.roomPage=="motions" and self.motionPanelHeight or self.fullHeight
+    self.foldTo=self.folded and self:titleBarHeight() or height
     self.foldButton:setTooltip(tr(self.folded and "RoomUnfold" or "RoomFold"))
     self:roomVisibility()
 end
@@ -2196,7 +2204,13 @@ function W:prerender()
     local header=self:titleBarHeight()
     if self.folded or self.foldStart then
         surface(self,0,0,self.width,math.min(header,self.height),.68)
-        self:drawText(self.title,76,16,.92,.92,.91,1,UIFont.Small)
+        local title=self.roomPage=="motions" and tr("RoomMotion") or self.title
+        self:drawText(title,76,16,.92,.92,.91,1,UIFont.Small)
+        return
+    end
+    if self.roomPage=="motions" then
+        surface(self,0,0,self.width,header,.87)
+        label(self,tr("RoomMotion"),76,14,23,self.width-120)
         return
     end
     local background=image(data.background)
@@ -2210,11 +2224,10 @@ function W:prerender()
     end
     surface(self,0,0,self.width,header,.67)
     local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",grip="GripCalibration",expression="Expression"}
-    local page=self.roomPage=="motions" and "RoomMotion" or titles[self.tab]
+    local page=titles[self.tab]
     if self.tab=="weaponDraw" then label(self,getText("ContextMenu_GFL2_WeaponPool"),76,14,23,self.width-180)
     elseif page then label(self,tr(page),76,14,23,self.width-180)
     else self:drawText(self.title,76,16,.92,.92,.91,1,UIFont.Small) end
-    if self.roomPage=="motions" then return end
     local character=self.byCharacter[self.character]
     local signatureWeapon=self.signatureWeapon
     if self.tab=="weaponDraw" and signatureWeapon then
@@ -2331,7 +2344,7 @@ function W:drawPity(title,remaining)
 end
 
 function W:render()
-    if self.folded or self.foldStart then return end
+    if self.folded or self.foldStart or self.roomPage=="motions" then return end
     if self.roomPageFade then
         local phase=ease((getTimestampMs()-self.roomPageFade)/170)
         self:drawRect(self.overviewX-12,self.overviewY,self.overviewWidth+24,math.floor(self.height*.59),.19*(1-phase),.05,.07,.07)
