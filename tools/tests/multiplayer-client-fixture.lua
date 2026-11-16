@@ -18,7 +18,54 @@ function peer:getUsername() return "remote" end
 function getPlayerByOnlineID(id) if id==4 then return actor elseif id==5 then return peer end end
 local sent = {}
 function sendClientCommand(_,_,command,args)
-    sent[#sent+1] = {command=command,request=args.request}
+    sent[#sent+1] = {command=command,request=args.request,appearance=args.appearance}
+end
+
+local actions, face, requestedSettings
+local model="pmx-abe3eaaaa9d04264"
+local clock=1000
+function getTimestampMs() return clock end
+function prepareExpressionEdits()
+    Events = {OnTick=event("previewTick"),OnDisconnect=event("previewDisconnect"),
+        OnGameStart=event("start"),OnCreatePlayer=event("create"),OnSave=event("save"),
+        OnPlayerDeath=event("death"),OnFillWorldObjectContextMenu=event("context")}
+    AimohPMXWindow={open=function(p,a) assert(p==actor);actions=a end,closeAll=function()end}
+    function getText(key) return key end
+    AimohPMXPreview.clear=function()end
+    AimohPMXPreview.isReady=function() return true end
+    AimohPMXPreview.modelId=function() return model end
+    AimohPMXPreview.modelIdAt=function() return "another-model" end
+    AimohPMXPreview.appearanceJson=function() return face end
+    AimohPMXPreview.settingsJson=function() return face end
+    AimohPMXPreview.networkAppearance=function() return face end
+    AimohPMXPreview.enableWithSettings=function(p,id,settings)
+        assert(p==actor and id==1)
+        requestedSettings=settings
+        return ""
+    end
+    actor.data.AimohPMXPreview.profiles["another-model"]="other profile"
+end
+
+function verifyExpressionEdits()
+    callbacks.start()
+    callbacks.context(0,{addOption=function(_,_,p,open)open(p)end},{},false)
+    local sentBefore=#sent
+    face='{"expressions":{"Smile":0.2}}';actions.expressionEdited(actor)
+    clock=clock+200;callbacks.previewTick()
+    assert(#sent==sentBefore)
+    face='{"expressions":{"Smile":0.9}}';actions.expressionEdited(actor)
+    clock=clock+249;callbacks.previewTick()
+    assert(#sent==sentBefore)
+    clock=clock+1;callbacks.previewTick()
+    assert(#sent==sentBefore+1 and sent[#sent].appearance==face)
+    assert(actor.data.AimohPMXPreview.profiles[model]==face)
+    callbacks.previewTick()
+    assert(#sent==sentBefore+1)
+    face='{"expressions":{}}';actions.expressionEdited(actor)
+    assert(actions.enable(actor,1) and requestedSettings=="other profile")
+    assert(#sent==sentBefore+2 and sent[#sent].appearance==face)
+    assert(actor.data.AimohPMXPreview.profiles[model]==face)
+    return "PASS expression drag waits for a quiet interval, saves the final value once, and flushes before changing outfit"
 end
 local applied, disabled, restoredSettings = 0, 0, nil
 local signature = string.rep("a",64)
@@ -37,8 +84,6 @@ AimohPMXPreview = {
     end,
     disable=function(player) assert(player==peer);disabled=disabled+1 end,
 }
-local clock=1000
-function getTimestampMs() return clock end
 function verifyClient(client,economy)
     local function receive(command,data)
         data.version=1

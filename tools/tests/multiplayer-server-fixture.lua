@@ -84,7 +84,7 @@ function verifyServer()
         receive("GFL2Exilium",command,owner,args)
     end
     local model="pmx-abe3eaaaa9d04264"
-    local appearance={model=model,signature=string.rep("a",64),appearance='{"choices":{},"material_visibility":[]}'}
+    local appearance={model=model,signature=string.rep("a",64),appearance='{"choices":{},"material_visibility":[],"expressions":{"Smile":0.6}}'}
     request(player,"Request",{})
     assert(replies.Wallet.request==0 and replies.Wallet.equipped==nil)
     saves["player-a"].wallet.targeted=10
@@ -103,8 +103,9 @@ function verifyServer()
     request(playerB,"Request",{})
     assert(replies.Wallet.player==5 and replies.Wallet.equipped==nil and replies.Wallet.request==0)
     assert(#replies.Snapshot.states==1 and replies.Snapshot.states[1].player==4)
+    assert(replies.Snapshot.states[1].appearance==appearance.appearance)
     request(player,"Request",{})
-    assert(replies.Wallet.equipped.model==model)
+    assert(replies.Wallet.equipped.model==model and replies.Wallet.equipped.appearance==appearance.appearance)
     local soppo, outfit = "pmx-40dbcd572c1fb3f8", "pmx-7d46f9b7159f3332"
     saves["player-b"].wallet.targeted=1
     saves["player-b"].wallet.credits=1080

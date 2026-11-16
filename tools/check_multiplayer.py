@@ -37,4 +37,7 @@ try:
  run((test/'multiplayer-client-fixture.lua').read_text('utf8'),'client-fixture')
  env.rawset('client',run((media/'client/GFL2MultiplayerClient.lua').read_text('utf8'),'client'))
  print(run('return verifyClient(client,AimohPMXRoomEconomy)','client-assertions'))
+ run('GFL2MultiplayerClient=client; prepareExpressionEdits()','expression-fixture')
+ run((media/'client/AimohPMXPreview.lua').read_text('utf8'),'preview')
+ print(run('return verifyExpressionEdits()','expression-assertions'))
 finally:jpype.shutdownJVM()

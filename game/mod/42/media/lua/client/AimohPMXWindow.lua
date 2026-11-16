@@ -1965,7 +1965,8 @@ function W:refreshControls(keepScroll)
                     self:addLabel(row.label,y,18)
                     local slider=ISSliderPanel:new(5,y+24,width-10,20,self,function(w,value)
                         local error=AimohPMXReadyRoom.expressionSet(w.player,id,field,value/100)
-                        if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error") end
+                        if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error")
+                        else w.actions.expressionEdited(w.player) end
                     end)
                     slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(0,100,1,10,true)
                     slider:setCurrentValue(row.value*100,true)

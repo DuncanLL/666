@@ -83,6 +83,7 @@ public final class ModelAppearance {
             if(!t.isNull(i)) {nextTextures[i]=t.getString(i);if(nextTextures[i].isBlank())throw new IllegalArgumentException("Empty texture override");}
         }
         for(int i=0;i<weights.length;i++)nextWeights[i]=weight(w,i);
+        if(state.has("expressions")) resolveExpressions(state.getJSONObject("expressions"),nextWardrobe,nextWeights);
         JSONObject nextSelected=nextWardrobe.choices(state.optJSONObject("choices")==null?new JSONObject():state.getJSONObject("choices"));
         boolean[] resolved=nextVisible.clone();float[] resolvedWeights=nextWeights.clone();nextWardrobe.resolve(nextSelected,resolved,resolvedWeights);
         JSONArray nextGroups=state.optJSONArray("groups")==null?new JSONArray():new JSONArray(state.getJSONArray("groups").toString());
@@ -155,13 +156,23 @@ public final class ModelAppearance {
         }
         return rows;
     }
-    public synchronized String expressionSnapshot() {
+    private JSONObject expressionValues() {
         JSONObject snapshot = new JSONObject();
         for (var control : facialControls()) {
             int index = control.index();
             if (!wardrobe.managesMorph(index) && weights[index] != 0) snapshot.put(control.name(), weights[index]);
         }
-        return snapshot.toString();
+        return snapshot;
+    }
+    public synchronized String expressionSnapshot() {
+        return expressionValues().toString();
+    }
+    public synchronized String networkJson() {
+        JSONObject state = new JSONObject().put("choices",selected).put("material_visibility",new JSONArray(visible));
+        String withExpressions = state.put("expressions",expressionValues()).toString();
+        if(withExpressions.length()<=8192) return withExpressions;
+        state.remove("expressions");
+        return state.toString();
     }
     private static float expressionWeight(double value) {
         if (!Double.isFinite(value) || value < 0 || value > 1) throw new IllegalArgumentException("表情权重须在 0 到 100% 之间");
@@ -176,13 +187,15 @@ public final class ModelAppearance {
     }
     public synchronized void loadExpression(String preset) {
         if (preset == null || preset.length() > 8192) throw new IllegalArgumentException("表情预设格式无效");
-        JSONObject values = new JSONObject(preset);
         float[] next = weights.clone();
+        resolveExpressions(new JSONObject(preset),wardrobe,next);
+        applyExpressionWeights(next);
+    }
+    private void resolveExpressions(JSONObject values,Wardrobe wardrobe,float[] next) {
         for (var control : facialControls()) {
             int index = control.index();
             if (!wardrobe.managesMorph(index)) next[index] = values.has(control.name()) ? expressionWeight(values.getDouble(control.name())) : 0;
         }
-        applyExpressionWeights(next);
     }
     private void applyExpressionWeights(float[] next) {
         if (Arrays.equals(weights, next)) return;
