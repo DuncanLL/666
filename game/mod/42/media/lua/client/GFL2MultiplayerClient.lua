@@ -11,7 +11,7 @@ local lastSnapshotRevision = 0
 
 local function slot(player)
     local id = player:getOnlineID()
-    if id < 0 then return end
+    if id < 0 or player:isDead() then return end
     local state = slots[id]
     if not state or state.player ~= player then
         if state then economy.setSnapshot(state.player, nil) end
@@ -139,7 +139,7 @@ Events.OnServerCommand.Add(function(module, command, data)
         return
     end
     local state = slots[data.player]
-    if not state then return end
+    if not state or state.player:isDead() or state.player:getOnlineID() ~= data.player then return end
     if command == "Snapshot" then
         if data.revision < lastSnapshotRevision then return end
         lastSnapshotRevision = data.revision
@@ -178,6 +178,7 @@ Events.OnTick.Add(function()
         if player and not player:isDead() then
             local state = slot(player)
             if state then
+                state.seenAt = now
                 if now >= state.nextSync then
                     state.nextSync = now + (state.ready and 15000 or 3000)
                     if not state.pending then send(player, "Request", {}) end
@@ -193,6 +194,12 @@ Events.OnTick.Add(function()
                     elseif AimohPMXPreview.hasModelFailure(player) then state.restoring = false end
                 end
             end
+        end
+    end
+    for id, state in pairs(slots) do
+        if state.seenAt ~= now then
+            economy.setSnapshot(state.player, nil)
+            slots[id] = nil
         end
     end
     updateRemote()

@@ -6,10 +6,10 @@ Events = {OnServerCommand=event("server"), OnTick=event("tick"),
     OnDisconnect=event("disconnect"), OnMainMenuEnter=event("menu")}
 function isClient() return true end
 function isServer() return false end
-local actor = {data={}}
-function actor:getOnlineID() return 4 end
+local actor = {data={},onlineId=4,dead=false}
+function actor:getOnlineID() return self.onlineId end
 function actor:getModData() return self.data end
-function actor:isDead() return false end
+function actor:isDead() return self.dead end
 function actor:isLocalPlayer() return true end
 function getSpecificPlayer(index) if index==0 then return actor end end
 local peer = {}
@@ -91,5 +91,15 @@ function verifyClient(client,economy)
     callbacks.tick()
     receive("Wallet",{player=4,request=2,wallet={},equipped={model=model,signature=signature,appearance="{}"}})
     assert(restoredSettings=="saved settings for that outfit")
-    return "PASS client handshake, retry after wallet snapshot, stale appearance, disconnect and per-model restore"
+    actor.dead=true
+    assert(not client.ready(actor))
+    clock=8400;callbacks.tick()
+    receive("Wallet",{player=4,request=3,wallet={targeted=25}})
+    assert(economy.balance(actor,"targeted")==0)
+    actor.onlineId=6;actor.dead=false
+    clock=8700;callbacks.tick()
+    assert(sent[#sent].command=="Request" and not client.ready(actor))
+    receive("Wallet",{player=6,request=3,wallet={targeted=2}})
+    assert(client.ready(actor) and economy.balance(actor,"targeted")==2)
+    return "PASS client handshake, retry after wallet snapshot, stale appearance, per-model restore, disconnect and respawn"
 end
