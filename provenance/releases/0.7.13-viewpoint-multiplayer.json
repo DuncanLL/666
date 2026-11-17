@@ -20,17 +20,70 @@
   "installed_core_readback": true,
   "actual_gameplay_tested": false,
   "unchanged_role_items": 14,
-  "queued_role_versions": {
-    "3838711556": "0.7.2",
-    "3838712707": "0.7.2",
-    "3838711981": "0.7.2",
-    "3838712515": "0.7.2",
-    "3838711736": "0.7.2",
-    "3838712165": "0.7.2",
-    "3838710368": "0.7.3",
-    "3838710868": "0.7.2",
-    "3838762352": "0.7.2",
-    "3838762751": "0.7.7"
+  "status": "LIMITED_HARDWARE_VALIDATION",
+  "steam_content_publish_verified": true,
+  "role_source_lua_compiled": 20,
+  "released_items": {
+    "3838709437": {
+      "version": "0.7.13",
+      "content_manifest": "9171388341177063930",
+      "published_at": "2026-11-17 08:04:46"
+    },
+    "3838711556": {
+      "version": "0.7.2",
+      "content_manifest": "6434846461874003391",
+      "published_at": "2026-11-17 08:04:58"
+    },
+    "3838712707": {
+      "version": "0.7.2",
+      "content_manifest": "3613098289601416613",
+      "published_at": "2026-11-17 08:05:24"
+    },
+    "3838711981": {
+      "version": "0.7.2",
+      "content_manifest": "1368361554614316317",
+      "published_at": "2026-11-17 08:05:49"
+    },
+    "3838712515": {
+      "version": "0.7.2",
+      "content_manifest": "7832752587198230464",
+      "published_at": "2026-11-17 08:05:59"
+    },
+    "3838711736": {
+      "version": "0.7.2",
+      "content_manifest": "3037405812913262095",
+      "published_at": "2026-11-17 08:06:23"
+    },
+    "3838712165": {
+      "version": "0.7.2",
+      "content_manifest": "8453417860858992694",
+      "published_at": "2026-11-17 08:06:48"
+    },
+    "3838710368": {
+      "version": "0.7.3",
+      "content_manifest": "6062158483954878747",
+      "published_at": "2026-11-17 08:06:58"
+    },
+    "3838710868": {
+      "version": "0.7.2",
+      "content_manifest": "6493381537658331216",
+      "published_at": "2026-11-17 08:07:22"
+    },
+    "3838762352": {
+      "version": "0.7.2",
+      "content_manifest": "1881044837737138812",
+      "published_at": "2026-11-17 08:07:44"
+    },
+    "3838762751": {
+      "version": "0.7.7",
+      "content_manifest": "3339079301268451972",
+      "published_at": "2026-11-17 08:08:07"
+    }
   },
-  "status": "LIMITED_HARDWARE_VALIDATION"
+  "manual_preview": {
+    "workshop_item": 3839180718,
+    "width": 256,
+    "height": 256,
+    "game_validator_passed": true
+  }
 }
