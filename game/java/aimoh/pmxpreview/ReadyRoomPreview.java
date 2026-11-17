@@ -73,7 +73,7 @@ public class ReadyRoomPreview {
     private static final IdentityHashMap<IsoGameCharacter,BrowsePreview> browsePreviews=new IdentityHashMap<>();
     private static final String SAMPLE_PREFIX="sample:";
     private static Path library() {
-        return Path.of(ZomboidFileSystem.instance.getCacheDir(),"R116","Motions").toAbsolutePath().normalize();
+        return Path.of(ZomboidFileSystem.instance.getCacheDir(),"GFL2Exilium","Motions").toAbsolutePath().normalize();
     }
     public static String motionDirectory() { return library().toString(); }
     private static boolean motionFile(Path path) {
