@@ -2,6 +2,7 @@ package aimoh.pmxpreview;
 
 import aimoh.motion.PmxDrawMesh;
 import java.util.IdentityHashMap;
+import java.util.function.Supplier;
 import org.joml.Matrix4f;
 import viewpoint.render.ModelDraws;
 import viewpoint.render.Retirement;
@@ -18,11 +19,11 @@ final class ViewpointModel implements AutoCloseable {
     final PmxPresentation presentation = new PmxPresentation();
     private final IdentityHashMap<ModelMesh, DrawHistory> history = new IdentityHashMap<>();
     private long historyFrame = Long.MIN_VALUE;
-    private final IdentityHashMap<PmxDrawMesh.FrameData,IdentityHashMap<ModelInstance,HeldPose>> held = new IdentityHashMap<>();
+    private final IdentityHashMap<float[],IdentityHashMap<ModelInstance,HeldPose>> held = new IdentityHashMap<>();
 
     private record HeldPose(DrawAccess.Gear gear,ModelMesh mesh,Matrix4f local) {
-        boolean matches(HeldPose current) {
-            return mesh==current.mesh&&gear.root==current.gear.root&&gear.side==current.gear.side&&gear.key.equals(current.gear.key);
+        boolean matches(DrawAccess.Gear next,ModelMesh nextMesh) {
+            return mesh==nextMesh&&gear.root==next.root&&gear.side==next.side&&gear.key.equals(next.key);
         }
     }
 
@@ -71,20 +72,27 @@ final class ViewpointModel implements AutoCloseable {
     }
 
     synchronized void retainHeldFrames(PmxDrawMesh.FrameData current,PmxDrawMesh.FrameData previous,PmxDrawMesh.FrameData older) {
-        held.keySet().removeIf(frame -> frame!=current&&frame!=previous&&frame!=older);
+        if(held.isEmpty())return;
+        float[] now=current.positions(),before=previous==null?null:previous.positions(),earlier=older==null?null:older.positions();
+        held.keySet().removeIf(pose -> pose!=now&&pose!=before&&pose!=earlier);
     }
 
     synchronized Bridge.HeldDraw captureHeld(Bridge.Frozen draw,int index,ModelInstance instance,
-            DrawAccess.Gear gear,ModelMesh mesh,Matrix4f local) {
-        var pose=new HeldPose(gear,mesh,local);
-        held.computeIfAbsent(draw.data,ignored -> new IdentityHashMap<>()).put(instance,pose);
-        return new Bridge.HeldDraw(index,local,heldAt(draw.previous,instance,pose),heldAt(draw.older,instance,pose));
+            DrawAccess.Gear gear,ModelMesh mesh,Supplier<Matrix4f> resolve) {
+        // Appearance-only frame copies share the same skinned vertices and attachment pose.
+        var poses=held.computeIfAbsent(draw.data.positions(),ignored -> new IdentityHashMap<>());
+        var pose=poses.get(instance);
+        if(pose==null||!pose.matches(gear,mesh)){
+            pose=new HeldPose(gear,mesh,resolve.get());
+            poses.put(instance,pose);
+        }
+        return new Bridge.HeldDraw(index,pose.local,heldAt(draw.previous,instance,gear,mesh),heldAt(draw.older,instance,gear,mesh));
     }
 
-    private Matrix4f heldAt(PmxDrawMesh.FrameData frame,ModelInstance instance,HeldPose current) {
-        var poses=held.get(frame);
+    private Matrix4f heldAt(PmxDrawMesh.FrameData frame,ModelInstance instance,DrawAccess.Gear gear,ModelMesh mesh) {
+        var poses=frame==null?null:held.get(frame.positions());
         var pose=poses==null?null:poses.get(instance);
-        return pose!=null&&pose.matches(current)?pose.local:null;
+        return pose!=null&&pose.matches(gear,mesh)?pose.local:null;
     }
 
     static void retire(Runnable close) { Retirement.retire(close::run); }

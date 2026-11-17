@@ -79,7 +79,7 @@ public final class GripPhaseCheck {
             frozen = new Bridge.Frozen(session,null,bodyFrame,source,0,bodyIndex);
             backend.retainHeldFrames(bodyFrame,frozen.previous,frozen.older);
             String itemKey = swap&&frame==2 ? "new-item" : "same-item";
-            frozen.addHeld(backend.captureHeld(frozen,gearIndex,null,new DrawAccess.Gear(null,1,itemKey),itemMesh,local));
+            frozen.addHeld(backend.captureHeld(frozen,gearIndex,null,new DrawAccess.Gear(null,1,itemKey),itemMesh,() -> local));
             if (frame<2) {
                 host.invoke(blend,source,(long)frame+1,0f,0f,0f,1f);
                 previous = source;

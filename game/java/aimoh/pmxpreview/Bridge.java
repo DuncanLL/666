@@ -2,6 +2,7 @@ package aimoh.pmxpreview;
 
 import aimoh.motion.PmxDrawMesh;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import viewpoint.core.Frame;
@@ -10,6 +11,7 @@ import viewpoint.render.SceneData;
 import zombie.characters.IsoGameCharacter;
 import zombie.iso.IsoCamera;
 import zombie.core.skinnedmodel.model.ModelInstance;
+import zombie.core.skinnedmodel.model.ModelInstanceRenderData;
 import zombie.core.skinnedmodel.model.ModelSlotRenderData;
 
 public final class Bridge {
@@ -38,13 +40,19 @@ public final class Bridge {
                     &&(gun<0||instance==gear.root))gun=n;
             }
             Matrix4f sourcePlacement=body<0?null:DrawAccess.matrix(draws,body);
-            Matrix4f inverse=sourcePlacement==null?null:new Matrix4f(sourcePlacement).invert();
-            Matrix4f weapon=gun>=0&&inverse!=null
-                ?new Matrix4f(inverse).mul(DrawAccess.matrix(draws,gun)):null;
+            var sourceItems=new IdentityHashMap<ModelInstance,ModelInstanceRenderData>();
+            Matrix4f bodyInverse=null;
+            if(!equipment.isEmpty())for(var capturedPart:slot.modelData){
+                var instance=capturedPart.modelInstance;
+                if(instance==slot.modelSlot.model)bodyInverse=new Matrix4f(capturedPart.xfrm).transpose().invert();
+                if(equipment.containsKey(instance))sourceItems.put(instance,capturedPart);
+            }
+            Matrix4f inverse=bodyInverse;
+            Matrix4f weapon=gun<0?null:heldSource(sourceItems.get(DrawAccess.instance(draws,gun)),inverse);
             PmxDrawMesh.FrameData data=null;
             long gameFrame=IsoCamera.frameState.frameCount;
             long captureNanos=DrawAccess.frameNanos(frame);
-            var pose=actor.getAnimationPlayer();
+            var pose=slot.animPlayer==null?actor.getAnimationPlayer():slot.animPlayer;
             try {if(!session.failed)data=session.update(gameFrame,captureNanos,pose,holding,
                 actor.getX(),actor.getY(),actor.getZ(),hideHead,idle,firstPerson,
                 GripCalibration.request(actor,session.entry.id(),weapon,slot.inVehicle?null:pose),true);}catch(Throwable e){session.fail(e);}
@@ -75,17 +83,24 @@ public final class Bridge {
             for(int n=first;n<originalEnd;n++) {
                 ModelInstance instance=DrawAccess.instance(draws,n);DrawAccess.Gear gear=equipment.get(instance);
                 if(gear==null)DrawAccess.flags(draws,n,0);
-                else if(instance.model.isStatic&&session.retargetsAttachment(gear.side)) {
-                    Matrix4f local=new Matrix4f(inverse).mul(DrawAccess.matrix(draws,n));
-                    Matrix4f held=session.attachment(gear.root,gear.side,gear.key,local,pose);
-                    Matrix4f placement=new Matrix4f(targetPlacement).mul(held);
+                else if(instance.model.isStatic&&inverse!=null&&session.retargetsAttachment(gear.side)) {
+                    var source=sourceItems.get(instance);
+                    if(source==null)continue;
+                    var mesh=DrawAccess.mesh(draws,n);
+                    HeldDraw held=backend.captureHeld(draw,n,instance,gear,mesh,
+                        () -> selected.attachment(gear.root,gear.side,gear.key,heldSource(source,inverse),pose));
+                    Matrix4f placement=new Matrix4f(targetPlacement).mul(held.current());
                     DrawAccess.matrix(draws,n,placement);
-                    var mesh=DrawAccess.mesh(draws,n);draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
+                    draws.bounds(n,placement,mesh.minXyz,mesh.maxXyz,1);
                     DrawAccess.ownPlacement(draws,n,originalEnd,continuous);
-                    draw.addHeld(backend.captureHeld(draw,n,instance,gear,mesh,held));
+                    draw.addHeld(held);
                 }
             }
         } catch(Throwable e) { if(draw!=null){draw.customEnd=draws.count();draw.restore();}session.fail(e); }
+    }
+    static Matrix4f heldSource(ModelInstanceRenderData part,Matrix4f inverseBody) {
+        // The game slot contains the bone and script mounts before Viewpoint's render placement.
+        return part==null||inverseBody==null?null:new Matrix4f(inverseBody).mul(new Matrix4f(part.xfrm).transpose());
     }
     public static void prepare(SceneData scene) {
         prepare(scene,1);
