@@ -52,6 +52,19 @@ Eclipse 通过 Iris 接入。构建使用固定指纹的 Eclipse 基线、实际
 
 0.7.11 的旧问题出现在频繁切换人物后。Java 人物网格结束使用时，Viewpoint 独立网格池里的副本曾持续占用。当前 [PmxDrawMesh](../../game/java/aimoh/motion/PmxDrawMesh.java) 在退役时也归还宿主网格池记录，使用确切宿主的退役入口。核查掉帧时分别记录当前帧模型、网格池已用与容量、Java 和原生资源、实际 GPU 绘制和是否有外部模组异常。[网格池与换包记录](../../provenance/releases/0.7.11-viewpoint-compatibility-audit.json)
 
+## 玩家日志定位过的兼容问题
+
+这些记录用来区分相似的表现。看到光影「加载成功」后，还要核对实际人物绘制有没有通过。
+
+| 当时的现象 | 日志定位和修复 | 记录 |
+|---|---|---|
+| RTX 4060 Laptop 上人物出现时着色器链接失败 | `C5121: multiple bindings to output semantic ATTR2`。公共顶点适配拼接宿主辅助源码和原人物程序后出现输出位置冲突。显式分配跨阶段输出位置，使桥接法线和片元输入一致。复核包含报错程序的 46 组组合。 | [顶点与片元接口](../eclipse-stage-interface-fix.md) |
+| 开 Eclipse 后人物相对场景变大 | 玩家更新后原先的 ATTR2 错误未再出现。后来在本机用 TAA 升采样复现人物与场景的投影范围不一致。人物深度和颜色阶段改为使用与场景相同的裁剪空间缩放，12 组比例和抖动对照通过。玩家当时的实际 TAA 设置未随日志记录。 | [Eclipse 升采样](../eclipse-screen-transport-0.1.2.md) |
+| RTX 4070 Laptop 的 Native 已显示 `linked`，进到人物才编译失败 | 首个 GLSL 错误定位到公共 `native_indirect.glsl` 的局部名 `packed`，后续多条报错由它引起。改名并把风险标识符纳入构建检查，使用宿主展开后的实际源码验证 150 项 OpenGL 编译和链接。 | [Native 跨驱动兼容](../handoffs/2026-11-08-native-0.2.9-driver-compat.md) |
+| 公司电脑上两套人物光影接入都未完成 | ZombieBuddy 调用框架时 Viewpoint 尚未进入类路径，读取 `ModelPass` 出现 `ClassNotFoundException`。在宿主入口可用时重试。带旧几何阶段的缓存也做了受控回归，修正版在首帧前更新了它。玩家故障现场实际读取的缓存未随日志提供。 | [宿主加载顺序与缓存](../handoffs/2026-11-11-r116-viewpoint-load-order-045.md) |
+
+后续记录收录了 RTX 4060、GTX 1060 等玩家的可用反馈。具体后端和驱动未逐一收齐，按当时反馈记录。主光只写缓冲、地形采样槽与透明前的覆盖修正，也可从同一份阶段记录追下去。[0.3.23 兼容阶段记录](../handoffs/2026-11-10-render-support-0.3.23.md)
+
 ## 故障从哪一层开始查
 
 - **原版人物消失或换装夭折**，从人物会话、实际目录注册和 PMX/贴图加载查起。
