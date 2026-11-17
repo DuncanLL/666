@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Pattern;
 import org.json.*;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
@@ -23,8 +24,11 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
     private final Map<Integer,Integer> materialBuffers=new LinkedHashMap<>();
     private final Map<String,AimohGf2OriginalTexture> textures=new LinkedHashMap<>();
     private final Map<String,Integer> defaults=new LinkedHashMap<>(),attributes=new LinkedHashMap<>();
-    private record ProgramKey(String vertex,String fragment,boolean early){}
-    private record StateKey(int material,String pass,boolean early){}
+    private enum Variant { COLOR, EARLY, COVERAGE }
+    private record ProgramKey(String vertex,String fragment,Variant variant){}
+    private record StateKey(int material,String pass,Variant variant){}
+    private static final String FACE_FORWARD = "a2f224c7144485694aa46c3c3b302b9e22e401b29eae813ee19e8ea14c740a8a";
+    private static final Pattern SOURCE_OUTPUT=Pattern.compile("(?m)^\\h*layout\\h*\\(\\h*location\\h*=\\h*\\d+\\h*\\)\\h*out\\h+vec4\\h+(SV_Target\\d+)\\h*;");
     private record TextureKey(AimohGf2OriginalProgram program,int material){}
     private final Map<ProgramKey,AimohGf2OriginalProgram> programs=new LinkedHashMap<>();
     private final Map<StateKey,JSONObject> states=new HashMap<>();
@@ -100,15 +104,23 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
         throw new IllegalArgumentException("Source material pass is absent/disabled: "+id+" "+name);
     }
     public AimohGf2OriginalProgram program(int id,String name,boolean early)throws IOException {
+        return program(id,name,early?Variant.EARLY:Variant.COLOR);
+    }
+
+    public AimohGf2OriginalProgram coverageProgram(int id)throws IOException {
+        return program(id,"GFCharTransFront",Variant.COVERAGE);
+    }
+
+    private AimohGf2OriginalProgram program(int id,String name,Variant variant)throws IOException {
         JSONObject material=material(id);pass(id,name);
         Map<String,String> selected=variants.get(material.getString("name")+"\n"+name);
         if(selected==null)throw new IllegalArgumentException("Source material variant missing");
         String vertex=selected.get("progVertex"),fragment=selected.get("progFragment");
         if(vertex==null||fragment==null)throw new IllegalArgumentException("Source program pair incomplete");
-        ProgramKey key=new ProgramKey(vertex,fragment,early);AimohGf2OriginalProgram program=programs.get(key);
+        ProgramKey key=new ProgramKey(vertex,fragment,variant);AimohGf2OriginalProgram program=programs.get(key);
         if(program==null){
             JSONObject library=data.manifest.getJSONObject("glsl");String vs=source(library.getJSONObject(vertex)),fs;
-            if(early){
+            if(variant==Variant.EARLY){
                 if(!name.equals("GFCharForward"))throw new IllegalArgumentException("Unsupported source early pass");
                 fs=source(data.manifest.getJSONObject("early_fragments").getJSONObject(fragment));
             }else{
@@ -119,18 +131,61 @@ public final class AimohGf2PackMaterials implements AutoCloseable {
                     fs+="\nvoid main(){gf2OriginalAuthoredLayer();float exposure=texelFetch(gf2AuthoredExposure,gf2AuthoredExposureOffset).r;SV_Target0.rgb/=max(exposure,0.00001);}\n";
                 }
             }
-            if(name.equals("GFCharForward"))fs=AimohGf2SurfaceControls.adapt(fs,programMetadata.get(fragment));
+            if(name.equals("GFCharForward")){
+                fs=AimohGf2SurfaceControls.adapt(fs,programMetadata.get(fragment));
+                if(variant==Variant.COLOR&&fragment.equals(FACE_FORWARD))fs=softenFaceMask(fs);
+            }
+            if(variant==Variant.COVERAGE)fs=coverageFragment(fs);
             program=new AimohGf2OriginalProgram(vs,fs,vertex,fragment);programs.put(key,program);
         }
         return program;
     }
 
+    /** Eclipse's direct face mask. Keep the shadow-map term and other face passes intact. */
+    private static String softenFaceMask(String source){
+        String width="GF2Raw2[17].x";
+        String begin="    u_xlat8.x = (-GF2Raw2[17].x) * 0.5 + u_xlat6.x;";
+        String end="    u_xlat8.x = u_xlat42 * u_xlat6.x;";
+        int start=source.indexOf(begin),stop=source.indexOf(end);
+        if(start<0||stop<=start||source.lastIndexOf(begin)!=start||source.lastIndexOf(end)!=stop)
+            throw new IllegalArgumentException("Source face mask layout differs");
+        String transition=source.substring(start,stop);
+        if(transition.split(Pattern.quote(width),-1).length!=6)
+            throw new IllegalArgumentException("Source face mask transition differs");
+        return source.substring(0,start)+transition.replace(width,"max("+width+", 0.30)")
+            +"    u_xlat6.x = mix(1.0, u_xlat6.x, 0.60);\n"+source.substring(stop);
+    }
+
+    static String coverageFragment(String source){
+        String entry="void main()";
+        int at=source.indexOf(entry);
+        if(at<0||at!=source.lastIndexOf(entry))throw new IllegalArgumentException("Source coverage entry differs");
+        String coverage=SOURCE_OUTPUT.matcher(source).replaceAll("vec4 $1;");
+        if(!coverage.contains("vec4 SV_Target0;")||coverage.equals(source))
+            throw new IllegalArgumentException("Source coverage alpha output differs");
+        // Keep authored alpha and discard logic. Unused color work can be removed at link time.
+        return coverage.replace(entry,"void gf2SourceCoverage()")
+            +"\nvoid main(){gf2SourceCoverage();if(!(SV_Target0.a>=1.0))discard;}\n";
+    }
+
     public JSONObject state(int id,String name,boolean early){
-        StateKey key=new StateKey(id,name,early);JSONObject result=states.get(key);
+        return state(id,name,early?Variant.EARLY:Variant.COLOR);
+    }
+
+    public JSONObject coverageState(int id){
+        return state(id,"GFCharTransFront",Variant.COVERAGE);
+    }
+
+    private JSONObject state(int id,String name,Variant variant){
+        StateKey key=new StateKey(id,name,variant);JSONObject result=states.get(key);
         if(result==null){
             result=new JSONObject(pass(id,name).getJSONObject("state").toString());
             if(name.equals("GFCharForward"))result.put("sourceSurfaceWeight",surfaceWeight(id));
-            if(early){result.put("rtSeparateBlend",false).put("alphaToMask",0);result.getJSONObject("rtBlend0").put("srcBlend",1).put("destBlend",0).put("srcBlendAlpha",1).put("destBlendAlpha",0).put("colMask",15);}
+            if(variant==Variant.EARLY){result.put("rtSeparateBlend",false).put("alphaToMask",0);result.getJSONObject("rtBlend0").put("srcBlend",1).put("destBlend",0).put("srcBlendAlpha",1).put("destBlendAlpha",0).put("colMask",15);}
+            if(variant==Variant.COVERAGE){
+                result.put("rtSeparateBlend",false).put("alphaToMask",0).put("stencilWriteMask",0);
+                result.getJSONObject("stencilOp").put("comp",0);
+            }
             if(name.equals("ShadowCaster"))result.put("offsetFactor",2.5).put("offsetUnits",1);
             states.put(key,result);
         }

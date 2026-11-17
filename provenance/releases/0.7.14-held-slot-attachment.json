@@ -1,0 +1,22 @@
+{
+  "version": "0.7.14",
+  "base": "0.7.13",
+  "host": "Viewpoint 0.1.7",
+  "workshop_id": 3838709437,
+  "jar_sha256": "4e461ea05e77c769c46bf3c911568f125bb6bbdd115783c36e1a131ed44624ef",
+  "base_jar_sha256": "a2cafc02bce07ca0da2c7813a451e9b0e7751704a4903fe5e1b3dab6825b9629",
+  "held_source": "Project Zomboid slot bone and script attachments; resolved once per skinned pose",
+  "native_held_interpolation": "GRIP_PHASE_PASS cases=33 max_palm_item_error=0.00000024 actual_host_hook=true",
+  "camera_recapture": "PAUSE_GRIP_PASS cases=6 max_local_grip_error=0.00000017 fresh_pose_and_item=true one_mount_per_pose=true",
+  "startup_checks": [
+    "fresh",
+    "late-host"
+  ],
+  "host_draw_cases": 8,
+  "gpu": "AMD Radeon RX 9070 XT",
+  "workshop_uploaded": true,
+  "actual_gameplay_tested": false,
+  "installed": true,
+  "steam_content_manifest": "6514375836193763330",
+  "steam_published_at": "2026-11-17 10:33:00"
+}

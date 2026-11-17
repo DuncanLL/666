@@ -10,7 +10,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/",D=R+"AimohGF2Services",S=R+"AimohGf2SourceHost",C=R+"AimohGf2AddonContext";
     static final String LINK="(Lviewpoint/iris/IrisPack;Lviewpoint/iris/IrisPack$Configured;Ljava/util/Map;)Lviewpoint/render/IrisPrograms;";
     public static final Map<String,Integer> EXPECTED=Map.of(R+"IrisProgram",5,R+"IrisBindings",2,R+"IrisPipeline",3,
-        R+"IrisPrograms",3,R+"IrisFrame",4,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
+        R+"IrisPrograms",3,R+"IrisFrame",5,R+"ModelPass",2,R+"IrisGeometry",1,"aimoh/motion/PmxOriginalInputs",1,"viewpoint/platform/ShaderLibrary",2);
     private volatile Throwable transformFailure;
     private static String t(String name){return "L"+R+name+";";}
     public static byte[] rewrite(String type,byte[] raw){
@@ -42,6 +42,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
                         if(type.equals(R+"IrisFrame"))switch(name){
                             case "draw"->{load(1,2);call(D,"beginFrame","("+t("IrisPipeline")+t("FrameContext")+")V");}
                             case "opaque"->{load(1,2,3);field(type,"models",t("ModelPass"));field(type,"values","Ljava/util/Map;");call(D,"prepare","("+t("IrisPipeline")+t("FrameContext")+t("ShadowPass")+t("ModelPass")+"Ljava/util/Map;)V");}
+                            case "translucent"->{load(1);call(S,"sourceCoverage","("+t("IrisPipeline")+")V");}
                             case "computes"->{load(0,1,2,3,4,5);call(S,"beforeSourcePass","("+t("IrisFrame")+t("IrisPipeline")+t("IrisPrograms$Pass")+"Ljava/lang/String;"+t("FrameContext")+"Ljava/util/Set;)V");}
                         }
                     }

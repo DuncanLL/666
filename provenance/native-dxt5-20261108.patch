@@ -1,0 +1,26 @@
+diff --git a/render-support/java/viewpoint/render/AimohGf2OriginalTexture.java b/render-support/java/viewpoint/render/AimohGf2OriginalTexture.java
+index 969506d..07c7aa7 100644
+--- a/render-support/java/viewpoint/render/AimohGf2OriginalTexture.java
++++ b/render-support/java/viewpoint/render/AimohGf2OriginalTexture.java
+@@ -15,10 +15,11 @@ public final class AimohGf2OriginalTexture implements AutoCloseable {
+         int format=metadata.getInt("m_TextureFormat");boolean srgb=metadata.getInt("m_ColorSpace")==1;
+         var caps=GL.getCapabilities();
+         if(format==25&&!caps.OpenGL42&&!caps.GL_ARB_texture_compression_bptc)throw new IllegalStateException("GF2 BC7/BPTC texture unsupported by this driver: "+resource);
+-        if(format==10&&!caps.GL_EXT_texture_compression_s3tc)throw new IllegalStateException("GF2 DXT1/S3TC texture unsupported by this driver: "+resource);
++        if((format==10||format==12)&&!caps.GL_EXT_texture_compression_s3tc)throw new IllegalStateException("GF2 S3TC texture unsupported by this driver: "+resource);
+         int internal=switch(format){
+             case 25->srgb?GL42.GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM:GL42.GL_COMPRESSED_RGBA_BPTC_UNORM;
+             case 10->srgb?EXTTextureSRGB.GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT:EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
++            case 12->srgb?EXTTextureSRGB.GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT:EXTTextureCompressionS3TC.GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+             case 17->GL30.GL_RGBA16F;
+             default->throw new IllegalArgumentException("Unmapped original texture format "+format+" "+resource);
+         };
+@@ -29,7 +30,7 @@ public final class AimohGf2OriginalTexture implements AutoCloseable {
+             int offset=originalPayload.position();
+             for(int level=0;level<levels;level++){
+                 int w=Math.max(1,width>>level),h=Math.max(1,height>>level);
+-                int bytes=format==17?w*h*8:Math.max(1,(w+3)/4)*Math.max(1,(h+3)/4)*(format==25?16:8);
++                int bytes=format==17?w*h*8:Math.max(1,(w+3)/4)*Math.max(1,(h+3)/4)*(format==10?8:16);
+                 if(offset+bytes>originalPayload.limit())throw new IllegalArgumentException("Truncated original mip "+level+" "+resource);
+                 ByteBuffer view=originalPayload.duplicate();view.position(offset);view.limit(offset+bytes);view=view.slice();
+                 if(format==17)GL11.glTexImage2D(GL11.GL_TEXTURE_2D,level,internal,w,h,0,GL11.GL_RGBA,GL30.GL_HALF_FLOAT,view);

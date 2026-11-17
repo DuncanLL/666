@@ -1,0 +1,33 @@
+module GFL2
+{
+    model SparklingCenterstageSkin4334195
+    {
+        mesh = GFL2/SparklingCenterstageSkin4334195,
+        texture = GFL2/SparklingCenterstageSkin4334195,
+        attachment muzzle
+        {
+            offset = 0.0017938888 0.39389407 0.033189469,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -1.5563735e-08 0.14237998 0.00046111056,
+            rotate = 0 0 90,
+        }
+    }
+    model SparklingCenterstageSkin4334195Empty
+    {
+        mesh = GFL2/SparklingCenterstageSkin4334195Empty,
+        texture = GFL2/SparklingCenterstageSkin4334195,
+        attachment muzzle
+        {
+            offset = 0.0017938888 0.39389407 0.033189469,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -1.5563735e-08 0.14237998 0.00046111056,
+            rotate = 0 0 90,
+        }
+    }
+}

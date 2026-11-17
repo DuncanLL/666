@@ -1,0 +1,33 @@
+module GFL2
+{
+    model ScyllaSkin4334055
+    {
+        mesh = GFL2/ScyllaSkin4334055,
+        texture = GFL2/ScyllaSkin4334055,
+        attachment muzzle
+        {
+            offset = 0.0017182876 0.39180412 0.05004511,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -3.7981679e-08 0.15029038 0.0022155494,
+            rotate = 0 0 90,
+        }
+    }
+    model ScyllaSkin4334055Empty
+    {
+        mesh = GFL2/ScyllaSkin4334055Empty,
+        texture = GFL2/ScyllaSkin4334055,
+        attachment muzzle
+        {
+            offset = 0.0017182876 0.39180412 0.05004511,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -3.7981679e-08 0.15029038 0.0022155494,
+            rotate = 0 0 90,
+        }
+    }
+}

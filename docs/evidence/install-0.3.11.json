@@ -1,0 +1,38 @@
+{
+  "version": "0.3.11",
+  "status": "INSTALLED_READBACK_VERIFIED_GAMEPLAY_NOT_TESTED",
+  "jar_sha256": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+  "game_started": false,
+  "actual_gameplay_tested": false,
+  "workshop_author_projects_changed": false,
+  "workshop_uploaded": false,
+  "models_changed": false,
+  "external_shaders_changed": false,
+  "workbench_changed": false,
+  "targets": [
+    "F test environment",
+    "Steam local user mod"
+  ],
+  "files": [
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "36472ccb7845d3200bdd8e14ca8bb627d15d0542bfd26681e53441020f0eb5e1",
+      "after": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "041e8660c0af7bffa4246a135d1e30a3b4fd712697fcb1e2ef593d06460fdd5e",
+      "after": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc"
+    },
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "36472ccb7845d3200bdd8e14ca8bb627d15d0542bfd26681e53441020f0eb5e1",
+      "after": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "041e8660c0af7bffa4246a135d1e30a3b4fd712697fcb1e2ef593d06460fdd5e",
+      "after": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc"
+    }
+  ]
+}

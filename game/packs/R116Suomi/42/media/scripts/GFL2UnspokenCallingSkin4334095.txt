@@ -1,0 +1,33 @@
+module GFL2
+{
+    model UnspokenCallingSkin4334095
+    {
+        mesh = GFL2/UnspokenCallingSkin4334095,
+        texture = GFL2/UnspokenCallingSkin4334095,
+        attachment muzzle
+        {
+            offset = 1.1135543e-06 0.33310259 0.014221705,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -4.3446276e-08 0.096236318 -0.0010676758,
+            rotate = 0 0 90,
+        }
+    }
+    model UnspokenCallingSkin4334095Empty
+    {
+        mesh = GFL2/UnspokenCallingSkin4334095Empty,
+        texture = GFL2/UnspokenCallingSkin4334095,
+        attachment muzzle
+        {
+            offset = 1.1135543e-06 0.33310259 0.014221705,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -4.3446276e-08 0.096236318 -0.0010676758,
+            rotate = 0 0 90,
+        }
+    }
+}

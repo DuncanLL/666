@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2HeavyStringsShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-1.wav,
+            volume = 2.275,
+            distanceMax = 45,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-2.wav,
+            volume = 2.275,
+            distanceMax = 45,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/HeavyStrings-suppressed-3.wav,
+            volume = 2.275,
+            distanceMax = 45,
+        }
+    }
+}

@@ -1,0 +1,18 @@
+module GFL2
+{
+    model RadianceSkin4333145
+    {
+        mesh = GFL2/RadianceSkin4333145,
+        texture = GFL2/RadianceSkin4333145,
+        attachment muzzle
+        {
+            offset = 8.0565278e-07 0.58169908 0.041937904,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -4.489559e-08 0.23107328 0.0020922645,
+            rotate = 0 0 90,
+        }
+    }
+}

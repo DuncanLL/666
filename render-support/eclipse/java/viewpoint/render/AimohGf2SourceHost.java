@@ -39,6 +39,12 @@ public final class AimohGf2SourceHost {
             AimohGf2Runtime.frame(p).draw(true);
         }catch(java.io.IOException e){throw new IllegalStateException("GF2 early stage",e);}
     }
+    public static void sourceCoverage(IrisPipeline p){
+        if(!AimohGf2Runtime.enabled(p))return;
+        if(!earlyDone||lateDone)throw new IllegalStateException("Source coverage outside the translucent boundary");
+        try{AimohGf2Runtime.frame(p).drawCoverage();}
+        catch(java.io.IOException e){throw new IllegalStateException("GF2 source coverage stage",e);}
+    }
     public static void beforeSourcePass(IrisFrame host,IrisPipeline p,IrisPrograms.Pass pass,String kind,FrameContext f,Set<Integer> flips){
         if(kind.equals("composite")&&pass.name().equals("composite4")&&pass.program()!=null
             &&pass.program().images.containsKey("cloudDepthTex")&&AimohGf2AddonContext.supports(p.pack)){
@@ -96,8 +102,10 @@ public final class AimohGf2SourceHost {
     }
     public static String option(String name){return pipeline.configured.values().get(name);}
     public static float[] pointLightData(){
-        int count=WorldRenderer.off(3)?0:Math.min(context.scene.lightCount,8);float[] result=new float[count*8];
-        for(int i=0;i<count;i++)System.arraycopy(context.scene.lights,i*12,result,i*8,8);
+        int stride=AimohGf2FrameInputs.SCENE_LIGHT_STRIDE;
+        int count=WorldRenderer.off(3)?0:Math.min(context.scene.lightCount,context.scene.lights.length/stride);
+        float[] result=new float[count*8];
+        for(int i=0;i<count;i++)System.arraycopy(context.scene.lights,i*stride,result,i*8,8);
         return result;
     }
     public static float[] torchLightData(){return Arrays.copyOf(context.lights.torches,Math.min(context.scene.torches.count,8)*11);}

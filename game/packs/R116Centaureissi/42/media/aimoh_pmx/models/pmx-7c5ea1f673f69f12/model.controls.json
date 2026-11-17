@@ -1,0 +1,67 @@
+{
+  "pmx_sha256": "7c5ea1f673f69f12de0846246cbec29153b554b144fed802e0db8e7e3f1ba785",
+  "label": "桑朵莱希 / 泳装",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "bracelet",
+        "label": "手链",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              14
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "necklace",
+        "label": "珍珠项链",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              15
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏"
+          }
+        ]
+      },
+      {
+        "id": "eyes",
+        "label": "眼睛",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "睁眼",
+            "morphs": {
+              "18": 0
+            }
+          },
+          {
+            "id": "off",
+            "label": "闭眼",
+            "morphs": {
+              "18": 1
+            }
+          }
+        ]
+      }
+    ],
+    "rules": []
+  }
+}

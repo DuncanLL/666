@@ -1,0 +1,473 @@
+{
+  "version": "0.3.89",
+  "room_portrait_size": [
+    128,
+    128
+  ],
+  "workshop_cover_size": [
+    512,
+    512
+  ],
+  "description_thumbnail_size": [
+    112,
+    112
+  ],
+  "transparent": true,
+  "installed_files_verified": 319,
+  "game_visual_tested": false,
+  "frameworks": [
+    {
+      "title": "少前2追放角色框架",
+      "mod": "AimohPmxPreview",
+      "project": "R116",
+      "id": 3838709437,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838709437",
+      "bytes": 319670278,
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/10321140672750985185/8EA664963EAA0E6C7ADA2ED122203D2FB9955B8C/",
+      "updated": 1794543521,
+      "description_links_verified": 22,
+      "description_readback": "Steam UGC long description"
+    },
+    {
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "mod": "AimohPmxPreview",
+      "project": "R116RC4",
+      "id": 3838770244,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838770244",
+      "bytes": 319670165,
+      "dependencies": [
+        3619862853
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/10075465900748836548/8EA664963EAA0E6C7ADA2ED122203D2FB9955B8C/",
+      "updated": 1794543576,
+      "description_links_verified": 22,
+      "description_readback": "Steam UGC long description"
+    }
+  ],
+  "characters": [
+    {
+      "title": "埃芙",
+      "mod": "R116Alva",
+      "project": "R116Alva",
+      "id": 3837425337,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3837425337",
+      "bytes": 215878644,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/12957956110623492515/5BCA3B22226489513CDDCF379353AC89C6A05AB0/",
+      "updated": 1794542980,
+      "portrait_model": "pmx-020abca186c52e7b",
+      "preview_sha256": "4fb86e7348e468bdcbc899eb72d4249c975cf806548d3f689e21f2673d09a3ef",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/14987412538838869325/3205C24D456AEF551DFE02D731DF3DF3DEE744AA/",
+      "description_thumbnail_sha256": "377a958fb4e088335609bbe3f3c9a99d0c961c25c8334f7a3395148502bc4d9d",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "桑朵莱希",
+      "mod": "R116Centaureissi",
+      "project": "R116Centaureissi",
+      "id": 3838711556,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838711556",
+      "bytes": 178994801,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/12575649373545441899/F11852CEC6137422B032C5AD524784D40327865A/",
+      "updated": 1794543449,
+      "portrait_model": "pmx-8fc5b665a5786924",
+      "preview_sha256": "36403bbc7bb91d1eb950279e5fc2c7cc7d87a296a31dc818b089b8fa9902f464",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/15262937160956873189/B338715979072DA58FF4D91D0B97BE4080767EF4/",
+      "description_thumbnail_sha256": "85c290bc605b55b22f82fe7dc85a715a348cda51bd9d1e4cf8f4c93ddd6b3b80",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "春田",
+      "mod": "R116Springfield",
+      "project": "R116Springfield",
+      "id": 3838712707,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838712707",
+      "bytes": 402632857,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11437321493926040047/D96DE1F6DB28F8DF901AF3CCABC6B0918BBBF746/",
+      "updated": 1794543456,
+      "portrait_model": "pmx-a030b24c0272893f",
+      "preview_sha256": "8ceb0495ce475024fe2f778781f966bc56c3152c8b6b5122df1cf2fba4415e01",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/14497948160367432176/51AA0A5A6C23D0A41B823AF8D1E6A4803D3A4563/",
+      "description_thumbnail_sha256": "9cb8bb09d94f0a4f117be5fb1bb8263ed5ee30e2598d43e6a0e336243568379b",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "芙铃",
+      "mod": "R116Faelynn",
+      "project": "R116Faelynn",
+      "id": 3838711981,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838711981",
+      "bytes": 238213809,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/14309389650098619293/C11BA97334F9952BC033C2B759C83B355C5F4AC4/",
+      "updated": 1794543462,
+      "portrait_model": "pmx-b6fa1b6b340d0fec",
+      "preview_sha256": "9ee50ae3558aea7891d7c5815c9291c701344116e38152d00a829b9e7d923f96",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/18020602272810627924/5FD80890FCFBBA47977953ED7F9E08EDA93CF9F6/",
+      "description_thumbnail_sha256": "9378da4d735f450996b48f1f0e33f45f7c491ab21f2a18539cfca931280e2eba",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "OTs-14",
+      "mod": "R116OTs14",
+      "project": "R116OTs14",
+      "id": 3838712515,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838712515",
+      "bytes": 199338021,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/17859090799163517847/46C7F989E97E529540712396FEB4C84A6AE8FDBA/",
+      "updated": 1794543144,
+      "portrait_model": "pmx-782f06826adb1307",
+      "preview_sha256": "d6379d496f18c90a530752888a331add76ee82522833286ecbcef67296469c0f",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/16122997250459940794/F619529DA002B991F25FB7FF330C389CBEA24F79/",
+      "description_thumbnail_sha256": "9df78cbab8c2e8892820133cdb0139169ef008006836aae50d388ef606551847",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "黛烟",
+      "mod": "R116Daiyan",
+      "project": "R116Daiyan",
+      "id": 3838711736,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838711736",
+      "bytes": 224685896,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/10077041659448486676/F6F29107191B80AA816C513F8F93E0C9BE190DDB/",
+      "updated": 1794543468,
+      "portrait_model": "pmx-8c817aa0fdd64f7a",
+      "preview_sha256": "762c0bdcb9128e5f63ad8d95585fcfc4afbec7961f450cd204342be958f11c05",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/10882129481969111735/B88CF22E9B4C224CF61F145DE23DB32184F0153D/",
+      "description_thumbnail_sha256": "591b398399530dce01c54d8827b5287ecc4984d041129e987f2cd51fdb839a8e",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "可露凯",
+      "mod": "R116Klukai",
+      "project": "R116Klukai",
+      "id": 3838712165,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838712165",
+      "bytes": 544056502,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/14985983929486633254/74A33C27806A589D78619E38235E410DFCDC1568/",
+      "updated": 1794543478,
+      "portrait_model": "pmx-efe685465097beb2",
+      "preview_sha256": "101157ddc091cd134102694d33959a2718c9df65cdf44ce7e45879ad46263fcf",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/15680642773670966976/8F642122349CDBFE543FC595DC690DDDB08D11C6/",
+      "description_thumbnail_sha256": "421d0b50dbb9f4b8e81405e91f1e41a76a30d0b1401e6380539cc8f4a45f168f",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "索米",
+      "mod": "R116Suomi",
+      "project": "R116Suomi",
+      "id": 3838712796,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838712796",
+      "bytes": 274157612,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11102166707697433806/4D391B8F935CE5326724CD167A8B7051E82243CA/",
+      "updated": 1794543485,
+      "portrait_model": "pmx-4019c9450e0e318d",
+      "preview_sha256": "5c0419a815552bbcb8f693304c7ce2a3da5533d0d1c842d375dc0ae6b57b4daf",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/12903294879366447279/4402118AFEE676DF862D5949AFC14F95FCBB487F/",
+      "description_thumbnail_sha256": "9b5fd8a878f23196c1fd0c01183dbbac5c2fe2de80ddd787e892b62a2a5a9be7",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "希丽雅",
+      "mod": "R116Cecilia",
+      "project": "R116Cecilia",
+      "id": 3838711420,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838711420",
+      "bytes": 135700836,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/12892317828182939020/A18983FC6BEF534255141BCE62C80E668F61DFE8/",
+      "updated": 1794543491,
+      "portrait_model": "pmx-fee7d92be40f96dd",
+      "preview_sha256": "87752b8502ffbe61008dba1f060c6f10a795ee520ab20472f221feca53d97949",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/12425597614068866686/02E17D507BC6C020B7D12EF3BB0F3460D6F4EF56/",
+      "description_thumbnail_sha256": "ff65ae706163a7a890a6771cb2371db2a14159de877a06f8d9e0d9957f666af2",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "莱娅",
+      "mod": "R116Laiya",
+      "project": "R116Laiya",
+      "id": 3838710183,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838710183",
+      "bytes": 392426613,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11078694843373901395/CDCF2417DE26EB51A6B0946B14E0B8C5AE3D5F16/",
+      "updated": 1794543221,
+      "portrait_model": "pmx-abe3eaaaa9d04264",
+      "preview_sha256": "6ccd3c74395b599387951189f64dbe38191f2d05764181ae650705cf7a45a5ce",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/13366760668780317231/D25EC580A6700417157ADB83BBE4121DAF982206/",
+      "description_thumbnail_sha256": "2a4ce527b4678259f9a33a8e42001d775c0f3023a138ba76aea63f27d9f6713d",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "夏安",
+      "mod": "R116Cheyanne",
+      "project": "R116Cheyanne",
+      "id": 3838710368,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838710368",
+      "bytes": 183797200,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/14814964847354585783/2E14D168CF3A3AC29274C88BC14FA78A778BABAE/",
+      "updated": 1794543231,
+      "portrait_model": "pmx-48650a04a35b40e0",
+      "preview_sha256": "0b573b9bef917660825eec7b50dc87b3ef6214e1c7be6300b322466b49788e0f",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/13900075458281207556/AD1B14C9B3B0593011EC8AB2984B8F86E6AD6B28/",
+      "description_thumbnail_sha256": "8d7d0e75a75bc5511d3fb3f2e3ab6f89edb6353103787e3a72bf9bcac5111cd0",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "阿斯缇亚",
+      "mod": "R116Asteria",
+      "project": "R116Asteria",
+      "id": 3838710555,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838710555",
+      "bytes": 301469894,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11249899435956151951/F0CD5D6D2F954C4255BF763B3F372B6485673F91/",
+      "updated": 1794543247,
+      "portrait_model": "pmx-412bd037301ebe18",
+      "preview_sha256": "ade8266a3040cdfa6b2ec39a7a78b906ff05f1286c5dc687b2705a00bccaae39",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/15597054029170257380/32CAC323B7E20D988EC85B389826ADA99B0BFD85/",
+      "description_thumbnail_sha256": "686215cdb5d117293eb14ef6b8a6814e72be4e4270e3dd03d1165e120040a4c9",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "克莱妲",
+      "mod": "R116Koleda",
+      "project": "R116Koleda",
+      "id": 3838710666,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838710666",
+      "bytes": 181436416,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/14768208328723051538/EB182259B4D64A0F4D2EDCFEA979EC4B18F96C4A/",
+      "updated": 1794543256,
+      "portrait_model": "pmx-90268b4961c97434",
+      "preview_sha256": "ee35b479f9a50b8f8208ef9d3dbc2833e77ad721efebdb22fad90e0985257885",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/12762920449348765314/EC732D1FF7F2CDAD26E64D1C436C29BA323D4B91/",
+      "description_thumbnail_sha256": "2bc11f1d32b15dd66932256267f092ed7b5df1994025fc3f137bda72588fb573",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "妮基塔",
+      "mod": "R116Nikketa",
+      "project": "R116Nikketa",
+      "id": 3838710868,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838710868",
+      "bytes": 428879676,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/15848437342682769009/5ABD29A92AE007463F2A1F0D484128F550538D9B/",
+      "updated": 1794543274,
+      "portrait_model": "pmx-4cdf23692c8709a0",
+      "preview_sha256": "9f9f432c44348beaf2346c05c25f1e58b129b77fde5219c862a77c217ca4fc3d",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/9780119059548556440/1D11CD40FA570BDB439F72C4605E3E4D7E970BD4/",
+      "description_thumbnail_sha256": "29ecb37dd6cde3473249f7a6f0ee7297971b2654cde42131794def30a360b32e",
+      "pack_portrait_synced": false
+    },
+    {
+      "title": "芙洛伦",
+      "mod": "R116Florence",
+      "project": "R116Florence",
+      "id": 3838711148,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838711148",
+      "bytes": 372075892,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/12613234210921349695/9DC835C88C97864B099EF3CC90EEEBA2D94C30FA/",
+      "updated": 1794543498,
+      "portrait_model": "pmx-23b0b754d23c6fb7",
+      "preview_sha256": "dd99d88c873d063494c7a29cdeaa5555f1f5e3e1a27c0c784b873ae12d2fe588",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/14193789750970746650/B39E2B3232BAB90B466429CCE8D68D9DDC7957E2/",
+      "description_thumbnail_sha256": "79d1f965ef78e9d19b582f0e131d5eb05c3225b2f3496125a390025555593e5f",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "莱娜",
+      "mod": "R116Lenna",
+      "project": "R116Lenna",
+      "id": 3838762352,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838762352",
+      "bytes": 333636069,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11938936492889739118/E7DFB1C0852740F55890D66C281A1E6C74750C5F/",
+      "updated": 1794543504,
+      "portrait_model": "pmx-f6ac57de07aff8b0",
+      "preview_sha256": "4730cfaa5094f349baf972398bb6000866b6e559312b1c90e57a25a107caaa53",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/18231756429830554885/2F86F1B447BC8A90463AD7697144F5F3937F0885/",
+      "description_thumbnail_sha256": "1729abea80cf087d57a9d02ddebf5e49c2b41fc9cff11437c5c458e74c797a85",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "维克托",
+      "mod": "R116Vector",
+      "project": "R116Vector",
+      "id": 3838763611,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838763611",
+      "bytes": 335194707,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/17965557159429302386/40DE1DCED0511258A7869858E53D61F85AB38E56/",
+      "updated": 1794543510,
+      "portrait_model": "pmx-4f5d642f97fc5a9d",
+      "preview_sha256": "e62ac6671f8fc2546624d7bf8328c3a661c139480522334affc16f9e21a83da5",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/11053727506646112841/1BE7B9E4B2754178DE5A98C0ADFB583A6CFA20E5/",
+      "description_thumbnail_sha256": "8bad603a6f4d348d0aa5175705f76e243ac5ec5fce17ffcc7a02c66103300121",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "翡图萨",
+      "mod": "R116Phaetusa",
+      "project": "R116Phaetusa",
+      "id": 3838763020,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838763020",
+      "bytes": 435434221,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/9814752318635713356/AD2FB8CD00A57C729AA3E320F646345D6627DCB4/",
+      "updated": 1794543527,
+      "portrait_model": "pmx-a3c2d1b094df6ee0",
+      "preview_sha256": "3279852707d40b148259e6e06ab1cb8b907a3451b8ad961ad2f4728a24eb239f",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/9475317063899037900/0F57BCB9398ACBCE0ECE0C908D558D3FC995E5DF/",
+      "description_thumbnail_sha256": "a0984556f33bf293f813e9585033657d1c2cbcddfb5f61e4acc1a578f540e44b",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "六分仪",
+      "mod": "R116Sextans",
+      "project": "R116Sextans",
+      "id": 3838763377,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838763377",
+      "bytes": 255940856,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/15084756039248321963/D38301F3F7B320770E7530502791AE0DB103A3E8/",
+      "updated": 1794543532,
+      "portrait_model": "pmx-caaf00b5aa73eb64",
+      "preview_sha256": "a1df2c0f167fd2a1aa52d326f07b5e1bc67454b0de7910e4d920d0ecd919519c",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/16581715978427715104/90428C31DA99F2FF33223411A5493AC5C98C29CD/",
+      "description_thumbnail_sha256": "a428e6a1b6cbdec72e00683c7adcfc2a0ffed60f89b12e4123d0b7de83918071",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "幼熙",
+      "mod": "R116Yohee",
+      "project": "R116Yohee",
+      "id": 3838763788,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838763788",
+      "bytes": 238948305,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/11245946384144189384/8C1283D3A1D2D133754574EDBC9EE843FFCDBBB4/",
+      "updated": 1794543538,
+      "portrait_model": "pmx-2689b8bef5ca9503",
+      "preview_sha256": "a0a3b891452e8da17aa151ad2533248a4197a4b4b0178ee096df1fa816cd50d6",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/17609164289823088162/246C7CA47E157296068A3CB6D6F2E35A034105A2/",
+      "description_thumbnail_sha256": "41c0bf8b57db9a011098fab7bcdbda8487fec3be2f032bf04ac5568051960e4c",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "破坏者",
+      "mod": "R116Destroyer",
+      "project": "R116Destroyer",
+      "id": 3838762173,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838762173",
+      "bytes": 193844120,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/9669206866330167965/7FF74271FD41959201392C103ECB37C93F546581/",
+      "updated": 1794543543,
+      "portrait_model": "pmx-d1fc22f957060588",
+      "preview_sha256": "b533d9627c1dac71a522d06b40afb86c15dcb2e1a50cec5a102612e7e6525e3d",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/12842349710687553936/D3F6C57F4D7BD990BB85F718093C4833F9880DEA/",
+      "description_thumbnail_sha256": "2a3cec2b52e636085ca0687803ae2279b0391b1e5f943d3e1ca6e71e37511c83",
+      "pack_portrait_synced": true
+    },
+    {
+      "title": "玛绮朵",
+      "mod": "R116Macqiato",
+      "project": "R116Macqiato",
+      "id": 3838762751,
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3838762751",
+      "bytes": 289291028,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "preview_url": "https://images.steamusercontent.com/ugc/10264462874350172246/AE1223392FAA1A22C84C528C6C2C7FFBB7BB129F/",
+      "updated": 1794543549,
+      "portrait_model": "pmx-e524539529b6d56a",
+      "preview_sha256": "e2a2908368a1e2fea7388666ab3820438acdcd21955be819b3881fa8271e1326",
+      "description_thumbnail_url": "https://images.steamusercontent.com/ugc/12118447115347800451/7C0D722E686B5BFAAE177B41E6A5DF73652662AE/",
+      "description_thumbnail_sha256": "531feda3b1508e4834171bdaa871f339688ea5b1e92b8054779322842a04ddf4",
+      "pack_portrait_synced": true
+    }
+  ]
+}

@@ -1,0 +1,2078 @@
+module Base {
+sound AimohPMXSoppo_Tired_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Tired_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Tired_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Endurance_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Endurance_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hungry_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hungry_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Thirst_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Thirst_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_FoodEaten_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/FoodEaten_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Panic_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Panic_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Stress_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Stress_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Pain_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Pain_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Sick_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Sick_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Bored_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Bored_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Unhappy_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Unhappy_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Hypothermia_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Hypothermia_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L1_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L1_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L1_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L1_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L1_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L1_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L2_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L2_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L2_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L2_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L2_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L2_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L3_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L3_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L3_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L3_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L3_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L3_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L4_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L4_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L4_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L4_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Drunk_L4_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Drunk_L4_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Shout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Shout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Shout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Shout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Shout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Shout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_SneakShout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/SneakShout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_SneakShout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/SneakShout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_SneakShout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/SneakShout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_D
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_D.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_E
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_E.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_F
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_F.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_G
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_G.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_H
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_H.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_I
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_I.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Kill_J
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Kill_J.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound AimohPMXSoppo_Idle_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/AimohPMXSoppo/Idle_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+}

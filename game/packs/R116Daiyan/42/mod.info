@@ -1,0 +1,8 @@
+name=黛烟
+id=GFL2Daiyan
+require=\GFL2Exilium
+modversion=0.7.2
+versionMin=42.22
+versionMax=42.22
+icon=icon.png
+poster=poster.png

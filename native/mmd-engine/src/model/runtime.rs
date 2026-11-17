@@ -141,6 +141,7 @@ pub struct MmdModel {
     original_positions: Vec<f32>,
     /// 原始法线（未蒙皮，用于 GPU 蒙皮）
     original_normals: Vec<f32>,
+    awaiting_cpu_skin: bool,
 
     // GPU Morph 数据缓冲区
     /// 顶点 Morph 偏移数据（密集格式：morph_count * vertex_count * 3）
@@ -278,6 +279,7 @@ impl MmdModel {
             bone_weights: Vec::new(),
             original_positions: Vec::new(),
             original_normals: Vec::new(),
+            awaiting_cpu_skin: false,
             gpu_morph_offsets: Vec::new(),
             gpu_morph_weights: Vec::new(),
             vertex_morph_indices: Vec::new(),
@@ -870,7 +872,7 @@ impl MmdModel {
     pub fn evaluate_external_skeleton(&mut self) {
         let active=self.physics_enabled;
         self.physics_enabled=false;
-        self.tick_animation_internal(0.0,false,true);
+        self.tick_animation_internal(0.0,false,true,false);
         self.physics_enabled=active;
     }
 
@@ -1180,7 +1182,7 @@ impl MmdModel {
     /// 更新动画（每帧调用）- 多动画层版本（CPU蒙皮模式）
     #[allow(unreachable_code)]
     pub fn tick_animation(&mut self, elapsed: f32) {
-        self.tick_animation_internal(elapsed, true, false);
+        self.tick_animation_internal(elapsed, true, false, false);
         return;
         // 更新所有动画层
         self.animation_layer_manager.update(elapsed);
@@ -2157,7 +2159,7 @@ impl MmdModel {
     /// 仅更新动画（不执行 CPU 蒙皮，用于 GPU 蒙皮模式）
     #[allow(unreachable_code)]
     pub fn tick_animation_no_skinning(&mut self, elapsed: f32) {
-        self.tick_animation_internal(elapsed, false, false);
+        self.tick_animation_internal(elapsed, false, false, false);
         return;
         self.animation_layer_manager.update(elapsed);
         self.begin_animation();
@@ -2229,7 +2231,8 @@ impl MmdModel {
     // ========== 物理系统方法 ==========
 
     /// 初始化物理系统（Bullet3）
-    fn tick_animation_internal(&mut self, elapsed: f32, cpu_skinning: bool, skeleton_only: bool) {
+    fn tick_animation_internal(&mut self, elapsed: f32, cpu_skinning: bool, skeleton_only: bool, defer_vertices: bool) {
+        self.awaiting_cpu_skin = false;
         self.with_vrm_runtime_state(|model, runtime_state| {
             runtime_state.apply_inputs(model);
         });
@@ -2256,6 +2259,7 @@ impl MmdModel {
         });
 
         if skeleton_only {self.morph_manager.apply_bone_morphs(&mut self.bone_manager);}
+        else if defer_vertices { self.morph_manager.apply_morphs(&mut self.bone_manager, &mut []); }
         else {self.update_morph_animation();}
 
         if !cpu_skinning {
@@ -2322,6 +2326,81 @@ impl MmdModel {
             */
         }
     }
+
+    /// Complete animation, Morphs and physics once, leaving mesh skinning to the consumer.
+    pub fn tick_pose_for_gpu(&mut self, elapsed: f32) {
+        self.tick_animation_internal(elapsed, false, false, true);
+        self.awaiting_cpu_skin = true;
+    }
+
+    /// Materialize the completed pose on the CPU if the GPU consumer becomes unavailable.
+    pub fn skin_completed_pose(&mut self) -> bool {
+        if !std::mem::take(&mut self.awaiting_cpu_skin) {
+            return false;
+        }
+        // Only rebuild render inputs. Bone and material Morphs already ran with the simulation.
+        for (dst, vertex) in self.update_positions.iter_mut().zip(&self.vertices) {
+            *dst = vertex.position;
+        }
+        for (index, weight) in self.effective_weights_buf.iter().copied().enumerate() {
+            if weight == 0.0 { continue; }
+            if let Some(morph) = self.morph_manager.get_morph(index) {
+                for offset in &morph.vertex_offsets {
+                    if let Some(dst) = self.update_positions.get_mut(offset.vertex_index as usize) {
+                        *dst += offset.offset * weight;
+                    }
+                }
+            }
+        }
+        for ((dst, vertex), delta) in self.update_uvs.iter_mut().zip(&self.vertices).zip(self.morph_manager.get_uv_morph_deltas()) {
+            *dst = vertex.uv + *delta;
+        }
+        self.update();
+        true
+    }
+
+    /// Static GPU source in little-endian order: counts, rest vertices, Morph spans and Morph rows.
+    pub fn gpu_deformation_source(&self) -> Option<Vec<u8>> {
+        let count = self.vertices.len();
+        let morph_count = self.morph_manager.morph_count();
+        if count == 0 || self.is_vrm || self.bone_indices.len() != count * 4
+            || self.weights.iter().any(|w| matches!(w, VertexWeight::Sdef { .. } | VertexWeight::Qdef { .. }))
+        { return None; }
+        let mut spans = vec![0u32; count + 1];
+        for index in 0..morph_count {
+            let morph = self.morph_manager.get_morph(index)?;
+            if !morph.uv_offsets.is_empty() { return None; }
+            for offset in &morph.vertex_offsets {
+                *spans.get_mut(offset.vertex_index as usize + 1)? += 1;
+            }
+        }
+        for i in 1..=count { spans[i] += spans[i - 1]; }
+        let mut write_at = spans.clone();
+        let mut rows = vec![[0f32; 4]; spans[count] as usize];
+        for index in 0..morph_count {
+            for offset in &self.morph_manager.get_morph(index)?.vertex_offsets {
+                let next = &mut write_at[offset.vertex_index as usize];
+                rows[*next as usize] = [offset.offset.x, offset.offset.y, offset.offset.z, index as f32];
+                *next += 1;
+            }
+        }
+        let mut bytes = Vec::with_capacity(12 + count * 64 + spans.len() * 4 + rows.len() * 16);
+        for value in [count as u32, morph_count as u32, rows.len() as u32] {
+            bytes.extend(value.to_le_bytes());
+        }
+        for (i, v) in self.vertices.iter().enumerate() {
+            for value in [v.position.x,v.position.y,v.position.z,0.,v.normal.x,v.normal.y,v.normal.z,0.] {
+                bytes.extend(value.to_le_bytes());
+            }
+            for value in &self.bone_indices[i * 4..i * 4 + 4] { bytes.extend(value.to_le_bytes()); }
+            for value in &self.bone_weights[i * 4..i * 4 + 4] { bytes.extend(value.to_le_bytes()); }
+        }
+        for offset in spans { bytes.extend(offset.to_le_bytes()); }
+        for row in rows { for value in row { bytes.extend(value.to_le_bytes()); } }
+        Some(bytes)
+    }
+
+    pub fn gpu_deformation_weights(&self) -> &[f32] { &self.effective_weights_buf }
 
     pub fn init_physics(&mut self) -> bool {
         if self.rigid_bodies.is_empty() {

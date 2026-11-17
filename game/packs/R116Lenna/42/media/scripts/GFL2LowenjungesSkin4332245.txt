@@ -1,0 +1,33 @@
+module GFL2
+{
+    model LowenjungesSkin4332245
+    {
+        mesh = GFL2/LowenjungesSkin4332245,
+        texture = GFL2/LowenjungesSkin4332245,
+        attachment muzzle
+        {
+            offset = 9.018443e-07 0.28923326 0.034055436,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 8.2698322e-09 0.097398014 0.0014900081,
+            rotate = 0 0 90,
+        }
+    }
+    model LowenjungesSkin4332245Empty
+    {
+        mesh = GFL2/LowenjungesSkin4332245Empty,
+        texture = GFL2/LowenjungesSkin4332245,
+        attachment muzzle
+        {
+            offset = 9.018443e-07 0.28923326 0.034055436,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 8.2698322e-09 0.097398014 0.0014900081,
+            rotate = 0 0 90,
+        }
+    }
+}

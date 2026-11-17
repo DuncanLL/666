@@ -1,10 +1,14 @@
 local key = "AimohPMXPreview"
 local window = require "AimohPMXWindow"
+local economy = require "AimohPMXRoomEconomy"
+local multiplayer = require "GFL2MultiplayerClient"
 local started = false
+local awaiting = {}
+local expressionEdits = {}
 
 local function problem(player, message)
     if message and message ~= "" then
-        print("[AimohPMXPreview] " .. message)
+        print("[GFL2Exilium] " .. message)
         if player then player:Say(getText("ContextMenu_AimohPMX_Error")) end
         return true
     end
@@ -12,8 +16,7 @@ local function problem(player, message)
 end
 
 local function publish(player, saved)
-    local multiplayer=rawget(_G,"AimohPMXMPClient")
-    if multiplayer then multiplayer.publish(player,saved) end
+    if isClient() then multiplayer.publish(player,saved) end
 end
 
 local function voiceChanged(player)
@@ -21,6 +24,7 @@ local function voiceChanged(player)
 end
 
 local function remember(player,quiet)
+    expressionEdits[player]=nil
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     local saved = {
@@ -31,18 +35,42 @@ local function remember(player,quiet)
     }
     profiles[saved.model]=saved.settings
     player:getModData()[key] = saved
+    economy.saveLocal(player)
     publish(player, saved)
     if not quiet then voiceChanged(player) end
 end
 
+multiplayer.onRestored=remember
+
+local function flushExpression(player)
+    if not expressionEdits[player] then return end
+    expressionEdits[player]=nil
+    if AimohPMXPreview and AimohPMXPreview.isReady(player) then remember(player,true) end
+end
+
 local function enable(player, index)
+    flushExpression(player)
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     if previous and previous.model and previous.settings then profiles[previous.model]=previous.settings end
     if problem(player, AimohPMXPreview.enableWithSettings(player,index,profiles[AimohPMXPreview.modelIdAt(index)] or "")) then return false end
     local saved=player:getModData()[key] or {};saved.profiles=profiles;player:getModData()[key]=saved
-    remember(player);return true
+    awaiting[player]=true;return true
 end
+
+Events.OnTick.Add(function()
+    for player,deadline in pairs(expressionEdits) do
+        if getTimestampMs()>=deadline then flushExpression(player) end
+    end
+    for player in pairs(awaiting) do
+        if AimohPMXPreview.hasModelFailure(player) then
+            awaiting[player]=nil
+            problem(player,AimohPMXPreview.status());voiceChanged(player)
+        elseif AimohPMXPreview.isReady(player) then
+            awaiting[player]=nil;remember(player)
+        end
+    end
+end)
 
 local function choice(player, group, option)
     if problem(player, AimohPMXPreview.setChoice(player, group, option)) then return false end
@@ -72,32 +100,40 @@ local function resetPhysics(player)
     return not problem(player,AimohPMXPreview.resetModelPhysics(player))
 end
 
-local function chestPhysics(player,index,value)
-    if problem(player,AimohPMXPreview.setChestPhysicsSlider(player,index,value))then return false end
-    remember(player,true);return true
-end
-local function chestDefaults(player)
-    if problem(player,AimohPMXPreview.resetChestPhysicsSettings(player))then return false end
-    remember(player,true);return true
+
+local function setBodyPhysics(player,enabled)
+    if problem(player,AimohPMXPreview.setModelPhysics(player,enabled))then return false end
+    remember(player,true)
+    return true
 end
 
-local function disable(player)
+local function clearAppearance(player)
+    expressionEdits[player]=nil
+    awaiting[player]=nil
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
     player:getModData()[key] = saved and {profiles=saved.profiles} or nil
-    publish(player, nil)
+    economy.saveLocal(player)
     voiceChanged(player)
+end
+
+multiplayer.onRejected=clearAppearance
+
+local function disable(player)
+    flushExpression(player)
+    clearAppearance(player)
+    publish(player, nil)
 end
 
 local function refresh(player)
     if problem(player,AimohPMXPreview.refreshLibrary()) then return false end
-    local multiplayer=rawget(_G,"AimohPMXMPClient")
-    if multiplayer then multiplayer.resync() end
+    if isClient() then multiplayer.resync() end
     return true
 end
 
 local function restore(player)
-    if not player or not AimohPMXPreview then return end
+    if not player or not AimohPMXPreview or isClient() then return end
+    economy.restoreLocal(player)
     local saved = player:getModData()[key]
     if type(saved) == "table" and type(saved.model) == "string" then
         local message
@@ -110,7 +146,9 @@ local function restore(player)
 end
 
 local function open(player)
-    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,chestPhysics=chestPhysics,chestDefaults=chestDefaults})
+    window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,bodyPhysics=setBodyPhysics,
+        expressionRemember=function(p)remember(p,true)end,
+        expressionEdited=function(p)expressionEdits[p]=getTimestampMs()+250 end})
 end
 
 local function menu(playerIndex, context, worldObjects, test)
@@ -127,6 +165,8 @@ end
 
 Events.OnFillWorldObjectContextMenu.Add(menu)
 Events.OnGameStart.Add(function()
+    awaiting={}
+    expressionEdits={}
     window.closeAll()
     started = true
     if not AimohPMXPreview then return end
@@ -138,21 +178,38 @@ Events.OnCreatePlayer.Add(function(index, player)
         restore(player)
     end
 end)
+Events.OnSave.Add(function()
+    if started then
+        for i = 0, 3 do
+            local player = getSpecificPlayer(i)
+            if player and not player:isDead() then
+                flushExpression(player)
+                economy.saveLocal(player)
+            end
+        end
+    end
+end)
 Events.OnPlayerDeath.Add(function(player)
+    flushExpression(player)
+    economy.saveLocal(player)
+    awaiting[player]=nil
     window.closeFor(player)
     if AimohPMXPreview then
         AimohPMXPreview.disable(player)
-        if not isClient() or player:isLocalPlayer() then publish(player, nil) end
     end
 end)
 if Events.OnMainMenuEnter then
     Events.OnMainMenuEnter.Add(function()
         started = false
+        awaiting={}
+        expressionEdits={}
         window.closeAll()
         if AimohPMXPreview then AimohPMXPreview.clear() end
     end)
 end
 Events.OnDisconnect.Add(function()
+    awaiting={}
+    expressionEdits={}
     window.closeAll()
     started = false
     if AimohPMXPreview then AimohPMXPreview.clear() end

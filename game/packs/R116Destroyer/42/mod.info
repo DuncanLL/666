@@ -1,0 +1,8 @@
+name=破坏者
+id=GFL2Destroyer
+require=\GFL2Exilium
+modversion=0.7.1
+versionMin=42.22
+versionMax=42.22
+icon=icon.png
+poster=poster.png

@@ -1,0 +1,33 @@
+module GFL2
+{
+    model IasoSkin4331295
+    {
+        mesh = GFL2/IasoSkin4331295,
+        texture = GFL2/IasoSkin4331295,
+        attachment muzzle
+        {
+            offset = -9.9023289e-07 0.14371524 -0.027758296,
+            rotate = -90 0 0,
+        }
+        attachment world
+        {
+            offset = 0 0.062765681 -0.00013673953,
+            rotate = 0 0 0,
+        }
+    }
+    model IasoSkin4331295Empty
+    {
+        mesh = GFL2/IasoSkin4331295Empty,
+        texture = GFL2/IasoSkin4331295,
+        attachment muzzle
+        {
+            offset = -9.9023289e-07 0.14371524 -0.027758296,
+            rotate = -90 0 0,
+        }
+        attachment world
+        {
+            offset = 0 0.062765681 -0.00013673953,
+            rotate = 0 0 0,
+        }
+    }
+}

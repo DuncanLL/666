@@ -7,7 +7,7 @@ sys.path[:0]=[c['python_dependencies'],str(ROOT/'experiments/softbody')]
 import jpype,numpy as np
 from softbody import SoftBody
 game=Path(c['game_root']);temp=BUILD/'chest-parity';temp.mkdir(exist_ok=True);os.environ['TEMP']=os.environ['TMP']=str(temp);os.chdir(game)
-jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-UNNAMED','-Duser.home='+str(temp),'-Djava.io.tmpdir='+str(temp),classpath=[str(BUILD/'AimohPMXPreview.jar'),c['viewpoint_jar'],c['zombiebuddy_jar'],str(game),*map(str,game.glob('*.jar'))],convertStrings=True)
+jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-UNNAMED','-Duser.home='+str(temp),'-Djava.io.tmpdir='+str(temp),classpath=[str(BUILD/'GFL2Exilium.jar'),c['viewpoint_jar'],c['zombiebuddy_jar'],str(game),*map(str,game.glob('*.jar'))],convertStrings=True)
 J=jpype.JClass;F=lambda v:jpype.JArray(jpype.JFloat)(v)
 model=None;body=None
 try:

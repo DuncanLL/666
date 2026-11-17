@@ -8,7 +8,7 @@ def properties(text):
 
 def promote(source,target,out,index,apply,item_id=None):
     source=source.resolve();target=target.resolve()
-    assert target.parent.name=='Workshop' and target.name in {'R116','R116RenderSupport'}
+    assert target.parent.name=='Workshop' and target.name in {'GFL2Exilium','GFL2RenderSupport'}
     assert not source.is_relative_to(target)and not target.is_relative_to(source)
     wanted=inventory(source);old=inventory(target)if target.exists()else{}
     assert not old.keys()-wanted.keys(),'Unexpected files in author project; preserve and inspect first'
@@ -66,19 +66,19 @@ def promote(source,target,out,index,apply,item_id=None):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--apply',action='store_true');args=parser.parse_args()
     cfg=settings();out=BUILD/'release-20261108-native';out.mkdir(exist_ok=True)
-    character=BUILD/'workshop/chest-trial/R116';support=BUILD/'workshop/R116RenderSupport'
+    character=BUILD/'workshop/chest-trial/GFL2Exilium';support=BUILD/'workshop/GFL2RenderSupport'
     body=json.loads((BUILD/'runtime-check.json').read_text('utf8'));render=json.loads((BUILD/'render-support/checks/validation.json').read_text('utf8'))
-    assert body['jar_sha256']==sha(character/'Contents/mods/AimohPmxPreview/42/media/java/client/AimohPMXPreview.jar')
+    assert body['jar_sha256']==sha(character/'Contents/mods/GFL2Exilium/42/media/java/client/GFL2Exilium.jar')
     assert render['jar_sha256']==sha(support/'Contents/mods/AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar')
     assert render.get('native_discovered')is True,'Native distributor has not passed normal discovery checks'
     roots=list(map(Path,cfg['workshop_targets']));ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in roots if (r/'workshop.txt').exists()};ids.discard(None)
     assert len(ids)<=1,'Existing character projects point to different Workshop items'
     character_id=next(iter(ids),None)
-    support_roots=[r.parent/'R116RenderSupport'for r in roots];support_ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in support_roots if (r/'workshop.txt').exists()};support_ids.discard(None)
+    support_roots=[r.parent/'GFL2RenderSupport'for r in roots];support_ids={properties((r/'workshop.txt').read_text('utf8')).get('id')for r in support_roots if (r/'workshop.txt').exists()};support_ids.discard(None)
     assert len(support_ids)<=1,'Existing rendering projects point to different Workshop items'
     support_id=next(iter(support_ids),None);reports=[]
     for root in roots:
-        for source,target in [(character,root),(support,root.parent/'R116RenderSupport')]:
+        for source,target in [(character,root),(support,root.parent/'GFL2RenderSupport')]:
             row=promote(source,target,out,len(reports),args.apply,character_id if source==character else support_id);reports.append(row)
             print(json.dumps({k:v for k,v in row.items()if k!='changed_files'},ensure_ascii=False),flush=True)
     commit=subprocess.run(['git','rev-parse','HEAD'],capture_output=True,text=True,check=True).stdout.strip()

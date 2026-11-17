@@ -10,14 +10,25 @@ final class PmxPresentation {
     private boolean history;
     private float token0,token1,actor;
 
-    PmxDrawMesh.FrameData sample(PmxDrawMesh.FrameData current,PmxDrawMesh.FrameData previous,
+    record Timing(PmxDrawMesh.FrameData from,PmxDrawMesh.FrameData to,float weight,boolean reset) {}
+
+    static Timing timing(PmxDrawMesh.FrameData current,PmxDrawMesh.FrameData previous,
             PmxDrawMesh.FrameData older,float phase,boolean cut) {
         int count=current.positions().length;
+        if(cut||previous==null||previous.positions().length!=count)return new Timing(current,current,1,true);
+        float weight=Float.isFinite(phase)?Math.min(phase,1):1;
+        if(weight<0) {
+            var earlier=older!=null&&older.positions().length==count?older:previous;
+            return new Timing(earlier,previous,Math.max(0,1+weight),false);
+        }
+        return new Timing(previous,current,weight,false);
+    }
+
+    PmxDrawMesh.FrameData sample(PmxDrawMesh.FrameData current,Timing timing,boolean cut) {
+        int count=current.positions().length;
         if(points==null||points[0].length!=count){points=new float[][]{new float[count],new float[count]};normals=new float[count];history=false;}
-        if(!Float.isFinite(phase))phase=1;
-        PmxDrawMesh.FrameData a=previous,b=current;float weight=Math.min(phase,1);
-        if(cut||a==null||a.positions().length!=count){a=b;weight=1;history=false;}
-        else if(weight<0){b=a;a=older!=null&&older.positions().length==count?older:b;weight=Math.max(0,1+weight);}
+        if(timing.reset())history=false;
+        var a=timing.from();var b=timing.to();float weight=timing.weight();
         float[] output=points[side^1],oldOutput=points[side],ap=a.positions(),bp=b.positions(),an=a.normals(),bn=b.normals();
         if(a==b||weight==1){System.arraycopy(bp,0,output,0,count);System.arraycopy(bn,0,normals,0,count);}
         else if(weight==0){System.arraycopy(ap,0,output,0,count);System.arraycopy(an,0,normals,0,count);}
@@ -63,7 +74,7 @@ final class PmxPresentation {
         }
         side^=1;
         // This upload view is render-thread scratch; immutable game snapshots remain untouched.
-        return new PmxDrawMesh.FrameData(output,normals,current.materials(),header);
+        return PmxDrawMesh.FrameData.interpolated(output,normals,current.materials(),header,a,b);
     }
     private static void normalize(float[] values,int at){
         float x=values[at],y=values[at+1],z=values[at+2],length=(float)Math.sqrt(x*x+y*y+z*z);

@@ -1,0 +1,33 @@
+module GFL2
+{
+    model AlvaAN94Skin4334325
+    {
+        mesh = GFL2/AlvaAN94Skin4334325,
+        texture = GFL2/AlvaAN94Skin4334325,
+        attachment muzzle
+        {
+            offset = 0 0.44147587 0.041540272,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.16915233 0.0044496107,
+            rotate = 0 0 90,
+        }
+    }
+    model AlvaAN94Skin4334325Empty
+    {
+        mesh = GFL2/AlvaAN94Skin4334325Empty,
+        texture = GFL2/AlvaAN94Skin4334325,
+        attachment muzzle
+        {
+            offset = 0 0.44147587 0.041540272,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 0 0.16915233 0.0044496107,
+            rotate = 0 0 90,
+        }
+    }
+}

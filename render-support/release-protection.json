@@ -1,0 +1,34 @@
+{
+  "proguard_version": "7.10.0",
+  "proguard_zip_sha256": "5aa88c434766a057a2ead3412acc01022bb444f9f1bfbae690a1d48b2006b242",
+  "internal_java_roots": [
+    "AimohSealedSources", "AimohGf2OutlineBridge", "AimohGf2SurfaceControls", "AimohGf2FrameInputs",
+    "AimohGf2RegisterBank", "AimohEclipseGf2RegisterBank", "AimohNativeSourcePrograms",
+    "AimohNativeSourceRenderer", "AimohNativeSourceScope", "AimohNativeSourceSpace",
+    "AimohNativeDisplayTransfer", "AimohNativeGf2Environment", "AimohNativeLocalLights",
+    "AimohNativeMotionBridge", "AimohNativeRoomProbe", "AimohGf2RuntimeQueue",
+    "AimohGf2WorldShadow", "AimohGf2ShadowReadback", "AimohGf2OriginalSamplers",
+    "AimohGf2OriginalTexture", "AimohGf2UnpackScope"
+  ],
+  "native_local_symbols": {
+    "cube_faces.glsl": ["face", "p"],
+    "native_cube.comp": ["gf2ProbePoint", "gf2ProbeEdge", "gf2ProbeSceneLight", "clip", "projected", "approached", "rayDepth", "sceneDepth", "midUv", "midDepth", "observed", "thickness", "sourceDirection", "nativeDirection"],
+    "native_indirect.glsl": ["normal", "coefficient", "channel"],
+    "native_light.comp": ["share", "skyPart", "scale", "isotropic", "constant", "dx", "dy", "dz", "diagonal"],
+    "native_local.glsl": ["slot", "colour", "kind", "dist", "energy", "att", "edge", "beam"],
+    "native_main.glsl": ["visibility"],
+    "native_motion.comp": ["originalDisplayInput", "decodeOct", "encodeOct", "layer", "pixel", "ownsOpaque", "exposure"],
+    "native_prefilter.comp": ["sampleH", "side", "phi", "axis", "weights"]
+  },
+  "eclipse_motion_local_symbols": ["at", "actorMotion"],
+  "eclipse_probe_fragment_sha256": "2b400c51eca0f50cfb4ea1ee228896fa3cb8ab4b08b40ea7692398329b1a7f48",
+  "eclipse_owned_files": [
+    "danrp/sky_base.fsh",
+    "danrp/sky_base.vsh",
+    "danrp/sky_filter.fsh",
+    "danrp/sky_filter.vsh",
+    "gf2/data/b093d1c52cde3adb19168eecadbee39218f6d57ba1bcff6c8bfd7bd45539fb72.comp",
+    "gf2/data/c764fda6ed924d0d5605f6f1e5f9b243a98665aca7f36587bc0b08c21c56cfe6.comp",
+    "gf2/data/ef189cfaaf76dfae8eec9c341ca9ee10be138ca958cd36ace34753f2067a2d6e.comp"
+  ]
+}

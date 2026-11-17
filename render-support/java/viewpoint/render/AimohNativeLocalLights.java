@@ -33,7 +33,7 @@ final class AimohNativeLocalLights {
         for(int i=0;i<java.lang.Math.min(frame.scene.torches.count,8);i++){int p=i*11;records.add(new float[]{torches[p],torches[p+1],torches[p+2],torches[p+3],torches[p+8],torches[p+9],torches[p+10],1});kinds.add(1);indices.add(i);}
         Object spots=AimohNativeGf2Environment.field(AimohNativeGf2Environment.world("shadows"),"spots");int count=(Integer)AimohNativeGf2Environment.field(spots,"count");FloatBuffer values=((FloatBuffer)AimohNativeGf2Environment.field(spots,"records")).duplicate();
         for(int i=0;i<count;i++){int p=i*24;records.add(new float[]{values.get(p),values.get(p+1),values.get(p+2),values.get(p+3),values.get(p+8),values.get(p+9),values.get(p+10),1});kinds.add(2);indices.add(i);}
-        if(!WorldRenderer.off(3))for(int i=0;i<java.lang.Math.min(frame.scene.lightCount,48);i++)if(frame.scene.lightKeys[i]>=0){int p=i*12;records.add(Arrays.copyOfRange(frame.scene.lights,p,p+8));kinds.add(0);indices.add(i);}
+        if(!WorldRenderer.off(3))for(int i=0;i<java.lang.Math.min(frame.scene.lightCount,48);i++)if(frame.scene.lightKeys[i]>=0){int p=i*AimohGf2FrameInputs.SCENE_LIGHT_STRIDE;records.add(Arrays.copyOfRange(frame.scene.lights,p,p+8));kinds.add(0);indices.add(i);}
         return new AimohNativeLocalLights(records,kinds,indices);
     }
     void neutralAttenuation(Map<String,float[]> values){

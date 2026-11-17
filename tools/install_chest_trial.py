@@ -4,13 +4,13 @@ import argparse,json,os,shutil
 from common import ROOT,BUILD,settings,sha,save
 
 def install(project,target,index):
-    source=project/'Contents/mods/AimohPmxPreview';target=target.resolve()
+    source=project/'Contents/mods/GFL2Exilium';target=target.resolve()
     assert (target/'42/mod.info').is_file() and (target/'42/media/aimoh_pmx/registry.json').is_file(),target
     generated=BUILD/'generated-mod';catalog_path=Path('42/media/ui/AimohPMXReadyRoom/catalog.json')
     from prepare_chest_labels import TEXT
     next_catalog=json.loads((target/catalog_path).read_text('utf8'));candidate=json.loads((source/catalog_path).read_text('utf8'))
     for key,value in TEXT.items():next_catalog['text'][key]=value;next_catalog['labels'][value]=candidate['labels'][value]
-    files={Path('42/media/java/client/AimohPMXPreview.jar'):source/'42/media/java/client/AimohPMXPreview.jar',
+    files={Path('42/media/java/client/GFL2Exilium.jar'):source/'42/media/java/client/GFL2Exilium.jar',
            Path('42/mod.info'):source/'42/mod.info'}
     for name in ['AimohPMXPreview.lua','AimohPMXWindow.lua']:
         relative=Path('42/media/lua/client')/name;files[relative]=source/relative
@@ -52,7 +52,7 @@ def install(project,target,index):
     return dict(target=str(target),status='INSTALLED_READBACK_VERIFIED_GAMEPLAY_NOT_TESTED',files=records,rollback=str(backup),models_and_textures_replaced=False,external_shaders_replaced=False)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--project',type=Path,default=BUILD/'workshop/chest-trial/R116');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--project',type=Path,default=BUILD/'workshop/chest-trial/GFL2Exilium');args=p.parse_args()
     c=settings();roots=[Path(p)for p in c['game_install_roots']];reports=[]
     for index,root in enumerate(roots):
         try:reports.append(install(args.project.resolve(),root,index))

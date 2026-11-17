@@ -4,6 +4,8 @@ import com.shiroha.mmdskin.NativeFunc;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,6 +27,8 @@ public final class ModelAppearance {
     private JSONObject selected=new JSONObject();
     private JSONArray groups=new JSONArray();
     private long revision;
+    private Set<String> animatedMorphs=Set.of();
+    private List<FacialExpressions.Control> facialControls;
 
     public ModelAppearance(NativeFunc api,long model) {
         this.api=api;this.model=model;
@@ -57,6 +61,11 @@ public final class ModelAppearance {
     }
     public synchronized void configure(String json){configure(json,wardrobe.json());}
     public synchronized void configure(String json,String definition) {
+        apply(prepare(json,definition));
+    }
+    record Prepared(boolean[] visible,float[] alpha,float[] weights,float[][] colours,Boolean[] bothFaces,String[] textures,
+                    Wardrobe wardrobe,JSONObject selected,JSONArray groups,boolean[] resolved,float[] resolvedWeights,boolean changed) {}
+    synchronized Prepared prepare(String json,String definition) {
         JSONObject state=new JSONObject(json);int format=state.getInt("format");
         if(format!=1&&format!=2)throw new IllegalArgumentException("Unsupported appearance format");
         Wardrobe nextWardrobe=new Wardrobe(definition,visible.length,weights.length);
@@ -74,19 +83,46 @@ public final class ModelAppearance {
             if(!t.isNull(i)) {nextTextures[i]=t.getString(i);if(nextTextures[i].isBlank())throw new IllegalArgumentException("Empty texture override");}
         }
         for(int i=0;i<weights.length;i++)nextWeights[i]=weight(w,i);
+        if(state.has("expressions")) resolveExpressions(state.getJSONObject("expressions"),nextWardrobe,nextWeights);
         JSONObject nextSelected=nextWardrobe.choices(state.optJSONObject("choices")==null?new JSONObject():state.getJSONObject("choices"));
         boolean[] resolved=nextVisible.clone();float[] resolvedWeights=nextWeights.clone();nextWardrobe.resolve(nextSelected,resolved,resolvedWeights);
         JSONArray nextGroups=state.optJSONArray("groups")==null?new JSONArray():new JSONArray(state.getJSONArray("groups").toString());
         boolean changed=!Arrays.equals(visible,nextVisible)||!Arrays.equals(alpha,nextAlpha)||!Arrays.equals(weights,nextWeights)||!Arrays.deepEquals(colours,nextColours)
             ||!Arrays.equals(bothFaces,nextBoth)||!Arrays.equals(textures,nextTextures)||!selected.similar(nextSelected)||!new JSONObject(wardrobe.json()).similar(new JSONObject(nextWardrobe.json()));
-        // Full zero weights clear old manual morphs. Current transport uses the game's animation source.
-        if(changed) {
-            api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,resolvedWeights);
-            for(int i=0;i<resolved.length;i++)api.SetMaterialVisible(model,i,resolved[i]);
+        return new Prepared(nextVisible,nextAlpha,nextWeights,nextColours,nextBoth,nextTextures,nextWardrobe,nextSelected,nextGroups,resolved,resolvedWeights,changed);
+    }
+    private void applyNative(boolean[] visibility,float[] morphs) {
+        applyMorphs(morphs);
+        for(int i=0;i<visibility.length;i++)api.SetMaterialVisible(model,i,visibility[i]);
+    }
+    private void applyMorphs(float[] morphs) {
+        if(animatedMorphs.isEmpty()) {
+            api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,morphs);
+            return;
+        }
+        int[] ids=new int[morphIds.length];float[] manual=new float[morphIds.length];int count=0;
+        for(int i:morphIds)if(!animatedMorphs.contains(api.GetMorphName(model,i))) {
+            ids[count]=i;manual[count++]=morphs[i];
+        }
+        api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],Arrays.copyOf(ids,count),Arrays.copyOf(manual,count));
+    }
+    synchronized void setAnimatedMorphs(Set<String> names) {
+        animatedMorphs=Set.copyOf(names);
+        float[] resolved=weights.clone();wardrobe.resolve(selected,visible.clone(),resolved);
+        applyMorphs(resolved);
+    }
+    synchronized void apply(Prepared next) {
+        if(next.changed()) {
+            try{applyNative(next.resolved(),next.resolvedWeights());}
+            catch(RuntimeException|Error e){
+                float[] previous=weights.clone();wardrobe.resolve(selected,visible.clone(),previous);
+                try{applyNative(effectiveVisible,previous);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+                throw e;
+            }
             revision++;
         }
-        visible=nextVisible;effectiveVisible=resolved;alpha=nextAlpha;weights=nextWeights;colours=nextColours;bothFaces=nextBoth;textures=nextTextures;
-        wardrobe=nextWardrobe;selected=nextSelected;groups=nextGroups;
+        visible=next.visible();effectiveVisible=next.resolved();alpha=next.alpha();weights=next.weights();colours=next.colours();bothFaces=next.bothFaces();textures=next.textures();
+        wardrobe=next.wardrobe();selected=next.selected();groups=next.groups();
     }
     public synchronized void choose(String group,String option) {
         JSONObject state=new JSONObject(stateJson());state.getJSONObject("choices").put(group,option);configure(state.toString());
@@ -107,6 +143,68 @@ public final class ModelAppearance {
     public synchronized String texture(int material){return textures[material]==null?originalTextures[material]:textures[material];}
     public synchronized String[] readTextures(){String[] result=new String[visible.length];for(int i=0;i<result.length;i++)result[i]=texture(i);return result;}
     public synchronized boolean managesMorph(int index){return wardrobe.managesMorph(index);}
+    private List<FacialExpressions.Control> facialControls() {
+        if (facialControls == null) facialControls = FacialExpressions.controls(api, model, weights.length);
+        return facialControls;
+    }
+    public synchronized JSONArray expressionRows() {
+        JSONArray rows = new JSONArray();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) rows.put(new JSONObject().put("index", index)
+                .put("group", control.group()).put("label", control.label()).put("value", weights[index]));
+        }
+        return rows;
+    }
+    private JSONObject expressionValues() {
+        JSONObject snapshot = new JSONObject();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index) && weights[index] != 0) snapshot.put(control.name(), weights[index]);
+        }
+        return snapshot;
+    }
+    public synchronized String expressionSnapshot() {
+        return expressionValues().toString();
+    }
+    public synchronized String networkJson() {
+        JSONObject state = new JSONObject().put("choices",selected).put("material_visibility",new JSONArray(visible));
+        String withExpressions = state.put("expressions",expressionValues()).toString();
+        if(withExpressions.length()<=8192) return withExpressions;
+        state.remove("expressions");
+        return state.toString();
+    }
+    private static float expressionWeight(double value) {
+        if (!Double.isFinite(value) || value < 0 || value > 1) throw new IllegalArgumentException("表情权重须在 0 到 100% 之间");
+        return (float)value;
+    }
+    public synchronized void setExpression(int index, double value) {
+        if (facialControls().stream().noneMatch(control -> control.index() == index) || wardrobe.managesMorph(index))
+            throw new IllegalArgumentException("当前模型没有此表情");
+        float[] next = weights.clone();
+        next[index] = expressionWeight(value);
+        applyExpressionWeights(next);
+    }
+    public synchronized void loadExpression(String preset) {
+        if (preset == null || preset.length() > 8192) throw new IllegalArgumentException("表情预设格式无效");
+        float[] next = weights.clone();
+        resolveExpressions(new JSONObject(preset),wardrobe,next);
+        applyExpressionWeights(next);
+    }
+    private void resolveExpressions(JSONObject values,Wardrobe wardrobe,float[] next) {
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) next[index] = values.has(control.name()) ? expressionWeight(values.getDouble(control.name())) : 0;
+        }
+    }
+    private void applyExpressionWeights(float[] next) {
+        if (Arrays.equals(weights, next)) return;
+        float[] resolved = next.clone();
+        wardrobe.resolve(selected, visible.clone(), resolved);
+        applyMorphs(resolved);
+        weights = next;
+        revision++;
+    }
     public synchronized float[] readMaterials(){return read(true,true);}
     public synchronized float[] readTextureFactors(){return read(false,false);}
     public synchronized boolean materialAvailable(int index) {

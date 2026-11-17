@@ -3,6 +3,7 @@ package aimoh.pmxpreview;
 import java.lang.reflect.Field;
 import java.util.IdentityHashMap;
 import org.joml.Matrix4f;
+import viewpoint.core.Frame;
 import viewpoint.render.ModelDraws;
 import zombie.characters.IsoGameCharacter;
 import zombie.core.skinnedmodel.ModelManager;
@@ -12,6 +13,12 @@ import zombie.core.textures.Texture;
 
 /** Bounded adapter to the inspected Viewpoint 0.1.6.1 draw layout. */
 final class DrawAccess {
+    private static final Field SIM_NANOS=simulationClock();
+    private static Field simulationClock(){try{return Frame.class.getField("simNanos");}catch(NoSuchFieldException legacy){return null;}}
+    static long frameNanos(Frame frame){
+        if(SIM_NANOS==null)return System.nanoTime();
+        try{return SIM_NANOS.getLong(frame);}catch(IllegalAccessException e){throw new IllegalStateException(e);}
+    }
     private static final Field PALETTES=field(ModelDraws.class,"palettes"),MESHES=field(ModelDraws.class,"meshes"),INSTANCES=field(ModelDraws.class,"instances"),VALUES=field(ModelDraws.class,"values"),
         FLAGS=field(ModelDraws.class,"flags"),TEXTURES=field(ModelDraws.class,"textures");
     private static final Field POSE_BONES=optionalField("poseBones");

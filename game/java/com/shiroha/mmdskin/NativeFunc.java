@@ -7,6 +7,10 @@ public final class NativeFunc {
     public native long LoadModelPMX(String file, String directory, long layers);
     public native void DeleteModel(long model);
     public native void UpdateModel(long model, float seconds);
+    public native void UpdateModelPose(long model, float seconds);
+    public native boolean SkinCompletedPose(long model);
+    public native byte[] GetGpuDeformationSource(long model);
+    public native int CopyGpuDeformationWeights(long model, ByteBuffer buffer);
     public native void UpdateAnimationOnly(long model, float seconds);
     public native void EvaluateSkeleton(long model);
     public native long GetVertexCount(long model);
@@ -49,6 +53,13 @@ public final class NativeFunc {
     public native long GetMorphCount(long model);
     public native String GetMorphName(long model, int index);
     public native float GetMorphWeight(long model, int index);
+    public native long LoadAnimation(long model, String file);
+    public native void DeleteAnimation(long animation);
+    public native void ChangeModelAnim(long model, long animation, long layer);
+    public native float GetAnimMaxFrame(long animation);
+    public native void SetLayerLoop(long model, long layer, boolean loop);
+    public native void SetLayerSpeed(long model, long layer, float speed);
+    public native void SeekLayer(long model, long layer, float frame);
     public native void SetPZAnimationState(long model, long[] animations, float[] frames,
                                           boolean[] additive, int[] morphs, float[] weights);
     public native String GetRuntimeStats();

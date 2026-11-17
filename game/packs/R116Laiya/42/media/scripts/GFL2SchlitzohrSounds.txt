@@ -1,0 +1,27 @@
+module GFL2
+{
+    sound GFL2SchlitzohrShoot
+    {
+        category = Item,
+        is3D = true,
+        maxInstancesPerEmitter = 4,
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-1.wav,
+            volume = 1.625,
+            distanceMax = 30,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-2.wav,
+            volume = 1.625,
+            distanceMax = 30,
+        }
+        clip
+        {
+            file = media/sound/GFL2SignatureWeapons/Schlitzohr-suppressed-3.wav,
+            volume = 1.625,
+            distanceMax = 30,
+        }
+    }
+}

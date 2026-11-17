@@ -1,0 +1,33 @@
+module GFL2
+{
+    model GuardianSilverwingSkin4333225
+    {
+        mesh = GFL2/GuardianSilverwingSkin4333225,
+        texture = GFL2/GuardianSilverwingSkin4333225,
+        attachment muzzle
+        {
+            offset = 9.0589278e-07 0.46304845 0.037559063,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 1.2318785e-08 0.16886603 0.0014899492,
+            rotate = 0 0 90,
+        }
+    }
+    model GuardianSilverwingSkin4333225Empty
+    {
+        mesh = GFL2/GuardianSilverwingSkin4333225Empty,
+        texture = GFL2/GuardianSilverwingSkin4333225,
+        attachment muzzle
+        {
+            offset = 9.0589278e-07 0.46304845 0.037559063,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 1.2318785e-08 0.16886603 0.0014899492,
+            rotate = 0 0 90,
+        }
+    }
+}

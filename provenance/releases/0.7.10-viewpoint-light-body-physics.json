@@ -1,0 +1,128 @@
+{
+  "version": "0.7.10",
+  "host_version": "0.1.7",
+  "workshop_id": "3838709437",
+  "uploaded": false,
+  "files": [
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\mod.info",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\mod.info",
+      "before": "62bebb3946bdcf712297f3496bf8db8858e5d21b49465bd0d704d69f7e90b40b",
+      "after": "995fc11247416e174a64052770cd5d28586197fa9da465ae7b3c70602e54e1f5"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\java\\client\\AimohPMXPreview.jar",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\java\\client\\AimohPMXPreview.jar",
+      "before": "7801b3eadfac09390cb2736739f568671ae1aa80ace07d10482752cce265f455",
+      "after": "21811685c6cbb58c3e065bbc7d5cdaf8615f29b25d080e7d3e98dd6211215a6d"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\lua\\client\\AimohPMXPreview.lua",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\lua\\client\\AimohPMXPreview.lua",
+      "before": "e3c03e9565ecbcbc3e98a6eddc37963c3d1cbc10d9ecfcb4fb7d1ff894929e47",
+      "after": "58ae7cfcd4f8e9ede253a2e37dc55e73bbc2197d8c00d61d25f6765fafb559b0"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\lua\\client\\AimohPMXWindow.lua",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\lua\\client\\AimohPMXWindow.lua",
+      "before": "01d459e04e7f6cc44f025a3834a5ea5326eb9cc9f25ad1fcdbe5bdcea36a1ad4",
+      "after": "eff34deb288a0c3860e7fc17e05cd00ef98b2e3c0ad1f5fae315b2f3f1db587a"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\lua\\shared\\Translate\\CN\\ContextMenu.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\lua\\shared\\Translate\\CN\\ContextMenu.json",
+      "before": "11283f3107f5173031fc9abc893d0fe6a5ab25af0d11d60f7bee00a018b71333",
+      "after": "531e950a527c994e88e63a1a2fef5b59f924160ed79c49a4dbb752af5f637fd7"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\lua\\shared\\Translate\\EN\\ContextMenu.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\lua\\shared\\Translate\\EN\\ContextMenu.json",
+      "before": "40e0f8894bd48067591feaeea30ec1c8b917c089c26e1952340301f1b2d1e257",
+      "after": "8d28c2843e42f4392f14a51eca6debb44e77ab56dc9289e5a537fd20dd772b20"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\mods\\AimohPmxPreview\\42\\media\\ui\\AimohPMXReadyRoom\\catalog.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\local\\42\\media\\ui\\AimohPMXReadyRoom\\catalog.json",
+      "before": "d2e1efc009241b0a47a4046c8641bff5daab98a365969e9ef03f7ca6e54f00ef",
+      "after": "50edb2c691bc6b7f0778ed98de53cd4214c58e073d9cd882c509fbe3866e641c"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\mod.info",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\mod.info",
+      "before": "62bebb3946bdcf712297f3496bf8db8858e5d21b49465bd0d704d69f7e90b40b",
+      "after": "995fc11247416e174a64052770cd5d28586197fa9da465ae7b3c70602e54e1f5"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\java\\client\\AimohPMXPreview.jar",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\java\\client\\AimohPMXPreview.jar",
+      "before": "7801b3eadfac09390cb2736739f568671ae1aa80ace07d10482752cce265f455",
+      "after": "21811685c6cbb58c3e065bbc7d5cdaf8615f29b25d080e7d3e98dd6211215a6d"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\lua\\client\\AimohPMXPreview.lua",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\lua\\client\\AimohPMXPreview.lua",
+      "before": "e3c03e9565ecbcbc3e98a6eddc37963c3d1cbc10d9ecfcb4fb7d1ff894929e47",
+      "after": "58ae7cfcd4f8e9ede253a2e37dc55e73bbc2197d8c00d61d25f6765fafb559b0"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\lua\\client\\AimohPMXWindow.lua",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\lua\\client\\AimohPMXWindow.lua",
+      "before": "01d459e04e7f6cc44f025a3834a5ea5326eb9cc9f25ad1fcdbe5bdcea36a1ad4",
+      "after": "eff34deb288a0c3860e7fc17e05cd00ef98b2e3c0ad1f5fae315b2f3f1db587a"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\lua\\shared\\Translate\\CN\\ContextMenu.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\lua\\shared\\Translate\\CN\\ContextMenu.json",
+      "before": "11283f3107f5173031fc9abc893d0fe6a5ab25af0d11d60f7bee00a018b71333",
+      "after": "531e950a527c994e88e63a1a2fef5b59f924160ed79c49a4dbb752af5f637fd7"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\lua\\shared\\Translate\\EN\\ContextMenu.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\lua\\shared\\Translate\\EN\\ContextMenu.json",
+      "before": "40e0f8894bd48067591feaeea30ec1c8b917c089c26e1952340301f1b2d1e257",
+      "after": "8d28c2843e42f4392f14a51eca6debb44e77ab56dc9289e5a537fd20dd772b20"
+    },
+    {
+      "path": "E:\\Game\\Save\\PZsave-B42.20\\Workshop\\R116\\Contents\\mods\\AimohPmxPreview\\42\\media\\ui\\AimohPMXReadyRoom\\catalog.json",
+      "backup": "D:\\CodexBackups\\GFL2-0.7.10-VP-0.1.7-20261116-210443\\standard-author\\42\\media\\ui\\AimohPMXReadyRoom\\catalog.json",
+      "before": "d2e1efc009241b0a47a4046c8641bff5daab98a365969e9ef03f7ca6e54f00ef",
+      "after": "50edb2c691bc6b7f0778ed98de53cd4214c58e073d9cd882c509fbe3866e641c"
+    }
+  ],
+  "status": "LIMITED_HARDWARE_VALIDATION",
+  "host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "host_signature_sha256": null,
+  "workshop_manifest": "6733935479255935738",
+  "light_record_floats": 20,
+  "log_incident": "Native light radius must be positive",
+  "disabled_light_slots_filtered": true,
+  "native_to_eclipse_tested": true,
+  "gpu_checks": {
+    "native": {
+      "model_ids": [
+        "pmx-412bd037301ebe18",
+        "pmx-48650a04a35b40e0",
+        "pmx-90268b4961c97434"
+      ],
+      "host_expanded_programs": 37,
+      "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+      "gpu": "AMD Radeon RX 9070 XT"
+    },
+    "eclipse": {
+      "model_ids": [
+        "pmx-412bd037301ebe18",
+        "pmx-48650a04a35b40e0",
+        "pmx-90268b4961c97434"
+      ],
+      "host_expanded_programs": 104,
+      "gl": "4.6.0 Compatibility Profile Context 26.9.1.260826",
+      "gpu": "AMD Radeon RX 9070 XT"
+    }
+  },
+  "body_physics_models": 70,
+  "body_menu_visible_outfits": 69,
+  "soft_body_models": 31,
+  "minimum_system_commit_left_mib_in_user_log": 354,
+  "gameplay_tested": false,
+  "compatibility_audit_in_progress": true
+}

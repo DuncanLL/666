@@ -1,0 +1,57 @@
+{
+  "shader_packs": [
+    "Native GFL 2",
+    "Eclipse GFL 2"
+  ],
+  "renamed_resource_directories": 47,
+  "migrated_options": 811,
+  "resources": [
+    {
+      "variant": "stable",
+      "new_catalogs": [
+        {
+          "backend": "native",
+          "models": 61
+        },
+        {
+          "backend": "eclipse",
+          "models": 61
+        }
+      ],
+      "game_started": false
+    },
+    {
+      "variant": "rc4",
+      "new_catalogs": [
+        {
+          "backend": "native",
+          "models": 61
+        },
+        {
+          "backend": "eclipse",
+          "models": 61
+        }
+      ],
+      "game_started": false
+    }
+  ],
+  "shader_archives_scanned": [
+    {
+      "backend": "native",
+      "entries": 10
+    },
+    {
+      "backend": "eclipse",
+      "entries": 231
+    },
+    {
+      "backend": "native",
+      "entries": 10
+    },
+    {
+      "backend": "eclipse",
+      "entries": 231
+    }
+  ],
+  "steam_uploaded": false
+}

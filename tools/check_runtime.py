@@ -6,29 +6,35 @@ import sys
 from common import ROOT, BUILD, settings, sha, save
 
 config = settings()
-project = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else BUILD / 'workshop/R116'
-mod = project / 'Contents/mods/AimohPmxPreview'
+project = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else BUILD / 'workshop/GFL2Exilium'
+mod = project / 'Contents/mods/GFL2Exilium'
 temp = BUILD / 'tmp'
 temp.mkdir(parents=True, exist_ok=True)
 os.environ['TEMP'] = os.environ['TMP'] = str(temp)
 sys.path.insert(0, config['python_dependencies'])
 import jpype
 game = Path(config['game_root'])
-jar = mod / '42/media/java/client/AimohPMXPreview.jar'
-home = BUILD
+jar = mod / '42/media/java/client/GFL2Exilium.jar'
+# The game's file validator permits only its private user root (or game roots).
+# Keep an out-of-workspace candidate inside this check's own permitted root.
+home = BUILD if project.is_relative_to(BUILD) else project.parent.parent
 home.mkdir(exist_ok=True)
 jpype.startJVM(str(game / 'jre64/bin/server/jvm.dll'), '--enable-native-access=ALL-UNNAMED',
               '-Djava.io.tmpdir=' + str(temp), '-Duser.home=' + str(home),
-              classpath=[str(jar), config['zombiebuddy_jar'], str(game), *map(str, game.glob('*.jar'))], convertStrings=True)
+              classpath=[str(jar), config['zombiebuddy_jar'], config['viewpoint_jar'], str(game), *map(str, game.glob('*.jar'))], convertStrings=True)
 J = jpype.JClass
 try:
     os.chdir(game)
     J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
     J('zombie.ZomboidFileSystem').instance.init()
+    if project.parent.name.casefold() == 'workshop':
+        J('zombie.ZomboidFileSystem').instance.setCacheDir(str(project.parent.parent))
     item = J('zombie.core.znet.SteamWorkshopItem')(str(project))
     assert item.readWorkshopTxt()
     assert item.validateContents() is None
-    assert item.getTitle() == 'R116' and item.getDescription() == '\u200b'
+    assert item.getTitle() == '少前2追放角色框架' and item.getDescription() == '\u200b'
+    J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
+    os.chdir(temp)
     main = J('aimoh.pmxpreview.Main')
     directory = main.class_.getDeclaredField('directory')
     directory.setAccessible(True); directory.set(None, J('java.nio.file.Path').of(str(mod / '42')))

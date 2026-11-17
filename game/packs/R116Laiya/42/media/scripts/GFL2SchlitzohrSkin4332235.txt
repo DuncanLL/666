@@ -1,0 +1,33 @@
+module GFL2
+{
+    model SchlitzohrSkin4332235
+    {
+        mesh = GFL2/SchlitzohrSkin4332235,
+        texture = GFL2/SchlitzohrSkin4332235,
+        attachment muzzle
+        {
+            offset = 8.8220763e-07 0.41891926 0.0511208,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -1.1366344e-08 0.16445352 0.0014899146,
+            rotate = 0 0 90,
+        }
+    }
+    model SchlitzohrSkin4332235Empty
+    {
+        mesh = GFL2/SchlitzohrSkin4332235Empty,
+        texture = GFL2/SchlitzohrSkin4332235,
+        attachment muzzle
+        {
+            offset = 8.8220763e-07 0.41891926 0.0511208,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -1.1366344e-08 0.16445352 0.0014899146,
+            rotate = 0 0 90,
+        }
+    }
+}

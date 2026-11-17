@@ -1,0 +1,20 @@
+{
+  "version": "0.7.15",
+  "base": "0.7.14",
+  "workshop_item": 3838709437,
+  "vmd_entry_default": "hidden",
+  "gesture": {
+    "resource": "targeted",
+    "hold_ms": 10000,
+    "mode": "local_player_game_session_toggle"
+  },
+  "lua_sha256": "0582171c6cc17b82cfa2399535377e834d01c249af1f0c5ad86b542518198c19",
+  "tests": [
+    "room_workshop",
+    "multiplayer",
+    "room_economy"
+  ],
+  "installed": true,
+  "uploaded": false,
+  "actual_gameplay_tested": false
+}

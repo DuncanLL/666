@@ -12,10 +12,10 @@ class ReleaseGateTests(unittest.TestCase):
             p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value),'utf8');return p
         self.write=write
         for name in ('runtime.java','core.jar','validator.exe','shader.frag'):(self.root/name).write_text('#version 430\nvoid main(){}','utf8')
-        self.mod=self.root/'mod';catalog=self.mod/'42/media/aimoh_gf2/characters.json';catalog.parent.mkdir(parents=True);catalog.write_text('{"characters":{"models":[{}]}}')
+        self.mod=self.root/'mod';catalog=self.mod/'42/media/gfl2_rendering/characters.json';catalog.parent.mkdir(parents=True);catalog.write_text('{"characters":{"models":[{}]}}')
         self.cfg=patch.object(gate,'settings',return_value=dict(asset_root=str(self.mod),reference_jar=str(self.root/'core.jar')));self.cfg.start()
         jar=self.root/'support.jar';payload=b'isolated-test-payload'
-        with zipfile.ZipFile(jar,'w')as z:z.writestr('aimoh/gf2/bridge/Aimoh-Native-GF2.zip',payload)
+        with zipfile.ZipFile(jar,'w')as z:z.writestr('META-INF/gfl2/rendering/native.zip',payload)
         self.jar_hash=gate.sha(jar);self.pack_hash=hashlib.sha256(payload).hexdigest()
         self.write('build/render-support/build.json',dict(jar=str(jar),jar_sha256=self.jar_hash,shader_sha256=self.pack_hash,version='TEST',source_hashes={'runtime.java':gate.sha(self.root/'runtime.java')}))
         self.write('provenance/render-support.json',dict(official_host_sha256='test-host',compatible_official_hosts={'test':'test-host'}))

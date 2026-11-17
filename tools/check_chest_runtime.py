@@ -3,11 +3,12 @@ from pathlib import Path
 import argparse,json,os,sys,time
 from common import ROOT,BUILD,settings,save,sha
 p=argparse.ArgumentParser();p.add_argument('--poses',type=Path,required=True);args=p.parse_args()
+args.poses=args.poses.resolve()
 c=settings();sys.path.insert(0,c['python_dependencies'])
 import jpype,numpy as np
 game=Path(c['game_root']);home=BUILD/'chest-runtime-check';home.mkdir(exist_ok=True)
 os.environ['TEMP']=os.environ['TMP']=str(home)
-classpath=[str(BUILD/'AimohPMXPreview.jar'),c['zombiebuddy_jar'],c['viewpoint_jar'],str(game),*map(str,game.glob('*.jar'))]
+classpath=[str(BUILD/'GFL2Exilium.jar'),c['zombiebuddy_jar'],c['viewpoint_jar'],str(game),*map(str,game.glob('*.jar'))]
 jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-UNNAMED','-Djava.io.tmpdir='+str(home),'-Duser.home='+str(home),classpath=classpath,convertStrings=True)
 J=jpype.JClass;F=lambda a:jpype.JArray(jpype.JFloat)(a)
 report=[]
@@ -41,10 +42,22 @@ try:
     seconds.append((time.perf_counter()-start)*1000)
    if model.hasChestPhysics():
     assert peak>1e-4,(row['label'],peak)
-    saved=str(model.chestSettings());model.chestSlider(2,80.);assert model.chestSlider(2)==80.
-    state=json_class().put('appearance',json_class(model.appearance().stateJson())).put('appearance_controls',json_class(json.dumps(profile.get('appearance_controls',{'format':1,'groups':[]})))).put('chest_physics',json_class(saved))
-    model.applySettings(str(state));assert str(model.chestSettings())==saved
-    before=model.handle();model.resetChestSettings();assert model.handle()==before
+    saved=json.loads(str(model.chestSettings()))
+    assert saved==dict(softness=90,damping=65,inertia=80,strength=100,lateral_limit=85,
+                       vertical_limit=105,depth_limit=90,cushion=30,bone_follow=0,lateral=100,landing=100,strain=100,enabled=True)
+    legacy=dict(saved,softness=20,damping=5,inertia=10,strength=0)
+    state=json_class().put('appearance',json_class(model.appearance().stateJson())).put('appearance_controls',json_class(json.dumps(profile.get('appearance_controls',{'format':1,'groups':[]})))).put('chest_physics',json_class(json.dumps(legacy)))
+    model.applySettings(str(state));assert json.loads(str(model.chestSettings()))==saved
+    original_physics=model.physicsEnabled()
+    state.getJSONObject('chest_physics').put('enabled',False)
+    model.applySettings(str(state))
+    assert not model.chestPhysicsEnabled() and model.physicsEnabled()==original_physics
+    model.apply(F(poses[30]),None,1/60)
+    api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12)
+    api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12)
+    raw=np.frombuffer(memoryview(pb),dtype='<f4').copy();p=F(raw);normal=F(np.frombuffer(memoryview(nb),dtype='<f4').copy())
+    model.deformChest(p,normal);assert np.array_equal(np.asarray(p),raw)
+    model.setChestPhysicsEnabled(True);assert json.loads(str(model.chestSettings()))==saved
     model.setPhysicsEnabled(False);model.apply(F(poses[30]),None,1/60)
     api.CopyDataToByteBuffer(pb,api.GetPoss(model.handle()),n*12);api.CopyDataToByteBuffer(nb,api.GetNormals(model.handle()),n*12)
     raw=np.frombuffer(memoryview(pb),dtype='<f4').copy();p=F(raw);normal=F(np.frombuffer(memoryview(nb),dtype='<f4').copy());model.deformChest(p,normal)

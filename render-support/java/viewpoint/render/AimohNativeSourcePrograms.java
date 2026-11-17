@@ -11,7 +11,6 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
     private final Map<String,AimohGf2OriginalProgram> programs=new HashMap<>();
     private final Map<String,Map<String,String>> variants=new HashMap<>();
     private final Map<String,JSONObject> originalPrograms=new HashMap<>();
-    private final Map<String,Integer> mainShadowRegisters=new HashMap<>();
     private final Set<String> localConsumers=new HashSet<>();
     private final Set<String> indirectConsumers=new HashSet<>();
     private final Set<String> mainConsumers=new HashSet<>();
@@ -24,48 +23,17 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
             JSONObject row=(JSONObject)value;var choices=row.getJSONArray("programs");if(choices.length()!=1)throw new IllegalArgumentException("Native source hardware variant is not unique");JSONObject program=choices.getJSONObject(0);String hash=program.getString("sha256");
             originalPrograms.put(hash,program);
             variants.computeIfAbsent(row.getString("material")+"\n"+row.getString("pass"),k->new HashMap<>()).put(row.getString("stage"),hash);
-            if(row.getString("stage").equals("progFragment"))for(Object valueTexture:program.getJSONArray("textures")){
-                JSONObject texture=(JSONObject)valueTexture;if(!texture.getString("name").equals("_MainLightShadowmapTexture"))continue;
-                int register=texture.getInt("m_Index");Integer old=mainShadowRegisters.putIfAbsent(hash,register);if(old!=null&&old!=register)throw new IllegalArgumentException("Conflicting source main shadow binding: "+hash);
-            }
+
         }
     }
     private String text(JSONObject entry)throws java.io.IOException{return new String(data.bytes(entry),StandardCharsets.UTF_8);}
-    record MainShadow(int begin,int end,String variable,String weight){}
-    static MainShadow inspectMainShadow(String source,JSONObject consumed,String identity){
-        String weight=null;
-        for(Object b:consumed.getJSONArray("buffers"))for(Object f:((JSONObject)b).getJSONArray("fields")){
-            JSONObject field=(JSONObject)f;if(!field.getString("name").equals("_MainLightShadowParams"))continue;
-            if(weight!=null||field.getInt("m_Index")%16!=0)throw new IllegalArgumentException("Ambiguous source main shadow weight: "+identity);
-            weight="GF2Raw"+((JSONObject)b).getInt("register")+"["+(field.getInt("m_Index")/16)+"].x";
-        }
-        if(weight==null)return null;
-        var mix=java.util.regex.Pattern.compile("(?m)^\\s*(u_xlat\\w+(?:\\.[xyzw])?)\\s*=\\s*\\1\\s*\\*\\s*"+java.util.regex.Pattern.quote(weight)+"\\s*\\+\\s*[\\w.]+\\s*;").matcher(source);
-        if(!mix.find())throw new IllegalArgumentException("Original main shadow mix was not found: "+identity);
-        String variable=mix.group(1);int after=mix.end();if(mix.find())throw new IllegalArgumentException("Ambiguous original main shadow mix: "+identity);
-        var end=java.util.regex.Pattern.compile(java.util.regex.Pattern.quote(variable)+"\\s*=\\s*\\([^;\\n]+\\)\\s*\\?\\s*1\\.0\\s*:\\s*"+java.util.regex.Pattern.quote(variable)+"\\s*;").matcher(source.substring(after,Math.min(source.length(),after+550)));
-        if(!end.find())throw new IllegalArgumentException("Original main shadow bounds output was not found: "+identity);
-        return new MainShadow(after+end.start(),after+end.end(),variable,weight);
-    }
-    private String mainLighting(String fragment,String hash){
-        MainShadow output=inspectMainShadow(fragment,data.manifest.getJSONObject("consumed").getJSONObject(hash),hash);if(output==null)return fragment;
-        String replacement=output.variable+"=1.0+(gf2NativeMainVisibility(vPos,normalize(gf2NativeWorldNormal*vec3(-1,1,-1)))-1.0)*"+output.weight+";";
-        fragment=fragment.substring(0,output.begin)+replacement+fragment.substring(output.end);
-        Integer register=mainShadowRegisters.get(hash);if(register==null)throw new IllegalArgumentException("Source main shadow sampler metadata missing: "+hash);
-        fragment=neutralMainProvider(fragment,register,hash);
-        if(mainService==null)mainService=AimohNativePackSelection.expanded("gf2/native_main.glsl").replaceFirst("#version[^\\n]*\\n","");
-        int main=fragment.indexOf("void main()");if(main<0||main!=fragment.lastIndexOf("void main()"))throw new IllegalArgumentException("Original main source entry changed");
-        String varyings=(fragment.contains("in vec3 vPos;")?"":"in vec3 vPos;\n")+(fragment.contains("in vec3 gf2NativeWorldNormal;")?"":"in vec3 gf2NativeWorldNormal;\n");
-        mainConsumers.add(hash);return fragment.substring(0,main)+varyings+mainService+"\n"+fragment.substring(main);
-    }
-    static String neutralMainProvider(String fragment,int register,String hash){
-        String lod="float gf2IncomingSunShadowLod(sampler2DShadow sm,vec3 p,float lod){return textureLod(sm,p,lod)*gf2ShadowTransmission;}",sample="float gf2IncomingSunShadow(sampler2DShadow sm,vec3 p){return texture(sm,p)*gf2ShadowTransmission;}",cloud="gf2ShadowTransmission=texelFetch(gf2NativeSunVisibility,ivec2(gl_FragCoord.xy),0).r;";
-        boolean wrapped=fragment.contains(lod)&&fragment.contains(sample)&&fragment.contains(cloud);
-        if(wrapped)fragment=fragment.replace(lod,"float gf2IncomingSunShadowLod(sampler2DShadow sm,vec3 p,float lod){return 1.0;}").replace(sample,"float gf2IncomingSunShadow(sampler2DShadow sm,vec3 p){return 1.0;}").replace(cloud,"gf2ShadowTransmission=1.0;");
-        var direct=java.util.regex.Pattern.compile("texture(?:Lod)?\\(hlslcc_zcmpGF2Texture"+register+"(?:TEX_with_SMPGF2Sampler\\d+)?\\s*,\\s*\\w+\\s*(?:,\\s*0\\.0)?\\)").matcher(fragment);
-        int count=0;StringBuilder result=new StringBuilder();while(direct.find()){direct.appendReplacement(result,"1.0");count++;}direct.appendTail(result);
-        if(!wrapped&&count!=9||wrapped&&count!=0)throw new IllegalArgumentException("Legacy source main provider has not been reviewed: "+hash+" direct taps="+count+" wrapped="+wrapped);
-        return result.toString();
+    private String mainLighting(String fragment, String hash) {
+        String baked = AimohNativeMainWiring.prepare(fragment, originalPrograms.get(hash),
+            data.manifest.getJSONObject("consumed").getJSONObject(hash), hash);
+        if (baked == null) return AimohGf2SurfaceControls.adapt(fragment, originalPrograms.get(hash));
+        if (mainService == null) mainService = AimohNativePackSelection.expanded("gf2/native_main.glsl").replaceFirst("#version[^\\n]*\\n", "");
+        mainConsumers.add(hash);
+        return baked.replace("/* native-main-service */", mainService + "\n");
     }
     static boolean reviewNormal(String source,String identity){
         if(!source.contains("SV_Target1"))return false;
@@ -130,7 +98,6 @@ public final class AimohNativeSourcePrograms implements AutoCloseable {
     public AimohGf2OriginalProgram source(int material,String pass)throws java.io.IOException{
         var pair=pair(material,pass);String vs=pair.get("progVertex"),fs=pair.get("progFragment"),key=vs+":"+fs+":source";AimohGf2OriginalProgram program=programs.get(key);if(program!=null)return program;
         JSONObject library=data.manifest.getJSONObject("glsl");String original=text(library.getJSONObject(fs));reviewNormal(original,fs);var motion=AimohNativeMotionBridge.inspect(original,fs);
-        original=AimohGf2SurfaceControls.adapt(original,originalPrograms.get(fs));
         String fragment=AimohNativeMotionBridge.adapt(indirectLighting(localLighting(mainLighting(original,fs),fs),fs),motion);
         program=new AimohGf2OriginalProgram(vertexUV1(text(library.getJSONObject(vs))),fragment,vs,fs);
         if(program.nativeProgram().has("gf2NativeSunVisibility")){program.close();throw new IllegalArgumentException("Unbridged Native source shadow consumer: "+fs);}

@@ -7,22 +7,72 @@ import net.bytebuddy.jar.asm.*;
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     private static final String SOURCE_INPUTS="aimoh/motion/PmxOriginalInputs";
-    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1);
+    private static final String MODEL_BATCHES=R+"ModelBatches";
+    private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"aimoh/motion/PmxShading",2,
+        SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1,MODEL_BATCHES,1);
+    private static final String IRIS_SOURCE = "viewpoint/iris/PackSource";
+    private static final String NATIVE_SOURCE = "viewpoint/platform/ShaderPack$1";
     public static final Map<String,Integer> EXPECTED;
     static {
         Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);
         EclipseHooks.EXPECTED.forEach((name,count)->{if(!name.equals(SOURCE_INPUTS))hooks.merge(name,count,Integer::sum);});
+        if(EclipseHooks.EXPECTED.isEmpty())hooks.remove(MODEL_BATCHES);
+        if (AimohSealedSources.enabled()) {
+            hooks.put(IRIS_SOURCE, 2);
+            hooks.put(NATIVE_SOURCE, 1);
+        }
         EXPECTED=Collections.unmodifiableMap(hooks);
     }
+    private final Set<String> targets;
     private volatile Throwable transformFailure;
+
+    public RuntimeHooks() {
+        this(EXPECTED.keySet());
+    }
+
+    RuntimeHooks(Set<String> targets) {
+        this.targets = Set.copyOf(targets);
+    }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
+        if (type.equals(IRIS_SOURCE) || type.equals(NATIVE_SOURCE)) return openSources(type, raw);
         byte[] result=NATIVE.containsKey(type)?rewriteNative(type,raw):raw;
         if(!type.equals(SOURCE_INPUTS)&&EclipseHooks.EXPECTED.containsKey(type))
             result=EclipseHooks.rewrite(type,result);
         return result;
     }
+    private static byte[] openSources(String type, byte[] raw) {
+        boolean iris = type.equals(IRIS_SOURCE);
+        String method = iris ? "bytes" : "read";
+        String value = iris ? "[B" : "Ljava/lang/String;";
+        String path = "Ljava/lang/String;";
+        ClassReader reader = new ClassReader(raw);
+        ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
+        int[] hits = {0};
+        reader.accept(new ClassVisitor(Opcodes.ASM9, writer) {
+            @Override public MethodVisitor visitMethod(int access, String name, String descriptor,
+                                                       String signature, String[] exceptions) {
+                MethodVisitor base = super.visitMethod(access, name, descriptor, signature, exceptions);
+                if (!name.equals(method) || !descriptor.equals("(" + path + ")" + value)) return base;
+                return new MethodVisitor(Opcodes.ASM9, base) {
+                    @Override public void visitInsn(int op) {
+                        if (op == Opcodes.ARETURN) {
+                            mv.visitVarInsn(Opcodes.ALOAD, 1);
+                            mv.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(ShaderManifestNames.class),
+                                iris ? "bytes" : "text", "(" + value + path + ")" + value, false);
+                            hits[0]++;
+                        }
+                        super.visitInsn(op);
+                    }
+                };
+            }
+        }, 0);
+        if (hits[0] != EXPECTED.get(type))
+            throw new IllegalStateException(type + ": protected shader read points changed: " + hits[0]);
+        return writer.toByteArray();
+    }
     private static byte[] rewriteNative(String type,byte[] raw){
+        if(type.equals(MODEL_BATCHES))return replayFilter(raw);
         if(type.equals("viewpoint/platform/PackOption")){
             ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);int[] hits={0};
             reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
@@ -39,6 +89,32 @@ public final class RuntimeHooks implements ClassFileTransformer {
         reader.accept(new ClassVisitor(Opcodes.ASM9,writer){public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] ex){return new MethodVisitor(Opcodes.ASM9,super.visitMethod(access,name,desc,sig,ex)){public void visitLdcInsn(Object value){if("viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.AimohGf2SourceHost");hits[0]++;}else super.visitLdcInsn(value);}};}},0);
         if(hits[0]!=1)throw new IllegalStateException("Character source-host entry changed: "+hits[0]);return writer.toByteArray();
     }
+    private static byte[] replayFilter(byte[] raw){
+        String filter="L"+MODEL_BATCHES+"$Filter;";
+        String draws="L"+R+"ModelDraws;";
+        ClassReader reader=new ClassReader(raw);
+        ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);
+        int[] hits={0};
+        reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
+            @Override public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] exceptions){
+                MethodVisitor base=super.visitMethod(access,name,desc,sig,exceptions);
+                if(!name.equals("inOrder")||!desc.equals("([II"+filter+"L"+MODEL_BATCHES+"$State;)I"))return base;
+                hits[0]++;
+                return new MethodVisitor(Opcodes.ASM9,base){
+                    @Override public void visitCode(){
+                        super.visitCode();
+                        mv.visitVarInsn(Opcodes.ALOAD,0);
+                        mv.visitFieldInsn(Opcodes.GETFIELD,MODEL_BATCHES,"draws",draws);
+                        mv.visitVarInsn(Opcodes.ALOAD,3);
+                        mv.visitMethodInsn(Opcodes.INVOKESTATIC,R+"AimohStockModelReplay","filter","("+draws+filter+")"+filter,false);
+                        mv.visitVarInsn(Opcodes.ASTORE,3);
+                    }
+                };
+            }
+        },0);
+        if(hits[0]!=1)throw new IllegalStateException("Viewpoint model batch replay entry changed: "+hits[0]);
+        return writer.toByteArray();
+    }
     public void install(Instrumentation agent)throws Exception{
         VerifiedViewpoint.verify();
         Class<?> core=Class.forName("aimoh.motion.PmxShading",false,RuntimeHooks.class.getClassLoader());
@@ -47,7 +123,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         ClassLoader loader=RuntimeHooks.class.getClassLoader();
         if(loader.getResource(R+"Gf2SourceHost.class")!=null)throw new IllegalStateException("A private GF2 host is already installed; refusing double rendering");
         var loaded=new ArrayList<Class<?>>();
-        for(String name:EXPECTED.keySet())try(var input=loader.getResourceAsStream(name+".class")){
+        for(String name:targets)try(var input=loader.getResourceAsStream(name+".class")){
             if(input==null)throw new IllegalStateException("Required integration class missing: "+name);
             rewrite(name,input.readAllBytes());
             Class<?> type=Class.forName(name.replace('/','.'),false,loader);
@@ -58,15 +134,16 @@ public final class RuntimeHooks implements ClassFileTransformer {
         try{
             agent.retransformClasses(loaded.toArray(Class<?>[]::new));
             if(transformFailure!=null)throw new IllegalStateException("Runtime integration rejected",transformFailure);
+            AimohSealedSources.arm(agent);
         }catch(Throwable failure){
             agent.removeTransformer(this);
-            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(EXPECTED.containsKey(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
+            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(targets.contains(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
             if(!restore.isEmpty())agent.retransformClasses(restore.toArray(Class<?>[]::new));
             throw failure;
         }
     }
     @Override public byte[] transform(ClassLoader loader,String name,Class<?> type,ProtectionDomain domain,byte[] bytes)throws IllegalClassFormatException{
-        if(!EXPECTED.containsKey(name))return null;
+        if(name==null||!targets.contains(name))return null;
         try{return rewrite(name,bytes);}catch(Throwable failure){transformFailure=failure;System.err.println("[AimohGF2] Integration failed for "+name+": "+failure);throw new IllegalClassFormatException(failure.toString());}
     }
 }

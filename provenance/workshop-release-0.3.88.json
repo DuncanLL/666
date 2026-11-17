@@ -1,0 +1,139 @@
+{
+  "version": "0.3.88",
+  "projects": [
+    {
+      "project": "R116",
+      "mod": "AimohPmxPreview",
+      "title": "少前2追放角色框架",
+      "id": 3838709437,
+      "bytes": 319504485,
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.88",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Destroyer",
+      "mod": "R116Destroyer",
+      "title": "破坏者",
+      "id": 3838762173,
+      "bytes": 193639937,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Lenna",
+      "mod": "R116Lenna",
+      "title": "莱娜",
+      "id": 3838762352,
+      "bytes": 333337025,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Macqiato",
+      "mod": "R116Macqiato",
+      "title": "玛绮朵",
+      "id": 3838762751,
+      "bytes": 289095094,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.86",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Phaetusa",
+      "mod": "R116Phaetusa",
+      "title": "翡图萨",
+      "id": 3838763020,
+      "bytes": 435182775,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Sextans",
+      "mod": "R116Sextans",
+      "title": "六分仪",
+      "id": 3838763377,
+      "bytes": 255823620,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Vector",
+      "mod": "R116Vector",
+      "title": "维克托",
+      "id": 3838763611,
+      "bytes": 334937187,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Yohee",
+      "mod": "R116Yohee",
+      "title": "幼熙",
+      "id": 3838763788,
+      "bytes": 238786443,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Springfield",
+      "mod": "R116Springfield",
+      "title": "春田",
+      "id": 3838712707,
+      "bytes": 402564786,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    },
+    {
+      "project": "R116Florence",
+      "mod": "R116Florence",
+      "title": "芙洛伦",
+      "id": 3838711148,
+      "bytes": 372008361,
+      "dependencies": [
+        3838709437
+      ],
+      "preview_matches": true,
+      "mod_version": "0.3.87",
+      "visibility": "unlisted"
+    }
+  ],
+  "portrait_links": 22,
+  "steam_html_verified": true,
+  "game_room_component_verified": true
+}

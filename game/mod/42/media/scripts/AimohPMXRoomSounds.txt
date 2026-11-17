@@ -1,0 +1,39 @@
+module Base
+{
+    sound R116RoomSelect
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/Select.wav, volume = 0.75, }
+    }
+    sound R116RoomPage
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/Page.wav, volume = 0.80, }
+    }
+    sound R116RoomConfirm
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/Confirm.wav, volume = 0.85, }
+    }
+    sound R116RoomDrawStart
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/DrawStart.wav, volume = 0.74, }
+    }
+    sound R116RoomDrawTick
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/DrawTick.wav, volume = 0.65, }
+    }
+    sound R116RoomDrawHit
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/AimohPMXReadyRoom/DrawHit.wav, volume = 0.85, }
+    }
+}

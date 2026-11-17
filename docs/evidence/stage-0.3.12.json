@@ -1,0 +1,111 @@
+{
+  "version": "0.3.12",
+  "status": "ALL_FOUR_LOCATIONS_INSTALLED_READBACK_VERIFIED",
+  "jar_sha256": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9",
+  "workshop_metadata_preserved": true,
+  "game_started": false,
+  "actual_gameplay_tested": false,
+  "uploaded": false,
+  "external_shaders_changed": false,
+  "physics_payloads_unchanged": true,
+  "files": [
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "after": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc",
+      "after": "5b41ba1e8d81906d4eda8124c3e868e7ea8eb30a21df7d54617a3579def4278d"
+    },
+    {
+      "path": "42/media/lua/client/AimohPMXWindow.lua",
+      "before": "4d1390c6a424cf518b76d1fd9a7a08918ea59b053eb70f495bdd403fb1596ce2",
+      "after": "4a23c30a989a882564791856138facd5aaf07c7341bf68b1179729c7ba22d199"
+    },
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "after": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc",
+      "after": "5b41ba1e8d81906d4eda8124c3e868e7ea8eb30a21df7d54617a3579def4278d"
+    },
+    {
+      "path": "42/media/lua/client/AimohPMXWindow.lua",
+      "before": "4d1390c6a424cf518b76d1fd9a7a08918ea59b053eb70f495bdd403fb1596ce2",
+      "after": "4a23c30a989a882564791856138facd5aaf07c7341bf68b1179729c7ba22d199"
+    },
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "after": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc",
+      "after": "5b41ba1e8d81906d4eda8124c3e868e7ea8eb30a21df7d54617a3579def4278d"
+    },
+    {
+      "path": "42/media/lua/client/AimohPMXWindow.lua",
+      "before": "4d1390c6a424cf518b76d1fd9a7a08918ea59b053eb70f495bdd403fb1596ce2",
+      "after": "4a23c30a989a882564791856138facd5aaf07c7341bf68b1179729c7ba22d199"
+    },
+    {
+      "path": "42/media/java/client/AimohPMXPreview.jar",
+      "before": "d42fe21dc86c8b0756d6a53bef7b501033452b30af5c456698c6a9117f375677",
+      "after": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9"
+    },
+    {
+      "path": "42/mod.info",
+      "before": "0aefeaba72cef002b0d0ec183ca51e41a33dfc64ca2d10b57eb1db697275f3dc",
+      "after": "5b41ba1e8d81906d4eda8124c3e868e7ea8eb30a21df7d54617a3579def4278d"
+    },
+    {
+      "path": "42/media/lua/client/AimohPMXWindow.lua",
+      "before": "4d1390c6a424cf518b76d1fd9a7a08918ea59b053eb70f495bdd403fb1596ce2",
+      "after": "4a23c30a989a882564791856138facd5aaf07c7341bf68b1179729c7ba22d199"
+    }
+  ],
+  "changed_jar_entries_vs_0_3_11": [
+    "aimoh/pmxpreview/Main.class",
+    "aimoh/pmxpreview/ReadyRoomPreview$Draw.class",
+    "aimoh/pmxpreview/ReadyRoomPreview$Mesh.class",
+    "aimoh/pmxpreview/ReadyRoomPreview$State.class",
+    "aimoh/pmxpreview/ReadyRoomPreview.class"
+  ],
+  "room_loading_check": {
+    "status": "PASS_ROOM_TRANSIENT_IMAGES_REOPEN_PARTS_AND_WORLD_LIFECYCLE",
+    "real_kahlua": true,
+    "game_slider_source": true,
+    "game_button_source": false,
+    "actor_and_widgets_substituted": true,
+    "actual_gameplay_tested": false,
+    "game_started": false
+  },
+  "catalog_check": {
+    "status": "PASS_FRESH_REAL_KAHLUA_CATALOG_AFTER_OLD_TABLE_MUTATION",
+    "jar_sha256": "bc1466caa2759d253fb96494c30f9fc856051be445f69fa7a5b762797bb9b3e9",
+    "assets_modified": false,
+    "game_started": false,
+    "actual_gameplay_tested": false
+  },
+  "menu_hit_check": {
+    "status": "PASS_ROOM_HIT_REGIONS_REAL_BUTTON_HANDLERS_EYES_SAVE_1296",
+    "real_kahlua": true,
+    "game_slider_source": true,
+    "game_button_source": true,
+    "actor_and_widgets_substituted": true,
+    "actual_gameplay_tested": false,
+    "game_started": false
+  },
+  "user_feedback": {
+    "performance_improvement_accepted": true,
+    "phase_effects_trending_stable": true,
+    "final_complete_release": false,
+    "ui_full_gameplay_regression_confirmed": false
+  }
+}

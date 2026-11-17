@@ -1,0 +1,3 @@
+require "AimohPMXVoice/FullVoiceCore"
+AimohPMXCheyanneVoiceCore=AimohPMXFullVoiceCore.create()
+return AimohPMXCheyanneVoiceCore

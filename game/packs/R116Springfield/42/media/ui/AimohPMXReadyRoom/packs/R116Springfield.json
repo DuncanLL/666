@@ -1,0 +1,193 @@
+{
+  "models": {
+    "pmx-a030b24c0272893f": {
+      "character": "春田",
+      "skin": "默认",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-a030b24c0272893f.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR.png",
+      "isDefault": true,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    },
+    "pmx-225af1a054faefb0": {
+      "character": "春田",
+      "skin": "睡醒的人鱼",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-225af1a054faefb0.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR03.png",
+      "groups": {
+        "m91": {
+          "label": "Hide1",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide1"
+        },
+        "m92": {
+          "label": "Hide2",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide2"
+        },
+        "m93": {
+          "label": "Hide3",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide3"
+        },
+        "m94": {
+          "label": "Hide4",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide4"
+        },
+        "m95": {
+          "label": "Hide5",
+          "options": [
+            "原始",
+            "启用"
+          ],
+          "display": "Hide5"
+        }
+      },
+      "officialSkin": "睡醒的人鱼",
+      "partImages": {},
+      "isDefault": false
+    },
+    "pmx-62b44285b57a48e9": {
+      "character": "春田",
+      "skin": "静享芳醇",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-62b44285b57a48e9.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR02.png",
+      "groups": {
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "apron": {
+          "label": "围裙",
+          "display": "围裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋袜",
+          "display": "鞋袜",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "帽子",
+        "围裙",
+        "鞋袜",
+        "眼睛"
+      ],
+      "partImages": {},
+      "officialSkin": "静享芳醇",
+      "isDefault": false
+    },
+    "pmx-cc787cf2d032366b": {
+      "character": "春田",
+      "skin": "灯火下的女王",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-cc787cf2d032366b.png",
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SpringfieldSSR01.png",
+      "isDefault": false,
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {
+    "Hide1": {
+      "path": "media/ui/AimohPMXReadyRoom/label-62266505291a90.png",
+      "width": 121,
+      "height": 38
+    },
+    "原始": {
+      "path": "media/ui/AimohPMXReadyRoom/label-8cb7c0a54b21bb.png",
+      "width": 84,
+      "height": 43
+    },
+    "Hide4": {
+      "path": "media/ui/AimohPMXReadyRoom/label-010f45b7da775f.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide3": {
+      "path": "media/ui/AimohPMXReadyRoom/label-34624794e62888.png",
+      "width": 121,
+      "height": 38
+    },
+    "Hide5": {
+      "path": "media/ui/AimohPMXReadyRoom/label-fab23fdaa48782.png",
+      "width": 121,
+      "height": 38
+    },
+    "启用": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f4f0ead1116b5b.png",
+      "width": 84,
+      "height": 44
+    },
+    "春田": {
+      "path": "media/ui/AimohPMXReadyRoom/label-6c49881b21ac71.png",
+      "width": 84,
+      "height": 43
+    },
+    "睡醒的人鱼": {
+      "path": "media/ui/AimohPMXReadyRoom/label-f14c171bb75283.png",
+      "width": 191,
+      "height": 43
+    },
+    "Hide2": {
+      "path": "media/ui/AimohPMXReadyRoom/label-c005b05d6d0210.png",
+      "width": 121,
+      "height": 38
+    }
+  }
+}

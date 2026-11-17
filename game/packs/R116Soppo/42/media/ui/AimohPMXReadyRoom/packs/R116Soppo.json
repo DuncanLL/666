@@ -1,0 +1,85 @@
+{
+  "models": {
+    "pmx-40dbcd572c1fb3f8": {
+      "character": "索普",
+      "skin": "默认",
+      "officialSkin": "凛霜风暴",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-40dbcd572c1fb3f8.png",
+      "isDefault": true,
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SoppoSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "hat": {
+          "label": "帽子",
+          "display": "帽子",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "tank": {
+          "label": "背罐",
+          "display": "背罐",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "帽子",
+        "背罐"
+      ],
+      "partImages": {}
+    },
+    "pmx-7d46f9b7159f3332": {
+      "character": "索普",
+      "skin": "绯红极限",
+      "officialSkin": "绯红极限",
+      "portrait": "media/ui/AimohPMXReadyRoom/round-pmx-7d46f9b7159f3332.png",
+      "isDefault": false,
+      "card": "media/ui/AimohPMXReadyRoom/official/Img_ChrSkinPic_SoppoSSR01.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        },
+        "headset": {
+          "label": "耳机",
+          "display": "耳机",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "glasses": {
+          "label": "墨镜",
+          "display": "墨镜",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "眼睛",
+        "耳机",
+        "墨镜"
+      ],
+      "partImages": {}
+    }
+  },
+  "labels": {}
+}

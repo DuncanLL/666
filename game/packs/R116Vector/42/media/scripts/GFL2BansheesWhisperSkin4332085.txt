@@ -1,0 +1,33 @@
+module GFL2
+{
+    model BansheesWhisperSkin4332085
+    {
+        mesh = GFL2/BansheesWhisperSkin4332085,
+        texture = GFL2/BansheesWhisperSkin4332085,
+        attachment muzzle
+        {
+            offset = 2.0499857e-05 0.32851961 0.035520232,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 2.2121322e-08 0.11594861 0.00096870775,
+            rotate = 0 0 90,
+        }
+    }
+    model BansheesWhisperSkin4332085Empty
+    {
+        mesh = GFL2/BansheesWhisperSkin4332085Empty,
+        texture = GFL2/BansheesWhisperSkin4332085,
+        attachment muzzle
+        {
+            offset = 2.0499857e-05 0.32851961 0.035520232,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 2.2121322e-08 0.11594861 0.00096870775,
+            rotate = 0 0 90,
+        }
+    }
+}

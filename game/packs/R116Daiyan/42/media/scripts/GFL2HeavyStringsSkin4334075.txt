@@ -1,0 +1,33 @@
+module GFL2
+{
+    model HeavyStringsSkin4334075
+    {
+        mesh = GFL2/HeavyStringsSkin4334075,
+        texture = GFL2/HeavyStringsSkin4334075,
+        attachment muzzle
+        {
+            offset = 0.0014560914 0.30557261 0.029658355,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -7.1092638e-08 0.11594335 0.0030101879,
+            rotate = 0 0 90,
+        }
+    }
+    model HeavyStringsSkin4334075Empty
+    {
+        mesh = GFL2/HeavyStringsSkin4334075Empty,
+        texture = GFL2/HeavyStringsSkin4334075,
+        attachment muzzle
+        {
+            offset = 0.0014560914 0.30557261 0.029658355,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = -7.1092638e-08 0.11594335 0.0030101879,
+            rotate = 0 0 90,
+        }
+    }
+}

@@ -1,0 +1,332 @@
+"""Basic Viewpoint lighting adapters for the public source view."""
+
+
+CHARACTER_RESPONSE = '''
+vec3 characterColour(vec3 colour) {
+    vec3 rgb = max(colour, vec3(0.0));
+    float luminance = dot(rgb, vec3(0.2126, 0.7152, 0.0722));
+    if (luminance < 0.0001) return rgb;
+    float level = luminance / (1.0 + luminance);
+    float band = clamp(floor(level * 6.0 + 0.5) / 6.0, 0.04, 0.94);
+    float exposure = mix(level, band, 0.58);
+    float gain = (exposure / (1.0 - exposure)) / luminance;
+    return rgb * gain;
+}
+'''
+
+NATIVE = {
+    'native_indirect.glsl': ('void gf2NativeInitIndirect', '''
+void gf2NativeInitIndirect(vec3 position) {
+    vec3 normal = texelFetch(gf2NativeNormals, ivec2(gl_FragCoord.xy), 0).xyz;
+    float upward = dot(normal, normal) > 0.01 ? normalize(normal).y : 0.0;
+    float hemisphere = smoothstep(-0.55, 0.35, upward);
+    gf2NativeBouncedIrradiance = vec3(gf2NativeIndirectOn == 0 ? 1.0 : mix(0.72, 1.10, hemisphere));
+}
+vec4 gf2NativeSH(int channel, vec4 coefficient) {
+    return coefficient * gf2NativeBouncedIrradiance[channel];
+}
+'''),
+    'native_main.glsl': ('// Incident visibility', '''
+float gf2NativeMainVisibility(vec3 position, vec3 normal) {
+    float shade = 1.0;
+#if PIPELINE_SHADOWS || PIPELINE_FAR_SHADOWS
+    if (uShadowsOff < 0.5) shade = sunVisibility(position, normal, max(dot(normal, uSunDir), 0.0));
+#endif
+    return mix(0.38, 1.0, step(0.55, shade));
+}
+'''),
+    'native_cube.comp': ('// Current-frame', '''
+void main() {
+    ivec3 p = ivec3(gl_GlobalInvocationID);
+    ivec2 size = imageSize(sourceCube);
+    if (any(greaterThanEqual(p.xy, size)) || p.z >= 6) return;
+    vec2 uv = (vec2(p.xy) + 0.5) / vec2(size) * 2.0 - 1.0;
+    vec3 ray = normalize(cubeDirection(p.z, uv)) * vec3(-1, 1, -1);
+    vec3 colour = reflectedSky(gf2ProbePosition, ray, clamp(gf2ProbeSkyShare, 0.0, 1.0));
+    if (gf2ProbeRoomOn != 0) {
+        vec4 room = textureLod(gf2ProbeRoom, ray, 0.0);
+        colour = mix(colour, room.rgb, room.a);
+    }
+    imageStore(sourceCube, p, vec4(max(colour, vec3(0.0)) * 0.25, 1.0));
+}
+'''),
+    'native_light.comp': ('void main()', '''
+void main() {
+    vec3 sky = max(texelFetch(nativeSkyTexture, ivec2(0), 0).rgb, vec3(0.0));
+    vec3 ambient = mix(max(nativeEngineLight.rgb, vec3(0.0)), sky, clamp(nativeEngineLight.a, 0.0, 1.0)) * 0.88;
+    for (int channel = 0; channel < 7; ++channel) sourceSH[channel] = vec4(0.0);
+    sourceSH[0].w = ambient.r;
+    sourceSH[1].w = ambient.g;
+    sourceSH[2].w = ambient.b;
+    sourceMain = vec4(max(nativeRelativeSky, vec3(0.0)) * max(nativePrimaryStrength, 0.0) * 0.8, 1.0);
+}
+'''),
+    'native_local.glsl': ('vec4 gf2NativeLocalColor', '''
+vec4 gf2NativeLocalColor(int slot, vec4 colour, vec3 position, vec3 normal) {
+    if (slot >= gf2NativeLocalCount) return colour;
+    int kind = gf2NativeLocalKind[slot];
+    int i = gf2NativeLocalIndex[slot];
+    vec3 source;
+    float reach;
+    if (kind == 0) {
+        source = uLightPos[i].xyz;
+        reach = uLightPos[i].w;
+    } else if (kind == 1) {
+        source = uTorchPos[i].xyz;
+        reach = uTorchPos[i].w;
+    } else {
+        Spot spot = spotAt(i);
+        source = spot.pos;
+        reach = spot.reach;
+    }
+    vec3 offset = source - position;
+    float distance = length(offset);
+    float falloff = max(0.0, 1.0 - distance / max(reach, 0.01));
+    float facing = mix(0.5, 1.0, max(dot(normalize(normal), offset / max(distance, 0.01)), 0.0));
+    return vec4(colour.rgb * falloff * falloff * facing * dot(offset, offset), colour.a);
+}
+'''),
+    'native_motion.comp': ('vec3 originalDisplayInput', CHARACTER_RESPONSE + '''
+void main() {
+    ivec2 pixel = ivec2(gl_GlobalInvocationID.xy);
+    if (any(greaterThanEqual(pixel, imageSize(nativeVelocity)))) return;
+    if (initializeNormals != 0) {
+        vec3 normal = imageLoad(nativeNormals, pixel).xyz;
+        imageStore(originalNormals, pixel, vec4(normal.xy * 0.5 + 0.5, 0.0, 0.0));
+        return;
+    }
+    vec4 motion = texelFetch(sourceNativeMotion, pixel, 0);
+    if (motion.w > 0.5 && motion.z > 0.0) imageStore(nativeVelocity, pixel, motion);
+    vec4 normal = imageLoad(originalNormals, pixel);
+    if (normal.z > 0.0) {
+        vec2 xy = normal.xy * 2.0 - 1.0;
+        imageStore(nativeNormals, pixel, vec4(normalize(vec3(xy, 1.0)), 1.0));
+    }
+    if (gf2TransferOn != 0 && (abs(normal.z) + abs(normal.w)) > 0.0001) {
+        float ownership = texelFetch(gf2TransferOwnership, pixel, 0).a;
+        if (abs(ownership - 31.0 / 255.0) < 0.5 / 255.0) {
+            vec4 surface = imageLoad(gf2TransferColour, pixel);
+            float exposure = max(gf2TransferExposure, 0.001);
+            surface.rgb = characterColour(surface.rgb * exposure) / exposure;
+            imageStore(gf2TransferColour, pixel, surface);
+        }
+    }
+}
+'''),
+    'native_prefilter.comp': ('const uint SAMPLE_COUNT', '''
+void main() {
+    ivec3 pixel = ivec3(gl_GlobalInvocationID);
+    ivec2 size = imageSize(filteredCube);
+    if (any(greaterThanEqual(pixel.xy, size)) || pixel.z >= 6) return;
+    vec2 uv = (vec2(pixel.xy) + 0.5) / vec2(size) * 2.0 - 1.0;
+    float width = sourcePerceptualRoughness * sourcePerceptualRoughness * 0.09;
+    vec3 filtered = textureLod(nativeRawCube, cubeDirection(pixel.z, uv), 0.0).rgb * 0.5;
+    filtered += textureLod(nativeRawCube, cubeDirection(pixel.z, uv + vec2(width)), 0.0).rgb * 0.25;
+    filtered += textureLod(nativeRawCube, cubeDirection(pixel.z, uv - vec2(width)), 0.0).rgb * 0.25;
+    imageStore(filteredCube, pixel, vec4(filtered, 1.0));
+}
+'''),
+}
+
+
+def native_shader(name, source):
+    if name == 'cube_faces.glsl':
+        return b'''#ifndef GF2_NATIVE_CUBE_FACES
+#define GF2_NATIVE_CUBE_FACES
+vec3 cubeDirection(int face, vec2 uv) {
+    if (face < 2) {
+        float side = face == 0 ? 1.0 : -1.0;
+        return vec3(side, -uv.y, -side * uv.x);
+    }
+    if (face < 4) {
+        float side = face == 2 ? 1.0 : -1.0;
+        return vec3(uv.x, side, side * uv.y);
+    }
+    float side = face == 4 ? 1.0 : -1.0;
+    return vec3(side * uv.x, -uv.y, side);
+}
+#endif
+'''
+    anchor, replacement = NATIVE[name]
+    prefix, found, _ = source.decode().partition(anchor)
+    if not found:
+        raise ValueError(f'Native public shader anchor changed: {name}')
+    prefix = public_header(prefix)
+    if name == 'native_indirect.glsl':
+        prefix = prefix.replace('#include "lib/bounce.glsl"\n', '')
+    if name == 'native_cube.comp':
+        for declaration in ('sampler2D gf2ProbeScene', 'sampler2D gf2ProbeAlbedo',
+                            'mat4 gf2ProbeViewProjection', 'int gf2ProbeSceneOn'):
+            prefix = prefix.replace('uniform ' + declaration + ';\n', '')
+    if name == 'native_motion.comp':
+        for declaration in ('sampler2D gf2TransferLut', 'float gf2TransferStrength'):
+            prefix = prefix.replace('uniform ' + declaration + ';\n', '')
+    return (prefix.rstrip() + '\n' + replacement).encode()
+
+
+def public_manifest(formal):
+    manifest = dict(formal)
+    fill = manifest.get('original_camera_fill')
+    if fill is not None:
+        manifest['original_camera_fill'] = {
+            'camera_local_direction': [0.6, -0.48, -0.64],
+            'color': [0.37, 0.37, 0.37, 1.0],
+            'unity_camera_to_world_z_parity': fill['unity_camera_to_world_z_parity'],
+        }
+    return manifest
+
+
+ECLIPSE_SKY = '''#version 430 compatibility
+uniform sampler2D colortex4;
+layout(location=0) out vec4 result;
+
+vec3 sampleSky(vec2 uv) {
+    vec2 tile = vec2(276.0, 2.0) + clamp(uv, 0.0, 1.0) * 252.0;
+    return max(textureLod(colortex4, tile / vec2(textureSize(colortex4, 0)), 0.0).rgb, vec3(0.0)) * 0.001;
+}
+'''
+
+ECLIPSE_FRAGMENTS = {
+    'sky_base.fsh': '''
+/* RENDERTARGETS:20 */
+void main() {
+    vec3 average = (sampleSky(vec2(0.25, 0.35)) + sampleSky(vec2(0.75, 0.65))) * 0.5;
+    result = int(gl_FragCoord.x) == 0 ? vec4(average, 1.0) : vec4(0.0);
+}
+''',
+    'sky_filter.fsh': '''
+/* RENDERTARGETS:21 */
+void main() {
+    vec2 uv = mod(gl_FragCoord.xy, 64.0) / 64.0;
+    ivec2 tile = ivec2(gl_FragCoord.xy) / 64;
+    float amount = float(tile.x + tile.y * 3) / 5.0;
+    vec3 average = sampleSky(vec2(0.5));
+    result = vec4(mix(sampleSky(uv), average, amount * 0.5) * 0.25, 1.0);
+}
+''',
+}
+
+ECLIPSE_KERNELS = {
+    'CUBE': '''
+void main() {
+    ivec3 p = ivec3(gl_GlobalInvocationID);
+    ivec2 size = imageSize(destination);
+    if (any(greaterThanEqual(p.xy, size)) || p.z >= 6) return;
+    vec2 uv = (vec2(p.xy) + 0.5) / vec2(size);
+    int tile = clamp(level - 1, 0, 5);
+    uv.x = fract((uv.x + float(p.z)) / 6.0);
+    vec2 atlas = (vec2(tile % 3, tile / 3) + uv) * 64.0;
+    imageStore(destination, p, vec4(textureLod(sourceSky, atlas / vec2(textureSize(sourceSky, 0)), 0.0).rgb, 1.0));
+}
+''',
+    'ENVIRONMENT_SH': '''
+void main() {
+    vec3 c[1];
+    c[0] = texelFetch(sourceSkySH, ivec2(0), 0).rgb * sourceEnvironmentScale;
+    vec3 ambient = c[0];
+    sh[0] = vec4(0.0, 0.0, 0.0, ambient.r);
+    sh[1] = vec4(0.0, 0.0, 0.0, ambient.g);
+    sh[2] = vec4(0.0, 0.0, 0.0, ambient.b);
+    for (int i = 3; i < 7; ++i) sh[i] = vec4(0.0);
+    vec3 daylight = vec3(0.0);
+    if (copyNativeMain) {
+        for (int channel = 0; channel < 3; ++channel)
+            daylight[channel] = max(nativeLightFields[nativeMainFloatOffset + channel], 0.0);
+    }
+    float strength = max(max(daylight.r, daylight.g), daylight.b);
+    mainLight = vec4(daylight * (nativeMainScale / (1.0 + 0.25 * strength)), 1.0);
+}
+''',
+    'MOTION_DECODE': '''
+void main() {
+    ivec2 p = ivec2(gl_GlobalInvocationID.xy);
+    if (any(greaterThanEqual(p, imageSize(nativeMotion)))) return;
+    vec2 velocity = texelFetch(sourceMotion, p, 0).xy / max(sourceViewport, vec2(1.0));
+    if (all(lessThan(abs(velocity), vec2(1.0)))) imageStore(nativeMotion, p, vec4(velocity.x, -velocity.y, 0.0, 0.0));
+}
+''',
+}
+
+
+def eclipse_shader(name, source, kernels):
+    basename = name.rsplit('/', 1)[-1]
+    if basename in ECLIPSE_FRAGMENTS:
+        return (ECLIPSE_SKY + ECLIPSE_FRAGMENTS[basename]).encode()
+    if basename.endswith('.vsh'):
+        return b'''#version 430 compatibility
+void main() {
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+}
+'''
+    key, = (key for key, row in kernels.items() if name.endswith(row['path']))
+    header, separator, _ = source.decode().partition('void main()')
+    if not separator:
+        raise ValueError(f'Eclipse public shader anchor changed: {name}')
+    return (public_header(header) + ECLIPSE_KERNELS[key]).encode()
+
+
+def public_header(source):
+    return ''.join(line + '\n' for line in source.splitlines()
+                   if not line.lstrip().startswith('//') or any(
+                       label in line.lower() for label in ('spdx', 'copyright', 'license')))
+
+
+def eclipse_probe():
+    return b'''#version 430
+layout(local_size_x=1) in;
+layout(std430,binding=0) readonly buffer BaseUnitySH { vec4 sourceSH[7]; vec4 sourceMain; };
+layout(std430,binding=1) writeonly buffer ActorUnitySH { vec4 actorSH[7]; vec4 reflectionHDR; vec4 cameraLightColor; };
+uniform bool nativeSkyAvailable;
+uniform vec3 nativeMinimumLight;
+
+void main() {
+    float visible = nativeSkyAvailable ? 0.8 : 0.92;
+    float incident = max(max(sourceMain.r, sourceMain.g), sourceMain.b);
+    float daylight = clamp(incident / (0.5 + max(incident, 0.0)), 0.0, 1.0);
+    float ambient = mix(0.06, 0.18, daylight) + max(nativeMinimumLight.x, 0.0) * 0.02;
+    for (int i = 0; i < 7; ++i) {
+        vec4 light = sourceSH[i] * visible;
+        if (i < 3) {
+            light.w += ambient;
+            light.y += max(light.w, 0.0) * 0.18;
+        }
+        actorSH[i] = light;
+    }
+    actorSH[6].w=1;
+    reflectionHDR = vec4(visible, 1.0, 0.0, 0.0);
+    cameraLightColor = vec4(vec3(0.39 * visible), 1.0);
+}
+'''
+
+
+ECLIPSE_COMPOSITE = b'''
+ ivec2 actorPixel = ivec2(closestToCamera.xy / texelSize);
+ if (all(greaterThanEqual(actorPixel, ivec2(0))) &&
+     all(lessThan(actorPixel, min(textureSize(colortex17, 0), textureSize(vpDanMotionTex, 0)))) &&
+     texelFetch(colortex17, actorPixel, 0).r > 0.5) {
+     vec2 motion = texelFetch(vpDanMotionTex, actorPixel, 0).rg;
+     if (all(lessThan(abs(motion), vec2(1000.0)))) velocity = -motion;
+ }
+'''
+
+
+def eclipse_composite(source, motion):
+    shader = source.replace(motion, ECLIPSE_COMPOSITE, 1)
+    marker = b'void main() {\n/* RENDERTARGETS:5 */'
+    mask = b'''
+bool characterPixel(vec2 uv) {
+    ivec2 size = textureSize(colortex17, 0);
+    ivec2 at = clamp(ivec2(uv * RENDER_SCALE * vec2(size)), ivec2(0), size - 1);
+    return texelFetch(colortex17, at, 0).r > 0.5;
+}
+'''
+    replacements = (
+        (marker, b'#if defined TAA && defined VP_DANRP_PIPELINE\n' + CHARACTER_RESPONSE.encode() + mask + b'#endif\n' + marker),
+        (b'vec4 color = computeTAA(texcoord, hand);',
+         b'vec4 color = computeTAA(texcoord, hand);\n#ifdef VP_DANRP_PIPELINE\n        if (characterPixel(texcoord)) color.rgb = characterColour(color.rgb);\n#endif'),
+    )
+    for original, replacement in replacements:
+        if shader.count(original) != 1:
+            raise ValueError('Eclipse public character composite layout changed')
+        shader = shader.replace(original, replacement, 1)
+    return shader

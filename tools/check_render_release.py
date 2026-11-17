@@ -40,11 +40,11 @@ def evaluate(evidence_file):
     require(e.get('format')==1,'Unsupported evidence format')
     require(sha(build['jar'])==build['jar_sha256'],'Built JAR has changed')
     with zipfile.ZipFile(build['jar'])as archive:
-        payload=archive.read(build.get('shader_payload','aimoh/gf2/bridge/Aimoh-Native-GF2.zip'))
+        payload=archive.read(build.get('shader_payload','META-INF/gfl2/rendering/native.zip'))
         require(hashlib.sha256(payload).hexdigest()==build['shader_sha256'],'Embedded shader payload differs')
     for name,digest in build['source_hashes'].items():require(sha(ROOT/name)==digest,'Source changed after build: '+name)
     for key in ('jar_sha256','shader_sha256'):require(e.get(key)==build[key],'Evidence belongs to another '+key)
-    catalog=Path(settings()['asset_root'])/'42/media/aimoh_gf2/characters.json'
+    catalog=Path(settings()['asset_root'])/'42/media/gfl2_rendering/characters.json'
     require(e.get('catalog_sha256')==sha(catalog),'Character catalog changed after verification')
     model_count=len(read(catalog)['characters']['models']);require(model_count>0,'Character catalog is empty')
     character_jar=Path(settings()['reference_jar'])

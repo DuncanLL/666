@@ -1,0 +1,331 @@
+{
+  "date": "2026-11-13",
+  "framework_version": "0.3.102",
+  "source_snapshots": {
+    "stable": "da747a4cf25d3fad8e6298894693407e1361b3e4",
+    "rc4": "154c0eb3aba189734502554a738ed5a38213699d"
+  },
+  "workshop_items": {
+    "3838709437": {
+      "version": "0.3.102",
+      "mod_id": "GFL2Exilium",
+      "title": "少前2追放角色框架",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3619862853,
+        3809306528
+      ],
+      "runtime_sha256": "5226365df984919d1c5a6dc8e8010a02125e46607076586d28758a0d7ab802b4",
+      "remote_details_verified": true,
+      "steam_content_manifest": "4137439648933729633"
+    },
+    "3838770244": {
+      "version": "0.3.102",
+      "mod_id": "GFL2Exilium",
+      "title": "少前2追放角色框架（VP RC4 专版）",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3619862853
+      ],
+      "runtime_sha256": "81b1096cb96e281c6b2d3e87970cf6b3fc52298ab1ae0429b1332e5c8ee3dbc1",
+      "remote_details_verified": true,
+      "steam_content_manifest": "261056197722019802"
+    },
+    "3838710183": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Laiya",
+      "title": "莱娅",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "7753410243333826061"
+    },
+    "3838710368": {
+      "version": "0.3.89",
+      "mod_id": "GFL2Cheyanne",
+      "title": "夏安",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "801534728376917778"
+    },
+    "3838710555": {
+      "version": "0.3.89",
+      "mod_id": "GFL2Asteria",
+      "title": "阿斯缇亚",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "9068568178514677782"
+    },
+    "3838710666": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Koleda",
+      "title": "克莱妲",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "first_attempt_result": 2,
+      "steam_content_manifest": "8744332558233839768"
+    },
+    "3838710868": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Nikketa",
+      "title": "妮基塔",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "8169161749493289673"
+    },
+    "3838711148": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Florence",
+      "title": "芙洛伦",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "7043247810663903524"
+    },
+    "3837425337": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Alva",
+      "title": "埃芙",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "5338152025498750462"
+    },
+    "3838711420": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Cecilia",
+      "title": "希丽雅",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "3607674214486938344"
+    },
+    "3838711556": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Centaureissi",
+      "title": "桑朵莱希",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "6281248473967343899"
+    },
+    "3838711736": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Daiyan",
+      "title": "黛烟",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "3793646315181025265"
+    },
+    "3838711981": {
+      "version": "0.3.89",
+      "mod_id": "GFL2Faelynn",
+      "title": "芙铃",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "233760486295099393"
+    },
+    "3838712165": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Klukai",
+      "title": "可露凯",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "6604044793968445571"
+    },
+    "3838712515": {
+      "version": "0.3.95",
+      "mod_id": "GFL2OTs14",
+      "title": "OTs-14",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "8356795919849297840"
+    },
+    "3838712707": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Springfield",
+      "title": "春田",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "9031157272768488582"
+    },
+    "3838712796": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Suomi",
+      "title": "索米",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "651305510092805268"
+    },
+    "3838762173": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Destroyer",
+      "title": "破坏者",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "9036559429158496038"
+    },
+    "3838762352": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Lenna",
+      "title": "莱娜",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "3435469174324789774"
+    },
+    "3838762751": {
+      "version": "0.3.100",
+      "mod_id": "GFL2Macqiato",
+      "title": "玛绮朵",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "4981764806627791033"
+    },
+    "3838763020": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Phaetusa",
+      "title": "翡图萨",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "3350125187189480838"
+    },
+    "3838763377": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Sextans",
+      "title": "六分仪",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "4908983479649688352"
+    },
+    "3838763611": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Vector",
+      "title": "维克托",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "5618754744840364874"
+    },
+    "3838763788": {
+      "version": "0.3.95",
+      "mod_id": "GFL2Yohee",
+      "title": "幼熙",
+      "result": 1,
+      "legal": false,
+      "dependencies": [
+        3838709437
+      ],
+      "remote_details_verified": true,
+      "steam_content_manifest": "5805697607193934276"
+    },
+    "3838935753": {
+      "title": "秋桦",
+      "version": "0.3.98",
+      "mod_id": "GFL2Qiuhua",
+      "result": 1,
+      "remote_details_verified": true,
+      "dependencies": [
+        3838709437
+      ],
+      "visibility": "unlisted",
+      "cover_present": false,
+      "steam_content_manifest": "9031823050664565876"
+    }
+  },
+  "images": {
+    "main_framework_cover_result": 25,
+    "main_framework_cover_changed": false,
+    "qiuhua_cover_result": 25
+  },
+  "checks": {
+    "native_workshop_content_validation_projects": 25,
+    "kahlua_compiled_files": 70,
+    "ui_component_resolution_checks": [
+      "1280x720",
+      "1920x1080",
+      "2560x1440"
+    ],
+    "live_gameplay_tested_this_release": false,
+    "fresh_subscriber_install_verified": false
+  }
+}

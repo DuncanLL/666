@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "mod": "R116Qiuhua",
+  "models": [
+    {
+      "id": "pmx-e4fe174c77f90d6c",
+      "label": "秋桦 / 默认",
+      "model": "models/pmx-e4fe174c77f90d6c/model.pmx",
+      "profile": "models/pmx-e4fe174c77f90d6c/profile.json"
+    },
+    {
+      "id": "pmx-e348ab0b30d7e83a",
+      "label": "秋桦 / 秋宴龙厨",
+      "model": "models/pmx-e348ab0b30d7e83a/model.pmx",
+      "profile": "models/pmx-e348ab0b30d7e83a/profile.json"
+    },
+    {
+      "id": "pmx-020f2e8bdc65bc5b",
+      "label": "秋桦 / 仁心仁术",
+      "model": "models/pmx-020f2e8bdc65bc5b/model.pmx",
+      "profile": "models/pmx-020f2e8bdc65bc5b/profile.json"
+    },
+    {
+      "id": "pmx-d373f73abd68a3d0",
+      "label": "秋桦 / 秋林烈兔",
+      "model": "models/pmx-d373f73abd68a3d0/model.pmx",
+      "profile": "models/pmx-d373f73abd68a3d0/profile.json"
+    }
+  ]
+}
