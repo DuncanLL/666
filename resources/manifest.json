@@ -6660,6 +6660,10 @@
           "bytes": 903,
           "sha256": "fd7de7c3ac3ecbd0f550b88a23200fdb40985a1d53b4072fb4ff79c791fc935b"
         },
+        "42/media/aimoh_pmx/models/pmx-020f2e8bdc65bc5b/chest.bin": {
+          "bytes": 185332,
+          "sha256": "6366ce64f4a2d67aa18e4c5ebbdbb1208ab4f8f7fa9ad0e6ca5992be40f0eaaf"
+        },
         "42/media/aimoh_pmx/models/pmx-020f2e8bdc65bc5b/model.controls.json": {
           "bytes": 3678,
           "sha256": "b4629f4f464f740d5f55bafbc10674854266ebd4ffcc04350c77bcf80e2173ac"
@@ -6727,6 +6731,10 @@
         "42/media/aimoh_pmx/models/pmx-e348ab0b30d7e83a/uv1-danrp.f32": {
           "bytes": 316232,
           "sha256": "53ef6040cfa26a419c4cb96d19dad6d4d9692ce43c706f69597e3e896a476b2f"
+        },
+        "42/media/aimoh_pmx/models/pmx-e4fe174c77f90d6c/chest.bin": {
+          "bytes": 69332,
+          "sha256": "62a72737c9ab909617771e49ee1808c58b5aa19da2476c852a8b4a493ef27a77"
         },
         "42/media/aimoh_pmx/models/pmx-e4fe174c77f90d6c/model.controls.json": {
           "bytes": 3964,
