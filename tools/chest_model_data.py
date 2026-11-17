@@ -1,4 +1,5 @@
 """Shared, validated PMX weight fit. Parsing stays with the existing PMX reader."""
+import re
 import numpy as np
 
 ALIASES={'chestl','chestr','breastl','breastr','bustl','bustr','左胸','右胸','左乳','右乳'}
@@ -11,7 +12,9 @@ def vertex_weights(vertex):
 def inspect(path):
     import pmx_reader
     model=pmx_reader.load(str(path))
-    key=lambda name:''.join(c for c in name.casefold() if c.isalnum())
+    def key(name):
+        without_prefix=re.sub(r'^bone[0-9]+_', '', name.casefold())
+        return ''.join(c for c in without_prefix if c.isalnum())
     bones={i for i,b in enumerate(model.bones)if key(b.name)in ALIASES or key(b.name_e)in ALIASES}
     weighted={bone for v in model.vertices for bone,w in vertex_weights(v)if w>1e-6 and bone in bones}
     bodies=[i for i,r in enumerate(model.rigids)if r.bone in weighted and r.mode in [1,2]]
