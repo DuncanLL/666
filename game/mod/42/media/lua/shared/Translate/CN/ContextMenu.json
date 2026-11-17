@@ -1,7 +1,7 @@
 {
     "ContextMenu_GFL2_NotOnServer": "本服未开放此角色",
     "ContextMenu_GFL2_AskHost": "由房主启用人物模块。",
-    "ContextMenu_GFL2_Connecting": "正在连接人物框架服务，请稍后再试。",
+    "ContextMenu_GFL2_Connecting": "正在连接，请稍后再试。",
     "ContextMenu_GFL2Character_Menu": "僵毁少女前线",
     "ContextMenu_GFL2_BodyPhysicsOn": "身体物理已开启",
     "ContextMenu_GFL2_BodyPhysicsOff": "身体物理已关闭",
@@ -11,7 +11,7 @@
     "ContextMenu_GFL2Character_Presets": "材质预设",
     "ContextMenu_GFL2Character_Reload": "重新应用配置",
     "ContextMenu_GFL2Character_Disable": "恢复原角色",
-    "ContextMenu_GFL2Character_Error": "人物框架操作未应用，详见 console.txt",
+    "ContextMenu_GFL2Character_Error": "操作未应用，详见 console.txt",
     "ContextMenu_GFL2Character_Simple": "简单调节",
     "ContextMenu_GFL2Character_Detail": "详细调节",
     "ContextMenu_GFL2Character_NoGroups": "暂无整套配件选项；可切换到详细调节。",

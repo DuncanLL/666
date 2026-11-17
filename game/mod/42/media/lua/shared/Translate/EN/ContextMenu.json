@@ -1,7 +1,7 @@
 {
     "ContextMenu_GFL2_NotOnServer": "Character unavailable on this server",
     "ContextMenu_GFL2_AskHost": "Ask the host to enable the character pack.",
-    "ContextMenu_GFL2_Connecting": "Connecting to the character framework. Try again shortly.",
+    "ContextMenu_GFL2_Connecting": "Connecting. Try again shortly.",
     "ContextMenu_GFL2Character_Menu": "僵毁少女前线",
     "ContextMenu_GFL2_BodyPhysicsOn": "Body physics enabled",
     "ContextMenu_GFL2_BodyPhysicsOff": "Body physics disabled",
@@ -11,7 +11,7 @@
     "ContextMenu_GFL2Character_Presets": "Material presets",
     "ContextMenu_GFL2Character_Reload": "Reapply configuration",
     "ContextMenu_GFL2Character_Disable": "Restore original character",
-    "ContextMenu_GFL2Character_Error": "Character Framework operation failed. See console.txt.",
+    "ContextMenu_GFL2Character_Error": "Could not apply the change. See console.txt.",
     "ContextMenu_GFL2Character_Simple": "Outfits",
     "ContextMenu_GFL2Character_Detail": "Parts",
     "ContextMenu_GFL2Character_NoGroups": "No outfit choices; use Parts for available meshes.",

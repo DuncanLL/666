@@ -1,7 +1,7 @@
 {
     "ContextMenu_GFL2_NotOnServer": "이 서버에서 사용할 수 없는 인형입니다",
     "ContextMenu_GFL2_AskHost": "호스트에게 인형 팩 활성화를 요청하세요.",
-    "ContextMenu_GFL2_Connecting": "인형 프레임워크에 연결 중입니다. 잠시 후 다시 시도하세요.",
+    "ContextMenu_GFL2_Connecting": "연결 중입니다. 잠시 후 다시 시도하세요.",
     "ContextMenu_GFL2Character_Menu": "僵毁少女前线",
     "ContextMenu_GFL2_BodyPhysicsOn": "신체 물리가 켜져 있습니다",
     "ContextMenu_GFL2_BodyPhysicsOff": "신체 물리가 꺼져 있습니다",

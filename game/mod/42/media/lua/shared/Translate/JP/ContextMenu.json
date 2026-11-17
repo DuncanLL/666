@@ -1,7 +1,7 @@
 {
     "ContextMenu_GFL2_NotOnServer": "このサーバーでは人形が開放されていません",
     "ContextMenu_GFL2_AskHost": "ホストに人形パックの有効化を依頼してください。",
-    "ContextMenu_GFL2_Connecting": "人形フレームワークに接続中です。少し待ってからお試しください。",
+    "ContextMenu_GFL2_Connecting": "接続中です。少し待ってからお試しください。",
     "ContextMenu_GFL2Character_Menu": "僵毁少女前线",
     "ContextMenu_GFL2_BodyPhysicsOn": "身体物理が有効です",
     "ContextMenu_GFL2_BodyPhysicsOff": "身体物理が無効です",

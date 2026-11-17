@@ -10,7 +10,6 @@
       "variant": "stable",
       "workshop": {
         "id": 3838709437,
-        "title": "少前2追放角色框架",
         "dependencies": [
           3619862853,
           3809306528
@@ -27,7 +26,6 @@
       "variant": "rc4",
       "workshop": {
         "id": 3838770244,
-        "title": "少前2追放角色框架（VP RC4 专版）",
         "dependencies": [
           3619862853
         ],
