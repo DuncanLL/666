@@ -38,7 +38,7 @@ try:
     shared = ROOT / "game/mod/42/media/lua/shared"
     run_source('function require(name) return assert(_G[name], name) end', 'require')
     environment.rawset("GFL2WeaponSkins", run(shared / "GFL2WeaponSkins.lua"))
-    environment.rawset("Economy", run(shared / "AimohPMXRoomEconomy.lua"))
+    environment.rawset("Economy", run(shared / "GFL2RoomEconomy.lua"))
     print(run(ROOT / "tools/tests/room_economy_assertions.lua"))
 finally:
     jpype.shutdownJVM()

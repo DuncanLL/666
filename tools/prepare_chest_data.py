@@ -5,14 +5,15 @@ from common import ROOT,BUILD,settings,save
 
 def prepare(config=None):
     c=config or settings()
+    base=Path(c['asset_root'])/'42/media/gfl2_pmx'
+    registry=json.loads((ROOT/'game/mod/42/media/gfl2_pmx/registry.json').read_text('utf8'))['models']
+    if not registry:return {}
     sys.path[:0]=[c['python_dependencies'],c['pmx_reader_scripts']]
     from chest_model_data import inspect,regions
-    base=Path(c['asset_root'])/'42/media/aimoh_pmx'
-    registry=json.loads((ROOT/'game/mod/42/media/aimoh_pmx/registry.json').read_text('utf8'))['models']
     output=BUILD/'chest-data';output.mkdir(parents=True,exist_ok=True)
     data={};report=[]
     for row in registry:
-        source=base/row['model'];profile=json.loads((ROOT/'game/mod/42/media/aimoh_pmx'/row['profile']).read_text('utf8'))
+        source=base/row['model'];profile=json.loads((ROOT/'game/mod/42/media/gfl2_pmx'/row['profile']).read_text('utf8'))
         sha=hashlib.sha256(source.read_bytes()).hexdigest()
         assert sha==profile['pmx_sha256'],row['id']
         model,info=inspect(source)
@@ -26,7 +27,7 @@ def prepare(config=None):
             for key,dtype in [('indices','<u4'),('weights','<f4'),('positions','<f4'),('normals','<f4')]:
                 payload+=r[key].astype(dtype).tobytes()
         file=output/(sha+'.bin');file.write_bytes(payload)
-        data['aimoh/pmxpreview/chest/'+file.name]=file
+        data['gfl2/runtime/chest/'+file.name]=file
         report.append(dict(id=row['id'],label=row['label'],supported=True,sha256=sha,bones=info['bones'],
             region_vertices=[len(r['indices'])for r in groups],bytes=len(payload),data_sha256=hashlib.sha256(payload).hexdigest()))
     save(output/'manifest.json',report)

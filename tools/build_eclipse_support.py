@@ -6,14 +6,14 @@ from build import compile_java
 from build_render_support import check_glsl_names,release_bootstrap
 
 SHADER_PAYLOAD='META-INF/gfl2/rendering/eclipse.zip'
-REFERENCE_SHADER_PAYLOAD='aimoh/gf2/bridge/Aimoh-Eclipse-GF2.zip'
+REFERENCE_SHADER_PAYLOAD='gfl2/render/GFL2-Eclipse.zip'
 PACK_SHADERS='Eclipse-Shader-Unstable/shaders/'
 SHADERS=PACK_SHADERS+'dimensions/'
 MOTION_PASS=SHADERS+'composite6.fsh'
 FOG_FILTER_PASS=SHADERS+'composite4.fsh'
 FOG_RAY_PASS=SHADERS+'composite3.fsh'
 GF2_MANIFEST=PACK_SHADERS+'gf2/manifest.json'
-RETIRED_ENTRIES={'viewpoint/render/AimohGF2Services$Snapshot.class'}
+RETIRED_ENTRIES={'viewpoint/render/Gfl2Services$Snapshot.class'}
 MC_TREES=('world-1/','world1/','world0_with_aether_flag/','world0_with_twilight_forest_flag/',
           'template/','world0/clrwl_')
 # Official RC3 has no draw or fallback path to these entries.
@@ -115,10 +115,10 @@ if __name__=='__main__':
     out=BUILD/'eclipse-support';out.mkdir(exist_ok=True)
     shared=[ROOT/'render-support/java'/name for name in origin['shared_sources']]
     sources=[*sorted((ROOT/'render-support/eclipse/java').rglob('*.java')),*shared,
-             ROOT/'render-support/java/aimoh/gf2/bridge/ManagedShaderPack.java']
-    classes=out/'classes-outline';compile_java(cfg,sources,classes,[reference,host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
+             ROOT/'render-support/java/gfl2/render/ManagedShaderPack.java']
+    classes=out/'classes-outline';compile_java(cfg,sources,classes,[reference,host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')])
     replacements={p.relative_to(classes).as_posix():p.read_bytes()for p in classes.rglob('*.class')}
-    jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')
+    jar=out/'GFL2RenderSupport.jar';temporary=jar.with_suffix('.jar.writing')
     motion=ROOT/'render-support/eclipse/shaders/actor-motion.glsl'
     options=((b'characterSurfaceDetail',0,0,100,1),(b'characterSkinGloss',0,0,100,1),
              (b'characterOutlineWidth',100,75,135,1),(b'characterKeyLightStrength',100,0,1000,5))
@@ -232,8 +232,8 @@ if __name__=='__main__':
     if args.workshop:
         assert args.metadata_from is not None,'Preserve the existing Workshop metadata with --metadata-from'
         target=args.workshop.resolve();assert not target.exists(),'Preserve existing candidates; choose a new output'
-        mod=target/'Contents/mods/AimohGF2Eclipse';shutil.copytree(ROOT/'render-support/eclipse/mod',mod)
-        (mod/'common/.gitkeep').unlink(missing_ok=True);dest=mod/'42/media/java/client/AimohGF2Eclipse.jar';dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(jar,dest)
+        mod=target/'Contents/mods/GFL2RenderSupport';shutil.copytree(ROOT/'render-support/eclipse/mod',mod)
+        (mod/'common/.gitkeep').unlink(missing_ok=True);dest=mod/'42/media/java/client/GFL2RenderSupport.jar';dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(jar,dest)
         for name in ('workshop.txt','preview.png'):shutil.copy2(args.metadata_from/name,target/name)
         assert sha(dest)==sha(jar)
         save(out/'workshop.json',dict(status='ECLIPSE_CANDIDATE_ONLY',path=str(target),jar_sha256=sha(dest),installed=False,uploaded=False))

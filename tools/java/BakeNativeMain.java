@@ -32,7 +32,7 @@ public final class BakeNativeMain {
                 if (raw.length != resource.getInt("bytes") ||
                     !HexFormat.of().formatHex(digest.digest(raw)).equals(resource.getString("sha256")))
                     throw new IllegalArgumentException("Native source resource changed: " + file);
-                String text = AimohNativeMainWiring.prepare(new String(raw, java.nio.charset.StandardCharsets.UTF_8), program, reflection.getJSONObject(hash), hash);
+                String text = Gfl2NativeMainWiring.prepare(new String(raw, java.nio.charset.StandardCharsets.UTF_8), program, reflection.getJSONObject(hash), hash);
                 if (text == null) continue;
                 Path target = output.resolve(hash + ".glsl");
                 if (Files.exists(target) && !text.equals(Files.readString(target)))

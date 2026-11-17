@@ -1,0 +1,613 @@
+module Base {
+sound GFL2PmxCeciliaSilent
+{
+ category=Player,
+ is3D=true,
+ loop=true,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeStab
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeStabOnGround
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeAttackHeavy
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeAttack
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeShove
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMeleeStomp
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromBite
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromGlassCut
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromFallLow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromFallHigh
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromHitBlunt
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromRunIntoWall
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentShoutHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentShoutMegaphoneHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSneezeLight
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSneezeHeavy
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentJumpLow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentJumpHigh
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentDeathAlone
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentDeathEaten
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentWhisperHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentWhisperPsst
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentWhisperMegaphoneHey
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentWhisperMegaphonePsst
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentClimbWindow
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentCough
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentMuffledCough
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSleep
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentVomit
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentApplyBandage
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSighBored
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSighReliefed
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSighSad
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromScratch
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainFromLacerate
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentLureTsk
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentLureCmon
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentDeathFall
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentDrunkHic
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentExercise
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentFreezeShiver
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentSmoke
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentPainMoodle
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentCorpseDragging
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentCorpseHighEffort
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+sound GFL2PmxCeciliaSilentCorpseLowEffort
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2Voice/silent.ogg,
+  volume=0,
+  distanceMax=20,
+ }
+}
+
+}

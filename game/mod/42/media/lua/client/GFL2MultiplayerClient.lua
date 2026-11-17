@@ -2,7 +2,7 @@ local M = {}
 if not isClient() then return M end
 
 local protocol = require "GFL2MultiplayerProtocol"
-local economy = require "AimohPMXRoomEconomy"
+local economy = require "GFL2RoomEconomy"
 
 local slots = {}
 local remote = {}
@@ -51,8 +51,8 @@ end
 function M.publish(player, saved)
     if not player:isLocalPlayer() or not M.ready(player) then return end
     local model = saved and saved.model or ""
-    local signature = model ~= "" and AimohPMXPreview.networkSignature(model) or ""
-    local appearance = model ~= "" and AimohPMXPreview.networkAppearance(player) or ""
+    local signature = model ~= "" and GFL2CharacterRuntime.networkSignature(model) or ""
+    local appearance = model ~= "" and GFL2CharacterRuntime.networkAppearance(player) or ""
     local args = {model = model, signature = signature, appearance = appearance}
     if not protocol.appearance(args) then return end
     local state = slot(player)
@@ -86,7 +86,7 @@ local function acceptAppearance(data, fromSnapshot)
         if current.actor then
             if sameSession and not current.actor:isDead() then data.actor = current.actor
             else
-                AimohPMXPreview.disable(current.actor)
+                GFL2CharacterRuntime.disable(current.actor)
                 data.previousActor = current.actor
             end
         end
@@ -100,24 +100,24 @@ local function updateRemote()
         if actor and (actor == state.previousActor or actor:isLocalPlayer() or actor:isDead()
                 or actor:getUsername() ~= state.owner) then actor = nil end
         if state.actor and state.actor ~= actor then
-            AimohPMXPreview.disable(state.actor)
+            GFL2CharacterRuntime.disable(state.actor)
             state.previousActor = state.actor
             state.actor = nil
             state.applied = false
             state.retired = true
         end
-        if state.actor and state.applied and AimohPMXPreview.hasModelFailure(state.actor) then
-            AimohPMXPreview.disable(state.actor)
+        if state.actor and state.applied and GFL2CharacterRuntime.hasModelFailure(state.actor) then
+            GFL2CharacterRuntime.disable(state.actor)
             state.actor = nil
             state.failed = true
         end
         if actor and not state.applied and not state.failed and not state.retired then
-            local problem = AimohPMXPreview.queueRemoteAppearance(actor, state.model, state.signature, state.appearance)
+            local problem = GFL2CharacterRuntime.queueRemoteAppearance(actor, state.model, state.signature, state.appearance)
             if problem == "" then state.actor = actor;state.applied = true;state.previousActor = nil
             else
                 state.failed = true
                 print("[GFL2Exilium] Remote appearance: " .. problem)
-                AimohPMXPreview.disable(actor)
+                GFL2CharacterRuntime.disable(actor)
             end
         end
     end
@@ -125,11 +125,11 @@ end
 
 local function restoreAppearance(state, equipped)
     if not protocol.appearance(equipped) or equipped.model == "" then return end
-    if AimohPMXPreview.networkSignature(equipped.model) ~= equipped.signature then return end
-    local saved = state.player:getModData().AimohPMXPreview
+    if GFL2CharacterRuntime.networkSignature(equipped.model) ~= equipped.signature then return end
+    local saved = state.player:getModData().GFL2CharacterRuntime
     local settings = saved and (saved.model == equipped.model and saved.settings
         or saved.profiles and saved.profiles[equipped.model]) or ""
-    local result = AimohPMXPreview.queueOwnedAppearance(state.player, equipped.model, equipped.appearance, settings)
+    local result = GFL2CharacterRuntime.queueOwnedAppearance(state.player, equipped.model, equipped.appearance, settings)
     if result == "" then state.restoring = true
     else print("[GFL2Exilium] Restore appearance: " .. result) end
 end
@@ -138,11 +138,11 @@ local function finishRejection(state)
     local rejection = state.rejection
     if not rejection then return end
     local player = state.player
-    if state.lastPublished ~= rejection.sent or AimohPMXPreview.modelId(player) ~= rejection.sent.model then
+    if state.lastPublished ~= rejection.sent or GFL2CharacterRuntime.modelId(player) ~= rejection.sent.model then
         state.rejection = nil
         return
     end
-    if not AimohPMXPreview.isReady(player) and not AimohPMXPreview.hasModelFailure(player) then return end
+    if not GFL2CharacterRuntime.isReady(player) and not GFL2CharacterRuntime.hasModelFailure(player) then return end
     state.rejection = nil
     state.lastPublished = nil
     state.restoring = false
@@ -168,7 +168,7 @@ local function acceptWallet(state, data)
 end
 
 Events.OnServerCommand.Add(function(module, command, data)
-    if module ~= protocol.module or type(data) ~= "table" or data.version ~= protocol.version or not AimohPMXPreview then return end
+    if module ~= protocol.module or type(data) ~= "table" or data.version ~= protocol.version or not GFL2CharacterRuntime then return end
     if command == "Appearance" then
         acceptAppearance(data)
         return
@@ -187,7 +187,7 @@ Events.OnServerCommand.Add(function(module, command, data)
         end
         for id, appearance in pairs(remote) do
             if not present[id] and appearance.revision <= data.revision then
-                if appearance.actor then AimohPMXPreview.disable(appearance.actor) end
+                if appearance.actor then GFL2CharacterRuntime.disable(appearance.actor) end
                 remote[id] = nil
             end
         end
@@ -209,7 +209,7 @@ Events.OnServerCommand.Add(function(module, command, data)
 end)
 
 Events.OnTick.Add(function()
-    if not AimohPMXPreview then return end
+    if not GFL2CharacterRuntime then return end
     local now = getTimestampMs()
     if now < nextUpdate then return end
     nextUpdate = now + 250
@@ -229,10 +229,10 @@ Events.OnTick.Add(function()
                 end
                 finishRejection(state)
                 if state.restoring then
-                    if AimohPMXPreview.isReady(player) then
+                    if GFL2CharacterRuntime.isReady(player) then
                         state.restoring = false
                         M.onRestored(player)
-                    elseif AimohPMXPreview.hasModelFailure(player) then state.restoring = false end
+                    elseif GFL2CharacterRuntime.hasModelFailure(player) then state.restoring = false end
                 end
             end
         end
@@ -247,9 +247,9 @@ Events.OnTick.Add(function()
 end)
 
 local function clear()
-    if AimohPMXPreview then
+    if GFL2CharacterRuntime then
         for _, state in pairs(remote) do
-            if state.actor then AimohPMXPreview.disable(state.actor) end
+            if state.actor then GFL2CharacterRuntime.disable(state.actor) end
         end
     end
     for _, state in pairs(slots) do economy.setSnapshot(state.player, nil) end

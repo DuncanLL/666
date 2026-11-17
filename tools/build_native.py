@@ -18,7 +18,7 @@ def main():
     strip = None
     if args.ozz:
         source = ROOT / 'native/ozz'
-        dll = output / 'AimohGripOzz.dll'
+        dll = output / 'GFL2GripOzz.dll'
         env.update(ZIG_GLOBAL_CACHE_DIR=str(output / 'zig-global-cache'), ZIG_LOCAL_CACHE_DIR=str(output / 'zig-local-cache'))
         command = [config['zig'], 'c++', '-target', 'x86_64-windows-gnu', '-std=c++17', '-O2', '-g0',
                    '-fno-exceptions', '-fno-rtti', '-shared', '-I' + str(source / 'upstream/include'),
@@ -32,10 +32,11 @@ def main():
         env.update(CARGO_HOME=str(tools / 'cargo'), RUSTUP_HOME=str(tools / 'rustup'),
                    RUSTUP_TOOLCHAIN='1.90.0-x86_64-pc-windows-gnu', CARGO_TARGET_DIR=str(output / 'target'),
                    CXX=str(gcc / 'g++.exe'), CC=str(gcc / 'gcc.exe'), AR=str(gcc / 'ar.exe'),
-                   CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=str(gcc / 'gcc.exe'), RUSTFLAGS='--cap-lints=warn')
+                   CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=str(gcc / 'gcc.exe'),
+                   CARGO_ENCODED_RUSTFLAGS='\x1f'.join(('--cap-lints=warn', f'--remap-path-prefix={ROOT}=gfl2-source')))
         env['PATH'] = str(gcc) + ';' + str(tools / 'cargo/bin') + ';' + env['PATH']
         strip = gcc / 'strip.exe'
-        dll = output / 'AimohMmdUpstream.dll'
+        dll = output / 'GFL2MmdEngine.dll'
     assert Path(command[0]).is_file(), command[0]
     if args.dry_run:
         print('cwd: ' + str(source)); print(subprocess.list2cmdline(command)); return

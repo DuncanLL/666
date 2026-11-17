@@ -5,8 +5,9 @@ ModData={getOrCreate=function(key)
  return worldData[key]
 end}
 function require(name)
- if name=="AimohPMXRoomEconomy"then return economy end
+ if name=="GFL2RoomEconomy"then return economy end
  if name=="GFL2SignatureWeapon"then return signatureWeapons end
+ if name=="GFL2WeaponSkins"then return weaponSkins end
  if name=="GFL2MultiplayerProtocol"then return multiplayerProtocol end
  if name=="GFL2MultiplayerClient"then return multiplayerRoom end
  return oldRequire(name)
@@ -29,6 +30,7 @@ ISSliderPanel=UI:derive("Slider")
 function ISSliderPanel:instantiate()self.sliderBarDim={}end
 function ISSliderPanel:setDoButtons()end
 function ISSliderPanel:setValues()end
+function ISSliderPanel:setCurrentValue(value)self.currentValue=value end
 function ISSliderPanel:paginate()end
 opened={}
 overlayEnabled=false

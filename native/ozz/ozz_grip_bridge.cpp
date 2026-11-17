@@ -5,7 +5,7 @@
 // Thin C ABI over the unmodified MIT ozz IKTwoBoneJob. All matrices are
 // column-major model-space matrices, quaternions are XYZW local corrections.
 // Return: 1 reached, 0 valid but unreached, -1 invalid values, -2 invalid job.
-extern "C" __declspec(dllexport) int aimoh_two_bone(
+extern "C" __declspec(dllexport) int gfl2_two_bone(
     const float* matrices, const float* target, const float* pole,
     const float* mid_axis, float weight, float soften, float twist,
     float* rotations) noexcept {

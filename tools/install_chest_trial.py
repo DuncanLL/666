@@ -5,19 +5,19 @@ from common import ROOT,BUILD,settings,sha,save
 
 def install(project,target,index):
     source=project/'Contents/mods/GFL2Exilium';target=target.resolve()
-    assert (target/'42/mod.info').is_file() and (target/'42/media/aimoh_pmx/registry.json').is_file(),target
-    generated=BUILD/'generated-mod';catalog_path=Path('42/media/ui/AimohPMXReadyRoom/catalog.json')
+    assert (target/'42/mod.info').is_file() and (target/'42/media/gfl2_pmx/registry.json').is_file(),target
+    generated=BUILD/'generated-mod';catalog_path=Path('42/media/ui/GFL2ReadyRoom/catalog.json')
     from prepare_chest_labels import TEXT
     next_catalog=json.loads((target/catalog_path).read_text('utf8'));candidate=json.loads((source/catalog_path).read_text('utf8'))
     for key,value in TEXT.items():next_catalog['text'][key]=value;next_catalog['labels'][value]=candidate['labels'][value]
     files={Path('42/media/java/client/GFL2Exilium.jar'):source/'42/media/java/client/GFL2Exilium.jar',
            Path('42/mod.info'):source/'42/mod.info'}
-    for name in ['AimohPMXPreview.lua','AimohPMXWindow.lua']:
+    for name in ['GFL2CharacterRuntime.lua','GFL2RoomWindow.lua']:
         relative=Path('42/media/lua/client')/name;files[relative]=source/relative
     for p in generated.rglob('*.png'):files[p.relative_to(generated)]=p
     stage=BUILD/'game-softbody/install-delta'/str(index);stage.mkdir(parents=True,exist_ok=True)
     catalog_file=stage/'catalog.json';catalog_file.write_text(json.dumps(next_catalog,ensure_ascii=False,indent=2)+'\n','utf8');files[catalog_path]=catalog_file
-    registry_path=Path('42/media/aimoh_pmx/registry.json')
+    registry_path=Path('42/media/gfl2_pmx/registry.json')
     registry=json.loads((target/registry_path).read_text('utf8'));listed={r['id']:r for r in json.loads((source/registry_path).read_text('utf8'))['models']}
     for row in registry['models']:
         if row['id'] in listed:
@@ -38,7 +38,7 @@ def install(project,target,index):
         for row in records:
             relative=Path(row['path']);final=target/relative;final.parent.mkdir(parents=True,exist_ok=True)
             assert (sha(final)if final.exists()else None)==row['before'],'Target changed during installation: '+str(final)
-            temporary=final.with_name(final.name+'.r116-trial-writing');assert not temporary.exists()
+            temporary=final.with_name(final.name+'.gfl2-trial-writing');assert not temporary.exists()
             try:shutil.copy2(files[relative],temporary);os.replace(temporary,final)
             finally:temporary.unlink(missing_ok=True)
             replaced.append(row);assert sha(final)==row['after']
@@ -47,7 +47,7 @@ def install(project,target,index):
             final=target/row['path']
             if row['before'] is None:final.unlink()
             else:
-                temporary=final.with_name(final.name+'.r116-rollback-writing');shutil.copy2(backup/row['path'],temporary);os.replace(temporary,final)
+                temporary=final.with_name(final.name+'.gfl2-rollback-writing');shutil.copy2(backup/row['path'],temporary);os.replace(temporary,final)
         raise
     return dict(target=str(target),status='INSTALLED_READBACK_VERIFIED_GAMEPLAY_NOT_TESTED',files=records,rollback=str(backup),models_and_textures_replaced=False,external_shaders_replaced=False)
 

@@ -1,4 +1,4 @@
-"""Combine the two verified build inputs into one normally loaded R116 MOD JAR."""
+"""Combine the two verified build inputs into one normally loaded GFL2 MOD JAR."""
 import json
 import os
 from pathlib import Path
@@ -8,13 +8,13 @@ from build import compile_java
 from build_render_support import write
 from common import ROOT, BUILD, settings, environment, sha, save
 
-BRIDGE='aimoh/gf2/bridge/'
+BRIDGE='gfl2/render/'
 RENDER='viewpoint/render/'
 VARIANTS=(
     'DepthStencil','GlScope','NativeShaders','OriginalProgram','PackMaterials',
     'Rc2Vertex','RegisterBank','SourceHost','Vertex',
 )
-RENAMES={RENDER+'AimohGf2'+name:RENDER+'AimohEclipseGf2'+name for name in VARIANTS}
+RENAMES={RENDER+'Gfl2'+name:RENDER+'Gfl2Eclipse'+name for name in VARIANTS}
 RENAMES[BRIDGE+'RuntimeHooks']=BRIDGE+'EclipseHooks'
 
 def class_root(entry):
@@ -54,17 +54,17 @@ def build_combined():
         subprocess.run(cmd,env=environment(),check=True)
         sources=sorted((ROOT/'render-support/combined/java').rglob('*.java'))
         overrides=staging/'combined'
-        compile_java(cfg,sources,overrides,[classes,native['jar'],host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
+        compile_java(cfg,sources,overrides,[classes,native['jar'],host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')])
         rows={}
         for base in (classes,overrides):
             for path in base.rglob('*.class'):
                 name=path.relative_to(base).as_posix()
                 assert name not in rows,'Combined entry conflict: '+name
                 rows[name]=path.read_bytes()
-        jar=out/'AimohGF2Eclipse.jar'
+        jar=out/'GFL2RenderSupport.jar'
         result=staging/jar.name
         with zipfile.ZipFile(native['jar'])as n,zipfile.ZipFile(eclipse['jar'])as e,zipfile.ZipFile(result,'w')as z:
-            replacements={BRIDGE+'Main.class',BRIDGE+'EclipseHooks.class',RENDER+'AimohGf2SourceHost.class'}
+            replacements={BRIDGE+'Main.class',BRIDGE+'EclipseHooks.class',RENDER+'Gfl2SourceHost.class'}
             assert set(rows)&set(n.namelist())==replacements,'Unexpected replacement of a Native class'
             for name in n.namelist():
                 if name not in replacements:write(z,name,n.read(name))

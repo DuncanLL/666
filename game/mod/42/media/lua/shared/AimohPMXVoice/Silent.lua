@@ -1,4 +1,0 @@
-require "AimohPMXVoice/SilentData"
-require "AimohPMXVoice/NativeVoice"
-AimohPMXSilentVoice=AimohPMXNativeVoice.create(AimohPMXSilentVoiceData,"AimohPMXSilentOriginalVoicePrefix")
-return AimohPMXSilentVoice

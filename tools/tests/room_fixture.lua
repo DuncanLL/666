@@ -18,10 +18,12 @@ function UI:drawTextureScaledAspect(t,x,y,w,h,a,r,g,b)recordDraw(self,"aspect",x
 function UI:drawRect(x,y,w,h,a,r,g,b)recordDraw(self,"rect",x,y,w,h,a,r,g,b,"")end
 function UI:drawRectBorder(x,y,w,h,a,r,g,b)recordDraw(self,"border",x,y,w,h,a,r,g,b,"")end
 function UI:drawText(t,x,y,r,g,b,a,font)recordDraw(self,"text",x,y,0,18,a,r,g,b,t)end
+function UI:drawTextZoomed(t,x,y,zoom,r,g,b,a,font)recordDraw(self,"text",x,y,0,18*zoom,a,r,g,b,t)end
+function UI:drawTextRight(t,x,y,r,g,b,a,font)recordDraw(self,"text",x,y,0,18,a,r,g,b,t)end
 function getTexture(path)return {path=path}end
 local originalRequire=require
-function require(name)if name=="AimohPMXRoomData"then return function()return roomData end end;return originalRequire(name)end
-local api=AimohPMXPreview
+function require(name)if name=="GFL2RoomData"then return function()return roomData end end;return originalRequire(name)end
+local api=GFL2CharacterRuntime
 function api.modelCount()return #registryModels end
 function api.modelIdAt(i)return registryModels[i+1].id end
 function api.modelLabel(i)return registryModels[i+1].label end
@@ -40,7 +42,7 @@ function api.setChoice(a,g,o)
  if calls.fail then return "invalid choice"end
  calls.choice=calls.choice+1;calls.choices[g]=o;a.settings="choice-settings-"..g.."-"..o;return ""
 end
-AimohPMXReadyRoom={draw=function(...)calls.draw=(calls.draw or 0)+1;return true end,release=function(a)calls.release=(calls.release or 0)+1 end}
+GFL2ReadyRoom={draw=function(...)calls.draw=(calls.draw or 0)+1;return true end,release=function(a)calls.release=(calls.release or 0)+1 end}
 function paint(panel)
  if not panel.visible then return end
  if panel.prerender then panel:prerender()end

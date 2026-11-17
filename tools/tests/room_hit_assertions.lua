@@ -20,16 +20,16 @@ local function checkArea(root,b)
  end
 end
 local ctx=context();Events.OnFillWorldObjectContextMenu.handlers[1](0,ctx,{},false);ctx.items[1].fn(ctx.items[1].target)
-local w=AimohPMXWindow.instances[0];local character
+local w=GFL2RoomWindow.instances[0];local character
 for _,c in ipairs(w.characters)do for _,skin in ipairs(c.skins)do if skin.id=='pmx-c7270af966e8aaf8'then character=c end end end
 assert(character,'Eye-enabled character missing');w:onCharacter(character);w:update()
 assert(w.eyeGroup~=nil and w.eyeOpenButton.visible and w.eyeClosedButton.visible)
-click(w,w.eyeClosedButton);assert(AimohPMXPreview.selectedOption(actor,w.eyeGroup)==1)
-click(w,w.eyeOpenButton);assert(AimohPMXPreview.selectedOption(actor,w.eyeGroup)==0)
-assert(actor.data.AimohPMXPreview.profiles[AimohPMXPreview.modelId(actor)]==actor.settings,'Eye selection not saved')
+click(w,w.eyeClosedButton);assert(GFL2CharacterRuntime.selectedOption(actor,w.eyeGroup)==1)
+click(w,w.eyeOpenButton);assert(GFL2CharacterRuntime.selectedOption(actor,w.eyeGroup)==0)
+assert(actor.data.GFL2CharacterRuntime.profiles[GFL2CharacterRuntime.modelId(actor)]==actor.settings,'Eye selection not saved')
 for _,size in ipairs({{1100,670},{960,620},{736,520}})do
- w:close();AimohPMXWindow.instances={};screenWidth=size[1]+64;screenHeight=size[2]+80
- w=AimohPMXWindow.open(actor,w.actions)
+ w:close();GFL2RoomWindow.instances={};screenWidth=size[1]+64;screenHeight=size[2]+80
+ w=GFL2RoomWindow.open(actor,w.actions)
  -- Width is fixed at construction; test each full tab's control ordering.
  for _,tab in ipairs({'skins','parts','advanced'})do
   w:setTab(tab)
@@ -51,14 +51,14 @@ for _,size in ipairs({{1100,670},{960,620},{736,520}})do
  w.preview:onMouseDown();w.preview:onMouseMove(12,0);w.preview:onMouseUp();assert(w.yaw>0 and not w.preview.dragging)
 end
 local previousSelected=w.selected
-local previousCount=AimohPMXPreview.groupCount;local previousLabel=AimohPMXPreview.groupLabel
+local previousCount=GFL2CharacterRuntime.groupCount;local previousLabel=GFL2CharacterRuntime.groupLabel
 w.selected={meta={primaryCategories={'Hands',roomData.text.Top,roomData.text.Bottom}}}
 local supplied={'Hands',roomData.text.Top,roomData.text.Bottom,roomData.text.Head}
-AimohPMXPreview.groupCount=function()return #supplied end
-AimohPMXPreview.groupLabel=function(player,index)return supplied[index+1]end
+GFL2CharacterRuntime.groupCount=function()return #supplied end
+GFL2CharacterRuntime.groupLabel=function(player,index)return supplied[index+1]end
 local primary=w:partRows(false);local extra=w:partRows(true)
 assert(#primary==3 and primary[1].label=='Hands' and primary[1].index==0 and primary[2].index==1 and primary[3].index==2,'Model-supplied primary categories were not preserved')
 assert(#extra==1 and extra[1].label==roomData.text.Head and extra[1].index==3,'Non-primary accessories were lost: '..tostring(#extra)..'/'..tostring(extra[1]and extra[1].label)..'/'..tostring(extra[1]and extra[1].index))
-AimohPMXPreview.groupCount=previousCount;AimohPMXPreview.groupLabel=previousLabel;w.selected=previousSelected
+GFL2CharacterRuntime.groupCount=previousCount;GFL2CharacterRuntime.groupLabel=previousLabel;w.selected=previousSelected
 w:close()
 return 'PASS_ROOM_HIT_REGIONS_REAL_BUTTON_HANDLERS_EYES_SAVE_'..checks

@@ -26,7 +26,7 @@ os.environ['TEMP']=os.environ['TMP']=str(out);s=NativeSession(cfg,out/('source-'
 try:
     os.chdir(game);J('zombie.ZomboidFileSystem').instance.setCacheDir(str(out/'User'));J('zombie.ZomboidFileSystem').instance.init()
     tracks=s.tracks([dict(path=str(game/'media/anims_X/Bob/Bob_IdleNoAim1Hand.x'),loop=True)])
-    cls=J('pvads.ADS').class_;fixture=J('aimoh.pmxpreview.SourcePoseFixture');actor=fixture.owner(s.player)
+    cls=J('pvads.ADS').class_;fixture=J('gfl2.runtime.SourcePoseFixture');actor=fixture.owner(s.player)
     def field(name):f=cls.getDeclaredField(name);f.setAccessible(True);return f
     def method(name):m=next(m for m in cls.getDeclaredMethods()if str(m.getName())==name);m.setAccessible(True);return m
     def fresh():
@@ -50,32 +50,32 @@ try:
         for file,track in clip_tracks.items():
             for at in [.0,.4,.8]:
                 s.player.setIsoGameCharacter(None);s.sample(track,at,[1.]);s.player.setIsoGameCharacter(actor);fixture.evaluateAnimation(s.player)
-                samples[file+'@'+str(at)]=np.asarray(J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())).copy()
+                samples[file+'@'+str(at)]=np.asarray(J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())).copy()
         return samples
     actions_before=action_samples();fresh()
     Instance=J('zombie.core.skinnedmodel.model.ModelInstance');parent=Instance();weapon=Instance();weapon.parent=parent;weapon.parentBoneName='Bip01_Prop1';field('e').setFloat(None,.5)
     clean=state();method('raiseHideArms').invoke(None,s.player);hidden_before=state();method('steadyArms').invoke(None,s.player,weapon,s.jpype.JFloat(.016));broken=state()
     assert not clean['nonfinite']and not clean['singular']and hidden_before['singular']and broken['nonfinite'],(clean,hidden_before,broken)
     rejected=False
-    try:J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
+    try:J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
     except jpype.JException:rejected=True
     assert rejected
     fresh();bench_before=[fixture.bench(s.player,300_000)for _ in range(5)]
     install=J('DeformedMotionCheck').class_.getDeclaredMethod('installReader');install.setAccessible(True);install.invoke(None)
     fresh();method('raiseHideArms').invoke(None,s.player);hidden_after=state();method('steadyArms').invoke(None,s.player,weapon,s.jpype.JFloat(.016));fixed=state()
     assert hidden_after['singular']and not fixed['nonfinite'],fixed
-    J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount());assert state()==clean,state()
+    J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount());assert state()==clean,state()
     cycles=60
     for cycle in range(cycles):
         if cycle%2==0:fixture.evaluateAnimation(s.player)
         method('raiseHideArms').invoke(None,s.player);method('steadyArms').invoke(None,s.player,weapon,s.jpype.JFloat([0.,.001,.016,.033,.08][cycle%5]))
-        assert not state()['nonfinite'],(cycle,state());J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
+        assert not state()['nonfinite'],(cycle,state());J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
     actions_after=action_samples();assert actions_before.keys()==actions_after.keys()
     action_error=max(float(np.max(np.abs(actions_before[k]-actions_after[k])))for k in actions_before);assert action_error==0,action_error
-    fresh();original=np.asarray(J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())).copy()
+    fresh();original=np.asarray(J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())).copy()
     raw=fixture.raw(s.player,7);raw.m00=float('nan');palette=s.player.getSkinTransforms(s.player.getSkinningData())
     assert not state()['nonfinite'];assert all(math.isfinite(getattr(m,'m'+str(r)+str(col)))for m in palette for r in range(4)for col in range(4))
-    restored=np.asarray(J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount()));assert np.max(np.abs(restored-original))<2e-5
+    restored=np.asarray(J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount()));assert np.max(np.abs(restored-original))<2e-5
     # A valid presentation adjustment, reflection and small nonuniform scale must remain byte-identical.
     raw=fixture.raw(s.player,7);raw.m00=-.00001;raw.m11=.004;raw.m22=.05;expected=[getattr(raw,'m'+str(r)+str(col))for r in range(4)for col in range(4)]
     actual=s.player.getModelTransformAt(7);assert expected==[getattr(actual,'m'+str(r)+str(col))for r in range(4)for col in range(4)]
@@ -92,7 +92,7 @@ try:
     fresh();s.player.boneTransforms[7].set(poisoned);fixture.evaluateAnimation(s.player)
     assert not math.isfinite(s.player.getModelTransformAt(7).m00)
     genuine_rejected=False
-    try:J('aimoh.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
+    try:J('gfl2.motion.PzPoseCapture').capture(s.player,s.player.getModelTransformsCount())
     except jpype.JException:genuine_rejected=True
     assert genuine_rejected
     fresh()
@@ -100,7 +100,7 @@ try:
     fresh();fixture.watched(actor,True);bench_after=[fixture.bench(s.player,300_000)for _ in range(5)]
     fixture.watched(actor,False);animation_before=[fixture.benchAnimation(s.player,3000)for _ in range(5)]
     fixture.watched(actor,True);animation_after=[fixture.benchAnimation(s.player,3000)for _ in range(5)]
-    J('aimoh.pmxpreview.Main').disable(actor);fixture.raw(s.player,7).m00=float('nan');assert not math.isfinite(s.player.getModelTransformAt(7).m00),'Disable retained source-pose ownership'
+    J('gfl2.runtime.Main').disable(actor);fixture.raw(s.player,7).m00=float('nan');assert not math.isfinite(s.player.getModelTransformAt(7).m00),'Disable retained source-pose ownership'
     result=dict(status='PASS_ACTUAL_WRITER_AND_COMMON_GETTER_PALETTE_ADVICE',actual_modifier_sha256=sha(ads),jar_sha256=sha(jar),before=broken,after=fixed,
                 zero_scale_mask_preceded_corruption=bool(hidden_before['singular']),physics_required_to_reproduce=False,real_game_animation_player=True,actual_zombiebuddy_advice=True,
                 actor_identity_substituted=True,ordinary_matrix_preserved=True,unowned_actor_unchanged=True,skin_palette_rebuilt=True,

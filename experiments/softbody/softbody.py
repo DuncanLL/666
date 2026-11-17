@@ -20,7 +20,7 @@ def pointer(value):return value.ctypes.data_as(F)
 class SoftBody:
     def __init__(self):
         self.dll_directory=os.add_dll_directory(cfg['native_source'])
-        self.lib=C.CDLL(str(ROOT/'build/softbody/AimohSoftBodyPreview.dll'))
+        self.lib=C.CDLL(str(ROOT/'build/softbody/GFL2SoftBodyPreview.dll'))
         self.lib.sb_new.restype=C.c_void_p
         self.lib.sb_delete.argtypes=[C.c_void_p]
         self.lib.sb_add.argtypes=[C.c_void_p,F,F,F,F,F,C.c_int,C.c_int,*([C.c_float]*4)]

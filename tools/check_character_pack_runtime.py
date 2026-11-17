@@ -9,7 +9,7 @@ game=Path(c['game_root'])
 mode=sys.argv[1]
 root=Path(sys.argv[2]).resolve(strict=True)/'Contents/mods/GFL2Exilium'
 jar=root/'42/media/java/client/GFL2Exilium.jar'
-reg=json.loads((root/'42/media/aimoh_pmx/registry.json').read_text('utf8'))
+reg=json.loads((root/'42/media/gfl2_pmx/registry.json').read_text('utf8'))
 mod_ids=reg.get('pack_mod_ids',{})
 assets=Path(sys.argv[3]).resolve(strict=True)
 game_jars=[c['zombiebuddy_jar'],str(game/'projectzomboid.jar')]
@@ -21,39 +21,40 @@ try:
  fs=J('zombie.ZomboidFileSystem').instance
  files=fs.activeFileMap
  mods=fs.getModIDs()
- runtime=J('aimoh.pmxpreview.Main')
- room=J('aimoh.pmxpreview.ReadyRoomPreview')
+ runtime=J('gfl2.runtime.Main')
+ room=J('gfl2.runtime.ReadyRoomPreview')
  fs.setModIdToDir('GFL2Exilium',str(root))
  for mod,ids in reg['packs'].items():
   # Simulate the stale metadata that used to hide all packs, while the active map
   # still points at the game-selected version.
-  fs.setModIdToDir(mod_ids.get(mod,mod),str(BUILD/'stale-mod-root'/mod))
-  rel=f'media/aimoh_pmx/packs/{mod}.json'
-  active=assets/mod/'Contents/mods'/mod/'42'/rel
+  mod_id=mod_ids.get(mod,mod)
+  fs.setModIdToDir(mod_id,str(BUILD/'stale-mod-root'/mod_id))
+  rel=f'media/gfl2_pmx/packs/{mod}.json'
+  active=assets/mod_id/'Contents/mods'/mod_id/'42'/rel
   assert active.is_file()
   files.put(rel.lower(),str(active))
  assert runtime.modelCount()==0
- mods.add(mod_ids.get('R116Laiya','R116Laiya'))
+ mods.add(mod_ids.get('GFL2Laiya','GFL2Laiya'))
  runtime.clear()
- assert runtime.modelCount()==len(reg['packs']['R116Laiya'])
+ assert runtime.modelCount()==len(reg['packs']['GFL2Laiya'])
  for mod in reg['packs']:
-  if mod!='R116Laiya': mods.add(mod_ids.get(mod,mod))
+  if mod!='GFL2Laiya': mods.add(mod_ids.get(mod,mod))
  runtime.clear()
  expected={ident for values in reg['packs'].values() for ident in values}
  assert runtime.modelCount()==len(expected)
  assert {runtime.modelIdAt(i) for i in range(runtime.modelCount())}==expected
  models=room.data().rawget('models')
- catalog=json.loads((root/'42/media/ui/AimohPMXReadyRoom/catalog.json').read_text('utf8'))
+ catalog=json.loads((root/'42/media/ui/GFL2ReadyRoom/catalog.json').read_text('utf8'))
  for mod,ids in reg['packs'].items():
   for ident in ids:
    if ident in catalog['models']:
     assert models.rawget(ident).rawget('pack')==mod,(mod,ident)
  # A stale role release with fewer registered outfits remains usable, while an
  # unknown ID is ignored. File paths for shared models are the real assets.
- role='R116Laiya'
- rel=f'media/aimoh_pmx/packs/{role}.json'
+ role='GFL2Laiya'
+ rel=f'media/gfl2_pmx/packs/{role}.json'
  current=Path(str(files.get(rel.lower())))
- fixture=BUILD/f'old-pack-{mode}'/'media/aimoh_pmx'
+ fixture=BUILD/f'old-pack-{mode}'/'media/gfl2_pmx'
  (fixture/'packs').mkdir(parents=True,exist_ok=True)
  data=json.loads(current.read_text('utf8'))
  known=next(m for m in data['models'] if not m.get('hidden',False))

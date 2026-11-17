@@ -2,7 +2,7 @@
   "format": 2,
   "backend": "VP_NATIVE",
   "release_version": "0.3.27",
-  "internal_mod_id": "AimohGF2Eclipse",
+  "internal_mod_id": "GFL2RenderSupport",
   "workshop_id": "3834707439",
   "supported_viewpoint": "official Steam Workshop 0.1.7",
   "official_host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
@@ -18,7 +18,6 @@
     "Read original GF2 programs/textures from external character MOD resources; not from Git",
     "Read official model helpers from the actual VP dependency; no VP classes/shaders copied into addon"
   ],
-  "historical_eclipse_provenance": "provenance/render-support-eclipse-20261106.json",
   "material_texture_pose_physics_changes": false,
   "nvidia_hardware_acceptance": false,
   "steam_subscription_acceptance": false,

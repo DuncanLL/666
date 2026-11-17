@@ -35,7 +35,7 @@ if __name__=='__main__':
     resources=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
     asset_root=Path(cfg['render_support_asset_root']).resolve();asset=(asset_root/resources['file']).resolve();assert asset.is_relative_to(asset_root)
     if args.read_assets_from:
-        with zipfile.ZipFile(args.read_assets_from)as z:raw=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
+        with zipfile.ZipFile(args.read_assets_from)as z:raw=z.read('gfl2/render/gf2-original-display.rgba16f')
         import hashlib
         assert len(raw)==resources['bytes']and hashlib.sha256(raw).hexdigest()==resources['sha256'],'Readback display asset differs'
         asset_root.mkdir(parents=True,exist_ok=True)
@@ -43,7 +43,7 @@ if __name__=='__main__':
         else:asset.write_bytes(raw)
     assert asset.stat().st_size==resources['bytes']and sha(asset)==resources['sha256'],'Original shared display profile differs'
     game=Path(cfg['game_root']);out=BUILD/'render-support';out.mkdir(parents=True,exist_ok=True);classes=out/('classes-'+origin['release_version']);sources=sorted((ROOT/'render-support/java').rglob('*.java'))
-    compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],cfg['reference_jar'],*game.glob('*.jar')])
+    compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')])
     packroot=ROOT/'render-support/native-pack';payload=io.BytesIO();shader_sources=sorted(p for p in packroot.rglob('*')if p.is_file())
     # Cross-driver guard: include legacy names accepted by some modern compilers.
     for source in shader_sources:check_glsl_names(source,source.read_bytes())
@@ -53,13 +53,13 @@ if __name__=='__main__':
             name=p.relative_to(packroot).as_posix()
             data=p.read_bytes()
             write(z,name,release_bootstrap(data) if name=='shaders/gf2/manifest.json' else data)
-    shader=payload.getvalue();jar=out/'AimohGF2Eclipse.jar';temporary=jar.with_suffix('.jar.writing')
+    shader=payload.getvalue();jar=out/'GFL2RenderSupport.jar';temporary=jar.with_suffix('.jar.writing')
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as z:
         for p in sorted(classes.rglob('*.class')):
             name=p.relative_to(classes).as_posix();assert name not in stock,'Stock VP class collision: '+name;write(z,name,p.read_bytes())
         write(z,'META-INF/gfl2/rendering/native.zip',shader)
-        write(z,'aimoh/gf2/bridge/gf2-original-display.rgba16f',asset.read_bytes())
+        write(z,'gfl2/render/gf2-original-display.rgba16f',asset.read_bytes())
     with zipfile.ZipFile(temporary)as z:
         assert z.testzip()is None;assert not any('META-INF/gfl2/rendering/eclipse.zip'in n for n in z.namelist())
     os.replace(temporary,jar)

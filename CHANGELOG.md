@@ -1,8 +1,19 @@
 # 版本记录
 
-当前项目为「少前2追放角色框架」(`GFL2Exilium`)。维护目标是兼容更新、四国语言本地化及复现明确的缺陷。角色、衣装、材质与动作按定版维护。
+当前项目为「僵毁少女前线」(`GFL2Exilium`)。维护目标是兼容更新、四国语言本地化及复现明确的缺陷。角色、衣装、材质与动作按定版维护。
 
 游戏动作、人物状态和光影接线详见 [维护手册](docs/maintenance/README.md)。
+
+## 0.7.16 · 本机与工坊上传目录
+
+- 限定衣装池采用[原游概率公示](https://gf2.haoplay.com/game/probability.html)的 0.02% 基础概率及四段软保底。第 100 抽必得所选衣装，含保底综合概率约 1.1776%。
+- 整备室经济模块更名为 `GFL2RoomEconomy.lua`，单机和联机入口使用新文件名。
+- 核心 Lua 入口、整备室资源和 24 个角色包登记使用当前命名。旧存档的余额、角色解锁、外观、表情以及站姿与瞄准握持设置可迁移到新键。
+- 工坊候选复用已核验的整备室图片，角色包检查按实际 MOD ID 读取分包。
+- 合入简体中文、英文、日文和韩文本地化，涵盖角色与衣装文案、字号适配、表情控件和 24 个角色的语音字幕。四种语言的菜单入口统一显示「僵毁少女前线」。
+- 更新 Java 包、原生库和 PMX 资源路径，并重新组装 Native 与 Eclipse。保留原有 PMX、动作和已验收的软体输入。
+- 语音脚本、字幕键和媒体目录迁到现用命名。载入存档时可以恢复旧角色的原声前缀。
+- 本机 MOD 和上传目录的核心与 24 个角色包已安装并回读。Steam 内容发布和进游戏后的实机验收待办。
 
 ## 0.7.15 · 当前本地维护基线
 
@@ -26,21 +37,21 @@
 - 通过握持重放、暂停镜头回归、官方宿主的早加载和后加载检查，以及 RX 9070 XT 的受控出图。
 - 框架和秋桦 0.7.2 的 Steam 发布均有内容清单回读。真实游玩验证在该发布记录中仍为待测。
 
-[框架发布及 Steam 回读](provenance/releases/0.7.14-held-slot-attachment.json) · [秋桦 0.7.2](provenance/releases/qiuhua-0.7.2-chest-weights.json)
+[框架发布及 Steam 回读](provenance/releases/0.7.14-held-slot-attachment.json) · 秋桦 0.7.2
 
 ## 0.7.13 · 2026-11-17
 
 - 适配 Steam 创意工坊正式版 Viewpoint 0.1.7。统一身体物理入口并更新持物姿态的同步。
 - 完成人物联机协议、整备室经济和换装逻辑的组件测试，核对框架和本次更新的角色包发布回读。
 
-[0.7.13 记录](provenance/releases/0.7.13-viewpoint-multiplayer.json) · [多人回环验证](provenance/releases/multiplayer-loopback-validation.json)
+[0.7.13 记录](provenance/releases/0.7.13-viewpoint-multiplayer.json) · 多人回环验证
 
 ## 0.7.9–0.7.12
 
 - 从旧宿主版本迁移到 Steam 正式版 Viewpoint 0.1.7，核对点光布局、身体物理入口、握持与兼容性。
 - 各阶段的原生组件、宿主与发布状态按独立记录核对。
 
-[0.7.9](provenance/releases/0.7.9-viewpoint-017.json) · [0.7.10](provenance/releases/0.7.10-viewpoint-light-body-physics.json) · [0.7.11](provenance/releases/0.7.11-viewpoint-compatibility-audit.json) · [0.7.12](provenance/releases/0.7.12-viewpoint-held-phase.json)
+0.7.9 · 0.7.10 · 0.7.11 · 0.7.12
 
 ## 0.7.0–0.7.8 · 历史
 

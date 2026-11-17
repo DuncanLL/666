@@ -1,0 +1,2079 @@
+module Base
+{
+    sound GFL2PmxFaelynn_Hungry_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hungry_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hungry_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Thirst_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Thirst_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Tired_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Tired_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Endurance_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Endurance_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Pain_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Pain_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bleeding_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bleeding_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Injured_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Injured_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Panic_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Panic_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Stress_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Stress_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Sick_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Sick_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Bored_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Bored_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Unhappy_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Unhappy_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Wet_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Wet_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HasACold_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HasACold_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_HeavyLoad_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/HeavyLoad_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Drunk_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Drunk_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_FoodEaten_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/FoodEaten_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hyperthermia_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hyperthermia_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Hypothermia_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Hypothermia_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Windchill_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Windchill_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_Uncomfortable_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/Uncomfortable_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L2_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L2_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L2_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L2_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L3_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L3_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_NoxiousSmell_L4_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/NoxiousSmell_L4_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_CantSprint_L1_A
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/CantSprint_L1_A.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_CantSprint_L1_B
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/CantSprint_L1_B.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynn_CantSprint_L1_C
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/GFL2PmxFaelynn/CantSprint_L1_C.wav,
+            volume = 1.0,
+            distanceMax = 20,
+        }
+    }
+sound GFL2PmxFaelynn_Shout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Shout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Shout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Shout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Shout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Shout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_SneakShout_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/SneakShout_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_SneakShout_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/SneakShout_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_SneakShout_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/SneakShout_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_A
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_A.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_B
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_B.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_C
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_C.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_D
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_D.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_E
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_E.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_F
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_F.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_G
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_G.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_H
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_H.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_I
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_I.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+sound GFL2PmxFaelynn_Kill_J
+{
+ category=Player,
+ is3D=true,
+ loop=false,
+ clip
+ {
+  file=media/sound/GFL2PmxFaelynn/Kill_J.wav,
+  volume=1,
+  distanceMax=20,
+ }
+}
+}

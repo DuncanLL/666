@@ -1,4 +1,4 @@
-package aimoh.gf2.bridge;
+package gfl2.render;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

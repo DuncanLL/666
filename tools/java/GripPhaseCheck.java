@@ -1,6 +1,6 @@
-package aimoh.pmxpreview;
+package gfl2.runtime;
 
-import aimoh.motion.PmxDrawMesh;
+import gfl2.motion.PmxDrawMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import viewpoint.render.ModelDraws;
@@ -25,7 +25,7 @@ public final class GripPhaseCheck {
     public static void main(String[] args) throws Exception {
         Class<?> loader = Class.forName("me.zed_0xff.zombie_buddy.Loader");
         field(loader,"g_instrumentation").set(null,instrumentation);
-        me.zed_0xff.zombie_buddy.PatchEngine.applyPatches("aimoh.pmxpreview",GripPhaseCheck.class.getClassLoader());
+        me.zed_0xff.zombie_buddy.PatchEngine.applyPatches("gfl2.runtime",GripPhaseCheck.class.getClassLoader());
 
         Class<?> type = Class.forName("viewpoint.render.ModelBlend");
         var constructor = type.getDeclaredConstructor();

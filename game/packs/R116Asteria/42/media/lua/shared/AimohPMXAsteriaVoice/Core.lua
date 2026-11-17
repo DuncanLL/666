@@ -1,3 +1,0 @@
-require "AimohPMXVoice/FullVoiceCore"
-AimohPMXAsteriaVoiceCore=AimohPMXFullVoiceCore.create()
-return AimohPMXAsteriaVoiceCore

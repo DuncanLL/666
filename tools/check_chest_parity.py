@@ -12,11 +12,11 @@ J=jpype.JClass;F=lambda v:jpype.JArray(jpype.JFloat)(v)
 model=None;body=None
 try:
  J('zombie.ZomboidFileSystem').instance.setCacheDir(str(temp));J('zombie.ZomboidFileSystem').instance.init()
- main=J('aimoh.pmxpreview.Main');field=main.class_.getDeclaredField('directory');field.setAccessible(True);field.set(None,J('java.nio.file.Path').of(str(Path(c['asset_root'])/'42')))
+ main=J('gfl2.runtime.Main');field=main.class_.getDeclaredField('directory');field.setAccessible(True);field.set(None,J('java.nio.file.Path').of(str(Path(c['asset_root'])/'42')))
  init=main.class_.getDeclaredMethod('nativeRuntime');init.setAccessible(True);init.invoke(None);field=main.class_.getDeclaredField('api');field.setAccessible(True);api=field.get(None)
  rows=json.loads((BUILD/'chest-data/manifest.json').read_text('utf8'));chosen=max((r for r in rows if r['supported']),key=lambda r:r['bytes'])
- assets=Path(c['asset_root'])/'42/media/aimoh_pmx';registry=json.loads((assets/'registry.json').read_text('utf8'))['models'];entry=next(r for r in registry if r['id']==chosen['id']);profile=json.loads((assets/entry['profile']).read_text('utf8'))
- model=J('aimoh.motion.PmxModel').load(api,J('java.nio.file.Path').of(str(assets/entry['model'])),J('java.nio.file.Path').of(str(assets/entry['profile'])))
+ assets=Path(c['asset_root'])/'42/media/gfl2_pmx';registry=json.loads((assets/'registry.json').read_text('utf8'))['models'];entry=next(r for r in registry if r['id']==chosen['id']);profile=json.loads((assets/entry['profile']).read_text('utf8'))
+ model=J('gfl2.motion.PmxModel').load(api,J('java.nio.file.Path').of(str(assets/entry['model'])),J('java.nio.file.Path').of(str(assets/entry['profile'])))
  data=(BUILD/'chest-data'/(profile['pmx_sha256']+'.bin')).read_bytes();offset=52;regions=[];body=SoftBody()
  for _ in chosen['bones']:
   values=struct.unpack_from('<IIf9f',data,offset);offset+=48;bone,count,mass=values[:3];arrays=[]

@@ -12,15 +12,15 @@ os.environ['TEMP']=os.environ['TMP']=str(out)
 s=NativeSession(cfg,out/('source-'+str(os.getpid())));J=s.J;model=None
 try:
     os.chdir(game);fs=J('zombie.ZomboidFileSystem').instance;fs.setCacheDir(str(out/'User'));fs.init()
-    main=J('aimoh.pmxpreview.Main')
+    main=J('gfl2.runtime.Main')
     def field(cls,name):
         f=cls.getDeclaredField(name);f.setAccessible(True);return f
     field(main.class_,'directory').set(None,J('java.nio.file.Path').of(str(Path(c['asset_root'])/'42')))
     init=main.class_.getDeclaredMethod('nativeRuntime');init.setAccessible(True);init.invoke(None);api=field(main.class_,'api').get(None);grip=field(main.class_,'grip').get(None)
     tracks=s.tracks([dict(path=str(game/'media/anims_X/Bob/Bob_IdleNoAim1Hand.x'),loop=True)]);s.sample(tracks,.25,[1.])
-    assets=Path(c['asset_root'])/'42/media/aimoh_pmx';rows=json.loads((assets/'registry.json').read_text('utf8'))['models'];row=next(r for r in rows if r['id']=='pmx-c7270af966e8aaf8')
-    path=J('java.nio.file.Path').of;entry=J('aimoh.pmxpreview.Main$Entry')(row['id'],row['label'],path(str(assets/row['model'])),path(str(assets/row['profile'])))
-    cls=J('aimoh.pmxpreview.ModelSession').class_;ctor=cls.getDeclaredConstructors()[0];ctor.setAccessible(True);session=ctor.newInstance(api,grip,entry);field(cls,'queued').setBoolean(session,True)
+    assets=Path(c['asset_root'])/'42/media/gfl2_pmx';rows=json.loads((assets/'registry.json').read_text('utf8'))['models'];row=next(r for r in rows if r['id']=='pmx-c7270af966e8aaf8')
+    path=J('java.nio.file.Path').of;entry=J('gfl2.runtime.Main$Entry')(row['id'],row['label'],path(str(assets/row['model'])),path(str(assets/row['profile'])))
+    cls=J('gfl2.runtime.ModelSession').class_;ctor=cls.getDeclaredConstructors()[0];ctor.setAccessible(True);session=ctor.newInstance(api,grip,entry);field(cls,'queued').setBoolean(session,True)
     model=field(cls,'model').get(session);assert model.physicsEnabled() and model.hasChestPhysics()
     update=next(m for m in cls.getDeclaredMethods()if str(m.getName())=='update'and m.getParameterCount()==9);update.setAccessible(True)
     frame=J('viewpoint.core.Frame')();frame.number=1;frame.simNanos=1_000_000_000

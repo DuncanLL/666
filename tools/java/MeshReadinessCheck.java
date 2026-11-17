@@ -1,5 +1,5 @@
-package aimoh.pmxpreview;
-import aimoh.motion.*;
+package gfl2.runtime;
+import gfl2.motion.*;
 import com.shiroha.mmdskin.NativeFunc;
 import java.lang.reflect.*;
 import java.nio.*;
@@ -20,12 +20,12 @@ public final class MeshReadinessCheck {
     public static void main(String[] args)throws Exception{
         Path root=Path.of(args[0]),out=Path.of(args[1]);boolean before=Boolean.parseBoolean(args[2]);
         zombie.ZomboidFileSystem.instance.setCacheDir(out.resolve("User").toString());zombie.ZomboidFileSystem.instance.init();
-        if(!GLFW.glfwInit())throw new AssertionError("GLFW");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);long window=GLFW.glfwCreateWindow(32,32,"R116 mesh readiness",0,0);if(window==0)throw new AssertionError("Hidden context");GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
+        if(!GLFW.glfwInit())throw new AssertionError("GLFW");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);long window=GLFW.glfwCreateWindow(32,32,"GFL2 mesh readiness",0,0);if(window==0)throw new AssertionError("Hidden context");GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
         try{
             zombie.core.skinnedmodel.model.VertexBufferObject.funcs=new zombie.core.VBO.GLBufferObject15();
             field(RenderThread.class,"isInitialized").setBoolean(null,true);field(RenderThread.class,"contextThread").set(null,Thread.currentThread());
             field(Main.class,"directory").set(null,root);Method init=Main.class.getDeclaredMethod("nativeRuntime");init.setAccessible(true);init.invoke(null);NativeFunc api=(NativeFunc)field(Main.class,"api").get(null);
-            Path assets=root.resolve("media/aimoh_pmx");JSONObject row=new JSONObject(Files.readString(assets.resolve("registry.json"))).getJSONArray("models").getJSONObject(0);
+            Path assets=root.resolve("media/gfl2_pmx");JSONObject row=new JSONObject(Files.readString(assets.resolve("registry.json"))).getJSONArray("models").getJSONObject(0);
             Path pmx=assets.resolve(row.getString("model")),profile=assets.resolve(row.getString("profile"));JSONObject p=new JSONObject(Files.readString(profile));int count=p.getInt("vertices");
             try(PmxModel model=PmxModel.load(api,pmx,profile);
                     TextureFactory textures=before?TextureFactory.class.getDeclaredConstructor().newInstance():new TextureFactory(true)){

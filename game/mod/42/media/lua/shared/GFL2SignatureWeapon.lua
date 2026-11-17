@@ -1,7 +1,7 @@
 local weapons = {{
     id = "GFL2.CauseAndEffect",
     mod = "GFL2Phaetusa",
-    character = "R116Phaetusa",
+    character = "GFL2Phaetusa",
     name = "ContextMenu_GFL2_CauseAndEffect",
     description = "ContextMenu_GFL2_WeaponDescription",
     icon = "media/textures/Item_GFL2CauseAndEffect.png",
@@ -70,7 +70,7 @@ local weapons = {{
 }, {
     id = "GFL2.Skyhowl",
     mod = "GFL2Soppo",
-    character = "R116Soppo",
+    character = "GFL2Soppo",
     name = "ContextMenu_GFL2_Skyhowl",
     description = "ContextMenu_GFL2_SkyhowlDescription",
     icon = "media/textures/Item_GFL2Skyhowl.png",
@@ -106,7 +106,7 @@ local weapons = {{
 }, {
     id = "GFL2.SparklingCenterstage",
     mod = "GFL2Yohee",
-    character = "R116Yohee",
+    character = "GFL2Yohee",
     name = "ContextMenu_GFL2_SparklingCenterstage",
     description = "ContextMenu_GFL2_SparklingCenterstageDescription",
     icon = "media/textures/Item_GFL2SparklingCenterstage.png",
@@ -178,7 +178,7 @@ local weapons = {{
 }, {
     id = "GFL2.Lowenjunges",
     mod = "GFL2Lenna",
-    character = "R116Lenna",
+    character = "GFL2Lenna",
     name = "ContextMenu_GFL2_Lowenjunges",
     description = "ContextMenu_GFL2_LowenjungesDescription",
     icon = "media/textures/Item_GFL2Lowenjunges.png",
@@ -190,7 +190,7 @@ local weapons = {{
 }, {
     id = "GFL2.BansheesWhisper",
     mod = "GFL2Vector",
-    character = "R116Vector",
+    character = "GFL2Vector",
     name = "ContextMenu_GFL2_BansheesWhisper",
     description = "ContextMenu_GFL2_BansheesWhisperDescription",
     icon = "media/textures/Item_GFL2BansheesWhisper.png",
@@ -213,7 +213,7 @@ local weapons = {{
 }, {
     id = "GFL2.BittersweetCaramel",
     mod = "GFL2Macqiato",
-    character = "R116Macqiato",
+    character = "GFL2Macqiato",
     name = "ContextMenu_GFL2_BittersweetCaramel",
     description = "ContextMenu_GFL2_BittersweetCaramelDescription",
     icon = "media/textures/Item_GFL2BittersweetCaramel.png",
@@ -237,7 +237,7 @@ local weapons = {{
 }, {
     id = "GFL2.Trailblazer",
     mod = "GFL2Qiuhua",
-    character = "R116Qiuhua",
+    character = "GFL2Qiuhua",
     name = "ContextMenu_GFL2_Trailblazer",
     description = "ContextMenu_GFL2_TrailblazerDescription",
     icon = "media/textures/Item_GFL2Trailblazer.png",
@@ -248,7 +248,7 @@ local weapons = {{
 }, {
     id = "GFL2.GaiaTerminus",
     mod = "GFL2Destroyer",
-    character = "R116Destroyer",
+    character = "GFL2Destroyer",
     name = "ContextMenu_GFL2_GaiaTerminus",
     description = "ContextMenu_GFL2_GaiaTerminusDescription",
     icon = "media/textures/Item_GFL2GaiaTerminus.png",
@@ -271,7 +271,7 @@ local weapons = {{
 }, {
     id = "GFL2.TwilightRose",
     mod = "GFL2Sextans",
-    character = "R116Sextans",
+    character = "GFL2Sextans",
     name = "ContextMenu_GFL2_TwilightRose",
     description = "ContextMenu_GFL2_TwilightRoseDescription",
     icon = "media/textures/Item_GFL2TwilightRose.png",

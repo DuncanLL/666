@@ -4,8 +4,8 @@
 
 | 内容 | 位置 |
 |---|---|
-| 人物注册、模型资料、衣装和配件 | [核心资源](../game/mod/42/media/aimoh_pmx) · [角色包](../game/packs) · [整备室资料](../game/mod/42/media/ui/AimohPMXReadyRoom) |
-| 人物姿态、网格和物理 | [动作与姿态](../game/java/aimoh/motion) · [原生核心](../native) |
+| 人物注册、模型资料、衣装和配件 | [核心资源](../game/mod/42/media/gfl2_pmx) · [角色包](../game/packs) · [整备室资料](../game/mod/42/media/ui/GFL2ReadyRoom) |
+| 人物姿态、网格和物理 | [动作与姿态](../game/java/gfl2/motion) · [原生核心](../native) |
 | 整备室、声音与多人 | [游戏 Lua](../game/mod/42/media/lua) · [多人协议记录](multiplayer-framework.md) |
 | Native 和 Eclipse | [渲染支持](../render-support) · [光影发布检查](render-release-standard.md) |
 | 构建、验证和发布记录 | [工具](../tools) · [结构化发布记录](../provenance/releases) · [历史笔记](handoffs) |

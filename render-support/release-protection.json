@@ -2,13 +2,13 @@
   "proguard_version": "7.10.0",
   "proguard_zip_sha256": "5aa88c434766a057a2ead3412acc01022bb444f9f1bfbae690a1d48b2006b242",
   "internal_java_roots": [
-    "AimohSealedSources", "AimohGf2OutlineBridge", "AimohGf2SurfaceControls", "AimohGf2FrameInputs",
-    "AimohGf2RegisterBank", "AimohEclipseGf2RegisterBank", "AimohNativeSourcePrograms",
-    "AimohNativeSourceRenderer", "AimohNativeSourceScope", "AimohNativeSourceSpace",
-    "AimohNativeDisplayTransfer", "AimohNativeGf2Environment", "AimohNativeLocalLights",
-    "AimohNativeMotionBridge", "AimohNativeRoomProbe", "AimohGf2RuntimeQueue",
-    "AimohGf2WorldShadow", "AimohGf2ShadowReadback", "AimohGf2OriginalSamplers",
-    "AimohGf2OriginalTexture", "AimohGf2UnpackScope"
+    "Gfl2SealedSources", "Gfl2OutlineBridge", "Gfl2SurfaceControls", "Gfl2FrameInputs",
+    "Gfl2RegisterBank", "Gfl2EclipseRegisterBank", "Gfl2NativeSourcePrograms",
+    "Gfl2NativeSourceRenderer", "Gfl2NativeSourceScope", "Gfl2NativeSourceSpace",
+    "Gfl2NativeDisplayTransfer", "Gfl2NativeEnvironment", "Gfl2NativeLocalLights",
+    "Gfl2NativeMotionBridge", "Gfl2NativeRoomProbe", "Gfl2RuntimeQueue",
+    "Gfl2WorldShadow", "Gfl2ShadowReadback", "Gfl2OriginalSamplers",
+    "Gfl2OriginalTexture", "Gfl2UnpackScope"
   ],
   "native_local_symbols": {
     "cube_faces.glsl": ["face", "p"],

@@ -15,9 +15,9 @@
 
 ## 代码入口
 
-- `AimohPMXNetwork.lua` 维护服务端钱包、校验请求、保存穿戴并发送快照。
+- `GFL2Network.lua` 维护服务端钱包、校验请求、保存穿戴并发送快照。
 - `GFL2MultiplayerClient.lua` 管理连接握手、请求重发和远端外观生命周期。
-- `AimohPMXRoomEconomy.lua` 是单机与服务端共用的价格和抽卡规则。联机客户端只读内存中的服务器钱包快照。
+- `GFL2RoomEconomy.lua` 是单机与服务端共用的价格和抽卡规则。联机客户端只读内存中的服务器钱包快照。
 - `GFL2MultiplayerCatalog.lua` 由框架和角色包资料生成。修改模型、价格或卡池后运行 `py -3 tools/generate_multiplayer_catalog.py`，用 `--check` 验证生成结果。
 - `Main.java` 解析配件、显隐和表情，使用现有角色会话完成本机和远端绘制。旧外观包缺少表情字段时，保留本地角色资料中的权重。衣装管理的 morph 仍由衣装规则应用。
 

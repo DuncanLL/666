@@ -6,19 +6,50 @@ ModData={getOrCreate=function(key)
     globalData[key]=globalData[key] or {}
     return globalData[key]
 end}
-local player={data={R116ReadyRoomWallet={
+local retiredPrefix=string.char(65,105,109,111,104)
+local retiredEdition=string.char(82,49,49,54)
+local retiredWallet=retiredEdition.."ReadyRoomWallet"
+local retiredAppearance=retiredPrefix.."PMXPreview"
+local retiredExpressions=retiredPrefix.."PMXExpressions"
+local retiredGrip=retiredPrefix..retiredEdition.."GripCalibration"
+local retiredAim=retiredGrip.."Aim"
+local player={data={[retiredWallet]={
     credits=1199,targeted=23,outfit=110,
     outfits={skinB=99,normal=true},daiyanUnlocked=true,daiyanMisses=57,
 }}}
 function player:getModData() return self.data end
 function player:getPlayerNum() return 0 end
-local wallet=player.data.R116ReadyRoomWallet
+local wallet=player.data[retiredWallet]
 assert(E.outfitGuarantee==100 and E.characterGuarantee==80)
+assert(E.characterChance(58)==60 and E.characterChance(59)==510 and E.characterChance(80)==10000)
+assert(E.weaponChance(50)==70 and E.weaponChance(51)==570 and E.weaponChance(70)==10000)
+local outfitRates={{25,2},{26,3},{49,26},{50,28},{69,66},{70,81},{79,216},{80,266},{99,1216},{100,10000}}
+for _,point in ipairs(outfitRates) do assert(E.outfitChance(point[1])==point[2]) end
 assert(E.characterUnlocked(player,"Daiyan") and E.characterMisses(player)==57)
+assert(player.data[retiredWallet]==nil and player.data.GFL2ReadyRoomWallet==wallet)
 assert(E.outfitOwned(player,"normal") and E.outfitMisses(player,"skinB")==99)
 local restored={data={},getModData=player.getModData,getPlayerNum=player.getPlayerNum}
 assert(E.characterUnlocked(restored,"Daiyan") and E.characterMisses(restored)==57)
 assert(E.balance(restored,"credits")==1199 and E.balance(restored,"targeted")==23)
+local priorSettings={
+    [retiredAppearance]={model="saved-model"},
+    [retiredExpressions]={slot=2},
+    [retiredGrip]={pose="standing"},
+    [retiredAim]={pose="aiming"},
+    GFL2Expressions={slot=3},
+}
+globalData.GFL2ExiliumReadyRoomV1["0"].settings=priorSettings
+E.restoreLocal(restored)
+assert(restored.data.GFL2CharacterRuntime.model=="saved-model")
+assert(restored.data.GFL2Expressions.slot==3)
+assert(restored.data.GFL2GripCalibration.pose=="standing" and restored.data.GFL2GripCalibrationAim.pose=="aiming")
+assert(not priorSettings[retiredAppearance] and not priorSettings[retiredExpressions] and not priorSettings[retiredGrip] and not priorSettings[retiredAim])
+local retiredPool=retiredEdition.."Phaetusa"
+local owned={[retiredPool]=true}
+local priorRecruit={data={GFL2ReadyRoomWallet={recruitment={owned=owned,misses=31}}},getModData=player.getModData}
+function priorRecruit:getPlayerNum() return 2 end
+assert(E.characterUnlocked(priorRecruit,"GFL2Phaetusa") and E.characterMisses(priorRecruit)==31)
+assert(owned[retiredPool]==nil and owned.GFL2Phaetusa==true)
 assert(E.buyOutfit(restored,"premium",1200)=="short" and E.balance(restored,"credits")==1199)
 assert(E.buyOutfit(restored,"regular",600)=="unlocked" and E.balance(restored,"credits")==599)
 assert(E.buyOutfit(restored,"regular",600)=="unavailable" and E.balance(restored,"credits")==599)
@@ -77,7 +108,7 @@ assert(E.claimWeapon(player,rifle)=="ok" and added==2)
 local respawn={data={}}
 function respawn:getPlayerNum() return 1 end
 function respawn:getModData() return self.data end
-respawn.data.R116ReadyRoomWallet={signatureWeapons={[blade.id]={acquired=true}}}
+respawn.data.GFL2ReadyRoomWallet={signatureWeapons={[blade.id]={acquired=true}}}
 local replacement
 function respawn:getInventory()
     return {containsTypeRecurse=function(_,id)return replacement==id end,

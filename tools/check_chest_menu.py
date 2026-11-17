@@ -35,8 +35,8 @@ try:
   parent.RemoveChild(preview);parent.RemoveChild(button);parent.AddChild(preview);parent.AddChild(button)
   assert parent.getControls().get(1)==button,'Native child insertion order changed'
  load(ROOT/'tools/tests/ui_fixture.lua');load(ROOT/'tools/tests/room_fixture.lua')
- catalog=json.loads((ROOT/'game/mod/42/media/ui/AimohPMXReadyRoom/catalog.json').read_text('utf8'));env.rawset('roomData',table(catalog))
- assets=Path(c['asset_root'])/'42/media/aimoh_pmx';registry=json.loads((assets/'registry.json').read_text('utf8'))['models']
+ catalog=json.loads((ROOT/'game/mod/42/media/ui/GFL2ReadyRoom/catalog.json').read_text('utf8'));env.rawset('roomData',table(catalog))
+ assets=Path(c['asset_root'])/'42/media/gfl2_pmx';registry=json.loads((assets/'registry.json').read_text('utf8'))['models']
  supported={r['id']for r in json.loads((BUILD/'chest-data/manifest.json').read_text('utf8'))if r['supported']}
  for row in registry:row['groups']=json.loads((assets/row['profile']).read_text('utf8')).get('appearance_controls',{}).get('groups',[]);row['chest']=row['id']in supported
  env.rawset('registryModels',table(registry));env.rawset('chestModelId','pmx-782f06826adb1307')
@@ -44,7 +44,7 @@ try:
  if args.hit_test:
   load(ROOT/'tools/tests/room_hit_fixture.lua');load(game/'media/lua/client/ISUI/ISButton.lua')
  load(game/'media/lua/client/RadioCom/ISUIRadio/ISSliderPanel.lua')
- load(args.window_source or ROOT/'game/mod/42/media/lua/client/AimohPMXWindow.lua');load(ROOT/'game/mod/42/media/lua/client/AimohPMXPreview.lua')
+ load(args.window_source or ROOT/'game/mod/42/media/lua/client/GFL2RoomWindow.lua');load(ROOT/'game/mod/42/media/lua/client/GFL2CharacterRuntime.lua')
  status=str(load(ROOT/'tools/tests'/('room_loading_assertions.lua'if args.loading else'lifecycle_assertions.lua'if args.lifecycle else'room_hit_assertions.lua'if args.hit_test else'chest_assertions.lua')));print(status,flush=True)
  save(BUILD/('menu-check/resource-loading.json'if args.loading else'lifecycle-0.3.6/menu.json'if args.lifecycle else'menu-check/hit-regions.json'if args.hit_test else'game-softbody/menu-check.json'),dict(status=status,real_kahlua=True,game_slider_source=True,game_button_source=args.hit_test,actor_and_widgets_substituted=True,actual_gameplay_tested=False,game_started=False))
 finally:jpype.shutdownJVM()

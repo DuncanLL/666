@@ -6,18 +6,18 @@ public final class OutlineBridgeCheck {
         String xy="gl_Position.xy = u_xlat0.xy * in_COLOR0.ww + u_xlat1.xy;";
         String depth="gl_Position.z -= 3.0 * gf2SourceOutlineClipOffset;";
         String outline="float gf2SourceOutlineClipOffset; vec3 c=in_COLOR0.xyz; "+normal+xy+depth;
-        String fixed=AimohGf2OutlineBridge.adapt(outline);
+        String fixed=Gfl2OutlineBridge.adapt(outline);
         if(!fixed.contains("(-in_TANGENT0.w) * GF2VSRaw1[9].w"))throw new AssertionError("Coordinate parity not compensated");
         if(!fixed.contains("uniform float gf2CharacterOutlineWidth = 1.0;")
             ||!fixed.contains("u_xlat0.xy * in_COLOR0.ww * gf2CharacterOutlineWidth + u_xlat1.xy;")
             ||!fixed.endsWith(depth))throw new AssertionError("Width must scale only XY extrusion");
-        if(!AimohGf2OutlineBridge.adapt(fixed).equals(fixed))throw new AssertionError("Compensation applied twice");
-        if(!AimohGf2OutlineBridge.adapt(normal).equals(normal))throw new AssertionError("Main shading changed");
+        if(!Gfl2OutlineBridge.adapt(fixed).equals(fixed))throw new AssertionError("Compensation applied twice");
+        if(!Gfl2OutlineBridge.adapt(normal).equals(normal))throw new AssertionError("Main shading changed");
         String plain="float gf2SourceOutlineClipOffset; vec3 n=in_NORMAL0;";
-        if(!AimohGf2OutlineBridge.adapt(plain).equals(plain))throw new AssertionError("Non-colour outline changed");
-        try{AimohGf2OutlineBridge.adapt(outline+normal);throw new AssertionError("Ambiguous basis accepted");}catch(IllegalArgumentException expected){}
-        try{AimohGf2OutlineBridge.adapt(outline.replace(normal,""));throw new AssertionError("Missing basis accepted");}catch(IllegalArgumentException expected){}
-        try{AimohGf2OutlineBridge.adapt(outline.replace(xy,""));throw new AssertionError("Missing extrusion accepted");}catch(IllegalArgumentException expected){}
+        if(!Gfl2OutlineBridge.adapt(plain).equals(plain))throw new AssertionError("Non-colour outline changed");
+        try{Gfl2OutlineBridge.adapt(outline+normal);throw new AssertionError("Ambiguous basis accepted");}catch(IllegalArgumentException expected){}
+        try{Gfl2OutlineBridge.adapt(outline.replace(normal,""));throw new AssertionError("Missing basis accepted");}catch(IllegalArgumentException expected){}
+        try{Gfl2OutlineBridge.adapt(outline.replace(xy,""));throw new AssertionError("Missing extrusion accepted");}catch(IllegalArgumentException expected){}
         // Both physical mirror signs survive the cancellation of the extra coordinate reflection.
         for(int physical:new int[]{-1,1})if((-1*physical)*-1!=physical)throw new AssertionError("Physical parity lost");
         System.out.println("SHARED_OUTLINE_PARITY_CHECK_PASS");

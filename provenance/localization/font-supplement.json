@@ -1,0 +1,15 @@
+{
+  "upstream": "https://github.com/notofonts/noto-cjk/tree/main/Sans",
+  "license": "licenses/Noto-CJK-OFL.txt",
+  "inputs": {
+    "SC": {
+      "source": "https://github.com/xypwn/filediver/blob/8e4909f8ba6b1212d64ee344a33fa135f5615f82/cmd/filediver-gui/fonts/NotoSansSC-Regular.ttf.gz",
+      "sha256_uncompressed": "5cf8b2a0576d5680284ab03a7a8219499d59bbe981a79bb3dc0031f251c39736"
+    },
+    "JP": {
+      "source": "https://github.com/xypwn/filediver/blob/8e4909f8ba6b1212d64ee344a33fa135f5615f82/cmd/filediver-gui/fonts/NotoSansJP-Regular.ttf.gz",
+      "sha256_uncompressed": "7c8597677e9fac0f54d7848ad18bc6a708dfb5baa4ebf4bd91e66efcca313bf3"
+    }
+  },
+  "output": "Only missing glyphs are rasterized into game-compatible bitmap fonts at the stock line metrics. Existing glyphs are preserved."
+}

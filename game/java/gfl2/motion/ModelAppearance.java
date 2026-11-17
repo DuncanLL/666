@@ -1,0 +1,239 @@
+package gfl2.motion;
+
+import com.shiroha.mmdskin.NativeFunc;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/** One validated appearance state shared by the workbench and every live PMX instance. */
+public final class ModelAppearance {
+    private final NativeFunc api;
+    private final long model;
+    private final float[] base;
+    private final boolean[] originalBothFaces;
+    private final String[] originalTextures;
+    private final ByteBuffer morphBuffer;
+    private final int[] morphIds;
+    private boolean[] visible,effectiveVisible;
+    private float[] alpha,weights;
+    private float[][] colours;
+    private Boolean[] bothFaces;
+    private String[] textures;
+    private Wardrobe wardrobe;
+    private JSONObject selected=new JSONObject();
+    private JSONArray groups=new JSONArray();
+    private long revision;
+    private Set<String> animatedMorphs=Set.of();
+    private List<FacialExpressions.Control> facialControls;
+
+    public ModelAppearance(NativeFunc api,long model) {
+        this.api=api;this.model=model;
+        int count=Math.toIntExact(api.GetMaterialCount(model));
+        base=new float[count*4];visible=new boolean[count];Arrays.fill(visible,true);effectiveVisible=visible.clone();
+        alpha=new float[count];Arrays.fill(alpha,Float.NaN);colours=new float[count][];bothFaces=new Boolean[count];textures=new String[count];
+        originalBothFaces=new boolean[count];originalTextures=new String[count];
+        weights=new float[Math.toIntExact(api.GetMorphCount(model))];morphIds=new int[weights.length];
+        for(int i=0;i<weights.length;i++)morphIds[i]=i;
+        ByteBuffer rgba=ByteBuffer.allocateDirect(16).order(ByteOrder.nativeOrder());
+        for(int i=0;i<count;i++) {
+            api.CopyDataToByteBuffer(rgba,api.GetMaterialDiffuse(model,i),16);
+            for(int k=0;k<4;k++)base[i*4+k]=rgba.getFloat(k*4);
+            originalBothFaces[i]=api.GetMaterialBothFace(model,i);originalTextures[i]=api.GetMaterialTex(model,i);
+        }
+        morphBuffer=ByteBuffer.allocateDirect(Math.multiplyExact(count,56*4)).order(ByteOrder.nativeOrder());
+        wardrobe=new Wardrobe(Wardrobe.empty(),count,weights.length);
+    }
+    private static JSONArray array(JSONObject state,String key,int length) {
+        JSONArray value=state.getJSONArray(key);
+        if(value.length()!=length)throw new IllegalArgumentException("Appearance "+key+" count differs from PMX");return value;
+    }
+    private static JSONArray optional(JSONObject state,String key,int length) {
+        if(state.has(key))return array(state,key,length);
+        JSONArray value=new JSONArray();for(int i=0;i<length;i++)value.put(JSONObject.NULL);return value;
+    }
+    private static float weight(JSONArray values,int index) {
+        double value=values.getDouble(index);
+        if(!Double.isFinite(value)||value<0||value>1)throw new IllegalArgumentException("Appearance value must be between 0 and 1");return (float)value;
+    }
+    public synchronized void configure(String json){configure(json,wardrobe.json());}
+    public synchronized void configure(String json,String definition) {
+        apply(prepare(json,definition));
+    }
+    record Prepared(boolean[] visible,float[] alpha,float[] weights,float[][] colours,Boolean[] bothFaces,String[] textures,
+                    Wardrobe wardrobe,JSONObject selected,JSONArray groups,boolean[] resolved,float[] resolvedWeights,boolean changed) {}
+    synchronized Prepared prepare(String json,String definition) {
+        JSONObject state=new JSONObject(json);int format=state.getInt("format");
+        if(format!=1&&format!=2)throw new IllegalArgumentException("Unsupported appearance format");
+        Wardrobe nextWardrobe=new Wardrobe(definition,visible.length,weights.length);
+        JSONArray v=array(state,"material_visibility",visible.length),a=array(state,"alpha_overrides",alpha.length),w=array(state,"morph_weights",weights.length),
+            c=optional(state,"colour_overrides",visible.length),b=optional(state,"double_sided",visible.length),t=optional(state,"texture_overrides",visible.length);
+        boolean[] nextVisible=new boolean[visible.length];float[] nextAlpha=new float[alpha.length],nextWeights=new float[weights.length];
+        float[][] nextColours=new float[visible.length][];Boolean[] nextBoth=new Boolean[visible.length];String[] nextTextures=new String[visible.length];
+        for(int i=0;i<visible.length;i++) {
+            nextVisible[i]=v.getBoolean(i);nextAlpha[i]=a.isNull(i)?Float.NaN:weight(a,i);
+            if(!c.isNull(i)) {
+                JSONArray colour=c.getJSONArray(i);if(colour.length()!=3)throw new IllegalArgumentException("Expected RGB colour");
+                nextColours[i]=new float[]{weight(colour,0),weight(colour,1),weight(colour,2)};
+            }
+            if(!b.isNull(i))nextBoth[i]=b.getBoolean(i);
+            if(!t.isNull(i)) {nextTextures[i]=t.getString(i);if(nextTextures[i].isBlank())throw new IllegalArgumentException("Empty texture override");}
+        }
+        for(int i=0;i<weights.length;i++)nextWeights[i]=weight(w,i);
+        if(state.has("expressions")) resolveExpressions(state.getJSONObject("expressions"),nextWardrobe,nextWeights);
+        JSONObject nextSelected=nextWardrobe.choices(state.optJSONObject("choices")==null?new JSONObject():state.getJSONObject("choices"));
+        boolean[] resolved=nextVisible.clone();float[] resolvedWeights=nextWeights.clone();nextWardrobe.resolve(nextSelected,resolved,resolvedWeights);
+        JSONArray nextGroups=state.optJSONArray("groups")==null?new JSONArray():new JSONArray(state.getJSONArray("groups").toString());
+        boolean changed=!Arrays.equals(visible,nextVisible)||!Arrays.equals(alpha,nextAlpha)||!Arrays.equals(weights,nextWeights)||!Arrays.deepEquals(colours,nextColours)
+            ||!Arrays.equals(bothFaces,nextBoth)||!Arrays.equals(textures,nextTextures)||!selected.similar(nextSelected)||!new JSONObject(wardrobe.json()).similar(new JSONObject(nextWardrobe.json()));
+        return new Prepared(nextVisible,nextAlpha,nextWeights,nextColours,nextBoth,nextTextures,nextWardrobe,nextSelected,nextGroups,resolved,resolvedWeights,changed);
+    }
+    private void applyNative(boolean[] visibility,float[] morphs) {
+        applyMorphs(morphs);
+        for(int i=0;i<visibility.length;i++)api.SetMaterialVisible(model,i,visibility[i]);
+    }
+    private void applyMorphs(float[] morphs) {
+        if(animatedMorphs.isEmpty()) {
+            api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],morphIds,morphs);
+            return;
+        }
+        int[] ids=new int[morphIds.length];float[] manual=new float[morphIds.length];int count=0;
+        for(int i:morphIds)if(!animatedMorphs.contains(api.GetMorphName(model,i))) {
+            ids[count]=i;manual[count++]=morphs[i];
+        }
+        api.SetPZAnimationState(model,new long[0],new float[0],new boolean[0],Arrays.copyOf(ids,count),Arrays.copyOf(manual,count));
+    }
+    synchronized void setAnimatedMorphs(Set<String> names) {
+        animatedMorphs=Set.copyOf(names);
+        float[] resolved=weights.clone();wardrobe.resolve(selected,visible.clone(),resolved);
+        applyMorphs(resolved);
+    }
+    synchronized void apply(Prepared next) {
+        if(next.changed()) {
+            try{applyNative(next.resolved(),next.resolvedWeights());}
+            catch(RuntimeException|Error e){
+                float[] previous=weights.clone();wardrobe.resolve(selected,visible.clone(),previous);
+                try{applyNative(effectiveVisible,previous);}catch(RuntimeException|Error rollback){if(rollback!=e)e.addSuppressed(rollback);}
+                throw e;
+            }
+            revision++;
+        }
+        visible=next.visible();effectiveVisible=next.resolved();alpha=next.alpha();weights=next.weights();colours=next.colours();bothFaces=next.bothFaces();textures=next.textures();
+        wardrobe=next.wardrobe();selected=next.selected();groups=next.groups();
+    }
+    public synchronized void choose(String group,String option) {
+        JSONObject state=new JSONObject(stateJson());state.getJSONObject("choices").put(group,option);configure(state.toString());
+    }
+    public synchronized String stateJson() {
+        JSONArray a=new JSONArray(),c=new JSONArray(),b=new JSONArray(),t=new JSONArray();
+        for(int i=0;i<alpha.length;i++) {
+            a.put(Float.isNaN(alpha[i])?JSONObject.NULL:alpha[i]);c.put(colours[i]==null?JSONObject.NULL:new JSONArray(colours[i]));
+            b.put(bothFaces[i]==null?JSONObject.NULL:bothFaces[i]);t.put(textures[i]==null?JSONObject.NULL:textures[i]);
+        }
+        return new JSONObject().put("format",2).put("material_visibility",new JSONArray(visible)).put("alpha_overrides",a).put("morph_weights",new JSONArray(weights))
+            .put("colour_overrides",c).put("double_sided",b).put("texture_overrides",t).put("choices",new JSONObject(selected.toString())).put("groups",new JSONArray(groups.toString())).toString();
+    }
+    public synchronized String controlsJson(){return wardrobe.json();}
+    public synchronized long revision(){return revision;}
+    public synchronized boolean bothFaces(int material){return bothFaces[material]==null?originalBothFaces[material]:bothFaces[material];}
+    public synchronized boolean[] readBothFaces(){boolean[] result=new boolean[visible.length];for(int i=0;i<result.length;i++)result[i]=bothFaces(i);return result;}
+    public synchronized String texture(int material){return textures[material]==null?originalTextures[material]:textures[material];}
+    public synchronized String[] readTextures(){String[] result=new String[visible.length];for(int i=0;i<result.length;i++)result[i]=texture(i);return result;}
+    public synchronized boolean managesMorph(int index){return wardrobe.managesMorph(index);}
+    private List<FacialExpressions.Control> facialControls() {
+        if (facialControls == null) facialControls = FacialExpressions.controls(api, model, weights.length);
+        return facialControls;
+    }
+    public synchronized JSONArray expressionRows() {
+        JSONArray rows = new JSONArray();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) rows.put(new JSONObject().put("index", index)
+                .put("group", control.group()).put("label", control.label()).put("value", weights[index]));
+        }
+        return rows;
+    }
+    private JSONObject expressionValues() {
+        JSONObject snapshot = new JSONObject();
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index) && weights[index] != 0) snapshot.put(control.name(), weights[index]);
+        }
+        return snapshot;
+    }
+    public synchronized String expressionSnapshot() {
+        return expressionValues().toString();
+    }
+    public synchronized String networkJson() {
+        JSONObject state = new JSONObject().put("choices",selected).put("material_visibility",new JSONArray(visible));
+        String withExpressions = state.put("expressions",expressionValues()).toString();
+        if(withExpressions.length()<=8192) return withExpressions;
+        state.remove("expressions");
+        return state.toString();
+    }
+    private static float expressionWeight(double value) {
+        if (!Double.isFinite(value) || value < 0 || value > 1) throw new IllegalArgumentException("表情权重须在 0 到 100% 之间");
+        return (float)value;
+    }
+    public synchronized void setExpression(int index, double value) {
+        if (facialControls().stream().noneMatch(control -> control.index() == index) || wardrobe.managesMorph(index))
+            throw new IllegalArgumentException("当前模型没有此表情");
+        float[] next = weights.clone();
+        next[index] = expressionWeight(value);
+        applyExpressionWeights(next);
+    }
+    public synchronized void loadExpression(String preset) {
+        if (preset == null || preset.length() > 8192) throw new IllegalArgumentException("表情预设格式无效");
+        float[] next = weights.clone();
+        resolveExpressions(new JSONObject(preset),wardrobe,next);
+        applyExpressionWeights(next);
+    }
+    private void resolveExpressions(JSONObject values,Wardrobe wardrobe,float[] next) {
+        for (var control : facialControls()) {
+            int index = control.index();
+            if (!wardrobe.managesMorph(index)) next[index] = values.has(control.name()) ? expressionWeight(values.getDouble(control.name())) : 0;
+        }
+    }
+    private void applyExpressionWeights(float[] next) {
+        if (Arrays.equals(weights, next)) return;
+        float[] resolved = next.clone();
+        wardrobe.resolve(selected, visible.clone(), resolved);
+        applyMorphs(resolved);
+        weights = next;
+        revision++;
+    }
+    public synchronized float[] readMaterials(){return read(true,true);}
+    public synchronized float[] readTextureFactors(){return read(false,false);}
+    public synchronized boolean materialAvailable(int index) {
+        boolean[] mask=new boolean[visible.length];Arrays.fill(mask,true);
+        wardrobe.resolve(selected,mask,new float[weights.length]);
+        float[] f=readTextureFactors();int at=index*12;
+        return mask[index]&&f[at+3]>.001f&&f[at+7]+f[at+11]>.001f;
+    }
+    /** Twelve floats/material: diffuse RGBA, texture multiply RGBA, texture add RGBA. */
+    public synchronized float[] readMaterials(boolean cameraMask){return read(true,cameraMask);}
+    private float[] read(boolean visibilityMask,boolean cameraMask) {
+        int count=api.CopyMaterialMorphResultsToBuffer(model,morphBuffer);
+        if(count!=0&&count!=visible.length)throw new IllegalStateException("Native material morph count differs from PMX");
+        float[] result=new float[visible.length*12];
+        for(int i=0;i<visible.length;i++) {
+            int offset=i*56*4;
+            for(int k=0;k<4;k++) {
+                float original=k<3&&colours[i]!=null?colours[i][k]:k==3&&!Float.isNaN(alpha[i])?alpha[i]:base[i*4+k];
+                result[i*12+k]=count==0?original:original*morphBuffer.getFloat(offset+k*4)+morphBuffer.getFloat(offset+(28+k)*4);
+                result[i*12+4+k]=count==0?1:morphBuffer.getFloat(offset+(16+k)*4);result[i*12+8+k]=count==0?0:morphBuffer.getFloat(offset+(44+k)*4);
+            }
+            if((visibilityMask&&!effectiveVisible[i])||(cameraMask&&!api.IsMaterialVisible(model,i)))result[i*12+3]=0;
+        }
+        for(float value:result)if(!Float.isFinite(value))throw new IllegalStateException("Non-finite PMX material morph");return result;
+    }
+    public synchronized boolean gf2SourceZeroAlphaVisible(int material) {
+        if (effectiveVisible[material] && base[material*4+3]==0
+                && (Float.isNaN(alpha[material]) || !(alpha[material]<=0)))
+            return api.IsMaterialVisible(model,material);
+        return false;
+    }
+}

@@ -14,7 +14,7 @@ assert len(libraries)==1,libraries
 bullet=ROOT/'native/mmd-engine/deps/bullet3/src'
 names=[p.relative_to(bullet/'BulletSoftBody').as_posix() for p in sorted((bullet/'BulletSoftBody').rglob('*.cpp'))]
 sources=[bullet/'BulletSoftBody'/name for name in names]
-dll=out/'AimohSoftBodyPreview.dll'
+dll=out/'GFL2SoftBodyPreview.dll'
 command=[str(gcc/'g++.exe'),'-std=c++17','-O2','-g0','-fno-exceptions','-fno-rtti',
          '-shared','-static-libgcc','-static-libstdc++','-I'+str(bullet),str(ROOT/'native/chest-softbody/softbody.cpp'),
          *map(str,sources),str(libraries[0]),'-o',str(dll)]

@@ -54,7 +54,7 @@ function ISComboBox:hidePopup()self.expanded=false;self.popupClosed=true end
 UIFont={Small="small",Medium="medium"}
 function getCore()return {getScreenWidth=function()return screenWidth or 1920 end,getScreenHeight=function()return screenHeight or 1080 end}end
 function require(name)
- if name=="AimohPMXWindow" then return AimohPMXWindow end
+ if name=="GFL2RoomWindow" then return GFL2RoomWindow end
  return {}
 end
 calls={enable=0,choice=0,material=0,preset=0,reset=0,reload=0,restore=0,clear=0,test=0,sent={}}
@@ -78,8 +78,8 @@ function context()
  function c:addOption(name,target,fn,...)local v={name=name,target=target,fn=fn,args={...}};table.insert(self.items,v);return v end
  return c
 end
-AimohPMXPreview={}
-local api=AimohPMXPreview
+GFL2CharacterRuntime={}
+local api=GFL2CharacterRuntime
 function api.modelCount()return 6 end
 function api.modelIdAt(i)return string.format("pmx-%016x",i+1)end
 function api.modelLabel(i)return modelLabels[i+1]end

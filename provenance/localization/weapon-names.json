@@ -1,0 +1,415 @@
+{
+  "GFL2.CauseAndEffect": {
+    "CN": {
+      "name": "因果律理",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%84%EA%B2%80",
+    "JP": {
+      "name": "フィリア",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%84%EA%B2%80"
+    },
+    "KO": {
+      "name": "인과율",
+      "status": "cross_referenced",
+      "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+    }
+  },
+  "GFL2.Chernobog": {
+    "CN": {
+      "name": "切尔诺伯格",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "チェルノボグ",
+      "status": "cross_referenced",
+      "source": "https://www.xitter.cf/EXILIUMJP/status/2121536113739170045"
+    },
+    "KO": {
+      "name": "체르노보그",
+      "status": "cross_referenced",
+      "source": "https://teapawt.net/EXILIUMKR"
+    }
+  },
+  "GFL2.AlvaAN94": {
+    "CN": {
+      "name": "6P33",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "6P33",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "6P33",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.Scylla": {
+    "CN": {
+      "name": "斯库拉",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "スキュラ",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "스킬라",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.UnspokenCalling": {
+    "CN": {
+      "name": "未言使命",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D",
+    "JP": {
+      "name": "サライスース",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    },
+    "KO": {
+      "name": "무언의 사명",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    }
+  },
+  "GFL2.NightRoaming": {
+    "CN": {
+      "name": "夜行豆蔻",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "ナイトカルダモン",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "나이트 카다멈",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.Skyhowl": {
+    "CN": {
+      "name": "碎穹嚎歌",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "ハウリングスピア",
+      "status": "cross_referenced",
+      "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+    },
+    "KO": {
+      "name": "쇄천의 하울링",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.Snotra": {
+    "CN": {
+      "name": "斯诺特拉",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "スノトラ",
+      "status": "transliteration_pending_original_release",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "스노트라",
+      "status": "transliteration_pending_original_release",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.MaidsRules": {
+    "CN": {
+      "name": "女仆准则",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "メイドコード",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "메이드 수칙",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.SparklingCenterstage": {
+    "CN": {
+      "name": "流光花火",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "フラッシュスパーク",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "블레이징 스파크",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.ConfessionCompass": {
+    "CN": {
+      "name": "忏悔罗盘",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "懺悔の羅針盤",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "참회의 나침반",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "EN": {
+      "name": "Contrition's Compass",
+      "status": "cross_referenced",
+      "source": "https://gfl2.help/en/characters/Asteria"
+    }
+  },
+  "GFL2.HeavyStrings": {
+    "CN": {
+      "name": "重弦",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "重弦",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "중현",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.Capitoline": {
+    "CN": {
+      "name": "卡庇托林",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "カンピドリオ",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "카피톨린",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.SavageBeast": {
+    "CN": {
+      "name": "森牙戾兽",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%8C%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "ヴァルトファング",
+      "status": "cross_referenced",
+      "source": "https://www.gamespark.jp/article/2026/10/22/173925.html"
+    },
+    "KO": {
+      "name": "발트베스티에",
+      "status": "cross_referenced",
+      "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+    }
+  },
+  "GFL2.Schlitzohr": {
+    "CN": {
+      "name": "狡狐",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D",
+    "JP": {
+      "name": "ヴィクセン",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    },
+    "KO": {
+      "name": "교활한 여우",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    }
+  },
+  "GFL2.Lowenjunges": {
+    "CN": {
+      "name": "幼狮",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D",
+    "JP": {
+      "name": "ライオンセル",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    },
+    "KO": {
+      "name": "리틀 라이온",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    }
+  },
+  "GFL2.BansheesWhisper": {
+    "CN": {
+      "name": "报丧轻语",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D",
+    "JP": {
+      "name": "バンシィ",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    },
+    "KO": {
+      "name": "밴시의 속삭임",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B8%B0%EA%B4%80%EB%8B%A8%EC%B4%9D"
+    }
+  },
+  "GFL2.Radiance": {
+    "CN": {
+      "name": "信仰棘光",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "信仰の光",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "신앙의 빛줄기",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.BittersweetCaramel": {
+    "CN": {
+      "name": "苦涩焦糖",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "ビターキャラメル",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "비터 캐러멜",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.GuardianSilverwing": {
+    "CN": {
+      "name": "护梦银翼",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D",
+    "JP": {
+      "name": "夢の翼",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "꿈지기의 날개",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%A0%80%EA%B2%A9%EC%86%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.Trailblazer": {
+    "CN": {
+      "name": "逐光",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D",
+    "JP": {
+      "name": "逐光",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D"
+    },
+    "KO": {
+      "name": "축광",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D"
+    }
+  },
+  "GFL2.GaiaTerminus": {
+    "CN": {
+      "name": "盖娅终结",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D",
+    "JP": {
+      "name": "ガイア・テルミナス",
+      "status": "transliteration_pending_original_release",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D"
+    },
+    "KO": {
+      "name": "가이아 터미너스",
+      "status": "transliteration_pending_original_release",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EC%82%B0%ED%83%84%EC%B4%9D"
+    }
+  },
+  "GFL2.Iaso": {
+    "CN": {
+      "name": "伊阿索",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B6%8C%EC%B4%9D",
+    "JP": {
+      "name": "イアソ",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B6%8C%EC%B4%9D"
+    },
+    "KO": {
+      "name": "이아소",
+      "status": "cross_referenced",
+      "source": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EA%B6%8C%EC%B4%9D"
+    }
+  },
+  "GFL2.TwilightRose": {
+    "CN": {
+      "name": "暮色蔷薇",
+      "source": "Original Chinese item name already in the framework"
+    },
+    "cross_locale_record": "https://namu.moe/w/%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85/%EC%9D%B8%ED%98%95%20%EB%AC%B4%EA%B8%B0/%EB%8F%84%EA%B2%80",
+    "JP": {
+      "name": "ヴェスパーローズ",
+      "status": "cross_referenced",
+      "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+    },
+    "KO": {
+      "name": "노을 장미",
+      "status": "cross_referenced",
+      "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+    }
+  }
+}

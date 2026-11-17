@@ -16,7 +16,7 @@ use super::{
     TEXTURE_PATH_INDEX,
 };
 
-const VERSION: &str = "Aimoh-Upstream-1/skeleton-eval1-softbody1";
+const VERSION: &str = "GFL2-MMD-1/skeleton-eval1-softbody1";
 
 #[no_mangle]
 pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAnimationOwnedPhysicsBones(
@@ -44,7 +44,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_EvaluateSkeleton(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_aimoh_motion_SecondaryPhysics_configure(
+pub extern "system" fn Java_gfl2_motion_SecondaryPhysics_configure(
     env: JNIEnv, _class: JClass, handle: jlong, ids: jni::objects::JIntArray,
     x: jfloat, z: jfloat, stiffness: jfloat, damping: jfloat,
 ) -> jboolean {

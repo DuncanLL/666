@@ -10,7 +10,7 @@ if __name__=='__main__':
     cp=[a.jar.resolve(),Path(c['viewpoint_jar']),Path(c['zombiebuddy_jar']),*game.glob('*.jar')]
     compile_java(c,[ROOT/'tools/java/PhysicsStreamingCheck.java'],out/'classes',cp)
     command=[str(game/'jre64/bin/java.exe'),'--enable-native-access=ALL-UNNAMED','-Djava.io.tmpdir='+str(BUILD/'tmp'),'-cp',';'.join(map(str,[out/'classes',*cp])),
-             'aimoh.pmxpreview.PhysicsStreamingCheck',str(Path(c['asset_root'])/'42'),str(out.resolve())]
+             'gfl2.runtime.PhysicsStreamingCheck',str(Path(c['asset_root'])/'42'),str(out.resolve())]
     run=subprocess.run(command,cwd=game,env=environment(),capture_output=True,text=True,encoding='utf8',timeout=180)
     (out/'run.log').write_text(run.stdout+run.stderr,'utf8')
     if run.returncode:print((run.stdout+run.stderr)[-5000:]);run.check_returncode()

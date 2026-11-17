@@ -19,8 +19,8 @@ def package(output,verify_existing=False,evidence=None,public=False,combined=Tru
                 raise ValueError(json.dumps(validation,ensure_ascii=False))
     if verify_existing:
         expected={n:r for n,r in inventory(ROOT/'render-support/mod').items()if n!='common/.gitkeep'}
-        expected['42/media/java/client/AimohGF2Eclipse.jar']={'bytes':jar.stat().st_size,'sha256':sha(jar)}
-        assert inventory(output/'Contents/mods/AimohGF2Eclipse')==expected
+        expected['42/media/java/client/GFL2RenderSupport.jar']={'bytes':jar.stat().st_size,'sha256':sha(jar)}
+        assert inventory(output/'Contents/mods/GFL2RenderSupport')==expected
     else:
         if combined:
             if metadata_from is None:
@@ -30,9 +30,9 @@ def package(output,verify_existing=False,evidence=None,public=False,combined=Tru
                 raise ValueError('Combined distribution must keep Workshop project '+workshop_id)
         assert not output.exists(),'Use --verify-existing to inspect a current candidate'
         stage=output.with_name(output.name+'.preparing');assert not stage.exists()
-        mod=stage/'Contents/mods/AimohGF2Eclipse';shutil.copytree(ROOT/'render-support/mod',mod)
+        mod=stage/'Contents/mods/GFL2RenderSupport';shutil.copytree(ROOT/'render-support/mod',mod)
         (mod/'common/.gitkeep').unlink(missing_ok=True)
-        target=mod/'42/media/java/client/AimohGF2Eclipse.jar';target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(jar,target)
+        target=mod/'42/media/java/client/GFL2RenderSupport.jar';target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(jar,target)
         if metadata_from:
             for name in ('workshop.txt','preview.png'):shutil.copy2(metadata_from/name,stage/name)
         else:
@@ -42,7 +42,7 @@ def package(output,verify_existing=False,evidence=None,public=False,combined=Tru
             Image.new('RGB',(256,256),(32,32,32)).save(stage/'preview.png')
             (stage/'workshop.txt').write_text('version=1\ntitle=少前2追放渲染支持\ndescription=\u200b\ntags=\nvisibility=unlisted\n','utf8')
         output.parent.mkdir(parents=True,exist_ok=True);stage.replace(output)
-    target=output/'Contents/mods/AimohGF2Eclipse/42/media/java/client/AimohGF2Eclipse.jar'
+    target=output/'Contents/mods/GFL2RenderSupport/42/media/java/client/GFL2RenderSupport.jar'
     forbidden={'.dll','.exe','.zip','.bat','.app','.so','.sh','.dylib'}
     assert not [p for p in output.rglob('*')if p.is_file()and p.suffix.lower()in forbidden]
     with zipfile.ZipFile(target)as z:assert z.testzip()is None

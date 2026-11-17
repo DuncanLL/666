@@ -1,6 +1,6 @@
-package aimoh.pmxpreview;
+package gfl2.runtime;
 
-import aimoh.motion.*;
+import gfl2.motion.*;
 import com.shiroha.mmdskin.NativeFunc;
 import java.lang.reflect.*;
 import java.nio.*;
@@ -59,10 +59,10 @@ public final class LifecycleCheck {
         check(new JSONObject(previous).similar(new JSONObject(s.model.appearance().stateJson()))&&oldChest.similar(s.model.chestSettings()),"Valid restore differs");
     }
     public static void main(String[] args)throws Exception{
-        Path root=Path.of(args[0]),out=Path.of(args[1]);assets=root.resolve("media/aimoh_pmx");
+        Path root=Path.of(args[0]),out=Path.of(args[1]);assets=root.resolve("media/gfl2_pmx");
         zombie.ZomboidFileSystem.instance.setCacheDir(out.resolve("User").toString());zombie.ZomboidFileSystem.instance.init();
         if(!GLFW.glfwInit())throw new AssertionError("GLFW");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);
-        long window=GLFW.glfwCreateWindow(32,32,"R116 lifecycle checks",0,0);if(window==0)throw new AssertionError("Hidden GL context");
+        long window=GLFW.glfwCreateWindow(32,32,"GFL2 lifecycle checks",0,0);if(window==0)throw new AssertionError("Hidden GL context");
         GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
         try{
             zombie.core.skinnedmodel.model.VertexBufferObject.funcs=new zombie.core.VBO.GLBufferObject15();

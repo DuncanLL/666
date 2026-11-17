@@ -32,34 +32,34 @@ function prepareExpressionEdits()
     Events = {OnTick=event("previewTick"),OnDisconnect=event("previewDisconnect"),
         OnGameStart=event("start"),OnCreatePlayer=event("create"),OnSave=event("save"),
         OnPlayerDeath=event("death"),OnFillWorldObjectContextMenu=event("context")}
-    AimohPMXWindow={open=function(p,a) assert(p==actor);actions=a end,closeAll=function()end}
+    GFL2RoomWindow={open=function(p,a) assert(p==actor);actions=a end,closeAll=function()end}
     function getText(key) return key end
-    AimohPMXPreview.clear=function()end
+    GFL2CharacterRuntime.clear=function()end
     renderedModel,renderedReady=model,true
-    AimohPMXPreview.isReady=function() return renderedReady end
-    AimohPMXPreview.modelId=function() return renderedModel end
-    AimohPMXPreview.modelIdAt=function() return "pmx-40dbcd572c1fb3f8" end
-    AimohPMXPreview.disable=function(p)
+    GFL2CharacterRuntime.isReady=function() return renderedReady end
+    GFL2CharacterRuntime.modelId=function() return renderedModel end
+    GFL2CharacterRuntime.modelIdAt=function() return "pmx-40dbcd572c1fb3f8" end
+    GFL2CharacterRuntime.disable=function(p)
         assert(p==actor)
         renderedModel,renderedReady="",false
     end
-    AimohPMXPreview.queueOwnedAppearance=function(p,id,appearance,settings)
+    GFL2CharacterRuntime.queueOwnedAppearance=function(p,id,appearance,settings)
         assert(p==actor and id==model)
         queuedModel=id;requestedSettings=settings
         return ""
     end
-    AimohPMXPreview.appearanceJson=function() return face end
-    AimohPMXPreview.settingsJson=function() return face end
-    AimohPMXPreview.networkAppearance=function() return face end
-    AimohPMXPreview.enableWithSettings=function(p,id,settings)
+    GFL2CharacterRuntime.appearanceJson=function() return face end
+    GFL2CharacterRuntime.settingsJson=function() return face end
+    GFL2CharacterRuntime.networkAppearance=function() return face end
+    GFL2CharacterRuntime.enableWithSettings=function(p,id,settings)
         assert(p==actor and id==1)
         requestedSettings=settings
         renderedReady=false
         return ""
     end
     voiceUpdates=0
-    AimohPMXVoiceEngine={modelChanged=function(p) assert(p==actor);voiceUpdates=voiceUpdates+1 end}
-    actor.data.AimohPMXPreview.profiles["pmx-40dbcd572c1fb3f8"]="other profile"
+    GFL2VoiceEngine={modelChanged=function(p) assert(p==actor);voiceUpdates=voiceUpdates+1 end}
+    actor.data.GFL2CharacterRuntime.profiles["pmx-40dbcd572c1fb3f8"]="other profile"
 end
 
 function verifyExpressionEdits()
@@ -70,10 +70,10 @@ function verifyExpressionEdits()
     callbacks.tick()
     callbacks.server("GFL2Exilium","Wallet",{version=1,player=6,request=3,wallet={},
         equipped={model=model,signature=string.rep("a",64),appearance=face}})
-    assert(voiceUpdates==0 and actor.data.AimohPMXPreview.model~=model)
+    assert(voiceUpdates==0 and actor.data.GFL2CharacterRuntime.model~=model)
     clock=clock+250;callbacks.tick()
-    assert(voiceUpdates==1 and actor.data.AimohPMXPreview.model==model)
-    assert(actor.data.AimohPMXPreview.settings==face and sent[#sent].appearance==face)
+    assert(voiceUpdates==1 and actor.data.GFL2CharacterRuntime.model==model)
+    assert(actor.data.GFL2CharacterRuntime.settings==face and sent[#sent].appearance==face)
     local sentBefore=#sent
     face='{"expressions":{"Smile":0.2}}';actions.expressionEdited(actor)
     clock=clock+200;callbacks.previewTick()
@@ -83,13 +83,13 @@ function verifyExpressionEdits()
     assert(#sent==sentBefore)
     clock=clock+1;callbacks.previewTick()
     assert(#sent==sentBefore+1 and sent[#sent].appearance==face)
-    assert(actor.data.AimohPMXPreview.profiles[model]==face)
+    assert(actor.data.GFL2CharacterRuntime.profiles[model]==face)
     callbacks.previewTick()
     assert(#sent==sentBefore+1)
     face='{"expressions":{}}';actions.expressionEdited(actor)
     assert(actions.enable(actor,1) and requestedSettings=="other profile")
     assert(#sent==sentBefore+2 and sent[#sent].appearance==face)
-    assert(actor.data.AimohPMXPreview.profiles[model]==face)
+    assert(actor.data.GFL2CharacterRuntime.profiles[model]==face)
     assert(voiceUpdates==1)
     return "PASS reconnect restores local profile and voice once; expression edits save once and flush before changing outfit"
 end
@@ -103,29 +103,29 @@ function verifyAppearanceRejections()
     assert(renderedModel==model and voiceUpdates==1,"an old rejection interrupted a new model load")
     renderedModel,renderedReady="pmx-40dbcd572c1fb3f8",true
     callbacks.previewTick()
-    assert(older~=sent[#sent].attempt and actor.data.AimohPMXPreview.model==renderedModel)
+    assert(older~=sent[#sent].attempt and actor.data.GFL2CharacterRuntime.model==renderedModel)
     local current=sent[#sent].attempt
     reject(older)
     clock=clock+250;callbacks.tick()
     assert(renderedModel=="pmx-40dbcd572c1fb3f8" and voiceUpdates==2,"the last authorized model was cleared")
     local sentBefore=#sent
     queuedModel=nil
-    local savedProfile=actor.data.AimohPMXPreview.profiles[model]
+    local savedProfile=actor.data.GFL2CharacterRuntime.profiles[model]
     reject(current,{model=model,signature=string.rep("a",64),appearance=face})
     assert(renderedModel=="" and voiceUpdates==3 and #sent==sentBefore)
-    assert(actor.data.AimohPMXPreview.model==nil and actor.data.AimohPMXPreview.profiles[model]==savedProfile)
+    assert(actor.data.GFL2CharacterRuntime.model==nil and actor.data.GFL2CharacterRuntime.profiles[model]==savedProfile)
     assert(queuedModel==model and requestedSettings==savedProfile)
     renderedModel,renderedReady=queuedModel,true
     clock=clock+250;callbacks.tick()
-    assert(actor.data.AimohPMXPreview.model==model and voiceUpdates==4 and #sent==sentBefore+1)
+    assert(actor.data.GFL2CharacterRuntime.model==model and voiceUpdates==4 and #sent==sentBefore+1)
     reject(sent[#sent].attempt)
     assert(renderedModel=="" and voiceUpdates==5 and #sent==sentBefore+1)
-    assert(actor.data.AimohPMXPreview.model==nil and actor.data.AimohPMXPreview.profiles[model]==face)
+    assert(actor.data.GFL2CharacterRuntime.model==nil and actor.data.GFL2CharacterRuntime.profiles[model]==face)
     return "PASS late appearance rejection leaves the newer model intact, current rejection restores the approved model and its voice"
 end
 local applied, disabled, cleared, restoredSettings = 0, 0, 0, nil
 local signature = string.rep("a",64)
-AimohPMXPreview = {
+GFL2CharacterRuntime = {
     hasModelFailure=function() return false end,
     networkSignature=function() return signature end,
     queueOwnedAppearance=function(player,model,appearance,settings)
@@ -214,7 +214,7 @@ function verifyClient(client,economy)
     assert(applied==5,"the same live player could not re-enable an appearance")
     callbacks.disconnect()
     assert(not client.ready(actor) and economy.balance(actor,"targeted")==0)
-    actor.data.AimohPMXPreview={model="other-model",profiles={[model]="saved settings for that outfit"}}
+    actor.data.GFL2CharacterRuntime={model="other-model",profiles={[model]="saved settings for that outfit"}}
     callbacks.tick()
     receive("Wallet",{player=4,request=2,wallet={},equipped={model=model,signature=signature,appearance="{}"}})
     assert(restoredSettings=="saved settings for that outfit")

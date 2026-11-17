@@ -11,5 +11,9 @@
   "native_toolchain_root": "D:/private-tools/mmd",
   "zig": "D:/private-tools/zig/zig.exe",
   "python_dependencies": "D:/private-python-dependencies",
+  "localization_fonts": {
+    "CN": "D:/noto-fonts/NotoSansSC-Regular.ttf",
+    "JP": "D:/noto-fonts/NotoSansJP-Regular.ttf"
+  },
   "pmx_reader_scripts": "D:/existing-pmx-reader/scripts"
 }

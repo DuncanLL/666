@@ -14,14 +14,14 @@ J=jpype.JClass;F=lambda a:jpype.JArray(jpype.JFloat)(a)
 report=[]
 try:
  os.chdir(game);J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home));J('zombie.ZomboidFileSystem').instance.init()
- main=J('aimoh.pmxpreview.Main');field=main.class_.getDeclaredField('directory');field.setAccessible(True)
+ main=J('gfl2.runtime.Main');field=main.class_.getDeclaredField('directory');field.setAccessible(True)
  field.set(None,J('java.nio.file.Path').of(str(Path(c['asset_root'])/'42')))
  init=main.class_.getDeclaredMethod('nativeRuntime');init.setAccessible(True);init.invoke(None)
  field=main.class_.getDeclaredField('api');field.setAccessible(True);api=field.get(None)
- assert api.GetVersion()=='Aimoh-Upstream-1/skeleton-eval1-softbody1'
- chest=J('aimoh.motion.ChestSoftBody');model_class=J('aimoh.motion.PmxModel');json_class=J('org.json.JSONObject')
- assets=Path(c['asset_root'])/'42/media/aimoh_pmx'
- registry=json.loads((ROOT/'game/mod/42/media/aimoh_pmx/registry.json').read_text('utf8'))['models']
+ assert api.GetVersion()=='GFL2-MMD-1/skeleton-eval1-softbody1'
+ chest=J('gfl2.motion.ChestSoftBody');model_class=J('gfl2.motion.PmxModel');json_class=J('org.json.JSONObject')
+ assets=Path(c['asset_root'])/'42/media/gfl2_pmx'
+ registry=json.loads((ROOT/'game/mod/42/media/gfl2_pmx/registry.json').read_text('utf8'))['models']
  supported={r['id'] for r in json.loads((BUILD/'chest-data/manifest.json').read_text('utf8'))if r['supported']}
  poses=np.load(args.poses.resolve())['poses'][:420]
  for row in registry:

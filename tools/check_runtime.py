@@ -32,10 +32,10 @@ try:
     item = J('zombie.core.znet.SteamWorkshopItem')(str(project))
     assert item.readWorkshopTxt()
     assert item.validateContents() is None
-    assert item.getTitle() == '少前2追放角色框架' and item.getDescription() == '\u200b'
+    assert item.getTitle() == '僵毁少女前线' and item.getDescription() == '\u200b'
     J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
     os.chdir(temp)
-    main = J('aimoh.pmxpreview.Main')
+    main = J('gfl2.runtime.Main')
     directory = main.class_.getDeclaredField('directory')
     directory.setAccessible(True); directory.set(None, J('java.nio.file.Path').of(str(mod / '42')))
     initialize = main.class_.getDeclaredMethod('nativeRuntime')
@@ -43,14 +43,14 @@ try:
     api_field = main.class_.getDeclaredField('api'); api_field.setAccessible(True)
     api = api_field.get(None)
     build = json.loads((BUILD / 'build.json').read_text('utf8'))
-    assert api.GetVersion() == build.get('native_version',json.loads((ROOT/'provenance/baseline.json').read_text('utf8'))['native_version'])
-    assets = mod / '42/media/aimoh_pmx'
+    assert api.GetVersion() == build['native_version']
+    assets = mod / '42/media/gfl2_pmx'
     registry = json.loads((assets / 'registry.json').read_text('utf8'))['models']
     checked = []
     for row in registry:
         profile = json.loads((assets / row['profile']).read_text('utf8'))
         assert sha(assets / row['model']) == profile['pmx_sha256']
-        model = J('aimoh.motion.PmxModel').load(api, J('java.nio.file.Path').of(str(assets / row['model'])),
+        model = J('gfl2.motion.PmxModel').load(api, J('java.nio.file.Path').of(str(assets / row['model'])),
                                               J('java.nio.file.Path').of(str(assets / row['profile'])))
         try:
             pose = jpype.JArray(jpype.JFloat)(profile['source_reference'])
@@ -59,7 +59,7 @@ try:
         finally: model.close()
     stats = json.loads(str(api.GetRuntimeStats()))
     assert all(value == 0 for value in stats.values())
-    assert J('aimoh.motion.ChestSoftBody').liveWorlds()==0
+    assert J('gfl2.motion.ChestSoftBody').liveWorlds()==0
     field = main.class_.getDeclaredField('grip'); field.setAccessible(True); field.get(None).close()
     save(BUILD / 'runtime-check.json', {'status': 'PASS_WORKSHOP_VALIDATOR_AND_NATIVE_MODEL_COMPONENTS',
          'jar_sha256': sha(jar), 'models': checked, 'remaining_objects': stats,

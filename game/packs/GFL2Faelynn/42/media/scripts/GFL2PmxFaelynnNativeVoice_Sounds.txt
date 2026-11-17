@@ -1,0 +1,567 @@
+module Base
+{
+    sound GFL2PmxFaelynnSilent
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeStab
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeStabOnGround
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeAttackHeavy
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeAttack
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeShove
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMeleeStomp
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromBite
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromGlassCut
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromFallLow
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromFallHigh
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromHitBlunt
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromRunIntoWall
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentShoutHey
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentShoutMegaphoneHey
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSneezeLight
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSneezeHeavy
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentJumpLow
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentJumpHigh
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentDeathAlone
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentDeathEaten
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentWhisperHey
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentWhisperPsst
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentWhisperMegaphoneHey
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentWhisperMegaphonePsst
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentClimbWindow
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentCough
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentMuffledCough
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSleep
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentVomit
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentApplyBandage
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSighBored
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSighReliefed
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSighSad
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromScratch
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainFromLacerate
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentLureTsk
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentLureCmon
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentDeathFall
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentDrunkHic
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentExercise
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentFreezeShiver
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentSmoke
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentPainMoodle
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentCorpseDragging
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentCorpseHighEffort
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+    sound GFL2PmxFaelynnSilentCorpseLowEffort
+    {
+        category = Player,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file=media/sound/GFL2Voice/silent.ogg,
+            volume = 0.0,
+            distanceMax = 20,
+        }
+    }
+}

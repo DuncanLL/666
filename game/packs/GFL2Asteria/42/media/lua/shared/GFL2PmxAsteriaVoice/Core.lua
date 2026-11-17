@@ -1,0 +1,3 @@
+require "GFL2Voice/FullVoiceCore"
+GFL2PmxAsteriaVoiceCore=GFL2PmxFullVoiceCore.create()
+return GFL2PmxAsteriaVoiceCore

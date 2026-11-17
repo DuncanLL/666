@@ -1,0 +1,1417 @@
+{
+  "pmx-225af1a054faefb0": {
+    "clothes_id": 1104703,
+    "published": {
+      "EN": {
+        "name": "Stirring Mermaid",
+        "source": "https://steamcommunity.com/app/3347400?l=english"
+      },
+      "KO": {
+        "name": "잠에서 깬 인어",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+      },
+      "JP": {
+        "name": "目覚めたマーメイド",
+        "source": "https://www.bilibili.com/video/BV1HVYY6EEEz/",
+        "status": "publisher_video_reproduced"
+      }
+    }
+  },
+  "pmx-76a4aa15941b6aa4": {
+    "clothes_id": 1106502,
+    "published": {
+      "EN": {
+        "name": "Wisteria Tidings",
+        "source": "https://steamcommunity.com/app/3347400?l=english"
+      },
+      "JP": {
+        "name": "花信風",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+      },
+      "KO": {
+        "name": "등꽃의 메시지",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+      }
+    }
+  },
+  "pmx-06925f50fb5cb612": {
+    "clothes_id": 1107401,
+    "published": {
+      "EN": {
+        "name": "Destined Love",
+        "source": "https://steamcommunity.com/app/3347400/allnews/"
+      },
+      "JP": {
+        "name": "運命の佳人",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+      },
+      "KO": {
+        "name": "하늘이 점쳐준 인연",
+        "source": "https://namu.moe/w/OTs-14%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-8a28434eee27a5ce": {
+    "clothes_id": 1105204,
+    "published": {
+      "EN": {
+        "name": "Indigo Oath",
+        "source": "https://steamcommunity.com/app/3347400/allnews/"
+      },
+      "KO": {
+        "name": "감벽빛 별의 서약",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=koreana"
+      },
+      "JP": {
+        "name": "紺星の願い",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/697642648593236024?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-5efe7392a2315a89": {
+    "clothes_id": 1103403,
+    "published": {
+      "EN": {
+        "name": "Steamy Vacance",
+        "source": "https://steamcommunity.com/app/3347400/allnews/"
+      },
+      "KO": {
+        "name": "온천가 휴일",
+        "source": "https://namu.moe/w/%EB%A7%88%ED%82%A4%EC%95%84%ED%86%A0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "湯煙休日",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/697642648593236024?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-d373f73abd68a3d0": {
+    "clothes_id": 1104803,
+    "published": {
+      "EN": {
+        "name": "Blazing Bunny",
+        "source": "https://steamcommunity.com/app/3347400/allnews/"
+      },
+      "JP": {
+        "name": "錦秋佳酔",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+      },
+      "KO": {
+        "name": "가을 숲의 화끈한 토끼",
+        "source": "https://namu.moe/w/%EC%B6%94%ED%99%94",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-74fa40dba7e013d6": {
+    "clothes_id": 1105205,
+    "published": {
+      "EN": {
+        "name": "Immaculate Service",
+        "source": "https://steamcommunity.com/app/3347400/allnews/"
+      },
+      "JP": {
+        "name": "無垢なる奉仕",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+      },
+      "KO": {
+        "name": "완전무결한 봉사",
+        "source": "https://namu.moe/w/%ED%81%B4%EB%A3%A8%EC%B9%B4%EC%9D%B4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-7d46f9b7159f3332": {
+    "clothes_id": 1107601,
+    "published": {
+      "EN": {
+        "name": "Redline Racer",
+        "source": "https://steamcommunity.com/app/3347400?l=english"
+      },
+      "JP": {
+        "name": "レッドゾーン",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese"
+      },
+      "KO": {
+        "name": "레드라인 레이서",
+        "source": "https://namu.moe/w/%EC%86%8C%ED%94%84%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-c7270af966e8aaf8": {
+    "clothes_id": 1107901,
+    "published": {
+      "EN": {
+        "name": "Age of Spooms",
+        "source": "https://www.sotwe.com/GFL2EXILIUM_EN"
+      },
+      "JP": {
+        "name": "フォーカスタイド",
+        "source": "https://x.com/EXILIUMJP/status/2121528571567227214",
+        "source_mirror": "https://www.xitter.cf/EXILIUMJP/status/2121528571567227214"
+      },
+      "KO": {
+        "name": "웨이브 포커스",
+        "source": "https://teapawt.net/EXILIUMKR"
+      }
+    }
+  },
+  "pmx-f5b2807685b18a60": {
+    "clothes_id": 1105503,
+    "published": {
+      "EN": {
+        "name": "Immaculate Devotion",
+        "source": "https://www.sotwe.com/GFL2EXILIUM_EN"
+      },
+      "KO": {
+        "name": "무구한 계약",
+        "source": "https://teapawt.net/EXILIUMKR",
+        "status": "publisher_announcement"
+      },
+      "JP": {
+        "name": "無垢なる契り",
+        "source": "https://nitter.cf/EXILIUMJP/media",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-020abca186c52e7b": {
+    "clothes_id": 1106500,
+    "published": {
+      "EN": {
+        "name": "Hyper Trigger",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "트윈 버스트",
+        "source": "https://namu.moe/w/%EC%95%A8%EB%B0%94",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "人形の引き金",
+        "source": "Original Chinese wardrobe entry 人偶扳机",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-412bd037301ebe18": {
+    "clothes_id": 1108000,
+    "published": {
+      "EN": {
+        "name": "Seeker",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "길을 찾는 이",
+        "source": "Original Chinese wardrobe entry 追寻者",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "探求者",
+        "source": "Original Chinese wardrobe entry 追寻者",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-fee7d92be40f96dd": {
+    "clothes_id": 1108200,
+    "published": {
+      "EN": {
+        "name": "The Mediator",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "중재자",
+        "source": "Original Chinese wardrobe entry 调停者",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "調停者",
+        "source": "Original Chinese wardrobe entry 调停者",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-8fc5b665a5786924": {
+    "clothes_id": 1102800,
+    "published": {
+      "EN": {
+        "name": "Flawless Hospitality",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "완벽한 접대",
+        "source": "https://namu.moe/w/%EC%84%BC%ED%83%80%EC%9A%B0%EB%A0%88%EC%9D%B4%EC%8B%9C%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "完璧なおもてなし",
+        "source": "Original Chinese wardrobe entry 完美招待",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-48650a04a35b40e0": {
+    "clothes_id": 1107000,
+    "published": {
+      "EN": {
+        "name": "Wind-Listener",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "바람에 귀를 기울이고",
+        "source": "https://namu.moe/w/%EC%83%A4%EC%9D%B4%EC%97%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "風を聴き、影を狩る",
+        "source": "Original Chinese wardrobe entry 听风狩影",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-8c817aa0fdd64f7a": {
+    "clothes_id": 1103200,
+    "published": {
+      "EN": {
+        "name": "Smoke Seeking",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "정처 없는 연기",
+        "source": "https://namu.moe/w/%EB%8C%80%EC%97%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "煙は異郷を求めて",
+        "source": "Original Chinese wardrobe entry 烟寻异处",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-b6fa1b6b340d0fec": {
+    "clothes_id": 1107800,
+    "published": {
+      "EN": {
+        "name": "Cherished Returner",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "집 보는 귀염둥이",
+        "source": "https://namu.moe/w/%ED%8E%98%EC%9D%BC%EB%A6%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "帰りを待つ愛し子",
+        "source": "Original Chinese wardrobe entry 望归宠儿",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-23b0b754d23c6fb7": {
+    "clothes_id": 1106400,
+    "published": {
+      "EN": {
+        "name": "Seductress' Pinion",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "매혹의 하얀 날개",
+        "source": "https://namu.moe/w/%ED%94%8C%EB%A1%9C%EB%A0%8C%EC%8A%A4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "魅惑の白羽",
+        "source": "https://dfl-store.jp/blogs/postponement/release-1",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-efe685465097beb2": {
+    "clothes_id": 1105200,
+    "published": {
+      "EN": {
+        "name": "Blazing Star",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "눈에 새겨질 별",
+        "source": "https://namu.moe/w/%ED%81%B4%EB%A3%A8%EC%B9%B4%EC%9D%B4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "ブルーモーメント",
+        "source": "https://www.4gamer.net/games/631/G063178/20250319043/",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-90268b4961c97434": {
+    "clothes_id": 1107900,
+    "published": {
+      "EN": {
+        "name": "Last Year's Snow",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "지난해의 눈",
+        "source": "Original Chinese wardrobe entry 旧年雪",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "去年の雪",
+        "source": "Original Chinese wardrobe entry 旧年雪",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-f6ac57de07aff8b0": {
+    "clothes_id": 1101300,
+    "published": {
+      "EN": {
+        "name": "Swift Messenger",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "질풍 메신저",
+        "source": "https://namu.moe/w/%EB%A0%88%EB%82%98%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "疾風の使い",
+        "source": "Original Chinese wardrobe entry 疾风讯使",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-abe3eaaaa9d04264": {
+    "clothes_id": 1105600,
+    "published": {
+      "EN": {
+        "name": "Reasoned Gaze",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "이성적인 주시",
+        "source": "https://namu.moe/w/%EB%A6%AC%EB%B0%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "理性のまなざし",
+        "source": "Original Chinese wardrobe entry 理性凝望",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-0b80022fae2dbb04": {
+    "clothes_id": 1103400,
+    "published": {
+      "EN": {
+        "name": "Caramel Melody",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "캐러멜 멜로디",
+        "source": "https://namu.moe/w/%EB%A7%88%ED%82%A4%EC%95%84%ED%86%A0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "キャラメルの旋律",
+        "source": "Original Chinese wardrobe entry 焦糖音律",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-4cdf23692c8709a0": {
+    "clothes_id": 1105500,
+    "published": {
+      "EN": {
+        "name": "Model Paragon",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "모범과 제식",
+        "source": "https://namu.moe/w/%EB%8B%88%ED%82%A4%ED%83%80%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "模範の制服",
+        "source": "Original Chinese wardrobe entry 典范制式",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-782f06826adb1307": {
+    "clothes_id": 1107400,
+    "published": {
+      "EN": {
+        "name": "Dark Sun's Shadow",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "어두운 낮의 시린 그림자",
+        "source": "https://namu.moe/w/OTs-14%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "昏い昼の冷たい影",
+        "source": "Original Chinese wardrobe entry 暗昼冽影",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-a3c2d1b094df6ee0": {
+    "clothes_id": 1106000,
+    "published": {
+      "EN": {
+        "name": "Sunless Seaglow",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "흑해의 서광",
+        "source": "https://namu.moe/w/%ED%8C%8C%EC%97%90%ED%88%AC%EC%82%AC%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "暗い海の曙光",
+        "source": "Original Chinese wardrobe entry 暗海曦光",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-e4fe174c77f90d6c": {
+    "clothes_id": 1104800,
+    "published": {
+      "EN": {
+        "name": "S-Grade Cuisine Hunter",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "특급 미식 헌터",
+        "source": "https://namu.moe/w/%EC%B6%94%ED%99%94",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "特級美食ハンター",
+        "source": "Original Chinese wardrobe entry 特级美食猎人",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-caaf00b5aa73eb64": {
+    "clothes_id": 1107300,
+    "published": {
+      "EN": {
+        "name": "Twilight Phantom",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "저무는 밤의 그림자",
+        "source": "https://namu.moe/w/%EC%84%B9%EC%8A%A4%ED%84%B4%EC%8A%A4",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "宵闇の幻影",
+        "source": "Original Chinese wardrobe entry 暮夜魅影",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-40dbcd572c1fb3f8": {
+    "clothes_id": 1107600,
+    "published": {
+      "EN": {
+        "name": "Rimestorm",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "서리 폭풍",
+        "source": "https://namu.moe/w/%EC%86%8C%ED%94%84%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "凍てつく嵐",
+        "source": "Original Chinese wardrobe entry 凛霜风暴",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-a030b24c0272893f": {
+    "clothes_id": 1104700,
+    "published": {
+      "EN": {
+        "name": "Clean Military Uniform",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "깔끔한 군장",
+        "source": "https://namu.moe/w/%EC%8A%A4%ED%94%84%EB%A7%81%ED%95%84%EB%93%9C%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "白く輝く軍装",
+        "source": "Original Chinese wardrobe entry 耀洁戎装",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-4019c9450e0e318d": {
+    "clothes_id": 1103900,
+    "published": {
+      "EN": {
+        "name": "Snow Bright",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "눈에 비친 맑은 빛",
+        "source": "https://namu.moe/w/%EC%88%98%EC%98%A4%EB%AF%B8%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "湖氷のきらめき",
+        "source": "https://img.altema.jp/gf2/uploads/2024/12/2024y12m06d_2018549435.jpg",
+        "status": "client_screenshot"
+      }
+    }
+  },
+  "pmx-4f5d642f97fc5a9d": {
+    "clothes_id": 1104400,
+    "published": {
+      "EN": {
+        "name": "Concealment Gear",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "은폐 무장",
+        "source": "https://namu.moe/w/%EB%B2%A1%ED%84%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "隠密装備",
+        "source": "Original Chinese wardrobe entry 隐匿武装",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-2689b8bef5ca9503": {
+    "clothes_id": 1105400,
+    "published": {
+      "EN": {
+        "name": "Fashion Dancer",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "패셔니스타 댄서",
+        "source": "https://namu.moe/w/%EC%9C%A0%ED%9D%AC%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "ファッションダンサー",
+        "source": "Original Chinese wardrobe entry 时尚舞者",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-33aa225b75767fcb": {
+    "clothes_id": 1103203,
+    "published": {
+      "EN": {
+        "name": "Narcissus",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "영롱한 옥",
+        "source": "https://namu.moe/w/%EB%8C%80%EC%97%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "玉玲瓏",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-e524539529b6d56a": {
+    "clothes_id": 1103401,
+    "published": {
+      "EN": {
+        "name": "Ballroom Interlude",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "무도회의 쉼표",
+        "source": "https://namu.moe/w/%EB%A7%88%ED%82%A4%EC%95%84%ED%86%A0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "舞踏室の間奏曲",
+        "source": "https://gamerch.com/gf2wiki/887241",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-79e7c6a0e60e6f61": {
+    "clothes_id": 1103402,
+    "published": {
+      "EN": {
+        "name": "Embroidered Bamboo, Blooming Shadows",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "겹쳐진 꽃",
+        "source": "https://namu.moe/w/%EB%A7%88%ED%82%A4%EC%95%84%ED%86%A0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "花影重",
+        "source": "https://www.youtube.com/watch?v=IodPp-yd0UA",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-43ef6f5967a37c87": {
+    "clothes_id": 1103901,
+    "published": {
+      "EN": {
+        "name": "Sparkling Ocean",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "영혼을 비추는 바다",
+        "source": "https://namu.moe/w/%EC%88%98%EC%98%A4%EB%AF%B8%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "煌海のエルフ",
+        "source": "https://gamerch.com/gf2wiki/887241",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-cb19e5961c38af86": {
+    "clothes_id": 1103902,
+    "published": {
+      "EN": {
+        "name": "Fluffy Korvatunturi",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "눈토끼의 선물",
+        "source": "https://namu.moe/w/%EC%88%98%EC%98%A4%EB%AF%B8%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "雪兎の贈り物",
+        "source": "https://applion.jp/ドールズフロントライン2：エクシリウム/iphone-6499011827/news/?start=580",
+        "status": "publisher_post_reproduced"
+      }
+    }
+  },
+  "pmx-cc787cf2d032366b": {
+    "clothes_id": 1104701,
+    "published": {
+      "EN": {
+        "name": "Queen in Radiance",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "등불 밑의 여왕",
+        "source": "https://namu.moe/w/%EC%8A%A4%ED%94%84%EB%A7%81%ED%95%84%EB%93%9C%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "灯下の女王",
+        "source": "https://www.kotobukiya.co.jp/product/detail/p4934054076123/",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-6826e4ccdf1f4ddf": {
+    "clothes_id": 1105201,
+    "published": {
+      "EN": {
+        "name": "Speed Star",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "슈넬슈테른",
+        "source": "https://namu.moe/w/%ED%81%B4%EB%A3%A8%EC%B9%B4%EC%9D%B4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "スピードスター",
+        "source": "https://slist.amiami.jp/top/search/list?pagemax=40&s_charaname_search_id=69858",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-a0790aac2b94e352": {
+    "clothes_id": 1105202,
+    "published": {
+      "EN": {
+        "name": "Astral Luminous",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "유성의 궤적",
+        "source": "https://namu.moe/w/%ED%81%B4%EB%A3%A8%EC%B9%B4%EC%9D%B4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "流星の煌めき",
+        "source": "https://www.4gamer.net/games/631/G063178/20250319043/",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-ba77d8beccf4a49b": {
+    "clothes_id": 1104402,
+    "published": {
+      "EN": {
+        "name": "Vivi Sometimes Hides Her Molotovs",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "学園風物詩",
+        "source": "https://free-wifi-password-recovery.twstalker.com/uniuni1047",
+        "status": "publisher_post_reproduced"
+      },
+      "KO": {
+        "name": "방과 후 소탕활동",
+        "source": "https://namu.moe/w/%EB%B2%A1%ED%84%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-9de435d3627c8e6b": {
+    "clothes_id": 1105401,
+    "published": {
+      "EN": {
+        "name": "Miracle Sweetheart",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "미라클 스윗하트",
+        "source": "https://namu.moe/w/%EC%9C%A0%ED%9D%AC%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "スイートミラクル",
+        "source": "https://dfl-store.jp/products/6976881810707",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-020f2e8bdc65bc5b": {
+    "clothes_id": 1104801,
+    "published": {
+      "EN": {
+        "name": "Benevolent Herbalist",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "자백제 어뷰저",
+        "source": "https://namu.moe/w/%EC%B6%94%ED%99%94",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "食は仁術",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/697642648593236024?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-78cbbc06c7da39dc": {
+    "clothes_id": 1105501,
+    "published": {
+      "EN": {
+        "name": "Dance Like the Blazing Sun",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "햇님처럼 뛰놀기",
+        "source": "https://namu.moe/w/%EB%8B%88%ED%82%A4%ED%83%80%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "ひまわりのように",
+        "source": "https://www.gamespark.jp/article/2025/08/14/156010.html",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-ea3eb50ef5b32295": {
+    "clothes_id": 1105502,
+    "published": {
+      "EN": {
+        "name": "Night on the Silver Bay",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "은하수 흐르는 밤에",
+        "source": "https://namu.moe/w/%EB%8B%88%ED%82%A4%ED%83%80%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "銀月めぐる夜",
+        "source": "https://kzwolf.net/gf2exilium/jp-beilan-island-shelter-broadcast-sp2602/",
+        "status": "preview_program_report"
+      }
+    }
+  },
+  "pmx-b6889756cf6c0d5e": {
+    "clothes_id": 1106401,
+    "published": {
+      "EN": {
+        "name": "Marvelous Yam Pastry",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "기묘한 참마칩",
+        "source": "https://namu.moe/w/%ED%94%8C%EB%A1%9C%EB%A0%8C%EC%8A%A4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "奇怪・とろろもち",
+        "source": "https://hobby.watch.impress.co.jp/docs/news/2112993.html",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-4818f3bdda4ec18d": {
+    "clothes_id": 1106402,
+    "published": {
+      "EN": {
+        "name": "Alluring Larkspur",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "델피니움",
+        "source": "https://namu.moe/w/%ED%94%8C%EB%A1%9C%EB%A0%8C%EC%8A%A4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "媚惑の千鳥草",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/697644549761138792?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-7834ce1969baa199": {
+    "clothes_id": 1105601,
+    "published": {
+      "EN": {
+        "name": "Diamond Flower",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "다이아몬드의 꽃",
+        "source": "https://namu.moe/w/%EB%A6%AC%EB%B0%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "ダイヤの花びら",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-67f783c2661ce19e": {
+    "clothes_id": 1101305,
+    "published": {
+      "EN": {
+        "name": "Vitality Magic",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "활력의 마법",
+        "source": "https://namu.moe/w/%EB%A0%88%EB%82%98%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "元気になる魔法",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-b8a56876e52dd98e": {
+    "clothes_id": 1101301,
+    "published": {
+      "EN": {
+        "name": "Flying Phantom",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "플라잉 팬텀",
+        "source": "https://namu.moe/w/%EB%A0%88%EB%82%98%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "シャドウエージェント",
+        "source": "https://kzwolf.net/gf2exilium/jp-beilan-island-shelter-broadcast-sp2602/",
+        "status": "preview_program_report"
+      }
+    }
+  },
+  "pmx-94483c23f678afe3": {
+    "clothes_id": 1106501,
+    "published": {
+      "EN": {
+        "name": "Antje",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "안티아",
+        "source": "https://namu.moe/w/%EC%95%A8%EB%B0%94",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "アンティア",
+        "source": "https://kzwolf.net/gf2exilium/jp-beilan-island-shelter-broadcast-sp2602/",
+        "status": "preview_program_report"
+      }
+    }
+  },
+  "pmx-81a5c871affb4465": {
+    "clothes_id": 1106001,
+    "published": {
+      "EN": {
+        "name": "Caged in the Evernight Garden",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "영야 정원의 수감자",
+        "source": "https://namu.moe/w/%ED%8C%8C%EC%97%90%ED%88%AC%EC%82%AC%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "常夜の花園",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/678498544605200437?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-47a4f99939c55958": {
+    "clothes_id": 1107001,
+    "published": {
+      "EN": {
+        "name": "Maiden Debut",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "풋풋한 연회",
+        "source": "https://namu.moe/w/%EC%83%A4%EC%9D%B4%EC%97%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "青い夜",
+        "source": "https://steamcommunity.com/games/3308670/announcements/detail/697644549761138792?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-e177f4382e37a789": {
+    "clothes_id": 1107301,
+    "published": {
+      "EN": {
+        "name": "Nocte Bewitchment",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "夜鶯の調べ",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese",
+        "status": "publisher_announcement"
+      },
+      "KO": {
+        "name": "나이팅게일의 매혹",
+        "source": "https://wiki.kanotype.net/ko/섹스턴스(소녀전선2:_망명)",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-293917f24c2bd387": {
+    "clothes_id": 1107801,
+    "published": {
+      "EN": {
+        "name": "Sunkissed Shimmer",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "폴짝 아지랑이",
+        "source": "https://namu.moe/w/%ED%8E%98%EC%9D%BC%EB%A6%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "サンシャイン☆ヘイズ",
+        "source": "https://www.gamespark.jp/article/2026/10/22/173925.html",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-7c5ea1f673f69f12": {
+    "clothes_id": 1102801,
+    "published": {
+      "EN": {
+        "name": "50 Days With Centaureissi",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "레이시와의 50일",
+        "source": "https://namu.moe/w/%EC%84%BC%ED%83%80%EC%9A%B0%EB%A0%88%EC%9D%B4%EC%8B%9C%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "レイシーと過ごす50日",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-0af216265749a22d": {
+    "clothes_id": 1105602,
+    "published": {
+      "KO": {
+        "name": "버닝 엑서사이즈",
+        "source": "https://namu.moe/w/%EB%A6%AC%EB%B0%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Sultry Tempo",
+        "source": "https://iopwiki.com/wiki/GFL2_Costumes#Sultry_Tempo",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "ホットエクササイズ",
+        "source": "https://steamcommunity.com/app/3308670/allnews/?l=japanese",
+        "status": "publisher_announcement"
+      }
+    }
+  },
+  "pmx-1c1dd0698118e114": {
+    "clothes_id": 1105603,
+    "published": {
+      "KO": {
+        "name": "교활한 토끼의 미로",
+        "source": "https://namu.moe/w/%EB%A6%AC%EB%B0%94%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Down the Fox's Burrow",
+        "source": "https://iopwiki.com/wiki/Leva",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "兎影の行方",
+        "source": "https://www.aayyy.org/latest/ドールズフロントライン2-エクシリウム-アステリアの性能特徴と共通キー転写の活用法まとめ/",
+        "status": "preview_program_report"
+      }
+    }
+  },
+  "pmx-62b44285b57a48e9": {
+    "clothes_id": 1104702,
+    "published": {
+      "KO": {
+        "name": "고요한 향 즐기며",
+        "source": "https://namu.moe/w/%EC%8A%A4%ED%94%84%EB%A7%81%ED%95%84%EB%93%9C%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Enjoy the Fragrance",
+        "source": "https://iopwiki.com/wiki/GFL2_Changelogs",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "芳醇なひととき",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-9ee1e4cdb8d7f985": {
+    "clothes_id": 1105203,
+    "published": {
+      "KO": {
+        "name": "쪽빛 궤적",
+        "source": "https://namu.moe/w/%ED%81%B4%EB%A3%A8%EC%B9%B4%EC%9D%B4%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Cerulean Breaker",
+        "source": "https://iopwiki.com/wiki/GFL2_Changelogs",
+        "status": "publisher_announcement_reproduced"
+      },
+      "JP": {
+        "name": "蒼き軌跡",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-b0dd2e3cfd1ab80c": {
+    "clothes_id": 1108001,
+    "published": {
+      "JP": {
+        "name": "シリウスへの途",
+        "source": "https://wiki.kanotype.net/ja/アステリア(ドールズフロントライン2)",
+        "status": "cross_referenced"
+      },
+      "KO": {
+        "name": "겨울밤의 별길",
+        "source": "https://www.inven.co.kr/webzine/news/?news=323295",
+        "status": "preview_program_report"
+      },
+      "EN": {
+        "name": "Ad Astra",
+        "source": "https://iopwiki.com/wiki/Asteria",
+        "status": "cross_referenced"
+      }
+    }
+  },
+  "pmx-73625fbf0962e120": {
+    "clothes_id": 1107402,
+    "published": {
+      "EN": {
+        "name": "Polarnight Daybreak",
+        "source": "https://www.taptap.cn/moment/857578060935859580?group_id=232066",
+        "artwork": "https://img2-tc.tapimg.com/moment/etag/Ftru1XBWJgbFkeU1QUpenJFrIvx__20261009110842.jpg/_tap_ugc.jpg",
+        "status": "publisher_artwork"
+      },
+      "KO": {
+        "name": "극야의 여명",
+        "source": "https://namu.moe/w/OTs-14%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      }
+    },
+    "provisional": {
+      "JP": {
+        "name": "極夜の黎明",
+        "source": "Original Chinese wardrobe entry 极夜黎明",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-e348ab0b30d7e83a": {
+    "clothes_id": 1104802,
+    "published": {
+      "KO": {
+        "name": "용급주사",
+        "source": "https://namu.moe/w/%EC%B6%94%ED%99%94",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Dragon Chef",
+        "source": "https://iopwiki.com/wiki/GFL2_Changelogs",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "秋宴の料理人",
+        "source": "https://www.famitsu.com/article/202512/58100",
+        "status": "client_names_reported"
+      }
+    }
+  },
+  "pmx-1303e831f7fc913d": {
+    "clothes_id": 1104401,
+    "published": {
+      "KO": {
+        "name": "몰로토프 버니",
+        "source": "https://namu.moe/w/%EB%B2%A1%ED%84%B0%28%EC%86%8C%EB%85%80%EC%A0%84%EC%84%A02%3A%20%EB%A7%9D%EB%AA%85%29",
+        "status": "cross_referenced"
+      },
+      "EN": {
+        "name": "Molotov Bunny",
+        "source": "https://kotobukiya-us.com/products/190526071568",
+        "status": "cross_referenced"
+      },
+      "JP": {
+        "name": "タクティカルバニー",
+        "source": "https://www.kotobukiya.co.jp/product/detail/p4934054076925/",
+        "status": "licensed_product"
+      }
+    }
+  },
+  "pmx-dd77c173248cb704": {
+    "clothes_id": 1102802,
+    "published": {
+      "EN": {
+        "name": "Ace Barista",
+        "source": "https://www.taptap.cn/moment/845008476882076123?group_id=232066",
+        "artwork": "https://img2-tc.tapimg.com/moment/etag/FmV_xBOOCcvyAa_WyxlKzBTZHtEt_20260904184146.jpg/_tap_ugc.jpg",
+        "status": "publisher_artwork"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "우수 직원",
+        "source": "https://www.taptap.cn/moment/843559215556461168",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "金賞のスタッフ",
+        "source": "Original Chinese wardrobe entry 金牌店员",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-9db646f49c805a1b": {
+    "clothes_id": 1108201,
+    "published": {
+      "EN": {
+        "name": "Soothing Respite",
+        "source": "https://www.taptap.cn/moment/845007441312615432?group_id=232066",
+        "artwork": "https://img2-tc.tapimg.com/moment/etag/Fj5xp7h8G4cTvnjX5Oqkr3_lKb5V_20260904183746.png/_tap_ugc.jpg",
+        "status": "publisher_artwork",
+        "store_reference": "https://apps.apple.com/pk/app/girls-frontline-2-exilium/id6502505286?platform=mac"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "따뜻한 차와 쉼",
+        "source": "https://www.taptap.cn/moment/843559215556461168",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "温かな紅茶でひと休み",
+        "source": "Original Chinese wardrobe entry 暖茶时憩",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-d1fc22f957060588": {
+    "clothes_id": 1108800,
+    "published": {},
+    "provisional": {
+      "EN": {
+        "name": "Wild Hunt Hellhound",
+        "source": "Original Chinese wardrobe entry 狂猎魔犬",
+        "status": "translated_from_cn"
+      },
+      "KO": {
+        "name": "광란의 마견",
+        "source": "Original Chinese wardrobe entry 狂猎魔犬",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "狂猟の魔犬",
+        "source": "Original Chinese wardrobe entry 狂猎魔犬",
+        "status": "translated_from_cn"
+      }
+    }
+  },
+  "pmx-d9972c9c00cacbc5": {
+    "clothes_id": 1108801,
+    "published": {
+      "EN": {
+        "name": "Noir Truffle",
+        "source": "https://www.taptap.cn/moment/867828883120982777?group_id=232066",
+        "artwork": "https://img2-tc.tapimg.com/moment/etag/FpXUNXNbGs3Dzq2gNxZPgZTYRoaS_20261107191937.jpg/_tap_ugc.jpg",
+        "status": "publisher_artwork"
+      }
+    },
+    "provisional": {
+      "KO": {
+        "name": "벨벳 다크 초콜릿",
+        "source": "https://www.taptap.cn/app/190930/topic?os=android&page=14",
+        "status": "translated_from_cn"
+      },
+      "JP": {
+        "name": "ベルベット・ビターチョコ",
+        "source": "Original Chinese wardrobe entry 垂绒黑巧",
+        "status": "translated_from_cn"
+      }
+    }
+  }
+}

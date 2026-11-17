@@ -1,0 +1,39 @@
+module Base
+{
+    sound GFL2RoomSelect
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/Select.wav, volume = 0.75, }
+    }
+    sound GFL2RoomPage
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/Page.wav, volume = 0.80, }
+    }
+    sound GFL2RoomConfirm
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/Confirm.wav, volume = 0.85, }
+    }
+    sound GFL2RoomDrawStart
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/DrawStart.wav, volume = 0.74, }
+    }
+    sound GFL2RoomDrawTick
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/DrawTick.wav, volume = 0.65, }
+    }
+    sound GFL2RoomDrawHit
+    {
+        category = UI,
+        is3D = false,
+        clip { file = media/sound/GFL2ReadyRoom/DrawHit.wav, volume = 0.85, }
+    }
+}

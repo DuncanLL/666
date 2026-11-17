@@ -18,21 +18,21 @@ if __name__=='__main__':
         assert protected['host_sha256']==build['host_sha256'] and set(protected['shaders'])==set(backends)
         backends={name:dict(row,shader_sha256=protected['shaders'][name]['sha256']) for name,row in backends.items()}
         build['jar_sha256']=protected['jar_sha256']
-    cfg=settings();project=a.project.resolve();mod=project/'Contents/mods/AimohGF2Eclipse'
-    jar=mod/'42/media/java/client/AimohGF2Eclipse.jar';game=Path(cfg['game_root']);host=Path(cfg['viewpoint_jar'])
+    cfg=settings();project=a.project.resolve();mod=project/'Contents/mods/GFL2RenderSupport'
+    jar=mod/'42/media/java/client/GFL2RenderSupport.jar';game=Path(cfg['game_root']);host=Path(cfg['viewpoint_jar'])
     before=sha(host);assert before==build['host_sha256']
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(jar)as z:
         assert not [n for n in z.namelist()if n.endswith('.class')and n in stock]
-        payloads={f'aimoh/gf2/bridge/Aimoh-{name.capitalize()}-GF2.zip' for name in backends}
-        assert {name for name in z.namelist() if name.startswith('aimoh/gf2/bridge/Aimoh-') and name.endswith('-GF2.zip')}==payloads
+        payloads={row['shader_payload'] for row in backends.values()}
+        assert {name for name in z.namelist() if name.startswith('META-INF/gfl2/rendering/') and name.endswith('.zip')}==payloads
         for row in backends.values():
             assert hashlib.sha256(z.read(row['shader_payload'])).hexdigest()==row['shader_sha256']
         if a.protected_report:
-            resource=protected.get('sealed_resource','aimoh/gf2/bridge/render-inputs.bin')
+            resource=protected.get('sealed_resource','gfl2/render/render-inputs.bin')
             assert hashlib.sha256(z.read(resource)).hexdigest()==protected['sealed_payload_sha256']
         if not eclipse:
-            display=z.read('aimoh/gf2/bridge/gf2-original-display.rgba16f')
+            display=z.read('gfl2/render/gf2-original-display.rgba16f')
             expected_display=json.loads((ROOT/'resources/manifest.json').read_text('utf8'))['render_support']['original_display_profile']
             assert len(display)==expected_display['bytes']and hashlib.sha256(display).hexdigest()==expected_display['sha256']
     assert sha(jar)==build['jar_sha256'],'Workshop JAR is not the build being validated'
@@ -42,7 +42,7 @@ if __name__=='__main__':
     with zipfile.ZipFile(agent,'w',zipfile.ZIP_DEFLATED)as z:
         z.writestr('META-INF/MANIFEST.MF','Manifest-Version: 1.0\nPremain-Class: RenderSupportTestAgent\nCan-Retransform-Classes: true\n\n')
         z.write(out/'agent-classes/RenderSupportTestAgent.class','RenderSupportTestAgent.class')
-    cp=[jar,Path(cfg['reference_jar']),host,cfg['zombiebuddy_jar'],agent,*game.glob('*.jar')]
+    cp=[jar,BUILD/'GFL2Exilium.jar',host,cfg['zombiebuddy_jar'],agent,*game.glob('*.jar')]
     if not eclipse and not a.protected_report:
         compile_java(cfg,[ROOT/'tools/java/NativePackOptionsCheck.java'],out/'pack-options-classes',cp)
         options_check=subprocess.run([str(game/'jre64/bin/java.exe'),'-ea','-cp',';'.join(map(str,[out/'pack-options-classes',*cp])),'viewpoint.render.NativePackOptionsCheck'],env=environment(),capture_output=True,text=True,timeout=30)
@@ -60,7 +60,7 @@ if __name__=='__main__':
              ';'.join(map(str,[out/'classes',*cp])),'RenderSupportStartupCheck',str(out),a.backend]
     if a.protected_report:
         mode='sealed-public' if protected.get('public_source_view') else 'sealed'
-        command.extend((mode,protected.get('marker_prefix','/*r116$'),protected.get('dispatcher_class','K')))
+        command.extend((mode,protected.get('marker_prefix','/*gfl2$'),protected.get('dispatcher_class','K')))
     result=subprocess.run(command,env=environment(),cwd=game,capture_output=True,text=True,encoding='utf8',errors='replace',timeout=90)
     (out/'startup.log').write_text(result.stdout+result.stderr,'utf8')
     if result.returncode:print((result.stdout+result.stderr)[-7000:],flush=True)

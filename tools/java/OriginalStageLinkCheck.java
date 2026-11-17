@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 import org.json.*;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.*;
-import viewpoint.render.AimohGf2OriginalProgram;
+import viewpoint.render.Gfl2OriginalProgram;
 
 /** Real source program links in a private hidden GL context; no game or model draw. */
 public final class OriginalStageLinkCheck {
@@ -24,7 +24,7 @@ public final class OriginalStageLinkCheck {
         if(fragment.contains("in vec3 gf2NativeWorldNormal;")&&(!input.find()||Integer.parseInt(input.group(1))!=normal))throw new AssertionError("Bridge normal locations differ");
     }
     private static String[] adapted(String vertex,String fragment)throws Exception {
-        Class<?> adapter=Class.forName("viewpoint.render.AimohGf2Rc2Vertex");
+        Class<?> adapter=Class.forName("viewpoint.render.Gfl2Rc2Vertex");
         try {
             Object stages=adapter.getMethod("stages",String.class,String.class).invoke(null,vertex,fragment);
             return new String[]{(String)stages.getClass().getMethod("vertex").invoke(stages),(String)stages.getClass().getMethod("fragment").invoke(stages)};
@@ -34,7 +34,7 @@ public final class OriginalStageLinkCheck {
         Path out=Path.of(args[1]);Files.createDirectories(out);
         if(!GLFW.glfwInit())throw new AssertionError("GL initialization failed");
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);
-        long window=GLFW.glfwCreateWindow(32,32,"R116 original shader links",0,0);
+        long window=GLFW.glfwCreateWindow(32,32,"GFL2 original shader links",0,0);
         if(window==0)throw new AssertionError("Hidden GL context unavailable");
         try {
             GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
@@ -43,7 +43,7 @@ public final class OriginalStageLinkCheck {
                 JSONObject job=(JSONObject)value;String vertex=Files.readString(Path.of(job.getString("vertex"))),fragment=Files.readString(Path.of(job.getString("fragment")));
                 String[] stages=adapted(vertex,fragment);check(stages[0],stages[1]);
                 if(linked==0){Files.writeString(out.resolve("reported-program.vert"),stages[0]);Files.writeString(out.resolve("reported-program.frag"),stages[1]);}
-                try(var program=new AimohGf2OriginalProgram(vertex,fragment,job.getString("vs"),job.getString("fs"))) {
+                try(var program=new Gfl2OriginalProgram(vertex,fragment,job.getString("vs"),job.getString("fs"))) {
                     int error=GL11.glGetError();if(error!=0)throw new AssertionError("GL error "+error+" in "+job);
                 }
                 linked++;System.out.println("LINKED "+linked+" "+job.getString("vs").substring(0,12)+"/"+job.getString("fs").substring(0,12)+" "+job.getString("kind"));

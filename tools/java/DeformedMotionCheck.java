@@ -1,5 +1,5 @@
-import aimoh.pmxpreview.MeshVertexPatch;
-import aimoh.motion.PmxDrawMesh;
+import gfl2.runtime.MeshVertexPatch;
+import gfl2.motion.PmxDrawMesh;
 import java.lang.instrument.Instrumentation;
 import java.nio.file.*;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ public final class DeformedMotionCheck {
     public static void premain(String ignored,Instrumentation value){instrumentation=value;}
     static void installReader()throws Exception{
         var loader=Class.forName("me.zed_0xff.zombie_buddy.Loader");var agent=loader.getDeclaredField("g_instrumentation");agent.setAccessible(true);agent.set(null,instrumentation);
-        me.zed_0xff.zombie_buddy.PatchEngine.applyPatches("aimoh.pmxpreview",DeformedMotionCheck.class.getClassLoader());
+        me.zed_0xff.zombie_buddy.PatchEngine.applyPatches("gfl2.runtime",DeformedMotionCheck.class.getClassLoader());
     }
     static String source(String name)throws Exception{
         Class<?> packs=Class.forName("viewpoint.platform.ShaderPacks"),active=Class.forName("viewpoint.platform.ShaderPacks$Active");
@@ -62,7 +62,7 @@ public final class DeformedMotionCheck {
     public static void main(String[] args)throws Exception{
         if(args[0].equals("--delegate")){installReader();Class.forName(args[1]).getMethod("main",String[].class).invoke(null,(Object)Arrays.copyOfRange(args,2,args.length));return;}
         Path out=Path.of(args[0]);boolean before=Boolean.parseBoolean(args[1]);
-        if(!GLFW.glfwInit())throw new AssertionError("GLFW unavailable");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);long window=GLFW.glfwCreateWindow(32,32,"R116 motion contract",0,0);if(window==0)throw new AssertionError("Hidden GL unavailable");GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
+        if(!GLFW.glfwInit())throw new AssertionError("GLFW unavailable");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);long window=GLFW.glfwCreateWindow(32,32,"GFL2 motion contract",0,0);if(window==0)throw new AssertionError("Hidden GL unavailable");GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
         try{
             String nativeSource=source("model.vert"),irisSource=source("iris/model_vertex.glsl");
             installReader();

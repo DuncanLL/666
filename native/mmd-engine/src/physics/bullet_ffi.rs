@@ -81,7 +81,7 @@ mod ffi {
         );
         pub fn bw_world_remove_constraint(world: *mut BW_World, c: *mut BW_Constraint);
         pub fn bw_world_set_kinematic_filter(world: *mut BW_World, enabled: bool);
-        pub fn aimoh_world_clear_contact_history(world:*mut BW_World);
+        pub fn gfl2_world_clear_contact_history(world:*mut BW_World);
 
         // 碰撞形状
         pub fn bw_shape_sphere(radius: c_float) -> *mut BW_Shape;
@@ -94,7 +94,7 @@ mod ffi {
         pub fn bw_rigid_body_destroy(rb: *mut BW_RigidBody);
         pub fn bw_rigid_body_get_transform(rb: *mut BW_RigidBody, matrix4x4: *mut c_float);
         pub fn bw_rigid_body_set_transform(rb: *mut BW_RigidBody, matrix4x4: *const c_float);
-        pub fn aimoh_body_rebase(rb: *mut BW_RigidBody, matrix4x4: *const c_float);
+        pub fn gfl2_body_rebase(rb: *mut BW_RigidBody, matrix4x4: *const c_float);
         pub fn bw_rigid_body_get_position(
             rb: *mut BW_RigidBody,
             x: *mut c_float,
@@ -257,7 +257,7 @@ impl BulletWorld {
         unsafe { ffi::bw_world_set_kinematic_filter(self.ptr, enabled) }
     }
 
-    pub fn clear_contact_history(&self) {unsafe {ffi::aimoh_world_clear_contact_history(self.ptr)}}
+    pub fn clear_contact_history(&self) {unsafe {ffi::gfl2_world_clear_contact_history(self.ptr)}}
 }
 
 impl Drop for BulletWorld {
@@ -370,7 +370,7 @@ impl BulletRigidBody {
     }
 
     pub fn rebase(&self, transform:Mat4) {
-        unsafe {ffi::aimoh_body_rebase(self.ptr,transform.to_cols_array().as_ptr())}
+        unsafe {ffi::gfl2_body_rebase(self.ptr,transform.to_cols_array().as_ptr())}
     }
 
     /// 获取位置

@@ -1,4 +1,0 @@
-require "AimohPMXFaelynnVoice/NativeData"
-require "AimohPMXVoice/NativeVoice"
-AimohPMXFaelynnNativeVoice=AimohPMXNativeVoice.create(AimohPMXFaelynnNativeVoiceData,"AimohPMXFaelynnOriginalVoicePrefix")
-return AimohPMXFaelynnNativeVoice

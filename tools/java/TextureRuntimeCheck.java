@@ -1,6 +1,6 @@
-package aimoh.pmxpreview;
+package gfl2.runtime;
 
-import aimoh.motion.*;
+import gfl2.motion.*;
 import com.shiroha.mmdskin.NativeFunc;
 import java.lang.reflect.*;
 import java.nio.file.*;
@@ -22,7 +22,7 @@ public class TextureRuntimeCheck {
         zombie.ZomboidFileSystem.instance.setCacheDir(args[1]);zombie.ZomboidFileSystem.instance.init();
         if(!GLFW.glfwInit())throw new AssertionError("GLFW initialization failed");
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);
-        long window=GLFW.glfwCreateWindow(32,32,"R116 texture check",0,0);
+        long window=GLFW.glfwCreateWindow(32,32,"GFL2 texture check",0,0);
         if(window==0)throw new AssertionError("Hidden GL context unavailable");
         try {
             GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();
@@ -31,12 +31,12 @@ public class TextureRuntimeCheck {
             set(Main.class,"directory",root);
             Method initialize=Main.class.getDeclaredMethod("nativeRuntime");initialize.setAccessible(true);initialize.invoke(null);
             NativeFunc api=(NativeFunc)get(Main.class,"api");
-            JSONArray registry=new JSONObject(Files.readString(root.resolve("media/aimoh_pmx/registry.json"))).getJSONArray("models");
+            JSONArray registry=new JSONObject(Files.readString(root.resolve("media/gfl2_pmx/registry.json"))).getJSONArray("models");
             int deformMask=0;try{deformMask=PmxDrawMesh.class.getField("DEFORMED").getInt(null);}catch(NoSuchFieldException historical){}
             int checked=0;
             for(int cycle=0;cycle<Integer.parseInt(args[2]);cycle++)for(int r=0;r<registry.length();r++) {
                 JSONObject row=registry.getJSONObject(r);
-                Path base=root.resolve("media/aimoh_pmx"),pmx=base.resolve(row.getString("model")),profile=base.resolve(row.getString("profile"));
+                Path base=root.resolve("media/gfl2_pmx"),pmx=base.resolve(row.getString("model")),profile=base.resolve(row.getString("profile"));
                 JSONObject p=new JSONObject(Files.readString(profile));
                 try(PmxModel model=PmxModel.load(api,pmx,profile);TextureFactory textures=new TextureFactory(true)) {
                     var source=p.getJSONArray("source_reference");float[] pose=new float[source.length()];

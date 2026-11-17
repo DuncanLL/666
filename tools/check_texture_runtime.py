@@ -20,7 +20,7 @@ if __name__=='__main__':
              '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED','-Djava.awt.headless=true','-Xmx768m',
              '-Dorg.lwjgl.util.DebugAllocator=true','-Dorg.lwjgl.util.DebugAllocator.internal=true',
              '-Djava.io.tmpdir='+str(BUILD/'tmp'),'-XX:ErrorFile='+str(out/'hs_err_pid%p.log'),
-             '-cp',';'.join(map(str,[classes,*classpath])),'aimoh.pmxpreview.TextureRuntimeCheck',
+             '-cp',';'.join(map(str,[classes,*classpath])),'gfl2.runtime.TextureRuntimeCheck',
              str(Path(cfg['game_install_roots'][0])/'42'),str(out/'User'),str(args.cycles)]
     log=out/'runtime.log'
     with log.open('w',encoding='utf8')as stream:

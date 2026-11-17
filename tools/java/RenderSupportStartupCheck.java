@@ -5,7 +5,7 @@ import net.bytebuddy.jar.asm.*;
 import java.util.*;
 import java.util.zip.*;
 import org.json.*;
-import aimoh.gf2.bridge.*;
+import gfl2.render.*;
 /** Actual normal Java dispatcher, shader discovery and one-MOD classpath contract. */
 public final class RenderSupportStartupCheck {
     private static void require(boolean value,String why){if(!value)throw new AssertionError(why);}
@@ -22,7 +22,7 @@ public final class RenderSupportStartupCheck {
         boolean combined=args.length>1&&args[1].equals("combined");
         boolean publicSources=args.length>2&&args[2].equals("sealed-public");
         boolean sealed=publicSources||args.length>2&&args[2].equals("sealed");
-        String markerPrefix=args.length>3?args[3]:"/*r116$";
+        String markerPrefix=args.length>3?args[3]:"/*gfl2$";
         String dispatcher=args.length>4?args[4]:"K";
         boolean protectedTrial=args.length>2;
         long eclipseLoad=0;
@@ -72,7 +72,7 @@ public final class RenderSupportStartupCheck {
                 }
             }
             if(!protectedTrial){
-                var adaptKeyLight=Class.forName("viewpoint.render.AimohGf2Runtime").getDeclaredMethod("sourceKeyLight",String.class,float.class);
+                var adaptKeyLight=Class.forName("viewpoint.render.Gfl2Runtime").getDeclaredMethod("sourceKeyLight",String.class,float.class);
                 adaptKeyLight.setAccessible(true);
                 require(keySource.equals(adaptKeyLight.invoke(null,keySource,0f)),"Disabled Eclipse key-light adjustment changed the shader");
                 var mainOutput=java.util.regex.Pattern.compile("\\bmainLight\\b");
@@ -191,7 +191,7 @@ public final class RenderSupportStartupCheck {
         for(String preset:viewpoint.platform.PackOption.PRESETS)require(Math.abs(Float.parseFloat(selected.preset(preset).valueFor(fill))-.08f)<1e-6f,"Preset changed the subtle fill default: "+preset);
         if(sealed) checkSealedRetransform(selected,dispatcher);
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");
-        try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("(aimoh-native|r116)-bundled-.*")),"Embedded payload temp leaked");}
+        try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("gfl2-(native|eclipse)-bundled-.*")),"Embedded payload temp leaked");}
         String status=combined?"NORMAL_COMBINED_EMBEDDED_INSTALL_DISCOVERY_PASS":"NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS";
         JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("eclipse_embedded",combined).put("eclipse_discovered",combined).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
         result.put("sealed_retransform_rejected",sealed).put("sealed_disk_checks",sealed).put("eclipse_discovery_configure_ns",eclipseLoad)
@@ -200,7 +200,7 @@ public final class RenderSupportStartupCheck {
     }
 
     private static void checkSealedRetransform(viewpoint.platform.ShaderPack pack,String dispatcher)throws Exception{
-        var types=Class.forName("aimoh.gf2.bridge."+dispatcher).getDeclaredMethod(dispatcher.equals("K")?"types":"a");
+        var types=Class.forName("gfl2.render."+dispatcher).getDeclaredMethod(dispatcher.equals("K")?"types":"a");
         types.setAccessible(true);
         Class<?> carrier=((Class<?>[])types.invoke(null))[1];
         var agent=RenderSupportTestAgent.agent;

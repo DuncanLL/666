@@ -149,7 +149,7 @@ void bw_world_step(BW_World* w, float dt, int max_substeps, float fixed_dt) {
     w->world->stepSimulation(dt, max_substeps, fixed_dt);
 }
 
-void aimoh_world_clear_contact_history(BW_World* w) {
+void gfl2_world_clear_contact_history(BW_World* w) {
     if (!w) return;
     for (int i=0;i<w->world->getNumCollisionObjects();++i) {
         auto* proxy=w->world->getCollisionObjectArray()[i]->getBroadphaseHandle();
@@ -310,7 +310,7 @@ void bw_rigid_body_set_transform(BW_RigidBody* rb, const float* matrix4x4) {
 }
 
 // A discontinuous pose starts a new history for Bullet's interpolator too.
-void aimoh_body_rebase(BW_RigidBody* rb, const float* matrix4x4) {
+void gfl2_body_rebase(BW_RigidBody* rb, const float* matrix4x4) {
     if (!rb || !matrix4x4) return;
     auto& body = *reinterpret_cast<btRigidBody*>(rb);
     const auto pose = mat4_to_bt(matrix4x4);

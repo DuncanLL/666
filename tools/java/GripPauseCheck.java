@@ -1,6 +1,6 @@
-package aimoh.pmxpreview;
+package gfl2.runtime;
 
-import aimoh.motion.PmxDrawMesh;
+import gfl2.motion.PmxDrawMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import viewpoint.render.ModelDraws;

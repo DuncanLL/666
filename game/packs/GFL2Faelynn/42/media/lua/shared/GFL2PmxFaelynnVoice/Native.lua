@@ -1,0 +1,4 @@
+require "GFL2PmxFaelynnVoice/NativeData"
+require "GFL2Voice/NativeVoice"
+GFL2PmxFaelynnNativeVoice=GFL2PmxNativeVoice.create(GFL2PmxFaelynnNativeVoiceData,"GFL2PmxFaelynnOriginalVoicePrefix")
+return GFL2PmxFaelynnNativeVoice

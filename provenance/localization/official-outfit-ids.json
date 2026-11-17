@@ -1,0 +1,636 @@
+{
+  "source": "Local official CN ClothesData and GunData joined to the framework roster IDs",
+  "verified_name_tables": {
+    "ClothesData.bytes": "5b1183f14a50b3b4108523813d8663fc6e235bd000d31358127b3d0b878de0e8",
+    "LangPackageTableCnData.bytes": "de872fa42f14d81617a3d7c76c7f4182f3ebcc82d3be2a91a0330fed805b1ef1",
+    "outfit_ids_and_chinese_titles_matched": 69
+  },
+  "outfits": {
+    "pmx-abe3eaaaa9d04264": {
+      "pack": "GFL2Laiya",
+      "gun_id": 1056,
+      "clothes_id": 1105600,
+      "name_ref": 15554,
+      "picture": "LevaSSR",
+      "cn": "理性凝望",
+      "default": true
+    },
+    "pmx-48650a04a35b40e0": {
+      "pack": "GFL2Cheyanne",
+      "gun_id": 1070,
+      "clothes_id": 1107000,
+      "name_ref": 15737,
+      "picture": "CheyanneSSR",
+      "cn": "听风狩影",
+      "default": true
+    },
+    "pmx-0af216265749a22d": {
+      "pack": "GFL2Laiya",
+      "gun_id": 1056,
+      "clothes_id": 1105602,
+      "name_ref": 15558,
+      "picture": "LevaSSR02",
+      "cn": "热力运动",
+      "default": false
+    },
+    "pmx-412bd037301ebe18": {
+      "pack": "GFL2Asteria",
+      "gun_id": 1080,
+      "clothes_id": 1108000,
+      "name_ref": 15632,
+      "picture": "AsteriaSSR",
+      "cn": "追寻者",
+      "default": true
+    },
+    "pmx-b0dd2e3cfd1ab80c": {
+      "pack": "GFL2Asteria",
+      "gun_id": 1080,
+      "clothes_id": 1108001,
+      "name_ref": 15634,
+      "picture": "AsteriaSSR01",
+      "cn": "冬夜星途",
+      "default": false
+    },
+    "pmx-c7270af966e8aaf8": {
+      "pack": "GFL2Koleda",
+      "gun_id": 1079,
+      "clothes_id": 1107901,
+      "name_ref": 15696,
+      "picture": "KoledaSSR01",
+      "cn": "濯浪焦点",
+      "default": false
+    },
+    "pmx-f5b2807685b18a60": {
+      "pack": "GFL2Nikketa",
+      "gun_id": 1055,
+      "clothes_id": 1105503,
+      "name_ref": 15516,
+      "picture": "NikketaSSR03",
+      "cn": "无垢契约",
+      "default": false
+    },
+    "pmx-4818f3bdda4ec18d": {
+      "pack": "GFL2Florence",
+      "gun_id": 1064,
+      "clothes_id": 1106402,
+      "name_ref": 15416,
+      "picture": "FlorenceSSR02",
+      "cn": "翠雀媚",
+      "default": false
+    },
+    "pmx-020abca186c52e7b": {
+      "pack": "GFL2Alva",
+      "gun_id": 1065,
+      "clothes_id": 1106500,
+      "name_ref": 15688,
+      "picture": "AlvaSSR",
+      "cn": "人偶扳机",
+      "default": true
+    },
+    "pmx-7c5ea1f673f69f12": {
+      "pack": "GFL2Centaureissi",
+      "gun_id": 1028,
+      "clothes_id": 1102801,
+      "name_ref": 15490,
+      "picture": "CentaureissiSSR01",
+      "cn": "和莱希的五十天",
+      "default": false
+    },
+    "pmx-225af1a054faefb0": {
+      "pack": "GFL2Springfield",
+      "gun_id": 1047,
+      "clothes_id": 1104703,
+      "name_ref": 15382,
+      "picture": "SpringfieldSSR03",
+      "cn": "睡醒的人鱼",
+      "default": false
+    },
+    "pmx-293917f24c2bd387": {
+      "pack": "GFL2Faelynn",
+      "gun_id": 1078,
+      "clothes_id": 1107801,
+      "name_ref": 15502,
+      "picture": "FaelynnSSR01",
+      "cn": "忻跃阳炎",
+      "default": false
+    },
+    "pmx-782f06826adb1307": {
+      "pack": "GFL2OTs14",
+      "gun_id": 1074,
+      "clothes_id": 1107400,
+      "name_ref": 15523,
+      "picture": "OTs14SSR",
+      "cn": "暗昼冽影",
+      "default": true
+    },
+    "pmx-33aa225b75767fcb": {
+      "pack": "GFL2Daiyan",
+      "gun_id": 1032,
+      "clothes_id": 1103203,
+      "name_ref": 15390,
+      "picture": "DaiyanSSR03",
+      "cn": "玉玲珑",
+      "default": false
+    },
+    "pmx-9ee1e4cdb8d7f985": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105203,
+      "name_ref": 15405,
+      "picture": "ClukaySSR03",
+      "cn": "蔚蓝轨迹",
+      "default": false
+    },
+    "pmx-43ef6f5967a37c87": {
+      "pack": "GFL2Suomi",
+      "gun_id": 1039,
+      "clothes_id": 1103901,
+      "name_ref": 15723,
+      "picture": "SuomiSSR01",
+      "cn": "灵海游光",
+      "default": false
+    },
+    "pmx-fee7d92be40f96dd": {
+      "pack": "GFL2Cecilia",
+      "gun_id": 1082,
+      "clothes_id": 1108200,
+      "name_ref": 15442,
+      "picture": "CeciliaSSR",
+      "cn": "调停者",
+      "default": true
+    },
+    "pmx-9db646f49c805a1b": {
+      "pack": "GFL2Cecilia",
+      "gun_id": 1082,
+      "clothes_id": 1108201,
+      "name_ref": 15444,
+      "picture": "CeciliaSSR01",
+      "cn": "暖茶时憩",
+      "cn_source": "https://www.taptap.cn/moment/845007441312615432?group_id=232066",
+      "default": false
+    },
+    "pmx-94483c23f678afe3": {
+      "pack": "GFL2Alva",
+      "gun_id": 1065,
+      "clothes_id": 1106501,
+      "name_ref": 15690,
+      "picture": "AlvaSSR01",
+      "cn": "安提娅",
+      "default": false
+    },
+    "pmx-76a4aa15941b6aa4": {
+      "pack": "GFL2Alva",
+      "gun_id": 1065,
+      "clothes_id": 1106502,
+      "name_ref": 15692,
+      "picture": "AlvaSSR02",
+      "cn": "紫藤花信",
+      "default": false
+    },
+    "pmx-47a4f99939c55958": {
+      "pack": "GFL2Cheyanne",
+      "gun_id": 1070,
+      "clothes_id": 1107001,
+      "name_ref": 15739,
+      "picture": "CheyanneSSR01",
+      "cn": "青涩夜会",
+      "default": false
+    },
+    "pmx-06925f50fb5cb612": {
+      "pack": "GFL2OTs14",
+      "gun_id": 1074,
+      "clothes_id": 1107401,
+      "name_ref": 15525,
+      "picture": "OTs14SSR01",
+      "cn": "天意佳人",
+      "default": false
+    },
+    "pmx-73625fbf0962e120": {
+      "pack": "GFL2OTs14",
+      "gun_id": 1074,
+      "clothes_id": 1107402,
+      "name_ref": 15527,
+      "picture": "OTs14SSR02",
+      "cn": "极夜黎明",
+      "cn_source": "https://www.taptap.cn/moment/857578060935859580?group_id=232066",
+      "default": false
+    },
+    "pmx-efe685465097beb2": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105200,
+      "name_ref": 15399,
+      "picture": "ClukaySSR",
+      "cn": "灼目之星",
+      "default": true
+    },
+    "pmx-6826e4ccdf1f4ddf": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105201,
+      "name_ref": 15401,
+      "picture": "ClukaySSR01",
+      "cn": "速度之星",
+      "default": false
+    },
+    "pmx-a0790aac2b94e352": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105202,
+      "name_ref": 15403,
+      "picture": "ClukaySSR02",
+      "cn": "星迹掠芒",
+      "default": false
+    },
+    "pmx-8a28434eee27a5ce": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105204,
+      "name_ref": 15408,
+      "picture": "ClukaySSR04",
+      "cn": "绀星绮愿",
+      "default": false
+    },
+    "pmx-b6fa1b6b340d0fec": {
+      "pack": "GFL2Faelynn",
+      "gun_id": 1078,
+      "clothes_id": 1107800,
+      "name_ref": 15500,
+      "picture": "FaelynnSSR",
+      "cn": "望归宠儿",
+      "default": true
+    },
+    "pmx-90268b4961c97434": {
+      "pack": "GFL2Koleda",
+      "gun_id": 1079,
+      "clothes_id": 1107900,
+      "name_ref": 15694,
+      "picture": "KoledaSSR",
+      "cn": "旧年雪",
+      "default": true
+    },
+    "pmx-8c817aa0fdd64f7a": {
+      "pack": "GFL2Daiyan",
+      "gun_id": 1032,
+      "clothes_id": 1103200,
+      "name_ref": 15388,
+      "picture": "DaiyanSSR",
+      "cn": "烟寻异处",
+      "default": true
+    },
+    "pmx-8fc5b665a5786924": {
+      "pack": "GFL2Centaureissi",
+      "gun_id": 1028,
+      "clothes_id": 1102800,
+      "name_ref": 15488,
+      "picture": "CentaureissiSSR",
+      "cn": "完美招待",
+      "default": true
+    },
+    "pmx-dd77c173248cb704": {
+      "pack": "GFL2Centaureissi",
+      "gun_id": 1028,
+      "clothes_id": 1102802,
+      "name_ref": 15493,
+      "picture": "CentaureissiSSR02",
+      "cn": "金牌店员",
+      "cn_source": "https://www.taptap.cn/moment/845008476882076123?group_id=232066",
+      "default": false
+    },
+    "pmx-78cbbc06c7da39dc": {
+      "pack": "GFL2Nikketa",
+      "gun_id": 1055,
+      "clothes_id": 1105501,
+      "name_ref": 15512,
+      "picture": "NikketaSSR01",
+      "cn": "骄阳般起舞",
+      "default": false
+    },
+    "pmx-ea3eb50ef5b32295": {
+      "pack": "GFL2Nikketa",
+      "gun_id": 1055,
+      "clothes_id": 1105502,
+      "name_ref": 15514,
+      "picture": "NikketaSSR02",
+      "cn": "银湾流转夜",
+      "default": false
+    },
+    "pmx-1c1dd0698118e114": {
+      "pack": "GFL2Laiya",
+      "gun_id": 1056,
+      "clothes_id": 1105603,
+      "name_ref": 15561,
+      "picture": "LevaSSR03",
+      "cn": "狡兔迷踪",
+      "default": false
+    },
+    "pmx-62b44285b57a48e9": {
+      "pack": "GFL2Springfield",
+      "gun_id": 1047,
+      "clothes_id": 1104702,
+      "name_ref": 15379,
+      "picture": "SpringfieldSSR02",
+      "cn": "静享芳醇",
+      "default": false
+    },
+    "pmx-cb19e5961c38af86": {
+      "pack": "GFL2Suomi",
+      "gun_id": 1039,
+      "clothes_id": 1103902,
+      "name_ref": 15725,
+      "picture": "SuomiSSR02",
+      "cn": "雪兔献礼",
+      "default": false
+    },
+    "pmx-4cdf23692c8709a0": {
+      "pack": "GFL2Nikketa",
+      "gun_id": 1055,
+      "clothes_id": 1105500,
+      "name_ref": 15510,
+      "picture": "NikketaSSR",
+      "cn": "典范制式",
+      "default": true
+    },
+    "pmx-4019c9450e0e318d": {
+      "pack": "GFL2Suomi",
+      "gun_id": 1039,
+      "clothes_id": 1103900,
+      "name_ref": 15721,
+      "picture": "SuomiSSR",
+      "cn": "雪映清辉",
+      "default": true
+    },
+    "pmx-f6ac57de07aff8b0": {
+      "pack": "GFL2Lenna",
+      "gun_id": 1013,
+      "clothes_id": 1101300,
+      "name_ref": 15481,
+      "picture": "LennaSSR",
+      "cn": "疾风讯使",
+      "default": true
+    },
+    "pmx-67f783c2661ce19e": {
+      "pack": "GFL2Lenna",
+      "gun_id": 1013,
+      "clothes_id": 1101305,
+      "name_ref": 15485,
+      "picture": "LennaSSR05",
+      "cn": "元气魔法",
+      "default": false
+    },
+    "pmx-b8a56876e52dd98e": {
+      "pack": "GFL2Lenna",
+      "gun_id": 1013,
+      "clothes_id": 1101301,
+      "name_ref": 15483,
+      "picture": "LennaSSR01",
+      "cn": "秘夜猎影",
+      "default": false
+    },
+    "pmx-4f5d642f97fc5a9d": {
+      "pack": "GFL2Vector",
+      "gun_id": 1044,
+      "clothes_id": 1104400,
+      "name_ref": 15455,
+      "picture": "VectorSSR",
+      "cn": "隐匿武装",
+      "default": true
+    },
+    "pmx-ba77d8beccf4a49b": {
+      "pack": "GFL2Vector",
+      "gun_id": 1044,
+      "clothes_id": 1104402,
+      "name_ref": 15460,
+      "picture": "VectorSSR02",
+      "cn": "学府风尚",
+      "default": false
+    },
+    "pmx-1303e831f7fc913d": {
+      "pack": "GFL2Vector",
+      "gun_id": 1044,
+      "clothes_id": 1104401,
+      "name_ref": 15457,
+      "picture": "VectorSSR01",
+      "cn": "战地兔影",
+      "default": false
+    },
+    "pmx-a3c2d1b094df6ee0": {
+      "pack": "GFL2Phaetusa",
+      "gun_id": 1060,
+      "clothes_id": 1106000,
+      "name_ref": 15581,
+      "picture": "PhaetusaSSR",
+      "cn": "暗海曦光",
+      "default": true
+    },
+    "pmx-81a5c871affb4465": {
+      "pack": "GFL2Phaetusa",
+      "gun_id": 1060,
+      "clothes_id": 1106001,
+      "name_ref": 15583,
+      "picture": "PhaetusaSSR01",
+      "cn": "永夜花园的囚徒",
+      "default": false
+    },
+    "pmx-caaf00b5aa73eb64": {
+      "pack": "GFL2Sextans",
+      "gun_id": 1073,
+      "clothes_id": 1107300,
+      "name_ref": 15477,
+      "picture": "SextansSSR",
+      "cn": "暮夜魅影",
+      "default": true
+    },
+    "pmx-e177f4382e37a789": {
+      "pack": "GFL2Sextans",
+      "gun_id": 1073,
+      "clothes_id": 1107301,
+      "name_ref": 15479,
+      "picture": "SextansSSR01",
+      "cn": "夜莺时魅",
+      "default": false
+    },
+    "pmx-2689b8bef5ca9503": {
+      "pack": "GFL2Yohee",
+      "gun_id": 1054,
+      "clothes_id": 1105400,
+      "name_ref": 15611,
+      "picture": "YooHeeSSR",
+      "cn": "时尚舞者",
+      "default": true
+    },
+    "pmx-9de435d3627c8e6b": {
+      "pack": "GFL2Yohee",
+      "gun_id": 1054,
+      "clothes_id": 1105401,
+      "name_ref": 15613,
+      "picture": "YooHeeSSR01",
+      "cn": "甜心奇迹",
+      "default": false
+    },
+    "pmx-d1fc22f957060588": {
+      "pack": "GFL2Destroyer",
+      "gun_id": 1088,
+      "clothes_id": 1108800,
+      "name_ref": 15393,
+      "picture": "DestroyerSSR",
+      "cn": "狂猎魔犬",
+      "default": true
+    },
+    "pmx-d9972c9c00cacbc5": {
+      "pack": "GFL2Destroyer",
+      "gun_id": 1088,
+      "clothes_id": 1108801,
+      "name_ref": 15395,
+      "picture": "DestroyerSSR01",
+      "cn": "垂绒黑巧",
+      "cn_source": "https://www.taptap.cn/moment/866393096156349365?group_id=232066",
+      "default": false
+    },
+    "pmx-a030b24c0272893f": {
+      "pack": "GFL2Springfield",
+      "gun_id": 1047,
+      "clothes_id": 1104700,
+      "name_ref": 6775,
+      "picture": "SpringfieldSSR",
+      "cn": "耀洁戎装",
+      "default": true
+    },
+    "pmx-cc787cf2d032366b": {
+      "pack": "GFL2Springfield",
+      "gun_id": 1047,
+      "clothes_id": 1104701,
+      "name_ref": 12889,
+      "picture": "SpringfieldSSR01",
+      "cn": "灯火下的女王",
+      "default": false
+    },
+    "pmx-23b0b754d23c6fb7": {
+      "pack": "GFL2Florence",
+      "gun_id": 1064,
+      "clothes_id": 1106400,
+      "name_ref": 15412,
+      "picture": "FlorenceSSR",
+      "cn": "魅惑白羽",
+      "default": true
+    },
+    "pmx-b6889756cf6c0d5e": {
+      "pack": "GFL2Florence",
+      "gun_id": 1064,
+      "clothes_id": 1106401,
+      "name_ref": 15414,
+      "picture": "FlorenceSSR01",
+      "cn": "奇妙山药饼",
+      "default": false
+    },
+    "pmx-e524539529b6d56a": {
+      "pack": "GFL2Macqiato",
+      "gun_id": 1034,
+      "clothes_id": 1103401,
+      "name_ref": 15429,
+      "picture": "MacqiatoSSR01",
+      "cn": "舞会休止符",
+      "default": false
+    },
+    "pmx-5efe7392a2315a89": {
+      "pack": "GFL2Macqiato",
+      "gun_id": 1034,
+      "clothes_id": 1103403,
+      "name_ref": 15433,
+      "picture": "MacqiatoSSR03",
+      "cn": "汤风休日",
+      "default": false
+    },
+    "pmx-0b80022fae2dbb04": {
+      "pack": "GFL2Macqiato",
+      "gun_id": 1034,
+      "clothes_id": 1103400,
+      "name_ref": 15427,
+      "picture": "MacqiatoSSR",
+      "cn": "焦糖音律",
+      "default": true
+    },
+    "pmx-79e7c6a0e60e6f61": {
+      "pack": "GFL2Macqiato",
+      "gun_id": 1034,
+      "clothes_id": 1103402,
+      "name_ref": 15431,
+      "picture": "MacqiatoSSR02",
+      "cn": "花影重",
+      "default": false
+    },
+    "pmx-e4fe174c77f90d6c": {
+      "pack": "GFL2Qiuhua",
+      "gun_id": 1048,
+      "clothes_id": 1104800,
+      "name_ref": 15573,
+      "picture": "QiuhuaSSR",
+      "cn": "特级美食猎人",
+      "default": true
+    },
+    "pmx-e348ab0b30d7e83a": {
+      "pack": "GFL2Qiuhua",
+      "gun_id": 1048,
+      "clothes_id": 1104802,
+      "name_ref": 15577,
+      "picture": "QiuhuaSSR02",
+      "cn": "秋宴龙厨",
+      "default": false
+    },
+    "pmx-020f2e8bdc65bc5b": {
+      "pack": "GFL2Qiuhua",
+      "gun_id": 1048,
+      "clothes_id": 1104801,
+      "name_ref": 15575,
+      "picture": "QiuhuaSSR01",
+      "cn": "仁心仁术",
+      "default": false
+    },
+    "pmx-d373f73abd68a3d0": {
+      "pack": "GFL2Qiuhua",
+      "gun_id": 1048,
+      "clothes_id": 1104803,
+      "name_ref": 15579,
+      "picture": "QiuhuaSSR03",
+      "cn": "秋林烈兔",
+      "default": false
+    },
+    "pmx-7834ce1969baa199": {
+      "pack": "GFL2Laiya",
+      "gun_id": 1056,
+      "clothes_id": 1105601,
+      "name_ref": 15556,
+      "picture": "LevaSSR01",
+      "cn": "钻石之花",
+      "default": false
+    },
+    "pmx-74fa40dba7e013d6": {
+      "pack": "GFL2Klukai",
+      "gun_id": 1052,
+      "clothes_id": 1105205,
+      "name_ref": 15410,
+      "picture": "ClukaySSR05",
+      "cn": "无瑕侍礼",
+      "default": false
+    },
+    "pmx-7d46f9b7159f3332": {
+      "pack": "GFL2Soppo",
+      "gun_id": 1076,
+      "clothes_id": 1107601,
+      "name_ref": 15664,
+      "picture": "SoppoSSR01",
+      "cn": "绯红极限",
+      "default": false
+    },
+    "pmx-40dbcd572c1fb3f8": {
+      "pack": "GFL2Soppo",
+      "gun_id": 1076,
+      "clothes_id": 1107600,
+      "name_ref": 15662,
+      "picture": "SoppoSSR",
+      "cn": "凛霜风暴",
+      "default": true
+    }
+  },
+  "unresolved": []
+}

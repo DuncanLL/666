@@ -1,8 +1,8 @@
 package com.shiroha.mmdskin;
 import java.nio.ByteBuffer;
-// Declarations of upstream JNI and the independently implemented Aimoh input ABI.
+// Declarations of upstream JNI and the project input ABI.
 public final class NativeFunc {
-    public static int aimohFacadeVersion() { return 1; }
+    public static int gfl2FacadeVersion() { return 1; }
     public native String GetVersion();
     public native long LoadModelPMX(String file, String directory, long layers);
     public native void DeleteModel(long model);

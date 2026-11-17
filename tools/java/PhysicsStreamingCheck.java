@@ -1,6 +1,6 @@
-package aimoh.pmxpreview;
+package gfl2.runtime;
 
-import aimoh.motion.*;
+import gfl2.motion.*;
 import com.shiroha.mmdskin.NativeFunc;
 import java.nio.*;
 import java.nio.file.*;
@@ -36,12 +36,12 @@ public final class PhysicsStreamingCheck {
         bounds();Path root=Path.of(args[0]),out=Path.of(args[1]);Files.createDirectories(out);
         zombie.ZomboidFileSystem.instance.setCacheDir(out.resolve("User").toString());zombie.ZomboidFileSystem.instance.init();
         if(!GLFW.glfwInit())throw new AssertionError("GLFW");GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE,GLFW.GLFW_FALSE);
-        long window=GLFW.glfwCreateWindow(32,32,"R116 component check",0,0);if(window==0)throw new AssertionError("GL context");
+        long window=GLFW.glfwCreateWindow(32,32,"GFL2 component check",0,0);if(window==0)throw new AssertionError("GL context");
         try{
             GLFW.glfwMakeContextCurrent(window);GL.createCapabilities();zombie.core.skinnedmodel.model.VertexBufferObject.funcs=new zombie.core.VBO.GLBufferObject15();
             field(RenderThread.class,"isInitialized").set(null,true);field(RenderThread.class,"contextThread").set(null,Thread.currentThread());field(Main.class,"directory").set(null,root);
             Method init=Main.class.getDeclaredMethod("nativeRuntime");init.setAccessible(true);init.invoke(null);NativeFunc api=(NativeFunc)field(Main.class,"api").get(null);
-            Path assets=root.resolve("media/aimoh_pmx");JSONArray checked=new JSONArray();
+            Path assets=root.resolve("media/gfl2_pmx");JSONArray checked=new JSONArray();
             for(Object object:new JSONObject(Files.readString(assets.resolve("registry.json"))).getJSONArray("models")){
                 JSONObject row=(JSONObject)object;if(row.optBoolean("hidden"))continue;
                 Path pmx=assets.resolve(row.getString("model")),profile=assets.resolve(row.getString("profile"));JSONObject data=new JSONObject(Files.readString(profile));

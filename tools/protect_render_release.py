@@ -20,12 +20,12 @@ from check_release_leaks import audit, read_references
 from common import BUILD, ROOT, environment, save, settings, sha
 
 
-BRIDGE = 'aimoh/gf2/bridge/'
+BRIDGE = 'gfl2/render/'
 SEALED_RESOURCE = BRIDGE + 'render-inputs.bin'
 RELEASE_RENDER_DATA = BRIDGE + 'data/render-resources.bin'
-LOADER = BRIDGE + 'AimohSealedSources'
+LOADER = BRIDGE + 'Gfl2SealedSources'
 LOADER_PARTS = ('', '$Payload', '$Watch')
-ECLIPSE_RUNTIME = 'viewpoint/render/AimohGf2Runtime.class'
+ECLIPSE_RUNTIME = 'viewpoint/render/Gfl2Runtime.class'
 MOTION_SUFFIX = '/shaders/dimensions/composite6.fsh'
 PROBE_FRAGMENT_START = b'uniform vec3 uSceneOrigin;\nfloat authorSkyVisibility('
 TOKEN = re.compile(r'^[ \t]*#[^\r\n]*|/\*[\s\S]*?\*/|//[^\r\n]*|"(?:\\.|[^"\\])*"|\.[ \t]*[A-Za-z_]\w*|\b[A-Za-z_]\w*\b', re.M | re.ASCII)
@@ -169,21 +169,24 @@ def protect_shaders(payload, backend, rules, fragments):
 
 
 def owned_classes(archive):
-    historical = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', '3127265^', 'render-support'],
-                                         cwd=ROOT, encoding='utf8').splitlines()
     sources = {file.stem for file in (ROOT / 'render-support').rglob('*.java')}
-    sources.update(Path(file).stem for file in historical if file.endswith('.java'))
+    reference = Path(settings()['eclipse_support_reference_jar'])
+    pin = json.loads((ROOT/'provenance/eclipse-outline.json').read_text('utf8'))['reference_jar_sha256']
+    assert sha(reference)==pin
+    with zipfile.ZipFile(reference) as prepared:
+        sources.update(Path(name).name.split('$',1)[0].removesuffix('.class')
+                       for name in prepared.namelist() if name.endswith('.class'))
     classes = set()
     assert not RETIRED_ENTRIES.intersection(archive.namelist()), 'Rebuild cleaned Eclipse support'
     for name in archive.namelist():
         if not name.endswith('.class'):
             continue
         root = Path(name).name.split('$', 1)[0].removesuffix('.class')
-        source = root.replace('AimohEclipseGf2', 'AimohGf2')
-        effect = name.startswith(('viewpoint/render/Aimoh', 'viewpoint/platform/Aimoh'))
-        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'AimohSealedSources', 'ShaderManifestNames', 'UnifiedStartup'}
+        source = root.replace('Gfl2Eclipse', 'Gfl2')
+        effect = name.startswith(('viewpoint/render/Gfl2', 'viewpoint/platform/Gfl2'))
+        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'Gfl2SealedSources', 'ShaderManifestNames', 'UnifiedStartup'}
         if effect or hook:
-            assert source in sources or root == 'EclipseHooks', name
+            assert root in sources or source in sources or root == 'EclipseHooks', name
             classes.add(name)
     return classes
 
@@ -224,14 +227,14 @@ def protect_classes(source, private, rules, proguard_zip, config):
     run_java([str(java), '-cp', str(classes), 'ProtectionRuntimeClasses', str(runtime)], private / 'java-runtime.log')
 
     output = private / 'owned-protected.jar'
-    libraries = [runtime, private / 'other.jar', Path(config['viewpoint_jar']), Path(config['reference_jar']),
+    libraries = [runtime, private / 'other.jar', Path(config['viewpoint_jar']), BUILD/'GFL2Exilium.jar',
                  Path(config['zombiebuddy_jar']), game / 'projectzomboid.jar']
     mapping = private / 'JAVA-MAPPING.txt'
     options = [f"-injars '{(private / 'owned.jar').as_posix()}'", f"-outjars '{output.as_posix()}'",
                *(f"-libraryjars '{path.as_posix()}'" for path in libraries),
                '-dontshrink', '-dontoptimize', '-dontskipnonpubliclibraryclasses', '-dontskipnonpubliclibraryclassmembers',
                '-keeppackagenames **', '-keepclassmembers class ** { !private <fields>; !private <methods>; }',
-               '-keepclassmembers class viewpoint.render.AimohGf2DepthStencil { *** copy; }',
+               '-keepclassmembers class viewpoint.render.Gfl2DepthStencil { *** copy; }',
                '-keepattributes Exceptions,InnerClasses,EnclosingMethod,Signature,*Annotation*,Record,NestHost,NestMembers,PermittedSubclasses',
                *(f"-keepnames class {name.removesuffix('.class').replace('/', '.')}" for name in sorted(owned - renamable)),
                f"-printmapping '{mapping.as_posix()}'"]
@@ -296,7 +299,7 @@ def release_context(seed, loader_name, private, config):
     sources = []
     for name, methods in carriers.items():
         layout.shuffle(methods)
-        lines = ['package aimoh.gf2.bridge;', f'final class {name} {{']
+        lines = ['package gfl2.render;', f'final class {name} {{']
         for method, row in methods:
             words = ', '.join(hex(word) for word in row)
             lines.append(f'    static int[] {method}() {{ return new int[] {{{words}}}; }}')
@@ -310,7 +313,7 @@ def release_context(seed, loader_name, private, config):
     layout.shuffle(cases)
     case_lines = '\n'.join(cases)
     dispatcher = generated / f'{dispatcher_name}.java'
-    dispatcher.write_text(f'''package aimoh.gf2.bridge;
+    dispatcher.write_text(f'''package gfl2.render;
 final class {dispatcher_name} {{
     static Class<?>[] a() {{ return new Class<?>[] {{{classes}}}; }}
     static void b(java.security.MessageDigest digest) {{
@@ -356,7 +359,7 @@ final class {dispatcher_name} {{
     for old, new in replacements.items():
         assert old in loader, old
         loader = loader.replace(old, new)
-    loader = loader.replace('AimohSealedSources', loader_name)
+    loader = loader.replace('Gfl2SealedSources', loader_name)
     loader_file = generated / f'{loader_name}.java'
     loader_file.write_text(loader, 'utf8')
 
@@ -386,7 +389,7 @@ def seal_archive(seed, loader_name, fragments, private, config):
     resource = RELEASE_RENDER_DATA
     sealed = private / Path(resource).name
     java = Path(config['game_root']) / 'jre64/bin/java.exe'
-    run_java([str(java), '-cp', str(tool_classes), 'aimoh.gf2.bridge.SealRenderResources',
+    run_java([str(java), '-cp', str(tool_classes), 'gfl2.render.SealRenderResources',
               str(source_archive), str(sealed)], private / 'sealer.log', key + nonce)
     return context, resource, sealed.read_bytes()
 
@@ -443,9 +446,9 @@ def prepare_native_main(raw, config, private, catalog_roots):
 
 
 def native_release_input(raw, config, private):
-    wiring = "viewpoint/render/AimohNativeMainWiring"
+    wiring = "viewpoint/render/Gfl2NativeMainWiring"
     classes = private / "native-release"
-    compile_java(config, [ROOT / "tools/java/release/AimohNativeMainWiring.java"], classes,
+    compile_java(config, [ROOT / "tools/java/release/Gfl2NativeMainWiring.java"], classes,
                  [raw, Path(config["game_root"]) / "projectzomboid.jar"])
     release = private / "render-release-input.jar"
     with zipfile.ZipFile(raw) as source, zipfile.ZipFile(release, "w") as target:
@@ -468,7 +471,7 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
     for name, expected in report['source_hashes'].items():
         assert sha(ROOT / name) == expected, f'Rebuild changed source: {name}'
     host = Path(config['viewpoint_jar'])
-    inputs = {path: sha(path) for path in (raw, host, Path(config['reference_jar']))}
+    inputs = {path: sha(path) for path in (raw, host, BUILD/'GFL2Exilium.jar')}
     signature=host.with_suffix('.jar.zbs')
     if signature.is_file():inputs[signature]=sha(signature)
     assert inputs[host] == report['host_sha256']
@@ -486,12 +489,12 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
     assert f'id={workshop_id}' in (metadata / 'workshop.txt').read_text('utf-8-sig').splitlines()
     assert f"modversion={report['version']}" in (ROOT / 'render-support/mod/42/mod.info').read_text('utf-8-sig').splitlines()
     project = output / 'Workshop/GFL2RenderSupport'
-    mod = project / 'Contents/mods/AimohGF2Eclipse'
+    mod = project / 'Contents/mods/GFL2RenderSupport'
     shutil.copytree(ROOT / 'render-support/mod', mod)
     (mod / 'common/.gitkeep').unlink(missing_ok=True)
     for name in ('workshop.txt', 'preview.png'):
         shutil.copy2(metadata / name, project / name)
-    jar = mod / '42/media/java/client/AimohGF2Eclipse.jar'
+    jar = mod / '42/media/java/client/GFL2RenderSupport.jar'
     jar.parent.mkdir(parents=True, exist_ok=True)
     shader_report = {}
     shader_mapping = {}

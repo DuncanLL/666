@@ -20,10 +20,10 @@
 |---|---|---|
 | 目录、ID 和产物 | [check_runtime_locations.py](../../tools/check_runtime_locations.py)、[check_runtime.py](../../tools/check_runtime.py) | 已配置安装路径和 JAR 读回、工坊候选校验、原生组件及模型身份。脚本依赖该工作树的候选与本机配置。 |
 | 动作源与帧推进 | [check_source_pose.py](../../tools/check_source_pose.py)、[check_frame_timing.py](../../tools/check_frame_timing.py) | 实际 PZ 动画组件、姿态守护和受控帧推进。源姿态夹具需要对应的本机依赖和已知动作输入，按脚本开头和参数准备。 |
-| 武器与镜头 | [GripPhaseCheck.java](../../tools/java/GripPhaseCheck.java)、[GripPauseCheck.java](../../tools/java/GripPauseCheck.java) | 持物与手部的相同插值权重、暂停和重捕获、换物品、相机切换及握持参数。既有对照见 [0.7.12](../../provenance/releases/0.7.12-viewpoint-held-phase.json) 和 [0.7.14](../../provenance/releases/0.7.14-held-slot-attachment.json)。 |
+| 武器与镜头 | [GripPhaseCheck.java](../../tools/java/GripPhaseCheck.java)、[GripPauseCheck.java](../../tools/java/GripPauseCheck.java) | 持物与手部的相同插值权重、暂停和重捕获、换物品、相机切换及握持参数。既有对照见 0.7.12 和 [0.7.14](../../provenance/releases/0.7.14-held-slot-attachment.json)。 |
 | 切人、隐藏部件和退役 | [check_lifecycle.py](../../tools/check_lifecycle.py)、[check_physics_streaming.py](../../tools/check_physics_streaming.py)、[check_texture_runtime.py](../../tools/check_texture_runtime.py) | 候选交接、发布外观前的就绪检查、图形资源释放、阴影专用部件以及旧新帧历史。 |
 | 整备室和多人 | [check_room_workshop.py](../../tools/check_room_workshop.py)、[check_room_economy.py](../../tools/check_room_economy.py)、[check_multiplayer.py](../../tools/check_multiplayer.py) | PZ 自带 Kahlua 执行生产 Lua，覆盖购买、领取、重试、联机槽位、恢复和语音生命周期。这些脚本的游戏对象与网络送达使用受控输入。 |
-| 工坊合包与渲染 | [check_r116_unified.py](../../tools/check_r116_unified.py)、[check_render_support.py](../../tools/check_render_support.py)、[check_render_release.py](../../tools/check_render_release.py) | 合包的实际启动和 pack 发现、宿主展开语法及设备证据。按 [渲染发布标准](../render-release-standard.md) 分别记录 Native 和 Eclipse。 |
+| 工坊合包与渲染 | [check_gfl2_unified.py](../../tools/check_gfl2_unified.py)、[check_render_support.py](../../tools/check_render_support.py)、[check_render_release.py](../../tools/check_render_release.py) | 合包的实际启动和 pack 发现、宿主展开语法及设备证据。按 [渲染发布标准](../render-release-standard.md) 分别记录 Native 和 Eclipse。 |
 | 分发内容 | [check_release_leaks.py](../../tools/check_release_leaks.py)、[外置文件清单](../../resources/manifest.json) | 发行件与明确参考输入比较。定位官方宿主内容、未经许可的资源及不应进入发布包的文件。 |
 
 常用组件检查可以在仓库根目录按以下方式跑。带路径的命令用本次实际候选替换尖括号里的值。
@@ -35,7 +35,7 @@ python tools/check_multiplayer.py
 python tools/generate_multiplayer_catalog.py --check
 python tools/check_lifecycle.py --jar "<人物候选 JAR>"
 python tools/check_runtime_locations.py --jar "<已验证的人物 JAR>"
-python tools/check_r116_unified.py --project "<候选目录>/Workshop/GFL2Exilium"
+python tools/check_gfl2_unified.py --project "<候选目录>/Workshop/GFL2Exilium"
 python tools/check_render_release.py --evidence "<后端验证记录 JSON>" --out "<结果 JSON>"
 ```
 

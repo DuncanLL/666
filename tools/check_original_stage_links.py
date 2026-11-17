@@ -5,12 +5,16 @@ from common import ROOT,BUILD,settings,environment,save,sha
 from build import compile_java
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--jar',type=Path,default=BUILD/'render-support/AimohGF2Eclipse.jar');p.add_argument('--tag',default='fixed');p.add_argument('--pmx-reader',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--jar',type=Path,default=BUILD/'render-support/GFL2RenderSupport.jar');p.add_argument('--tag',default='fixed');p.add_argument('--pmx-reader',action='store_true');a=p.parse_args()
     assert a.tag.isidentifier()
     c=settings();game=Path(c['game_root']);out=BUILD/'shader-link-fix'/a.tag;out.mkdir(parents=True,exist_ok=True)
     media=Path(c['asset_root'])/'42/media';data=json.loads((media/'gfl2_rendering/characters.json').read_text('utf8'))['characters']
     def resource(row):
-        assert row['storage']=='mod';path=(media/('aimoh_'+row['path'])).resolve();assert path.is_relative_to(media.resolve())and path.is_file();assert sha(path)==row['sha256'];return str(path)
+        assert row['storage']=='mod' and row['path'].startswith('gf2/')
+        path=(media/'gfl2_rendering'/row['path'].removeprefix('gf2/')).resolve()
+        assert path.is_relative_to(media.resolve()) and path.is_file()
+        assert sha(path)==row['sha256']
+        return str(path)
     groups={}
     for row in data['programs']:groups.setdefault((row['material'],row['pass']),{})[row['stage']]=row['programs'][0]['sha256']
     jobs={}

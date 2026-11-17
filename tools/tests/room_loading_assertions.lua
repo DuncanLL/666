@@ -14,7 +14,7 @@ function recordDraw(panel,kind,x,y,w,h,a,r,g,b,path)
 end
 local function tick()for _,fn in ipairs(Events.OnTick.handlers)do fn()end end
 local ctx=context();Events.OnFillWorldObjectContextMenu.handlers[1](0,ctx,{},false);ctx.items[1].fn(ctx.items[1].target)
-local w=AimohPMXWindow.instances[0]
+local w=GFL2RoomWindow.instances[0]
 local character=w.characters[1];w:onCharacter(character);w:update();paint(w)
 local portrait=character.portrait;local card=w.browsed.meta.card
 assert(portrait and card,'Fixture must use real catalog artwork')
@@ -29,11 +29,11 @@ local nextData={};for key,value in pairs(roomData)do nextData[key]=value end
 nextData.models={};for id,meta in pairs(roomData.models)do nextData.models[id]=meta end
 local firstId=w.browsed.id;local nextMeta={};for key,value in pairs(roomData.models[firstId])do nextMeta[key]=value end
 nextMeta.portrait='room-fixture-new-catalog-portrait.png';nextData.models[firstId]=nextMeta;roomData=nextData
-w=AimohPMXWindow.open(actor,actions);w:update();paint(w)
+w=GFL2RoomWindow.open(actor,actions);w:update();paint(w)
 assert(w.characters[1].portrait==nextMeta.portrait and pictures[nextMeta.portrait],'Reopen retained stale catalog')
 assert(#w.characters==count and pictures[portrait]and w.browsed,'Reopen lost room content')
 w:setTab('parts');assert(#w.widgets>0 and w.pageButton.enabled,'Reopen left parts disabled')
-AimohPMXWindow.closeAll();w=AimohPMXWindow.open(actor,actions);w:update();paint(w)
+GFL2RoomWindow.closeAll();w=GFL2RoomWindow.open(actor,actions);w:update();paint(w)
 assert(#w.characters==count and w.browsed,'World lifecycle lost catalog')
 w:close()
 return 'PASS_ROOM_TRANSIENT_IMAGES_REOPEN_PARTS_AND_WORLD_LIFECYCLE'

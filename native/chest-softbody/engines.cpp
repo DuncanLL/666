@@ -1,4 +1,4 @@
-// Jolt and MuJoCo solve the same authored cage used by the R116 soft-body bridge.
+// Jolt and MuJoCo solve the same authored cage used by the soft-body bridge.
 #include "xpbd.cpp"
 #include <Jolt/Jolt.h>
 #include <Jolt/RegisterTypes.h>
@@ -206,7 +206,7 @@ struct MujocoRegion final : CageEngine {
         xml << std::setprecision(9)
             << "<mujoco><option gravity='0 0 0' integrator='discrete'>"
                "<flag contact='disable' warmstart='disable'/></option><worldbody>"
-               "<flexcomp name='r116' type='direct' dim='3' mass='";
+               "<flexcomp name='gfl2' type='direct' dim='3' mass='";
         float mass = 0;
         for (int i = 0; i < cage.body->m_nodes.size(); ++i)
             if (cage.inverseMass[i] > 0) mass += 1 / cage.inverseMass[i];
@@ -262,8 +262,8 @@ struct MujocoRegion final : CageEngine {
         library.defaultVFS(&vfs);
         char error[1024]{};
         mjModel* compiled=nullptr;
-        if (library.addBuffer(&vfs, "r116.xml", source.data(), int(source.size())) == 0)
-            compiled = library.loadXML("r116.xml", &vfs, error, sizeof(error));
+        if (library.addBuffer(&vfs, "gfl2.xml", source.data(), int(source.size())) == 0)
+            compiled = library.loadXML("gfl2.xml", &vfs, error, sizeof(error));
         library.deleteVFS(&vfs);
         if(!compiled)engineError=error[0]?error:"MuJoCo flex could not be compiled";
         return compiled;

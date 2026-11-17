@@ -1,0 +1,447 @@
+{
+  "GFL2Alva": {
+    "gun_id": 1065,
+    "published": {
+      "EN": {
+        "name": "Alva",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "アルヴァ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "앨바",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Asteria": {
+    "gun_id": 1080,
+    "published": {
+      "EN": {
+        "name": "Asteria",
+        "source": "https://gfl-store.com/collections/new-arrival"
+      },
+      "KO": {
+        "name": "아스테리아",
+        "source": "https://gfl-store.com/ko/collections/new-arrival"
+      },
+      "JP": {
+        "name": "アステリア",
+        "source": "https://x.com/EXILIUMJP/status/2120714450319585597",
+        "source_mirror": "https://xitter.gq/EXILIUMJP/status/2120714450319585597"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Cecilia": {
+    "gun_id": 1082,
+    "published": {},
+    "missing": [
+      "EN",
+      "JP",
+      "KO"
+    ],
+    "provisional": {
+      "EN": {
+        "name": "Cecilia",
+        "source": "https://iopwiki.com/wiki/Cecilia"
+      },
+      "JP": {
+        "name": "セシリア",
+        "source": "https://note.com/unsoluble_sugar/n/n0393438cd299"
+      },
+      "KO": {
+        "name": "세실리아",
+        "source": "https://namu.moe/w/세실리아(소녀전선2:%20망명)"
+      }
+    }
+  },
+  "GFL2Centaureissi": {
+    "gun_id": 1028,
+    "published": {
+      "EN": {
+        "name": "Centaureissi",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "センタウレイシー",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/?role=1"
+      },
+      "KO": {
+        "name": "센타우레이시",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Cheyanne": {
+    "gun_id": 1070,
+    "published": {
+      "EN": {
+        "name": "Cheyanne",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "シャイアン",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "샤이엔",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Daiyan": {
+    "gun_id": 1032,
+    "published": {
+      "EN": {
+        "name": "Daiyan",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "黛煙",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "대연",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Destroyer": {
+    "gun_id": 1088,
+    "published": {
+      "EN": {
+        "name": "Destroyer",
+        "source": "https://www.taptap.cn/moment/866633534549265744?group_id=232066",
+        "artwork": "https://img2-tc.tapimg.com/moment/etag/FvPaFT8EBfCUdWaiPSCpwomlaLub_20261103105159.jpg/_tap_ugc.jpg"
+      }
+    },
+    "missing": [
+      "JP",
+      "KO"
+    ],
+    "provisional": {
+      "JP": {
+        "name": "デストロイヤー",
+        "source": "https://prtimes.jp/main/html/rd/p/000000161.000050327.html"
+      },
+      "KO": {
+        "name": "디스트로이어",
+        "source": "https://namu.moe/w/디스트로이어(소녀전선2:%20망명)"
+      }
+    }
+  },
+  "GFL2Faelynn": {
+    "gun_id": 1078,
+    "published": {
+      "EN": {
+        "name": "Faelynn",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "フェアリン",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "페일린",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Florence": {
+    "gun_id": 1064,
+    "published": {
+      "EN": {
+        "name": "Florence",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "フローレンス",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "플로렌스",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Klukai": {
+    "gun_id": 1052,
+    "published": {
+      "EN": {
+        "name": "Klukai",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "クルカイ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "클루카이",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Koleda": {
+    "gun_id": 1079,
+    "published": {
+      "EN": {
+        "name": "Koleda",
+        "source": "https://gfl-store.com/collections/new-arrival"
+      },
+      "KO": {
+        "name": "콜레다",
+        "source": "https://gfl-store.com/ko/collections/new-arrival"
+      },
+      "JP": {
+        "name": "コレダ",
+        "source": "https://x.com/EXILIUMJP/status/2120714450319585597",
+        "source_mirror": "https://xitter.gq/EXILIUMJP/status/2120714450319585597"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Laiya": {
+    "gun_id": 1056,
+    "published": {
+      "EN": {
+        "name": "Leva",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "リヴァ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "리바",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Lenna": {
+    "gun_id": 1013,
+    "published": {
+      "EN": {
+        "name": "Lenna",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "レナ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "레나",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Macqiato": {
+    "gun_id": 1034,
+    "published": {
+      "EN": {
+        "name": "Makiatto",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "マキアート",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "마키아토",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Nikketa": {
+    "gun_id": 1055,
+    "published": {
+      "EN": {
+        "name": "Nikketa",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "ニキータ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "니키타",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2OTs14": {
+    "gun_id": 1074,
+    "published": {
+      "EN": {
+        "name": "OTs-14",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "OTs-14",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "OTs-14",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Phaetusa": {
+    "gun_id": 1060,
+    "published": {
+      "EN": {
+        "name": "Phaetusa",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "パエトゥーサ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "파에투사",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Qiuhua": {
+    "gun_id": 1048,
+    "published": {
+      "EN": {
+        "name": "QIUHUA",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "秋樺",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "추화",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Sextans": {
+    "gun_id": 1073,
+    "published": {
+      "EN": {
+        "name": "Sextans",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "セクスタンス",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "섹스턴스",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Soppo": {
+    "gun_id": 1076,
+    "published": {
+      "EN": {
+        "name": "Soppo",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "ソップ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "소프",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Springfield": {
+    "gun_id": 1047,
+    "published": {
+      "EN": {
+        "name": "Springfield",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "スプリングフィールド",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/?role=1"
+      },
+      "KO": {
+        "name": "스프링필드",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Suomi": {
+    "gun_id": 1039,
+    "published": {
+      "EN": {
+        "name": "Suomi",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "スオミ",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "수오미",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Vector": {
+    "gun_id": 1044,
+    "published": {
+      "EN": {
+        "name": "Vector",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "ヴェクター",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "벡터",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  },
+  "GFL2Yohee": {
+    "gun_id": 1054,
+    "published": {
+      "EN": {
+        "name": "Yoohee",
+        "source": "https://gf2.haoplay.com/en/roleinfo/allroles.html"
+      },
+      "JP": {
+        "name": "幼熙",
+        "source": "https://gf2.haoplay.com/jp/roleinfo/allroles.html"
+      },
+      "KO": {
+        "name": "유희",
+        "source": "https://gf2.haoplay.com/kr/roleinfo/allroles.html"
+      }
+    },
+    "missing": []
+  }
+}

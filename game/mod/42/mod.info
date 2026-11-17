@@ -1,11 +1,11 @@
-name=少前2追放角色框架
+name=僵毁少女前线
 id=GFL2Exilium
 require=\ZombieBuddy
-modversion=0.7.15
+modversion=0.7.16
 versionMin=42.22
 versionMax=42.22
 javaJarFile=media/java/client/GFL2Exilium.jar
-javaPkgName=aimoh.pmxpreview
+javaPkgName=gfl2.runtime
 ZBVersionMin=2.3.4
 icon=icon.png
 poster=poster.png

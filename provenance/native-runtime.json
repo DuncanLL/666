@@ -1,0 +1,18 @@
+{
+  "native_version": "GFL2-MMD-1/skeleton-eval1-softbody1",
+  "native_hashes": {
+    "GFL2ChestSoftBody.dll": "922c1c7a0900887d20dc732f2b10a570ba9682efb7926734e4e80d6e8d4a5f78",
+    "GFL2GripOzz.dll": "ab279ef253c69f7adfa470490a85a435a448a91024c899e3f5ecd2d44a40b39d",
+    "GFL2MmdEngine.dll": "51935a8ad85438f9bf873073229fecc4f7890c12cb1fa6eaaac1b2f7a82e6940",
+    "libgcc_s_seh-1.dll": "368488a9089e3d89b32a3609816fa40dd02fa4cdf480a2bc86e19c7bebdc8bda",
+    "libstdc++-6.dll": "ba2f2acaa48011aff3f14a9806cc69db1e78c12c9a87ad3f7f88b965fce7fb1d",
+    "libwinpthread-1.dll": "1b801c9280f6cad8cb2a026bfa48be8c4bea07a0dc78a820d1591f900ee76f0b"
+  },
+  "chest_hashes": {
+    "16a505f156a4c569457cac8d831b8a4b3435dd5932cae80c87f5a9d7662f8ae2.bin": "82c7d66e36c83e735f9ca49030958e6ecbafa0c8e7fa766fa4ede338f1987868",
+    "479727164fc1e964b46670e705bc6a2e039bc13e4fceb99ab04bdf51299b0dff.bin": "6fee059c50fcc34e40218584871669425bd999c5eaf46322cdf068ac87a286d2",
+    "970165ef8f226cd9c2b4eed51935e88dad2148d4ce99f26e8556d011a6c98eec.bin": "9caf75fdde005735de65ade6627de36a9c0c19a112e895fa1860d74bae2a31fe",
+    "ba8172885eb50332c1d1f2c988eea2c9e8522990065b493e3a30ff7951e489cd.bin": "5180d3888f209b1c4e7dfb033911a07c27b2630f54a30cdab8fb72e75bb96a33"
+  },
+  "chest_bridge_source_sha256": "93ad7293bf0c54c17af40a9d0754399570569093ed84c05697685eff110fe215"
+}

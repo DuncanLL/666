@@ -26,10 +26,14 @@ def record(output, jar):
 def package(output, verify_existing=False):
     config = settings()
     build = json.loads((BUILD / 'build.json').read_text('utf8'))
-    generated=None
+    generated = None
+    generated_files = {}
     if not build.get('release_reference'):
-        from prepare_chest_labels import prepare
-        generated=prepare()
+        from prepare_localized_fonts import prepare
+        generated_root = BUILD / 'generated-font-mod'
+        generated = prepare(generated_root)
+        generated_path = generated.relative_to(generated_root)
+        generated_files = {(generated_path/name).as_posix():row for name,row in inventory(generated).items()}
     jar = Path(build['jar'])
     assert sha(jar) == build['jar_sha256']
     for relative, fingerprint in build['source_hashes'].items():
@@ -41,7 +45,7 @@ def package(output, verify_existing=False):
         expected = dict(manifest)
         owned = {name: row for name, row in inventory(ROOT / 'game/mod').items() if name != 'common/.gitkeep'}
         expected.update(owned)
-        if generated is not None:expected.update(inventory(generated))
+        expected.update(generated_files)
         expected['42/media/java/client/GFL2Exilium.jar'] = {'bytes': jar.stat().st_size, 'sha256': sha(jar)}
         mod = output / 'Contents/mods/GFL2Exilium'
         actual = inventory(mod)
@@ -64,7 +68,7 @@ def package(output, verify_existing=False):
     mod = stage / 'Contents/mods/GFL2Exilium'
     mod.mkdir(parents=True)
     owned=set(inventory(ROOT/'game/mod'))|{'42/media/java/client/GFL2Exilium.jar'}
-    if generated is not None:owned.update(inventory(generated))
+    owned.update(generated_files)
     for relative, row in manifest.items():
         # These files come from this checkout, never from the external asset copy.
         if relative in owned:continue
@@ -76,7 +80,8 @@ def package(output, verify_existing=False):
         shutil.copy2(path, dest)
     # The repository owns these configuration, Lua and sound-declaration files.
     shutil.copytree(ROOT / 'game/mod', mod, dirs_exist_ok=True)
-    if generated is not None:shutil.copytree(generated,mod,dirs_exist_ok=True)
+    if generated is not None:
+        shutil.copytree(generated,mod/generated_path,dirs_exist_ok=True)
     runtime = mod / '42/media/java/client/GFL2Exilium.jar'
     runtime.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(jar, runtime)
@@ -87,15 +92,21 @@ def package(output, verify_existing=False):
         sys.path.insert(0, config['python_dependencies'])
         from PIL import Image
         Image.new('RGB', (256, 256), (32, 32, 32)).save(stage / 'preview.png')
-        (stage / 'workshop.txt').write_text('version=1\ntitle=少前2追放角色框架\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
+        (stage / 'workshop.txt').write_text('version=1\ntitle=僵毁少女前线\ndescription=\u200b\ntags=\nvisibility=unlisted\n', 'utf8')
     (mod / 'common').mkdir(exist_ok=True)
     # .gitkeep is useful in Git only, not in the Workshop payload.
     (mod / 'common/.gitkeep').unlink(missing_ok=True)
     forbidden = {'.dll', '.exe', '.zip', '.bat', '.app', '.so', '.sh', '.dylib'}
     assert not [p for p in stage.rglob('*') if p.is_file() and p.suffix.lower() in forbidden]
     with zipfile.ZipFile(runtime) as archive: assert archive.testzip() is None
-    registry = json.loads((mod / '42/media/aimoh_pmx/registry.json').read_text('utf8'))['models']
-    assert not next(row for row in registry if row['id'] == 'pmx-f5b2807685b18a60').get('hidden',False)
+    registry = json.loads((mod / '42/media/gfl2_pmx/registry.json').read_text('utf8'))
+    nikketa = 'pmx-f5b2807685b18a60'
+    models = registry['models']
+    if not any(row['id'] == nikketa for row in models):
+        pack, = (name for name, ids in registry['packs'].items() if nikketa in ids)
+        index = ROOT / 'game/packs' / pack / '42/media/gfl2_pmx/packs' / (pack + '.json')
+        models = json.loads(index.read_text('utf8'))['models']
+    assert not next(row for row in models if row['id'] == nikketa).get('hidden', False)
     output.parent.mkdir(parents=True, exist_ok=True)
     os.replace(stage, output)
     runtime = output / 'Contents/mods/GFL2Exilium/42/media/java/client/GFL2Exilium.jar'

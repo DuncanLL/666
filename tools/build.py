@@ -45,7 +45,7 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
         # Keep the tested runtime bytes after verifying that the compiled source matches it.
         with zipfile.ZipFile(reference) as archive:
             assert archive.testzip() is None
-            prefix='aimoh/pmxpreview/native/windows-x64/'
+            prefix='gfl2/runtime/native/windows-x64/'
             for name,digest in release['native_hashes'].items():
                 assert hashlib.sha256(archive.read(prefix+name)).hexdigest()==digest,name
         jar=BUILD/'GFL2Exilium.jar'
@@ -58,15 +58,19 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
             native_rebuilt=False,game_started=False,installed=False))
         print('Verified character release: '+str(jar),flush=True)
         return
-    baseline = json.loads((ROOT / 'provenance/baseline.json').read_text('utf8'))
+    baseline = json.loads((ROOT / 'provenance/native-runtime.json').read_text('utf8'))
     candidate=None if native_candidate is None else json.loads(Path(native_candidate).read_text('utf8'))
     natives = {name: Path(config['native_source']) / name for name in baseline['native_hashes']} if candidate is None else {name:Path(row['path'])for name,row in candidate['files'].items()}
     for name, path in natives.items():
         assert sha(path) == (baseline['native_hashes'][name] if candidate is None else candidate['files'][name]['sha256']), 'Native input changed: ' + name
     resources={}
+    for name,fingerprint in baseline['chest_hashes'].items():
+        path=Path(config['native_source'])/'chest'/name
+        assert sha(path)==fingerprint,'Chest data changed: '+name
+        resources['gfl2/runtime/chest/'+name]=path
     if candidate is not None:
         from prepare_chest_data import prepare
-        resources=prepare(config)
+        resources.update(prepare(config))
     hashes = {name: sha(path) for name, path in natives.items()}
     identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
     index = 'bundle=' + identity + '\nfiles=' + ','.join(sorted(natives)) + '\n'
@@ -82,7 +86,7 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
             entry.external_attr = 0o100644 << 16
             archive.writestr(entry, data)
         for path in sorted(classes.rglob('*.class')): write(path.relative_to(classes).as_posix(), path.read_bytes())
-        prefix = 'aimoh/pmxpreview/native/windows-x64/'
+        prefix = 'gfl2/runtime/native/windows-x64/'
         write(prefix + 'index.properties', index)
         for name in sorted(natives): write(prefix + name, natives[name].read_bytes())
         for name,path in sorted(resources.items()):write(name,path.read_bytes())

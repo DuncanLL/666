@@ -1,0 +1,4 @@
+require "GFL2PmxAsteriaVoice/NativeData"
+require "GFL2Voice/NativeVoice"
+GFL2PmxAsteriaNativeVoice=GFL2PmxNativeVoice.create(GFL2PmxAsteriaNativeVoiceData,"GFL2PmxAsteriaOriginalVoicePrefix")
+return GFL2PmxAsteriaNativeVoice

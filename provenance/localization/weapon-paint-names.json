@@ -1,0 +1,457 @@
+{
+  "4334325": {
+    "CN": {
+      "name": "涂装·雪境狼灵",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Snow Wolf's Spirit",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "雪原の狼霊",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "설원의 늑대 혼",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334625": {
+    "CN": {
+      "name": "涂装·沉星守护",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Silent Guarding Star",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "静かに守る星",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "고요한 수호별",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332645": {
+    "CN": {
+      "name": "涂装·知心解意",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Thoughtful Understanding",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "心に寄り添う",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "마음을 헤아리는 이",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334215": {
+    "CN": {
+      "name": "涂装·全心全意的服务",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Devoted Service",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "心を尽くした奉仕",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "온 마음을 다한 봉사",
+      "status": "translated_from_cn"
+    }
+  },
+  "4333475": {
+    "CN": {
+      "name": "涂装·全能先锋",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "All-Rounder Vanguard",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "万能の先鋒",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "만능 선봉대",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334075": {
+    "CN": {
+      "name": "涂装·钟情的尾声",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "The Coda of Love",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "想いの終奏",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "사랑의 종장",
+      "status": "translated_from_cn"
+    }
+  },
+  "4336675": {
+    "CN": {
+      "name": "涂装·铸梦之形",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Dreamforged Form",
+      "status": "translated_from_cn"
+    },
+    "JP": {
+      "name": "夢から鋳たかたち",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "꿈을 빚은 형상",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334605": {
+    "CN": {
+      "name": "涂装·乖巧幼崽",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Obedient Cub",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "お行儀のよい子狼",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "얌전한 새끼 늑대",
+      "status": "translated_from_cn"
+    }
+  },
+  "4331295": {
+    "CN": {
+      "name": "涂装·清纯之心",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Pure Heart",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "純真な心",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "순수한 마음",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334055": {
+    "CN": {
+      "name": "涂装·精英人形的青睐",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Elite Doll's Favor",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "精鋭人形のお気に入り",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "정예 인형의 총애",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334615": {
+    "CN": {
+      "name": "涂装·她的微笑",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Her Smile",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "彼女の微笑み",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "그녀의 미소",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332235": {
+    "CN": {
+      "name": "涂装·交错的思绪",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Emotions In Passing",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "交錯する想い",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "엇갈리는 마음",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332245": {
+    "CN": {
+      "name": "涂装·幼狮的守候",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Lioness' Vigil",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "若獅子の見守り",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "어린 사자의 기다림",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332115": {
+    "CN": {
+      "name": "涂装·醇香赠礼",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Mellow Gift",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "芳醇な贈り物",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "향기로운 선물",
+      "status": "translated_from_cn"
+    }
+  },
+  "4333225": {
+    "CN": {
+      "name": "涂装·维护正义的搭档",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Friend of Justice",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "正義を守る相棒",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "정의를 지키는 동료",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334545": {
+    "CN": {
+      "name": "涂装·矜傲防线",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Proud Defense Line",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "誇り高き防衛線",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "긍지의 방어선",
+      "status": "translated_from_cn"
+    }
+  },
+  "4337415": {
+    "CN": {
+      "name": "涂装·跨越时空之人",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Across Time And Space",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "時空を越える者",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "시공을 건너는 이",
+      "status": "translated_from_cn"
+    }
+  },
+  "4336185": {
+    "CN": {
+      "name": "涂装·拓荒先锋",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Spearhead Vanguard",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "開拓の先駆者",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "개척의 선봉",
+      "status": "translated_from_cn"
+    }
+  },
+  "4337535": {
+    "CN": {
+      "name": "涂装·蚀刻印记",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Graven Mark",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "蝕刻の印",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "새겨진 흔적",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332565": {
+    "CN": {
+      "name": "涂装·永痕刻印",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Eternal Engraving",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "消えない刻印",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "영원한 각인",
+      "status": "translated_from_cn"
+    }
+  },
+  "4333145": {
+    "CN": {
+      "name": "涂装·方糖的挚友",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Zucchero's Best Friend",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "角砂糖の親友",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "각설탕의 단짝",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334095": {
+    "CN": {
+      "name": "涂装·重金属鉴赏家",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Heavy Metal Connoisseur",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "ヘヴィメタル愛好家",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "헤비메탈 애호가",
+      "status": "translated_from_cn"
+    }
+  },
+  "4332085": {
+    "CN": {
+      "name": "涂装·光耀的玫瑰园",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Glorious Rosegarden",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "輝く薔薇の庭",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "찬란한 장미 정원",
+      "status": "translated_from_cn"
+    }
+  },
+  "4334195": {
+    "CN": {
+      "name": "涂装·韵律节拍",
+      "status": "original_cn_catalog"
+    },
+    "EN": {
+      "name": "Rhythmical Beats",
+      "status": "cross_referenced",
+      "source": "https://iopwiki.com/wiki/GFL2_Weapons#Classic_Fashion/Affinity_skins"
+    },
+    "JP": {
+      "name": "弾むビート",
+      "status": "translated_from_cn"
+    },
+    "KO": {
+      "name": "리드미컬 비트",
+      "status": "translated_from_cn"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-//! Aimoh external-pose boundary. Written against upstream types and our profile contract.
+//! External pose input. Written against upstream types and our profile contract.
 //! The legacy JNI names are retained only as a consumer ABI; no VMD policy is imported.
 use glam::{Mat4, Quat, Vec3};
 use jni::{JNIEnv, objects::{JClass, JIntArray, JFloatArray, JLongArray, JBooleanArray}, sys::{jlong,jint,jboolean,jstring}};
@@ -142,9 +142,9 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPZLegIKSuppressed(
 
 #[no_mangle]
 pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPZAnimationState(mut env:JNIEnv,_:JClass,handle:jlong,animations:JLongArray,frames:JFloatArray,additive:JBooleanArray,indices:JIntArray,weights:JFloatArray) {
-    // Existing Aimoh consumers submit only an explicit manual Morph baseline.
+    // External pose consumers submit only an explicit manual Morph baseline.
     if env.get_array_length(&animations).unwrap_or(-1)!=0||env.get_array_length(&frames).unwrap_or(-1)!=0||env.get_array_length(&additive).unwrap_or(-1)!=0 {
-        let _=env.throw_new("java/lang/IllegalArgumentException","Native animation playback is not part of the Aimoh pose input");return;
+        let _=env.throw_new("java/lang/IllegalArgumentException","Native animation playback is unavailable on external pose input");return;
     }
     let Ok(count)=env.get_array_length(&indices)else{return};if count<0||count>65536||env.get_array_length(&weights).unwrap_or(-1)!=count {let _=env.throw_new("java/lang/IllegalArgumentException","Invalid Morph baseline dimensions");return;}
     let mut ids=vec![0;count as usize];let mut values=vec![0.;count as usize];

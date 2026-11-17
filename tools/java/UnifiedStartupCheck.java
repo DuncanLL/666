@@ -18,7 +18,7 @@ import zombie.ZomboidFileSystem;
 public final class UnifiedStartupCheck {
     private static final String MODEL_PASS = "viewpoint/render/ModelPass";
     private static final List<String> ORDER = List.of("NativePmxMaterials.bind", "NativePmxMaterials.unbind",
-        "AimohNativeGf2Runtime.beforeLighting");
+        "Gfl2NativeRuntime.beforeLighting");
 
     public static void apply(String name, Instrumentation agent) throws Exception {
         Class<?> loader = Class.forName("me.zed_0xff.zombie_buddy.Loader");
@@ -36,7 +36,7 @@ public final class UnifiedStartupCheck {
         Class<?> scene = Class.forName("viewpoint.render.SceneData");
         var ctor = scene.getDeclaredConstructor();
         ctor.setAccessible(true);
-        Class.forName("aimoh.pmxpreview.RenderPatch").getDeclaredMethod("enter", scene, Object[].class)
+        Class.forName("gfl2.runtime.RenderPatch").getDeclaredMethod("enter", scene, Object[].class)
             .invoke(null, ctor.newInstance(), new Object[0]);
     }
 
@@ -50,7 +50,7 @@ public final class UnifiedStartupCheck {
                         if (!name.equals("gbuffer")) return null;
                         return new MethodVisitor(Opcodes.ASM9) {
                             @Override public void visitMethodInsn(int op, String owner, String method, String desc, boolean iface) {
-                                if (owner.startsWith("aimoh/") || owner.endsWith("/AimohNativeGf2Runtime"))
+                                if (owner.startsWith("gfl2/") || owner.endsWith("/Gfl2NativeRuntime"))
                                     order.add(owner.substring(owner.lastIndexOf('/') + 1) + "." + method);
                             }
                         };
@@ -87,7 +87,7 @@ public final class UnifiedStartupCheck {
             zip.write("layout(triangle_strip,max_vertices=24) out;".getBytes(java.nio.charset.StandardCharsets.UTF_8));
             zip.closeEntry();
         }
-        var installed = aimoh.gf2.bridge.ManagedShaderPack.install(archive, user);
+        var installed = gfl2.render.ManagedShaderPack.install(archive, user);
         require(installed.action().equals("INSTALLED"), "Could not seed an old managed Eclipse pack");
         return archive;
     }
@@ -111,13 +111,13 @@ public final class UnifiedStartupCheck {
         if (lateHost) require(UnifiedStartupCheck.class.getClassLoader().getResource(MODEL_PASS + ".class") == null,
             "Late-host case already exposes Viewpoint");
         if (!lateHost && !legacy) apply("viewpoint", agent);
-        apply("aimoh.pmxpreview", agent);
+        apply("gfl2.runtime", agent);
         if (lateHost) {
             require(Files.mismatch(oldEclipse, installedEclipse) == -1, "Shader install ran before Viewpoint was added");
             agent.appendToSystemClassLoaderSearch(new JarFile(args[3]));
             apply("viewpoint", agent);
         }
-        if (legacy) apply("aimoh.gf2.bridge", agent);
+        if (legacy) apply("gfl2.render", agent);
         List<String> early = ORDER.subList(0,2);
         var before = drawOrder(agent);
         require(before.equals(early), "Character advice not registered exactly once before first draw: "+before);
@@ -151,7 +151,7 @@ public final class UnifiedStartupCheck {
             read.setAccessible(true);
             require(new JSONObject((String)read.invoke(nativePack,"gf2/manifest.json")).has("original_camera_fill"),
                 "Native manifest unavailable before first model preparation");
-            require(viewpoint.platform.IrisPacks.active()==null, "R116 selected an optical pack");
+            require(viewpoint.platform.IrisPacks.active()==null, "GFL2 selected an optical pack");
             prepare();
             require(drawOrder(agent).equals(ORDER), "First model preparation has incorrect draw advice: "+drawOrder(agent));
             prepare();
@@ -165,8 +165,10 @@ public final class UnifiedStartupCheck {
         ZomboidFileSystem.instance.setCacheDir(project.getParent().getParent().toString());
         ZomboidFileSystem.instance.init();
         var item = new zombie.core.znet.SteamWorkshopItem(project.toString());
-        require(item.readWorkshopTxt() && item.validateContents()==null && item.getTitle().equals("少前2追放角色框架"),
-            "Game Workshop validator rejected R116");
+        boolean read = item.readWorkshopTxt();
+        String problem = read ? item.validateContents() : "workshop.txt could not be read";
+        require(read && problem==null && item.getTitle().equals("僵毁少女前线"),
+            "Game Workshop validator rejected GFL2: "+problem+"; title="+item.getTitle());
         report.put("workshop_validator_passed",true).put("saved_selection_preserved",true)
             .put("custom_pack_preserved",true).put("game_started",false);
         Files.writeString(root.resolve("startup.json"),report.toString(2));

@@ -1,0 +1,143 @@
+{
+  "models": {
+    "pmx-8fc5b665a5786924": {
+      "character": "桑朵莱希",
+      "skin": "默认",
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-8fc5b665a5786924.png",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR.png",
+      "groups": {
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {},
+      "officialSkin": "完美招待",
+      "isDefault": true
+    },
+    "pmx-7c5ea1f673f69f12": {
+      "character": "桑朵莱希",
+      "skin": "和莱希的五十天",
+      "officialSkin": "和莱希的五十天",
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-7c5ea1f673f69f12.png",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR01.png",
+      "primaryCategories": [
+        "手链",
+        "珍珠项链"
+      ],
+      "groups": {
+        "bracelet": {
+          "label": "手链",
+          "display": "手链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "necklace": {
+          "label": "珍珠项链",
+          "display": "珍珠项链",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {},
+      "isDefault": false
+    },
+    "pmx-dd77c173248cb704": {
+      "character": "桑朵莱希",
+      "skin": "金牌店员",
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-dd77c173248cb704.png",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_CentaureissiSSR02.png",
+      "groups": {
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "bow": {
+          "label": "领结",
+          "display": "领结",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "apron": {
+          "label": "围裙",
+          "display": "围裙",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "logo": {
+          "label": "胸标",
+          "display": "胸标",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        },
+        "footwear": {
+          "label": "鞋子",
+          "display": "鞋子",
+          "options": [
+            "穿鞋",
+            "脱鞋"
+          ]
+        },
+        "eyes": {
+          "label": "眼睛",
+          "display": "眼睛",
+          "options": [
+            "睁眼",
+            "闭眼"
+          ]
+        }
+      },
+      "partImages": {},
+      "officialSkin": "金牌店员",
+      "isDefault": false
+    }
+  },
+  "labels": {
+    "桑朵莱希": {
+      "path": "media/ui/GFL2ReadyRoom/label-e6a588be889495.png",
+      "width": 160,
+      "height": 45
+    },
+    "泳装": {
+      "path": "media/ui/GFL2ReadyRoom/label-7cced051dbd411.png",
+      "width": 84,
+      "height": 46
+    },
+    "手链": {
+      "path": "media/ui/GFL2ReadyRoom/label-c21aa09db2dfc6.png",
+      "width": 84,
+      "height": 45
+    },
+    "珍珠项链": {
+      "path": "media/ui/GFL2ReadyRoom/label-2b3c43c8f75a63.png",
+      "width": 160,
+      "height": 45
+    }
+  }
+}

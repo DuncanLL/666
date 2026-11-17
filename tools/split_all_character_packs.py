@@ -8,21 +8,21 @@ import shutil
 import zipfile
 
 from common import save, sha
-from package_r116_unified import trim_render_catalogs
-from split_r116_character_packs import catalog_subset, material_ids, resources, ui_files
+from package_gfl2_unified import trim_render_catalogs
+from split_gfl2_character_packs import catalog_subset, material_ids, resources, ui_files
 
 NEW_PACKS = {
-    "莱娅": ("R116Laiya", "Laiya"),
-    "夏安": ("R116Cheyanne", "Cheyanne"),
-    "阿斯缇亚": ("R116Asteria", "Asteria"),
-    "克莱妲": ("R116Koleda", "Klaid"),
-    "妮基塔": ("R116Nikketa", "Nikketa"),
-    "芙洛伦": ("R116Florence", "Florence"),
+    "莱娅": ("GFL2Laiya", "Laiya"),
+    "夏安": ("GFL2Cheyanne", "Cheyanne"),
+    "阿斯缇亚": ("GFL2Asteria", "Asteria"),
+    "克莱妲": ("GFL2Koleda", "Klaid"),
+    "妮基塔": ("GFL2Nikketa", "Nikketa"),
+    "芙洛伦": ("GFL2Florence", "Florence"),
 }
 MEDIA = Path("42/media")
-REGISTRY = MEDIA / "aimoh_pmx/registry.json"
+REGISTRY = MEDIA / "gfl2_pmx/registry.json"
 GF2 = MEDIA / "gfl2_rendering/characters.json"
-ROOM = MEDIA / "ui/AimohPMXReadyRoom/catalog.json"
+ROOM = MEDIA / "ui/GFL2ReadyRoom/catalog.json"
 JAR = MEDIA / "java/client/GFL2Exilium.jar"
 
 def read(path):
@@ -63,10 +63,10 @@ def build(workshop, output, version):
         models = []
         model_dirs[mod] = set()
         for row in rows:
-            profile = read(source / MEDIA / "aimoh_pmx" / row["profile"])
+            profile = read(source / MEDIA / "gfl2_pmx" / row["profile"])
             fingerprint = profile["pmx_sha256"]
-            assert sha(source / MEDIA / "aimoh_pmx" / row["model"]) == fingerprint
-            model_dirs[mod].add(MEDIA/"aimoh_pmx"/Path(row["model"]).parent)
+            assert sha(source / MEDIA / "gfl2_pmx" / row["model"]) == fingerprint
+            model_dirs[mod].add(MEDIA/"gfl2_pmx"/Path(row["model"]).parent)
             if fingerprint in shader_models:
                 models.append(shader_models[fingerprint])
             else:
@@ -113,14 +113,14 @@ def build(workshop, output, version):
             exclude.add(directory)
         with zipfile.ZipFile(source/JAR) as archive:
             for row in rows:
-                fingerprint = read(source/MEDIA/"aimoh_pmx"/row["profile"])["pmx_sha256"]
-                chest = target/MEDIA/"aimoh_pmx"/Path(row["model"]).parent/"chest.bin"
-                embedded = "aimoh/pmxpreview/chest/"+fingerprint+".bin"
+                fingerprint = read(source/MEDIA/"gfl2_pmx"/row["profile"])["pmx_sha256"]
+                chest = target/MEDIA/"gfl2_pmx"/Path(row["model"]).parent/"chest.bin"
+                embedded = "gfl2/runtime/chest/"+fingerprint+".bin"
                 if not chest.is_file() and embedded in archive.namelist():
                     chest.write_bytes(archive.read(embedded))
-        save(target/MEDIA/"aimoh_pmx/packs"/(mod+".json"),dict(format=1,mod=mod,models=rows))
+        save(target/MEDIA/"gfl2_pmx/packs"/(mod+".json"),dict(format=1,mod=mod,models=rows))
         save(target/MEDIA/"gfl2_rendering/packs"/(mod+".json"),dict(format=1,mod=mod,characters=shards[mod]))
-        save(target/MEDIA/"ui/AimohPMXReadyRoom/packs"/(mod+".json"),dict(models=entries,labels={}))
+        save(target/MEDIA/"ui/GFL2ReadyRoom/packs"/(mod+".json"),dict(models=entries,labels={}))
         for relative in resources(shards[mod]) - core_data:
             copy(source/relative,target/relative)
             exclude.add(relative)
@@ -129,11 +129,11 @@ def build(workshop, output, version):
                 continue
             copy(source/relative,target/relative)
         voice_paths = [
-            MEDIA/"lua/client"/f"ZZ_AimohPMX{voice}Voice.lua",
-            MEDIA/"lua/shared"/f"AimohPMX{voice}Voice",
-            MEDIA/"scripts"/f"AimohPMX{voice}Voice_Sounds.txt",
-            MEDIA/"scripts"/f"AimohPMX{voice}NativeVoice_Sounds.txt",
-            MEDIA/"sound"/f"AimohPMX{voice}",
+            MEDIA/"lua/client"/f"ZZ_GFL2Pmx{voice}Voice.lua",
+            MEDIA/"lua/shared"/f"GFL2Pmx{voice}Voice",
+            MEDIA/"scripts"/f"GFL2Pmx{voice}Voice_Sounds.txt",
+            MEDIA/"scripts"/f"GFL2Pmx{voice}NativeVoice_Sounds.txt",
+            MEDIA/"sound"/f"GFL2Pmx{voice}",
         ]
         for relative in voice_paths:
             if (source/relative).exists():
@@ -144,14 +144,14 @@ def build(workshop, output, version):
     assert len(room["optionalModels"]) == len(set(room["optionalModels"])) == 39
     registry["models"] = []
     known_models = {model for ids in registry["packs"].values() for model in ids}
-    for directory in (source/MEDIA/"aimoh_pmx/models").iterdir():
+    for directory in (source/MEDIA/"gfl2_pmx/models").iterdir():
         relative = directory.relative_to(source)
         if directory.is_dir() and relative not in exclude:
             assert directory.name in known_models, "Unexpected unregistered model directory"
             exclude.add(relative)
     for mod in sorted(set(registry["packs"]) - set(shards)):
         source_pack = mod_root(workshop,mod)
-        ui = read(source_pack/MEDIA/"ui/AimohPMXReadyRoom/packs"/(mod+".json"))
+        ui = read(source_pack/MEDIA/"ui/GFL2ReadyRoom/packs"/(mod+".json"))
         roles = {m["character"] for m in ui["models"].values()}
         assert len(roles)==1
         role = next(iter(roles))
@@ -162,7 +162,7 @@ def build(workshop, output, version):
         metadata=re.sub(r"(?m)^title=.*$","title="+role,metadata)
         (output/mod/"workshop.txt").write_text(metadata,"utf8")
         summaries.append(dict(mod=mod,character=role,skins=len(ui["models"]),
-                              models=len(read(target/MEDIA/"aimoh_pmx/packs"/(mod+".json"))["models"]),new_project=False))
+                              models=len(read(target/MEDIA/"gfl2_pmx/packs"/(mod+".json"))["models"]),new_project=False))
     # Portraits and small shared UI assets remain available for unsubscribed character hints.
     excluded_paths = {Path("Contents/mods/GFL2Exilium")/p for p in exclude}
     def ignore(directory,names):
@@ -187,7 +187,7 @@ def build(workshop, output, version):
         core_bytes=sum(p.stat().st_size for p in core_files),core_files=len(core_files),
         core_shared_resources=len(core_data),core_compatibility_shader_models=len(residual),
         runtime_sha256=sha(target/JAR),removed_from_core=[p.as_posix() for p in sorted(exclude)]))
-    print("Prepared",len(summaries),"character projects and R116 core.",flush=True)
+    print("Prepared",len(summaries),"character projects and GFL2 core.",flush=True)
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(description=__doc__)

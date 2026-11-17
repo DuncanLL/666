@@ -68,7 +68,7 @@ void bw_world_remove_rigid_body(BW_World* world, BW_RigidBody* rb);
 void bw_world_add_constraint(BW_World* world, BW_Constraint* c, bool disable_collision);
 void bw_world_remove_constraint(BW_World* world, BW_Constraint* c);
 void bw_world_set_kinematic_filter(BW_World* world, bool enabled);
-void aimoh_world_clear_contact_history(BW_World* world);
+void gfl2_world_clear_contact_history(BW_World* world);
 
 /* ===== 碰撞形状 ===== */
 BW_Shape* bw_shape_sphere(float radius);
@@ -81,7 +81,7 @@ BW_RigidBody* bw_rigid_body_create(const BW_RigidBodyInfo* info);
 void bw_rigid_body_destroy(BW_RigidBody* rb);
 void bw_rigid_body_get_transform(BW_RigidBody* rb, float* matrix4x4);
 void bw_rigid_body_set_transform(BW_RigidBody* rb, const float* matrix4x4);
-void aimoh_body_rebase(BW_RigidBody* rb, const float* matrix4x4);
+void gfl2_body_rebase(BW_RigidBody* rb, const float* matrix4x4);
 void bw_rigid_body_get_position(BW_RigidBody* rb, float* x, float* y, float* z);
 void bw_rigid_body_get_rotation(BW_RigidBody* rb, float* x, float* y, float* z, float* w);
 void bw_rigid_body_set_linear_velocity(BW_RigidBody* rb, float x, float y, float z);

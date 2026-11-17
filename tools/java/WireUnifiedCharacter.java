@@ -5,7 +5,7 @@ import net.bytebuddy.jar.asm.*;
 
 /** Wire the verified character entry points without recompiling its other classes. */
 public final class WireUnifiedCharacter {
-    private static final String STARTUP = "aimoh/gf2/bridge/UnifiedStartup";
+    private static final String STARTUP = "gfl2/render/UnifiedStartup";
 
     public static void main(String[] args) throws Exception {
         Path output = Path.of(args[1]);
@@ -17,7 +17,7 @@ public final class WireUnifiedCharacter {
 
     private static void wire(ZipFile source, Path output, String type, String method, String descriptor, String hook)
             throws Exception {
-        String entry = "aimoh/pmxpreview/" + type + ".class";
+        String entry = "gfl2/runtime/" + type + ".class";
         ClassReader reader;
         try (var data = source.getInputStream(source.getEntry(entry))) {
             reader = new ClassReader(data);

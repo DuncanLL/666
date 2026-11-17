@@ -1,0 +1,4 @@
+require "GFL2PmxLaiyaVoice/NativeData"
+require "GFL2Voice/NativeVoice"
+GFL2PmxLaiyaNativeVoice=GFL2PmxNativeVoice.create(GFL2PmxLaiyaNativeVoiceData,"GFL2PmxLaiyaOriginalVoicePrefix")
+return GFL2PmxLaiyaNativeVoice

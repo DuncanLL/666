@@ -32,11 +32,11 @@ jpype.startJVM(str(game/'jre64/bin/server/jvm.dll'),'--enable-native-access=ALL-
               classpath=[str(a.jar.resolve()),c['viewpoint_jar'],c['zombiebuddy_jar'],str(game),*map(str,game.glob('*.jar'))],convertStrings=True)
 J=jpype.JClass;F=lambda values:jpype.JArray(jpype.JFloat)(values);path=J('java.nio.file.Path').of;Q=J('org.json.JSONObject')
 try:
-    fs=J('zombie.ZomboidFileSystem').instance;fs.setCacheDir(str(temp/'User'));fs.init();main=J('aimoh.pmxpreview.Main')
+    fs=J('zombie.ZomboidFileSystem').instance;fs.setCacheDir(str(temp/'User'));fs.init();main=J('gfl2.runtime.Main')
     def field(name):
         f=main.class_.getDeclaredField(name);f.setAccessible(True);return f
     field('directory').set(None,path(str(Path(c['asset_root'])/'42')));init=main.class_.getDeclaredMethod('nativeRuntime');init.setAccessible(True);init.invoke(None);api=field('api').get(None)
-    assets=Path(c['asset_root'])/'42/media/aimoh_pmx';rows=json.loads((assets/'registry.json').read_text('utf8'))['models']
+    assets=Path(c['asset_root'])/'42/media/gfl2_pmx';rows=json.loads((assets/'registry.json').read_text('utf8'))['models']
     supported=[r['id']for r in json.loads((BUILD/'chest-data/manifest.json').read_text('utf8'))if r['supported']]
     chosen=[supported[0],supported[len(supported)//2],supported[-1]]
     clips=[np.load(BUILD/'softbody'/name)['poses'][:60]for name in ['source-poses.npz','dance-poses.npz']];poses=np.concatenate(clips)
@@ -44,7 +44,7 @@ try:
     samples={}
     for index,id in enumerate(chosen):
         row=next(r for r in rows if r['id']==id);profile=json.loads((assets/row['profile']).read_text('utf8'))
-        model=J('aimoh.motion.PmxModel').load(api,path(str(assets/row['model'])),path(str(assets/row['profile'])))
+        model=J('gfl2.motion.PmxModel').load(api,path(str(assets/row['model'])),path(str(assets/row['profile'])))
         try:
             n=profile['vertices'];pb=J('java.nio.ByteBuffer').allocateDirect(n*12);nb=J('java.nio.ByteBuffer').allocateDirect(n*12);captured=[]
             appearance=str(model.appearance().stateJson());chest=str(model.chestSettings())
@@ -65,7 +65,7 @@ try:
             assert partial==(a.old and not a.baseline_atomic),(label,'late-setting rollback',partial)
             samples['model_'+str(index)]=np.asarray(captured);print(label,id,'120 frames; late-setting partial commit',partial,flush=True)
         finally:model.close()
-    assert J('aimoh.motion.ChestSoftBody').liveWorlds()==0
+    assert J('gfl2.motion.ChestSoftBody').liveWorlds()==0
     assert all(v==0 for v in json.loads(str(api.GetRuntimeStats())).values());field('grip').get(None).close()
     np.savez(out/(label+'.npz'),**samples)
 finally:jpype.shutdownJVM()
