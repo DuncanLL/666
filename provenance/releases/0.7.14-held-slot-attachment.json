@@ -14,7 +14,9 @@
   ],
   "host_draw_cases": 8,
   "gpu": "AMD Radeon RX 9070 XT",
-  "workshop_uploaded": false,
+  "workshop_uploaded": true,
   "actual_gameplay_tested": false,
-  "installed": true
+  "installed": true,
+  "steam_content_manifest": "6514375836193763330",
+  "steam_published_at": "2026-11-17 10:33:00"
 }

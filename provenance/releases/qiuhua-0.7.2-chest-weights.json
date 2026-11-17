@@ -132,6 +132,8 @@
     }
   },
   "installed": true,
-  "uploaded": false,
-  "actual_gameplay_tested": false
+  "uploaded": true,
+  "actual_gameplay_tested": false,
+  "steam_content_manifest": "5977488960180196358",
+  "steam_published_at": "2026-11-17 10:33:10"
 }
