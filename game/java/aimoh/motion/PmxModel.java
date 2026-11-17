@@ -141,11 +141,13 @@ public final class PmxModel implements AutoCloseable {
         long started=System.nanoTime();
         WorldPoseRetargeter.GripResult[] result;
         if(motion!=0) {
-            if(motionPaused||motionEnd<=0)seconds=0;
+            if(motionPaused)seconds=0;
             // The layer scales VMD time internally. Both physics solvers use the unscaled frame time.
             core.finishNativePose(seconds);
-            motionFrame+=seconds*motionSpeed*30f;
-            if(motionEnd>0&&motionFrame>motionEnd)motionFrame%=motionEnd;
+            if(motionEnd>0) {
+                motionFrame+=seconds*motionSpeed*30f;
+                if(motionFrame>motionEnd)motionFrame%=motionEnd;
+            }
             result=new WorldPoseRetargeter.GripResult[0];
         } else if (grip != null && profile.palm_ready) {
             if(adjustment!=null)adjustment.itemTuning=profile.weapon_tuning.get(adjustment.itemKey);

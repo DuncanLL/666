@@ -1,8 +1,21 @@
 local oldRequire=require
+local worldData={}
+ModData={getOrCreate=function(key)
+ worldData[key]=worldData[key] or {}
+ return worldData[key]
+end}
 function require(name)
  if name=="AimohPMXRoomEconomy"then return economy end
+ if name=="GFL2SignatureWeapon"then return signatureWeapons end
+ if name=="GFL2MultiplayerProtocol"then return multiplayerProtocol end
+ if name=="GFL2MultiplayerClient"then return multiplayerRoom end
  return oldRequire(name)
 end
+function getScriptManager()return {FindItem=function()end}end
+function actor:getInventory()
+ return {getAllTypeRecurse=function()return {size=function()return 0 end} end}
+end
+function actor:isDead()return false end
 function getTimestampMs()return 10000 end
 function UI:getIsVisible()return self.visible end
 function UI:setTooltip(s)self.tooltip=s end

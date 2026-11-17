@@ -295,11 +295,22 @@ function E.setWeaponSkin(player,weapon,skin)
     if not progress.acquired or (skin~="" and not model) then return "unavailable" end
     progress.skin=skin~="" and skin or nil
     local items=player:getInventory():getAllTypeRecurse(weapon.id)
+    local server=isServer and isServer()
+    local primary,secondary,heldChanged
+    if server then primary,secondary=player:getPrimaryHandItem(),player:getSecondaryHandItem() end
     for i=0,items:size()-1 do
         local item=items:get(i)
-        item:getModData().GFL2WeaponSkin=model
-        if isServer and isServer() then syncItemModData(player,item) end
+        local data=item:getModData()
+        if data.GFL2WeaponSkin~=model then
+            data.GFL2WeaponSkin=model
+            if server then
+                syncItemModData(player,item)
+                if item==primary or item==secondary then heldChanged=true end
+            end
+        end
     end
+    -- The inventory packet does not rebuild observers' equipped item copies.
+    if heldChanged then sendEquip(player) end
     player:resetEquippedHandsModels()
     return "ok"
 end

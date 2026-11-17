@@ -25,9 +25,9 @@ try:
  for p in media.rglob('*.lua'):
   compiler.loadstring(p.read_text('utf-8-sig'),p.name,env)
  print('PASS Lua compilation',len(list(media.rglob('*.lua'))))
- for name in ('AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog','GFL2SignatureWeapon'):
+ run('function require(name) return assert(_G[name], name) end','require')
+ for name in ('GFL2WeaponSkins','AimohPMXRoomEconomy','GFL2MultiplayerProtocol','GFL2MultiplayerCatalog','GFL2SignatureWeapon'):
   env.rawset(name,run((media/'shared'/f'{name}.lua').read_text('utf8'),name))
- run('function require(name) return _G[name] end','require')
  env.rawset('Economy',env.rawget('AimohPMXRoomEconomy'))
  print(run((root/'tools/tests/room_economy_assertions.lua').read_text('utf8'),'economy'))
  run((test/'multiplayer-server-fixture.lua').read_text('utf8'),'fixture')
@@ -37,4 +37,15 @@ try:
  run((test/'multiplayer-client-fixture.lua').read_text('utf8'),'client-fixture')
  env.rawset('client',run((media/'client/GFL2MultiplayerClient.lua').read_text('utf8'),'client'))
  print(run('return verifyClient(client,AimohPMXRoomEconomy)','client-assertions'))
+ run('GFL2MultiplayerClient=client; prepareExpressionEdits()','expression-fixture')
+ run((media/'client/AimohPMXPreview.lua').read_text('utf8'),'preview')
+ print(run('return verifyExpressionEdits()','expression-assertions'))
+ print(run('return verifyAppearanceRejections()','appearance-rejection-assertions'))
+ run((test/'multiplayer-voice-fixture.lua').read_text('utf8'),'voice-fixture')
+ for folder, names in [('shared',('VoiceRouting','Identity','NativeVoice','SilentData','Silent','VoiceCore','FullVoiceCore')),
+                      ('client',('VoiceEngine','CatalogVoice'))]:
+  for name in names:
+   module=f'AimohPMXVoice/{name}'
+   env.rawset(module,run((media/folder/f'{module}.lua').read_text('utf8'),module))
+ print(run('return verifyVoiceLifecycle()','voice-assertions'))
 finally:jpype.shutdownJVM()

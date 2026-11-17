@@ -1,0 +1,36 @@
+{
+  "version": "0.7.13",
+  "game": "42.22",
+  "host": "Viewpoint 0.1.7",
+  "framework_workshop_id": 3838709437,
+  "candidate_sha256": "e239857cb843e07c191f099079c6063ccb62ed1166b0486e0d589ac18eff442e",
+  "host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "body_physics_switch": true,
+  "grip_replay_cases": 33,
+  "motion_check_gpu": "AMD Radeon RX 9070 XT",
+  "shader_motion_cases": 8,
+  "startup_checks": [
+    "fresh",
+    "late-host"
+  ],
+  "multiplayer_kahlua_passed": true,
+  "room_economy_kahlua_passed": true,
+  "recruitment_and_equip_kahlua_passed": true,
+  "multiplayer_loopback_server_files_match": true,
+  "installed_core_readback": true,
+  "actual_gameplay_tested": false,
+  "unchanged_role_items": 14,
+  "queued_role_versions": {
+    "3838711556": "0.7.2",
+    "3838712707": "0.7.2",
+    "3838711981": "0.7.2",
+    "3838712515": "0.7.2",
+    "3838711736": "0.7.2",
+    "3838712165": "0.7.2",
+    "3838710368": "0.7.3",
+    "3838710868": "0.7.2",
+    "3838762352": "0.7.2",
+    "3838762751": "0.7.7"
+  },
+  "status": "LIMITED_HARDWARE_VALIDATION"
+}

@@ -4,6 +4,7 @@ local economy = require "AimohPMXRoomEconomy"
 local multiplayer = require "GFL2MultiplayerClient"
 local started = false
 local awaiting = {}
+local expressionEdits = {}
 
 local function problem(player, message)
     if message and message ~= "" then
@@ -23,6 +24,7 @@ local function voiceChanged(player)
 end
 
 local function remember(player,quiet)
+    expressionEdits[player]=nil
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     local saved = {
@@ -38,7 +40,16 @@ local function remember(player,quiet)
     if not quiet then voiceChanged(player) end
 end
 
+multiplayer.onRestored=remember
+
+local function flushExpression(player)
+    if not expressionEdits[player] then return end
+    expressionEdits[player]=nil
+    if AimohPMXPreview and AimohPMXPreview.isReady(player) then remember(player,true) end
+end
+
 local function enable(player, index)
+    flushExpression(player)
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     if previous and previous.model and previous.settings then profiles[previous.model]=previous.settings end
@@ -48,6 +59,9 @@ local function enable(player, index)
 end
 
 Events.OnTick.Add(function()
+    for player,deadline in pairs(expressionEdits) do
+        if getTimestampMs()>=deadline then flushExpression(player) end
+    end
     for player in pairs(awaiting) do
         if AimohPMXPreview.hasModelFailure(player) then
             awaiting[player]=nil
@@ -93,14 +107,22 @@ local function setBodyPhysics(player,enabled)
     return true
 end
 
-local function disable(player)
+local function clearAppearance(player)
+    expressionEdits[player]=nil
     awaiting[player]=nil
     AimohPMXPreview.disable(player)
     local saved=player:getModData()[key]
     player:getModData()[key] = saved and {profiles=saved.profiles} or nil
     economy.saveLocal(player)
-    publish(player, nil)
     voiceChanged(player)
+end
+
+multiplayer.onRejected=clearAppearance
+
+local function disable(player)
+    flushExpression(player)
+    clearAppearance(player)
+    publish(player, nil)
 end
 
 local function refresh(player)
@@ -125,7 +147,8 @@ end
 
 local function open(player)
     window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,bodyPhysics=setBodyPhysics,
-        expressionRemember=function(p)remember(p,true)end})
+        expressionRemember=function(p)remember(p,true)end,
+        expressionEdited=function(p)expressionEdits[p]=getTimestampMs()+250 end})
 end
 
 local function menu(playerIndex, context, worldObjects, test)
@@ -143,6 +166,7 @@ end
 Events.OnFillWorldObjectContextMenu.Add(menu)
 Events.OnGameStart.Add(function()
     awaiting={}
+    expressionEdits={}
     window.closeAll()
     started = true
     if not AimohPMXPreview then return end
@@ -158,11 +182,15 @@ Events.OnSave.Add(function()
     if started then
         for i = 0, 3 do
             local player = getSpecificPlayer(i)
-            if player and not player:isDead() then economy.saveLocal(player) end
+            if player and not player:isDead() then
+                flushExpression(player)
+                economy.saveLocal(player)
+            end
         end
     end
 end)
 Events.OnPlayerDeath.Add(function(player)
+    flushExpression(player)
     economy.saveLocal(player)
     awaiting[player]=nil
     window.closeFor(player)
@@ -174,12 +202,14 @@ if Events.OnMainMenuEnter then
     Events.OnMainMenuEnter.Add(function()
         started = false
         awaiting={}
+        expressionEdits={}
         window.closeAll()
         if AimohPMXPreview then AimohPMXPreview.clear() end
     end)
 end
 Events.OnDisconnect.Add(function()
     awaiting={}
+    expressionEdits={}
     window.closeAll()
     started = false
     if AimohPMXPreview then AimohPMXPreview.clear() end

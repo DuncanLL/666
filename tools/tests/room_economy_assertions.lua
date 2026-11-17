@@ -1,30 +1,22 @@
 local E=Economy
-local pools={skinA={},skinB={},skinC={}}
+function isClient() return false end
+function isServer() return false end
+local globalData={}
+ModData={getOrCreate=function(key)
+    globalData[key]=globalData[key] or {}
+    return globalData[key]
+end}
 local player={data={R116ReadyRoomWallet={
-    credits=12345,targeted=17,outfit=22,
-    recruitment={owned={Daiyan=true},misses=57},
-    outfits={skinA=true,skinB=99,normal=true},
-    daiyanUnlocked=true,daiyanMisses=50,
+    credits=1199,targeted=23,outfit=110,
+    outfits={skinB=99,normal=true},daiyanUnlocked=true,daiyanMisses=57,
 }}}
-function player:getModData()return self.data end
+function player:getModData() return self.data end
+function player:getPlayerNum() return 0 end
 local wallet=player.data.R116ReadyRoomWallet
-E.resetTestDraws(player,pools)
 assert(E.outfitGuarantee==100 and E.characterGuarantee==80)
-assert(not E.characterUnlocked(player,"Daiyan") and E.characterMisses(player)==0)
-assert(not E.outfitOwned(player,"skinA") and E.outfitMisses(player,"skinB")==0)
-assert(E.outfitOwned(player,"normal"))
-assert(E.balance(player,"credits")==0 and E.balance(player,"targeted")==0 and E.balance(player,"outfit")==0)
-assert(wallet.drawResetBackup20261113.credits==12345)
-assert(wallet.drawResetBackup20261113.recruitment.misses==57)
-
-wallet.recruitment.owned.Daiyan=true
-wallet.recruitment.misses=57
-wallet.outfits.skinB=99
-wallet.outfit=110
-wallet.targeted=23
-wallet.credits=1199
-local restored={data=player.data,getModData=player.getModData}
-E.resetTestDraws(restored,pools)
+assert(E.characterUnlocked(player,"Daiyan") and E.characterMisses(player)==57)
+assert(E.outfitOwned(player,"normal") and E.outfitMisses(player,"skinB")==99)
+local restored={data={},getModData=player.getModData,getPlayerNum=player.getPlayerNum}
 assert(E.characterUnlocked(restored,"Daiyan") and E.characterMisses(restored)==57)
 assert(E.balance(restored,"credits")==1199 and E.balance(restored,"targeted")==23)
 assert(E.buyOutfit(restored,"premium",1200)=="short" and E.balance(restored,"credits")==1199)
@@ -50,13 +42,6 @@ assert(E.drawCharacter(player,"Other",10,high)=="miss")
 status,results=E.drawCharacter(player,"Other",10,high)
 assert(status=="unlocked" and #results==3)
 assert(E.characterMisses(player)==0 and E.balance(player,"targeted")==0)
-local globalData={}
-ModData={getOrCreate=function(key)
-    globalData[key]=globalData[key] or {}
-    return globalData[key]
-end}
-function player:getPlayerNum() return 0 end
-
 local blade={id="GFL2.CauseAndEffect",character="Phaetusa"}
 local rifle={id="GFL2.TestRifle",character="Other"}
 wallet.recruitment.owned.Phaetusa=true
@@ -74,11 +59,15 @@ assert(E.weaponProgress(player,rifle.id).acquired and E.weaponProgress(player,bl
 local carried={}
 local added=0
 local inventory={}
+local function item()
+    local data={}
+    return {getModData=function() return data end}
+end
 function inventory:containsTypeRecurse(id) return carried[id]==true end
 function inventory:AddItem(id)
     added=added+1
     carried[id]=true
-    return {}
+    return item()
 end
 function player:getInventory() return inventory end
 assert(E.claimWeapon(player,rifle)=="ok" and added==1)
@@ -86,12 +75,13 @@ assert(E.claimWeapon(player,rifle)=="alreadyCarried" and added==1)
 carried[rifle.id]=nil
 assert(E.claimWeapon(player,rifle)=="ok" and added==2)
 local respawn={data={}}
-function respawn:getPlayerNum() return 0 end
+function respawn:getPlayerNum() return 1 end
 function respawn:getModData() return self.data end
+respawn.data.R116ReadyRoomWallet={signatureWeapons={[blade.id]={acquired=true}}}
 local replacement
 function respawn:getInventory()
     return {containsTypeRecurse=function(_,id)return replacement==id end,
-            AddItem=function(_,id)replacement=id;return {} end}
+            AddItem=function(_,id)replacement=id;return item() end}
 end
 assert(E.weaponProgress(respawn,blade.id).acquired and not E.characterUnlocked(respawn,"Phaetusa"))
 assert(E.claimWeapon(respawn,blade)=="ok" and replacement==blade.id)

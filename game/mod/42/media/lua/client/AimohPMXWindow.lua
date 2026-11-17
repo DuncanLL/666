@@ -1983,7 +1983,8 @@ function W:refreshControls(keepScroll)
                     self:addLabel(row.label,y,18)
                     local slider=ISSliderPanel:new(5,y+24,width-10,20,self,function(w,value)
                         local error=AimohPMXReadyRoom.expressionSet(w.player,id,field,value/100)
-                        if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error") end
+                        if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error")
+                        else w.actions.expressionEdited(w.player) end
                     end)
                     slider:initialise();slider:instantiate();slider:setDoButtons(false);slider:setValues(0,100,1,10,true)
                     slider:setCurrentValue(row.value*100,true)
@@ -1995,6 +1996,7 @@ function W:refreshControls(keepScroll)
                 end
             else self:addLabel(tr("ExpressionEmpty"),y);y=y+30 end
         elseif self.tab=="grip" then
+            local id=self.currentId
             local family=AimohPMXReadyRoom.gripFamily(self.player)
             self.gripFamily=family
             if family=="" then
@@ -2029,7 +2031,7 @@ function W:refreshControls(keepScroll)
                         local field=start+i-1
                         self:addLabel(axis,y,17)
                         local slider=ISSliderPanel:new(inset,y+2,width-inset-resetWidth-8,20,self,function(w,value)
-                            if not AimohPMXReadyRoom.gripSet(w.player,family,field,value,aiming)then w.status=tr("Error") end
+                            if not AimohPMXReadyRoom.gripSet(w.player,id,family,field,value,aiming)then w.status=tr("Error") end
                         end)
                         slider:initialise();slider:instantiate();slider:setDoButtons(true);slider:setValues(-limit,limit,.1,1,true)
                         slider:setCurrentValue(values[field+1] or 0,true)
@@ -2040,7 +2042,7 @@ function W:refreshControls(keepScroll)
                         end
                         slider.roomSlider=true;self.content:addChild(slider);table.insert(self.widgets,slider)
                         local reset=button(self.content,width-resetWidth,y,resetWidth,getText("ContextMenu_GFL2_GripResetValue"),self,function(w)
-                            if AimohPMXReadyRoom.gripSet(w.player,family,field,0,aiming) then
+                            if AimohPMXReadyRoom.gripSet(w.player,id,family,field,0,aiming) then
                                 slider:setCurrentValue(0,true)
                             else w.status=tr("Error") end
                         end)
@@ -2048,7 +2050,7 @@ function W:refreshControls(keepScroll)
                     end
                 end
                 local b=button(self.content,0,y+4,width,tr("Reset"),self,function(w)
-                    if AimohPMXReadyRoom.gripSet(w.player,family,-1,0,aiming)then w:refreshControls(true) end
+                    if AimohPMXReadyRoom.gripSet(w.player,id,family,-1,0,aiming)then w:refreshControls(true) end
                 end)
                 table.insert(self.widgets,b);y=y+42
             end

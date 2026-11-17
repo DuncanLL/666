@@ -290,10 +290,7 @@ public class Main {
     }
     public static synchronized String networkAppearance(IsoGameCharacter actor) {
         ModelSession session=active.get(actor);
-        if(session==null)return "";
-        JSONObject state=new JSONObject(session.model.appearance().stateJson());
-        return new JSONObject().put("choices",state.getJSONObject("choices"))
-            .put("material_visibility",state.getJSONArray("material_visibility")).toString();
+        return session==null?"":session.model.appearance().networkJson();
     }
 
     public static synchronized String queueRemoteAppearance(IsoPlayer actor,String id,String signature,String value) {
@@ -332,7 +329,9 @@ public class Main {
         for(int i=0;i<visibility.length();i++)if(!(visibility.get(i) instanceof Boolean))
             throw new IllegalArgumentException("Invalid material visibility");
         // Remote players use local model assets and never receive texture paths or physics parameters.
-        result.getJSONObject("appearance").put("material_visibility",visibility).put("choices",supplied.getJSONObject("choices"));
+        JSONObject appearance=result.getJSONObject("appearance");
+        appearance.put("material_visibility",visibility).put("choices",supplied.getJSONObject("choices"));
+        if(supplied.has("expressions")) appearance.put("expressions",supplied.getJSONObject("expressions"));
         return result;
     }
 

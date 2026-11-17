@@ -191,9 +191,9 @@ public class ReadyRoomPreview {
             return J2SEPlatform.getInstance().newTable();
         return GripCalibration.sliders(actor,session.entry.id(),key,aiming);
     }
-    public static boolean gripSet(IsoGameCharacter actor,String key,int axis,double value,boolean aiming) {
+    public static boolean gripSet(IsoGameCharacter actor,String id,String key,int axis,double value,boolean aiming) {
         ModelSession session=Main.session(actor);
-        return session!=null&&Main.isReady(actor)&&GripCalibration.set(actor,session.entry.id(),key,axis,value,aiming);
+        return session!=null&&session.entry.id().equals(id)&&Main.isReady(actor)&&GripCalibration.set(actor,id,key,axis,value,aiming);
     }
     public static synchronized boolean drawGripView(IsoGameCharacter actor,int x,int y,int width,int height,boolean aiming,float yaw,float pitch,float zoom) {
         return GripRoomPreview.draw(actor,x,y,width,height,aiming,yaw,pitch,zoom);
