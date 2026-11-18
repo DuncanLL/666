@@ -1,0 +1,26 @@
+{
+  "status": "WORKSHOP_CONTENT_VERIFIED",
+  "app_id": 108600,
+  "item": 3838709437,
+  "version": "0.7.19",
+  "result": 1,
+  "jar_sha256": "b131631700d431b3e8be8bdcf259c2f6926132479145a21d0200df2bdd59e41c",
+  "manifest": "5102821104588589619",
+  "remote_size": 278679237,
+  "unlisted": true,
+  "remote_updated_unix": 1795013363,
+  "previous_updated_unix": 1795007068,
+  "remote_updated_shanghai": "2026-11-18T22:49:23+08:00",
+  "unchanged_page_fields": [
+    "title",
+    "description",
+    "visibility",
+    "preview_handle",
+    "tags",
+    "children",
+    "preview_count"
+  ],
+  "subscriber_cold_start_tested": false,
+  "source_commit": "00e4663",
+  "verification_record": "provenance/releases/0.7.19-somber-ink-local.json"
+}

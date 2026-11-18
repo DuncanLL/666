@@ -10,7 +10,7 @@
 
 ## 0.7.19 · Somber 透明材质的场景描线修正（2026-11-18）
 
-- Somber 对使用少前2原材质法线的可见表面沿用人物描线遮罩，避免背景边线叠到翡图萨等角色的丝袜上。场景着色、人物调色和透明材质的混合方式沿用原逻辑。见[本地验证记录](provenance/releases/0.7.19-somber-ink-local.json)。
+- Somber 对使用少前2原材质法线的可见表面沿用人物描线遮罩，避免背景边线叠到翡图萨等角色的丝袜上。场景着色、人物调色和透明材质的混合方式沿用原逻辑。见[本地验证记录](provenance/releases/0.7.19-somber-ink-local.json)和[工坊更新记录](provenance/releases/0.7.19-workshop-unlisted.json)。
 
 ## 0.7.18 · 运行时优化与光影分发调整（2026-11-18）
 
