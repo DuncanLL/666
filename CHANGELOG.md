@@ -12,6 +12,7 @@
 
 - 工坊框架自动分发 Native-GFL2 和 Somber-GFL2。Eclipse 只保留在独立维护构建，已安装的光影文件与玩家选择由 Viewpoint 管理。
 - 减少人物绘制过程中反复查询 OpenGL 状态的次数，复用 PMX 姿态计算所需的临时缓存，保留原有人物、物理、材质和存档格式。
+- 框架及 24 个现有角色包已提交至未列出的工坊条目，框架内容清单与验证范围见[工坊记录](provenance/releases/0.7.18-workshop-unlisted.json)。
 
 ## 0.7.17 · Somber 人物光影分发（2026-11-18）
 

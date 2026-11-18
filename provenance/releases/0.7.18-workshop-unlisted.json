@@ -1,0 +1,34 @@
+{
+  "framework_version": "0.7.18",
+  "app_id": 108600,
+  "framework_workshop_id": 3838709437,
+  "visibility": "unlisted",
+  "updated_shanghai": "2026-11-18T21:04:28+08:00",
+  "source_commit": "5301fb2",
+  "runtime_performance_commit": "2788e5f",
+  "framework_jar_sha256": "7e225a2c108e13297b9eb3763056020d388c003e7738cb28b2294aab459eab73",
+  "framework_content_manifest": "5601523029940353582",
+  "framework_content_size": 278679181,
+  "viewpoint_version": "0.1.7",
+  "host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "pack_sha256": {
+    "native": "e155ab3ead571784e2c0c999c776c36dbfe7e96c984b5ded01a49884358a00b8",
+    "somber": "352c7568442fc2c8349b430f594d76afdad0c8b058dd77140581715da3c579ed"
+  },
+  "verification": {
+    "successful_item_callbacks": 25,
+    "existing_role_packs_resubmitted": 24,
+    "new_content_manifest_count": 1,
+    "fresh_and_late_host_startup": [
+      "fresh",
+      "late-host"
+    ],
+    "actual_driver": "AMD Radeon RX 9070 XT",
+    "source_build_catalog_models": 72,
+    "host_expanded_source_build_links_per_pack": 69,
+    "host_expanded_final_render_build_links_per_pack": 27,
+    "nvidia_intel_and_gameplay_verified": false,
+    "workshop_preview_uploaded": false
+  },
+  "local_candidate_without_workshop_id": "GFL2Loreley"
+}
