@@ -4,6 +4,7 @@
 
 | 要查的问题 | 入口 |
 |---|---|
+| 从裸 PMX 制作一套衣装并复核结果 | [导入与标定](pmx-import-workflow.md) · [原材质与三角形映射](source-material-workflow.md) · [双后端构建和验收](workflow-build-checks.md) |
 | 走跑蹲、翻窗跨栏、空手、持枪与瞄准、第一人称、车内、暂停和 VMD | [游戏中的动作、持物和物理](gameplay.md#各种游戏状态) |
 | 换人失败、角色重载、姿态异常、刚体和胸部软体 | [模型会话](gameplay.md#从游戏角色到模型会话) · [异常恢复](gameplay.md#两个需要保留的异常恢复) |
 | 角色包、整备室、招募和专武、保存、联机握手、语音状态 | [人物数据、整备室、联机与语音](character-systems.md) |

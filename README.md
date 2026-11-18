@@ -6,6 +6,7 @@ Project Zomboid B42.22 的少前2角色 MOD。核心内部 ID 为 `GFL2Exilium`�
 - [24 个角色包的订阅合集](https://steamcommunity.com/sharedfiles/filedetails/?id=3841234557)
 - [版本记录](CHANGELOG.md)
 - [维护手册](docs/maintenance/README.md) · [源码导航](docs/README.md) · [光影发布检查](docs/render-release-standard.md)
+- [从 PMX 标定、原材质接入到 Native / Eclipse 合包的实作流程](docs/maintenance/pmx-import-workflow.md)
 
 ## 本机使用
 
