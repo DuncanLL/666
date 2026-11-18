@@ -84,6 +84,7 @@ public final class Gfl2PackData {
             Path registry=file.getParent().getParent().resolve("gfl2_pmx/registry.json");
             JSONObject registryData=Files.isRegularFile(registry)?new JSONObject(Files.readString(registry)):new JSONObject();
             JSONObject packs=registryData.optJSONObject("packs"),modIds=registryData.optJSONObject("pack_mod_ids");
+            CatalogMerge merge = new CatalogMerge(fields);
             if(packs!=null)for(String mod:packs.keySet().stream().sorted().toList()){
                 String modId=modIds==null?mod:modIds.getString(mod);
                 if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(modId))continue;
@@ -95,9 +96,7 @@ public final class Gfl2PackData {
                     byte[] packBytes=Files.readAllBytes(fragment);
                     JSONObject extra=new JSONObject(new String(packBytes,StandardCharsets.UTF_8));
                     if(extra.getInt("format")!=1||!mod.equals(extra.getString("mod")))throw new IllegalArgumentException("Invalid GF2 character pack");
-                    JSONObject combined=copyCatalogContainers(fields);
-                    mergeCharacters(combined,extra.getJSONObject("characters"));
-                    fields=combined;
+                    merge.append(extra.getJSONObject("characters"));
                     digest.update((byte)'\n');digest.update(packBytes);
                 }catch(Exception e){System.err.println("[GFL2 GF2] Character pack "+mod+": "+e);}
             }
@@ -111,67 +110,89 @@ public final class Gfl2PackData {
         return root;
     }
 
-    private static JSONObject copyCatalogContainers(JSONObject fields) {
-        // mergeCharacters appends new entries and remaps incoming rows. Previously accepted rows are read-only.
-        JSONObject staged = new JSONObject();
-        for (String key : fields.keySet()) {
-            Object field = fields.get(key);
-            if (field instanceof JSONArray entries) {
-                JSONArray copy = new JSONArray();
-                for (Object entry : entries) copy.put(entry);
-                staged.put(key, copy);
-            } else {
-                JSONObject entries = fields.getJSONObject(key);
-                JSONObject copy = new JSONObject();
-                for (String name : entries.keySet()) copy.put(name, entries.get(name));
-                staged.put(key, copy);
-            }
-        }
-        return staged;
-    }
+    /** Only incoming rows are rewritten. Publish the fragment after all its references validate. */
+    private static final class CatalogMerge {
+        private final JSONObject base;
+        private final Map<String,JSONObject> byName = new HashMap<>();
+        private final Map<String,JSONObject> comparable = new HashMap<>();
+        private final Map<List<String>,JSONObject> choices = new HashMap<>();
+        private final Set<String> modelIds = new HashSet<>();
 
-    private static void mergeCharacters(JSONObject base,JSONObject extra){
-        if(!extra.keySet().equals(CHARACTER_FIELDS))throw new IllegalArgumentException("Character pack fields differ");
-        JSONArray materials=base.getJSONArray("materials"), additions=extra.getJSONArray("materials");
-        Map<String,JSONObject> byName=new HashMap<>();
-        for(Object value:materials){JSONObject row=(JSONObject)value;byName.put(row.getString("name"),row);}
-        int[] remap=new int[additions.length()];
-        for(int i=0;i<remap.length;i++){
-            JSONObject row=additions.getJSONObject(i);
-            if(row.getInt("id")!=i)throw new IllegalArgumentException("Non-contiguous pack material ID");
-            String name=row.getString("name");JSONObject old=byName.get(name);
-            int id=old==null?materials.length():old.getInt("id");
-            row.put("id",id);remap[i]=id;
-            if(old==null){materials.put(row);byName.put(name,row);}
-            else if(!materialForComparison(old).similar(materialForComparison(row)))throw new IllegalArgumentException("Conflicting pack material "+name);
-        }
-        for(String key:List.of("textures","shader_property_defaults","glsl","early_fragments","consumed")){
-            JSONObject target=base.getJSONObject(key),incoming=extra.getJSONObject(key);
-            for(String name:incoming.keySet()){
-                JSONObject row=incoming.getJSONObject(name);
-                if(!target.has(name))target.put(name,row);
-                else if(!target.getJSONObject(name).similar(row))throw new IllegalArgumentException("Conflicting pack resource "+name);
+        CatalogMerge(JSONObject base) {
+            this.base = base;
+            for (Object value : base.getJSONArray("materials")) {
+                JSONObject row=(JSONObject)value;
+                byName.put(row.getString("name"), row);
             }
-        }
-        JSONArray programs=base.getJSONArray("programs");
-        Map<List<String>,JSONObject> choices=new HashMap<>();
-        for(Object value:programs){JSONObject row=(JSONObject)value;choices.put(programKey(row),row);}
-        for(Object value:extra.getJSONArray("programs")){
-            JSONObject row=(JSONObject)value;JSONObject old=choices.putIfAbsent(programKey(row),row);
-            if(old==null)programs.put(row);
-            else if(!old.similar(row))throw new IllegalArgumentException("Conflicting pack program "+programKey(row));
-        }
-        JSONArray models=base.getJSONArray("models");Set<String> modelIds=new HashSet<>();
-        for(Object value:models)modelIds.add(((JSONObject)value).getString("pmx_sha256"));
-        for(Object value:extra.getJSONArray("models")){
-            JSONObject model=(JSONObject)value;
-            if(!modelIds.add(model.getString("pmx_sha256")))throw new IllegalArgumentException("Duplicate pack model SHA");
-            for(Object part:model.getJSONArray("parts")){
-                JSONObject row=(JSONObject)part;row.put("source_material",remap[row.getInt("source_material")]);
+            for (Object value : base.getJSONArray("programs")) {
+                JSONObject row=(JSONObject)value;
+                choices.put(programKey(row),row);
             }
-            JSONObject frames=model.getJSONObject("renderer_frames"), old=frames.getJSONObject("materials"), updated=new JSONObject();
-            for(String key:old.keySet())updated.put(Integer.toString(remap[Integer.parseInt(key)]),old.get(key));
-            frames.put("materials",updated);models.put(model);
+            for (Object value : base.getJSONArray("models")) modelIds.add(((JSONObject)value).getString("pmx_sha256"));
+        }
+
+        void append(JSONObject extra) {
+            if (!extra.keySet().equals(CHARACTER_FIELDS)) throw new IllegalArgumentException("Character pack fields differ");
+            JSONArray materials=base.getJSONArray("materials"), additions=extra.getJSONArray("materials");
+            Map<String,JSONObject> newMaterials=new LinkedHashMap<>(), newComparable=new HashMap<>();
+            int[] remap=new int[additions.length()];
+            for (int i=0;i<remap.length;i++) {
+                JSONObject row=additions.getJSONObject(i);
+                if (row.getInt("id")!=i) throw new IllegalArgumentException("Non-contiguous pack material ID");
+                String name=row.getString("name");
+                JSONObject accepted=byName.get(name), old=accepted!=null?accepted:newMaterials.get(name);
+                remap[i]=old==null?materials.length()+newMaterials.size():old.getInt("id");
+                row.put("id",remap[i]);
+                if (old==null) newMaterials.put(name,row);
+                else {
+                    JSONObject normalized=(accepted==null?newComparable:comparable)
+                        .computeIfAbsent(name,k->materialForComparison(old));
+                    if (!normalized.similar(materialForComparison(row))) throw new IllegalArgumentException("Conflicting pack material "+name);
+                }
+            }
+            var dictionaries=List.of("textures","shader_property_defaults","glsl","early_fragments","consumed");
+            for (String key : dictionaries) {
+                JSONObject target=base.getJSONObject(key), incoming=extra.getJSONObject(key);
+                for (String name : incoming.keySet()) {
+                    JSONObject row=incoming.getJSONObject(name);
+                    if (target.has(name) && !target.getJSONObject(name).similar(row))
+                        throw new IllegalArgumentException("Conflicting pack resource "+name);
+                }
+            }
+            Map<List<String>,JSONObject> newPrograms=new LinkedHashMap<>();
+            for (Object value : extra.getJSONArray("programs")) {
+                JSONObject row=(JSONObject)value;
+                var key=programKey(row);
+                JSONObject old=choices.get(key);
+                if (old==null) old=newPrograms.putIfAbsent(key,row);
+                if (old!=null && !old.similar(row)) throw new IllegalArgumentException("Conflicting pack program "+key);
+            }
+            Set<String> newIds=new HashSet<>();
+            JSONArray models=extra.getJSONArray("models");
+            for (Object value : models) {
+                JSONObject model=(JSONObject)value;
+                String hash=model.getString("pmx_sha256");
+                if (modelIds.contains(hash)||!newIds.add(hash)) throw new IllegalArgumentException("Duplicate pack model SHA");
+                for (Object part : model.getJSONArray("parts")) {
+                    JSONObject row=(JSONObject)part;
+                    row.put("source_material",remap[row.getInt("source_material")]);
+                }
+                JSONObject frames=model.getJSONObject("renderer_frames"), old=frames.getJSONObject("materials"), updated=new JSONObject();
+                for (String key : old.keySet()) updated.put(Integer.toString(remap[Integer.parseInt(key)]),old.get(key));
+                frames.put("materials",updated);
+            }
+
+            byName.putAll(newMaterials);
+            comparable.putAll(newComparable);
+            for (JSONObject row:newMaterials.values()) materials.put(row);
+            choices.putAll(newPrograms);
+            for (JSONObject row:newPrograms.values()) base.getJSONArray("programs").put(row);
+            modelIds.addAll(newIds);
+            for (Object model:models) base.getJSONArray("models").put(model);
+            for (String key:dictionaries) {
+                JSONObject target=base.getJSONObject(key), incoming=extra.getJSONObject(key);
+                for (String name:incoming.keySet()) if (!target.has(name)) target.put(name,incoming.get(name));
+            }
         }
     }
     private static JSONObject materialForComparison(JSONObject material) {

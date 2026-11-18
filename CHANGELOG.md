@@ -4,6 +4,10 @@
 
 游戏动作、人物状态和光影接线详见 [维护手册](docs/maintenance/README.md)。
 
+## 运行时性能候选 · 2026-11-18
+
+隔离分支优化人物绘制状态保存、分包目录合并、材质缓冲上传、身体重定向、显示插值与整备室浏览预览。实测口径、回退条件及复跑入口见[性能复审](docs/handoffs/2026-11-18-runtime-performance.md)。
+
 ## 0.7.17 · Somber 人物光影分发（2026-11-18）
 
 框架增加可选光影 Somber GFL 2，沿用 Native 的人物、衣装、专武和材质目录。启动时分发 Native、Somber 和 Eclipse，保留玩家的光影选择与手改文件。Somber 的漫画效果保留在场景中，角色使用原材质描边和颜色转换。构建、更新和回归步骤见[维护手册](docs/maintenance/rendering.md)，本机版本的包指纹与测试范围见[验证记录](provenance/releases/0.7.17-somber-local.json)。

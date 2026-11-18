@@ -78,6 +78,14 @@ public final class Wardrobe {
         }
         for(int i=0;i<materials;i++)visible[i]&=mask[i];
     }
+    private JSONArray groups(){return definition.getJSONArray("groups");}
+    int groupCount(){return groups().length();}
+    String groupId(int group){return groups().getJSONObject(group).getString("id");}
+    String groupLabel(int group){JSONObject g=groups().getJSONObject(group);return g.optString("label",g.getString("id"));}
+    private JSONArray options(int group){return groups().getJSONObject(group).getJSONArray("options");}
+    int optionCount(int group){return options(group).length();}
+    String optionId(int group,int option){return options(group).getJSONObject(option).getString("id");}
+    String optionLabel(int group,int option){JSONObject o=options(group).getJSONObject(option);return o.optString("label",o.getString("id"));}
     public String json(){return definition.toString();}
     public boolean managesMorph(int index){return managedMorphs[index];}
     public static String empty(){return "{\"format\":1,\"groups\":[],\"rules\":[]}";}

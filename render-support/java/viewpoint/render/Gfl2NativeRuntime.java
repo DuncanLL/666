@@ -51,7 +51,7 @@ public final class Gfl2NativeRuntime {
                 if(renderer==null)return;
             }
         }
-        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope()){
+        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope(Gfl2GlScope.Phase.SETUP)){
             if(renderer!=null&&(drawnData!=prepared||!Gfl2NativeRegistry.active())){renderer.close();renderer=null;drawnData=null;released++;}
             if(prepared!=null&&renderer==null){
                 try{

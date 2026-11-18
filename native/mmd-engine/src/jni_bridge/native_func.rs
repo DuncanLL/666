@@ -16,7 +16,7 @@ use super::{
     TEXTURE_PATH_INDEX,
 };
 
-const VERSION: &str = "GFL2-MMD-1/skeleton-eval1-softbody1";
+const VERSION: &str = "GFL2-MMD-1/skeleton-eval2-softbody1";
 
 #[no_mangle]
 pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAnimationOwnedPhysicsBones(
@@ -141,6 +141,17 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMX(
     _dir: JString,
     _layer_count: jlong,
 ) -> jlong {
+    load_pmx_handle(&mut env, filename, true)
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadPreviewModelPMX(
+    mut env: JNIEnv, _class: JClass, filename: JString,
+) -> jlong {
+    load_pmx_handle(&mut env, filename, false)
+}
+
+fn load_pmx_handle(env: &mut JNIEnv, filename: JString, with_physics: bool) -> jlong {
     let filename_str: String = match env.get_string(&filename) {
         Ok(s) => s.into(),
         Err(_) => return 0,
@@ -149,7 +160,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMX(
     match load_pmx(&filename_str) {
         Ok(mut model) => {
             // 自动初始化物理系统
-            if !model.rigid_bodies.is_empty() {
+            if with_physics && !model.rigid_bodies.is_empty() {
                 log::info!(
                     "模型包含 {} 个刚体, {} 个关节, 自动初始化物理",
                     model.rigid_bodies.len(),

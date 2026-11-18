@@ -128,6 +128,8 @@ public final class Gfl2Services {
         State state=STATES.get(p.targets);
         if(state==null||state.actors.isEmpty())return;
         try{
+            Gfl2GlScope.skyInputs(p,state.bundle.skyBase.program());
+            Gfl2GlScope.skyInputs(p,state.bundle.skyFilter.program());
             SCREEN.invoke(host,p,state.bundle.skyBase,"composite",frame,false,flips);
             SCREEN.invoke(host,p,state.bundle.skyFilter,"composite",frame,false,flips);
         }catch(ReflectiveOperationException e){throw failure(e);}

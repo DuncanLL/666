@@ -29,13 +29,14 @@ final class PmxPresentation {
         if(points==null||points[0].length!=count){points=new float[][]{new float[count],new float[count]};normals=new float[count];history=false;}
         if(timing.reset())history=false;
         var a=timing.from();var b=timing.to();float weight=timing.weight();
+        if(!Float.isFinite(weight)||weight<0||weight>1)throw new IllegalArgumentException("Invalid interpolation weight");
         float[] output=points[side^1],oldOutput=points[side],ap=a.positions(),bp=b.positions(),an=a.normals(),bn=b.normals();
         if(a==b||weight==1){System.arraycopy(bp,0,output,0,count);System.arraycopy(bn,0,normals,0,count);}
         else if(weight==0){System.arraycopy(ap,0,output,0,count);System.arraycopy(an,0,normals,0,count);}
         else {
-            for(int i=0;i<count;i++)output[i]=ap[i]+(bp[i]-ap[i])*weight;
+            for(int i=0;i<count;i++)output[i]=lerp(ap[i],bp[i],weight);
             for(int i=0;i<count;i+=3){
-                float x=an[i]+(bn[i]-an[i])*weight,y=an[i+1]+(bn[i+1]-an[i+1])*weight,z=an[i+2]+(bn[i+2]-an[i+2])*weight;
+                float x=lerp(an[i],bn[i],weight),y=lerp(an[i+1],bn[i+1],weight),z=lerp(an[i+2],bn[i+2],weight);
                 float length=(float)Math.sqrt(x*x+y*y+z*z);
                 if(length<1e-8f){normals[i]=bn[i];normals[i+1]=bn[i+1];normals[i+2]=bn[i+2];}
                 else{normals[i]=x/length;normals[i+1]=y/length;normals[i+2]=z/length;}
@@ -51,12 +52,12 @@ final class PmxPresentation {
             boolean dan=source.length>27&&source[26]==42137;
             if(dan)compatible=compatible&&ah[26]==42137&&bh[26]==42137&&ah[24]==source[24]&&bh[24]==source[24];
             if(compatible) {
-                for(int i=0;i<12;i++)if(i!=3&&i!=7&&i!=11)header[i]=ah[i]+(bh[i]-ah[i])*weight;
+                for(int i=0;i<12;i++)if(i!=3&&i!=7&&i!=11)header[i]=lerp(ah[i],bh[i],weight);
                 normalize(header,0);normalize(header,4);
                 if(dan) {
                     int start=(int)source[17]*4,length=(int)source[16]*12;
-                    for(int i=start;i<start+length;i++)header[i]=ah[i]+(bh[i]-ah[i])*weight;
-                } else for(int i=16;i<header.length;i++)header[i]=ah[i]+(bh[i]-ah[i])*weight;
+                    for(int i=start;i<start+length;i++)header[i]=lerp(ah[i],bh[i],weight);
+                } else for(int i=16;i<header.length;i++)header[i]=lerp(ah[i],bh[i],weight);
             }
             if(dan) {
                 int start=(int)source[17]*4,length=(int)source[16]*12,oldStart=(int)source[27]*4,positions=(int)source[18];
@@ -75,6 +76,10 @@ final class PmxPresentation {
         side^=1;
         // This upload view is render-thread scratch; immutable game snapshots remain untouched.
         return PmxDrawMesh.FrameData.interpolated(output,normals,current.materials(),header,a,b);
+    }
+    private static float lerp(float from,float to,float weight){
+        // Double subtraction also handles finite endpoints at opposite float extremes.
+        return (float)(from+((double)to-from)*weight);
     }
     private static void normalize(float[] values,int at){
         float x=values[at],y=values[at+1],z=values[at+2],length=(float)Math.sqrt(x*x+y*y+z*z);

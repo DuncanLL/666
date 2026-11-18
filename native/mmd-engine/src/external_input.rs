@@ -12,6 +12,9 @@ pub struct ExternalInput {
     pub game_fk: bool,
     pub physics_reset: bool,
     parent_order:Vec<usize>,
+    retarget_ids: Vec<usize>,
+    retarget_parents: Vec<usize>,
+    retarget_eligible: bool,
     simulated:Vec<Option<(Mat4,bool)>>,
     motion_sample:Option<(Vec3,Vec3)>,
     rebase_distance_sq:f32,
@@ -172,4 +175,59 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetRuntimeStats(env:J
     let models=MODELS.read().unwrap_or_else(|p|p.into_inner()).len();
     let value=serde_json::json!({"models":models,"worlds":stats.worlds,"shapes":stats.shapes,"bodies":stats.rigid_bodies,"constraints":stats.constraints,"motion_states":stats.motion_states});
     env.new_string(value.to_string()).map(|s|s.into_raw()).unwrap_or(std::ptr::null_mut())
+}
+
+/// Between mapped layers Java needs only the parent palette. Keep the native PMX
+/// local transforms and the same glam multiplication as the full evaluation.
+#[no_mangle]
+pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_TryUpdateRetargetParents(
+    env: JNIEnv, _: JClass, handle: jlong, palette: jni::objects::JByteBuffer,
+) -> jboolean {
+    let models = MODELS.read().unwrap_or_else(|p| p.into_inner());
+    let Some(shared) = models.get(&handle) else { return 0 };
+    let mut model = shared.lock().unwrap_or_else(|p| p.into_inner());
+    let bones = model.bone_manager.bone_count();
+    if env.get_direct_buffer_capacity(&palette).unwrap_or(0) < bones * 64 { return 0 }
+    let Ok(dst) = env.get_direct_buffer_address(&palette) else { return 0 };
+    if !model.can_update_retarget_parents() { return 0 }
+    let model = &mut *model;
+    let input = &mut model.external_input;
+    let skeleton = &mut model.bone_manager;
+    if !input.pose.iter().map(|p|p.0).eq(input.retarget_ids.iter().copied()) {
+        input.retarget_eligible = false;
+        input.retarget_ids = input.pose.iter().map(|p|p.0).collect();
+        input.retarget_parents.clear();
+        for &target in &input.retarget_ids {
+            let mut parent = skeleton.get_bone(target).unwrap().parent_id();
+            let mut path = Vec::new();
+            while let Some(id) = parent {
+                if input.retarget_parents.contains(&id) { break }
+                if path.contains(&id) { return 0 }
+                path.push(id);
+                let Some(ancestor)=skeleton.get_bone(id) else { return 0 };
+                parent=ancestor.parent_id();
+            }
+            input.retarget_parents.extend(path.into_iter().rev());
+        }
+        input.retarget_eligible = input.retarget_parents.iter().all(|&i| {
+            let b = skeleton.get_bone(i).unwrap();
+            input.retarget_ids.contains(&i) || b.append_config.as_ref().is_none_or(|a|
+                a.parent >= 0 && skeleton.get_bone(a.parent as usize).is_some_and(|p|p.append_config.is_none()))
+        });
+    }
+    if !input.retarget_eligible || input.retarget_parents.iter().any(|&id|skeleton.is_physics_bone(id))
+        || skeleton.has_active_parent_ik(&input.retarget_parents) { return 0 }
+    for &(id,t,q,scale) in &input.pose {
+        let bone = skeleton.get_bone_mut(id).unwrap();
+        bone.animation_translate=t;
+        bone.animation_rotate=q;
+        bone.external_local=Some(Mat4::from_scale_rotation_translation(scale,q,bone.body_shift+t));
+    }
+    for &id in &input.retarget_parents {
+        skeleton.update_retarget_parent(id);
+        let matrix = skeleton.get_bone(id).unwrap().get_skinning_matrix();
+        // The bounds check above covers every bone index owned by this skeleton.
+        unsafe { std::ptr::copy_nonoverlapping(matrix.to_cols_array().as_ptr().cast::<u8>(),dst.add(id*64),64); }
+    }
+    1
 }

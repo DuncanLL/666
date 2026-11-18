@@ -31,9 +31,9 @@ def main():
         command = [str(tools / 'cargo/bin/cargo.exe'), 'build', '--release', '--locked', '--lib', '-j', '4']
         env.update(CARGO_HOME=str(tools / 'cargo'), RUSTUP_HOME=str(tools / 'rustup'),
                    RUSTUP_TOOLCHAIN='1.90.0-x86_64-pc-windows-gnu', CARGO_TARGET_DIR=str(output / 'target'),
-                   CXX=str(gcc / 'g++.exe'), CC=str(gcc / 'gcc.exe'), AR=str(gcc / 'ar.exe'),
+                   SOURCE_DATE_EPOCH='0', CXX=str(gcc / 'g++.exe'), CC=str(gcc / 'gcc.exe'), AR=str(gcc / 'ar.exe'),
                    CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=str(gcc / 'gcc.exe'),
-                   CARGO_ENCODED_RUSTFLAGS='\x1f'.join(('--cap-lints=warn', f'--remap-path-prefix={ROOT}=gfl2-source')))
+                   CARGO_ENCODED_RUSTFLAGS='\x1f'.join(('--cap-lints=warn', '-Clink-arg=-Wl,--no-insert-timestamp', f'--remap-path-prefix={ROOT}=gfl2-source')))
         env['PATH'] = str(gcc) + ';' + str(tools / 'cargo/bin') + ';' + env['PATH']
         strip = gcc / 'strip.exe'
         dll = output / 'GFL2MmdEngine.dll'

@@ -46,10 +46,16 @@ public final class LifecycleCheck {
         JSONObject changed=new JSONObject(previous);changed.getJSONArray("material_visibility").put(0,false);
         JSONObject input=new JSONObject().put("appearance",changed).put("appearance_controls",s.profile.getJSONObject("appearance_controls"))
             .put("chest_physics",new JSONObject().put("strength",101));
+        // Legacy slider values are ignored by the current public settings contract.
+        s.applySettings(input,false);
+        check(oldChest.similar(s.model.chestSettings())&&physics==s.model.physicsEnabled(),"Legacy slider changed physics");
+        s.applySettings(new JSONObject(input.toString()).put("appearance",new JSONObject(previous)),false);
+        revision=s.model.appearance().revision();
+        input.put("weapon_tuning",new JSONObject().put("test",new JSONArray().put(0)));
         boolean failed=false;try{s.applySettings(input,false);}catch(IllegalArgumentException e){failed=true;}
-        check(failed,"Invalid late chest setting accepted");
-        check(new JSONObject(previous).similar(new JSONObject(s.model.appearance().stateJson()))&&s.model.appearance().revision()==revision,"Invalid late field changed appearance");
-        check(oldChest.similar(s.model.chestSettings())&&physics==s.model.physicsEnabled(),"Invalid field changed physics");
+        check(failed && new JSONObject(previous).similar(new JSONObject(s.model.appearance().stateJson()))
+            && s.model.appearance().revision()==revision,"Invalid tuning changed appearance");
+        input.remove("weapon_tuning");
         input.put("chest_physics",oldChest).put("material_presets",4);
         failed=false;try{s.applySettings(input,false);}catch(JSONException e){failed=true;}
         check(failed&&new JSONObject(previous).similar(new JSONObject(s.model.appearance().stateJson())),"Invalid session metadata committed model settings");

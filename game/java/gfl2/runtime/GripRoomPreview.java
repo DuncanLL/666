@@ -63,7 +63,7 @@ final class GripRoomPreview {
         try {
             if(preview==null||preview.equipped!=equipped){
                 release(actor);
-                preview=new GripRoomPreview(equipped,Main.createRoomPreview(equipped.entry.id()));
+                preview=new GripRoomPreview(equipped,Main.createGripPreview(equipped.entry.id()));
                 active.put(actor,preview);
             }
             preview.update(actor,live,aiming);

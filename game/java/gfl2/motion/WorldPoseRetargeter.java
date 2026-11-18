@@ -29,6 +29,8 @@ public final class WorldPoseRetargeter {
     private final Vector3f[] sourcePalmLocal = new Vector3f[2], targetPalmLocal = new Vector3f[2];
     private final int[] palmSourceHands = new int[2], palmTargetHands = new int[2], palmTargetKnuckles = new int[8];
     private int evaluations;
+    private final Matrix4f poseMatrix=new Matrix4f(), deltaMatrix=new Matrix4f(), parentMatrix=new Matrix4f();
+    private final Quaternionf localRotation=new Quaternionf(), parentRotation=new Quaternionf();
     private final ModelPhysics physics;
     private ForwardFingerPose fingerPreview;
     private float fingerPreviewWeight;
@@ -72,7 +74,7 @@ public final class WorldPoseRetargeter {
         api.UpdateAnimationOnly(handle, 0);
         readPalette();
         targetReference = new Matrix4f[targetBones.length];
-        for (int i = 0; i < targetBones.length; i++) targetReference[i] = joint(targetBones[i]);
+        for (int i = 0; i < targetBones.length; i++) targetReference[i] = joint(targetBones[i],new Matrix4f());
         levels = new int[targetBones.length];
         for (int i = 0; i < targetBones.length; i++) {
             int parent = parents[targetBones[i]], steps = 0;
@@ -99,9 +101,10 @@ public final class WorldPoseRetargeter {
     }
 
     private Matrix4f joint(int bone) {
-        float[] values = new float[16];
-        for (int i = 0; i < 16; i++) values[i] = palette.getFloat(bone * 64 + i * 4);
-        return new Matrix4f().set(values).translate(positions[bone * 3], positions[bone * 3 + 1], positions[bone * 3 + 2]);
+        return joint(bone,parentMatrix);
+    }
+    private Matrix4f joint(int bone,Matrix4f result) {
+        palette.position(bone*64);return result.set(palette).translate(positions[bone * 3], positions[bone * 3 + 1], positions[bone * 3 + 2]);
     }
 
     private void applyBody(float[] sourceWorld, boolean needsFinalPalette) {
@@ -111,37 +114,38 @@ public final class WorldPoseRetargeter {
         api.SetBoneAdditiveTransformBatch(handle, targetBones, qps);
         api.EvaluateSkeleton(handle);
         evaluations = 1;
+        readPalette();
         int cursor = 0;
         while (cursor < order.length) {
-            readPalette();
             int level = levels[order[cursor]];
             while (cursor < order.length && levels[order[cursor]] == level) {
                 int index = order[cursor++], target = targetBones[index], source = sourceBones[index];
-                Matrix4f delta = new Matrix4f(basis).mul(sourceMatrix(sourceWorld, source).setTranslation(0, 0, 0))
+                Matrix4f delta = deltaMatrix.set(basis).mul(poseMatrix.set(sourceWorld,source*16).setTranslation(0, 0, 0))
                     .mul(sourceRestInverse[source]).mul(basis);
-                Quaternionf rotation = delta.getUnnormalizedRotation(new Quaternionf()).normalize();
-                Matrix4f desired = new Matrix4f().rotation(rotation).mul(targetReference[index]);
-                Quaternionf parent = parents[target] < 0 ? new Quaternionf() :
-                    joint(parents[target]).getUnnormalizedRotation(new Quaternionf()).normalize();
-                Quaternionf local = parent.invert().mul(desired.getUnnormalizedRotation(new Quaternionf()).normalize()).normalize();
+                Quaternionf rotation = delta.getUnnormalizedRotation(localRotation).normalize();
+                Matrix4f desired = poseMatrix.rotation(rotation).mul(targetReference[index]);
+                Quaternionf parent = parents[target] < 0 ? parentRotation.identity() :
+                    joint(parents[target],parentMatrix).getUnnormalizedRotation(parentRotation).normalize();
+                Quaternionf local = parent.invert().mul(desired.getUnnormalizedRotation(localRotation).normalize()).normalize();
                 int offset = index * 10;
                 qps[offset + 3] = local.x;
                 qps[offset + 4] = local.y;
                 qps[offset + 5] = -local.z;
                 qps[offset + 6] = -local.w;
                 if (target == targetRoot) {
-                    Vector3f translation = sourceMatrix(sourceWorld, sourceMotion).getTranslation(new Vector3f())
-                        .sub(sourceMotionReference).mul(unitScale);
-                    qps[offset] = translation.x;
-                    qps[offset + 1] = translation.y;
-                    qps[offset + 2] = translation.z;
+                    int at=sourceMotion*16+12;
+                    qps[offset]=(sourceWorld[at]-sourceMotionReference.x)*unitScale;
+                    qps[offset+1]=(sourceWorld[at+1]-sourceMotionReference.y)*unitScale;
+                    qps[offset+2]=(sourceWorld[at+2]-sourceMotionReference.z)*unitScale;
                 }
             }
             api.SetBoneAdditiveTransformBatch(handle, targetBones, qps);
             // Without a grip solve, the final pose update evaluates the last layer.
+            if (cursor < order.length && api.TryUpdateRetargetParents(handle,palette)) continue;
             if (cursor < order.length || needsFinalPalette) {
                 api.EvaluateSkeleton(handle);
                 evaluations++;
+                if(cursor < order.length) readPalette();
             }
         }
     }
@@ -221,7 +225,7 @@ public final class WorldPoseRetargeter {
         float[] result=new float[6];
         for (int side=0;side<2;side++) {
             int at=side*3;
-            Matrix4f start=joint(targetArms[at]),mid=joint(targetArms[at+1]),end=joint(targetArms[at+2]);
+            Matrix4f start=joint(targetArms[at],poseMatrix),mid=joint(targetArms[at+1],deltaMatrix),end=joint(targetArms[at+2],parentMatrix);
             Vector3f bend=start.getTranslation(new Vector3f()).sub(mid.getTranslation(new Vector3f()))
                 .cross(end.getTranslation(new Vector3f()).sub(mid.getTranslation(new Vector3f())));
             if (bend.lengthSquared()<1e-10f) throw new IllegalArgumentException("Bend reference is straight");

@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 public final class NativeFunc {
     public static int gfl2FacadeVersion() { return 1; }
     public native String GetVersion();
+    public native long LoadPreviewModelPMX(String file);
     public native long LoadModelPMX(String file, String directory, long layers);
     public native void DeleteModel(long model);
     public native void UpdateModel(long model, float seconds);
@@ -12,6 +13,7 @@ public final class NativeFunc {
     public native byte[] GetGpuDeformationSource(long model);
     public native int CopyGpuDeformationWeights(long model, ByteBuffer buffer);
     public native void UpdateAnimationOnly(long model, float seconds);
+    public native boolean TryUpdateRetargetParents(long model, ByteBuffer palette);
     public native void EvaluateSkeleton(long model);
     public native long GetVertexCount(long model);
     public native int GetBoneCount(long model);

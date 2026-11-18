@@ -136,6 +136,18 @@ public final class ModelAppearance {
         return new JSONObject().put("format",2).put("material_visibility",new JSONArray(visible)).put("alpha_overrides",a).put("morph_weights",new JSONArray(weights))
             .put("colour_overrides",c).put("double_sided",b).put("texture_overrides",t).put("choices",new JSONObject(selected.toString())).put("groups",new JSONArray(groups.toString())).toString();
     }
+    public synchronized int groupCount(){return wardrobe.groupCount();}
+    public synchronized String groupLabel(int group){return wardrobe.groupLabel(group);}
+    public synchronized int optionCount(int group){return wardrobe.optionCount(group);}
+    public synchronized String optionLabel(int group,int option){return wardrobe.optionLabel(group,option);}
+    public synchronized String groupId(int group){return wardrobe.groupId(group);}
+    public synchronized String optionId(int group,int option){return wardrobe.optionId(group,option);}
+    public synchronized int selectedOption(int group){
+        String choice=selected.getString(wardrobe.groupId(group));
+        for(int i=0;i<wardrobe.optionCount(group);i++)if(choice.equals(wardrobe.optionId(group,i)))return i;
+        return -1;
+    }
+    public synchronized boolean materialVisible(int id){return visible[id];}
     public synchronized String controlsJson(){return wardrobe.json();}
     public synchronized long revision(){return revision;}
     public synchronized boolean bothFaces(int material){return bothFaces[material]==null?originalBothFaces[material]:bothFaces[material];}

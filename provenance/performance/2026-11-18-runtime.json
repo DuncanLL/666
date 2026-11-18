@@ -1,0 +1,139 @@
+{
+  "baseline": "c515051868a3425920067ae11f6e99e037955c9c",
+  "role": "Loreley",
+  "vertices": 98078,
+  "bones": 497,
+  "hardware": "AMD Radeon RX 9070 XT",
+  "game": "42.22.2",
+  "viewpoint": "0.1.7",
+  "before": {
+    "room_cold_ms": 106.1285,
+    "room_hot_ms": 38.8906,
+    "bullet_worlds": 1,
+    "chest_worlds": 1,
+    "sample_ms": 0.4739,
+    "body_ms": 0.3375,
+    "body_bytes_per_call": 17304,
+    "evaluations": 10,
+    "initial_buffers": 1204,
+    "catalog_materials_ms": 1350.1858,
+    "frame_input_floats": 895236,
+    "core_sha256": "de9375154c014fb71b890ec358a8c2cf35de410af7d9f5a3833a5ce49c021d80",
+    "material_identity": "fbcf2a73ebb4db8d2523895041d2ed048d0e23e53c858e231c8af08ce47c5856",
+    "Native-GFL2_query_samples": [
+      3669,
+      3667,
+      3669,
+      3667,
+      3669,
+      3667
+    ],
+    "Native-GFL2_queries_per_frame": 3668.0,
+    "Eclipse_query_samples": [
+      1932,
+      1932,
+      1932,
+      1932,
+      1932,
+      1932
+    ],
+    "Eclipse_queries_per_frame": 1932.0,
+    "native_shadow_views": 2,
+    "interpolated_float_is_finite_calls": 895236,
+    "native_query_median_rule": "Six warmed frames. Median of the two middle observations."
+  },
+  "after": {
+    "room_cold_ms": 53.7535,
+    "room_hot_ms": 17.9303,
+    "bullet_worlds": 0,
+    "chest_worlds": 0,
+    "sample_ms": 0.3192,
+    "body_ms": 0.0754,
+    "body_bytes_per_call": 0,
+    "evaluations": 2,
+    "initial_buffers": 0,
+    "catalog_materials_ms": 1077.5897,
+    "frame_input_floats": 895236,
+    "core_sha256": "87f45f5e3bd811ca14ea8f4cf3229b1a94d5af4fcc891729ae37c13ff7b8d64e",
+    "material_identity": "fbcf2a73ebb4db8d2523895041d2ed048d0e23e53c858e231c8af08ce47c5856",
+    "Native-GFL2_query_samples": [
+      714,
+      712,
+      714,
+      712,
+      714,
+      712
+    ],
+    "Native-GFL2_queries_per_frame": 713.0,
+    "Eclipse_query_samples": [
+      701,
+      701,
+      701,
+      701,
+      701,
+      701
+    ],
+    "Eclipse_queries_per_frame": 701.0,
+    "native_shadow_views": 2,
+    "interpolated_float_is_finite_calls": 0,
+    "native_query_median_rule": "Six warmed frames. Median of the two middle observations."
+  },
+  "pixel_rmse_0_to_1": {
+    "day_Native-GFL2": 0.0,
+    "day_Eclipse": 0.0,
+    "night_Native-GFL2": 0.0,
+    "night_Eclipse": 0.0
+  },
+  "matrix_max_abs": 0.0,
+  "registered_models": 71,
+  "poses_per_model": 3,
+  "hand_matrix_max_abs": 0.0,
+  "catalog_models": 72,
+  "catalog_packs": 25,
+  "catalog_materials": 1204,
+  "release": {
+    "native": {
+      "status": "LIMITED_HARDWARE_VALIDATION",
+      "reference_programs": 69,
+      "models": 72,
+      "material_upload_readback_equal": true,
+      "unique_linked_pairs": 63,
+      "material_count": 1204
+    },
+    "somber": {
+      "status": "LIMITED_HARDWARE_VALIDATION",
+      "reference_programs": 69,
+      "models": 72,
+      "material_upload_readback_equal": true,
+      "unique_linked_pairs": 63,
+      "material_count": 1204
+    },
+    "eclipse": {
+      "status": "LIMITED_HARDWARE_VALIDATION",
+      "reference_programs": 109,
+      "models": 72,
+      "material_upload_readback_equal": true,
+      "unique_linked_pairs": 63,
+      "material_count": 1204
+    }
+  },
+  "scope": "Private candidate. Counts cover Java OpenGL query call sites in VP, PZ and GFL2 on the measured render thread. No gameplay FPS or multiplayer claim.",
+  "limits": "Full skeleton fallback for active dependent IK, pose morphs, transitions and unsupported helper chains. Timings are component medians from three isolated JVMs on one machine.",
+  "verification": {
+    "indexed_gl_state_and_ranges": "pass",
+    "test_build": "pass",
+    "LifecycleCheck": "pass",
+    "DeformedMotionCheck": "pass",
+    "GripPhaseCheck_cases": 33,
+    "GripPauseCheck_cases": 6,
+    "PhysicsStreamingCheck": "pass",
+    "check_source_pose": "pass",
+    "OriginalStageLinkCheck_Loreley_pairs": 30,
+    "protected_startup": "pass",
+    "workshop_upload": false,
+    "installed": false,
+    "sealed_render_sha256": "3457a9a9cc28d665394945132771b59a18886bd4ea406f963834aaf94703c0dd",
+    "native_engine_sha256": "4a0dfb9440ca7c96592869fdb327661b80b782895b8e4c583107edecad250a59",
+    "ui_read_queries_match_persisted_state": true
+  }
+}

@@ -44,7 +44,7 @@ public final class PmxShading {
     private final int[][] fringeRanges;
     private final Path[] fringeTextures;
 
-    private PmxShading(JSONObject j,JSONObject profile,Path root)throws Exception {
+    private PmxShading(JSONObject j,JSONObject profile,Path root,float[] validatedUv)throws Exception {
         if(j.getInt("format")!=1||!j.getString("protocol").equals("PMX-MAT1")||!j.getString("pmx_sha256").equals(profile.getString("pmx_sha256")))
             throw new IllegalArgumentException("Shading data belongs to a different PMX");
         String modelHash=profile.getString("pmx_sha256");
@@ -97,11 +97,15 @@ public final class PmxShading {
         if(clearance!=null){if(clearance.length()!=ids.length)throw new IllegalArgumentException("Shading UV coverage count");for(int i=0;i<ids.length;i++){markerClearance[i]=clearance.getFloat(i);if(!Float.isFinite(markerClearance[i])||markerClearance[i]<0)throw new IllegalArgumentException("Invalid shading UV coverage");}}
         for(int i=0;i<ids.length;i++)if(ids[i]<0||ids[i]>255||kinds[i]<0||kinds[i]>7)throw new IllegalArgumentException("Shading material code");
         Path file=root.resolve(j.getString("uv1")).normalize();if(!file.startsWith(root))throw new IllegalArgumentException("Shading UV path escapes model");
-        byte[] bytes=Files.readAllBytes(file);
-        if(bytes.length!=Math.multiplyExact(profile.getInt("vertices"),8)||!HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes)).equals(j.getString("uv1_sha256")))
-            throw new IllegalArgumentException("Shading UV data differs");
-        uv1=new float[bytes.length/4];ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer().get(uv1);
-        for(float v:uv1)if(!Float.isFinite(v)||Math.abs(v)>=8)throw new IllegalArgumentException("Shading UV out of PMX-MAT1 range");
+        if (validatedUv != null) {
+            uv1 = validatedUv;
+        } else {
+            byte[] bytes=Files.readAllBytes(file);
+            if(bytes.length!=Math.multiplyExact(profile.getInt("vertices"),8)||!HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes)).equals(j.getString("uv1_sha256")))
+                throw new IllegalArgumentException("Shading UV data differs");
+            uv1=new float[bytes.length/4];ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer().get(uv1);
+            for(float v:uv1)if(!Float.isFinite(v)||Math.abs(v)>=8)throw new IllegalArgumentException("Shading UV out of PMX-MAT1 range");
+        }
         palette=ByteBuffer.allocateDirect(Math.multiplyExact(bones,64)).order(ByteOrder.nativeOrder());
         JSONArray features=j.optJSONArray("fringe_materials"),baseline=j.optJSONArray("fringe_baseline_materials");
         fringeMaterials=features==null?new int[0]:ints(features);fringeBaseline=new float[fringeMaterials.length][12];
@@ -133,11 +137,11 @@ public final class PmxShading {
     }
     public static PmxShading load(Path model,JSONObject profile)throws Exception {
         Path root=model.toAbsolutePath().getParent(),file=root.resolve("shading.json");
-        PmxShading normal=Files.exists(file)?new PmxShading(new JSONObject(Files.readString(file)),profile,root):null;
+        PmxShading normal=Files.exists(file)?new PmxShading(new JSONObject(Files.readString(file)),profile,root,null):null;
         Path optional=root.resolve("shading-danrp.json");
         if(Files.exists(optional)){
             JSONObject data=new JSONObject(Files.readString(optional));
-            PmxShading extra=new PmxShading(data,profile,root);
+            PmxShading extra=new PmxShading(data,profile,root,null);
             if(!extra.danrp)throw new IllegalArgumentException("Optional shading profile is not DanRP");
             if(normal==null){
                 JSONObject nativeData=new JSONObject(data.toString());
@@ -145,7 +149,7 @@ public final class PmxShading {
                 nativeData.remove("danrp_fringe_mesh");
                 JSONArray kinds=new JSONArray();for(int i=0;i<data.getJSONArray("material_ids").length();i++)kinds.put(0);
                 nativeData.put("material_kinds",kinds);
-                normal=new PmxShading(nativeData,profile,root);
+                normal=new PmxShading(nativeData,profile,root,extra.uv1);
             }
             normal.danrpVariant=extra;
         }

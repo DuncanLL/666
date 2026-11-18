@@ -64,8 +64,11 @@ final class ModelSession {
     private boolean hiddenHead;
 
     ModelSession(NativeFunc api,OzzGrip grip,Main.Entry entry) throws Exception {
+        this(api,grip,entry,false);
+    }
+    ModelSession(NativeFunc api,OzzGrip grip,Main.Entry entry,boolean previewOnly) throws Exception {
         this.api=api;this.grip=grip;this.entry=entry;
-        profile=new JSONObject(Files.readString(entry.profile()));shading=PmxShading.load(entry.model(),profile);scale=(float)profile.getDouble("unit_scale");
+        profile=new JSONObject(Files.readString(entry.profile()));shading=previewOnly ? null : PmxShading.load(entry.model(),profile);scale=(float)profile.getDouble("unit_scale");
         var names=profile.getJSONArray("source_bone_names");sourceNames=new String[names.length()];
         for(int i=0;i<sourceNames.length;i++)sourceNames[i]=names.getString(i);
         var ref=profile.getJSONArray("source_reference");reference=new float[ref.length()];for(int i=0;i<reference.length;i++)reference[i]=(float)ref.getDouble(i);
@@ -83,7 +86,7 @@ final class ModelSession {
             else if(pelvis<0&&"Bip01_Pelvis".equals(name)){pelvis=sourceIds[i];pelvisTarget=targetIds[i];}
         }
         sourceHead=head;targetHead=headTarget;sourcePelvis=pelvis;targetPelvis=pelvisTarget;
-        model=PmxModel.load(api,entry.model(),entry.profile());
+        model=PmxModel.load(api,entry.model(),entry.profile(),previewOnly);
         try {
         IdleHandPose candidate;
         try { candidate=new IdleHandPose(api,model,profile); }

@@ -161,9 +161,13 @@ public class Main {
         }
         ModelSession next=preparing.get(actor);return next==null?active.get(actor):next;
     }
-    static synchronized ModelSession createRoomPreview(String id) throws Exception {
+    static synchronized ModelSession createGripPreview(String id) throws Exception {
         nativeRuntime();
         return new ModelSession(api,grip,entry(id));
+    }
+    static synchronized ModelSession createRoomPreview(String id) throws Exception {
+        nativeRuntime();
+        return new ModelSession(api,grip,entry(id),true);
     }
 
     private static void cancelPreparation(IsoGameCharacter actor) {
@@ -345,20 +349,15 @@ public class Main {
         }catch(Throwable e){error(e);return lastError;}
     }
     private static ModelSession required(IsoGameCharacter actor){ModelSession s=active.get(actor);if(s==null)throw new IllegalStateException("请先启用人物");return s;}
-    private static org.json.JSONArray controlGroups(ModelSession s){return new JSONObject(s.model.appearance().controlsJson()).getJSONArray("groups");}
-    public static synchronized int groupCount(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?0:controlGroups(s).length();}
-    public static synchronized String groupLabel(IsoGameCharacter actor,int group){JSONObject g=controlGroups(required(actor)).getJSONObject(group);return g.optString("label",g.getString("id"));}
-    public static synchronized int selectedOption(IsoGameCharacter actor,int group) {
-        ModelSession s=required(actor);JSONObject g=controlGroups(s).getJSONObject(group);
-        String selected=new JSONObject(s.model.appearance().stateJson()).getJSONObject("choices").getString(g.getString("id"));
-        var options=g.getJSONArray("options");for(int i=0;i<options.length();i++)if(selected.equals(options.getJSONObject(i).getString("id")))return i;return -1;
-    }
-    public static synchronized int optionCount(IsoGameCharacter actor,int group){return controlGroups(required(actor)).getJSONObject(group).getJSONArray("options").length();}
-    public static synchronized String optionLabel(IsoGameCharacter actor,int group,int option){JSONObject o=controlGroups(required(actor)).getJSONObject(group).getJSONArray("options").getJSONObject(option);return o.optString("label",o.getString("id"));}
+    public static synchronized int groupCount(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?0:s.model.appearance().groupCount();}
+    public static synchronized String groupLabel(IsoGameCharacter actor,int group){return required(actor).model.appearance().groupLabel(group);}
+    public static synchronized int selectedOption(IsoGameCharacter actor,int group){return required(actor).model.appearance().selectedOption(group);}
+    public static synchronized int optionCount(IsoGameCharacter actor,int group){return required(actor).model.appearance().optionCount(group);}
+    public static synchronized String optionLabel(IsoGameCharacter actor,int group,int option){return required(actor).model.appearance().optionLabel(group,option);}
     public static synchronized String setChoice(IsoGameCharacter actor,int group,int option) {
         try {
-            ModelSession s=required(actor);JSONObject g=controlGroups(s).getJSONObject(group),o=g.getJSONArray("options").getJSONObject(option);
-            s.choose(g.getString("id"),o.getString("id"));return "";
+            ModelSession s=required(actor);var a=s.model.appearance();
+            s.choose(a.groupId(group),a.optionId(group,option));return "";
         }catch(Throwable e){error(e);return lastError;}
     }
     public static synchronized int presetCount(IsoGameCharacter actor){ModelSession s=active.get(actor);return s==null?0:s.profile.optJSONArray("material_presets")==null?0:s.profile.getJSONArray("material_presets").length();}
@@ -381,7 +380,7 @@ public class Main {
         JSONObject m=required(actor).profile.getJSONObject("appearance_catalog").getJSONArray("materials").getJSONObject(index);return m.optString("label",m.getString("name"));
     }
     public static synchronized boolean materialVisible(IsoGameCharacter actor,int index) {
-        return new JSONObject(required(actor).model.appearance().stateJson()).getJSONArray("material_visibility").getBoolean(index);
+        return required(actor).model.appearance().materialVisible(index);
     }
     public static synchronized boolean materialAvailable(IsoGameCharacter actor,int index) {
         return required(actor).model.appearance().materialAvailable(index);

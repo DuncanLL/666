@@ -80,35 +80,59 @@ public final class PmxModel implements AutoCloseable {
         }
     }
 
-    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile, Path modelPath) throws IOException {
+    private PmxModel(NativeFunc api, long handle, WorldPoseRetargeter core, Profile profile, Path modelPath, boolean previewOnly) throws IOException {
         this.api = api; this.handle = handle; this.core = core; this.profile = profile;
         appearance=new ModelAppearance(api,handle);
         if (profile.appearance!=null) appearance.configure(profile.appearance.toString(),profile.appearance_controls==null?Wardrobe.empty():profile.appearance_controls.toString());
         JSONObject chestProfile=new JSONObject().put("pmx_sha256",profile.pmx_sha256).put("unit_scale",profile.unit_scale)
             .put("bones",profile.bones).put("vertices",profile.vertices);
-        chest=ChestSoftBody.load(api,handle,chestProfile,modelPath.resolveSibling("chest.bin"));
+        chest=previewOnly ? null : ChestSoftBody.load(api,handle,chestProfile,modelPath.resolveSibling("chest.bin"));
     }
 
+    private record Fingerprint(java.nio.file.attribute.BasicFileAttributes attributes, String sha) {
+        boolean matches(java.nio.file.attribute.BasicFileAttributes now) {
+            return attributes.size() == now.size() && attributes.lastModifiedTime().equals(now.lastModifiedTime())
+                && java.util.Objects.equals(attributes.fileKey(),now.fileKey());
+        }
+    }
+    private static final Map<Path,Fingerprint> fingerprints = new HashMap<>();
+    private static String fingerprint(Path path) throws IOException {
+        var before = Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class);
+        synchronized (fingerprints) {
+            var hit = fingerprints.get(path);
+            if (hit != null && hit.matches(before)) return hit.sha();
+        }
+        String sha;
+        try (var input = Files.newInputStream(path)) {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] block = new byte[65536];
+            for (int n; (n=input.read(block)) >= 0;) digest.update(block,0,n);
+            sha=HexFormat.of().formatHex(digest.digest());
+        } catch (NoSuchAlgorithmException e) { throw new IllegalStateException(e); }
+        Fingerprint found=new Fingerprint(before,sha);
+        if (!found.matches(Files.readAttributes(path,java.nio.file.attribute.BasicFileAttributes.class)))
+            throw new IOException("PMX changed while reading: "+path);
+        synchronized(fingerprints){fingerprints.put(path,found);}
+        return sha;
+    }
     public static PmxModel load(NativeFunc api, Path pmx, Path generatedProfile) throws IOException {
+        return load(api,pmx,generatedProfile,false);
+    }
+    public static PmxModel load(NativeFunc api, Path pmx, Path generatedProfile, boolean previewOnly) throws IOException {
         Profile p = new Profile(new JSONObject(Files.readString(generatedProfile)));
         if (p.format != 1 || p.bones <= 0 || p.vertices <= 0 ||
             !Float.isFinite(p.unit_scale) || p.unit_scale <= 0)
             throw new IOException("Invalid generated PMX profile");
-        try (var input = Files.newInputStream(pmx)) {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] block = new byte[65536];
-            for (int n; (n = input.read(block)) >= 0;) digest.update(block, 0, n);
-            if (!HexFormat.of().formatHex(digest.digest()).equals(p.pmx_sha256))
-                throw new IOException("Profile belongs to a different PMX");
-        } catch (NoSuchAlgorithmException e) { throw new IllegalStateException(e); }
-        Path modelPath = pmx.toAbsolutePath();
-        long handle = api.LoadModelPMX(modelPath.toString(), modelPath.getParent().toString(), 3);
+        Path modelPath=pmx.toAbsolutePath().normalize();
+        if(!fingerprint(modelPath).equals(p.pmx_sha256)) throw new IOException("Profile belongs to a different PMX");
+        long handle=previewOnly ? api.LoadPreviewModelPMX(modelPath.toString()) :
+            api.LoadModelPMX(modelPath.toString(), modelPath.getParent().toString(), 3);
         if (handle == 0) throw new IOException("Native PMX load failed");
         try {
             if (api.GetBoneCount(handle) != p.bones || api.GetVertexCount(handle) != p.vertices)
                 throw new IOException("Native PMX structure differs from profile");
             api.SetPhysicsEnabled(handle, false); api.SetAutoBlinkEnabled(handle, false);
-            if (!api.HasPhysics(handle)) api.InitPhysics(handle);
+            if (!previewOnly && !api.HasPhysics(handle)) api.InitPhysics(handle);
             api.SetPZLegIKSuppressed(handle, true); api.InitGpuSkinningData(handle);
             WorldPoseRetargeter core = new WorldPoseRetargeter(api, handle, p.source_ids, p.target_ids,
                 p.parents, p.initial_positions, p.source_reference, p.neutral_qps, p.unit_scale,
@@ -116,8 +140,8 @@ public final class PmxModel implements AutoCloseable {
             if (p.palm_ready) core.calibratePalms(p.palm_source_hands, p.palm_source_knuckles,
                 p.palm_target_hands, p.palm_target_knuckles);
             core.apply(p.source_bend); core.calibrateGripAxes(p.target_arms);
-            core.setPhysicsEnabled(p.physics_enabled);
-            return new PmxModel(api, handle, core, p, modelPath);
+            core.setPhysicsEnabled(!previewOnly && p.physics_enabled);
+            return new PmxModel(api, handle, core, p, modelPath, previewOnly);
         } catch (IOException | RuntimeException | Error e) {
             api.DeleteModel(handle);
             throw e;

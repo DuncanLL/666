@@ -869,6 +869,11 @@ impl MmdModel {
         self.physics_enabled=active;
     }
 
+    pub(crate) fn can_update_retarget_parents(&self) -> bool {
+        !self.is_vrm && !self.vr_enabled && !self.is_transitioning && self.external_input.game_fk
+            && !self.morph_manager.has_active_pose_morph()
+    }
+
     pub fn evaluate_external_skeleton(&mut self) {
         let active=self.physics_enabled;
         self.physics_enabled=false;

@@ -394,6 +394,23 @@ impl BoneSet {
     }
 
     /// 应用附加变换
+    pub(crate) fn has_active_parent_ik(&self, parents: &[usize]) -> bool {
+        self.ik_solvers.iter().any(|s| s.enabled && s.config.links.iter().any(|l|
+            l.bone_index >= 0 && parents.contains(&(l.bone_index as usize))))
+    }
+
+    pub(crate) fn update_retarget_parent(&mut self, index: usize) {
+        let link=&self.links[index];
+        if link.external_local.is_some() { self.links[index].compute_local_transform(); }
+        else if link.is_append_rotate() || link.is_append_translate() { self.apply_append_transform(index); }
+        let link=&self.links[index];
+        let global=match link.parent_id() {
+            Some(parent)=>self.links[parent].local_to_world * link.local_to_parent,
+            None=>link.local_to_parent,
+        };
+        self.links[index].local_to_world=global;
+    }
+
     fn apply_append_transform(&mut self, index: usize) {
         if self.links[index].external_local.is_some(){return;}
         let append_config = match &self.links[index].append_config {

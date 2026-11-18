@@ -53,21 +53,31 @@ public final class Gfl2PackMaterials implements AutoCloseable {
             selected.put(row.getString("stage"),sha);programMetadata.put(sha,program);
         }
         try {
+            Map<String,JSONObject> byName=new HashMap<>();
+            Map<String,Map<String,JSONObject>> fields=new HashMap<>();
             for(int i=0;i<source.length();i++){
                 JSONObject material=source.getJSONObject(i);if(material.getInt("id")!=i)throw new IllegalArgumentException("Source material identity differs");materials[i]=material;
                 // Authored character-receiving path; never infer a role from a character name or skin colour.
                 for(Object f:material.getJSONArray("bindings")){JSONObject field=(JSONObject)f;if(field.getString("name").equals("_UseGIFlatten")){float weight=field.getJSONArray("value").getFloat(0);if(!Float.isFinite(weight)||weight<0||weight>1)throw new IllegalArgumentException("Invalid authored surface weight");surfaceWeights[i]=weight;}}
-                byte[] raw=data.bytes(material.getJSONObject("buffer"));
-                if(raw.length!=material.getInt("bytes"))throw new IllegalArgumentException("Material register byte count differs");
-                ByteBuffer bytes=direct(raw);int buffer=GL45.glCreateBuffers();materialBuffers.put(i,buffer);
-                GL45.glNamedBufferData(buffer,bytes,GL15.GL_STATIC_DRAW);materialBytes+=raw.length;
+                if(material.getJSONObject("buffer").getInt("bytes")!=material.getInt("bytes"))
+                    throw new IllegalArgumentException("Material register byte count differs");
+                String name=material.getString("name");
+                if(byName.putIfAbsent(name,material)==null){
+                    Map<String,JSONObject> bindings=new HashMap<>();
+                    for(Object field:material.getJSONArray("bindings")){
+                        JSONObject binding=(JSONObject)field;bindings.put(binding.getString("name"),binding);
+                    }
+                    fields.put(name,bindings);
+                }
             }
             // Match each consumed UnityPerMaterial field to its prepared offset,
             // rather than assuming that the material is always register b2.
             JSONObject consumed=data.manifest.getJSONObject("consumed");
             for(Object value:data.manifest.getJSONArray("programs")){
-                JSONObject row=(JSONObject)value;JSONObject material=Arrays.stream(materials).filter(m->m.getString("name").equals(row.getString("material"))).findFirst().orElseThrow();
-                Map<String,JSONObject> prepared=new HashMap<>();for(Object field:material.getJSONArray("bindings"))prepared.put(((JSONObject)field).getString("name"),(JSONObject)field);
+                JSONObject row=(JSONObject)value;String name=row.getString("material");
+                JSONObject material=byName.get(name);
+                if(material==null)throw new IllegalArgumentException("Unknown program material "+name);
+                Map<String,JSONObject> prepared=fields.get(name);
                 for(Object p:row.getJSONArray("programs"))for(Object b:consumed.getJSONObject(((JSONObject)p).getString("sha256")).getJSONArray("buffers")){
                     JSONObject layout=(JSONObject)b;if(!layout.getString("name").equals("UnityPerMaterial"))continue;
                     if(layout.getInt("size")>material.getInt("bytes"))throw new IllegalArgumentException("Material register buffer too small");
@@ -78,17 +88,34 @@ public final class Gfl2PackMaterials implements AutoCloseable {
                     }
                 }
             }
-        }catch(IOException|RuntimeException e){close();throw e;}
+        }catch(RuntimeException e){close();throw e;}
     }
 
     private static ByteBuffer direct(byte[] bytes){ByteBuffer buffer=BufferUtils.createByteBuffer(bytes.length);buffer.put(bytes).flip();return buffer;}
     private String source(JSONObject resource)throws IOException {return new String(data.bytes(resource),StandardCharsets.UTF_8);}
     public JSONObject material(int id){if(id<0||id>=materials.length)throw new IllegalArgumentException("Source material out of range");return materials[id];}
-    public int materialBuffer(int id){material(id);return materialBuffers.get(id);}
+    public int materialBuffer(int id) throws IOException {
+        JSONObject material=material(id);
+        Integer cached=materialBuffers.get(id);
+        if(cached!=null)return cached;
+        byte[] raw=data.bytes(material.getJSONObject("buffer"));
+        if(raw.length!=material.getInt("bytes"))throw new IllegalArgumentException("Material register byte count differs");
+        ByteBuffer bytes=direct(raw);
+        int buffer=GL45.glCreateBuffers();
+        try {
+            GL45.glNamedBufferData(buffer,bytes,GL15.GL_STATIC_DRAW);
+            materialBuffers.put(id,buffer);
+        } catch(RuntimeException | Error failure) {
+            GL15.glDeleteBuffers(buffer);throw failure;
+        }
+        materialBytes+=raw.length;
+        return buffer;
+    }
     public float surfaceWeight(int id){material(id);return surfaceWeights[id];}
     public int programCount(){return programs.size();}
     public int stateCount(){return states.size();}
     public int textureSetCount(){return bindings.size();}
+    public int uploadedMaterialCount(){return materialBuffers.size();}
     public int materialCount(){return materials.length;}
 
     public JSONObject optionalPass(int id,String name){

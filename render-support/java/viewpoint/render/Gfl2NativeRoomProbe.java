@@ -13,7 +13,8 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
     private int framebuffer,lightFramebuffer,neutralOcclusion,emptyReflection;
     private final int[][] views=new int[6][4];
     private GlProgram geometry,lighting;
-    private Inputs geometryInputs,lightInputs;
+    private Inputs geometryInputs;
+    private Gfl2ProbeProjection lightInputs;
     private final Matrix4f[] matrices=new Matrix4f[6];
     private byte[] savedFlags=new byte[0];
     private int[] savedPlan=new int[0];
@@ -45,8 +46,8 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
             geometry=GlProgram.fromSources("GF2 Native room geometry",new GlProgram.Sources(vertex,null,null,gs.toString(),fragment),Map.of(),Map.of(),List.of());
             if(geometry.id()==0)throw new IllegalStateException(GlProgram.lastError());
             Object surfaces=Gfl2NativeEnvironment.world("surfaces");GlProgram nativeGeometry=(GlProgram)Gfl2NativeEnvironment.field(surfaces,"gbuffer");geometryInputs=new Inputs(nativeGeometry,geometry);
-            lighting=GlProgram.fromSources("GF2 Native room lighting",new GlProgram.Sources(Gfl2NativePackSelection.expanded("screen.vert"),null,null,null,Gfl2NativePackSelection.expanded("light.frag")),Map.of(),Map.of(),List.of());
-            if(lighting.id()==0)throw new IllegalStateException(GlProgram.lastError());lightInputs=new Inputs((GlProgram)Gfl2NativeEnvironment.field(surfaces,"light"),lighting);
+            lighting=(GlProgram)Gfl2NativeEnvironment.field(surfaces,"light");
+            lightInputs=new Gfl2ProbeProjection(lighting);
             albedo=cube(GL11.GL_RGBA8);normal=cube(GL30.GL_RGB10_A2);engine=cube(GL11.GL_RGBA8);depth=cube(GL30.GL_DEPTH24_STENCIL8);
             radiance=cube(GL30.GL_RGBA16F);lightFramebuffer=GL45.glCreateFramebuffers();
             int[] textures={albedo,normal,engine,depth},formats={GL11.GL_RGBA8,GL30.GL_RGB10_A2,GL11.GL_RGBA8,GL30.GL_DEPTH24_STENCIL8};
@@ -68,8 +69,8 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
     public void capture(FrameContext frame,float[] position)throws Exception{
         if(position.length!=3)throw new IllegalArgumentException("Probe position shape differs");for(float v:position)if(!Float.isFinite(v))throw new IllegalArgumentException("Non-finite probe position");
         SceneData scene=frame.scene;int count=scene.meshCount;if(savedFlags.length<count){savedFlags=new byte[count];savedPlan=new int[count];}System.arraycopy(scene.meshFlags,0,savedFlags,0,count);System.arraycopy(scene.meshPlan,0,savedPlan,0,count);
-        int cachedTexture=Texture.lastTextureID;ExtraTextures extra=new ExtraTextures();
-        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope(true)){
+        int cachedTexture=Texture.lastTextureID;
+        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope(Gfl2GlScope.Phase.PROBE_GEOMETRY)){
             geometryInputs.copy();geometry.use();geometry.set("uEye",position[0],position[1],position[2]);geometry.set("uViewer",position[0],position[1],position[2]);
             Matrix4f projection=new Matrix4f().perspective((float)(java.lang.Math.PI*.5),1,.05f,400);
             for(int face=0;face<6;face++){
@@ -81,37 +82,34 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
             // A reflection capture needs available geometry outside the main camera's triangle plan.
             for(int i=0;i<count;i++){scene.meshFlags[i]|=1;scene.meshPlan[i]=-1;}
             Meshes.drawPlanned(scene,geometry,(byte)1,true);GL42.glMemoryBarrier(GL42.GL_TEXTURE_FETCH_BARRIER_BIT|GL42.GL_FRAMEBUFFER_BARRIER_BIT);captures++;meshes=count;
-        }finally{System.arraycopy(savedFlags,0,scene.meshFlags,0,count);System.arraycopy(savedPlan,0,scene.meshPlan,0,count);extra.close();Texture.lastTextureID=cachedTexture;}
+        }finally{System.arraycopy(savedFlags,0,scene.meshFlags,0,count);System.arraycopy(savedPlan,0,scene.meshPlan,0,count);Texture.lastTextureID=cachedTexture;}
     }
     public int captures(){return captures;}
     public int availableMeshes(){return meshes;}
     public void illuminate(FrameContext frame,float[] position)throws Exception{
         if(captures==0)throw new IllegalStateException("Room lighting requires captured geometry");
-        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope()){
-            lightInputs.copy();lighting.use();lighting.set("uEye",position[0],position[1],position[2]);lighting.set("uCamera",.05f,400f,1f,1f);lighting.setInt("uDebugView",0);lighting.setInt("uBlobCount",0);lighting.setInt("uContactShadows",0);
-            ShadowPass shadows=(ShadowPass)Gfl2NativeEnvironment.world("shadows");ShadowPass.samplers(lighting);LampShadows.sampler(lighting);Spots.sampler(lighting);shadows.bind(true);
-            lighting.sampler("uAlbedo",9);lighting.sampler("uNormal",10);lighting.sampler("uEngineLight",11);lighting.sampler("uDepth",12);
+        try(Gfl2NativeSourceScope scope=new Gfl2NativeSourceScope(Gfl2GlScope.Phase.PROBE_LIGHT)){
+            // Use the host's existing lighting uniforms. DSA overrides only the probe camera
+            // and input samplers, leaving VP's CPU uniform cache undisturbed.
+            lightInputs.capture();try {
+            GL20.glUseProgram(lighting.id());lightInputs.camera(position);
+            ShadowPass shadows=(ShadowPass)Gfl2NativeEnvironment.world("shadows");shadows.bind(true);
             int location=GL20.glGetUniformLocation(lighting.id(),"uOcclusion");if(location>=0){int unit=GL20.glGetUniformi(lighting.id(),location);GL13.glActiveTexture(GL13.GL_TEXTURE0+unit);GL11.glBindTexture(GL11.GL_TEXTURE_2D,neutralOcclusion);GL33.glBindSampler(unit,0);}
             // A cubemap has no main-view SSAO, contact-shadow buffer or recursive screen reflection.
-            lighting.sampler("uReflection",119);lighting.sampler("uReflectionDepth",120);GL13.glActiveTexture(GL13.GL_TEXTURE0+119);GL11.glBindTexture(GL11.GL_TEXTURE_2D,emptyReflection);GL33.glBindSampler(119,0);GL13.glActiveTexture(GL13.GL_TEXTURE0+120);GL11.glBindTexture(GL11.GL_TEXTURE_2D,views[0][3]);GL33.glBindSampler(120,0);
+            GL13.glActiveTexture(GL13.GL_TEXTURE0+119);GL11.glBindTexture(GL11.GL_TEXTURE_2D,emptyReflection);GL33.glBindSampler(119,0);GL13.glActiveTexture(GL13.GL_TEXTURE0+120);GL11.glBindTexture(GL11.GL_TEXTURE_2D,views[0][3]);GL33.glBindSampler(120,0);
             GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER,lightFramebuffer);GL11.glViewport(0,0,SIZE,SIZE);for(int cap:new int[]{GL11.GL_SCISSOR_TEST,GL11.GL_DEPTH_TEST,GL11.GL_STENCIL_TEST,GL11.GL_CULL_FACE})GL11.glDisable(cap);GL11.glDepthMask(false);GL30.glDisablei(GL11.GL_BLEND,0);GL30.glColorMaski(0,true,true,true,true);
             for(int face=0;face<6;face++){
                 GL30.glFramebufferTexture2D(GL30.GL_FRAMEBUFFER,GL30.GL_COLOR_ATTACHMENT0,GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X+face,radiance,0);GL11.glDrawBuffer(GL30.GL_COLOR_ATTACHMENT0);GL30.glClearBufferfv(GL11.GL_COLOR,0,new float[4]);
-                lighting.set("uInvViewProjection",new Matrix4f(matrices[face]).invert());
+                lightInputs.face(matrices[face]);
                 for(int i=0;i<4;i++){GL13.glActiveTexture(GL13.GL_TEXTURE0+9+i);GL11.glBindTexture(GL11.GL_TEXTURE_2D,views[face][i]);GL33.glBindSampler(9+i,0);}Gl.screenTriangle();
             }
             GL42.glMemoryBarrier(GL42.GL_TEXTURE_FETCH_BARRIER_BIT|GL42.GL_FRAMEBUFFER_BARRIER_BIT);
+            } finally {lightInputs.restore();}
         }
     }
     public long bytes(){return (long)SIZE*SIZE*(6*24+4)+8;}
-    @Override public void close(){Gfl2NativeSourceScope.forget(geometry,lighting);if(geometry!=null)geometry.delete();if(lighting!=null)lighting.delete();for(int[] face:views){for(int id:face)if(id!=0)GL11.glDeleteTextures(id);Arrays.fill(face,0);}for(int id:new int[]{albedo,normal,engine,depth,radiance,neutralOcclusion,emptyReflection})if(id!=0)GL11.glDeleteTextures(id);for(int id:new int[]{framebuffer,lightFramebuffer})if(id!=0)GL30.glDeleteFramebuffers(id);geometry=lighting=null;albedo=normal=engine=depth=radiance=framebuffer=lightFramebuffer=neutralOcclusion=emptyReflection=0;}
+    @Override public void close(){Gfl2NativeSourceScope.forget(geometry);if(geometry!=null)geometry.delete();for(int[] face:views){for(int id:face)if(id!=0)GL11.glDeleteTextures(id);Arrays.fill(face,0);}for(int id:new int[]{albedo,normal,engine,depth,radiance,neutralOcclusion,emptyReflection})if(id!=0)GL11.glDeleteTextures(id);for(int id:new int[]{framebuffer,lightFramebuffer})if(id!=0)GL30.glDeleteFramebuffers(id);geometry=lighting=null;albedo=normal=engine=depth=radiance=framebuffer=lightFramebuffer=neutralOcclusion=emptyReflection=0;}
 
-    /** Mesh floor arrays, plant records and corpse-card records are outside the character draw scope. */
-    private static final class ExtraTextures implements AutoCloseable{
-        final int active=GL11.glGetInteger(GL13.GL_ACTIVE_TEXTURE);final int[] units={41,48,90,136};final int[][] values=new int[4][5];
-        ExtraTextures(){for(int i=0;i<units.length;i++){GL13.glActiveTexture(GL13.GL_TEXTURE0+units[i]);values[i]=new int[]{GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D),GL11.glGetInteger(GL30.GL_TEXTURE_BINDING_2D_ARRAY),GL11.glGetInteger(GL31.GL_TEXTURE_BINDING_BUFFER),GL11.glGetInteger(GL13.GL_TEXTURE_BINDING_CUBE_MAP),GL30.glGetIntegeri(GL33.GL_SAMPLER_BINDING,units[i])};}GL13.glActiveTexture(active);}
-        public void close(){for(int i=0;i<units.length;i++){GL13.glActiveTexture(GL13.GL_TEXTURE0+units[i]);GL11.glBindTexture(GL11.GL_TEXTURE_2D,values[i][0]);GL11.glBindTexture(GL30.GL_TEXTURE_2D_ARRAY,values[i][1]);GL11.glBindTexture(GL31.GL_TEXTURE_BUFFER,values[i][2]);GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP,values[i][3]);GL33.glBindSampler(units[i],values[i][4]);}GL13.glActiveTexture(active);}
-    }
     /** Copy the actual Native geometry uniforms; shader layouts are cached, not queried every face. */
     private static final class Inputs{
         private final GlProgram source,target;private final List<Uniform> uniforms=new ArrayList<>();

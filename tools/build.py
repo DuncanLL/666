@@ -80,8 +80,11 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
     baseline = json.loads((ROOT / 'provenance/native-runtime.json').read_text('utf8'))
     candidate=None if native_candidate is None else json.loads(Path(native_candidate).read_text('utf8'))
     natives = {name: Path(config['native_source']) / name for name in baseline['native_hashes']} if candidate is None else {name:Path(row['path'])for name,row in candidate['files'].items()}
+    compiled_engine = BUILD / 'native/GFL2MmdEngine.dll'
+    if candidate is None and compiled_engine.is_file() and sha(compiled_engine)==baseline['native_hashes']['GFL2MmdEngine.dll']:
+        natives['GFL2MmdEngine.dll'] = compiled_engine
     for name, path in natives.items():
-        assert sha(path) == (baseline['native_hashes'][name] if candidate is None else candidate['files'][name]['sha256']), 'Native input changed: ' + name
+        assert sha(path) == (baseline['native_hashes'][name] if candidate is None else candidate['files'][name]['sha256']), 'Native input differs: ' + name + ' (rebuild the engine with tools/build_native.py)'
     resources={}
     for name,fingerprint in baseline['chest_hashes'].items():
         path=Path(config['native_source'])/'chest'/name
@@ -114,7 +117,7 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
     save(BUILD / 'build.json', {'status': 'PASS_FULL_SOURCE_BUILD_AND_RUNTIME_CLASS_PARITY' if compare_baseline else 'PASS_FULL_SOURCE_BUILD',
          'jar': str(jar), 'jar_sha256': sha(jar), 'jar_bytes': jar.stat().st_size,
          'reference_jar_sha256': sha(config['reference_jar']), 'java_sources': len(source),
-         'native_hashes': hashes, 'native_rebuilt': candidate is not None, 'native_version':baseline['native_version'] if candidate is None else candidate['native_version'],
+         'native_hashes': hashes, 'native_rebuilt': candidate is not None or natives.get('GFL2MmdEngine.dll') == compiled_engine, 'native_version':baseline['native_version'] if candidate is None else candidate['native_version'],
          'runtime_class_baseline_compared': compare_baseline,'chest_models':len(resources),
          'source_hashes': {p.relative_to(ROOT).as_posix(): sha(p) for p in source},
          'game_started': False, 'installed': False})

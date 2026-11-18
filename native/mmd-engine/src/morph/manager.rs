@@ -191,6 +191,11 @@ impl MorphManager {
     }
 
     /// 应用所有 Morph（遵循 MMD 规范，Group/Flip 递归展开）
+    pub(crate) fn has_active_pose_morph(&self) -> bool {
+        self.morphs.iter().any(|m|m.weight.abs()>MORPH_WEIGHT_EPSILON &&
+            matches!(m.morph_type, MorphType::Bone | MorphType::Group | MorphType::Flip))
+    }
+
     pub fn apply_bone_morphs(&self, bone_manager: &mut BoneManager) {
         // Intermediate FK needs bone Morphs, not repeated full-mesh/UV/material writes.
         for (index,morph) in self.morphs.iter().enumerate() {

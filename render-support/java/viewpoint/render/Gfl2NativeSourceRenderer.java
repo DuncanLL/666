@@ -38,6 +38,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
     private final int[] reliefLocations=new int[RELIEF_NAMES.length];
     private final float[][] reliefValues=new float[RELIEF_NAMES.length][4];
     private int reliefBaseId;
+    private long reliefFrame=Long.MIN_VALUE;
     private final List<String> stageOrder=new ArrayList<>();
     private Map<String,float[]> previousValues;
     private long revision;
@@ -160,8 +161,8 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
             if(!eligible.isEmpty())casters.add(new Casters(actor,eligible));
         }
         if(casters.isEmpty())return;
-        try(Gfl2GlScope scope=new Gfl2GlScope();AutoCloseable bindings=modelBindings(models)){
-            captureRelief(models);
+        try(Gfl2GlScope scope=new Gfl2GlScope(Gfl2GlScope.Phase.SHADOW);AutoCloseable bindings=modelBindings(models)){
+            captureRelief(models,frame.index);
             float factor=GL11.glIsEnabled(GL11.GL_POLYGON_OFFSET_FILL)?GL11.glGetFloat(GL11.GL_POLYGON_OFFSET_FACTOR):0,units=GL11.glIsEnabled(GL11.GL_POLYGON_OFFSET_FILL)?GL11.glGetFloat(GL11.GL_POLYGON_OFFSET_UNITS):0;
             float[] eye={frame.eyeX,frame.eyeY,frame.eyeZ};Matrix4f sourceVp=new Matrix4f(nativeVp).translate(eye[0],eye[1],eye[2]).scale(-1,1,-1);
             org.joml.Vector3f right=new org.joml.Vector3f(sourceVp.m00(),sourceVp.m10(),sourceVp.m20()).normalize(),up=new org.joml.Vector3f(sourceVp.m01(),sourceVp.m11(),sourceVp.m21()).normalize();
@@ -190,8 +191,8 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         if(earlyFrame==frame.index)throw new IllegalStateException("Duplicate source GBuffer callback");earlyFrame=frame.index;earlyDraws=0;
         ModelPass models=(ModelPass)Gfl2NativeEnvironment.world("models");ModelDraws draws=models.draws();List<Actor> actors=actors(frame,models).colour;if(actors.isEmpty())return;
         Targets nativeTargets=(Targets)Gfl2NativeEnvironment.world("targets");
-        try(Gfl2GlScope scope=new Gfl2GlScope();AutoCloseable bindings=modelBindings(models)){
-            captureRelief(models);
+        try(Gfl2GlScope scope=new Gfl2GlScope(Gfl2GlScope.Phase.PREPASS);AutoCloseable bindings=modelBindings(models)){
+            captureRelief(models,frame.index);
             environment.prepareDepth(frame);ensure(frame.width,frame.height);target.targets(Map.of(0,nativeTargets.albedo,1,nativeTargets.normal,2,nativeTargets.engineLight,3,nativeTargets.velocity));target.begin(nativeTargets.depth);
             Map<String,float[]> values=Gfl2NativeSourceSpace.values(frame,environment.direction,previousValues);
             for(int actorIndex=0;actorIndex<actors.size();actorIndex++){
@@ -234,7 +235,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
             transferOutputs(frame,nativeTargets,true);
             Map<String,float[]> values=Gfl2NativeSourceSpace.values(frame,environment.direction,previousValues);Gfl2NativeLocalLights frameLights=Gfl2NativeLocalLights.capture(frame);
             List<Ready> ready=new ArrayList<>(actors.size());for(Actor actor:actors)ready.add(prepareActor(frame,draws,actor,values,frameLights));
-            captureRelief(models);
+            captureRelief(models,frame.index);
             float[] depth=new float[draws.count];var position=new org.joml.Vector3f();
             for(Ready actor:ready)for(Draw draw:actor.actor.draws){
                 int at=draw.index*68+24;
@@ -322,7 +323,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         Map<String,float[]> values=new LinkedHashMap<>(input);values.put("unity_ObjectToWorld",flat(object));values.put("unity_WorldToObject",flat(new Matrix4d(object).invert()));values.put("unity_MatrixPreviousM",flat(previous));
         return new Local(values,flat(new Matrix4d(object).invert()),normal(object),flat(new Matrix4d(previous).invert()));
     }
-    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> input,int actor,boolean early){
+    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> input,int actor,boolean early)throws java.io.IOException{
         return registers(program,material,root,input,actor,early,environment.buffer);
     }
     private RegisterLayout registerLayout(String sha,int binding){
@@ -341,7 +342,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
             return new RegisterLayout(layout,sh,main);
         });
     }
-    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> input,int actor,boolean early,int lighting){
+    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> input,int actor,boolean early,int lighting)throws java.io.IOException{
         Map<Integer,Integer> result=new HashMap<>();String scope=frames+":"+actor+":"+early+":"+shadowPhase;
         for(int slot=0;slot<6;slot++)if(program.registerBytes(slot)>0){
             String sha=slot<3?program.fragmentHash:program.vertexHash;int binding=slot%3;RegisterLayout layout=registerLayout(sha,binding);
@@ -355,10 +356,12 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
             }result.put(slot,bank.buffer);
         }return result;
     }
-    private void captureRelief(ModelPass models)throws Exception{
+    private void captureRelief(ModelPass models,long index)throws Exception{
         GlProgram base=(GlProgram)Gfl2NativeEnvironment.field(models,"gbuffer");
+        if(reliefFrame==index&&reliefBaseId==base.id())return;
         if(reliefBaseId!=base.id()){reliefBaseId=base.id();for(int i=0;i<RELIEF_NAMES.length;i++)reliefLocations[i]=GL20.glGetUniformLocation(base.id(),RELIEF_NAMES[i]);}
         for(int i=0;i<RELIEF_NAMES.length;i++)if(reliefLocations[i]>=0)GL20.glGetUniformfv(base.id(),reliefLocations[i],reliefValues[i]);
+        reliefFrame=index;
     }
     private void characterControls(Gfl2OriginalProgram program,int material){
         var settings=viewpoint.platform.Gfl2NativePackSelection.displaySettings();GlProgram gl=program.nativeProgram();gl.use();

@@ -135,9 +135,9 @@ public final class Gfl2OriginalProgram implements AutoCloseable {
         for(var entry:textureUnits.entrySet()){
             int[] value=data.get(entry.getKey());
             if(value==null||value.length!=3||value[1]<=0)throw new IllegalArgumentException("Missing GF2 source texture register "+entry.getKey());
-            GL13.glActiveTexture(GL13.GL_TEXTURE0+entry.getValue());GL11.glBindTexture(value[0],value[1]);GL33.glBindSampler(entry.getValue(),value[2]);
+            Gfl2GlScope.materialUnit(entry.getValue(),value[0]);
+            GL45.glBindTextureUnit(entry.getValue(),value[1]);GL33.glBindSampler(entry.getValue(),value[2]);
         }
-        GL13.glActiveTexture(GL13.GL_TEXTURE0);
     }
 
     private static double numeric(JSONObject state,String name){

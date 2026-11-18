@@ -72,7 +72,7 @@ public final class Gfl2Runtime implements AutoCloseable {
     }
     private int renderFrame;
     private int lastActors,lastDraws;
-    public static String evidence(IrisPipeline p){Gfl2Runtime r=FRAMES.get(p.targets);return r==null?"{}":new JSONObject().put("frames",r.renderFrame).put("actors",r.lastActors).put("native_source_draws",r.lastDraws).put("material_buffers",r.assets.materials.materialCount()).put("source_programs",r.assets.materials.programCount()).put("data_identity",r.assets.data.identity).put("python_callback",false).put("original_game_archive",false).put("native_probe_active",r.environment.localProbeActive).toString();}
+    public static String evidence(IrisPipeline p){Gfl2Runtime r=FRAMES.get(p.targets);return r==null?"{}":new JSONObject().put("frames",r.renderFrame).put("actors",r.lastActors).put("native_source_draws",r.lastDraws).put("material_buffers",r.assets.materials.uploadedMaterialCount()).put("catalog_materials",r.assets.materials.materialCount()).put("source_programs",r.assets.materials.programCount()).put("data_identity",r.assets.data.identity).put("python_callback",false).put("original_game_archive",false).put("native_probe_active",r.environment.localProbeActive).toString();}
     private long revision;
     private boolean closed;
 
@@ -298,7 +298,7 @@ public final class Gfl2Runtime implements AutoCloseable {
     private static JSONObject pass(JSONObject material,String name){for(Object value:material.getJSONArray("passes")){JSONObject p=(JSONObject)value;if(p.getString("name").equals(name)&&!p.getBoolean("disabled_by_material"))return p;}return null;}
     private static int renderQueue(JSONObject material,JSONObject pass){int value=material.getInt("render_queue_override");if(value>=0)return value;String text="Geometry";for(Object tag:pass.getJSONObject("state").getJSONObject("m_Tags").getJSONArray("tags")){JSONArray pair=(JSONArray)tag;if(pair.getString(0).equals("QUEUE"))text=pair.getString(1);}Matcher m=Pattern.compile("([A-Za-z]+)([+-]\\d+)?").matcher(text);if(!m.matches())throw new IllegalArgumentException("Source queue changed");int base=switch(m.group(1)){case "Background"->1000;case "Geometry"->2000;case "AlphaTest"->2450;case "Transparent"->3000;case "Overlay"->4000;default->throw new IllegalArgumentException("Unknown source queue");};return base+(m.group(2)==null?0:Integer.parseInt(m.group(2)));}
 
-    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> inputs,int frame,int actor,int phase,int cameraSlot){
+    private Map<Integer,Integer> registers(Gfl2OriginalProgram program,int material,String root,Map<String,float[]> inputs,int frame,int actor,int phase,int cameraSlot)throws java.io.IOException{
         Map<Integer,Integer> result=new HashMap<>();JSONObject consumed=assets.data.manifest.getJSONObject("consumed");Scope scope=new Scope(frame,actor,phase);
         for(int slot=0;slot<6;slot++){
             if(program.registerBytes(slot)==0)continue;String sha=slot<3?program.fragmentHash:program.vertexHash;int binding=slot%3;JSONObject layout=null;for(Object value:consumed.getJSONObject(sha).getJSONArray("buffers")){JSONObject candidate=(JSONObject)value;if(candidate.getInt("register")==binding){layout=candidate;break;}}if(layout==null)throw new IllegalArgumentException("Source consumed register absent");

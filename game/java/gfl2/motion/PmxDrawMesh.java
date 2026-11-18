@@ -90,18 +90,24 @@ public final class PmxDrawMesh implements AutoCloseable {
             if (positions.length!=normals.length || positions.length%3!=0 || materials.length%12!=0)
                 throw new IllegalArgumentException("Invalid frozen PMX frame");
             if(shadingHead!=null&&(shadingHead.length<12||shadingHead.length%12!=0))throw new IllegalArgumentException("Invalid shading frame");
+            this.positions=positions;this.normals=normals;this.materials=materials;this.shadingHead=shadingHead;gpuPose=null;
+            if (a != null && b != null) {
+                if (a.positions.length != positions.length || b.positions.length != positions.length)
+                    throw new IllegalArgumentException("Interpolation endpoint shape differs");
+                minX=Math.min(a.minX,b.minX);minY=Math.min(a.minY,b.minY);minZ=Math.min(a.minZ,b.minZ);
+                maxX=Math.max(a.maxX,b.maxX);maxY=Math.max(a.maxY,b.maxY);maxZ=Math.max(a.maxZ,b.maxZ);
+                return;
+            }
             if(shadingHead!=null)for(float value:shadingHead)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite shading frame");
             float lx=Float.POSITIVE_INFINITY,ly=lx,lz=lx,hx=-lx,hy=hx,hz=hx;
             for(int i=0;i<positions.length;i+=3){
                 float x=positions[i],y=positions[i+1],z=positions[i+2];
                 if(!Float.isFinite(x)||!Float.isFinite(y)||!Float.isFinite(z))throw new IllegalArgumentException("Non-finite frozen PMX frame");
-                if(a==null){lx=Math.min(lx,x);ly=Math.min(ly,y);lz=Math.min(lz,z);hx=Math.max(hx,x);hy=Math.max(hy,y);hz=Math.max(hz,z);}
+                lx=Math.min(lx,x);ly=Math.min(ly,y);lz=Math.min(lz,z);hx=Math.max(hx,x);hy=Math.max(hy,y);hz=Math.max(hz,z);
             }
             for(float value:normals)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
             for(float value:materials)if(!Float.isFinite(value))throw new IllegalArgumentException("Non-finite frozen PMX frame");
-            this.positions=positions;this.normals=normals;this.materials=materials;this.shadingHead=shadingHead;gpuPose=null;
-            minX=a==null?lx:Math.min(a.minX,b.minX);minY=a==null?ly:Math.min(a.minY,b.minY);minZ=a==null?lz:Math.min(a.minZ,b.minZ);
-            maxX=a==null?hx:Math.max(a.maxX,b.maxX);maxY=a==null?hy:Math.max(a.maxY,b.maxY);maxZ=a==null?hz:Math.max(a.maxZ,b.maxZ);
+            minX=lx;minY=ly;minZ=lz;maxX=hx;maxY=hy;maxZ=hz;
         }
         /** Plain renderers bind the completed GPU mesh directly; no CPU geometry exists in this frame. */
         public FrameData(float[] materials,GpuDeformation.Pose pose) {
@@ -332,11 +338,8 @@ public final class PmxDrawMesh implements AutoCloseable {
             if(streaming!=null&&part.handle!=null&&!cpuOutline) {
                 if(part.gpuRemap==0)part.gpuRemap=PmxMeshStream.remap(part.source);
                 streaming.pack(part.handle.vboId,part.gpuRemap,part.source.length,part.continuous);
-                for(int source:part.source) {
-                    int at=source*3;
-                    point.set(positions[at],positions[at+1],positions[at+2]);
-                    part.mesh.minXyz.min(point);part.mesh.maxXyz.max(point);
-                }
+                part.mesh.minXyz.set(frame.minX,frame.minY,frame.minZ);
+                part.mesh.maxXyz.set(frame.maxX,frame.maxY,frame.maxZ);
                 part.mesh.modificationCount++;
                 part.continuous=part.gpuWritten=true;
                 continue;

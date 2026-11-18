@@ -13,6 +13,8 @@
     "viewpoint/render/Gfl2Device.java",
     "viewpoint/render/Gfl2FrameInputs.java",
     "viewpoint/render/Gfl2GlScope.java",
+    "viewpoint/render/Gfl2FixedState.java",
+    "viewpoint/render/Gfl2ScopeAudit.java",
     "viewpoint/render/Gfl2OriginalSamplers.java",
     "viewpoint/render/Gfl2OriginalTexture.java",
     "viewpoint/render/Gfl2OutlineBridge.java",
