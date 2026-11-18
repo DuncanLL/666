@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,io,json,os,re,zipfile
 from common import ROOT,BUILD,settings,sha,save
-from build import compile_java
+from build import class_entries, release_classes
 
 def write(z,name,data):
     entry=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));entry.compress_type=zipfile.ZIP_DEFLATED;entry.create_system=3;entry.external_attr=0o100644<<16;z.writestr(entry,data)
@@ -42,8 +42,9 @@ if __name__=='__main__':
         if asset.exists():assert sha(asset)==resources['sha256'],'Existing source asset differs; preserved'
         else:asset.write_bytes(raw)
     assert asset.stat().st_size==resources['bytes']and sha(asset)==resources['sha256'],'Original shared display profile differs'
-    game=Path(cfg['game_root']);out=BUILD/'render-support';out.mkdir(parents=True,exist_ok=True);classes=out/('classes-'+origin['release_version']);sources=sorted((ROOT/'render-support/java').rglob('*.java'))
-    compile_java(cfg,sources,classes,[host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')])
+    game=Path(cfg['game_root']);out=BUILD/'render-support';sources=sorted((ROOT/'render-support/java').rglob('*.java'))
+    with release_classes(cfg,sources,out,[host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')]) as classes:
+        bytecode=class_entries(classes)
     packroot=ROOT/'render-support/native-pack';payload=io.BytesIO();shader_sources=sorted(p for p in packroot.rglob('*')if p.is_file())
     # Cross-driver guard: include legacy names accepted by some modern compilers.
     for source in shader_sources:check_glsl_names(source,source.read_bytes())
@@ -56,8 +57,8 @@ if __name__=='__main__':
     shader=payload.getvalue();jar=out/'GFL2RenderSupport.jar';temporary=jar.with_suffix('.jar.writing')
     with zipfile.ZipFile(host)as z:stock=set(z.namelist())
     with zipfile.ZipFile(temporary,'w',zipfile.ZIP_DEFLATED)as z:
-        for p in sorted(classes.rglob('*.class')):
-            name=p.relative_to(classes).as_posix();assert name not in stock,'Stock VP class collision: '+name;write(z,name,p.read_bytes())
+        for name,data in bytecode.items():
+            assert name not in stock,'Stock VP class collision: '+name;write(z,name,data)
         write(z,'META-INF/gfl2/rendering/native.zip',shader)
         write(z,'gfl2/render/gf2-original-display.rgba16f',asset.read_bytes())
     with zipfile.ZipFile(temporary)as z:

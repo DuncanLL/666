@@ -24745,8 +24745,8 @@
           "sha256": "ff31a2a146e06872c8c825c72baf1789f9023c86ebfeb952ca5b6e017243fb9c"
         },
         "42/media/gfl2_rendering/packs/GFL2Klukai.json": {
-          "bytes": 5371198,
-          "sha256": "f517bda2cb1a15615fc4bea9a698187ddf660f8b82af4db47c4cd5430085826d"
+          "bytes": 12043180,
+          "sha256": "7e5910f1d743cc767ae885ed27d197d4d7ed42dcdb76f273cfae533a4c7f322b"
         },
         "42/media/gfl2_pmx/models/pmx-6826e4ccdf1f4ddf/Textures/c_ClukaySSR0101_slg_cloth_da.png": {
           "bytes": 3022253,
@@ -25446,15 +25446,15 @@
         },
         "42/media/gfl2_pmx/models/pmx-efe685465097beb2/model.controls.json": {
           "bytes": 4752,
-          "sha256": "5a109c4146c3c7d7a016eb39c6cf05da6a404c56d901de19f4c5d99c6fce8d18"
+          "sha256": "4be23985c1a37807cbbffaef75239cb313f26665f03b21b75dcdfa540add3306"
         },
         "42/media/gfl2_pmx/models/pmx-efe685465097beb2/model.pmx": {
           "bytes": 3621847,
-          "sha256": "d974b73cd438fde67a61a6aa14302be2ff0e55a4109ec5852a22e9fe9c028c1a"
+          "sha256": "54bb7068caf5b0a029c98bec2e771968d3f9402a50511778d9fb8b2d105ad74d"
         },
         "42/media/gfl2_pmx/models/pmx-efe685465097beb2/shading-danrp.json": {
           "bytes": 1136,
-          "sha256": "468b49e71babeb8abb88f4800b901857dac13935affabbe366619989beb4d5f8"
+          "sha256": "7ab34d3865a062790b292297176f2820cac04ec7949c2740ac8aef399439fb62"
         },
         "42/media/gfl2_pmx/models/pmx-efe685465097beb2/spa/SSShine1.png": {
           "bytes": 2570,
@@ -26827,6 +26827,10 @@
         "42/media/ui/GFL2/ScyllaSkin4334055.png": {
           "bytes": 151922,
           "sha256": "56cc6f13647812b25d67ba6a365ba37cda9caca35cdb3ef1b28918c08bbc3036"
+        },
+        "42/media/gfl2_rendering/data/e286a880a288c0511265e7e7f5ebfc8ca9779eb7b3bd1dba447a1de21f7a2551.f32": {
+          "bytes": 4636672,
+          "sha256": "e286a880a288c0511265e7e7f5ebfc8ca9779eb7b3bd1dba447a1de21f7a2551"
         }
       }
     },

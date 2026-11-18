@@ -95,7 +95,7 @@ public final class Gfl2PackData {
                     byte[] packBytes=Files.readAllBytes(fragment);
                     JSONObject extra=new JSONObject(new String(packBytes,StandardCharsets.UTF_8));
                     if(extra.getInt("format")!=1||!mod.equals(extra.getString("mod")))throw new IllegalArgumentException("Invalid GF2 character pack");
-                    JSONObject combined=new JSONObject(fields.toString());
+                    JSONObject combined=copyCatalogContainers(fields);
                     mergeCharacters(combined,extra.getJSONObject("characters"));
                     fields=combined;
                     digest.update((byte)'\n');digest.update(packBytes);
@@ -109,6 +109,25 @@ public final class Gfl2PackData {
             root.put("data_identity",HexFormat.of().formatHex(digest.digest()));
         }catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
         return root;
+    }
+
+    private static JSONObject copyCatalogContainers(JSONObject fields) {
+        // mergeCharacters appends new entries and remaps incoming rows. Previously accepted rows are read-only.
+        JSONObject staged = new JSONObject();
+        for (String key : fields.keySet()) {
+            Object field = fields.get(key);
+            if (field instanceof JSONArray entries) {
+                JSONArray copy = new JSONArray();
+                for (Object entry : entries) copy.put(entry);
+                staged.put(key, copy);
+            } else {
+                JSONObject entries = fields.getJSONObject(key);
+                JSONObject copy = new JSONObject();
+                for (String name : entries.keySet()) copy.put(name, entries.get(name));
+                staged.put(key, copy);
+            }
+        }
+        return staged;
     }
 
     private static void mergeCharacters(JSONObject base,JSONObject extra){

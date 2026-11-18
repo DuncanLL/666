@@ -169,7 +169,8 @@ public final class UnifiedStartupCheck {
         String problem = read ? item.validateContents() : "workshop.txt could not be read";
         require(read && problem==null && item.getTitle().equals("僵毁少女前线"),
             "Game Workshop validator rejected GFL2: "+problem+"; title="+item.getTitle());
-        report.put("workshop_validator_passed",true).put("saved_selection_preserved",true)
+        zombie.ui.TextManager.instance.Init();
+        report.put("stock_font_init_passed",true).put("workshop_validator_passed",true).put("saved_selection_preserved",true)
             .put("custom_pack_preserved",true).put("game_started",false);
         Files.writeString(root.resolve("startup.json"),report.toString(2));
         System.out.println(report);

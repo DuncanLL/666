@@ -17,7 +17,6 @@ import zombie.ZomboidFileSystem;
 import zombie.characters.IsoGameCharacter;
 import zombie.characters.IsoPlayer;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
-import zombie.ui.TextManager;
 
 public class Main {
     static final String MOD_ID="GFL2Exilium";
@@ -78,7 +77,6 @@ public class Main {
     private static synchronized void configure() throws Exception {
         if (directory!=null) return;
         Path d=locate(),root=d.resolve("media/gfl2_pmx").normalize();
-        LocalizedGlyphs.install(TextManager.instance);
         JSONObject registry=new JSONObject(Files.readString(root.resolve("registry.json")));
         ArrayList<Entry> loaded=new ArrayList<>();HashSet<String> hidden=new HashSet<>();
         readEntries(root,registry.getJSONArray("models"),loaded,hidden,null);

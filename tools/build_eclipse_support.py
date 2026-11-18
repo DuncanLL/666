@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,hashlib,io,json,os,re,shutil,zipfile
 from common import ROOT,BUILD,settings,sha,save
-from build import compile_java
+from build import class_entries, release_classes
 from build_render_support import check_glsl_names,release_bootstrap
 
 SHADER_PAYLOAD='META-INF/gfl2/rendering/eclipse.zip'
@@ -116,8 +116,8 @@ if __name__=='__main__':
     shared=[ROOT/'render-support/java'/name for name in origin['shared_sources']]
     sources=[*sorted((ROOT/'render-support/eclipse/java').rglob('*.java')),*shared,
              ROOT/'render-support/java/gfl2/render/ManagedShaderPack.java']
-    classes=out/'classes-outline';compile_java(cfg,sources,classes,[reference,host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')])
-    replacements={p.relative_to(classes).as_posix():p.read_bytes()for p in classes.rglob('*.class')}
+    with release_classes(cfg,sources,out,[reference,host,cfg['zombiebuddy_jar'],BUILD/'GFL2Exilium.jar',*game.glob('*.jar')]) as classes:
+        replacements=class_entries(classes)
     jar=out/'GFL2RenderSupport.jar';temporary=jar.with_suffix('.jar.writing')
     motion=ROOT/'render-support/eclipse/shaders/actor-motion.glsl'
     options=((b'characterSurfaceDetail',0,0,100,1),(b'characterSkinGloss',0,0,100,1),

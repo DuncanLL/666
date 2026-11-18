@@ -7,6 +7,48 @@ import viewpoint.render.Gfl2PackData;
 
 /** Real resource reader with only relocated Workshop-style media registered; no author fallback. */
 public final class RelocatedResourceChecks {
+    static void checkCatalogIsolation(viewpoint.iris.SourceFiles source, Path fixture) throws Exception {
+        var fs = ZomboidFileSystem.instance;
+        String key = "media/gfl2_rendering/characters.json";
+        String original = fs.activeFileMap.get(key);
+        Path catalog = fixture.resolve(key);
+        Files.createDirectories(catalog.getParent());
+        Files.copy(Path.of(original), catalog, StandardCopyOption.REPLACE_EXISTING);
+        Path registry = fixture.resolve("media/gfl2_pmx/registry.json");
+        Files.createDirectories(registry.getParent());
+        Files.writeString(registry, "{\"packs\":{\"AuditBad\":[],\"AuditGood\":[]}}");
+        Path fragments = catalog.getParent().resolve("packs");
+        Files.createDirectories(fragments);
+        for (String id : List.of("AuditBad", "AuditGood")) {
+            JSONObject fields = new JSONObject();
+            for (String field : List.of("textures","shader_property_defaults","glsl","early_fragments","consumed"))
+                fields.put(field, new JSONObject());
+            fields.put("programs", new JSONArray());
+            fields.put("materials", new JSONArray().put(new JSONObject().put("id", 0).put("name", id)));
+            // The missing model SHA fails late, after the new material has been staged.
+            fields.put("models", id.equals("AuditBad") ? new JSONArray().put(new JSONObject()) : new JSONArray());
+            Files.writeString(fragments.resolve(id + ".json"), new JSONObject().put("format", 1)
+                    .put("mod", id).put("characters", fields).toString());
+            fs.setModIdToDir(id, fixture.toString());
+        }
+        fs.activeFileMap.put(key, catalog.toString());
+        fs.getModIDs().add("AuditGood");
+        try {
+            Gfl2PackData expected = new Gfl2PackData(source);
+            JSONArray accepted = expected.manifest.getJSONArray("materials");
+            if (!accepted.getJSONObject(accepted.length()-1).getString("name").equals("AuditGood"))
+                throw new AssertionError("Valid test pack not loaded");
+            fs.getModIDs().add("AuditBad");
+            Gfl2PackData actual = new Gfl2PackData(source);
+            if (!actual.identity.equals(expected.identity) || !actual.manifest.similar(expected.manifest))
+                throw new AssertionError("Rejected role pack modified the accepted catalog");
+        } finally {
+            fs.getModIDs().remove("AuditBad");
+            fs.getModIDs().remove("AuditGood");
+            fs.activeFileMap.put(key, original);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static void main(String[] args)throws Exception{
         Path media=Path.of(args[0]),pack=Path.of(args[1]),out=Path.of(args[2]);
@@ -14,6 +56,7 @@ public final class RelocatedResourceChecks {
         relative.clear();ZomboidFileSystem.instance.activeFileMap.clear();
         try(var files=Files.walk(media.resolve("gfl2_rendering"))){for(Path file:files.filter(Files::isRegularFile).toList()){String key="media/"+media.relativize(file).toString().replace('\\','/');relative.put(key,key);ZomboidFileSystem.instance.activeFileMap.put(key,file.toString());}}
         viewpoint.iris.SourceFiles source=name->Files.readString(pack.resolve("shaders").resolve(name));Gfl2PackData data=new Gfl2PackData(source);long bytes=0;String small=null;
+        checkCatalogIsolation(source, out.resolveSibling("catalog-isolation"));
         for(String name:data.paths()){byte[] raw=data.bytes(name);bytes+=raw.length;if(small==null&&raw.length>0&&raw.length<4096)small=name;}
         if(small==null)throw new AssertionError("No bounded resource for fault test");String key="media/gfl2_rendering/"+small.substring("gf2/".length()),original=ZomboidFileSystem.instance.activeFileMap.get(key);int rejected=0;
         Map<String,String> enabled=new HashMap<>(ZomboidFileSystem.instance.activeFileMap);

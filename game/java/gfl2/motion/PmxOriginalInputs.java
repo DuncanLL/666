@@ -28,6 +28,14 @@ public final class PmxOriginalInputs {
             JSONObject attributes=selected.getJSONObject("attributes"),geometry=selected.getJSONObject("geometry");
             byte[] attributeBytes=(byte[])invoke(host,"resourceBytes",new Class<?>[]{String.class,String.class},key,attributes.getString("path"));
             if(attributeBytes.length!=(long)selected.getInt("texture_width")*selected.getInt("texture_height")*16)throw new IllegalArgumentException("Source attribute image shape differs");
+            int attributeStride=6*4*Float.BYTES;
+            if(records>attributeBytes.length/attributeStride)throw new IllegalArgumentException("Source attribute records exceed image");
+            ByteBuffer attributeData=ByteBuffer.wrap(attributeBytes).order(ByteOrder.LITTLE_ENDIAN);
+            boolean[] validAttribute=new boolean[records];
+            for(int i=0;i<records;i++){
+                float sourceVertex=attributeData.getFloat(i*attributeStride+3*Float.BYTES);
+                validAttribute[i]=sourceVertex>0&&sourceVertex<=vertexCount;
+            }
             byte[] raw=(byte[])invoke(host,"resourceBytes",new Class<?>[]{String.class,String.class},key,geometry.getString("path"));ByteBuffer data=ByteBuffer.wrap(raw).order(ByteOrder.LITTLE_ENDIAN);List<Draw> draws=new ArrayList<>();
             for(Object value:selected.getJSONArray("parts")){
                 JSONObject part=(JSONObject)value;int material=part.getInt("pmx_material"),sourceMaterial=part.getInt("source_material"),count=part.getInt("vertices"),length=part.getInt("indices"),vo=part.getInt("vertex_offset"),io=part.getInt("index_offset");
@@ -35,6 +43,17 @@ public final class PmxOriginalInputs {
                 int[] source=new int[count],carrier=new int[count],indices=new int[length];
                 for(int i=0;i<count;i++){source[i]=data.getInt(vo+i*8);carrier[i]=data.getInt(vo+i*8+4);if(source[i]<0||source[i]>=vertexCount||carrier[i]<0||carrier[i]>=records)throw new IllegalArgumentException("Source vertex outside range");}
                 for(int i=0;i<length;i++){indices[i]=data.getInt(io+i*4);if(indices[i]<0||indices[i]>=count)throw new IllegalArgumentException("Source triangle outside compact range");}
+                // Sending only the invalid corner off-screen stretches the rest of the triangle.
+                int kept=0;
+                for(int i=0;i<length;i+=3){
+                    int a=indices[i],b=indices[i+1],c=indices[i+2];
+                    if(!validAttribute[carrier[a]]||!validAttribute[carrier[b]]||!validAttribute[carrier[c]])continue;
+                    indices[kept++]=a;
+                    indices[kept++]=b;
+                    indices[kept++]=c;
+                }
+                if(kept==0)continue;
+                if(kept!=length)indices=Arrays.copyOf(indices,kept);
                 String shader=shaders.getString(sourceMaterial);draws.add(new Draw(material,sourceMaterial,source,carrier,indices,shader.endsWith("/eyeblend_add")||shader.endsWith("/eyeblend_multiply")));
             }
             return new PmxOriginalInputs(key,draws);

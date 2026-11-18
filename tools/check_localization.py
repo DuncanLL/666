@@ -1,18 +1,11 @@
 """Check the game's translation reader, glyph coverage and caption layout."""
 from pathlib import Path
-import argparse
 import json
 import os
 import re
 import sys
 import tempfile
 from common import ROOT, settings
-
-parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--font-mod', type=Path, help='Require the supplemental glyphs from a built MOD directory.')
-font_mod = parser.parse_args().font_mod
-if font_mod is not None:
-    font_mod = font_mod.resolve(strict=True) / '42'
 
 LANGUAGES = ('CN', 'EN', 'JP', 'KO')
 mod = ROOT / 'game/mod/42'
@@ -66,26 +59,14 @@ import jpype
 
 os.chdir(game)
 temporary_home = tempfile.TemporaryDirectory(prefix='gfl2-localization-fonts-')
-classpath = [str(game / 'projectzomboid.jar')]
-if font_mod is not None:
-    info = (font_mod / 'mod.info').read_text('utf-8-sig')
-    jar = re.search(r'^javaJarFile=(.+)$', info, re.M)[1]
-    classpath.extend([str((font_mod / jar).resolve(strict=True)), config['zombiebuddy_jar']])
 jpype.startJVM(str(game / 'jre64/bin/server/jvm.dll'), '--enable-native-access=ALL-UNNAMED',
     '-Djava.awt.headless=true', '-Duser.home=' + temporary_home.name,
-    classpath=classpath, convertStrings=True)
+    classpath=[str(game / 'projectzomboid.jar')], convertStrings=True)
 try:
     J = jpype.JClass
     filesystem = J('zombie.ZomboidFileSystem').instance
     filesystem.setCacheDir(temporary_home.name)
     filesystem.init()
-    if font_mod is not None:
-        font_root = font_mod / 'media/gfl2_pmx/fonts'
-        assert (font_root / 'OFL.txt').is_file(), font_root
-        for asset in font_root.rglob('*'):
-            if asset.is_file():
-                filesystem.activeFileMap.put(asset.relative_to(font_mod).as_posix().lower(), str(asset))
-        supplement = J('gfl2.runtime.LocalizedGlyphs')
     bitmap_font = J('zombie.core.fonts.AngelCodeFont')
     font_manager = J('zombie.ui.TextManager').instance
     small = J('zombie.ui.UIFont').Small
@@ -200,8 +181,6 @@ try:
 
     for lang in LANGUAGES:
         language = make_language.newInstance(lang, lang, 'EN', jpype.JBoolean(False))
-        if font_mod is not None:
-            translator.setLanguage(language)
         ui = load(lang, 'UI', language)
         menu = load(lang, 'ContextMenu', language)
         assert required | notice_keys <= ui.keys(), (lang, sorted((required | notice_keys)-ui.keys()))
@@ -263,39 +242,21 @@ try:
                               caption_counts=caption_counts)))
         font_directory = Path('media/fonts') / lang
         font_definitions = (font_directory / 'fonts.txt').read_text('utf-8-sig')
-        sizes = ['Small', 'Medium', 'Large'] if font_mod is not None else ['Small']
-        font_names = {size: re.search(rf'font {size}\s*\{{\s*fnt\s*=\s*([^,]+)', font_definitions)[1].strip()
-                      for size in sizes}
+        small_font_name = re.search(r'font Small\s*\{\s*fnt\s*=\s*([^,]+)', font_definitions)[1].strip()
         ui_text = [*ui.values(), *menu.values(), *inventory_names.values()]
         ui_glyph_gaps = set()
         caption_glyph_gaps = set()
         line_heights = {}
         caption_widths = {}
         for scale in range(1, 5):
-            loaded = {size: bitmap_font((font_directory / f'{scale}x' / filename).as_posix(), '')
-                      for size, filename in font_names.items()}
-            font = loaded['Small']
-            if font_mod is not None:
-                # Test a newly loaded stock font at every scale, as happens when the user changes its size.
-                fonts = J('zombie.ui.UIFont')
-                stock = {}
-                for size, element in loaded.items():
-                    font_manager.enumToFont[getattr(fonts, size).ordinal()] = element
-                    stock[size] = (element.chars, element.getLineHeight())
-                supplement.afterInit(font_manager)
-                for size, element in loaded.items():
-                    original_glyphs, original_height = stock[size]
-                    current_glyphs = element.chars
-                    assert element.getLineHeight() == original_height
-                    assert all(glyph is None or current_glyphs[index] == glyph for index, glyph in enumerate(original_glyphs))
-                    assert not missing_glyphs(element, ui_text), (lang, scale, size)
+            font = bitmap_font((font_directory / f'{scale}x' / small_font_name).as_posix(), '')
             line_heights[scale] = font.getLineHeight()
             assert line_heights[scale] > 0 and font.getWidth('ABC') > 0, (lang, scale)
             ui_glyph_gaps.update(missing_glyphs(font, ui_text))
             caption_glyph_gaps.update(missing_glyphs(font, caption_text))
             caption_widths[scale] = caption_width_limits(font, caption_text)
-        if font_mod is not None or lang in ('EN', 'KO'):
-            brand_glyphs = set() if font_mod is not None else set(menu['ContextMenu_GFL2Character_Menu'])
+        if lang in ('EN', 'KO'):
+            brand_glyphs = set(menu['ContextMenu_GFL2Character_Menu'])
             assert not (ui_glyph_gaps - brand_glyphs), (lang, sorted(ui_glyph_gaps))
             assert not caption_glyph_gaps, (lang, sorted(caption_glyph_gaps))
         provisional_roles = sorted(pack for pack, details in doll_names.items() if lang in details.get('provisional', {}))

@@ -26,14 +26,6 @@ def record(output, jar):
 def package(output, verify_existing=False):
     config = settings()
     build = json.loads((BUILD / 'build.json').read_text('utf8'))
-    generated = None
-    generated_files = {}
-    if not build.get('release_reference'):
-        from prepare_localized_fonts import prepare
-        generated_root = BUILD / 'generated-font-mod'
-        generated = prepare(generated_root)
-        generated_path = generated.relative_to(generated_root)
-        generated_files = {(generated_path/name).as_posix():row for name,row in inventory(generated).items()}
     jar = Path(build['jar'])
     assert sha(jar) == build['jar_sha256']
     for relative, fingerprint in build['source_hashes'].items():
@@ -45,7 +37,6 @@ def package(output, verify_existing=False):
         expected = dict(manifest)
         owned = {name: row for name, row in inventory(ROOT / 'game/mod').items() if name != 'common/.gitkeep'}
         expected.update(owned)
-        expected.update(generated_files)
         expected['42/media/java/client/GFL2Exilium.jar'] = {'bytes': jar.stat().st_size, 'sha256': sha(jar)}
         mod = output / 'Contents/mods/GFL2Exilium'
         actual = inventory(mod)
@@ -68,7 +59,6 @@ def package(output, verify_existing=False):
     mod = stage / 'Contents/mods/GFL2Exilium'
     mod.mkdir(parents=True)
     owned=set(inventory(ROOT/'game/mod'))|{'42/media/java/client/GFL2Exilium.jar'}
-    owned.update(generated_files)
     for relative, row in manifest.items():
         # These files come from this checkout, never from the external asset copy.
         if relative in owned:continue
@@ -80,8 +70,6 @@ def package(output, verify_existing=False):
         shutil.copy2(path, dest)
     # The repository owns these configuration, Lua and sound-declaration files.
     shutil.copytree(ROOT / 'game/mod', mod, dirs_exist_ok=True)
-    if generated is not None:
-        shutil.copytree(generated,mod/generated_path,dirs_exist_ok=True)
     runtime = mod / '42/media/java/client/GFL2Exilium.jar'
     runtime.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(jar, runtime)

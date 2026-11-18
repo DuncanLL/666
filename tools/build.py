@@ -1,25 +1,43 @@
 """Compile the complete game runtime from the consolidated source tree."""
 from pathlib import Path
+from contextlib import contextmanager
 import argparse
 import hashlib
 import json
 import os
 import shutil
 import subprocess
+import tempfile
 import zipfile
 from common import ROOT, BUILD, settings, sha, save, environment
 
 
-def compile_java(config, sources, target, classpath):
+def compile_java(config, sources, target, classpath, *, log_file=None):
     target.mkdir(parents=True, exist_ok=True)
     command = [str(Path(config['game_root']) / 'jre64/bin/java.exe'), '-jar', config['ecj_jar'],
                '-25', '-encoding', 'UTF-8', '-classpath', ';'.join(map(str, classpath)),
                '-d', str(target), *map(str, sources)]
     result = subprocess.run(command, env=environment(), capture_output=True, text=True, encoding='utf8')
-    (target.parent / (target.name + '.log')).write_text(result.stdout + result.stderr, 'utf8')
+    if log_file is None:
+        log_file = target.parent / (target.name + '.log')
+    log_file.write_text(result.stdout + result.stderr, 'utf8')
     if result.returncode:
         print(result.stdout + result.stderr)
         result.check_returncode()
+
+
+@contextmanager
+def release_classes(config, sources, output, classpath):
+    """Only the current compiler invocation may supply entries to a release JAR."""
+    output.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='java-', dir=output) as work:
+        classes = Path(work) / 'classes'
+        compile_java(config, sources, classes, classpath, log_file=output / 'classes.log')
+        yield classes
+
+
+def class_entries(classes):
+    return {p.relative_to(classes).as_posix(): p.read_bytes() for p in sorted(classes.rglob('*.class'))}
 
 
 def build(compare_baseline=False,native_candidate=None,release_reference=None):
@@ -27,20 +45,21 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
     game = Path(config['game_root'])
     classpath = [config['viewpoint_jar'], config['zombiebuddy_jar'], *game.glob('*.jar')]
     source = sorted((ROOT / 'game/java').rglob('*.java'))
-    classes = BUILD / ('release-classes' if release_reference is not None else 'classes')
-    compile_java(config, source, classes, classpath)
-    compile_java(config, [ROOT / 'tools/java/CompareRuntime.java'], BUILD / 'tools', [config['zombiebuddy_jar']])
-    if compare_baseline or release_reference is not None:
-        reference=Path(config['reference_jar']) if release_reference is None else release_reference.resolve(strict=True)
-        if release_reference is not None:
-            release=json.loads((ROOT/'provenance/character-release.json').read_text('utf8'))
-            assert sha(reference)==release['runtime_sha256'], 'Character release runtime fingerprint differs'
-        comparison = subprocess.run([str(game / 'jre64/bin/java.exe'), '-cp', str(BUILD / 'tools') + ';' + config['zombiebuddy_jar'],
-                                     'CompareRuntime', str(reference), str(classes)],
-                                    env=environment(), capture_output=True, text=True, encoding='utf8')
-        (BUILD / 'class-comparison.txt').write_text(comparison.stdout + comparison.stderr, 'utf8')
-        print(comparison.stdout, flush=True)
-        comparison.check_returncode()
+    with release_classes(config, source, BUILD, classpath) as classes:
+        if compare_baseline or release_reference is not None:
+            reference=Path(config['reference_jar']) if release_reference is None else release_reference.resolve(strict=True)
+            if release_reference is not None:
+                release=json.loads((ROOT/'provenance/character-release.json').read_text('utf8'))
+                assert sha(reference)==release['runtime_sha256'], 'Character release runtime fingerprint differs'
+            compile_java(config, [ROOT / 'tools/java/CompareRuntime.java'], classes.parent / 'tools', [config['zombiebuddy_jar']])
+            comparison = subprocess.run([str(game / 'jre64/bin/java.exe'), '-cp', str(classes.parent / 'tools') + ';' + config['zombiebuddy_jar'],
+                                         'CompareRuntime', str(reference), str(classes)],
+                                        env=environment(), capture_output=True, text=True, encoding='utf8')
+            (BUILD / 'class-comparison.txt').write_text(comparison.stdout + comparison.stderr, 'utf8')
+            print(comparison.stdout, flush=True)
+            comparison.check_returncode()
+        if release_reference is None:
+            bytecode = class_entries(classes)
     if release_reference is not None:
         # Keep the tested runtime bytes after verifying that the compiled source matches it.
         with zipfile.ZipFile(reference) as archive:
@@ -85,7 +104,7 @@ def build(compare_baseline=False,native_candidate=None,release_reference=None):
             entry.create_system = 3
             entry.external_attr = 0o100644 << 16
             archive.writestr(entry, data)
-        for path in sorted(classes.rglob('*.class')): write(path.relative_to(classes).as_posix(), path.read_bytes())
+        for name, data in bytecode.items(): write(name, data)
         prefix = 'gfl2/runtime/native/windows-x64/'
         write(prefix + 'index.properties', index)
         for name in sorted(natives): write(prefix + name, natives[name].read_bytes())
