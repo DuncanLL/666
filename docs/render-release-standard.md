@@ -21,7 +21,7 @@
 
 ## 工具入口
 
-封装发布前可用 `tools/check_release_leaks.py` 同时检查最终工坊目录和空用户目录首次安装后的三套光影。用 `--reference` 指向私有着色源码，用 `--shared` 提供已核对的共用接口片段。报告只记录命中路径和参考指纹，写在被扫描目录之外。检测比较连续的 40 个 GLSL 词元，忽略注释和空白，并扫描 Java 常量池的文本。它的覆盖范围由参考资料决定。
+封装发布前可用 `tools/check_release_leaks.py` 同时检查最终工坊目录和空用户目录首次安装后实际分发的光影。用 `--reference` 指向私有着色源码，用 `--shared` 提供已核对的共用接口片段。报告只记录命中路径和参考指纹，写在被扫描目录之外。检测比较连续的 40 个 GLSL 词元，忽略注释和空白，并扫描 Java 常量池的文本。它的覆盖范围由参考资料决定。
 
 ```powershell
 python tools/check_release_leaks.py "<工坊目录>" "<首次安装的光影目录>" --reference "<私有着色参考>" --shared "<已核对的共享接口>" --out "<包外报告.json>"
@@ -37,13 +37,12 @@ Eclipse 启动检查还会用官方 Iris 配置器核对 PZ 材质映射、体�
 
 ```powershell
 python tools/build_render_support.py
-python tools/build_eclipse_support.py
 python tools/build_combined_render_support.py
 python tools/package_render_support.py --output <新工坊项目目录> --metadata-from <现有工坊项目目录>
 python tools/check_render_support.py --project <新工坊项目目录>
 python tools/check_render_release.py --evidence <evidence.json> --out <result.json>
 python tools/check_render_release.py --evidence <evidence.json> --out <public-result.json> --public
-python tools/package_render_support.py --output <新工坊项目目录> --metadata-from <现有工坊项目目录> --public --evidence <Native证据.json> --eclipse-evidence <Eclipse证据.json> --somber-evidence <Somber证据.json>
+python tools/package_render_support.py --output <新工坊项目目录> --metadata-from <现有工坊项目目录> --public --evidence <Native证据.json> --somber-evidence <Somber证据.json>
 ```
 
 `--public`要求三家驱动证据齐全才通过。没有此标志的目录是候选，不能把候选目录生成成功当作跨显卡发布验收。上传仍由用户决定，工具不会自动上传。

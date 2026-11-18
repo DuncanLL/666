@@ -5,10 +5,10 @@
 - 按用户 2026-11-17 指示，人物和功能进入定版维护。维护范围为兼容性、本地化和已复现的缺陷。维护基线和发布记录见 [CHANGELOG.md](CHANGELOG.md)。
 - 本仓库维护游戏人物 MOD、其独立原生核心、Native、Somber 及保留的 Eclipse 渲染支持与构建发布工具。工作台不纳入；不要恢复旧 FBX 人物卡流程。
 - `game/java` 是当前游戏 Java 实现；`game/mod` 是 Lua、声音定义、菜单和人物配置；`native` 是实际使用的 Rust/Bullet 与 Ozz 源码。
-- 现行僵毁少女前线工坊项目为 3838709437，内部 MOD ID 为 `GFL2Exilium`。人物与 Native、Somber、Eclipse 光影在同一核心包交付，角色包按需启用。用 `tools/package_gfl2_unified.py` 合并验证完成的人物和光影构建。独立渲染构建仅作为构建输入和回退资料。
+- 现行僵毁少女前线工坊项目为 3838709437，内部 MOD ID 为 `GFL2Exilium`。人物与 Native、Somber 光影在同一核心包交付，角色包按需启用。用 `tools/package_gfl2_unified.py` 合并验证完成的人物和光影构建。独立渲染构建仅作为构建输入和回退资料。
 - 人物还原以整备室为主要观感参考，但人物仍接受VP现场光照与反射。所有角色共用材质/显示接入，不按角色美白、固定布灯或复制房间反射；VP原版环境、天空、雾、曝光和场景后处理保持。新角色沿共同资料契约接入，不另写角色补丁；被否定的调色预设不得恢复。
 - 本分支面向 PZ 42.22 和 Steam 创意工坊正式版 Viewpoint 0.1.7。官方文件保持 Steam 清单原字节，换宿主时重新核对实际接口和受控绘制。
-- Eclipse 专用覆盖源在 `render-support/eclipse`。Somber 复用 Native 人物后端，随合包从本次 Native 载荷和官方 Somber 构建。两份独立后端构建是 `tools/build_combined_render_support.py` 的输入。合包的一个 JAR 只运行一份安装入口和宿主挂接安装器。两后端共用宿主校验、人物骨骼数据、描边和纹理读取。
+- Eclipse 专用覆盖源在 `render-support/eclipse`。Somber 复用 Native 人物后端，随合包从本次 Native 载荷和官方 Somber 构建。`tools/build_combined_render_support.py` 默认分发 Native 与 Somber，Eclipse 仅在显式指定 `--with-eclipse` 的维护构建中加入。合包的一个 JAR 只运行一份安装入口和宿主挂接安装器。两后端共用宿主校验、人物骨骼数据、描边和纹理读取。
 - 原生核心直接来源于已记录的 MC-MMD-rust 上游。第三方来源与许可保留在 `provenance`、`licenses`；不导入 PZMMD 作者分支或其成品核心。
 - 模型、贴图、语音及原游着色资源不进 Git，按 `resources/manifest.json` 读回；本机路径只放被忽略的 `.local/paths.json`。
 - `build` 是可重新生成的本地输出，不提交二进制、日志、缓存、游戏或存档。

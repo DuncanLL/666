@@ -2,13 +2,13 @@
 
 从仓库根运行命令。新衣装的普通模型从[PMX 导入](pmx-import-workflow.md)开始，原程序着色从[源材质与几何](source-material-workflow.md)开始。能编译 JAR、能启动组件、能画对某个角色的某个 pass，各自需要不同证据。
 
-## 构建两套渲染输入
+## 构建当前分发输入
 
 1. 填齐 [paths.example.json](../../config/paths.example.json) 对应的 `.local/paths.json`。准备游戏、官方 VP JAR 及同版签名、ZombieBuddy、ECJ、当前人物参考 JAR、已核对的原生库及人物外置资源。Native 构建还读取 `render_support_asset_root` 下的显示资源，Eclipse 构建需要 `eclipse_support_reference_jar`。用来源清单的摘要逐项比对：普通下载的 Eclipse ZIP 不能代替指定基线 JAR。[Native 核心指纹](../../provenance/native-runtime.json) · [外置资源](../../resources/manifest.json) · [Eclipse 来源](../../provenance/eclipse-outline.json)
 2. 按下列顺序从新检出构建。普通构建使用已验过的本机原生库。需要改 Rust/Bullet 或 Ozz 时，从 [build_native.py](../../tools/build_native.py) 的工具链和候选输出入手，再向 `build.py --native-candidate` 提供对应报告。精确复核旧发行核心才使用 `--compare-baseline` 或指纹匹配的 `--release-reference`。
 
 ```powershell
-$steps = 'build.py', 'build_render_support.py', 'build_eclipse_support.py', 'build_combined_render_support.py'
+$steps = 'build.py', 'build_render_support.py', 'build_combined_render_support.py'
 foreach ($step in $steps) {
     & $py "tools/$step"
     if ($LASTEXITCODE -ne 0) { throw "Build failed at $step" }
@@ -19,8 +19,8 @@ foreach ($step in $steps) {
 |---|---|
 | `build/GFL2Exilium.jar`、`build/build.json` | 人物代码、人物原生依赖指纹与这次检出一致。 |
 | `build/render-support/build.json` | Native JAR、官方 host SHA、包内 Native 光影 ZIP 的键与 SHA。 |
-| `build/eclipse-support/build.json` | Eclipse 参考 JAR SHA、目标宿主、着色覆盖点、最终 ZIP SHA。定点替换出现零个或多个位置时应核新基线。 |
-| `build/combined-support/build.json` | 两个输入必须针对同一个宿主；合并两后端的类，解决已知同名实现，只保留一个安装入口，核对与官方宿主无同名 class。 |
+| `build/eclipse-support/build.json` | 可选的 Eclipse 维护输入。Eclipse 参考 JAR SHA、目标宿主、着色覆盖点、最终 ZIP SHA。定点替换出现零个或多个位置时应核新基线。 |
+| `build/combined-support/build.json` | Native 和 Somber 对应同一个宿主，共用一个安装入口。加入可选 Eclipse 时，先构建 Eclipse 输入，再向合包脚本传入 `--with-eclipse`。 |
 
 [人物构建](../../tools/build.py) · [Native 构建](../../tools/build_render_support.py) · [Eclipse 构建](../../tools/build_eclipse_support.py) · [两后端合并](../../tools/build_combined_render_support.py)
 

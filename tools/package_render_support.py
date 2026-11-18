@@ -1,4 +1,4 @@
-"""Create the Native and Eclipse rendering-support Workshop project."""
+"""Create the rendering-support Workshop project from the selected backends."""
 from pathlib import Path
 import argparse,json,shutil,zipfile
 from common import ROOT,BUILD,settings,sha,save,inventory
@@ -10,7 +10,9 @@ def package(output,verify_existing=False,evidence=None,public=False,combined=Tru
     assert sha(jar)==report['jar_sha256']
     for name,value in report['source_hashes'].items():assert sha(ROOT/name)==value,'Source changed after build: '+name
     if public:
-        evidence_by_backend={'native':evidence,'eclipse':eclipse_evidence,'somber':somber_evidence} if combined else {'native':evidence}
+        supplied={'native':evidence,'eclipse':eclipse_evidence,'somber':somber_evidence}
+        backends=report['backends'] if combined else ('native',)
+        evidence_by_backend={name:supplied[name] for name in backends}
         if not all(evidence_by_backend.values()):raise ValueError('Public validation requires evidence for each packaged backend')
         from check_render_release import evaluate
         for backend,source in evidence_by_backend.items():
