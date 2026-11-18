@@ -14,7 +14,7 @@ function require(name)
 end
 function getScriptManager()return {FindItem=function()end}end
 function actor:getInventory()
- return {getAllTypeRecurse=function()return {size=function()return 0 end} end}
+ return {containsTypeRecurse=function()return false end,getAllTypeRecurse=function()return {size=function()return 0 end} end}
 end
 function actor:isDead()return false end
 function getTimestampMs()return 10000 end
@@ -26,12 +26,6 @@ function UI:drawTextCentre()end
 function UI:drawTextRight()end
 function recordDraw()end
 function getTexture(path)return {path=path,getWidth=function()return 340 end,getHeight=function()return 156 end}end
-ISSliderPanel=UI:derive("Slider")
-function ISSliderPanel:instantiate()self.sliderBarDim={}end
-function ISSliderPanel:setDoButtons()end
-function ISSliderPanel:setValues()end
-function ISSliderPanel:setCurrentValue(value)self.currentValue=value end
-function ISSliderPanel:paginate()end
 opened={}
 overlayEnabled=false
 function isSteamOverlayEnabled()return overlayEnabled end

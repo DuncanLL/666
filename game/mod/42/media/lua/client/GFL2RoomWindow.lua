@@ -36,13 +36,29 @@ local function ease(t)
     t=1-clamp(t,0,1)
     return 1-t*t*t
 end
+local function hoverAmount(item,over)
+    local target=over and 1 or 0
+    local previous=item.roomHoverTo or 0
+    if previous==target and not item.roomHoverStart then return target end
+    local now=getTimestampMs()
+    local value=previous
+    if item.roomHoverStart then
+        local elapsed=(now-item.roomHoverStart)/(previous==1 and 115 or 150)
+        value=item.roomHoverFrom+(previous-item.roomHoverFrom)*ease(elapsed)
+        if elapsed>=1 then item.roomHoverStart=nil end
+    end
+    if previous~=target then
+        item.roomHoverFrom=value;item.roomHoverTo=target;item.roomHoverStart=now
+    end
+    return value
+end
 local function surface(p,x,y,w,h,a)
     if h<=0 or w<=0 then return end
-    p:drawRect(x+2,y,w-4,h,a,.110,.149,.169)
-    p:drawRect(x,y+2,2,h-4,a,.110,.149,.169)
-    p:drawRect(x+w-2,y+2,2,h-4,a,.110,.149,.169)
+    p:drawRect(x,y,w,h,a,.073,.108,.124)
     local glass=image(art.."glass.png")
-    if glass then p:drawTextureScaled(glass,x,y,w,h,a,1,1,1) end
+    if glass then p:drawTextureScaled(glass,x,y,w,h,a*.28,1,1,1) end
+    p:drawRect(x,y,w,1,a*.25,.66,.74,.75)
+    p:drawRect(x,y+h-1,w,1,a*.58,.025,.040,.045)
 end
 local function frosted(p,w,x,y,width,height,alpha)
     local blur=image(art.."frost-bg.png")
@@ -141,6 +157,7 @@ local function textInSlot(panel,value,x,y,height,width,r,g,b,a,align,font)
     else panel:drawText(text,x,top,r,g,b,a,font) end
 end
 local function label(panel,value,x,y,height,width,r,g,b,a,centered)
+    a=(a or 1)*(panel.roomEnterAlpha or 1)
     value=roleNames[value] or value
     local row=(data.roomLabels and data.roomLabels[value]) or data.labels[value]
     local t=row and image(row.path)
@@ -200,9 +217,9 @@ local function description(panel,lines,x,y,width)
         else label(panel,line,x,top,15,width,.84,.84,.82) end
     end
 end
-local function featureIcon(p,kind,x,y,a)
+local function featureIcon(p,kind,x,y,size,a)
     local glyph=image(art..kind..".png")
-    if glyph then p:drawTextureScaled(glyph,x,y,29,29,a,.85,.87,.86) end
+    if glyph then p:drawTextureScaled(glyph,x,y,size,size,a,.83,.89,.89) end
 end
 
 local function expressionPreset(preset,rows)
@@ -226,7 +243,7 @@ local function number(p,value,x,y,h,r,g,b,right)
     end
 end
 
-local function tile(panel,x,y,w,h,path,title,captionHeight,active,hovered,pressed)
+local function tile(panel,x,y,w,h,path,title,captionHeight,active,hover,pressed)
     surface(panel,x,y,w,h,.8)
     local bodyHeight=h-captionHeight
     local t=image(path)
@@ -237,11 +254,11 @@ local function tile(panel,x,y,w,h,path,title,captionHeight,active,hovered,presse
     end
     panel:drawRect(x,y+bodyHeight,w,captionHeight,.82,.035,.05,.055)
     label(panel,title,x+6,y+bodyHeight+4,captionHeight-8,w-12)
-    if hovered or pressed then
-        panel:drawRect(x+1,y+1,w-2,h-2,pressed and .22 or .08,.64,.81,.82)
+    if hover>0 or pressed then
+        panel:drawRect(x+1,y+1,w-2,h-2,pressed and .22 or hover*.08,.64,.81,.82)
     end
-    if active or hovered then
-        panel:drawRectBorder(x,y,w,h,active and .90 or .54,active and 1 or .56,active and .71 or .72,active and .38 or .75)
+    if active or hover>0 then
+        panel:drawRectBorder(x,y,w,h,active and .90 or hover*.54,active and 1 or .56,active and .71 or .72,active and .38 or .75)
     end
     if active then
         panel:drawRect(x,y+h-2,w,2,1,1,.71,.38)
@@ -294,40 +311,30 @@ local function button(parent,x,y,w,title,target,callback)
     end
     b.backgroundColor={r=.149,g=.204,b=.227,a=.84}
     b.borderColor={r=.45,g=.56,b=.60,a=.38}
-    b.roomHover=0;b.roomHoverTo=0
+    b.roomHover=0
     b.prerender=function(s)
         local enabled=s.enable~=false
-        local to=enabled and (s.mouseOver or s.pressed or s.joypadFocused) and 1 or 0
-        if to~=s.roomHoverTo then
-            s.roomHoverFrom=s.roomHover;s.roomHoverTo=to;s.roomHoverStart=getTimestampMs()
-        end
-        if s.roomHoverStart then
-            local t=clamp((getTimestampMs()-s.roomHoverStart)/115,0,1)
-            s.roomHover=s.roomHoverFrom+(to-s.roomHoverFrom)*ease(t)
-            if t==1 then s.roomHoverStart=nil end
-        end
+        s.roomHover=hoverAmount(s,enabled and (s.mouseOver or s.pressed or s.joypadFocused))
         local c=s.backgroundColor
         local a=enabled and c.a or .51
         if s.roomTab then a=.35+s.roomHover*.36 end
         if s.roomLook=="bare" then a=s.roomHover*.26 end
-        if s.roomLook=="outfit" or s.roomLook=="parts" then c={r=.84,g=.84,b=.86};a=enabled and .99 or .66 end
-        if s.roomLook=="navigation" then c={r=.16,g=.22,b=.23};a=.88 end
-        if s.roomLook=="primary" then c={r=.220,g=.322,b=.306};a=enabled and .98 or .87 end
-        if s.roomLook=="drawOnce" then c=s.roomOutfitDraw and {r=.29,g=.24,b=.69} or {r=.79,g=.80,b=.82};a=.94 end
-        if s.roomLook=="outfitPurchase" then c={r=.84,g=.84,b=.86};a=enabled and .99 or .66 end
-        if s.roomLook=="drawTen" then c={r=.82,g=.24,b=.08};a=.94 end
-        local glow=s.roomHover*(s.pressed and -.05 or s.roomTile and .115 or .075)
-        if s.roomTile then a=enabled and .92 or .62 end
+        if s.roomLook=="quiet" then a=.18+s.roomHover*.30 end
+        if s.roomLook=="navigation" then c={r=.12,g=.17,b=.19};a=.85 end
+        local primary=s.roomLook=="primary" or s.roomLook=="outfitPurchase" or s.roomLook=="drawTen"
+        if primary and enabled then c={r=.15,g=.32,b=.31};a=.98 end
+        if s.roomLook=="drawOnce" then a=enabled and .88 or .53 end
+        if s.roomTile then a=.40+s.roomHover*.50 end
+        local glow=s.roomHover*(s.pressed and -.055 or .075)
+        a=a*(s.roomEnterAlpha or 1)
         local r,g,b=c.r+glow,c.g+glow,c.b+glow
-        s:drawRect(0,2,s.width,s.height-4,a,r,g,b)
-        s:drawRect(2,0,s.width-4,2,a,r,g,b)
-        s:drawRect(2,s.height-2,s.width-4,2,a,r,g,b)
-        local glass=image(art.."glass.png")
-        if glass then s:drawTextureScaled(glass,0,0,s.width,s.height,a,1,1,1) end
-        if s.roomTile or s.roomLook=="primary" then
-            s:drawRectBorder(0,0,s.width,s.height,(enabled and .26 or .16)+s.roomHover*.30,.63,.76,.76)
+        s:drawRect(0,0,s.width,s.height,a,r,g,b)
+        if s.roomLook~="bare" and s.roomLook~="quiet" then
+            s:drawRect(0,0,s.width,1,a*(s.pressed and .06 or .23),.72,.83,.83)
+            s:drawRect(0,s.height-1,s.width,1,a*.57,.03,.05,.06)
         end
-        if s.roomActive then s:drawRect(3,s.height-3,s.width-6,2,.92,.875,.620,0) end
+        if s.roomHover>.01 then s:drawRectBorder(0,0,s.width,s.height,s.roomHover*.46,.58,.78,.78) end
+        if s.roomActive and s.roomTile~="chest" then s:drawRect(0,4,2,s.height-8,.92,.875,.620,0) end
         if s.tooltip then s:updateTooltip() end
     end
     b.render=function(s)
@@ -344,43 +351,42 @@ local function button(parent,x,y,w,title,target,callback)
         end
         if s.roomTile then
             local press=s.pressed and enabled and 1 or 0
-            local x,width=s.width/2,s.width-12
-            if s.roomTitleLines then
-                local tm=getTextManager()
-                local zoom=slotFontSize(tm,UIFont.Small,16)
-                if tm:MeasureStringX(UIFont.Small,s.roomTitle)*zoom>width then
-                    local lines,y=s.roomTitleLines,s.height-36
-                    if tm:MeasureStringX(UIFont.Small,lines[1])*zoom>width then
-                        lines,y=s.roomTitleNarrowLines,math.floor((s.height-48)/2)
-                    else
-                        featureIcon(s,s.roomTile,x-14.5,press,a)
-                    end
-                    for i,line in ipairs(lines) do
-                        label(s,line,x,y+(i-1)*16+press,16,width,.91,.92,.90,a,true)
-                    end
-                    return
-                end
+            featureIcon(s,s.roomTile,9,(s.height-22)/2+press,22,a)
+            local cy=math.floor(s.height/2)+press
+            local toggle=s.roomTile=="chest"
+            textInSlot(s,s.roomTitle,40,cy-12,24,s.width-40-(toggle and 50 or 27),.91,.94,.93,
+                a*(s.roomEnterAlpha or 1),nil,UIFont.Medium)
+            if toggle then
+                local x=s.width-41
+                s:drawRect(x,cy-7,32,14,1,.14,s.roomActive and .36 or .19,s.roomActive and .34 or .20)
+                s:drawRectBorder(x,cy-7,32,14,s.roomActive and .88 or .50,.47,.69,.68)
+                s:drawRect(x+(s.roomActive and 18 or 3),cy-5,11,10,1,s.roomActive and .76 or .44,s.roomActive and .91 or .52,s.roomActive and .86 or .53)
+            else
+                chevron(s,s.width-14,cy,"right",14,.52+s.roomHover*.45)
             end
-            featureIcon(s,s.roomTile,x-14.5,math.floor((s.height-50)/2)+press,a)
-            label(s,s.roomTitle,x,s.height-23+press,16,width,.91,.92,.90,a,true)
             return
         end
         if s.roomLook=="outfit" then
             local icon=image(art.."clothes.png")
-            if icon then s:drawTextureScaled(icon,(s.width-31)/2,(s.height-31)/2,31,31,a,.15,.21,.23) end
+            if icon then s:drawTextureScaled(icon,9,(s.height-20)/2,20,20,a,.86,.90,.90) end
+            label(s,s.roomTitle,34,(s.height-17)/2,17,s.width-40,.90,.93,.92,a)
+            return
+        end
+        if s.roomLook=="quiet" then
+            textInSlot(s,s.roomTitle,s.width/2,(s.height-16)/2,16,s.width-16,.77,.83,.83,a*(s.roomEnterAlpha or 1),.5)
             return
         end
         if s.roomWrappedTitle then
             local step=descriptionHeight()
             local top=(s.height-#s.roomWrappedTitle*step)/2
-            local tint=s.roomLook=="primary" and .94 or .12
+            local tint=.94
             for i,line in ipairs(s.roomWrappedTitle) do
                 s:drawTextCentre(line,s.width/2,top+(i-1)*step,tint,tint,tint,a,UIFont.Small)
             end
             return
         end
         if s.roomLook=="parts" or s.roomLook=="drawOnce" or s.roomLook=="drawTen" then
-            local t=(s.roomLook=="drawTen" or s.roomOutfitDraw) and .94 or .12
+            local t=enabled and .95 or .63
             label(s,s.roomTitle,s.width/2,(s.height-19)/2,19,s.width-16,t,t,t,1,true)
             return
         end
@@ -462,9 +468,10 @@ function W:createChildren()
         local width,height=math.floor(p.width),math.floor(p.height)
         local now=getTimestampMs()
         local locked=w.roomPage=="appearance" and character and character.unlockRequired==true
-        if w.browsed and now>=w.previewAt then
+        if w.browsed and now>=w.previewAt then w.previewRequestId=w.browsed.id end
+        if w.browsed and w.previewRequestId then
             local draw=w.tab=="overview" and GFL2ReadyRoom.drawOverviewCamera or GFL2ReadyRoom.drawBrowseCamera
-            ok=draw(w.player,w.browsed.id,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
+            ok=draw(w.player,w.previewRequestId,x,y,width,height,w.yaw,w.zoom,w.cameraPan,w.cameraFocus,locked==true)
         end
         if ok and locked then
             local glyph=image(art.."lock-large.png")
@@ -515,8 +522,9 @@ function W:createChildren()
     self.workshopButton:setHeight(43);self.workshopButton.roomLook="primary"
     self.workshopButton:setVisible(false)
     self.railWidth=115;self.gridWidth=math.min(365,math.floor(self.width*.255))
-    self.rightWidth=math.max(270,math.floor(self.width*.30));self.rightX=self.width-self.rightWidth-16
-    self.overviewWidth=math.max(228,math.floor(self.width*.193));self.overviewX=self.width-math.floor(self.width*.037)-self.overviewWidth
+    local rightEdge=self.width-math.floor(self.width*.037)
+    self.rightWidth=math.max(270,math.floor(self.width*.30));self.rightX=rightEdge-self.rightWidth
+    self.overviewWidth=clamp(math.floor(self.width*.225),248,320);self.overviewX=rightEdge-self.overviewWidth
     self.overviewY=math.floor(self.height*.157)
     local railY=math.floor(self.height*.105)
     self.sidebar=ISScrollingListBox:new(math.floor(self.width*.028),railY,self.railWidth,math.floor(self.height*.80));self.sidebar:initialise()
@@ -563,17 +571,26 @@ function W:createChildren()
         ISScrollingListBox.onMouseUpOutside(s,x,y)
     end
     self:addChild(self.sidebar)
-    self.rosterToggle=button(self,self.sidebar.x+self.sidebar.width+8,math.floor(self.height*.465),36,"",self,self.toggleRoster)
+    self.rosterToggle=button(self,self.sidebar.x+self.sidebar.width,math.floor(self.height*.465),28,"",self,self.toggleRoster)
     self.rosterToggle:setHeight(47)
     self.rosterToggle.roomArrow="right"
     self.rosterToggle.roomLook="navigation"
     self.rosterToggle:setSound("activate","GFL2RoomPage")
     self.content=panel(self,self.rightX,105,self.rightWidth,self.height-247)
-    local biography=panel(self,self.overviewX,self.overviewY+265,self.overviewWidth,1)
-    local renderPanel=biography.prerender
+    local drawContent=self.content.prerender
+    self.content.prerender=function(p)
+        drawContent(p)
+        if self.tab=="weaponDraw" and self.signatureWeapon then
+            local width=p.weaponTextWidth
+            textInSlot(p,getText(self.signatureWeapon.name),12,7,34,width,.97,.97,.95,1,nil,UIFont.Large)
+            p:drawRect(12,47,width,1,.25,.66,.76,.76)
+            description(p,p.weaponLines,12,56,width)
+        end
+    end
+    local biography=panel(self,self.overviewX,self.overviewY,self.overviewWidth,1)
     biography.prerender=function(p)
-        renderPanel(p)
-        description(p,p.lines,10,9,p.textWidth)
+        p:setStencilRect(0,0,p.width,p.height)
+        description(p,p.lines,14,8,p.textWidth)
     end
     biography:setVisible(false)
     self.biographyPanel=biography
@@ -587,7 +604,7 @@ function W:createChildren()
     self.gripAimButton:setVisible(false)
     self.expressionButton=button(self,0,0,86,tr("Expression"),self,function(w)w:setTab("expression")end)
     self:createExpressionFooter()
-    self.skinButton=button(self,0,0,44,"",self,function(w)w:setTab("skins")end)
+    self.skinButton=button(self,0,0,108,tr("RoomOutfits"),self,function(w)w:setTab("skins")end)
     self.skinButton.roomLook="outfit"
     self.skinButton:setTooltip(tr("RoomOutfits"))
     self.skinButton:setSound("activate","GFL2RoomPage")
@@ -602,40 +619,42 @@ function W:createChildren()
         local icon=image(art.."credits.png")
         if icon then b:drawTextureScaled(icon,x,7,29,29,1,1,1,1) end
         local affordable=economy.balance(self.player,"credits")>=price
-        number(b,price,x+33,10,23,affordable and .09 or .88,affordable and .15 or .24,.12)
+        number(b,price,x+33,10,23,affordable and .94 or .97,affordable and .96 or .49,affordable and .92 or .45)
     end
     self.physicsResetButton=button(self,0,0,86,tr("RoomPhysicsShort"),self,self.requestPhysicsReset)
+    self.physicsResetButton.roomLook="quiet"
     self.physicsResetButton:setTooltip(tr("PhysicsReset"))
-    self.bodyPhysicsButton=button(self,0,0,86,tr("BodyPhysicsToggle"),self,self.toggleBodyPhysics)
-    self.bodyPhysicsButton.roomTitleLines={tr("BodyPhysics"),tr("PhysicsSwitch")}
-    self.bodyPhysicsButton.roomTitleNarrowLines={tr("BodyPhysicsSubject"),tr("BodyPhysicsEffect"),tr("PhysicsSwitch")}
+    self.bodyPhysicsButton=button(self,0,0,86,tr("BodyPhysics"),self,self.toggleBodyPhysics)
     self.restoreButton=button(self,0,0,96,tr("Restore"),self,self.onRestore)
+    self.restoreButton.roomLook="quiet"
     self.motionTab=button(self,0,0,86,tr("RoomMotion"),self,self.requestMotionPage)
+    self.gripButton.roomTile="grip";self.expressionButton.roomTile="expression"
+    self.motionTab.roomTile="play";self.bodyPhysicsButton.roomTile="chest"
     self.foldButton=button(self,self.width-53,7,34,"",self,function(w)w:toggleRoomFold()end)
     self.foldButton.roomFold=true;self.foldButton.roomLook="bare"
     self.foldButton:setTooltip(tr("RoomFold"))
     self:createMotionPage()
     self.weaponCard=button(self,0,0,160,"",self,function(w)w:setTab("weaponDraw")end)
     self.weaponCard.prerender=function(b)
-        local hover=b.mouseOver or b.joypadFocused
+        local hover=hoverAmount(b,b.mouseOver or b.joypadFocused)
         frosted(b,self,0,0,b.width,b.height,.86)
-        b:drawRectBorder(0,0,b.width,b.height,hover and .83 or .34,.80,.76,.61)
+        if hover>0 then b:drawRectBorder(0,0,b.width,b.height,hover*.55,.65,.78,.78) end
     end
     self.weaponCard.render=function(b)
         local signatureWeapon=self.signatureWeapon
         local owned=economy.weaponProgress(self.player,signatureWeapon.id).acquired
         local icon=image(signatureWeapon.card)
         if icon then
-            local width=b.width-44
-            local height=width*icon:getHeight()/icon:getWidth()
-            b:setStencilRect(1,1,b.width-2,b.height-2)
-            b:drawTextureScaled(icon,13,b.height*.43-height/2,width,height,owned and 1 or .64,1,1,1)
-            b:clearStencilRect()
+            local bounds=signatureWeapon.cardBounds
+            local sx,sy=bounds and bounds[1] or 0,bounds and bounds[2] or 0
+            local sw,sh=bounds and bounds[3] or icon:getWidth(),bounds and bounds[4] or icon:getHeight()
+            local scale=math.min((b.width-64)/sw,(b.height-48)/sh)
+            local width,height=sw*scale,sh*scale
+            b:drawSubTexture(icon,sx,sy,sw,sh,(b.width-width)/2,(b.height-height)/2,width,height,owned and 1 or .64,1,1,1)
         end
-        label(b,getText(signatureWeapon.name),12,b.height-26,16,b.width-35,.94,.95,.94)
+        label(b,getText(signatureWeapon.name),12,b.height-22,16,b.width-48,.94,.95,.94)
         if not owned then lock(b,b.width-30,7) end
         chevron(b,b.width-14,b.height/2+8,"right",17,.72)
-        b:drawRect(0,b.height-3,b.width,3,owned and 1 or .63,.96,.66,.13)
     end
     self.weaponCard:setVisible(false)
     self.weaponClaimButton=button(self,0,0,160,getText("ContextMenu_GFL2_ClaimWeapon"),self,function(w)w:claimSignatureWeapon()end)
@@ -654,7 +673,6 @@ function W:createChildren()
     self.weaponSkinButton:setHeight(43)
     self.weaponSkinButton:setVisible(false)
     self.weaponSkinPanel=panel(self,0,0,230,100)
-    self.weaponSkinPanel.prerender=function(p) frosted(p,self,0,0,p.width,p.height,.84) end
     self.weaponSkinPanel:setVisible(false)
     self.weaponSkinRows={}
     self:createRoomResources()
@@ -668,7 +686,7 @@ local function resourceIcon(p,key,x,y,size)
     if t then p:drawTextureScaled(t,x,y,size,size,1,1,1,1) end
 end
 
-local function bindMotionEntryHold(window,add)
+local function bindResourceHold(window,add,action)
     local down,up,outside,moveOutside,update=add.onMouseDown,add.onMouseUp,add.onMouseUpOutside,add.onMouseMoveOutside,add.update
     local function eligible(b)
         return b.enable and b:getIsVisible() and b:isMouseOver() and window.roomPage=="appearance"
@@ -676,37 +694,35 @@ local function bindMotionEntryHold(window,add)
             and not window.exchange and not window.workshopPrompt and not window.drawAnimation
     end
     local function complete(b)
-        if not b.motionHold or getTimestampMs()-b.motionHold<10000 then return end
-        b.motionHold=nil
-        b.motionHoldConsumed=true
-        if motionEntryVisible(window) then motionEntryPlayers[window.playerIndex]=nil
-        else motionEntryPlayers[window.playerIndex]=window.player end
-        window:layoutOverview()
+        if not b.resourceHold or getTimestampMs()-b.resourceHold<10000 then return end
+        b.resourceHold=nil
+        b.resourceHoldConsumed=true
+        action(window)
     end
     add.onMouseDown=function(b,x,y)
         down(b,x,y)
-        if b.pressed and eligible(b) and not b.motionHold and not b.motionHoldConsumed then
-            b.motionHold=getTimestampMs()
+        if b.pressed and eligible(b) and not b.resourceHold and not b.resourceHoldConsumed then
+            b.resourceHold=getTimestampMs()
         end
     end
     add.onMouseUp=function(b,x,y)
         if eligible(b) then complete(b) end
-        b.motionHold=nil
-        if b.motionHoldConsumed then b.motionHoldConsumed=nil;b.pressed=false;return end
+        b.resourceHold=nil
+        if b.resourceHoldConsumed then b.resourceHoldConsumed=nil;b.pressed=false;return end
         return up(b,x,y)
     end
     add.onMouseUpOutside=function(b,x,y)
-        b.motionHold=nil;b.motionHoldConsumed=nil
+        b.resourceHold=nil;b.resourceHoldConsumed=nil
         return outside(b,x,y)
     end
     add.onMouseMoveOutside=function(b,dx,dy)
-        b.motionHold=nil
+        b.resourceHold=nil
         return moveOutside(b,dx,dy)
     end
     add.update=function(b)
         update(b)
-        if not b.motionHold then return end
-        if not eligible(b) or not isMouseButtonDown(0) then b.motionHold=nil
+        if not b.resourceHold then return end
+        if not eligible(b) or not isMouseButtonDown(0) then b.resourceHold=nil
         else complete(b) end
     end
 end
@@ -718,23 +734,42 @@ function W:createRoomResources()
     for i,key in ipairs(economy.keys)do
         local chip=ISPanel:new(start+(i-1)*(width+9),8,width,34)
         chip:initialise();chip.background=false
+        local add
         chip.prerender=function(p)
-            surface(p,0,0,p.width,p.height,.89)
+            p:drawRect(0,0,p.width,p.height,.42,.075,.11,.12)
+            p:drawRect(p.width-26,7,1,p.height-14,.32,.58,.69,.70)
             resourceIcon(p,key,2,1,32)
             local balance=economy.balance(self.player,key)
             local count=#string.format("%.0f",balance)
             local size=math.min(17,(p.width-62)/(count*.63))
             number(p,balance,p.width-29,(p.height-size)/2,size,.95,.96,.95,true)
+            local started=add.resourceHold or add.creditHold
+            local progress=0
+            if add.resourceHoldConsumed or add.creditGranted then progress=1
+            elseif started then progress=clamp((getTimestampMs()-started)/(key=="credits" and 8000 or 10000),0,1) end
+            if progress>=.05 then
+                p:drawRect(2,p.height-2,p.width-4,2,.40,.37,.47,.48)
+                p:drawRect(2,p.height-2,(p.width-4)*progress,2,.92,.58,.82,.77)
+            end
         end
         self:addChild(chip)
-        local add=button(chip,width-26,0,26,"+",self,function(w)w:openExchange(key)end)
+        add=button(chip,width-26,0,26,"+",self,function(w)w:openExchange(key)end)
         add:setHeight(34);add:setTooltip(tr(resourceTitles[key]))
+        add.roomLook="bare"
         add.render=function(b)
-            b:drawRect(6,15,14,4,1,.94,.95,.95)
-            b:drawRect(11,10,4,14,1,.94,.95,.95)
+            b:drawRect(7,16,12,2,1,.86,.91,.91)
+            b:drawRect(12,11,2,12,1,.86,.91,.91)
         end
         if key=="targeted" then
-            bindMotionEntryHold(self,add)
+            bindResourceHold(self,add,function(w)
+                if motionEntryVisible(w) then motionEntryPlayers[w.playerIndex]=nil
+                else motionEntryPlayers[w.playerIndex]=w.player end
+                w:layoutOverview()
+            end)
+        elseif key=="outfit" and not self.multiplayerSession then
+            bindResourceHold(self,add,function(w)
+                if economy.toggleRecordingUnlocks(w.player)~=nil then w:refresh() end
+            end)
         elseif key=="credits" and not self.multiplayerSession then
             local originalDown,originalUp,originalOutside=add.onMouseDown,add.onMouseUp,add.onMouseUpOutside
             add.onMouseDown=function(b,x,y)
@@ -773,7 +808,7 @@ function W:createRoomResources()
         local width=math.floor(self.width*.137)
         local right=math.floor(self.width*.963)
         local x=right-width*2-19+(i-1)*(width+19)
-        local b=button(self,x,math.floor(self.height*.892),width,tr(key),self,function(w)
+        local b=button(self,x,math.floor(self.height*.919),width,tr(key),self,function(w)
             if w.tab=="outfitDraw" then w:requestOutfitDraw(count)
             elseif w.tab=="weaponDraw" then w:requestWeaponDraw(count)
             else w:requestCharacterDraw(count) end
@@ -784,6 +819,8 @@ function W:createRoomResources()
         b.render=function(p)
             draw(p)
             surface(p,0,-29,p.width,25,.79)
+            local anim=self.drawAnimation
+            if anim and self.drawButtons[anim.button]==p and anim.soundIndex and anim.results[anim.soundIndex]==false then return end
             resourceIcon(p,p.roomOutfitDraw and "outfit" or "targeted",p.width/2-34,-32,29)
             label(p,"×",p.width/2-4,-24,15,12)
             number(p,count,p.width/2+9,-24,15,.96,.96,.95)
@@ -793,7 +830,7 @@ function W:createRoomResources()
     end
 end
 
-local drawStep,missLife,hitLife=215,720,1150
+local drawStep,missLife,hitLife=215,205,1180
 
 -- Single-player settles immediately. In multiplayer only a server reply can start the animation.
 function W:roomTransaction(command,target,count,localAction,onResult)
@@ -826,7 +863,7 @@ function W:requestCharacterDraw(count)
         if not results then return end
         self.drawNotice=nil
         self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
-            character=character.name,portrait=character.portrait,misses=misses,button=count==1 and 1 or 2}
+            character=character.name,rewardName=roleNames[character.name] or character.name,portrait=character.portrait,misses=misses,button=count==1 and 1 or 2}
         self:layoutOverview()
     end)
 end
@@ -846,7 +883,7 @@ function W:requestOutfitDraw(count)
         if not results then return end
         self.drawNotice=nil
         self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",outfit=entry.id,
-            portrait=entry.meta.portrait,misses=misses,button=count==1 and 1 or 2}
+            rewardName=outfitName(entry),portrait=entry.meta.portrait,misses=misses,button=count==1 and 1 or 2}
         self:layoutOverview()
     end)
 end
@@ -863,7 +900,7 @@ function W:requestWeaponDraw(count)
         if not results then return end
         self.drawNotice=nil
         self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
-            weapon=true,portrait=signatureWeapon.icon,misses=previousMisses,button=count==1 and 1 or 2}
+            weapon=true,rewardName=getText(signatureWeapon.name),portrait=signatureWeapon.icon,misses=previousMisses,button=count==1 and 1 or 2}
         self:layoutOverview()
     end)
 end
@@ -930,19 +967,24 @@ function W:layoutWeaponSkins(weapon,variants,visible,selected)
             self.weaponSkinRows[#self.weaponSkinRows+1]=b
         end
     end
-    local y=8
-    for _,row in ipairs(self.weaponSkinRows) do
-        if row.roomLocalizedPaint then
-            row.roomWrappedTitle=describe(row.roomTitle,width-32)
+    local function arrange(rowWidth)
+        local y=8
+        for _,row in ipairs(self.weaponSkinRows) do
+            if row.roomLocalizedPaint then row.roomWrappedTitle=describe(row.roomTitle,rowWidth-16) end
+            local lines=row.roomWrappedTitle and #row.roomWrappedTitle or 1
+            row:setY(y);row:setWidth(rowWidth)
+            row:setHeight(math.max(34,lines*descriptionHeight()+12))
+            row.roomLook=row.skinId==selected and "primary" or "drawOnce"
+            y=y+row.height+5
         end
-        local lines=row.roomWrappedTitle and #row.roomWrappedTitle or 1
-        row:setY(y);row:setWidth(width-16)
-        row:setHeight(math.max(34,lines*descriptionHeight()+12))
-        row.roomLook=row.skinId==selected and "primary" or "drawOnce"
-        y=y+row.height+5
+        return y+8
     end
-    p:setHeight(y+8)
-    p:setScrollHeight(p.height)
+    local total=arrange(width-16)
+    local maxHeight=math.floor((self.fullHeight-p.y)*.5)
+    if total>maxHeight then total=arrange(width-30) end
+    p:setHeight(math.min(total,maxHeight))
+    p:setScrollHeight(total)
+    p:setYScroll(clamp(p:getYScroll(),p.height-p:getScrollHeight(),0))
     p:bringToTop()
 end
 
@@ -974,26 +1016,25 @@ function W:drawRecruitmentResults()
     if not a then return end
     local elapsed=getTimestampMs()-a.started
     local button=self.drawButtons[a.button]
-    local x=button.x+(button.width-142)/2
     local portrait=a.weapon and image(a.portrait) or portraitImage(a.portrait)
+    local right=self.drawButtons[2].x+self.drawButtons[2].width
     for i,hit in ipairs(a.results)do
         local age=elapsed-(i-1)*drawStep
         local life=hit and hitLife or missLife
         if age>=0 and age<life then
-            local rise=hit and 119*ease(age/520) or 185*age/life
-            local y=button.y-47-rise
-            local alpha=clamp(age/80,0,1)*clamp((life-age)/190,0,1)
             if hit then
-                self:drawRect(x,y,142,47,.94*alpha,.27,.18,.04)
-                self:drawRectBorder(x-1,y-1,144,49,alpha,.99,.72,.22)
-                self:drawRectBorder(x+1,y+1,140,45,alpha,.96,.61,.12)
-                if portrait then self:drawTextureScaled(portrait,x+5,y+4,40,40,alpha,1,.96,.86) end
-                label(self,tr("RoomDrawHit"),x+52,y+13,19,84,1,.85,.46,alpha)
+                local width=right-self.drawButtons[1].x
+                local x,y=right-width,button.y-99+4*(1-ease(age/130))
+                local alpha=ease(age/120)*clamp((life-age)/160,0,1)
+                self:drawRect(x,y,width,58,.94*alpha,.10,.14,.15)
+                self:drawRect(x,y,3,58,alpha,.99,.72,.22)
+                if portrait then self:drawTextureScaledAspect(portrait,x+7,y+6,46,46,alpha,1,1,1) end
+                label(self,tr("RoomDrawHit"),x+63,y+5,14,width-72,1,.76,.33,alpha)
+                label(self,a.rewardName or "",x+63,y+25,21,width-72,.96,.97,.95,alpha)
             else
-                self:drawRect(x,y,142,47,.91*alpha,.05,.07,.08)
-                self:drawRectBorder(x,y,142,47,.46*alpha,.28,.32,.33)
-                if portrait then self:drawTextureScaled(portrait,x+5,y+4,40,40,alpha,.11,.12,.13) end
-                label(self,tr("RoomDrawMiss"),x+52,y+14,16,84,.72,.76,.77,alpha)
+                local alpha=clamp(age/35,0,1)*clamp((life-age)/90,0,1)
+                label(self,tr("RoomDrawMiss"),button.x+button.width/2,button.y-20-4*ease(age/life),14,
+                    button.width,.73,.79,.79,alpha,true)
             end
         end
     end
@@ -1181,6 +1222,24 @@ function W:useExpressionSlot(index)
     self.actions.expressionRemember(self.player)
 end
 
+local function motionTrack(slider,x,y,width,seek)
+    local over=not slider.disabled and slider:isMouseOver() and (not seek or slider:getMouseY()>=13)
+    local hover=hoverAmount(slider,over or (not slider.disabled and (slider.dragInside or slider.joypadFocused)))
+    local h=slider.dragInside and not slider.disabled and 4 or 3
+    slider:drawRect(x,y,width,h,.92,.15+.07*hover,.21+.08*hover,.24+.08*hover)
+    if slider.disabled then return end
+    local fill=width*clamp(slider.currentValue,0,1)
+    if fill>0 then slider:drawRect(x,y,fill,h,1,seek and .94 or .53,seek and .71 or .77,seek and .38 or .73) end
+    if seek and over and not slider.dragInside then
+        local tick=clamp(slider:getMouseX(),x,x+width-1)
+        slider:drawRect(tick,y-3,1,h+6,.76*hover,.85,.90,.88)
+    end
+    local knob=image(art.."knob.png")
+    local size=slider.dragInside and 12 or 8+2*hover
+    if knob then slider:drawTextureScaled(knob,x+fill-size/2,y+(h-size)/2,size,size,1,
+        seek and 1 or .76,seek and .80 or .92,seek and .52 or .87) end
+end
+
 function W:createMotionPage()
     self.motionPanelWidth=math.min(550,self.fullWidth)
     self.motionPanelHeight=math.min(450,self.fullHeight)
@@ -1199,11 +1258,16 @@ function W:createMotionPage()
     list:initialise();list.itemheight=42
     list.backgroundColor={r=.035,g=.055,b=.065,a=0}
     list.doDrawItem=function(s,y,row,alt)
+        local scroll=s:getYScroll()
+        if y+row.height+scroll<=0 or y+scroll>=s.height then return y+row.height end
+        local hover=hoverAmount(row,s.mouseoverselected==row.index and s:isMouseOver() and not s:isMouseOverScrollBar())
         if row.index==s.selected then
-            s:drawRect(0,y,s.width-14,row.height-2,.93,.15,.19,.20)
+            s:drawRect(0,y,s.width-14,row.height-2,.93,.15+.04*hover,.19+.05*hover,.20+.05*hover)
             s:drawRect(0,y+4,2,row.height-10,1,1,.71,.38)
-        elseif s.mouseoverSelected==row.index then s:drawRect(0,y,s.width-14,row.height-2,.60,.13,.20,.24)
-        elseif alt then s:drawRect(0,y,s.width-14,row.height-2,.42,.055,.085,.105) end
+        else
+            if alt then s:drawRect(0,y,s.width-14,row.height-2,.42,.055,.085,.105) end
+            if hover>0 then s:drawRect(0,y,s.width-14,row.height-2,.76*hover,.18,.28,.30) end
+        end
         label(s,row.text,9,y+5,17,s.width-28)
         label(s,row.source,9,y+24,13,s.width-28,.58,.70,.72)
         return y+row.height
@@ -1234,7 +1298,7 @@ function W:createMotionPage()
         label(p,w.motionStatus or tr("MotionStopped"),28,40,17,textWidth-16,.69,.86,.88)
         if w.motionPlayingLabel then label(p,w.motionPlayingLabel,12,60,17,textWidth) end
         label(p,tr("MotionSpeed"),12,118,15,textWidth-66,.65,.73,.77)
-        textInSlot(p,string.format("%.2f×",w.motionSpeed.currentValue),p.width-12,118,15,60,.82,.88,.90,1,1)
+        textInSlot(p,string.format("%.2fx",w.motionSpeed.currentValue),p.width-12,118,15,60,.82,.88,.90,1,1)
         p:drawRect(12,162,textWidth,1,.28,.41,.55,.60)
         label(p,tr("MotionSelected"),12,171,14,textWidth,.65,.73,.77)
         label(p,w.motionSelectedLabel or tr("MotionNoSelection"),12,189,16,textWidth)
@@ -1259,9 +1323,7 @@ function W:createMotionPage()
         physics=control(12,316,half,"MotionPhysicsOn","physics"),
         reset=control(18+half,316,width-half-6,"MotionPhysicsReset","reset"),
     }
-    self.motionButtons.play.backgroundColor={r=.23,g=.18,b=.12,a=.97}
-    self.motionButtons.play.borderColor={r=1,g=.73,b=.42,a=.95}
-    self.motionButtons.play.roomActive=true
+    self.motionButtons.play.roomLook="primary"
     for _,key in ipairs({"play","pause","restart","stop"})do self.motionButtons[key].roomIcon=key end
     self:createMotionTimeline(box,width)
     local speed=ISSliderPanel:new(12,135,width,21,self,function(w,value)
@@ -1270,7 +1332,13 @@ function W:createMotionPage()
     end)
     speed:initialise();speed:instantiate()
     speed:setDoButtons(false);speed:setValues(0,1,.01,.1,true)
+    speed.sliderBarDim.x=6;speed.sliderBarDim.w=width-12
     speed.currentValue=1;speed.disabled=true
+    local speedDown=speed.onMouseDown
+    speed.onMouseDown=function(s,x,y)
+        if not s.disabled then return speedDown(s,x,y) end
+    end
+    speed.render=function(s)motionTrack(s,s.sliderBarDim.x,math.floor(s.height/2)-1,s.sliderBarDim.w,false)end
     box:addChild(speed);self.motionSpeed=speed
 end
 
@@ -1285,7 +1353,7 @@ function W:createMotionTimeline(box,width)
     slider:setDoButtons(false);slider:setValues(0,1,.00001,.01,true)
     slider.currentValue=0;slider.disabled=true
     slider:paginate()
-    slider.sliderBarDim.x=4;slider.sliderBarDim.w=width-8
+    slider.sliderBarDim.x=6;slider.sliderBarDim.w=width-12
     local mouseDown=slider.onMouseDown
     slider.cancel=function(s)
         if not s.dragInside then return end
@@ -1314,15 +1382,7 @@ function W:createMotionTimeline(box,width)
         local state=s.target.motionPlayback
         local duration=state and state.endFrame or 0
         local frame=s.dragInside and duration*s.currentValue or state and state.frame or 0
-        local startX=s.sliderBarDim.x
-        local track=s.sliderBarDim.w
-        local fill=track*clamp(s.currentValue,0,1)
-        s:drawRect(startX,25,track,3,.92,.15,.21,.24)
-        if not s.disabled then
-            if fill>0 then s:drawRect(startX,25,fill,3,1,1,.71,.38) end
-            local knob=image(art.."knob.png")
-            if knob then s:drawTextureScaled(knob,startX+fill-4,22,8,8,1,1,.79,.51) end
-        end
+        motionTrack(s,s.sliderBarDim.x,25,s.sliderBarDim.w,true)
         local current=math.floor(frame/30)
         local total=math.floor(duration/30)
         if current~=s.lastSecond then s.lastSecond=current;s.clock=clockText(frame) end
@@ -1421,6 +1481,7 @@ function W:refreshMotionControls()
     for _,key in ipairs({"pause","restart","stop","physics","reset"})do b[key]:setEnable(active and not self.waiting)end
     b.reset:setEnable(active and state.physics and not self.waiting)
     b.pause.roomTitle=tr(state.paused and "MotionResume" or "MotionPause")
+    b.pause.roomActive=active and state.paused
     b.pause.roomIcon=state.paused and "play" or "pause"
     b.physics.roomTitle=tr(state.physics and "MotionPhysicsOn" or "MotionPhysicsOff")
 end
@@ -1483,7 +1544,6 @@ function W:setRoomPage(page)
     self:closeWorkshopPrompt()
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
-    self.pageFade=getTimestampMs()
     self:closeExchange()
     if page=="motions" then
         GFL2ReadyRoom.release(self.player)
@@ -1499,6 +1559,7 @@ function W:setRoomPage(page)
     self.preview:onMouseUp()
     self.sidebar.roomDown=false;self.sidebar:setCapture(false)
     self.gripAiming=false
+    self:endTabMotion()
     self.roomPage=page;self.foldButton:setX(self.width-53);self:roomVisibility()
     if page=="motions" then self:refreshMotionLibrary() else self:refreshControls() end
 end
@@ -1509,6 +1570,7 @@ function W:toggleRoomFold()
     self:closeExchange()
     self:closeMotionPathDialog()
     self.motionSeek:cancel()
+    self:endTabMotion()
     self.folded=not self.folded
     self.preview:onMouseUp()
     self.sidebar.roomDown=false;self.sidebar:setCapture(false)
@@ -1524,23 +1586,68 @@ function W:toggleRoomFold()
     self:roomVisibility()
 end
 
+function W:layoutWeaponDescription(weapon)
+    local p=self.content
+    local x=math.floor(self.fullWidth*.045)-12
+    local width=math.floor(self.fullWidth*.32)+24
+    local top=self:titleBarHeight()+12
+    if self.weaponSkinPanel:getIsVisible() then top=self.weaponSkinPanel.y+self.weaponSkinPanel.height+8 end
+    local scene=self.weaponPreview
+    if x+width+8>scene.x then top=math.max(top,scene.y+scene.height+8) end
+    local bottom=self.fullHeight-14
+    local textWidth=width-24
+    local lines=describe(getText(weapon.description),textWidth)
+    if 65+#lines*descriptionHeight()>bottom-top then
+        textWidth=textWidth-16
+        lines=describe(getText(weapon.description),textWidth)
+    end
+    local total=65+#lines*descriptionHeight()
+    local y=math.max(top,bottom-total)
+    p:setX(x);p:setY(y);p:setWidth(width);p:setHeight(math.min(total,bottom-y))
+    p:setScrollHeight(total);p:setYScroll(clamp(p:getYScroll(),p.height-total,0))
+    p.weaponLines,p.weaponTextWidth=lines,textWidth
+end
+
 function W:createWeaponPreview(signatureWeapon)
-    if self.weaponPreview then self:removeChild(self.weaponPreview) end
-    local width=math.floor(self.width*.50)
-    local scene=ISUI3DScene:new(math.floor((self.width-width)/2),64,width,math.floor(self.fullHeight*.70))
+    if self.weaponPreview then
+        self.weaponPreview:onMouseUp()
+        self:removeChild(self.weaponPreview)
+    end
+    local side=math.floor(self.fullWidth*.035)+math.max(160,math.floor(self.fullWidth*.205))+8
+    local bottom=self.drawButtons[1].y-110
+    -- UI3DScene normalizes its projection to the viewport width. A square keeps the
+    -- authored full-weapon framing valid when a long barrel rotates towards vertical.
+    local size=math.min(self.fullWidth-2*side,2*bottom-self.fullHeight)
+    local scene=ISUI3DScene:new(math.floor((self.fullWidth-size)/2),math.floor((self.fullHeight-size)/2),size,size)
     scene.background=false
     scene:initialise()
     scene:instantiate()
     local java=scene.javaObject
     local id=signatureWeapon.id
     local model=weaponSkins.model(id,economy.weaponProgress(self.player,id).skin) or id
+    local script=getScriptManager():getModelScript(model)
+    local muzzle=script and script:getAttachmentById("muzzle")
+    -- The muzzle's local roll also describes which side of the barrel is up.
+    local tilt=muzzle and (180-muzzle:getRotate():z())%360 or 0
     scene:setView("UserDefined")
-    java:fromLua3("setViewRotation",-82,0,90)
+    java:fromLua3("setViewRotation",-82+tilt,0,90)
     java:fromLua1("setDrawGrid",false)
-    java:fromLua1("setMaxZoom",17)
-    java:fromLua1("setZoom",signatureWeapon.previewZoom or 14)
+    local maxZoom=math.floor(signatureWeapon.previewZoom or 14)
+    local zoom=maxZoom
+    java:fromLua1("setMaxZoom",maxZoom)
+    java:fromLua1("setZoom",zoom)
     java:fromLua2("createModel",id,model)
-    java:fromLua1("getObjectTranslation",id):set(0,-signatureWeapon.previewCenterY,signatureWeapon.previewCenterZ or 0)
+    local translation=java:fromLua1("getObjectTranslation",id)
+    if not GFL2ReadyRoom.centerWeaponPreview(model,translation) then
+        scene.prerender=function(p)
+            if GFL2ReadyRoom.centerWeaponPreview(model,translation) then p.prerender=nil end
+        end
+    end
+    scene.onMouseWheel=function(_,delta)
+        zoom=clamp(zoom-delta,1,maxZoom)
+        java:fromLua1("setZoom",zoom)
+        return true
+    end
     scene.onMouseDown=function(p)
         p.orbit=true
         p:setCapture(true)
@@ -1550,7 +1657,7 @@ function W:createWeaponPreview(signatureWeapon)
         if not p.orbit then return false end
         p.pitch=clamp((p.pitch or -82)+dy*.35,-175,-5)
         p.heading=((p.heading or 0)+dx*.35)%360
-        java:fromLua3("setViewRotation",p.pitch,p.heading,90)
+        java:fromLua3("setViewRotation",p.pitch+tilt,p.heading,90)
         return true
     end
     scene.onMouseMoveOutside=scene.onMouseMove
@@ -1567,6 +1674,7 @@ function W:createWeaponPreview(signatureWeapon)
 end
 
 function W:layoutOverview()
+    self:endTabMotion()
     local overview=self.tab=="overview"
     local skins=self.tab=="skins"
     local character=self.byCharacter and self.byCharacter[self.character]
@@ -1612,11 +1720,12 @@ function W:layoutOverview()
     self.weaponSkinButton:setVisible(showSkins)
     local skin=progress.skin or ""
     local previewModel=weaponPage and (weaponSkins.model(signatureWeapon.id,skin) or signatureWeapon.id)
+    self:layoutWeaponSkins(signatureWeapon,variants,showSkins and self.weaponSkinOpen==true,skin)
     if weaponPage and (not self.weaponPreview or self.weaponPreview.weaponId~=signatureWeapon.id
             or self.weaponPreview.skinModel~=previewModel) then
         self:createWeaponPreview(signatureWeapon)
     end
-    self:layoutWeaponSkins(signatureWeapon,variants,showSkins and self.weaponSkinOpen==true,skin)
+    if weaponPage then self:layoutWeaponDescription(signatureWeapon) end
     if self.weaponPreview then
         if not weaponPage and self.weaponPreview.orbit then self.weaponPreview:onMouseUp() end
         self.weaponPreview:setVisible(not not weaponPage)
@@ -1627,44 +1736,47 @@ function W:layoutOverview()
         b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw or weaponDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-    local controls={self.gripButton,self.expressionButton,self.motionTab,self.physicsResetButton,self.bodyPhysicsButton}
-    local symbols={"grip","expression","play","restart","chest"}
-    local inset,gap,tileHeight=12,8,64
-    local tileWidth=math.floor((width-inset*2-gap*2)/3)
-    local tile=0
-    local motionVisible=motionEntryVisible(self)
-    for i,b in ipairs(controls) do
-        local listed=b~=self.motionTab or motionVisible
-        b:setVisible(listed and available and overview)
-        if listed then
-            b.roomTile=symbols[i]
-            b:setX(x+inset+(tile%3)*(tileWidth+gap))
-            b:setY(y+76+math.floor(tile/3)*(tileHeight+gap))
-            b:setWidth(tileWidth);b:setHeight(tileHeight)
-            tile=tile+1
-        end
-    end
     local physicsAvailable=available and overview and self:canEditCurrent()
-    self.bodyPhysicsButton:setVisible(not not physicsAvailable)
+    local inner=width-24
+    local rowY=y+54
+    for _,b in ipairs({self.gripButton,self.expressionButton,self.motionTab,self.bodyPhysicsButton}) do
+        local listed=(b~=self.motionTab or motionEntryVisible(self)) and (b~=self.bodyPhysicsButton or physicsAvailable)
+        b:setVisible(not not (listed and available and overview))
+        b:setX(x+12);b:setY(rowY);b:setWidth(inner);b:setHeight(35)
+        if listed then rowY=rowY+37 end
+    end
     local physicsOn=physicsAvailable and GFL2CharacterRuntime.modelPhysicsEnabled(self.player)
     self.bodyPhysicsButton.roomActive=not not physicsOn
     self.bodyPhysicsButton:setTooltip(getText(physicsOn and "ContextMenu_GFL2_BodyPhysicsOn" or "ContextMenu_GFL2_BodyPhysicsOff"))
-    self.restoreButton:setX(x+10);self.restoreButton:setY(y+226)
-    self.restoreButton.roomLook="bare"
-    self.restoreButton:setVisible(available and overview and GFL2CharacterRuntime.isEnabled(self.player))
-    self.wearButton:setX(x);self.wearButton:setY(math.floor(self.height*.919))
-    self.wearButton:setWidth(width);self.wearButton:setHeight(43)
+    local restore=available and overview and GFL2CharacterRuntime.isEnabled(self.player)
+    self.physicsResetButton:setVisible(available and overview)
+    self.restoreButton:setVisible(restore)
+    local half=math.floor((inner-6)/2)
+    local tm=getTextManager()
+    local zoom=slotFontSize(tm,UIFont.Small,16)
+    local stacked=restore and tm:MeasureStringX(UIFont.Small,self.restoreButton.roomTitle)*zoom>half-16
+    local split=restore and not stacked
+    rowY=rowY+4
+    self.physicsResetButton:setX(x+12);self.physicsResetButton:setY(rowY)
+    self.physicsResetButton:setWidth(split and half or inner);self.physicsResetButton:setHeight(28)
+    self.restoreButton:setX(split and x+18+half or x+12);self.restoreButton:setY(stacked and rowY+30 or rowY)
+    self.restoreButton:setWidth(split and inner-half-6 or inner);self.restoreButton:setHeight(28)
+    self.biographyPanel:setY(rowY+(stacked and 66 or 36))
+    local secondary=math.floor((width-6)*.43)
+    local splitFooter=available and (overview or skins)
+    self.wearButton:setX(splitFooter and x+secondary+6 or x);self.wearButton:setY(math.floor(self.height*.919))
+    self.wearButton:setWidth(splitFooter and width-secondary-6 or width);self.wearButton:setHeight(43)
     self.wearButton:setVisible(available and self.tab~="outfitDraw" and not weaponPage and (overview or skins or not self:canEditCurrent()))
     self.weaponCard:setX(x)
     self.weaponCard:setWidth(width)
-    self.weaponCard:setHeight(clamp(math.floor(self.fullHeight*.103),56,90))
-    self.weaponCard:setY(self.wearButton.y-self.weaponCard.height-14)
+    self.weaponCard:setHeight(clamp(math.floor(self.fullHeight*.15),84,132))
+    self.weaponCard:setY(self.wearButton.y-self.weaponCard.height-6)
     self.weaponCard:setVisible(not not (signatureWeapon and overview and (available or progress.acquired)))
-    self.skinButton:setWidth(46);self.skinButton:setHeight(43)
-    self.skinButton:setX(x-58);self.skinButton:setY(self.wearButton.y)
+    self.skinButton:setWidth(secondary);self.skinButton:setHeight(43)
+    self.skinButton:setX(x);self.skinButton:setY(self.wearButton.y)
     self.skinButton:setVisible(available and overview)
-    self.pageButton:setWidth(136);self.pageButton:setHeight(43)
-    self.pageButton:setX(x-150);self.pageButton:setY(self.wearButton.y)
+    self.pageButton:setWidth(secondary);self.pageButton:setHeight(43)
+    self.pageButton:setX(x);self.pageButton:setY(self.wearButton.y)
     self.pageButton:setVisible(available and skins)
     if not overview then self.sidebar.roomHoverCharacter=nil end
     self.sidebar:setVisible(overview)
@@ -1720,7 +1832,7 @@ function W:drawCharacter(y,item,alt)
         end
         for i,entry in ipairs(item.item) do
             local x,top,size,height=rosterCard(window,i,y)
-            local hover=self.roomHoverCharacter==entry
+            local hover=hoverAmount(entry,self.roomHoverCharacter==entry)
             local selected=window.character==entry.name
             local texture=portraitImage(entry.portrait)
             self:drawRect(x,top,size,size,.96,.76,.76,.79)
@@ -1734,8 +1846,8 @@ function W:drawCharacter(y,item,alt)
             if selected then
                 self:drawRectBorder(x,top,size,height,1,.99,.55,.21)
                 self:drawRect(x+1,top+height-2,size-2,2,1,.99,.55,.21)
-            elseif hover then
-                self:drawRectBorder(x,top,size,height,.85,.69,.82,.83)
+            elseif hover>0 then
+                self:drawRectBorder(x,top,size,height,hover*.85,.69,.82,.83)
             end
         end
     else
@@ -1744,29 +1856,15 @@ function W:drawCharacter(y,item,alt)
         local t=portraitImage(entry.portrait)
         local shade=(entry.locked or entry.unlockRequired) and .47 or 1
         local cx,cy=55,y+item.height/2
-        local hovered=self.roomHoverCharacter==entry
-        local size=selected and 84 or 76
+        local hover=hoverAmount(entry,self.roomHoverCharacter==entry)
+        local size=selected and 84 or 76+2*hover
         if t then self:drawTextureScaled(t,cx-size/2,cy-size/2,size,size,1,shade,shade,shade) end
         local ring=image(data.portraitRing)
         if ring then
             if selected then
-                self:drawTextureScaled(ring,cx-51,cy-51,102,102,.17,.40,.82,.81)
-                self:drawTextureScaled(ring,cx-46,cy-46,92,92,.99,.92,.93,.92)
-            elseif hovered then self:drawTextureScaled(ring,cx-41,cy-41,82,82,.90,.65,.76,.77)
-            else self:drawTextureScaled(ring,cx-40,cy-40,80,80,.68,.37,.42,.43) end
-        end
-        if selected then
-            local phase=getTimestampMs()/475
-            for i=0,4 do
-                local a=phase-i*.083
-                self:drawRect(cx+math.cos(a)*45,cy+math.sin(a)*45,2,2,.78-i*.14,.67,.92,.89)
-            end
-        elseif not entry.locked then
-            for i=0,10 do
-                local a=(.22+i*.057)*math.pi
-                local b=a+.057*math.pi
-                self:drawLine2(cx+math.cos(a)*37,cy+math.sin(a)*37,cx+math.cos(b)*37,cy+math.sin(b)*37,.88,.875,.620,0)
-            end
+                self:drawTextureScaled(ring,cx-46,cy-46,92,92,.99,1,.71,.38)
+            else self:drawTextureScaled(ring,cx-size/2-2,cy-size/2-2,size+4,size+4,
+                .68+.22*hover,.37+.28*hover,.42+.34*hover,.43+.34*hover) end
         end
         if entry.locked or entry.unlockRequired then lock(self,cx+21,cy+20) end
     end
@@ -1784,10 +1882,10 @@ function W:clearContent()
     if self.content.roomScrollDrag then self.content:onMouseUp() end
     self.content:setYScroll(0)
 end
-function W:addLabel(value,y,textHeight)
+function W:addLabel(value,y,textHeight,width)
     textHeight=textHeight or 20
-    local p=ISPanel:new(0,y,self.rightWidth-18,math.max(25,textHeight+6));p:initialise();p.background=false
-    p.prerender=function(s)s:drawRect(0,6,3,13,1,.24,.66,.69);label(s,value,10,3,textHeight,s.width-14)end
+    local p=ISPanel:new(0,y,width or self.rightWidth-32,math.max(25,textHeight+6));p:initialise();p.background=false
+    p.prerender=function(s)label(s,value,0,3,textHeight,s.width-4,.83,.90,.89)end
     self.content:addChild(p);table.insert(self.widgets,p)
 end
 function W:addTile(x,y,width,height,title,path,active,callback)
@@ -1798,7 +1896,7 @@ function W:addTile(x,y,width,height,title,path,active,callback)
     local captionHeight=math.max(25,descriptionHeight()+6)
     b.prerender=function(s)
         local enabled=s.enable~=false
-        tile(s,0,0,s.width,s.height,path,title,captionHeight,active,enabled and s.mouseOver,enabled and s.pressed)
+        tile(s,0,0,s.width,s.height,path,title,captionHeight,active,hoverAmount(s,enabled and (s.mouseOver or s.joypadFocused)),enabled and s.pressed)
         s:updateTooltip()
     end
     b.render=function()end
@@ -1809,30 +1907,26 @@ function W:carousel(character)
     p.entries=character.skins;p.index=1;p.offset=0
     local function cardHeight(s)return math.min(math.floor(self.fullHeight*.44),s.height-28) end
     for i,e in ipairs(p.entries)do if e.id==(self.browseId or self.currentId)then p.index=i end end
-    local function select(s,index,openPool)
-        local nextIndex=clamp(index,1,#s.entries)
-        if s.index~=nextIndex then
-            s.slideFrom=(nextIndex-s.index)*(cardHeight(s)*.505+15)+s.offset
-            s.changedAt=getTimestampMs()
-            roomSound("Select")
-        end
-        s.index=nextIndex;s.offset=0
-        local entry=s.entries[s.index]
-        self:previewEntry(entry);self:updateWear()
-        if openPool and entry.outfitPool and entry.outfitLocked and entry.id~=self.currentId then
-            self:setTab("outfitDraw")
-        end
+    local function step(s)return cardHeight(s)*.505+15 end
+    local function position(s)
+        if s.dragging then return clamp(s.dragOrigin-s.offset/step(s),1,#s.entries) end
+        if not s.changedAt then return s.index end
+        local t=ease((getTimestampMs()-s.changedAt)/180)
+        return s.slideFrom+(s.index-s.slideFrom)*t
     end
-    local function cardRect(s,i,phase)
+    local function select(s,index,from)
+        index=clamp(index,1,#s.entries)
+        from=from or position(s)
+        if index~=s.index then roomSound("Select") end
+        s.index=index;s.slideFrom=from;s.changedAt=getTimestampMs();s.offset=0
+        self:previewEntry(s.entries[index]);self:updateWear()
+    end
+    local function cardRect(s,i,cursor)
         local height=cardHeight(s)
         local width=height*.505
-        local scale=i==s.index and (.88+.12*phase) or .88
+        local scale=.88+.12*math.max(0,1-math.abs(i-cursor))
         local w,h=width*scale,height*scale
-        local x=s.width/2-w/2+(i-s.index)*(width+15)+s.offset+(s.slideFrom or 0)*(1-phase)
-        return x,(s.height-h)/2,w,h
-    end
-    local function phaseAt(s)
-        return s.changedAt and ease((getTimestampMs()-s.changedAt)/180) or 1
+        return (s.width-w)/2+(i-cursor)*step(s),(s.height-h)/2,w,h
     end
     local function cardAt(s,x,y,phase)
         if x<0 or x>=s.width or y<0 or y>=s.height then return nil end
@@ -1843,15 +1937,16 @@ function W:carousel(character)
     end
     p.prerender=function(s)
         s:setStencilRect(0,0,s.width,s.height)
-        local phase=phaseAt(s)
+        local phase=position(s)
         local hover=s:isMouseOver() and not s.dragging and cardAt(s,s:getMouseX(),s:getMouseY(),phase)
         local function card(i)
             local active=i==s.index
             local x,y,w,h=cardRect(s,i,phase)
             if x+w<=0 or x>=s.width then return end
             local meta=s.entries[i].meta
+            local amount=hoverAmount(s.entries[i],hover==i)
             local t=image(meta.card)
-            if t then s:drawTextureScaledAspect(t,x,y,w,h,active and 1 or hover==i and .85 or .61,1,1,1)end
+            if t then s:drawTextureScaledAspect(t,x,y,w,h,(active and 1 or .61+.24*amount)*(s.roomEnterAlpha or 1),1,1,1)end
             surface(s,x+3,y+h-38,w-6,34,.62)
             label(s,outfitName(s.entries[i]),x+w/2,y+h-31,17,w-14,.96,.96,.94,1,true)
             if s.entries[i].outfitLocked and s.entries[i].id~=self.currentId then
@@ -1860,8 +1955,8 @@ function W:carousel(character)
             if active then
                 s:drawRectBorder(x,y,w,h,1,.99,.55,.21)
                 s:drawRect(x+1,y+h-2,w-2,2,1,.99,.55,.21)
-            elseif hover==i then
-                s:drawRectBorder(x,y,w,h,.88,.69,.82,.83)
+            elseif amount>0 then
+                s:drawRectBorder(x,y,w,h,amount*.88,.69,.82,.83)
             end
         end
         for i=1,#s.entries do if i~=s.index then card(i)end end
@@ -1869,30 +1964,33 @@ function W:carousel(character)
     end
     p.render=function(s)s:clearStencilRect()end
     p.onMouseDown=function(s,x,y)
-        s.pressedCard=cardAt(s,x,y,phaseAt(s))
+        s.dragOrigin=position(s)
+        s.pressedCard=cardAt(s,x,y,s.dragOrigin)
         s.dragging=true;s.offset=0;s:setCapture(true)
         return true
     end
     p.onMouseMove=function(s,dx,dy)if s.dragging then s.offset=s.offset+dx end;return true end
     p.onMouseMoveOutside=p.onMouseMove
     p.onMouseUp=function(s,x,y)
-        local wasDragging=s.dragging
-        s.dragging=false;s:setCapture(false)
-        if wasDragging then
-            local distance=s.offset;local step=cardHeight(s)*.505+15
-            if math.abs(distance)>24 then
-                select(s,s.index+(distance<0 and 1 or -1)*math.max(1,math.floor(math.abs(distance)/step+.5)),true)
-            else
-                s.offset=0
-                local clicked=x and y and cardAt(s,x,y,phaseAt(s))
-                if clicked and clicked==s.pressedCard then select(s,clicked,true) end
-            end
+        if not s.dragging then return true end
+        local cursor=position(s)
+        local target=s.index
+        if math.abs(s.offset)>24 then
+            target=s.dragOrigin+(s.offset<0 and 1 or -1)*math.max(1,math.floor(math.abs(s.offset)/step(s)+.5))
+            target=math.floor(target+.5)
+        else
+            local clicked=x and y and cardAt(s,x,y,cursor)
+            if clicked and clicked==s.pressedCard then target=clicked end
         end
-        s.pressedCard=nil
+        s.dragging=false;s:setCapture(false);s.pressedCard=nil
+        select(s,target,cursor)
         return true
     end
     p.onMouseUpOutside=p.onMouseUp
-    p.onMouseWheel=function(s,delta)if delta~=0 then select(s,s.index+(delta>0 and 1 or -1),true)end;return true end
+    p.onMouseWheel=function(s,delta)
+        if delta~=0 and not s.dragging then select(s,s.index+(delta>0 and 1 or -1)) end
+        return true
+    end
     self.content:addChild(p);table.insert(self.widgets,p);self.carouselPanel=p;select(p,p.index)
 end
 
@@ -1934,7 +2032,6 @@ function W:updateWear()
     local wearing=self.browsed and self.browsed.id==self.currentId
     local locked=self.browsed and self.browsed.outfitLocked and not wearing
     local skins=self.tab=="skins"
-    self.skinButton.roomTitle=""
     local character=self.byCharacter[self.character]
     self.skinButton:setEnable(skins or (self.browsed~=nil and not (character and character.unlockRequired) and not self.waiting))
     self.wearButton.roomLook=skins and locked and self.browsed.price and "outfitPurchase" or "primary"
@@ -1951,8 +2048,11 @@ function W:previewEntry(entry)
     local id=entry and entry.id
     if id~=self.browseId then
         self.toolNotice=nil
-        GFL2ReadyRoom.release(self.player)
-        self.previewAt=getTimestampMs()+85
+        if not entry or not self.browsed or entry.meta.character~=self.browsed.meta.character then
+            self.previewRequestId=nil
+            GFL2ReadyRoom.release(self.player)
+        end
+        self.previewAt=getTimestampMs()+(self.previewRequestId and 65 or 0)
     end
     self.browseId=id;self.browsed=entry
 end
@@ -2043,6 +2143,8 @@ function W:refresh()
     self:refreshControls()
 end
 function W:setTab(tab)
+    local changed=self.tab~=tab
+    local returning=tab=="overview" or (tab=="skins" and (self.tab=="parts" or self.tab=="outfitDraw"))
     if self.tab~=tab then
         self:closeWorkshopPrompt()
         if self.tab=="grip" then
@@ -2062,7 +2164,7 @@ function W:setTab(tab)
         if character then self:previewEntry(character.baseSkin or character.skins[1]) end
     end
     if self.tab~=tab then
-        self.expressionSaving=false;self.roomPageFade=getTimestampMs()
+        self.expressionSaving=false
         self.drawNotice=nil
         if tab=="expression" then
             self.cameraBeforeExpression={self.zoom,self.cameraPan,self.cameraFocus}
@@ -2075,6 +2177,37 @@ function W:setTab(tab)
     end
     self.toolNotice=nil
     self.tab=tab;self:refreshControls()
+    if changed then self:beginTabMotion(returning and -1 or 1) end
+end
+
+function W:endTabMotion()
+    if not self.tabMotion then return end
+    for widget,y in pairs(self.tabMotion.rows)do widget:setY(y);widget.roomEnterAlpha=nil end
+    self.tabMotion=nil
+end
+
+function W:beginTabMotion(direction)
+    self:endTabMotion()
+    local rows={}
+    for _,widget in ipairs(self.widgets)do rows[widget]=widget.y end
+    if self.tab=="overview" then
+        for _,widget in ipairs({self.gripButton,self.expressionButton,self.bodyPhysicsButton,self.physicsResetButton,self.motionTab,self.restoreButton})do
+            if widget:getIsVisible() then rows[widget]=widget.y end
+        end
+    end
+    self.tabMotion={rows=rows,start=getTimestampMs(),direction=direction}
+    self:updateTabMotion()
+end
+
+function W:updateTabMotion()
+    local motion=self.tabMotion
+    if not motion then return end
+    local phase=ease((getTimestampMs()-motion.start)/150)
+    if phase==1 then self:endTabMotion();return end
+    for widget,y in pairs(motion.rows)do
+        widget:setY(y+math.floor(motion.direction*6*(1-phase)+.5))
+        widget.roomEnterAlpha=.65+.35*phase
+    end
 end
 function W:partRows(extrasOnly)
             local names=self.selected and self.selected.meta.primaryCategories or {data.text.Head,data.text.Top,data.text.Bottom}
@@ -2140,6 +2273,7 @@ function W:drawGroups(ordered,y,width)
     return y
 end
 function W:refreshControls(keepScroll)
+    self:endTabMotion()
     if self.folded or self.foldStart then return end
     if self.roomPage=="motions" then self:refreshMotionControls();return end
     local editable=self:canEditCurrent()
@@ -2154,7 +2288,7 @@ function W:refreshControls(keepScroll)
     self.content:setWidth(self.tab=="skins" and self.overviewWidth+64 or self.rightWidth)
     self.content:setY(self.tab=="skins" and math.floor(self.height*.19) or 91)
     self.content:setHeight(self.tab=="skins" and math.floor(self.height*.57) or self.height-self.content.y-112)
-    local y=0;local width=self.rightWidth-18;local showExpressionSlots=false
+    local y=8;local width=self.rightWidth-32;local showExpressionSlots=false
     if self.tab=="overview" then
         y=0
     elseif self.tab=="outfitDraw" or self.tab=="weaponDraw" then
@@ -2172,7 +2306,7 @@ function W:refreshControls(keepScroll)
             y=self:drawExpressionPresets(rows,y,width)
             showExpressionSlots=#rows>0
             if showExpressionSlots then
-                self.content:setHeight(self.expressionFooter.y-self.content.y-6)
+                self.content:setHeight(self.fullHeight-116-self.content.y-6)
                 if GFL2ReadyRoom.motionState(self.player).name~="" then
                     self:addLabel(tr("ExpressionVmd"),y);y=y+28
                 end
@@ -2180,7 +2314,7 @@ function W:refreshControls(keepScroll)
                 for _,row in ipairs(rows)do
                     if group~=row.group then group=row.group;self:addLabel(tr(group),y);y=y+31 end
                     local field=row.index
-                    self:addLabel(localizedLabel("ExpressionControl",row.label),y,18)
+                    self:addLabel(localizedLabel("ExpressionControl",row.label),y,18,width-60)
                     local slider=ISSliderPanel:new(5,y+24,width-10,20,self,function(w,value)
                         local error=GFL2ReadyRoom.expressionSet(w.player,id,field,value/100)
                         if error~="" then print("[GFL2Exilium] "..error);w.status=tr("Error")
@@ -2278,13 +2412,19 @@ function W:refreshControls(keepScroll)
             table.insert(self.widgets,reset);table.insert(self.widgets,reload);y=y+38
         end
     end
+    if self.tab=="grip" or self.tab=="expression" or self.tab=="parts" then
+        for _,widget in ipairs(self.widgets) do widget:setX(widget.x+12) end
+        y=y+8
+        self.content:setHeight(math.min(self.content.height,y))
+    end
+    if showExpressionSlots then self.expressionFooter:setY(self.content.y+self.content.height+6) end
     self:refreshExpressionSlots(showExpressionSlots)
     self:updateWear()
     self.content:setScrollHeight(math.max(y,self.content.height))
     self.content:setYScroll(clamp(scroll,self.content.height-self.content:getScrollHeight(),0))
     self.status=self.waiting and tr("Loading") or enabled and tr("Saved") or tr("Original")
     self:layoutOverview()
-    self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw" and self.tab~="weaponDraw")
+    self.content:setVisible(self.tab~="overview" and self.tab~="outfitDraw" and (self.tab~="weaponDraw" or self.signatureWeapon~=nil))
 end
 function W:selectSkin(entry)
     local character=self.byCharacter[self.character]
@@ -2379,6 +2519,7 @@ function W:onReset()if self.actions.reset(self.player)then self:refreshControls(
 function W:onReload()if self.actions.reload(self.player)then self:refreshControls()end end
 function W:update()
     ISCollapsableWindow.update(self)
+    self:updateTabMotion()
     if self.multiplayerSession then
         local ready=not not multiplayer.ready(self.player)
         if self.multiplayerReady~=ready then
@@ -2410,7 +2551,7 @@ function W:update()
         local phase=ease((getTimestampMs()-self.railStart)/160)
         local width=self.rosterExpanded and self.gridWidth or self.railWidth
         self.sidebar:setWidth(math.floor(self.railFrom+(width-self.railFrom)*phase+.5))
-        self.rosterToggle:setX(self.sidebar.x+self.sidebar.width+8)
+        self.rosterToggle:setX(self.sidebar.x+self.sidebar.width)
         if phase==1 then self.railStart=nil end
     end
     if self.foldStart then
@@ -2418,7 +2559,7 @@ function W:update()
         self:setHeight(math.floor(self.foldFrom+(self.foldTo-self.foldFrom)*ease(t)+.5))
         if t==1 then
             self.foldStart=nil;self:roomVisibility()
-            if not self.folded then self.pageFade=getTimestampMs();self:refreshControls() end
+            if not self.folded then self:refreshControls() end
         end
     end
     if self.waiting then
@@ -2436,7 +2577,8 @@ function W:update()
 end
 function W:layoutBiography(character)
     local panel=self.biographyPanel
-    local available=self.height-panel.y-14
+    local bottom=self.weaponCard:getIsVisible() and self.weaponCard.y or self.wearButton.y
+    local available=bottom-panel.y-10
     local show=character and not character.locked and not character.unlockRequired
         and self.tab=="overview" and not self.toolNotice and not self.folded and not self.foldStart
         and self.roomPage~="motions" and available>18
@@ -2448,7 +2590,7 @@ function W:layoutBiography(character)
         return
     end
     local step=descriptionHeight()
-    local textWidth=panel.width-20
+    local textWidth=panel.width-28
     local lines=describe(source,textWidth)
     local contentHeight=18+#lines*step
     if contentHeight>available then
@@ -2497,12 +2639,11 @@ function W:prerender()
     else label(self,self.title,76,14,23,self.width-180) end
     local character=self.byCharacter[self.character]
     local signatureWeapon=self.signatureWeapon
+    if self.tab=="overview" then
+        local rail=self.sidebar
+        surface(self,rail.x,rail.y,rail.width,rail.height,.56)
+    end
     if self.tab=="weaponDraw" and signatureWeapon then
-        local x,y=math.floor(self.width*.045),math.floor(self.height*.66)
-        textInSlot(self,getText(signatureWeapon.name),x,y,34,math.floor(self.width*.55),.97,.97,.95,1,nil,UIFont.Large)
-        self:drawRect(x,y+39,54,3,1,.96,.66,.13)
-        local width=math.floor(self.width*.55)
-        description(self,describe(getText(signatureWeapon.description),width),x,y+51,width)
         local progress=economy.weaponProgress(self.player,signatureWeapon.id)
         if not progress.acquired or self.drawAnimation then
             local misses=self.drawAnimation and self.drawAnimation.misses or economy.weaponMisses(self.player)
@@ -2537,6 +2678,7 @@ function W:prerender()
             if attempt==2 or y>=header+(cover and coverHeight+14 or 0) then break end
             width=math.max(width,self.rightX-x-24)
         end
+        surface(self,x-12,y-8,width+24,bodyTop+#(text or {})*step+18,.90)
         if cover then self:drawTextureScaled(cover,x,y-coverHeight-14,coverWidth,coverHeight,1,1,1,1) end
         if heading then
             for i,line in ipairs(heading) do
@@ -2546,7 +2688,7 @@ function W:prerender()
             label(self,name,x,y,32,width,.94,.94,.94)
         end
         label(self,self.character,x,y+headingHeight,19,width,.78,.78,.77)
-        self:drawRect(x,y+bodyTop-16,72,4,1,.875,.620,0)
+        self:drawRect(x,y+bodyTop-10,width,1,.25,.66,.76,.76)
         description(self,text,x,y+bodyTop,width)
         if inPool then
             local misses=self.drawAnimation and self.drawAnimation.misses or economy.outfitMisses(self.player,self.browsed.id)
@@ -2558,14 +2700,16 @@ function W:prerender()
         self:drawLockedCharacterInfo(character)
     elseif self.tab=="overview" and character then
         local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-        frosted(self,self,x,y,width,258,.78)
-        self:drawRectBorder(x,y,width,258,.32,.61,.72,.74)
-        label(self,self.character,x+12,y+12,34,width-24,.95,.95,.94)
-        self:drawRect(x+12,y+57,width-24,1,.26,.62,.75,.76)
-        self:drawRect(x+12,y+57,30,2,.96,.99,.55,.21)
+        local bio=self.biographyPanel
+        local height=bio.y-y+(bio:getIsVisible() and bio.height or self.toolNotice and 35 or 0)
+        frosted(self,self,x,y,width,height,.94)
+        label(self,self.character,x+14,y+9,32,width-28,.95,.95,.94)
+        self:drawRect(x+14,y+46,width-28,1,.29,.63,.73,.73)
+        if bio:getIsVisible() or self.toolNotice then
+            self:drawRect(x+14,bio.y,width-28,1,.24,.63,.73,.73)
+        end
         if self.toolNotice then
-            surface(self,x,y+265,width,37,.92)
-            label(self,self.toolNotice,x+10,y+274,16,width-20)
+            label(self,self.toolNotice,x+14,bio.y+8,18,width-28)
         end
     end
 end
@@ -2588,7 +2732,7 @@ end
 function W:drawLockedCharacterInfo(character)
     local card=character.recruitment
     if not card then return end
-    local x=math.max(math.floor(self.width*.122),self.sidebar.x+self.sidebar.width+24)
+    local x=math.max(math.floor(self.width*.122),self.rosterToggle.x+self.rosterToggle.width+12)
     local bannerWidth=math.floor(self.width*.164)
     local width=bannerWidth
     local source=biographies[character.name] or (data.roomCharacterDescriptions or {})[character.name]
@@ -2618,6 +2762,7 @@ function W:drawLockedCharacterInfo(character)
     if biography and biography.plain and blockHeight>bottom-self:titleBarHeight() then
         -- Long localized cards can use the otherwise empty area above the recruitment controls.
         local _,pityTop=elitePityLayout(self,remaining)
+        if self:showingReward() then pityTop=math.min(pityTop,self.drawButtons[1].y-99) end
         bottom=pityTop-5-(self.drawNotice and math.max(20,step) or 0)
         width=self.width-x-24
         headingX=banner and x+bannerWidth+16 or x
@@ -2632,10 +2777,9 @@ function W:drawLockedCharacterInfo(character)
         blockHeight=bodyY+#biography*step
     end
     local y=math.min(math.floor(self.height*.65),bottom-blockHeight)
+    surface(self,x-10,y-6,width+20,blockHeight+14,.90)
     if banner then
-        frosted(self,self,x,y,bannerWidth,bannerHeight,.80)
         self:drawTextureScaled(banner,x,y,bannerWidth,bannerHeight,1,1,1,1)
-        self:drawRectBorder(x,y,bannerWidth,bannerHeight,.52,.63,.70,.70)
     end
     local headingTop=y+headingY
     if card.element then
@@ -2661,15 +2805,18 @@ function W:drawLockedCharacterInfo(character)
 end
 
 function W:drawElitePity(remaining)
+    if self:showingReward() then return end
     local x,y,width,height,font,fontHeight,count,copy,countWidth=elitePityLayout(self,remaining)
     local textY=y+(height-fontHeight)/2
-    self:drawRect(x,y,width,height,.94,.79,.23,.045)
+    self:drawRect(x,y,width,height,.90,.10,.15,.16)
+    self:drawRect(x,y,2,height,.95,.94,.68,.29)
     self:drawText(count,x+10,textY,1,.82,.26,1,font)
     self:drawText(copy,x+10+countWidth,textY,1,.98,.94,1,font)
     if self.drawNotice then label(self,self.drawNotice,x,y-math.max(20,descriptionHeight()),16,width,.96,.87,.73) end
 end
 
 function W:drawPity(title,remaining)
+    if self:showingReward() then return end
     local button=self.drawButtons[2]
     local right=button.x+button.width
     local top=button.y-56
@@ -2678,18 +2825,12 @@ function W:drawPity(title,remaining)
     if self.drawNotice then label(self,self.drawNotice,self.drawButtons[1].x,top,16,220,.96,.87,.73) end
 end
 
+function W:showingReward()
+    local a=self.drawAnimation
+    return a and a.won and getTimestampMs()>=a.started+(#a.results-1)*drawStep
+end
 function W:render()
     if self.folded or self.foldStart or self.roomPage=="motions" then return end
-    if self.roomPageFade then
-        local phase=ease((getTimestampMs()-self.roomPageFade)/170)
-        self:drawRect(self.overviewX-12,self.overviewY,self.overviewWidth+24,math.floor(self.height*.59),.19*(1-phase),.05,.07,.07)
-        if phase==1 then self.roomPageFade=nil end
-    end
-    if self.pageFade then
-        local phase=ease((getTimestampMs()-self.pageFade)/150)
-        self:drawRect(0,0,self.width,self.height,.24*(1-phase),.05,.07,.07)
-        if phase==1 then self.pageFade=nil end
-    end
     if self.drawAnimation then self:drawRecruitmentResults() end
 end
 function W:close()

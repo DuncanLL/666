@@ -66,16 +66,101 @@ local function localeMetrics()
   getFontHeight=function(_,font)return fontHeight(font)end
  }
 end
+do
+ local oldScene,oldScripts=ISUI3DScene,getScriptManager
+ local oldMetrics=getTextManager
+ if roomTranslations then getTextManager=localeMetrics end
+ ISUI3DScene=UI:derive("WeaponPreviewFixture")
+ function ISUI3DScene:instantiate()
+  local scene=self
+  self.javaObject={
+   fromLua1=function(_,command,value)
+    if command=="getObjectTranslation" then return {set=function()end} end
+    assert(command~="zoom","pointer-centred zoom can pan a weapon out of its viewport")
+    scene[command]=value
+   end,
+   fromLua2=function(_,command,id,model)scene.fixtureModel=model end,
+   fromLua3=function(_,command,pitch)scene.viewPitch=pitch end,
+  }
+ end
+ function ISUI3DScene:setView()end
+ local roll
+ local modelScript={getAttachmentById=function(_,id)
+  if id=="muzzle" and roll then return {getRotate=function()return {z=function()return roll end}end} end
+ end}
+ function getScriptManager()return {FindItem=function()return true end,getModelScript=function()return modelScript end}end
+ local card=w.weaponCard
+ local originalProgress=economy.weaponProgress
+ local originalCenter=GFL2ReadyRoom.centerWeaponPreview
+ local ready=false
+ GFL2ReadyRoom.centerWeaponPreview=function(id,offset)
+  if ready then offset:set(0,0,0) end
+  return ready
+ end
+ local drawIcon=card.drawSubTexture
+ local cardImage
+ card.drawSubTexture=function(b,tex,sx,sy,sw,sh,x,y,width,height)
+  assert(x>=31.99 and y>=23.99 and height>0 and math.abs(x+width/2-b.width/2)<.01 and math.abs(y+height/2-b.height/2)<.01)
+  cardImage=tex.path
+ end
+ local tested=0
+ for _,c in ipairs(w.characters) do
+  w:onCharacter(c)
+  local weapon=w.signatureWeapon
+  if weapon then
+   roll=tested%2==0 and -180 or nil
+   local wasLocked=c.unlockRequired
+   c.unlockRequired=false;w:layoutOverview()
+   cardImage=nil;card:render();assert(cardImage==weapon.card)
+   assert(card.visible);click(w,card)
+   local scene=w.weaponPreview
+   ready=true;scene:prerender();ready=false;assert(rawget(scene,"prerender")==nil)
+   local info=w.content
+   assert(scene.fixtureModel==weapon.id and scene.viewPitch==-82 and info.visible and scene.width==scene.height)
+   assert(math.abs(scene.x+scene.width/2-w.width/2)<=.5 and math.abs(scene.y+scene.height/2-w.height/2)<=.5)
+   assert(info.x+info.width<=scene.x or info.y>=scene.y+scene.height)
+   assert(scene.y>=w:titleBarHeight() and scene.y+scene.height<=w.drawButtons[1].y-99)
+   assert(info.y>=w:titleBarHeight() and info.y+info.height<=w.height and info:getScrollHeight()>=info.height)
+   local limit=scene.setMaxZoom
+   scene:onMouseWheel(-100);assert(scene.setZoom==limit)
+   scene:onMouseWheel(100);assert(scene.setZoom==1)
+   scene:onMouseDown();scene:onMouseMove(900,500);assert(scene.orbit and scene.capture)
+   local skin=weaponSkins.available(weapon.id)[1]
+   roll=0
+   economy.weaponProgress=function()return {acquired=true,skin=skin.id} end
+   w.weaponSkinOpen=true;w:layoutOverview()
+   local painted=w.weaponPreview
+   assert(painted~=scene and not scene.capture and painted.fixtureModel==skin.model)
+   assert(painted.viewPitch==98);painted:onMouseDown();painted:onMouseMove(5,0);assert(painted.viewPitch==98)
+   assert(w.weaponSkinPanel.visible and w.weaponSkinPanel.y+w.weaponSkinPanel.height<=info.y-8)
+   assert((painted.x>=info.x+info.width or info.y>=painted.y+painted.height) and painted.y+painted.height<=w.weaponClaimButton.y-8)
+   economy.weaponProgress=originalProgress
+   c.unlockRequired=wasLocked
+   w:back();assert(not painted.visible and not painted.capture)
+   tested=tested+1
+  end
+ end
+ assert(tested==24)
+ card.drawSubTexture=drawIcon
+ GFL2ReadyRoom.centerWeaponPreview=originalCenter
+ getTextManager=oldMetrics
+ ISUI3DScene,getScriptManager=oldScene,oldScripts
+end
 if roomTranslations then
  local oldMetrics=getTextManager
  getTextManager=localeMetrics
- for _,button in ipairs({w.gripAimButton,w.bodyPhysicsButton,w.physicsResetButton,w.drawButtons[1],w.drawButtons[2]}) do
+ for _,button in ipairs({w.gripAimButton,w.gripButton,w.expressionButton,w.motionTab,w.restoreButton,w.bodyPhysicsButton,w.physicsResetButton,w.drawButtons[1],w.drawButtons[2]}) do
   local originalText,originalCentre,originalZoom=button.drawText,button.drawTextCentre,button.drawTextZoomed
   local function check(value,x,y,zoom,font)
    local top,bottom=0,button.height
    if y<0 and (button.roomLook=="drawOnce" or button.roomLook=="drawTen") then top,bottom=-29,-4 end
    assert(y>=top and y+fontHeight(font)*zoom<=bottom+.01,"button text exceeds height for "..value)
    assert(x>=-.01 and x+measureStockFont(value,font)*zoom<=button.width+.01,"button text exceeds width for "..value)
+   if button.roomTile then
+    local reserved=button==w.bodyPhysicsButton and 50 or 27
+    assert(value==button.roomTitle and x>=40 and x+measureStockFont(value,font)*zoom<=button.width-reserved+.01,
+     "action label collides with an icon or was shortened: "..value)
+   end
   end
   function button:drawText(value,x,y,_,_,_,_,font) check(value,x,y,1,font) end
   function button:drawTextCentre(value,x,y,_,_,_,_,font) check(value,x-measureStockFont(value,font)/2,y,1,font) end
@@ -115,7 +200,7 @@ if localizedBiographies then
   local bar
   local text={}
   function w:drawRect(x,y,width,height)
-   bar={x=x,y=y,width=width,height=height}
+   if not bar or width>bar.width then bar={x=x,y=y,width=width,height=height} end
    assert(x>=0 and x+width<=self.width,"guarantee panel exceeds the window")
    assert(y+height<=self.drawButtons[1].y-29,"guarantee panel overlaps the draw cost")
   end
@@ -274,7 +359,10 @@ if roomTranslations then
  local labels={}
  w.canEditCurrent=function()return true end
  w.selected={meta={}}
- w.addLabel=function(_,value)labels[value]=true end
+ w.addLabel=function(window,value,...)
+  labels[value]=true
+  return oldLabel(window,value,...)
+ end
  GFL2ReadyRoom.motionState=function()return {name=""} end
  GFL2ReadyRoom.expressionRows=function()
   return {{index=7,group="ExpressionEyes",label=testExpression,value=.25}}
@@ -287,6 +375,25 @@ if roomTranslations then
  local slider
  for _,widget in ipairs(w.widgets) do if widget.roomSlider then slider=widget end end
  assert(slider and slider.currentValue==25)
+ assert(w.content.y+w.content.height+6==w.expressionFooter.y and w.expressionFooter.y+w.expressionFooter.height<=w.height,
+  "short expression lists must place the save controls directly below their rows")
+ assert(w.content.height<w.height*.5,"a short expression list left a full-height empty panel")
+ local oldPhysics,oldToggle=GFL2CharacterRuntime.modelPhysicsEnabled,w.actions.bodyPhysics
+ local physics=true
+ GFL2CharacterRuntime.modelPhysicsEnabled=function()return physics end
+ w.actions.bodyPhysics=function(_,on)physics=on;return true end
+ w:setTab("overview")
+ assert(w.bodyPhysicsButton.roomActive)
+ w:toggleBodyPhysics()
+ assert(not physics and not w.bodyPhysicsButton.roomActive)
+ GFL2CharacterRuntime.modelPhysicsEnabled,w.actions.bodyPhysics=oldPhysics,oldToggle
+ w:layoutBiography(w.byCharacter[w.character])
+ assert(w.bodyPhysicsButton.visible and w.bodyPhysicsButton.width==w.expressionButton.width)
+ assert(w.bodyPhysicsButton.y>=w.expressionButton.y+w.expressionButton.height)
+ assert(w.skinButton.x==w.overviewX and w.skinButton.x+w.skinButton.width<w.wearButton.x)
+ assert(w.biographyPanel.y>=w.physicsResetButton.y+w.physicsResetButton.height)
+ local bottom=w.weaponCard.visible and w.weaponCard.y or w.wearButton.y
+ assert(w.biographyPanel.y+w.biographyPanel.height<=bottom-10,"biography covers the bottom actions")
  w.canEditCurrent,w.addLabel=oldEdit,oldLabel
  w.selected=oldSelection
  GFL2ReadyRoom.expressionRows,GFL2ReadyRoom.motionState=oldRows,oldState
@@ -311,6 +418,7 @@ do
  assert(not w.motionTab.visible and not w.motionLibraryBox.visible and not w.motionBox.visible)
  w:setRoomPage("motions");w:requestMotionPage()
  assert(w.roomPage=="appearance","hidden VMD tool opened")
+ w:updateTabMotion()
  local compactX,compactY=w.physicsResetButton.x,w.physicsResetButton.y
  local targeted=plus(w)
  local permit=(getTextOrNull and getTextOrNull("UI_GFL2_RoomTargetedPermit")) or roomData.text.RoomTargetedPermit
@@ -318,10 +426,20 @@ do
  assert(targeted.tooltip==permit and w.motionTab.roomTitle==motion)
  down(targeted);clock=clock+180;up(targeted)
  assert(purchases==1 and lastKey=="targeted" and not w.motionTab.visible)
- down(targeted);clock=clock+9999;targeted:update()
+ down(targeted);clock=clock+5000
+ local chip=targeted.parent
+ local oldRect=chip.drawRect
+ local progress
+ chip.drawRect=function(_,_,y,width,height,alpha)
+  if y==chip.height-2 and height==2 and alpha==.92 then progress=width end
+ end
+ chip:prerender()
+ assert(progress==(chip.width-4)/2,"permit hold meter must follow the real ten-second timer")
+ chip.drawRect=oldRect
+ clock=clock+4999;targeted:update()
  assert(not w.motionTab.visible,"gesture completed before ten seconds")
  clock=clock+1;targeted:update()
- assert(w.motionTab.visible and w.motionTab.x==compactX and w.motionTab.y==compactY)
+ assert(w.motionTab.visible and w.motionTab.x==w.expressionButton.x and w.motionTab.y>=w.expressionButton.y+w.expressionButton.height)
  assert(w.physicsResetButton.y>compactY,"list did not reflow around the revealed button")
  clock=clock+10000;targeted:update()
  assert(w.motionTab.visible,"one hold toggled the entry twice")
@@ -333,10 +451,49 @@ do
  w.getX=function(self)return self.x end
  w.getY=function(self)return self.y end
  local motionLibrary,motionState=GFL2ReadyRoom.motionLibrary,GFL2ReadyRoom.motionState
- GFL2ReadyRoom.motionLibrary=function()return {} end
- GFL2ReadyRoom.motionState=function()return {name=""} end
+ local playback={name="",frame=0,endFrame=240,speed=1,revision=3}
+ GFL2ReadyRoom.motionLibrary=function()return {"first.vmd","second.vmd"} end
+ GFL2ReadyRoom.motionState=function()return playback end
  w:requestMotionPage()
  assert(w.roomPage=="motions" and w.motionLibraryBox.visible and w.motionBox.visible)
+ local list=w.motionList
+ list.isMouseOver=function()return true end
+ list.getMouseX=function()return 10 end
+ list.getMouseY=function()return list.itemheight+5 end
+ local alpha=0
+ list.drawRect=function(_,_,_,_,_,a)alpha=a end
+ local function drawSecond()
+  alpha=0;list:doDrawItem(list.itemheight,list.items[2],false);return alpha
+ end
+ list:onMouseMove(0,0);assert(drawSecond()==0)
+ clock=clock+55;local entering=drawSecond()
+ assert(entering>0 and entering<.76 and list.selected==1)
+ list:onMouseMoveOutside(0,0);assert(drawSecond()==entering)
+ clock=clock+60;assert(drawSecond()<entering)
+ clock=clock+150;assert(drawSecond()==0 and w.motionSelected=="first.vmd")
+ local seek=w.motionSeek
+ w.motionSpeed:onMouseDown(20,10)
+ assert(not w.motionSpeed.dragInside,"disabled speed control started a drag")
+ local seekCalls=0
+ local oldCommand=GFL2ReadyRoom.motionCommand
+ GFL2ReadyRoom.motionCommand=function(_,action,arg)
+  assert(action=="seek" and math.abs(tonumber(arg:match(":(.+)"))-.75)<.001)
+  seekCalls=seekCalls+1;return ""
+ end
+ assert(not seek:onMouseDown(10,22) and not seek.dragInside)
+ playback.name="first.vmd";w:refreshMotionControls()
+ seek.isMouseOver=function()return true end
+ seek.getMouseX=function()return seek.sliderBarDim.x+seek.sliderBarDim.w*.5 end
+ seek.getMouseY=function()return 24 end
+ local marker=0
+ seek.drawRect=function(_,_,_,width,_,a)if width==1 then marker=a end end
+ seek:render();clock=clock+115;seek:render()
+ assert(marker>.7 and seek.currentValue==0 and seekCalls==0,"hover must preview a position without seeking")
+ assert(seek:onMouseDown(seek:getMouseX(),24) and seek.capture)
+ assert(seek:onMouseUp(seek.sliderBarDim.x+seek.sliderBarDim.w*.75) and seekCalls==1 and not seek.capture)
+ assert(seek:onMouseDown(seek:getMouseX(),24));playback.revision=4;w:refreshMotionControls()
+ assert(not seek.dragInside and not seek:onMouseUp(20) and seekCalls==1)
+ GFL2ReadyRoom.motionCommand=oldCommand
  w.canEditCurrent=canEditCurrent
  w:back()
  assert(w.roomPage=="appearance" and w.motionTab.visible)
@@ -356,8 +513,44 @@ do
  targeted:onMouseUpOutside(0,0);held=false
 
  local outfit=plus(w,2)
- down(outfit);clock=clock+10000;outfit:update();up(outfit)
+ down(outfit);clock=clock+180;up(outfit)
  assert(not w.motionTab.visible and purchases==2 and lastKey=="outfit")
+ local characterBefore,outfitBefore,weaponBefore={},{},{}
+ for _,character in ipairs(w.characters)do
+  if character.recruitment then
+   local key=character.recruitment.pool
+   characterBefore[key]=economy.characterUnlocked(actor,key)
+  end
+  for _,skin in ipairs(character.skins)do outfitBefore[skin.id]=economy.outfitOwned(actor,skin.id) end
+ end
+ for id in pairs(signatureWeapons.byId)do weaponBefore[id]=economy.weaponProgress(actor,id).acquired==true end
+ local permits=economy.balance(actor,"outfit")
+ down(outfit);clock=clock+9999;outfit:update()
+ assert(not economy.outfitOwned(actor,"not-yet-owned"),"recording unlock started before ten seconds")
+ clock=clock+1;outfit:update()
+ for key in pairs(characterBefore)do assert(economy.characterUnlocked(actor,key)) end
+ for id in pairs(outfitBefore)do assert(economy.outfitOwned(actor,id)) end
+ for id in pairs(weaponBefore)do assert(economy.weaponProgress(actor,id).acquired) end
+ clock=clock+10000;outfit:update()
+ assert(economy.outfitOwned(actor,"not-yet-owned"),"one hold toggled recording twice")
+ up(outfit);assert(purchases==2 and not w.motionTab.visible)
+ down(outfit);clock=clock+10000;up(outfit)
+ for key,owned in pairs(characterBefore)do assert(economy.characterUnlocked(actor,key)==owned) end
+ for id,owned in pairs(outfitBefore)do assert(economy.outfitOwned(actor,id)==owned) end
+ for id,owned in pairs(weaponBefore)do assert((economy.weaponProgress(actor,id).acquired==true)==owned) end
+ assert(not economy.outfitOwned(actor,"not-yet-owned") and economy.balance(actor,"outfit")==permits)
+ assert(purchases==2,"recording holds opened the permit exchange")
+ local railWindow={content=UI:new(0,0,300,340),fullHeight=700,widgets={},browseId="one",tab="skins",
+  updateWear=function()end,previewEntry=function(self,e)self.browsed=e end}
+ local outfits={{id="one",meta={}},{id="two",meta={},outfitLocked=true,outfitPool={}},{id="three",meta={}}}
+ GFL2RoomWindow.carousel(railWindow,{skins=outfits})
+ local rail=railWindow.carouselPanel
+ rail:onMouseWheel(1)
+ assert(railWindow.browsed.id=="two" and railWindow.tab=="skins")
+ clock=clock+60;rail:onMouseWheel(1)
+ assert(rail.index==3 and rail.slideFrom>1 and rail.slideFrom<2,"interrupted scroll snapped to the old target")
+ clock=clock+200;rail:onMouseDown(150,160);rail:onMouseMove(90,0);rail:onMouseUp(240,160)
+ assert(rail.index==2 and rail.slideFrom>2 and rail.slideFrom<3,"drag did not settle from the pointer position")
  down(targeted);clock=clock+10000;targeted:update();up(targeted)
  assert(w.motionTab.visible)
  GFL2RoomWindow.closeAll()

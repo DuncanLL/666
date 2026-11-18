@@ -71,7 +71,23 @@ public class ReadyRoomPreview {
             appearanceRevision=revision;
         }
     }
-    private static final IdentityHashMap<IsoGameCharacter,BrowsePreview> browsePreviews=new IdentityHashMap<>();
+    private static final class BrowseState {
+        BrowsePreview requested;
+        ModelSession shown;
+        boolean ownsShown;
+
+        void discardRequest() {
+            if (requested!=null && requested.session!=null && requested.session!=shown) requested.session.retire();
+            requested=null;
+        }
+
+        void present(ModelSession next,boolean owned) {
+            if (shown!=next && ownsShown) shown.retire();
+            shown=next;
+            ownsShown=owned;
+        }
+    }
+    private static final IdentityHashMap<IsoGameCharacter,BrowseState> browsePreviews=new IdentityHashMap<>();
     private static final String SAMPLE_PREFIX="sample:";
     private static final class MotionInput extends IllegalArgumentException {
         MotionInput(String key) { super(text(key)); }
@@ -341,20 +357,28 @@ public class ReadyRoomPreview {
     private static boolean drawBrowse(IsoGameCharacter actor,String id,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,boolean overview) {
         ModelSession equipped=Main.session(actor);
         if(equipped!=null&&!equipped.entry.id().equals(id))equipped=null;
-        if(equipped!=null&&!overview)return drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked);
+        BrowseState state=browsePreviews.computeIfAbsent(actor,unused->new BrowseState());
+        if(equipped!=null&&!overview){
+            state.discardRequest();
+            if(drawSession(equipped,x,y,width,height,yaw,zoom,pan,focus,locked)){
+                state.present(equipped,false);
+                return true;
+            }
+            return drawSession(state.shown,x,y,width,height,yaw,zoom,pan,focus,locked);
+        }
 
         var worldPlayer=actor.getAnimationPlayer();
         if(worldPlayer==null||!worldPlayer.isReady())return false;
-        BrowsePreview preview=browsePreviews.get(actor);
+        BrowsePreview preview=state.requested;
         if(preview==null||!preview.id.equals(id)||preview.appearanceSource!=null&&equipped==null) {
-            release(actor);
+            state.discardRequest();
             try {
                 preview=new BrowsePreview(id,Main.createRoomPreview(id));
             }catch(Exception | LinkageError failure){
                 System.err.println("[GFL2ReadyRoom] Browse preview unavailable: "+failure);
                 preview=new BrowsePreview(id,null);
             }
-            browsePreviews.put(actor,preview);
+            state.requested=preview;
         }
         if(preview.session==null||preview.session.failed)return false;
         try {
@@ -363,7 +387,11 @@ public class ReadyRoomPreview {
             preview.session.fail(failure);
             return false;
         }
-        return drawSession(preview.session,x,y,width,height,yaw,zoom,pan,focus,locked);
+        if(drawSession(preview.session,x,y,width,height,yaw,zoom,pan,focus,locked)){
+            state.present(preview.session,true);
+            return true;
+        }
+        return drawSession(state.shown,x,y,width,height,yaw,zoom,pan,focus,locked);
     }
     private static boolean drawSession(ModelSession session,int x,int y,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked) {
         if(session==null||!session.ready||session.retired||session.failed||width<16||height<16)return false;
@@ -376,8 +404,8 @@ public class ReadyRoomPreview {
     }
     public static synchronized void release(IsoGameCharacter actor) {
         GripRoomPreview.release(actor);
-        BrowsePreview preview=browsePreviews.remove(actor);
-        if(preview!=null&&preview.session!=null)preview.session.retire();
+        BrowseState state=browsePreviews.remove(actor);
+        if(state!=null){state.discardRequest();state.present(null,false);}
     }
     private record PreviewProgram(int id,int vp,int turn,int image,int locked) {
         // LWJGL keeps these capabilities with their GL context. The context owns the program.

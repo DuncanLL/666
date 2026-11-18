@@ -2,6 +2,7 @@ local weaponSkins=require "GFL2WeaponSkins"
 local E={cost={targeted=150,outfit=120},creditsPerCash=60}
 E.keys={"targeted","outfit","credits"}
 local snapshots=setmetatable({},{__mode="k"})
+local recordingUnlocks=setmetatable({},{__mode="k"})
 
 local walletKey = "GFL2ReadyRoomWallet"
 local settingsKeys = {"GFL2CharacterRuntime", "GFL2Expressions", "GFL2GripCalibration", "GFL2GripCalibrationAim"}
@@ -175,7 +176,7 @@ function E.characterChance(nextPull)
 end
 
 function E.characterUnlocked(player,key)
-    return recruitment(player).owned[key]==true
+    return recordingUnlocks[player]~=nil or recruitment(player).owned[key]==true
 end
 
 function E.characterMisses(player)
@@ -219,7 +220,7 @@ local function outfits(player)
 end
 
 function E.outfitOwned(player,id)
-    return outfits(player)[id]==true
+    return recordingUnlocks[player]~=nil or outfits(player)[id]==true
 end
 
 function E.outfitMisses(player,id)
@@ -264,6 +265,13 @@ function E.grantTestCredits(player)
     return true
 end
 
+function E.toggleRecordingUnlocks(player)
+    if E.serverWallet or (isClient and isClient()) or (isServer and isServer()) then return nil end
+    local enabled=recordingUnlocks[player]==nil
+    recordingUnlocks[player]=enabled and {} or nil
+    return enabled
+end
+
 local legacyWeapon="GFL2.CauseAndEffect"
 
 local function weaponWallet(player)
@@ -285,10 +293,14 @@ end
 
 function E.weaponProgress(player,id)
     local room=weaponWallet(player)
-    local owned=room.signatureWeapons and room.signatureWeapons[id]
-    if owned then return owned end
-    if id==legacyWeapon and room.signatureWeapon then return room.signatureWeapon end
-    return {}
+    local owned=(room.signatureWeapons and room.signatureWeapons[id])
+        or (id==legacyWeapon and room.signatureWeapon)
+    local temporary=recordingUnlocks[player]
+    if temporary and not (owned and owned.acquired) then
+        if not temporary[id] then temporary[id]={acquired=true} end
+        return temporary[id]
+    end
+    return owned or {}
 end
 
 function E.weaponMisses(player)

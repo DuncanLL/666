@@ -52,6 +52,17 @@ try:
  env.rawset('economy',load(repo/'game/mod/42/media/lua/shared/GFL2RoomEconomy.lua'))
  load(game/'media/lua/client/ISUI/ISButton.lua')
  load(repo/'tools/tests/room_workshop_fixture.lua')
+ run("""roomListFixture=ISScrollingListBox
+ISPanelJoypad=ISPanel
+local tm=getTextManager();tm.getFontHeight=function()return 18 end
+roomTextManager=getTextManager;getTextManager=function()return tm end""",'stock-pointer-setup')
+ load(game/'media/lua/client/ISUI/ISScrollingListBox.lua')
+ run("""for _,name in ipairs({'rowAt','onMouseMove','onMouseMoveOutside'}) do
+ roomListFixture[name]=ISScrollingListBox[name]
+end
+ISScrollingListBox=roomListFixture;getTextManager=roomTextManager""",'stock-list-pointer')
+ load(game/'media/lua/client/RadioCom/ISUIRadio/ISSliderPanel.lua')
+ run('function ISSliderPanel:instantiate() self:paginate() end','slider-geometry')
  env.rawset('screenWidth',float(args.resolution[0]))
  env.rawset('screenHeight',float(args.resolution[1]))
  if locale:
