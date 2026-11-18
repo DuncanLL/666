@@ -32,15 +32,14 @@ if ((Get-FileHash $reader).Hash -ne 'ec716cbbe235a269268efef32594f9c095d2f21264c
 
 在 `.local/paths.json` 填写本机**绝对路径**。`game_root` 指向含 `projectzomboid.jar` 和 `jre64` 的目录；`viewpoint_jar`、`zombiebuddy_jar`、`reference_jar` 分别指向两项依赖和当前框架 JAR；`pmx_reader_scripts` 指向刚才的读取器目录。使用上面的虚拟环境时，`python_dependencies` 可填空字符串。只运行这组人物制作工具用到这些键，重新编译和封装还要补齐模板的其余键。
 
-以下示例从**已持有的角色包**读输入。先把三个示例路径换成本机的核心、莱娅包和阿斯缇亚包的 `42/media` 目录。使用新的候选目录，避开已安装 MOD 和作者上传目录。
+以下示例从**已持有的核心和莱娅角色包**读输入。把两个示例路径换成各自的 `42/media` 目录。PZ 源姿态直接使用[仓库已登记的参考 profile](../../game/packs/GFL2Asteria/42/media/gfl2_pmx/models/pmx-412bd037301ebe18/profile.json)。使用新的候选目录，避开已安装 MOD 和作者上传目录。
 
 ```powershell
 $core = 'D:/your-mods/GFL2Exilium/42/media'
 $role = 'D:/your-mods/GFL2Laiya/42/media'
-$referenceRole = 'D:/your-mods/GFL2Asteria/42/media'
 $id = 'pmx-abe3eaaaa9d04264'
 $source = "$role/gfl2_pmx/models/$id/model.pmx"
-$poses = "$referenceRole/gfl2_pmx/models/pmx-412bd037301ebe18/profile.json"
+$poses = 'game/packs/GFL2Asteria/42/media/gfl2_pmx/models/pmx-412bd037301ebe18/profile.json'
 $out = "build/workflow-example/models/$id"
 & $py tools/character_workflow/import_pmx.py --pmx $source --source-poses $poses --output $out
 if ($LASTEXITCODE -ne 0) { throw 'PMX import failed' }
@@ -69,5 +68,7 @@ if ($LASTEXITCODE -ne 0) { throw 'PMX import failed' }
 [框架登记](../../game/mod/42/media/gfl2_pmx/registry.json) · [莱娅分包登记](../../game/packs/GFL2Laiya/42/media/gfl2_pmx/packs/GFL2Laiya.json) · [整备室与存档契约](character-systems.md)
 
 首次入库可用 `pmx-` 加源 SHA 前 16 个十六进制字符建立 ID。已发布衣装优先沿用注册和存档里的 ID。重新导出的字节变了，就重新计算完整 SHA，重新标定并重做材质和顶点映射。候选目录中保存新增文件以及变更前后身份清单；合包时追加新登记，已有角色继续按原键加载。
+
+制作分包时，将版本根放在 `Workshop/<包>/Contents/mods/<MOD ID>/42/`。以仓库 `game/packs/<包>/42` 的已有结构为准增量放入 mod.info、相对路径登记和整备室条目。源侧受管 JSON 与真正的二进制资源各归对应位置。对照 `resources/manifest.json` 中核心的 `files` 和角色的 `character_packs[包].files` 登记外置文件的字节数和 SHA。打包前核对哪些描述符已随对应版本纳入源码，避免同一路径被旧外置副本回盖。独立角色包加入框架的角色列表后，分别测试只启用核心、只加目标包、再加一个旧包。
 
 进入下一步前保存 PMX 指纹、骨数、顶点数、材质数、比例、缺失骨／贴图、物理开关及两帧读回结果。随后按[原材质、几何和双后端制作](source-material-workflow.md)完成专属着色。

@@ -29,6 +29,9 @@ foreach ($step in $steps) {
 **进入这一步以前有三份额外输入。** 人物候选依赖 `asset_root` 与资源清单匹配。制作受保护的合并渲染 JAR 需要[规则中锁定版本和 SHA 的 ProGuard](../../render-support/release-protection.json)、原独立渲染项目的 `workshop.txt` 与 `preview.png`，以及含本次核心与对应全部角色包的本地 Workshop 目录。这个目录用来整理有效程序／资源目录。用新的输出名并保存各步骤的 build.json。示例中 `$shaderMetadata`、`$proguardZip`、`$roleWorkshop` 指向这些本机来源，`$version` 是本次明确选择的框架版本（例 `0.7.16`）。
 
 ```powershell
+$version = '0.7.16'
+& $py -m pip install Pillow==11.3.0
+if ($LASTEXITCODE -ne 0) { throw 'Packaging image dependency missing' }
 $character = 'build/workflow-inputs/character/GFL2Exilium'
 $protected = 'build/workflow-inputs/protected'
 $unified = 'build/workflow-run/Workshop/GFL2Exilium'
@@ -50,6 +53,18 @@ if ($LASTEXITCODE -ne 0) { throw 'Role pack registration check failed' }
 `package_gfl2_unified.py` 检查人物 JAR、保护报告、宿主及两个后端输入的对应关系，输出必须是仓库 `build/` 下面新的 `Workshop/GFL2Exilium`。测试用的普通人物候选可能只有本地预览图及临时元数据；正式项目身份和封面按既有作者目录另行核对。保护阶段的私有映射、种子与研究资料留在本机。联包验证包括正常加载与宿主晚到，角色包验证覆盖停用、启用、旧分片的部分匹配与清场。两项均为受控检查。[保护与封装](../../tools/protect_render_release.py) · [人物与双后端合包](../../tools/package_gfl2_unified.py) · [组件启动](../../tools/check_gfl2_unified.py) · [角色包回读](../../tools/check_character_pack_runtime.py)
 
 ## 实际画面与故障定位
+
+按上一章的 `$role`，可针对莱娅分片在本机 OpenGL 上做一次原程序链接回归。它为每个“材质／pass”取现有检查器选定的首个顶点／片元 choice，另验适用的 early 片元版本；相同组合去重，报告写到 `build/shader-link-fix/laiya/result.json`。不给 `--fragment` 时走原有的历史回归资料入口，核心目录必须包含当时报错的程序对。
+
+```powershell
+& $py tools/check_original_stage_links.py --fragment "$role/gfl2_rendering/packs/GFL2Laiya.json" --tag laiya --pmx-reader
+if ($LASTEXITCODE -ne 0) { throw 'Native source shader stage link failed' }
+$eclipseJar = (Get-Content -Raw build/eclipse-support/build.json | ConvertFrom-Json).jar
+& $py tools/check_original_stage_links.py --jar $eclipseJar --fragment "$role/gfl2_rendering/packs/GFL2Laiya.json" --tag laiya_eclipse --pmx-reader
+if ($LASTEXITCODE -ne 0) { throw 'Eclipse source shader stage link failed' }
+```
+
+本次从干净检出使用外置输入，实际完成了人物核心、Native、Eclipse、合并渲染 JAR 和最终框架候选的构建。正常加载与宿主晚到两项启动检查均通过。游戏 JVM 回读了 24 个分包、70 个注册模型（含兼容条目）。RX 9070 XT 的隐藏 OpenGL 上下文用两个后端各自的顶点桥和程序构造器，各链接了莱娅分片的 44 组阶段组合，包含历史 NVIDIA 报错的程序对。该次驱动实测设备是 AMD，新角色的双后端最终画面仍按下表验收。
 
 | 现象 | 先做哪个区分 | 要留的证据 |
 |---|---|---|

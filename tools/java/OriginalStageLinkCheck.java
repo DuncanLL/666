@@ -25,10 +25,14 @@ public final class OriginalStageLinkCheck {
     }
     private static String[] adapted(String vertex,String fragment)throws Exception {
         Class<?> adapter=Class.forName("viewpoint.render.Gfl2Rc2Vertex");
-        try {
-            Object stages=adapter.getMethod("stages",String.class,String.class).invoke(null,vertex,fragment);
+        for(String method:List.of("stages","adapt")){
+            Method paired;
+            try{paired=adapter.getMethod(method,String.class,String.class);}
+            catch(NoSuchMethodException absent){continue;}
+            Object stages=paired.invoke(null,vertex,fragment);
             return new String[]{(String)stages.getClass().getMethod("vertex").invoke(stages),(String)stages.getClass().getMethod("fragment").invoke(stages)};
-        }catch(NoSuchMethodException old){return new String[]{(String)adapter.getMethod("adapt",String.class).invoke(null,vertex),fragment};}
+        }
+        return new String[]{(String)adapter.getMethod("adapt",String.class).invoke(null,vertex),fragment};
     }
     public static void main(String[] args)throws Exception {
         Path out=Path.of(args[1]);Files.createDirectories(out);

@@ -1,5 +1,7 @@
 # 僵毁少女前线
 
+- 接手 PMX 导入、原材质和双后端制作时，从[可执行工作流](docs/maintenance/pmx-import-workflow.md)开始。用其中的衣装样例核对本机依赖和输出指纹，再处理新的源数据。
+
 - 按用户 2026-11-17 指示，人物和功能进入定版维护。维护范围为兼容性、本地化和已复现的缺陷。维护基线和发布记录见 [CHANGELOG.md](CHANGELOG.md)。
 - 本仓库维护游戏人物 MOD、其独立原生核心、Native及保留的Eclipse渲染支持与构建发布工具。工作台不纳入；不要恢复旧 FBX 人物卡流程。
 - `game/java` 是当前游戏 Java 实现；`game/mod` 是 Lua、声音定义、菜单和人物配置；`native` 是实际使用的 Rust/Bullet 与 Ozz 源码。

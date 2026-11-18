@@ -263,7 +263,11 @@ def calibrate(J, jp, api, path, names, source_reference, source_bend):
         protected = set(target_ids)
         for bone in target_ids:
             parent = int(parents[bone])
+            chain = {bone}
             while parent >= 0:
+                if parent >= len(parents) or parent in chain:
+                    raise ValueError(f"Invalid parent chain for mapped bone {bone}")
+                chain.add(parent)
                 protected.add(parent)
                 parent = int(parents[parent])
         conflicts = sorted({source.bones[b.bone].name for b in dynamic if b.bone in protected})

@@ -31,6 +31,8 @@ if ($LASTEXITCODE -ne 0) { throw 'Material readback failed' }
 
 一行制作台账至少应含 PMX 完整 SHA、PMX 材质槽和三角范围、原 CAB/PathID、renderer/submesh、原材质键、pass/stage/关键词、程序 SHA、纹理及采样器、常量布局和证据文件。明确区分缺失、原始默认及条件性关闭的输入。
 
+项目早期的原程序转译采用 Unity HLSLcc。需要新增变体时，可从它的 `TranslateHLSLFromFile` 或 `TranslateHLSLFromMem` 接入。提供该阶段的 DXBC、目标桌面 GLSL、阶段依赖和反射回调；保留原指令及输入输出签名作对照。把实际读取的常量寄存器映射回 Unity 反射字段，保留纹理与 sampler 的对应，分别记录原程序和生成 GLSL 的 SHA。传给原程序的宿主位置、法线、颜色及上一帧属性仍需通过项目的顶点桥，着色器链接和实际像素另验。可优先用一个已经支持的变体校对工具链，再处理未知变体。[Unity HLSLcc](https://github.com/Unity-Technologies/HLSLcc) · [转译器接口](https://github.com/Unity-Technologies/HLSLcc/blob/master/include/hlslcc.h) · [公共顶点适配](../../render-support/java/viewpoint/render/Gfl2Rc2Vertex.java)
+
 [原材质常量烘焙器](../../tools/character_workflow/bake_material.py) 可以直接消费导出的 Unity Material 类型树。输入 JSON 的 `material` 放含 `m_SavedProperties` 的原对象，`properties` 按属性名保存 Shader 的 `type/value`，`bytes` 取缓冲反射大小。将已经核对的多 pass 浮点字段并集放入 `layout`，如 `{"name":"_BaseMap_ST","byte_offset":16,"components":4,"type":0,"array_size":0}`。以实际反射为准填写。工具支持本制作链的浮点标量／向量，遇到新的字段类型或数组会指出需要扩展的位置。
 
 ```powershell
