@@ -1,0 +1,230 @@
+{
+  "framework_version": "0.7.16",
+  "app_id": 108600,
+  "framework_workshop_id": 3838709437,
+  "published_shanghai": "2026-11-18T12:40:07+08:00",
+  "source_commit": "a927d25",
+  "update_mode": "existing Workshop item content only",
+  "pack_count": 24,
+  "framework_jar_sha256": "60191abcf3caa5a443f93f3cc41b843c7dcceb97a0cf48b2eaa4943d66309cca",
+  "verification": {
+    "successful_item_callbacks": 25,
+    "unique_items": 25,
+    "content_manifest_ids_from_steam_upload_log": 25,
+    "uncached_server_sizes_and_update_times_verified": 25,
+    "schinese_page_fields_and_dependency_lists_verified_unchanged": 25,
+    "core_final_diff_from_first_content_upload": "unified runtime JAR only",
+    "core_startup": [
+      "fresh",
+      "late-host"
+    ],
+    "render_catalog_identity_preserved_with_24_packs": true,
+    "registered_models": 70,
+    "registered_render_materials": 1169,
+    "workshop_preview_upload": false,
+    "home_runtime_reinstalled": false,
+    "company_gameplay_tested": false
+  },
+  "items": [
+    {
+      "mod": "GFL2Alva",
+      "workshop_id": 3837425337,
+      "version": "0.7.1",
+      "manifest": "7368361817007291542",
+      "bytes": 262746328,
+      "updated_unix": 1794976157
+    },
+    {
+      "mod": "GFL2Asteria",
+      "workshop_id": 3838710555,
+      "version": "0.7.2",
+      "manifest": "4045398222370383127",
+      "bytes": 344528623,
+      "updated_unix": 1794976167
+    },
+    {
+      "mod": "GFL2Cecilia",
+      "workshop_id": 3838711420,
+      "version": "0.7.1",
+      "manifest": "6866731243180991191",
+      "bytes": 217744370,
+      "updated_unix": 1794976175
+    },
+    {
+      "mod": "GFL2Centaureissi",
+      "workshop_id": 3838711556,
+      "version": "0.7.2",
+      "manifest": "8397430046844240036",
+      "bytes": 247643409,
+      "updated_unix": 1794976183
+    },
+    {
+      "mod": "GFL2Cheyanne",
+      "workshop_id": 3838710368,
+      "version": "0.7.3",
+      "manifest": "8596029122017094777",
+      "bytes": 231104900,
+      "updated_unix": 1794976195
+    },
+    {
+      "mod": "GFL2Daiyan",
+      "workshop_id": 3838711736,
+      "version": "0.7.2",
+      "manifest": "2181045260884872857",
+      "bytes": 313142014,
+      "updated_unix": 1794976205
+    },
+    {
+      "mod": "GFL2Destroyer",
+      "workshop_id": 3838762173,
+      "version": "0.7.1",
+      "manifest": "1411029385808117482",
+      "bytes": 315182761,
+      "updated_unix": 1794976214
+    },
+    {
+      "mod": "GFL2Exilium",
+      "workshop_id": 3838709437,
+      "version": "0.7.16",
+      "manifest": "1050789018337649627",
+      "bytes": 325226157,
+      "updated_unix": 1794976807
+    },
+    {
+      "mod": "GFL2Faelynn",
+      "workshop_id": 3838711981,
+      "version": "0.7.2",
+      "manifest": "8268519471633730803",
+      "bytes": 320411934,
+      "updated_unix": 1794976222
+    },
+    {
+      "mod": "GFL2Florence",
+      "workshop_id": 3838711148,
+      "version": "0.7.1",
+      "manifest": "6564071973815687163",
+      "bytes": 440469851,
+      "updated_unix": 1794976232
+    },
+    {
+      "mod": "GFL2Klukai",
+      "workshop_id": 3838712165,
+      "version": "0.7.2",
+      "manifest": "1355790940673275907",
+      "bytes": 799055264,
+      "updated_unix": 1794976251
+    },
+    {
+      "mod": "GFL2Koleda",
+      "workshop_id": 3838710666,
+      "version": "0.7.0",
+      "manifest": "5264232307261924798",
+      "bytes": 229777094,
+      "updated_unix": 1794976258
+    },
+    {
+      "mod": "GFL2Laiya",
+      "workshop_id": 3838710183,
+      "version": "0.7.1",
+      "manifest": "5605981305290765848",
+      "bytes": 493095522,
+      "updated_unix": 1794976270
+    },
+    {
+      "mod": "GFL2Lenna",
+      "workshop_id": 3838762352,
+      "version": "0.7.2",
+      "manifest": "4462883314618648565",
+      "bytes": 431089361,
+      "updated_unix": 1794976279
+    },
+    {
+      "mod": "GFL2Macqiato",
+      "workshop_id": 3838762751,
+      "version": "0.7.7",
+      "manifest": "3035122934912179268",
+      "bytes": 577024504,
+      "updated_unix": 1794976289
+    },
+    {
+      "mod": "GFL2Nikketa",
+      "workshop_id": 3838710868,
+      "version": "0.7.2",
+      "manifest": "17834733791671833",
+      "bytes": 508070018,
+      "updated_unix": 1794976298
+    },
+    {
+      "mod": "GFL2OTs14",
+      "workshop_id": 3838712515,
+      "version": "0.7.2",
+      "manifest": "4401972473222395632",
+      "bytes": 263912809,
+      "updated_unix": 1794976308
+    },
+    {
+      "mod": "GFL2Phaetusa",
+      "workshop_id": 3838763020,
+      "version": "0.7.3",
+      "manifest": "2781686164424665252",
+      "bytes": 518476094,
+      "updated_unix": 1794976318
+    },
+    {
+      "mod": "GFL2Qiuhua",
+      "workshop_id": 3838935753,
+      "version": "0.7.2",
+      "manifest": "1131829886208036403",
+      "bytes": 531292073,
+      "updated_unix": 1794976326
+    },
+    {
+      "mod": "GFL2Sextans",
+      "workshop_id": 3838763377,
+      "version": "0.7.1",
+      "manifest": "109992409744371183",
+      "bytes": 337627580,
+      "updated_unix": 1794976335
+    },
+    {
+      "mod": "GFL2Soppo",
+      "workshop_id": 3841178627,
+      "version": "0.7.1",
+      "manifest": "4338604096062989703",
+      "bytes": 255097084,
+      "updated_unix": 1794976342
+    },
+    {
+      "mod": "GFL2Springfield",
+      "workshop_id": 3838712707,
+      "version": "0.7.2",
+      "manifest": "9213758110245178102",
+      "bytes": 513153373,
+      "updated_unix": 1794976352
+    },
+    {
+      "mod": "GFL2Suomi",
+      "workshop_id": 3838712796,
+      "version": "0.7.1",
+      "manifest": "9094027765590655099",
+      "bytes": 325189898,
+      "updated_unix": 1794976361
+    },
+    {
+      "mod": "GFL2Vector",
+      "workshop_id": 3838763611,
+      "version": "0.7.1",
+      "manifest": "397181742665314299",
+      "bytes": 439128057,
+      "updated_unix": 1794976372
+    },
+    {
+      "mod": "GFL2Yohee",
+      "workshop_id": 3838763788,
+      "version": "0.7.1",
+      "manifest": "5099867089587868022",
+      "bytes": 336895528,
+      "updated_unix": 1794976381
+    }
+  ]
+}
