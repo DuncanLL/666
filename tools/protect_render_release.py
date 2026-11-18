@@ -170,12 +170,13 @@ def protect_shaders(payload, backend, rules, fragments):
 
 def owned_classes(archive):
     sources = {file.stem for file in (ROOT / 'render-support').rglob('*.java')}
-    reference = Path(settings()['eclipse_support_reference_jar'])
-    pin = json.loads((ROOT/'provenance/eclipse-outline.json').read_text('utf8'))['reference_jar_sha256']
-    assert sha(reference)==pin
-    with zipfile.ZipFile(reference) as prepared:
-        sources.update(Path(name).name.split('$',1)[0].removesuffix('.class')
-                       for name in prepared.namelist() if name.endswith('.class'))
+    if ECLIPSE_RUNTIME in archive.namelist():
+        reference = Path(settings()['eclipse_support_reference_jar'])
+        pin = json.loads((ROOT/'provenance/eclipse-outline.json').read_text('utf8'))['reference_jar_sha256']
+        assert sha(reference)==pin
+        with zipfile.ZipFile(reference) as prepared:
+            sources.update(Path(name).name.split('$',1)[0].removesuffix('.class')
+                           for name in prepared.namelist() if name.endswith('.class'))
     classes = set()
     assert not RETIRED_ENTRIES.intersection(archive.namelist()), 'Rebuild cleaned Eclipse support'
     for name in archive.namelist():
@@ -211,6 +212,8 @@ def protect_classes(source, private, rules, proguard_zip, config):
     keep = originals - owned
     internal = set(rules['internal_java_roots'])
     renamable = {name for name in owned if Path(name).name.split('$', 1)[0].removesuffix('.class') in internal}
+    if ECLIPSE_RUNTIME not in originals:
+        internal -= {'Gfl2EclipseRegisterBank', 'Gfl2RuntimeQueue', 'Gfl2ShadowReadback', 'Gfl2WorldShadow'}
     assert internal <= {Path(name).name.split('$', 1)[0].removesuffix('.class') for name in owned}
     assert not any(name.removesuffix('.class').encode() in source.read(other) for name in renamable for other in keep), 'A retained class refers to an internal rename target'
     files = {'owned.jar': owned, 'other.jar': keep}
@@ -505,7 +508,7 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
     with zipfile.ZipFile(release) as source:
         protected, names, renamed_members = protect_classes(source, private, rules, proguard, config)
         shaders = {}
-        for backend in ('native','eclipse'):
+        for backend in sorted(report['backends'].keys() - {'somber'}):
             row = report['backends'][backend]
             entry = row['shader_payload']
             data = source.read(entry)
@@ -521,8 +524,10 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
         shader_report['somber'] = dict(sha256=digest(shaders[somber_entry]), sealed_entries=sorted(shared))
         shader_mapping['somber'] = {key: value for key, value in shader_mapping['native'].items() if key in shared}
         loader = Path(names[LOADER + '.class']).stem
-        with zipfile.ZipFile(protected) as owned:
-            adjusted = protect_eclipse_calibration(owned.read(names[ECLIPSE_RUNTIME]), loader, fragments, private, config)
+        adjusted = None
+        if 'eclipse' in report['backends']:
+            with zipfile.ZipFile(protected) as owned:
+                adjusted = protect_eclipse_calibration(owned.read(names[ECLIPSE_RUNTIME]), loader, fragments, private, config)
         context, resource, sealed_resource = seal_archive(seed, loader, fragments, private, config)
         replaced = {LOADER + part + '.class' for part in LOADER_PARTS} | {BRIDGE + 'K.class'}
         added = set(context) | {resource}
@@ -560,7 +565,7 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
          protection_rules_sha256=sha(rules_file), protection_script_sha256=sha(Path(__file__)),
          proguard_version=rules['proguard_version'], proguard_zip_sha256=rules['proguard_zip_sha256'],
          protected_classes=len(names), renamed_classes=sum(a != b for a, b in names.items()), renamed_java_members=renamed_members,
-         shaders=shader_report, sealed_input_count=len(fragments), sealed_calibration_count=2, sealed_native_main_count=native_main_count, sealed_payload_sha256=digest(sealed_resource),
+         shaders=shader_report, sealed_input_count=len(fragments), sealed_calibration_count=2 if adjusted else 0, sealed_native_main_count=native_main_count, sealed_payload_sha256=digest(sealed_resource),
          sealed_resource=resource, public_source_view=True, loader_class=loader,
          dispatcher_class=Path(list(context)[len(LOADER_PARTS)]).stem,
          seal_tool_sha256=sha(ROOT / 'tools/java/SealRenderResources.java'), generated_context_classes=len(context),

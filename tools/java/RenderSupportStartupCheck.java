@@ -20,6 +20,7 @@ public final class RenderSupportStartupCheck {
         Path root=Path.of(args[0]);Files.createDirectories(root);Path user=Files.createTempDirectory(root,"玩家 空目录-");zombie.ZomboidFileSystem.instance.setCacheDir(user.toString());
         boolean eclipse=args.length>1&&args[1].equals("eclipse");
         boolean combined=args.length>1&&args[1].equals("combined");
+        boolean hasEclipse=Main.class.getResource("/META-INF/gfl2/rendering/eclipse.zip")!=null;
         boolean publicSources=args.length>2&&args[2].equals("sealed-public");
         boolean sealed=publicSources||args.length>2&&args[2].equals("sealed");
         String markerPrefix=args.length>3?args[3]:"/*gfl2$";
@@ -35,7 +36,8 @@ public final class RenderSupportStartupCheck {
             try{Main.main(new String[0]);}catch(Throwable failure){throw new AssertionError("Normal entry did not install hooks",failure);}
             throw new AssertionError("Normal dispatch failed but direct entry succeeded");
         }
-        if(eclipse||combined){
+        if (combined && !hasEclipse) require(!Files.exists(player.resolveSibling("Eclipse GFL 2.zip")), "Release installed Eclipse");
+        if(eclipse||hasEclipse){
             Path pack=player.resolveSibling("Eclipse GFL 2.zip");
             try(var embedded=Main.class.getResourceAsStream("/META-INF/gfl2/rendering/eclipse.zip")){
                 require(embedded!=null&&Arrays.equals(embedded.readAllBytes(),Files.readAllBytes(pack)),"Eclipse payload differs");
@@ -194,7 +196,7 @@ public final class RenderSupportStartupCheck {
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");
         try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("gfl2-(native|eclipse)-bundled-.*")),"Embedded payload temp leaked");}
         String status=combined?"NORMAL_COMBINED_EMBEDDED_INSTALL_DISCOVERY_PASS":"NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS";
-        JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("somber_discovered",combined).put("eclipse_embedded",combined).put("eclipse_discovered",combined).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
+        JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("somber_discovered",combined).put("eclipse_embedded",hasEclipse).put("eclipse_discovered",hasEclipse).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
         result.put("sealed_retransform_rejected",sealed).put("sealed_disk_checks",sealed).put("eclipse_discovery_configure_ns",eclipseLoad)
             .put("native_discovery_source_read_ns",nativeLoad).put("check_elapsed_ns",System.nanoTime()-start);
         Files.writeString(root.resolve("startup.json"),result.toString(2));System.out.println(result.toString());

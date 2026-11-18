@@ -139,24 +139,32 @@ public final class UnifiedStartupCheck {
             require(drawOrder(agent).equals(early), "Legacy coexistence applied a duplicate renderer");
             require(!Files.exists(folder.resolve("Eclipse GFL 2.zip")), "Duplicate renderer touched the user's packs");
         } else {
-            if (lateHost) {
-                require(Files.mismatch(oldEclipse, installedEclipse) != -1, "Stale managed Eclipse was not upgraded");
-                try (var zip = new ZipFile(installedEclipse.toFile())) {
-                    require(zip.stream().noneMatch(e -> e.getName().endsWith("/gbuffers_terrain.gsh")),
-                        "Managed Eclipse still contains the old terrain geometry shader");
+            boolean hasEclipse = gfl2.render.Main.class.getResource("/META-INF/gfl2/rendering/eclipse.zip") != null;
+            if (hasEclipse) {
+                if (lateHost) {
+                    require(Files.mismatch(oldEclipse, installedEclipse) != -1, "Stale managed Eclipse was not upgraded");
+                    try (var zip = new ZipFile(installedEclipse.toFile())) {
+                        require(zip.stream().noneMatch(e -> e.getName().endsWith("/gbuffers_terrain.gsh")),
+                            "Managed Eclipse still contains the old terrain geometry shader");
+                    }
+                    report.put("stale_eclipse_geometry_upgraded", true);
                 }
-                report.put("stale_eclipse_geometry_upgraded", true);
+                var iris = (IrisPack)find("IrisPacks", folder.toFile(), "minecraft-Eclipse_GFL_2");
+                var manifest = new JSONObject(iris.source.read("gf2/manifest.json"));
+                var probe = manifest.getJSONObject("native_probe");
+                byte[] source = iris.source.readBytes(probe.getString("path"));
+                require(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(source)).equals(probe.getString("sha256")),
+                    "Saved Eclipse pack cannot restore its probe before first model preparation");
+                var macros = viewpoint.iris.IrisMacros.standard(460,"","",Set.of("COMPUTE_SHADERS","CUSTOM_IMAGES","SSBO","FADE_VARIABLE"),true);
+                var configured = iris.configure(Map.of("TAA","true","VP_DANRP_PIPELINE","true"),macros);
+                var post = iris.preprocess(configured,"world0/composite6.fsh",macros);
+                require(post.errors().isEmpty() && post.text().contains("vpDanMotionTex"), "Early Eclipse preprocessing failed");
+                report.put("eclipse_taa_preprocess",true);
+            } else if (lateHost) {
+                require(Files.mismatch(oldEclipse, installedEclipse) == -1, "Release changed an existing Eclipse pack");
+            } else {
+                require(!Files.exists(installedEclipse), "Release installed Eclipse in a fresh profile");
             }
-            var iris = (IrisPack)find("IrisPacks", folder.toFile(), "minecraft-Eclipse_GFL_2");
-            var manifest = new JSONObject(iris.source.read("gf2/manifest.json"));
-            var probe = manifest.getJSONObject("native_probe");
-            byte[] source = iris.source.readBytes(probe.getString("path"));
-            require(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(source)).equals(probe.getString("sha256")),
-                "Saved Eclipse pack cannot restore its probe before first model preparation");
-            var macros = viewpoint.iris.IrisMacros.standard(460,"","",Set.of("COMPUTE_SHADERS","CUSTOM_IMAGES","SSBO","FADE_VARIABLE"),true);
-            var configured = iris.configure(Map.of("TAA","true","VP_DANRP_PIPELINE","true"),macros);
-            var post = iris.preprocess(configured,"world0/composite6.fsh",macros);
-            require(post.errors().isEmpty() && post.text().contains("vpDanMotionTex"), "Early Eclipse preprocessing failed");
             var somber = (viewpoint.platform.ShaderPack)find("ShaderPacks", folder.toFile(), "Somber-GFL2");
             require(somber != null && somber.base.id.equals("somber"), "Official discovery missed the Somber variant");
             Path somberFolder = folder.resolve("Somber-GFL2");
@@ -190,8 +198,8 @@ public final class UnifiedStartupCheck {
             require(drawOrder(agent).equals(ORDER), "First model preparation has incorrect draw advice: "+drawOrder(agent));
             prepare();
             require(drawOrder(agent).equals(ORDER), "Model preparation applied duplicate advice");
-            report.put("native_available_before_first_draw",true).put("eclipse_available_before_first_draw",true)
-                .put("native_callback_order",ORDER).put("eclipse_taa_preprocess",true);
+            report.put("native_available_before_first_draw",true).put("eclipse_available_before_first_draw",hasEclipse)
+                .put("native_callback_order",ORDER);
         }
         require(Files.readString(selection).equals(chosen) && Arrays.equals(Files.readAllBytes(custom),new byte[]{7,8,9}),
             "Player shader selection or custom pack was modified");

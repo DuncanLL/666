@@ -1,6 +1,6 @@
 # Viewpoint、Native、Somber 与 Eclipse 光影
 
-当前框架将人物运行时、Native、Somber 和 Eclipse 支持交付在一个工坊核心包里。支持基线是 Steam 创意工坊正式 Viewpoint 0.1.7，具体 JAR 指纹由 [VerifiedViewpoint](../../render-support/java/gfl2/render/VerifiedViewpoint.java) 和 [发布来源记录](../../provenance/render-support.json) 核验。独立后端目录是构建和排查输入。进入游戏以后，玩家从 Viewpoint 选择实际光影。
+当前框架将人物运行时、Native 和 Somber 交付在一个工坊核心包里。Eclipse 保留在独立维护构建。支持基线是 Steam 创意工坊正式 Viewpoint 0.1.7，具体 JAR 指纹由 [VerifiedViewpoint](../../render-support/java/gfl2/render/VerifiedViewpoint.java) 和 [发布来源记录](../../provenance/render-support.json) 核验。独立后端目录是构建和排查输入。进入游戏以后，玩家从 Viewpoint 选择实际光影。
 
 ## 从安装到当前帧
 
@@ -9,7 +9,7 @@
 3. 三套光影共用人物会话提供的资料。普通 PZ 或别的 Viewpoint 包仍沿其自身绘制通道。启用了定义少前2渲染协议的包时，角色的专属着色接管相应图元。程序的判断条件是当前绘制的包和实际角色材质身份。
 4. 捕获层提供位置、法线、材料显隐、各源材质的图元和上一帧资料。Viewpoint 的表现层在同一帧按宿主 phase 采样骨骼关联数据和顶点。这里应以 [PmxPresentation](../../game/java/gfl2/runtime/PmxPresentation.java) 和 [Bridge](../../game/java/gfl2/runtime/Bridge.java) 为准，别把绘制次数当作物理已经推进的次数。
 
-两边的合包由 [build_combined_render_support](../../tools/build_combined_render_support.py) 组装。同一个宿主类同时有 Native 和 Iris 关注点时，合包钩子按 [RuntimeHooks](../../render-support/java/gfl2/render/RuntimeHooks.java) 中的顺序处理。适配时查实际命中的方法和计数，再看相机与渲染效果。
+[build_combined_render_support](../../tools/build_combined_render_support.py) 默认合并 Native 和 Somber。仅在维护 Eclipse 时先构建 Eclipse 支持，再传入 `--with-eclipse`。同一个宿主类同时有 Native 和 Iris 关注点时，合包钩子按 [RuntimeHooks](../../render-support/java/gfl2/render/RuntimeHooks.java) 中的顺序处理。适配时查实际命中的方法和计数，再看相机与渲染效果。
 
 ## Somber 的分发与回归
 
@@ -83,4 +83,4 @@ Eclipse 通过 Iris 接入。构建使用固定指纹的 Eclipse 基线、实际
 - **启动或换包后黑屏、编译报错**，读取第一条着色器、宿主版本或 GL 状态错误。用实际宿主展开源码层级定位报错，核对预处理、缓冲布局、纹理格式、阶段衔接、采样预算和同步屏障，再查硬件环境。
 - **能出图但切换愈来愈卡**，分清 CPU 动作、次级物理、渲染资源上传、宿主网格池与实际 GPU 时间。只看一个角色的一段帧率不足以归因。
 
-正式发布按 [人物光影跨显卡检查](../render-release-standard.md) 记录 Native 和 Eclipse 的各自证据。组件规格、驱动出图、实际游戏和用户复测的边界见 [维护与验证](verification.md)。
+正式发布按 [人物光影跨显卡检查](../render-release-standard.md) 记录实际分发后端各自的证据。组件规格、驱动出图、实际游戏和用户复测的边界见 [维护与验证](verification.md)。

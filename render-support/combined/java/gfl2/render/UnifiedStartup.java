@@ -47,7 +47,7 @@ public final class UnifiedStartup {
         try {
             // ZombieBuddy has now composed the character's ModelPass advice.
             new RuntimeHooks(Set.of(MODEL_PASS)).install(agent);
-            System.out.println("[GFL2] Bundled Native, Somber and Eclipse integration ready");
+            System.out.println("[GFL2] Bundled shader integration ready");
         } catch (Exception | LinkageError failure) {
             System.err.println("[GFL2] Bundled ModelPass integration: " + failure);
         }

@@ -15,7 +15,7 @@ public final class Main {
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
-        System.out.println("[GFL2] Native, Somber and Eclipse integration ready. Select the pack in Viewpoint.");
+        System.out.println("[GFL2] Bundled shader integration ready. Select the pack in Viewpoint.");
     }
 
     static Instrumentation instrumentation()throws Exception{
@@ -31,7 +31,7 @@ public final class Main {
         Path user=Path.of(zombie.ZomboidFileSystem.instance.getCacheDir());
         Files.createDirectories(user);
         install(user,"Native",false);
-        install(user,"Eclipse",true);
+        if (!EclipseHooks.EXPECTED.isEmpty()) install(user,"Eclipse",true);
         install(user,"Somber",false);
     }
 

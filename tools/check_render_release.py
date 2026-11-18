@@ -57,7 +57,7 @@ def evaluate(evidence_file):
     for flag in ('normal_zombiebuddy_dispatch',backend+'_discovered','player_custom_pack_preserved','official_host_unchanged','workshop_validator_passed'):require(startup.get(flag)is True,'Startup check not passed: '+flag)
     if combined:
         require(all(startup.get(name+'_discovered') is True and startup.get('shader_hashes',{}).get(name)==row['shader_sha256']
-                    for name,row in build['backends'].items()),'Combined startup did not verify both embedded packs')
+                    for name,row in build['backends'].items()),'Combined startup did not verify every embedded pack')
     references=e.get('reference_reports',[]);require(bool(references),'No host-expanded reference compilation evidence')
     terrain_checked=False
     for path in references:

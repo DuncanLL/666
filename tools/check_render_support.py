@@ -12,7 +12,7 @@ if __name__=='__main__':
     build=json.loads((build_dir/'build.json').read_text('utf8'))
     backends=build['backends'] if combined else {a.backend:build}
     if a.protected_report:
-        assert combined, 'Protected review builds contain both backends'
+        assert combined, 'Protected review builds require the combined renderer'
         protected=json.loads(a.protected_report.read_text('utf8'))
         assert protected['status']=='PROTECTED_REVIEW_BUILD' and protected['input_jar_sha256']==build['jar_sha256']
         assert protected['host_sha256']==build['host_sha256'] and set(protected['shaders'])==set(backends)

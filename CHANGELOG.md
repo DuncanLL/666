@@ -8,6 +8,11 @@
 
 隔离分支优化人物绘制状态保存、分包目录合并、材质缓冲上传、身体重定向、显示插值与整备室浏览预览。实测口径、回退条件及复跑入口见[性能复审](docs/handoffs/2026-11-18-runtime-performance.md)。
 
+## 0.7.18 · 运行时优化与光影分发调整（2026-11-18）
+
+- 工坊框架自动分发 Native-GFL2 和 Somber-GFL2。Eclipse 只保留在独立维护构建，已安装的光影文件与玩家选择由 Viewpoint 管理。
+- 减少人物绘制过程中反复查询 OpenGL 状态的次数，复用 PMX 姿态计算所需的临时缓存，保留原有人物、物理、材质和存档格式。
+
 ## 0.7.17 · Somber 人物光影分发（2026-11-18）
 
 框架增加可选光影 Somber GFL 2，沿用 Native 的人物、衣装、专武和材质目录。启动时分发 Native、Somber 和 Eclipse，保留玩家的光影选择与手改文件。Somber 的漫画效果保留在场景中，角色使用原材质描边和颜色转换。构建、更新和回归步骤见[维护手册](docs/maintenance/rendering.md)，本机版本的包指纹与测试范围见[验证记录](provenance/releases/0.7.17-somber-local.json)。
