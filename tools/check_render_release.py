@@ -26,10 +26,11 @@ def write_only_buffer_accesses(source):
 def evaluate(evidence_file):
     evidence_file=Path(evidence_file).resolve();base=evidence_file.parent;e=read(evidence_file)
     backend=e.get('backend','native')
-    if backend not in ('native','eclipse'):raise ValueError('Unsupported render backend')
+    if backend not in ('native','somber','eclipse'):raise ValueError('Unsupported render backend')
     eclipse=backend=='eclipse'
     combined=e.get('distribution')=='combined'
     build=read(BUILD/('combined-support' if combined else 'eclipse-support' if eclipse else 'render-support')/'build.json')
+    if backend=='somber' and not combined:raise ValueError('Somber is distributed with the combined build')
     if combined:build.update(build['backends'][backend])
     origin=read(ROOT/'provenance'/('eclipse-outline.json' if eclipse else 'render-support.json'))
     errors=[];vendors=set();hosts=set()
@@ -87,10 +88,13 @@ def evaluate(evidence_file):
         require(d.get('addon_sha256')==build['jar_sha256'],'Driver report belongs to another JAR: '+path)
         require(d.get('core_sha256')==sha(character_jar),'Driver report used another character core')
         require(host in allowed,'Driver report used an unverified VP host')
+        if backend=='somber':
+            require(d.get('pack_id')=='Somber-GFL2' and d.get('shader_sha256')==build['shader_sha256'],
+                    'Somber driver evidence must identify the drawn pack and its tested payload')
         require(d.get('gl_messages') == [] and d.get('gl_error',0) == 0 and d.get('iris_active',False) is eclipse,'Driver reported GL errors or wrong backend')
         renderer=d.get('original_renderer',{})
         require(renderer.get('frames',0)>0 and renderer.get('original_stage_draws',0)>0,'Driver report did not render the character path')
-        variants=d.get(backend+'_catalog_variant_proof',{})
+        variants=d.get(('native' if backend=='somber' else backend)+'_catalog_variant_proof',{})
         coverage |= variants.get('models',0)>=model_count and variants.get('unique_linked_pairs',0)>0 and variants.get('material_upload_readback_equal') is True
         if re.search(r'AMD|Radeon',gpu,re.I):vendors.add('AMD')
         elif re.search(r'NVIDIA|GeForce|Quadro',gpu,re.I):vendors.add('NVIDIA')

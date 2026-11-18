@@ -1,17 +1,27 @@
-# Viewpoint、Native 与 Eclipse 光影
+# Viewpoint、Native、Somber 与 Eclipse 光影
 
-当前框架将人物运行时、Native 和 Eclipse 支持交付在一个工坊核心包里。支持基线是 Steam 创意工坊正式 Viewpoint 0.1.7，具体 JAR 指纹由 [VerifiedViewpoint](../../render-support/java/gfl2/render/VerifiedViewpoint.java) 和 [发布来源记录](../../provenance/render-support.json) 核验。独立后端目录是构建和排查输入。进入游戏以后，玩家从 Viewpoint 选择实际光影。
+当前框架将人物运行时、Native、Somber 和 Eclipse 支持交付在一个工坊核心包里。支持基线是 Steam 创意工坊正式 Viewpoint 0.1.7，具体 JAR 指纹由 [VerifiedViewpoint](../../render-support/java/gfl2/render/VerifiedViewpoint.java) 和 [发布来源记录](../../provenance/render-support.json) 核验。独立后端目录是构建和排查输入。进入游戏以后，玩家从 Viewpoint 选择实际光影。
 
 ## 从安装到当前帧
 
-1. 合包的[光影入口](../../render-support/combined/java/gfl2/render/Main.java) 核对只有一份接入入口，并验证官方宿主 JAR。经 ZombieBuddy 正常授权取得运行时挂接能力，再安装包内的两份光影和公共钩子。宿主文件继续由 Steam 提供。版本名相同而 JAR 二进制不同，也可能无法通过校验。
+1. 合包的[光影入口](../../render-support/combined/java/gfl2/render/Main.java) 核对只有一份接入入口，并验证官方宿主 JAR。经 ZombieBuddy 正常授权取得运行时挂接能力，再安装包内的三份光影和公共钩子。宿主文件继续由 Steam 提供。版本名相同而 JAR 二进制不同，也可能无法通过校验。
 2. [ManagedShaderPack](../../render-support/java/gfl2/render/ManagedShaderPack.java) 用 `viewpoint-shaderpacks` 存放包，写入 `gfl2-rendering` 的管理状态，根据已有包的身份与指纹处理更新、备份或保留。对前代受管包有选择迁移逻辑。查“更新后仍用旧包”时同时读实际选项、管理指纹和实际绘制的 pack。
-3. 两套光影共用人物会话提供的资料。普通 PZ 或别的 Viewpoint 包仍沿其自身绘制通道。启用了定义少前2渲染协议的包时，角色的专属着色接管相应图元。程序的判断条件是当前绘制的包和实际角色材质身份。
+3. 三套光影共用人物会话提供的资料。普通 PZ 或别的 Viewpoint 包仍沿其自身绘制通道。启用了定义少前2渲染协议的包时，角色的专属着色接管相应图元。程序的判断条件是当前绘制的包和实际角色材质身份。
 4. 捕获层提供位置、法线、材料显隐、各源材质的图元和上一帧资料。Viewpoint 的表现层在同一帧按宿主 phase 采样骨骼关联数据和顶点。这里应以 [PmxPresentation](../../game/java/gfl2/runtime/PmxPresentation.java) 和 [Bridge](../../game/java/gfl2/runtime/Bridge.java) 为准，别把绘制次数当作物理已经推进的次数。
 
 两边的合包由 [build_combined_render_support](../../tools/build_combined_render_support.py) 组装。同一个宿主类同时有 Native 和 Iris 关注点时，合包钩子按 [RuntimeHooks](../../render-support/java/gfl2/render/RuntimeHooks.java) 中的顺序处理。适配时查实际命中的方法和计数，再看相机与渲染效果。
 
-## 一套人物怎样进入两种光影
+## Somber 的分发与回归
+
+Somber 使用 Native 人物后端。角色包提供一份 PMX 和一份原材质目录，Native 和 Somber 读取同一份资料。新增角色时按现有流程更新人物目录，并将角色的完整制作端材质数据传给保护构建的 `--catalog-workshop`。原游 GLSL 和贴图继续使用外部资源目录。
+
+[Somber 构建器](../../tools/build_somber_pack.py) 从本次构建的 Native ZIP 派生 `somber.zip`。官方 Somber 自带的天空、光照、预设和选项通过 `base=somber` 继承。构建器从已验证的 VP JAR 读取 Somber 的 `post.frag`，在其原始雾、透明层和曝光流程中接入人物显示转换。升级 VP 时，源码接点的匹配失败会报告具体语句。复核新后处理的顺序与输入后再更新构建器。保护构建从同批已封装的 Native 资料重新派生 Somber，沿用同一份公共人物程序。
+
+[人物覆盖范围](../../render-support/java/viewpoint/render/Gfl2SomberCoverage.java) 读取当前帧少前2实际绘制的法线目标。普通 VP 模型也使用材质编号 31，必须同时核对少前2输出标记。每次后处理结束时恢复纹理单元与采样器。Somber 反射探针使用本包的天空入口与六向房间采样。主光方向、颜色和强度来自 VP 当前帧。
+
+框架首次启动会将 `META-INF/gfl2/rendering/somber.zip` 展开到 `viewpoint-shaderpacks/Somber-GFL2`，在 VP 图形设置中显示为 **Somber GFL 2**。它和 Native 使用相同的逐文件指纹、受管更新和用户编辑保护。用 `tools/check_gfl2_unified.py` 检查空目录、延迟加载 VP、旧版升级及重复启动。实绘回归覆盖质量与性能预设、实时设置、来回切包、普通模型与少前2角色同屏、白天及室内夜景。记录设备、实际 JAR 和光影 SHA。
+
+## 一套人物怎样进入三套光影
 
 少前2原程序、属性、贴图、GLSL、材质覆盖数据不随 Git 分发。按照核心及已启用分包里的 `media/gfl2_rendering`，由 [Gfl2PackData](../../render-support/java/viewpoint/render/Gfl2PackData.java) 按身份读回。[PmxShading](../../game/java/gfl2/motion/PmxShading.java) 以 `PMX-MAT1` sidecar 核 PMX 指纹、属性流和贴图映射。[PmxOriginalInputs](../../game/java/gfl2/motion/PmxOriginalInputs.java) 进一步核源码图元与实际 PMX 顶点、索引及材质编号。
 

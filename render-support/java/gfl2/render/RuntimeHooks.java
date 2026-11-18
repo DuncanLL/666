@@ -15,6 +15,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     public static final Map<String,Integer> EXPECTED;
     static {
         Map<String,Integer> hooks=new LinkedHashMap<>(NATIVE);
+        hooks.put(SomberPostHooks.POST,2);
         EclipseHooks.EXPECTED.forEach((name,count)->{if(!name.equals(SOURCE_INPUTS))hooks.merge(name,count,Integer::sum);});
         if(EclipseHooks.EXPECTED.isEmpty())hooks.remove(MODEL_BATCHES);
         if (Gfl2SealedSources.enabled()) {
@@ -35,6 +36,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     }
     public static byte[] rewrite(String type,byte[] raw){
         if(!EXPECTED.containsKey(type))return null;
+        if(type.equals(SomberPostHooks.POST))return SomberPostHooks.adapt(raw);
         if (type.equals(IRIS_SOURCE) || type.equals(NATIVE_SOURCE)) return openSources(type, raw);
         byte[] result=NATIVE.containsKey(type)?rewriteNative(type,raw):raw;
         if(!type.equals(SOURCE_INPUTS)&&EclipseHooks.EXPECTED.containsKey(type))

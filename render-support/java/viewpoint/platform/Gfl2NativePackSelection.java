@@ -9,7 +9,8 @@ public final class Gfl2NativePackSelection {
     private static float[] displayLive;
     private static DisplaySettings displaySettings;
     private static int contrastIndex,saturationIndex,vibranceIndex,exposureIndex,strengthIndex,detailIndex,glossIndex,outlineIndex;
-    private static boolean filmic;
+    private static boolean filmic, somberPost;
+    public static boolean somberActorPost(){return somberPost && displayPack == ShaderPacks.drawn();}
     private static final java.util.regex.Pattern FILMIC=java.util.regex.Pattern.compile("(?m)^#define\\s+OPTION_TONE_CURVE\\s+0\\s*$");
     /** Native already keeps numeric options on the CPU. Never read the GPU option UBO per frame. */
     public static DisplaySettings displaySettings(){
@@ -17,7 +18,12 @@ public final class Gfl2NativePackSelection {
         if(displayPack!=pack){
             contrastIndex=saturationIndex=vibranceIndex=exposureIndex=strengthIndex=detailIndex=glossIndex=outlineIndex=-1;int at=0;
             for(PackOption option:pack.pack.options)if(option.kind==PackOption.Kind.NUMBER){switch(option.id){case "contrast"->contrastIndex=at;case "saturation"->saturationIndex=at;case "vibrance"->vibranceIndex=at;case "exposure"->exposureIndex=at;case "characterDisplayStrength"->strengthIndex=at;case "characterSurfaceDetail"->detailIndex=at;case "characterSkinGloss"->glossIndex=at;case "characterOutlineWidth"->outlineIndex=at;}at++;}
-            filmic=FILMIC.matcher(pack.defines).find();displayPack=pack;displayLive=null;
+            ShaderPack base = pack.pack;
+            while (base != null && !base.builtIn) base = base.base;
+            somberPost = base != null && base.id.equals("somber") && strengthIndex >= 0
+                && pack.pack.shader("gf2/somber_actor_display.glsl") != null;
+            filmic = somberPost || (base != null && base.id.equals("default") && FILMIC.matcher(pack.defines).find());
+            displayPack=pack;displayLive=null;
         }
         if(displayLive!=live){displayLive=live;displaySettings=contrastIndex<0||saturationIndex<0||vibranceIndex<0||exposureIndex<0?null:new DisplaySettings(live[contrastIndex],live[saturationIndex],live[vibranceIndex],live[exposureIndex],strengthIndex<0?1:live[strengthIndex],filmic,detailIndex<0?0:live[detailIndex],glossIndex<0?0:live[glossIndex],outlineIndex<0?1:live[outlineIndex]);}
         return displaySettings;
@@ -45,6 +51,7 @@ public final class Gfl2NativePackSelection {
         Map<String,ShaderPack> parents=new HashMap<>();
         ShaderPack library=ShaderPack.parse("library",ShaderPack.jar("library"),id->parents.get(id),true);parents.put("library",library);
         ShaderPack defaults=ShaderPack.parse("default",ShaderPack.jar("default"),id->parents.get(id),true);parents.put("default",defaults);
+        ShaderPack somber=ShaderPack.parse("somber",ShaderPack.jar("somber"),parents::get,true);parents.put("somber",somber);
         ShaderPack selected=ShaderPack.parse("gf2-native-development",ShaderPack.folder(new File(folder)),id->parents.get(id),false);
         PackPreset preset=selected.preset(selected.firstPreset);ShaderPacks.use(selected,preset::valueFor);
     }

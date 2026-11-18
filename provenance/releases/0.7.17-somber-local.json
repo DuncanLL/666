@@ -1,0 +1,31 @@
+{
+  "version": "0.7.17",
+  "render_support_version": "0.3.28",
+  "date": "2026-11-18",
+  "distribution": "local",
+  "host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "installed_core_sha256": "6916396805787d0844be916cf3fcd564e4a6eab5fe42af0fd45e4a91cabd4ed7",
+  "pack_sha256": {
+    "native": "e155ab3ead571784e2c0c999c776c36dbfe7e96c984b5ded01a49884358a00b8",
+    "eclipse": "124fad545aba38df066f67bec89b1ada49c425d648fc13e37f9bbbba7ea09f89",
+    "somber": "ef6c7704e494d7b492442d678f11db005f8b0a421c8c07e517584e6236e9ab4c"
+  },
+  "tests": {
+    "fresh_install": true,
+    "late_host_and_managed_upgrade": true,
+    "repeat_install_current": true,
+    "user_modified_pack_preserved": true,
+    "saved_pack_selection_preserved": true,
+    "reference_programs": 75,
+    "reference_failures": 0,
+    "gpu": "AMD Radeon RX 9070 XT",
+    "opengl": "4.6.0 Compatibility Profile Context 26.9.1.260806",
+    "day_and_night_models": [
+      "GFL2Asteria",
+      "GFL2Cheyanne",
+      "GFL2Koleda"
+    ],
+    "quality_performance_live_and_return": true
+  },
+  "release_scope": "Controlled OpenGL and package verification. Gameplay, subscriber cold start, NVIDIA and Intel unverified. No Steam upload."
+}

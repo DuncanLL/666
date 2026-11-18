@@ -3,14 +3,14 @@ from pathlib import Path
 import argparse,json,shutil,zipfile
 from common import ROOT,BUILD,settings,sha,save,inventory
 
-def package(output,verify_existing=False,evidence=None,public=False,combined=True,metadata_from=None,eclipse_evidence=None):
+def package(output,verify_existing=False,evidence=None,public=False,combined=True,metadata_from=None,eclipse_evidence=None,somber_evidence=None):
     output=Path(output).resolve()
     folder=BUILD/('combined-support' if combined else 'render-support')
     report=json.loads((folder/'build.json').read_text('utf8'));jar=Path(report['jar'])
     assert sha(jar)==report['jar_sha256']
     for name,value in report['source_hashes'].items():assert sha(ROOT/name)==value,'Source changed after build: '+name
     if public:
-        evidence_by_backend={'native':evidence,'eclipse':eclipse_evidence} if combined else {'native':evidence}
+        evidence_by_backend={'native':evidence,'eclipse':eclipse_evidence,'somber':somber_evidence} if combined else {'native':evidence}
         if not all(evidence_by_backend.values()):raise ValueError('Public validation requires evidence for each packaged backend')
         from check_render_release import evaluate
         for backend,source in evidence_by_backend.items():
@@ -58,5 +58,5 @@ if __name__=='__main__':
     parser.add_argument('--verify-existing',action='store_true');parser.add_argument('--public',action='store_true')
     parser.add_argument('--native-only',action='store_true',help='Build a standalone Native diagnostic candidate')
     parser.add_argument('--metadata-from',type=Path)
-    parser.add_argument('--evidence',type=Path);parser.add_argument('--eclipse-evidence',type=Path);args=parser.parse_args()
-    package(args.output,args.verify_existing,args.evidence,args.public,not args.native_only,args.metadata_from,args.eclipse_evidence)
+    parser.add_argument('--evidence',type=Path);parser.add_argument('--eclipse-evidence',type=Path);parser.add_argument('--somber-evidence',type=Path);args=parser.parse_args()
+    package(args.output,args.verify_existing,args.evidence,args.public,not args.native_only,args.metadata_from,args.eclipse_evidence,args.somber_evidence)

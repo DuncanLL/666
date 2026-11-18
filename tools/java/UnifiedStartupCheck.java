@@ -108,6 +108,17 @@ public final class UnifiedStartupCheck {
         Instrumentation agent = RenderSupportTestAgent.agent;
         Path oldEclipse = lateHost ? installOldEclipse(user) : null;
         Path installedEclipse = folder.resolve("Eclipse GFL 2.zip");
+        if (lateHost) {
+            Path old = Files.createTempFile(root, "somber-previous-", ".zip");
+            try (var zip = new ZipOutputStream(Files.newOutputStream(old))) {
+                for (String name : List.of("pack.properties","shaders/gf2/manifest.json","retired-test.glsl")) {
+                    zip.putNextEntry(new ZipEntry(name));
+                    zip.write(new byte[]{0});
+                    zip.closeEntry();
+                }
+            }
+            gfl2.render.ManagedShaderPack.installSomber(old, user);
+        }
         if (lateHost) require(UnifiedStartupCheck.class.getClassLoader().getResource(MODEL_PASS + ".class") == null,
             "Late-host case already exposes Viewpoint");
         if (!lateHost && !legacy) apply("viewpoint", agent);
@@ -146,6 +157,29 @@ public final class UnifiedStartupCheck {
             var configured = iris.configure(Map.of("TAA","true","VP_DANRP_PIPELINE","true"),macros);
             var post = iris.preprocess(configured,"world0/composite6.fsh",macros);
             require(post.errors().isEmpty() && post.text().contains("vpDanMotionTex"), "Early Eclipse preprocessing failed");
+            var somber = (viewpoint.platform.ShaderPack)find("ShaderPacks", folder.toFile(), "Somber-GFL2");
+            require(somber != null && somber.base.id.equals("somber"), "Official discovery missed the Somber variant");
+            Path somberFolder = folder.resolve("Somber-GFL2");
+            Path postFile = somberFolder.resolve("shaders/post.frag");
+            require(Files.readString(postFile).contains("gf2HasCoverage"), "Installed Somber lacks the actor mask");
+            Path bundledSomber = Files.createTempFile(root,"somber-release-", ".zip");
+            try (var payload = gfl2.render.Main.class.getResourceAsStream("/META-INF/gfl2/rendering/somber.zip")) {
+                require(payload != null,"Combined JAR lacks Somber");
+                Files.copy(payload,bundledSomber,java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+            try (var archive = new ZipFile(bundledSomber.toFile())) {
+                for (var entry : archive.stream().filter(e -> !e.isDirectory()).toList()) {
+                    require(Arrays.equals(archive.getInputStream(entry).readAllBytes(),
+                            Files.readAllBytes(somberFolder.resolve(entry.getName()))), "Somber file differs: "+entry.getName());
+                }
+            }
+            require(!Files.exists(somberFolder.resolve("retired-test.glsl")), "Stale managed Somber file survived upgrade");
+            require(gfl2.render.ManagedShaderPack.installSomber(bundledSomber,user).action().equals("CURRENT"),
+                    "Repeated install changed the managed Somber pack");
+            Files.writeString(postFile,"user shader");
+            require(gfl2.render.ManagedShaderPack.installSomber(bundledSomber,user).action().equals("USER_FILE_PRESERVED")
+                    && Files.readString(postFile).equals("user shader"), "Edited Somber shader was overwritten");
+            report.put("somber_discovered",true).put("somber_updated",lateHost).put("somber_custom_preserved",true);
             Object nativePack = find("ShaderPacks", folder.toFile(), "Native-GFL2");
             var read = nativePack.getClass().getDeclaredMethod("shader",String.class);
             read.setAccessible(true);

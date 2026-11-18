@@ -164,6 +164,7 @@ public final class RenderSupportStartupCheck {
         }
         long nativeStart=System.nanoTime();
         var discover=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("discover",java.io.File.class);discover.setAccessible(true);discover.invoke(null,folder.getParent().toFile());var find=viewpoint.platform.ShaderPacks.class.getDeclaredMethod("find",String.class);find.setAccessible(true);require(find.invoke(null,"Native-GFL2")!=null,"Official Native discoverer did not find installed folder");
+        if(combined){var somber=(viewpoint.platform.ShaderPack)find.invoke(null,"Somber-GFL2");require(somber!=null && somber.base.id.equals("somber"),"Somber pack not discovered");}
         var selected=(viewpoint.platform.ShaderPack)find.invoke(null,"Native-GFL2");var fill=selected.option("characterSoftFill");
         if(combined){
             var read=viewpoint.platform.ShaderPack.class.getDeclaredMethod("shader",String.class);read.setAccessible(true);
@@ -193,7 +194,7 @@ public final class RenderSupportStartupCheck {
         dispatch.invoke(null,Main.class,main);require(!Files.exists(user.resolve("viewpoint-live.properties")),"Author graphics options written");
         try(var files=Files.list(user)){require(files.noneMatch(p->p.getFileName().toString().matches("gfl2-(native|eclipse)-bundled-.*")),"Embedded payload temp leaked");}
         String status=combined?"NORMAL_COMBINED_EMBEDDED_INSTALL_DISCOVERY_PASS":"NORMAL_NATIVE_EMBEDDED_INSTALL_DISCOVERY_PASS";
-        JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("eclipse_embedded",combined).put("eclipse_discovered",combined).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
+        JSONObject result=new JSONObject().put("status",status).put("user_root",user.toString()).put("native_discovered",true).put("somber_discovered",combined).put("eclipse_embedded",combined).put("eclipse_discovered",combined).put("player_custom_pack_preserved",true).put("normal_zombiebuddy_dispatch",true).put("selected_shader_changed",false).put("game_started",false).put("steam_subscription_tested",false);
         result.put("sealed_retransform_rejected",sealed).put("sealed_disk_checks",sealed).put("eclipse_discovery_configure_ns",eclipseLoad)
             .put("native_discovery_source_read_ns",nativeLoad).put("check_elapsed_ns",System.nanoTime()-start);
         Files.writeString(root.resolve("startup.json"),result.toString(2));System.out.println(result.toString());

@@ -184,7 +184,7 @@ def owned_classes(archive):
         root = Path(name).name.split('$', 1)[0].removesuffix('.class')
         source = root.replace('Gfl2Eclipse', 'Gfl2')
         effect = name.startswith(('viewpoint/render/Gfl2', 'viewpoint/platform/Gfl2'))
-        hook = name.startswith(BRIDGE) and root in {'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'Gfl2SealedSources', 'ShaderManifestNames', 'UnifiedStartup'}
+        hook = name.startswith(BRIDGE) and root in {'SomberPostHooks', 'NativeHooks', 'RuntimeHooks', 'EclipseHooks', 'Gfl2SealedSources', 'ShaderManifestNames', 'UnifiedStartup'}
         if effect or hook:
             assert root in sources or source in sources or root == 'EclipseHooks', name
             classes.add(name)
@@ -462,6 +462,7 @@ def native_release_input(raw, config, private):
 
 
 def package(output, proguard, metadata, seed_from=None, leak_references=(), shared_references=(), catalog_roots=()):
+    import build_somber_pack
     config = settings()
     rules_file = ROOT / 'render-support/release-protection.json'
     rules = json.loads(rules_file.read_text('utf8'))
@@ -504,12 +505,21 @@ def package(output, proguard, metadata, seed_from=None, leak_references=(), shar
     with zipfile.ZipFile(release) as source:
         protected, names, renamed_members = protect_classes(source, private, rules, proguard, config)
         shaders = {}
-        for backend, row in report['backends'].items():
+        for backend in ('native','eclipse'):
+            row = report['backends'][backend]
             entry = row['shader_payload']
             data = source.read(entry)
             assert digest(data) == row['shader_sha256']
             shaders[entry], shader_mapping[backend], sealed = protect_shaders(data, backend, rules, fragments)
             shader_report[backend] = {'sha256': digest(shaders[entry]), 'sealed_entries': sorted(sealed)}
+        somber_entry = build_somber_pack.PAYLOAD
+        somber_input = source.read(somber_entry)
+        assert digest(somber_input) == report['backends']['somber']['shader_sha256']
+        native_entry = report['backends']['native']['shader_payload']
+        shaders[somber_entry] = build_somber_pack.build_somber(shaders[native_entry], host)
+        shared = set(shader_report['native']['sealed_entries']) - {'shaders/gf2/native_cube.comp'}
+        shader_report['somber'] = dict(sha256=digest(shaders[somber_entry]), sealed_entries=sorted(shared))
+        shader_mapping['somber'] = {key: value for key, value in shader_mapping['native'].items() if key in shared}
         loader = Path(names[LOADER + '.class']).stem
         with zipfile.ZipFile(protected) as owned:
             adjusted = protect_eclipse_calibration(owned.read(names[ECLIPSE_RUNTIME]), loader, fragments, private, config)

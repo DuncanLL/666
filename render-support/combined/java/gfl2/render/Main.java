@@ -4,7 +4,7 @@ import java.lang.instrument.Instrumentation;
 import java.io.InputStream;
 import java.nio.file.*;
 
-/** Single approved MOD entry for both shader packs. */
+/** Single approved MOD entry for the bundled shader packs. */
 public final class Main {
     private static RuntimeHooks hooks;
     public static synchronized void main(String[] ignored)throws Exception{
@@ -15,7 +15,7 @@ public final class Main {
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
         hooks=next;
-        System.out.println("[GFL2] Native and Eclipse integration ready. Select the pack in Viewpoint.");
+        System.out.println("[GFL2] Native, Somber and Eclipse integration ready. Select the pack in Viewpoint.");
     }
 
     static Instrumentation instrumentation()throws Exception{
@@ -32,6 +32,7 @@ public final class Main {
         Files.createDirectories(user);
         install(user,"Native",false);
         install(user,"Eclipse",true);
+        install(user,"Somber",false);
     }
 
     private static void install(Path user,String backend,boolean eclipse)throws Exception{
@@ -40,8 +41,13 @@ public final class Main {
         try(InputStream payload=Main.class.getResourceAsStream(archive)){
             if(payload==null)throw new IllegalStateException("Bundled "+backend+" shader missing");
             Files.copy(payload,temporary,StandardCopyOption.REPLACE_EXISTING);
-            var result=eclipse?ManagedShaderPack.install(temporary,user):ManagedShaderPack.installNative(temporary,user);
-            ManagedShaderPack.migrateSelection(user,result,eclipse);
+            ManagedShaderPack.Result result;
+            if (backend.equals("Somber")) {
+                result=ManagedShaderPack.installSomber(temporary,user);
+            } else {
+                result=eclipse?ManagedShaderPack.install(temporary,user):ManagedShaderPack.installNative(temporary,user);
+                ManagedShaderPack.migrateSelection(user,result,eclipse);
+            }
             System.out.println("[GFL2 "+backend+"] "+result.action()+" "+result.pack());
         }finally{Files.deleteIfExists(temporary);}
     }

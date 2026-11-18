@@ -14,6 +14,9 @@ import viewpoint.platform.Gfl2NativePackSelection;
 
 /** Original GF2 source stages in Native AFTER_OPAQUE; Native world/lighting/post are retained. */
 public final class Gfl2NativeSourceRenderer implements AutoCloseable {
+    int somberCoverageTexture(long frame) {
+        return frame == lastFrame && lastActors > 0 ? target.sourceNormal() : 0;
+    }
     private final Gfl2PackData data;
     private final Gfl2PackMaterials materials;
     private final Gfl2NativeSourcePrograms nativePrograms;

@@ -1,5 +1,7 @@
 """Combine the two verified build inputs into one normally loaded GFL2 MOD JAR."""
+import hashlib
 import json
+import build_somber_pack
 import os
 from pathlib import Path
 import subprocess
@@ -70,13 +72,17 @@ def build_combined():
                 if name not in replacements:write(z,name,n.read(name))
             for name,data in sorted(rows.items()):write(z,name,data)
             write(z,eclipse['shader_payload'],e.read(eclipse['shader_payload']))
+            somber = build_somber_pack.build_somber(n.read(native['shader_payload']), host)
+            write(z,build_somber_pack.PAYLOAD,somber)
         with zipfile.ZipFile(host)as stock,zipfile.ZipFile(result)as combined:
             assert combined.testzip()is None
             assert not {n for n in combined.namelist() if n.endswith('.class')}&set(stock.namelist()),'Official host class collision'
         os.replace(result,jar)
     files=[*sources,relocator,Path(__file__).resolve(),ROOT/'tools/build_render_support.py',ROOT/'tools/build_eclipse_support.py']
+    files.extend([Path(build_somber_pack.__file__), *[p for p in build_somber_pack.OVERLAY.rglob("*") if p.is_file()]])
     hashes={**native['source_hashes'],**eclipse['source_hashes'],**{p.relative_to(ROOT).as_posix():sha(p)for p in files}}
     backends={report['backend']:{key:report[key] for key in ('shader_payload','shader_sha256')}for report in (native,eclipse)}
+    backends['somber'] = dict(shader_payload=build_somber_pack.PAYLOAD, shader_sha256=hashlib.sha256(somber).hexdigest())
     save(out/'build.json',dict(status='BUILT_COMBINED_RENDER_SUPPORT',backend='combined',version=native['version'],
         jar=str(jar),jar_sha256=sha(jar),host_sha256=sha(host),backends=backends,source_hashes=hashes,installed=False,uploaded=False))
     print('Built combined render support: '+str(jar),flush=True)

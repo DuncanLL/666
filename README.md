@@ -1,6 +1,6 @@
 # 僵毁少女前线
 
-Project Zomboid B42.22 的少前2角色 MOD。核心内部 ID 为 `GFL2Exilium`，随包提供 Native 和 Eclipse 人物渲染支持，当前维护基线使用 Steam 创意工坊提供的 Project Viewpoint 0.1.7。
+Project Zomboid B42.22 的少前2角色 MOD。核心内部 ID 为 `GFL2Exilium`，随包提供 Native、Somber 和 Eclipse 人物渲染支持，当前维护基线使用 Steam 创意工坊提供的 Project Viewpoint 0.1.7。
 
 - [框架工坊项目](https://steamcommunity.com/sharedfiles/filedetails/?id=3838709437)
 - [24 个角色包的订阅合集](https://steamcommunity.com/sharedfiles/filedetails/?id=3841234557)

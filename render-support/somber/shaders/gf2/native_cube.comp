@@ -1,0 +1,30 @@
+#version 430
+#include "constants.glsl"
+#include "lib/camera.glsl"
+#include "lib/sky.glsl"
+uniform vec3 uSunDir;
+uniform vec3 uSunColor;
+uniform float uSunStrength;
+uniform vec3 gf2ProbePosition;
+uniform float gf2ProbeSkyShare;
+uniform samplerCube gf2ProbeRoom;
+uniform int gf2ProbeRoomOn;
+#include "gf2/native_reflection_sky.glsl"
+layout(local_size_x=8,local_size_y=8)in;
+layout(rgba16f,binding=0)writeonly uniform imageCube sourceCube;
+#include "gf2/cube_faces.glsl"
+
+void main() {
+    ivec3 p = ivec3(gl_GlobalInvocationID);
+    ivec2 size = imageSize(sourceCube);
+    if (any(greaterThanEqual(p.xy, size)) || p.z >= 6) return;
+    vec2 uv = (vec2(p.xy) + 0.5) / vec2(size) * 2.0 - 1.0;
+    vec3 ray = normalize(cubeDirection(p.z, uv)) * vec3(-1, 1, -1);
+    vec3 colour = reflectedSky(gf2ProbePosition, ray, clamp(gf2ProbeSkyShare, 0.0, 1.0));
+    if (gf2ProbeRoomOn != 0) {
+        vec4 room = textureLod(gf2ProbeRoom, ray, 0.0);
+        colour = mix(colour, room.rgb, room.a);
+    }
+    imageStore(sourceCube, p, vec4(max(colour, vec3(0.0)) * 0.25, 1.0));
+}
+

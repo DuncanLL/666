@@ -4,6 +4,10 @@
 
 游戏动作、人物状态和光影接线详见 [维护手册](docs/maintenance/README.md)。
 
+## 0.7.17 · Somber 人物光影分发（2026-11-18）
+
+框架增加可选光影 Somber GFL 2，沿用 Native 的人物、衣装、专武和材质目录。启动时分发 Native、Somber 和 Eclipse，保留玩家的光影选择与手改文件。Somber 的漫画效果保留在场景中，角色使用原材质描边和颜色转换。构建、更新和回归步骤见[维护手册](docs/maintenance/rendering.md)，本机版本的包指纹与测试范围见[验证记录](provenance/releases/0.7.17-somber-local.json)。
+
 ## 0.7.16 · 工坊内容更新（2026-11-18）
 
 框架和 24 个角色包均已更新到原有工坊条目。Steam 回读的 25 项内容大小与本地提交一致。最终框架包含角色材质目录加载优化，内容清单为 `1050789018337649627`，北京时间 12:40 发布。[各条目的内容清单与核验记录](provenance/releases/0.7.16-workshop.json)

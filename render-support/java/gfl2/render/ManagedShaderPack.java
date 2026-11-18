@@ -9,6 +9,7 @@ import java.util.zip.*;
 /** Installs owned packs and carries forward their existing Viewpoint selection. */
 public final class ManagedShaderPack {
     public static final String NATIVE="Native-GFL2";
+    public static final String SOMBER="Somber-GFL2";
     public static final String ECLIPSE="Eclipse GFL 2";
     private static final String previousTag=new String(new char[]{65,105,109,111,104});
     private static final String LEGACY_NATIVE=previousTag+"-Native-GF2";
@@ -25,9 +26,15 @@ public final class ManagedShaderPack {
         return install(source,userRoot,ECLIPSE+".zip","managed-shader.properties");
     }
     public static Result installNative(Path source,Path userRoot)throws IOException{
+        return installFolder(source,userRoot,NATIVE);
+    }
+    public static Result installSomber(Path source,Path userRoot)throws IOException{
+        return installFolder(source,userRoot,SOMBER);
+    }
+    private static Result installFolder(Path source,Path userRoot,String packName)throws IOException{
         source=source.toAbsolutePath().normalize();userRoot=userRoot.toAbsolutePath().normalize();
         Path folder=userRoot.resolve("viewpoint-shaderpacks"),state=userRoot.resolve("gfl2-rendering");
-        Path target=folder.resolve(NATIVE);String wanted=sha(source),marker=".gfl2-managed.properties";
+        Path target=folder.resolve(packName);String wanted=sha(source),marker=".gfl2-managed.properties";
         if(Files.exists(target)){
             if(Files.isSymbolicLink(target)||!Files.isDirectory(target)||!Files.isRegularFile(target.resolve(marker)))return new Result(target,"USER_FILE_PRESERVED","");
             Properties old=new Properties();try(var stream=Files.newInputStream(target.resolve(marker))){old.load(stream);}

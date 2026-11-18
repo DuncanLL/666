@@ -6,6 +6,9 @@ import zombie.ZomboidFileSystem;
 
 /** One Native renderer per actual drawn pack generation. Data preparation has no GL calls. */
 public final class Gfl2NativeRuntime {
+    public static int somberCoverageTexture(long frame) {
+        return frameRenderer == null ? 0 : frameRenderer.somberCoverageTexture(frame);
+    }
     private static ShaderPacks.Active selected;
     private static Gfl2PackData prepared,drawnData;
     private static Gfl2NativeSourceRenderer renderer,frameRenderer;

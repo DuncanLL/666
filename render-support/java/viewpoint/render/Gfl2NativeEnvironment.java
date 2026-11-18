@@ -47,7 +47,11 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
     }
     private void uniform(String name,float[] result){int location=GL20.glGetUniformLocation(lighting.id(),name);if(location<0)throw new IllegalStateException("Native light uniform absent: "+name);GL20.glGetUniformfv(lighting.id(),location,result);}
     public void update(FrameContext frame)throws Exception{
-        find();uniform("uSunDir",direction);uniform("uSkyLevel",level);uniform("uSunColor",sunColor);strength=GL20.glGetUniformf(lighting.id(),GL20.glGetUniformLocation(lighting.id(),"uSunStrength"));
+        find();uniform("uSkyLevel",level);
+        // The active scene owns these values even if a pack's lighting shader optimizes them out.
+        direction[0]=frame.scene.sunX;direction[1]=frame.scene.sunY;direction[2]=frame.scene.sunZ;
+        sunColor[0]=frame.scene.sunR;sunColor[1]=frame.scene.sunG;sunColor[2]=frame.scene.sunB;
+        strength=frame.sun?frame.scene.sunStrength:0;
         int block=GL31.glGetUniformBlockIndex(lighting.id(),"SkyLight"),binding=GL31.glGetActiveUniformBlocki(lighting.id(),block,GL31.GL_UNIFORM_BLOCK_BINDING),sky=GL30.glGetIntegeri(GL31.GL_UNIFORM_BUFFER_BINDING,binding);
         if(sky==0)throw new IllegalStateException("Actual Native SkyLight UBO is not bound");
         pack.use();pack.set("nativeRelativeSky",level[0],level[1],level[2]);pack.set("nativePrimaryStrength",strength);
@@ -64,7 +68,7 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
         cube=reflectionCubes.computeIfAbsent(actor,k->reflectionCubes.isEmpty()&&cube!=0?cube:environmentCube());
         boolean room=frame.pipeline.reflections;
         if(room){if(roomProbe==null)roomProbe=new Gfl2NativeRoomProbe();roomProbe.capture(frame,center);roomProbe.illuminate(frame,center);}
-        Targets targets=(Targets)world("targets");reflection.use();frame.camera(reflection);
+        Targets targets=(Targets)world("targets");reflection.use();frame.camera(reflection);FrameUniforms.apply(reflection,frame);
         reflection.set("gf2ProbeViewProjection",frame.viewProjection);
         reflection.set("gf2ProbePosition",center[0],center[1],center[2]);reflection.set("gf2ProbeSkyShare",skyShare);
         reflection.setInt("gf2ProbeSceneOn",frame.pipeline.reflections?1:0);
