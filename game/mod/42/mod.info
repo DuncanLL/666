@@ -1,7 +1,7 @@
 name=僵毁少女前线
 id=GFL2Exilium
 require=\ZombieBuddy
-modversion=0.7.18
+modversion=0.7.19
 versionMin=42.22
 versionMax=42.22
 javaJarFile=media/java/client/GFL2Exilium.jar

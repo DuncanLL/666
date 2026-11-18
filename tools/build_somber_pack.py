@@ -43,16 +43,20 @@ def character_post(host):
     source = replace_once(source, 'void main() {', '#include "gf2/somber_actor_display.glsl"\nvoid main() {')
     source = replace_once(source, 'float ink = 0.0;', '''float ink = 0.0;
   bool gf2Actor = false;
+  bool gf2SourceSurface = false;
   if (gf2HasCoverage) {
     ivec2 dims = textureSize(gf2OriginalNormals, 0);
     ivec2 pixel = clamp(ivec2(vUv * vec2(dims)), ivec2(0), dims-1);
     vec2 tags = texelFetch(gf2OriginalNormals, pixel, 0).zw;
+    // Source normal tags also cover visible materials drawn after the opaque pass.
+    gf2SourceSurface = abs(tags.x - 0.498) < 0.0003 || abs(tags.x - 0.499) < 0.0003;
     gf2Actor = any(greaterThan(abs(tags), vec2(0.0001))) &&
         abs(texelFetch(uAlbedo, pixel, 0).a - 31.0/255.0) < 0.5/255.0;
   }
-  float gf2Coverage = gf2Actor ? 1.0 - layered : 0.0;''')
+  float gf2Coverage = gf2Actor ? 1.0 - layered : 0.0;
+  float gf2InkCoverage = gf2SourceSurface ? 1.0 - layered : gf2Coverage;''')
     source = replace_once(source, 'if (!share) ink = inkAt(vUv, OPTION_INK_WIDTH) * OPTION_INK_STRENGTH;',
-                          'if (!share && gf2Coverage < 1.0) ink = inkAt(vUv, OPTION_INK_WIDTH) * OPTION_INK_STRENGTH * (1.0-gf2Coverage);')
+                          'if (!share && gf2InkCoverage < 1.0) ink = inkAt(vUv, OPTION_INK_WIDTH) * OPTION_INK_STRENGTH * (1.0-gf2InkCoverage);')
     grade = 'color = grade(color, depth >= 1.0 && (uFarOn < 0.5 || texture(uFarDepth, vUv).r >= 1.0), dark, middle);'
     return replace_once(source, grade, '''if (gf2Coverage >= 1.0) {
     color = gf2ActorGrade(color, dark, middle);

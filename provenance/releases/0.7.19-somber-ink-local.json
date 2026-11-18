@@ -1,0 +1,50 @@
+{
+  "version": "0.7.19",
+  "distribution": "local",
+  "installed_core_sha256": "b131631700d431b3e8be8bdcf259c2f6926132479145a21d0200df2bdd59e41c",
+  "host_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "pack_sha256": {
+    "Native-GFL2": "e155ab3ead571784e2c0c999c776c36dbfe7e96c984b5ded01a49884358a00b8",
+    "Somber-GFL2": "bab517c147febc89b53ec5e81ba045f25e2893d593339c9836f868c53e2cd78a"
+  },
+  "visual_checks": {
+    "PhaetusaWardrobe": [
+      "p1",
+      "p2",
+      "p3"
+    ],
+    "Sextans": "nightingale",
+    "Asteria": "default",
+    "scene_only_identical": true,
+    "native_pixels_identical": true
+  },
+  "device": "AMD Radeon RX 9070 XT",
+  "status": "LIMITED_HARDWARE_VALIDATION",
+  "driver_tests": {
+    "native": {
+      "host_expanded_program_groups": 70,
+      "material_catalog": {
+        "models": 72,
+        "material_upload_readback_equal": true,
+        "unique_linked_pairs": 63,
+        "material_count": 1204
+      }
+    },
+    "somber": {
+      "host_expanded_program_groups": 70,
+      "material_catalog": {
+        "models": 72,
+        "material_upload_readback_equal": true,
+        "unique_linked_pairs": 63,
+        "material_count": 1204
+      }
+    }
+  },
+  "unverified": [
+    "NVIDIA",
+    "Intel",
+    "live gameplay",
+    "subscriber cold start"
+  ],
+  "uploaded": false
+}
