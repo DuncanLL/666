@@ -119,6 +119,10 @@
     "GFL2Soppo": [
       "pmx-40dbcd572c1fb3f8",
       "pmx-7d46f9b7159f3332"
+    ],
+    "GFL2Loreley": [
+      "pmx-dc209b2768a8242a",
+      "pmx-f2a800c48ca2b031"
     ]
   },
   "pack_mod_ids": {
@@ -145,6 +149,7 @@
     "GFL2Destroyer": "GFL2Destroyer",
     "GFL2Macqiato": "GFL2Macqiato",
     "GFL2Qiuhua": "GFL2Qiuhua",
-    "GFL2Soppo": "GFL2Soppo"
+    "GFL2Soppo": "GFL2Soppo",
+    "GFL2Loreley": "GFL2Loreley"
   }
 }

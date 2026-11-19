@@ -1,0 +1,203 @@
+{
+  "status": "VERIFIED_UNLISTED_FRAMEWORK_DRAFT",
+  "version": "0.7.22",
+  "item": 3838709437,
+  "visibility": "unlisted",
+  "manifest": "616326915523099197",
+  "remote_size": 279326642,
+  "remote_updated_unix": 1795073982,
+  "remote_updated_shanghai": "2026-11-19T15:39:42+08:00",
+  "previous_manifest": "702608741834675494",
+  "unchanged_page_fields": [
+    "title",
+    "description",
+    "visibility",
+    "preview_handle",
+    "tags",
+    "children",
+    "preview_count"
+  ],
+  "author_directory_synced": true,
+  "author_roles_aligned": [
+    "GFL2Macqiato",
+    "GFL2Loreley"
+  ],
+  "app_id": 108600,
+  "framework_jar_sha256": "b131631700d431b3e8be8bdcf259c2f6926132479145a21d0200df2bdd59e41c",
+  "background_source": {
+    "name": "Img_Weapon_Bg",
+    "bundle": "478eba1ae871589858b7e2d13a79cf83.bundle",
+    "path_id": -5818515678266352875,
+    "encoded_payload_sha256": "771b4d2f5c132265754d7a8702cad4a5f47bb847c44881d90a3d30e9104b5178"
+  },
+  "background_resources": {
+    "weaponBackground": {
+      "path": "42/media/ui/GFL2ReadyRoom/weapon-bg.png",
+      "bytes": 514421,
+      "sha256": "df5058db05caad567708cd688997887722c8aa66e9c41ddad7ecfb3604f1970d"
+    },
+    "weaponFrostBackground": {
+      "path": "42/media/ui/GFL2ReadyRoom/weapon-frost-bg.png",
+      "bytes": 44851,
+      "sha256": "392ec4b3c24f0d994ae3e6886a3e656f00739ae261636550febfc6ab8ee404c2"
+    }
+  },
+  "roles": {
+    "GFL2Alva": {
+      "item": 3837425337,
+      "version": "0.7.1",
+      "workshop_bytes": 262746328
+    },
+    "GFL2Asteria": {
+      "item": 3838710555,
+      "version": "0.7.2",
+      "workshop_bytes": 344528623
+    },
+    "GFL2Cecilia": {
+      "item": 3838711420,
+      "version": "0.7.1",
+      "workshop_bytes": 217744370
+    },
+    "GFL2Centaureissi": {
+      "item": 3838711556,
+      "version": "0.7.2",
+      "workshop_bytes": 247643409
+    },
+    "GFL2Cheyanne": {
+      "item": 3838710368,
+      "version": "0.7.3",
+      "workshop_bytes": 231104900
+    },
+    "GFL2Daiyan": {
+      "item": 3838711736,
+      "version": "0.7.2",
+      "workshop_bytes": 313142014
+    },
+    "GFL2Destroyer": {
+      "item": 3838762173,
+      "version": "0.7.1",
+      "workshop_bytes": 315182761
+    },
+    "GFL2Faelynn": {
+      "item": 3838711981,
+      "version": "0.7.2",
+      "workshop_bytes": 320411934
+    },
+    "GFL2Florence": {
+      "item": 3838711148,
+      "version": "0.7.1",
+      "workshop_bytes": 440469851
+    },
+    "GFL2Klukai": {
+      "item": 3838712165,
+      "version": "0.7.2",
+      "workshop_bytes": 799055264
+    },
+    "GFL2Koleda": {
+      "item": 3838710666,
+      "version": "0.7.0",
+      "workshop_bytes": 229777094
+    },
+    "GFL2Laiya": {
+      "item": 3838710183,
+      "version": "0.7.1",
+      "workshop_bytes": 493095522
+    },
+    "GFL2Lenna": {
+      "item": 3838762352,
+      "version": "0.7.2",
+      "workshop_bytes": 431089361
+    },
+    "GFL2Macqiato": {
+      "item": 3838762751,
+      "version": "0.7.8",
+      "workshop_bytes": 577620480
+    },
+    "GFL2Nikketa": {
+      "item": 3838710868,
+      "version": "0.7.2",
+      "workshop_bytes": 508070018
+    },
+    "GFL2OTs14": {
+      "item": 3838712515,
+      "version": "0.7.2",
+      "workshop_bytes": 263912809
+    },
+    "GFL2Phaetusa": {
+      "item": 3838763020,
+      "version": "0.7.3",
+      "workshop_bytes": 518476094
+    },
+    "GFL2Qiuhua": {
+      "item": 3838935753,
+      "version": "0.7.2",
+      "workshop_bytes": 531292073
+    },
+    "GFL2Sextans": {
+      "item": 3838763377,
+      "version": "0.7.1",
+      "workshop_bytes": 337627580
+    },
+    "GFL2Soppo": {
+      "item": 3841178627,
+      "version": "0.7.1",
+      "workshop_bytes": 255097084
+    },
+    "GFL2Springfield": {
+      "item": 3838712707,
+      "version": "0.7.2",
+      "workshop_bytes": 513153373
+    },
+    "GFL2Suomi": {
+      "item": 3838712796,
+      "version": "0.7.1",
+      "workshop_bytes": 325189898
+    },
+    "GFL2Vector": {
+      "item": 3838763611,
+      "version": "0.7.1",
+      "workshop_bytes": 439128057
+    },
+    "GFL2Yohee": {
+      "item": 3838763788,
+      "version": "0.7.1",
+      "workshop_bytes": 336895528
+    },
+    "GFL2Loreley": {
+      "item": 3842261104,
+      "version": "0.7.1",
+      "workshop_bytes": 239757466
+    }
+  },
+  "verification": {
+    "unchanged_character_content_readback": 25,
+    "registered_models": 72,
+    "room_ui_languages": [
+      "CN",
+      "EN",
+      "JP",
+      "KO"
+    ],
+    "smaller_cn_fixture": [
+      1366,
+      768
+    ],
+    "weapon_view_uses_source_background": true,
+    "other_room_views_use_room_background": true,
+    "missing_weapon_background_falls_back": true,
+    "weapon_pity_pulls": 70,
+    "weapon_claim_magazine_and_oath_skin_fixture_passed": true,
+    "multiplayer_components_passed": true,
+    "workshop_validator_passed": true,
+    "same_render_runtime_as_0.7.21": true,
+    "packaging_preview_dimensions": [
+      512,
+      512
+    ]
+  },
+  "game_started": false,
+  "actual_gameplay_tested": false,
+  "real_multiplayer_tested": false,
+  "subscriber_cold_start_tested": false,
+  "additional_vendor_hardware_tested": false
+}

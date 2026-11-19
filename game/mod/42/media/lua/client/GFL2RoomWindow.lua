@@ -61,7 +61,7 @@ local function surface(p,x,y,w,h,a)
     p:drawRect(x,y+h-1,w,1,a*.58,.025,.040,.045)
 end
 local function frosted(p,w,x,y,width,height,alpha)
-    local blur=image(art.."frost-bg.png")
+    local blur=image(w.tab=="weaponDraw" and data.weaponFrostBackground or (art.."frost-bg.png")) or image(art.."frost-bg.png")
     if blur then
         local dx=w:getAbsoluteX()-p:getAbsoluteX()
         local dy=w:getAbsoluteY()-p:getAbsoluteY()
@@ -680,6 +680,7 @@ function W:createChildren()
 end
 
 local resourceTitles={targeted="RoomTargetedPermit",outfit="RoomOutfitPermit",credits="RoomCredits"}
+local resourceHoldMs=3000
 
 local function resourceIcon(p,key,x,y,size)
     local t=image(art..key..".png")
@@ -694,7 +695,7 @@ local function bindResourceHold(window,add,action)
             and not window.exchange and not window.workshopPrompt and not window.drawAnimation
     end
     local function complete(b)
-        if not b.resourceHold or getTimestampMs()-b.resourceHold<10000 then return end
+        if not b.resourceHold or getTimestampMs()-b.resourceHold<resourceHoldMs then return end
         b.resourceHold=nil
         b.resourceHoldConsumed=true
         action(window)
@@ -746,7 +747,7 @@ function W:createRoomResources()
             local started=add.resourceHold or add.creditHold
             local progress=0
             if add.resourceHoldConsumed or add.creditGranted then progress=1
-            elseif started then progress=clamp((getTimestampMs()-started)/(key=="credits" and 8000 or 10000),0,1) end
+            elseif started then progress=clamp((getTimestampMs()-started)/resourceHoldMs,0,1) end
             if progress>=.05 then
                 p:drawRect(2,p.height-2,p.width-4,2,.40,.37,.47,.48)
                 p:drawRect(2,p.height-2,(p.width-4)*progress,2,.92,.58,.82,.77)
@@ -792,7 +793,7 @@ function W:createRoomResources()
                 if not b.creditHold then return end
                 if not b:isMouseOver() or not isMouseButtonDown(0) or self.closed or self.folded or self.foldStart or self.exchange then
                     b.creditHold=nil
-                elseif getTimestampMs()-b.creditHold>=8000 then
+                elseif getTimestampMs()-b.creditHold>=resourceHoldMs then
                     b.creditHold=nil
                     b.creditGranted=economy.grantTestCredits(self.player)
                     if b.creditGranted then self.player:Say(getText("ContextMenu_GFL2_TestCredits")) end
@@ -1614,11 +1615,11 @@ function W:createWeaponPreview(signatureWeapon)
         self:removeChild(self.weaponPreview)
     end
     local side=math.floor(self.fullWidth*.035)+math.max(160,math.floor(self.fullWidth*.205))+8
-    local bottom=self.drawButtons[1].y-110
-    -- UI3DScene normalizes its projection to the viewport width. A square keeps the
-    -- authored full-weapon framing valid when a long barrel rotates towards vertical.
-    local size=math.min(self.fullWidth-2*side,2*bottom-self.fullHeight)
-    local scene=ISUI3DScene:new(math.floor((self.fullWidth-size)/2),math.floor((self.fullHeight-size)/2),size,size)
+    local top=self:titleBarHeight()+8
+    local bottom=self.drawButtons[1].y-100
+    -- UI3DScene projects to viewport width, so keep a square for long weapons during rotation.
+    local size=math.min(self.fullWidth-2*side,bottom-top)
+    local scene=ISUI3DScene:new(math.floor((self.fullWidth-size)/2),top,size,size)
     scene.background=false
     scene:initialise()
     scene:instantiate()
@@ -2622,7 +2623,7 @@ function W:prerender()
         label(self,tr("RoomMotion"),76,14,23,self.width-120)
         return
     end
-    local background=image(data.background)
+    local background=image(self.tab=="weaponDraw" and data.weaponBackground or data.background) or image(data.background)
     if background then
         local w,h=self.width,self.height
         self:setStencilRect(0,0,w,h)

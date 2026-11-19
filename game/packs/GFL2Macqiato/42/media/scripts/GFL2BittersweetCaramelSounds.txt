@@ -8,19 +8,19 @@ module GFL2
         clip
         {
             file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-1.wav,
-            volume = 0.975,
+            volume = 2.275,
             distanceMax = 55,
         }
         clip
         {
             file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-2.wav,
-            volume = 0.975,
+            volume = 2.275,
             distanceMax = 55,
         }
         clip
         {
             file = media/sound/GFL2SignatureWeapons/BittersweetCaramel-suppressed-3.wav,
-            volume = 0.975,
+            volume = 2.275,
             distanceMax = 55,
         }
     }

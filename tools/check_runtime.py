@@ -31,8 +31,12 @@ try:
         J('zombie.ZomboidFileSystem').instance.setCacheDir(str(project.parent.parent))
     item = J('zombie.core.znet.SteamWorkshopItem')(str(project))
     assert item.readWorkshopTxt()
-    assert item.validateContents() is None
-    assert item.getTitle() == '僵毁少女前线' and item.getDescription() == '\u200b'
+    error = item.validateContents()
+    assert error is None, error
+    description = '\n'.join(line.removeprefix('description=') for line in
+                            (project / 'workshop.txt').read_text('utf-8-sig').splitlines()
+                            if line.startswith('description='))
+    assert item.getTitle() == '僵毁少女前线' and item.getDescription().strip() == description.strip()
     J('zombie.ZomboidFileSystem').instance.setCacheDir(str(home))
     os.chdir(temp)
     main = J('gfl2.runtime.Main')

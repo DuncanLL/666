@@ -26,7 +26,8 @@
       "GFL2.Radiance": "信仰棘光",
       "GFL2.UnspokenCalling": "未言使命",
       "GFL2.BansheesWhisper": "报丧轻语",
-      "GFL2.SparklingCenterstage": "流光花火"
+      "GFL2.SparklingCenterstage": "流光花火",
+      "GFL2.TidalNocturne": "潮涌夜曲"
     },
     "skins": {
       "4334325": "涂装·雪境狼灵",
@@ -52,7 +53,8 @@
       "4333145": "涂装·方糖的挚友",
       "4334095": "涂装·重金属鉴赏家",
       "4332085": "涂装·光耀的玫瑰园",
-      "4334195": "涂装·韵律节拍"
+      "4334195": "涂装·韵律节拍",
+      "4333455": "涂装·片刻囚徒"
     }
   },
   "text": {
@@ -745,6 +747,22 @@
       "portrait": "media/ui/GFL2ReadyRoom/round-pmx-40dbcd572c1fb3f8.png",
       "isDefault": true,
       "pack": "GFL2Soppo"
+    },
+    "pmx-dc209b2768a8242a": {
+      "character": "罗蕾莱",
+      "skin": "默认",
+      "officialSkin": "最高出价",
+      "isDefault": true,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-dc209b2768a8242a.png",
+      "pack": "GFL2Loreley"
+    },
+    "pmx-f2a800c48ca2b031": {
+      "character": "罗蕾莱",
+      "skin": "暮色絮语",
+      "officialSkin": "暮色絮语",
+      "isDefault": false,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-f2a800c48ca2b031.png",
+      "pack": "GFL2Loreley"
     }
   },
   "labels": {
@@ -2889,7 +2907,9 @@
     "pmx-7834ce1969baa199",
     "pmx-74fa40dba7e013d6",
     "pmx-40dbcd572c1fb3f8",
-    "pmx-7d46f9b7159f3332"
+    "pmx-7d46f9b7159f3332",
+    "pmx-dc209b2768a8242a",
+    "pmx-f2a800c48ca2b031"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [
@@ -3262,6 +3282,16 @@
     "pmx-40dbcd572c1fb3f8": [
       "索普的常见着装。清凉的着装掩盖不了其内心的热",
       "情，未来的路她早已决心和你共同开创。"
+    ],
+    "pmx-f2a800c48ca2b031": [
+      "“呵呵……不如就这样，在沙发上和我度过一天",
+      "吧？我还有更多……想做的事呢……”",
+      "温暖的织物和细腻的轻纱包裹着她的身体，她笑着",
+      "伸出手，将你也拉进了这个温暖而又柔软的怀抱。"
+    ],
+    "pmx-dc209b2768a8242a": [
+      "罗蕾莱的常见着装，优雅的礼服，将她的璀璨夺目",
+      "衬托得更进一步，足以让她胜任一切场合。"
     ]
   },
   "roomLabels": {
@@ -6974,6 +7004,196 @@
       "path": "media/ui/GFL2ReadyRoom/label-recruitment-278ec1ee204ff325.png",
       "width": 506,
       "height": 40
+    },
+    "罗蕾莱": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-d6c5bc394472.png",
+      "width": 112,
+      "height": 40
+    },
+    "暮色絮语": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-8b071bff929d.png",
+      "width": 148,
+      "height": 40
+    },
+    "复合输出 / 召唤 / 复合增益": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-704f05262662.png",
+      "width": 434,
+      "height": 40
+    },
+    "神秘优雅的外表下，藏着暗涌般深沉而又大胆的欲": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-254c70f34f23.png",
+      "width": 796,
+      "height": 40
+    },
+    "望。没人能摸透她的想法，或许，她的真心只为一": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-bbee27894878.png",
+      "width": 796,
+      "height": 40
+    },
+    "人而驻留。": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-c220dd9a2e5d.png",
+      "width": 184,
+      "height": 40
+    },
+    "“呵呵呵，指挥官查阅我的资料是对我有兴趣吗？": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-72bc587d0525.png",
+      "width": 777,
+      "height": 40
+    },
+    "如果您想知道更多的话，就应该亲自来找我。我会": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-1ae4a8dd06a2.png",
+      "width": 796,
+      "height": 40
+    },
+    "一点一滴，毫无保留地……将我的一切告诉您": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-394255c2fc48.png",
+      "width": 726,
+      "height": 40
+    },
+    "哦。”": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-dfe43ca9187f.png",
+      "width": 93,
+      "height": 40
+    },
+    "“呵呵……不如就这样，在沙发上和我度过一天": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-9688b78cc25a.png",
+      "width": 743,
+      "height": 40
+    },
+    "吧？我还有更多……想做的事呢……”": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-12760509e3fa.png",
+      "width": 601,
+      "height": 40
+    },
+    "温暖的织物和细腻的轻纱包裹着她的身体，她笑着": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-eed072993513.png",
+      "width": 796,
+      "height": 40
+    },
+    "伸出手，将你也拉进了这个温暖而又柔软的怀抱。": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-2ea57781f3d0.png",
+      "width": 796,
+      "height": 40
+    },
+    "针织外套": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-b3aaea378f3d.png",
+      "width": 148,
+      "height": 40
+    },
+    "穿着外套": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-c7e17821e70d.png",
+      "width": 148,
+      "height": 40
+    },
+    "脱下外套": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-7ddbe47fea70.png",
+      "width": 148,
+      "height": 40
+    },
+    "P2 无附加头饰": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-3885ef7692a4.png",
+      "width": 237,
+      "height": 40
+    },
+    "P1 蕾丝发箍": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-9e13b42047ff.png",
+      "width": 201,
+      "height": 40
+    },
+    "P3 侧边发夹": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-0a5efa152d51.png",
+      "width": 201,
+      "height": 40
+    },
+    "内搭睡衣": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-ee20dfecf32d.png",
+      "width": 148,
+      "height": 40
+    },
+    "P2 黑蕾丝睡裙": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-74aa6a575dfe.png",
+      "width": 237,
+      "height": 40
+    },
+    "P1 纯白睡裙": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-b2a85200cf52.png",
+      "width": 201,
+      "height": 40
+    },
+    "P3 绯粉围裙": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-0712acd3b7c8.png",
+      "width": 201,
+      "height": 40
+    },
+    "腿部丝袜": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-c665103b0d77.png",
+      "width": 148,
+      "height": 40
+    },
+    "P2 黑丝": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-d47b03224e3c.png",
+      "width": 129,
+      "height": 40
+    },
+    "P1 裸腿": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-842af7d869d6.png",
+      "width": 129,
+      "height": 40
+    },
+    "P3 白粉丝": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-a3a9c70b5542.png",
+      "width": 165,
+      "height": 40
+    },
+    "拖鞋": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-6053e0a7e287.png",
+      "width": 76,
+      "height": 40
+    },
+    "P2 黑色拖鞋": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-fcd4321f0272.png",
+      "width": 201,
+      "height": 40
+    },
+    "P1 白坡跟拖鞋": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-91f52503c581.png",
+      "width": 237,
+      "height": 40
+    },
+    "P3 粉白兔拖鞋": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-c57686cddcff.png",
+      "width": 237,
+      "height": 40
+    },
+    "铃铛项圈": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-522ff7843b94.png",
+      "width": 148,
+      "height": 40
+    },
+    "最高出价": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-8db101889607.png",
+      "width": 148,
+      "height": 40
+    },
+    "罗蕾莱的常见着装，优雅的礼服，将她的璀璨夺目": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-fd1c6498a5c1.png",
+      "width": 796,
+      "height": 40
+    },
+    "衬托得更进一步，足以让她胜任一切场合。": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-a1611ca7e7db.png",
+      "width": 688,
+      "height": 40
+    },
+    "潮涌夜曲": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-68714f2230c1.png",
+      "width": 148,
+      "height": 40
+    },
+    "涂装·片刻囚徒": {
+      "path": "media/ui/GFL2ReadyRoom/label-loreley-2092c889e74b.png",
+      "width": 239,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -7349,6 +7569,17 @@
         0.12941176470588237
       ],
       "tags": "群体控制 / 地格 / 隐身"
+    },
+    "罗蕾莱": {
+      "pool": "GFL2Loreley",
+      "banner": "media/ui/GFL2ReadyRoom/recruitment/loreley.png",
+      "element": "燃烧",
+      "color": [
+        0.8980392156862745,
+        0.40784313725490196,
+        0.1607843137254902
+      ],
+      "tags": "复合输出 / 召唤 / 复合增益"
     }
   },
   "roomDefaultSkinNames": {
@@ -7372,6 +7603,11 @@
     "pmx-9ee1e4cdb8d7f985": {
       "name": "蔚蓝轨迹",
       "banner": "media/ui/GFL2ReadyRoom/recruitment/outfit-clukay.png"
+    },
+    "pmx-f2a800c48ca2b031": {
+      "name": "暮色絮语",
+      "banner": "media/ui/GFL2ReadyRoom/recruitment/outfit-loreley.png",
+      "preservePriorPurchase": true
     }
   },
   "roomCharacterDescriptions": {
@@ -7583,9 +7819,19 @@
       "着珍视的家人。日渐沉稳的她，会在对",
       "外沟通中展露完美的笑容，也会在见到",
       "家人时“强行”献上真诚的拥抱。"
+    ],
+    "罗蕾莱": [
+      "神秘优雅的外表下，藏着暗涌般深沉而又大胆的欲",
+      "望。没人能摸透她的想法，或许，她的真心只为一",
+      "人而驻留。",
+      "“呵呵呵，指挥官查阅我的资料是对我有兴趣吗？",
+      "如果您想知道更多的话，就应该亲自来找我。我会",
+      "一点一滴，毫无保留地……将我的一切告诉您",
+      "哦。”"
     ]
   },
   "roomWorkshopItems": {
+    "罗蕾莱": "3842261104",
     "索普": "3841178627",
     "莱娅": "3838710183",
     "夏安": "3838710368",
@@ -7674,6 +7920,9 @@
     "破坏者": "pmx-d1fc22f957060588",
     "玛绮朵": "pmx-0b80022fae2dbb04",
     "秋桦": "pmx-e4fe174c77f90d6c",
-    "索普": "pmx-40dbcd572c1fb3f8"
-  }
+    "索普": "pmx-40dbcd572c1fb3f8",
+    "罗蕾莱": "pmx-dc209b2768a8242a"
+  },
+  "weaponBackground": "media/ui/GFL2ReadyRoom/weapon-bg.png",
+  "weaponFrostBackground": "media/ui/GFL2ReadyRoom/weapon-frost-bg.png"
 }

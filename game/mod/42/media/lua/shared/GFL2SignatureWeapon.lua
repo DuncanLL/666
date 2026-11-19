@@ -283,6 +283,18 @@ local weapons = {{
     previewCenterY = 0.2022906,
     previewCenterZ = -0.0042202114,
     previewZoom = 11.68,
+}, {
+    id = "GFL2.TidalNocturne",
+    mod = "GFL2Loreley",
+    character = "GFL2Loreley",
+    name = "ContextMenu_GFL2_TidalNocturne",
+    description = "ContextMenu_GFL2_TidalNocturneDescription",
+    icon = "media/textures/Item_GFL2TidalNocturne.png",
+    card = "media/ui/GFL2/TidalNocturneCard.png",
+    previewCenterY = 0.191981,
+    previewCenterZ = 0.007725,
+    previewZoom = 14,
+    startsWithMagazine = true,
 }}
 
 local catalog = {byId = {}, byCharacter = {}}

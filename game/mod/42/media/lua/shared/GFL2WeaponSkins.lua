@@ -20,6 +20,7 @@ local options = {
     ["GFL2.Skyhowl"] = { { id="4332565", model="GFL2.SkyhowlSkin4332565", detached=true } },
     ["GFL2.Snotra"] = { { id="4332645", model="GFL2.SnotraSkin4332645", detached=true } },
     ["GFL2.SparklingCenterstage"] = { { id="4334195", model="GFL2.SparklingCenterstageSkin4334195", detached=true } },
+    ["GFL2.TidalNocturne"] = { { id="4333455", model="GFL2.TidalNocturneSkin4333455", detached=false } },
     ["GFL2.Trailblazer"] = { { id="4336185", model="GFL2.TrailblazerSkin4336185", detached=false } },
     ["GFL2.TwilightRose"] = { { id="4337535", model="GFL2.TwilightRoseSkin4337535", detached=false } },
     ["GFL2.UnspokenCalling"] = { { id="4334095", model="GFL2.UnspokenCallingSkin4334095", detached=true } },

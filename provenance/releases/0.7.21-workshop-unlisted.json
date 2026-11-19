@@ -1,0 +1,115 @@
+{
+  "status": "WORKSHOP_DRAFT_CONTENT_VERIFIED",
+  "app_id": 108600,
+  "version": "0.7.21",
+  "visibility": "unlisted",
+  "items": {
+    "GFL2Exilium": {
+      "status": "WORKSHOP_CONTENT_VERIFIED",
+      "item": 3838709437,
+      "result": 1,
+      "local_size": 278759143,
+      "manifest": "702608741834675494",
+      "remote_size": 278759143,
+      "remote_updated_unix": 1795058741,
+      "remote_updated_shanghai": "2026-11-19T11:25:41+08:00",
+      "visibility": "unlisted",
+      "title": "僵毁少女前线",
+      "unchanged_page_fields": [
+        "title",
+        "description",
+        "visibility",
+        "preview_handle",
+        "tags",
+        "children",
+        "preview_count"
+      ],
+      "mod_version": "0.7.21"
+    },
+    "GFL2Loreley": {
+      "status": "WORKSHOP_CONTENT_VERIFIED",
+      "item": 3842261104,
+      "result": 1,
+      "local_size": 239757466,
+      "manifest": "735018523634554085",
+      "remote_size": 239757466,
+      "remote_updated_unix": 1795058722,
+      "remote_updated_shanghai": "2026-11-19T11:25:22+08:00",
+      "visibility": "unlisted",
+      "title": "罗蕾莱 - Loreley",
+      "unchanged_page_fields": [],
+      "required_workshop_items": [
+        3838709437
+      ],
+      "mod_version": "0.7.1",
+      "page_metadata": {
+        "source_asset": "Avatar_Whole_LoreleySSR",
+        "cover_dimensions": [
+          512,
+          512
+        ],
+        "cover_sha256": "df1c242fdd5eb1d2d4ab7db1cdb24002fecebef89a26aa1818f53335a763f0a5",
+        "preview_handle": "18158508518962457501",
+        "description_sha256": "0e66de1e437824c3d1ea17a2bff98ecee38b9ce56b4d18053f3e9ac99d2442e1",
+        "linked_character_count": 23,
+        "cdn_byte_identical": true,
+        "description_readback_matched": true
+      }
+    },
+    "GFL2Macqiato": {
+      "status": "WORKSHOP_CONTENT_VERIFIED",
+      "item": 3838762751,
+      "result": 1,
+      "local_size": 577620480,
+      "manifest": "3127772378208695211",
+      "remote_size": 577620480,
+      "remote_updated_unix": 1795058749,
+      "remote_updated_shanghai": "2026-11-19T11:25:49+08:00",
+      "visibility": "unlisted",
+      "title": "玛绮朵 - Makiatto",
+      "unchanged_page_fields": [
+        "title",
+        "description",
+        "visibility",
+        "preview_handle",
+        "tags",
+        "children",
+        "preview_count"
+      ],
+      "mod_version": "0.7.8"
+    }
+  },
+  "framework_jar_sha256": "b131631700d431b3e8be8bdcf259c2f6926132479145a21d0200df2bdd59e41c",
+  "registered_character_packs": 25,
+  "registered_models": 72,
+  "verified": {
+    "room_languages": [
+      "CN",
+      "EN",
+      "JP",
+      "KO"
+    ],
+    "resource_hold_ms": 3000,
+    "weapon_pity_pulls": 70,
+    "loreley_outfits": [
+      "pmx-dc209b2768a8242a",
+      "pmx-f2a800c48ca2b031"
+    ],
+    "gpu": "AMD Radeon RX 9070 XT",
+    "checked_backends": [
+      "Native-GFL2",
+      "Somber-GFL2"
+    ],
+    "reference_linked_programs_per_outfit_and_backend": 29
+  },
+  "public_release_review": {
+    "full_catalog_render_coverage": false,
+    "other_vendors_untested": [
+      "NVIDIA",
+      "Intel"
+    ]
+  },
+  "game_started": false,
+  "actual_gameplay_tested": false,
+  "subscriber_cold_start_tested": false
+}

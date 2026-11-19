@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "mod": "GFL2Loreley",
+  "models": [
+    {
+      "id": "pmx-dc209b2768a8242a",
+      "label": "罗蕾莱 / 最高出价",
+      "model": "models/pmx-dc209b2768a8242a/model.pmx",
+      "profile": "models/pmx-dc209b2768a8242a/profile.json"
+    },
+    {
+      "id": "pmx-f2a800c48ca2b031",
+      "label": "罗蕾莱 / 暮色絮语",
+      "model": "models/pmx-f2a800c48ca2b031/model.pmx",
+      "profile": "models/pmx-f2a800c48ca2b031/profile.json"
+    }
+  ]
+}

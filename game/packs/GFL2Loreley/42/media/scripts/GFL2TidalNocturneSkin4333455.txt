@@ -1,0 +1,18 @@
+module GFL2
+{
+    model TidalNocturneSkin4333455
+    {
+        mesh = GFL2/TidalNocturneSkin4333455,
+        texture = GFL2/TidalNocturneSkin4333455,
+        attachment muzzle
+        {
+            offset = -0.0 0.592105 0.043761,
+            rotate = -90 0 -180,
+        }
+        attachment world
+        {
+            offset = 1e-06 0.211037 0.011732,
+            rotate = 0 0 90,
+        }
+    }
+}

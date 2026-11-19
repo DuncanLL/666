@@ -116,8 +116,41 @@ do
    local scene=w.weaponPreview
    ready=true;scene:prerender();ready=false;assert(rawget(scene,"prerender")==nil)
    local info=w.content
+   if tested==0 then
+    local art="media/ui/GFL2ReadyRoom/"
+    local normalFrost=art.."room-frost-bg.png"
+    assert(roomData.weaponBackground==art.."weapon-bg.png")
+    assert(roomData.weaponFrostBackground==art.."weapon-frost-bg.png")
+    local weaponBg,weaponFrost=roomData.weaponBackground,roomData.weaponFrostBackground
+    local oldDraw,oldContentDraw,oldTexture=w.drawTextureScaled,info.drawTextureScaled,getTexture
+    local tab=w.tab
+    local function drawn(tabName)
+     local images={}
+     local function record(_,texture) images[texture.path]=true end
+     w.drawTextureScaled,info.drawTextureScaled=record,record
+     w.tab=tabName
+     w:prerender()
+     info:prerender()
+     info:render()
+     return images
+    end
+    local weapon=drawn("weaponDraw")
+    assert(weapon[weaponBg] and weapon[weaponFrost] and not weapon[roomData.background] and not weapon[normalFrost])
+    local ordinary=drawn("overview")
+    assert(ordinary[roomData.background] and ordinary[normalFrost] and not ordinary[weaponBg] and not ordinary[weaponFrost])
+    roomData.weaponBackground,roomData.weaponFrostBackground="missing-weapon-bg","missing-weapon-frost"
+    getTexture=function(path)
+     if path~="missing-weapon-bg" and path~="missing-weapon-frost" then return oldTexture(path) end
+    end
+    local fallback=drawn("weaponDraw")
+    assert(fallback[roomData.background] and fallback[normalFrost])
+    roomData.weaponBackground,roomData.weaponFrostBackground=weaponBg,weaponFrost
+    w.tab,w.drawTextureScaled,info.drawTextureScaled,getTexture=tab,oldDraw,oldContentDraw,oldTexture
+   end
    assert(scene.fixtureModel==weapon.id and scene.viewPitch==-82 and info.visible and scene.width==scene.height)
-   assert(math.abs(scene.x+scene.width/2-w.width/2)<=.5 and math.abs(scene.y+scene.height/2-w.height/2)<=.5)
+   assert(math.abs(scene.x+scene.width/2-w.width/2)<=.5 and scene.y==w:titleBarHeight()+8)
+   local side=math.floor(w.fullWidth*.035)+math.max(160,math.floor(w.fullWidth*.205))+8
+   assert(scene.width==math.min(w.fullWidth-2*side,w.drawButtons[1].y-100-scene.y))
    assert(info.x+info.width<=scene.x or info.y>=scene.y+scene.height)
    assert(scene.y>=w:titleBarHeight() and scene.y+scene.height<=w.drawButtons[1].y-99)
    assert(info.y>=w:titleBarHeight() and info.y+info.height<=w.height and info:getScrollHeight()>=info.height)
@@ -140,7 +173,7 @@ do
    tested=tested+1
   end
  end
- assert(tested==24)
+ assert(tested==25)
  card.drawSubTexture=drawIcon
  GFL2ReadyRoom.centerWeaponPreview=originalCenter
  getTextManager=oldMetrics
@@ -255,7 +288,7 @@ if localizedBiographies then
    checked=checked+1
   end
  end
- assert(checked==24)
+  assert(checked==25)
  local oldScripts=getScriptManager
  function getScriptManager()return {getModelScript=function(_,id)return id end}end
  local paintCount=0
@@ -280,7 +313,7 @@ if localizedBiographies then
    paintCount=paintCount+1
   end
  end
- assert(paintCount==24)
+  assert(paintCount==25)
  w:layoutWeaponSkins(nil,{},false,"")
  getScriptManager=oldScripts
  if localizedOutfitDescriptions then
@@ -330,7 +363,7 @@ if localizedBiographies then
    end
    shown=shown+1
   end
-  assert(shown==69 and pools>0)
+  assert(shown==71 and pools>0)
   w.tab,w.browsed,w.character=tab,browsed,character
   w.drawText,w.drawTextureScaled=oldText,oldPicture
  end
@@ -426,7 +459,7 @@ do
  assert(targeted.tooltip==permit and w.motionTab.roomTitle==motion)
  down(targeted);clock=clock+180;up(targeted)
  assert(purchases==1 and lastKey=="targeted" and not w.motionTab.visible)
- down(targeted);clock=clock+5000
+ down(targeted);clock=clock+1500
  local chip=targeted.parent
  local oldRect=chip.drawRect
  local progress
@@ -434,14 +467,14 @@ do
   if y==chip.height-2 and height==2 and alpha==.92 then progress=width end
  end
  chip:prerender()
- assert(progress==(chip.width-4)/2,"permit hold meter must follow the real ten-second timer")
+ assert(progress==(chip.width-4)/2,"permit hold meter must follow the three-second timer")
  chip.drawRect=oldRect
- clock=clock+4999;targeted:update()
- assert(not w.motionTab.visible,"gesture completed before ten seconds")
+ clock=clock+1499;targeted:update()
+ assert(not w.motionTab.visible,"gesture completed before three seconds")
  clock=clock+1;targeted:update()
  assert(w.motionTab.visible and w.motionTab.x==w.expressionButton.x and w.motionTab.y>=w.expressionButton.y+w.expressionButton.height)
  assert(w.physicsResetButton.y>compactY,"list did not reflow around the revealed button")
- clock=clock+10000;targeted:update()
+ clock=clock+3000;targeted:update()
  assert(w.motionTab.visible,"one hold toggled the entry twice")
  up(targeted)
  assert(purchases==1,"a completed long press opened the permit exchange")
@@ -503,12 +536,12 @@ do
  assert(w.motionTab.visible,"closing the window discarded the per-player session toggle")
 
  targeted=plus(w)
- down(targeted);clock=clock+10000;up(targeted)
+ down(targeted);clock=clock+3000;up(targeted)
  assert(not w.motionTab.visible and w.physicsResetButton.x==compactX and w.physicsResetButton.y==compactY)
- assert(purchases==1,"release after ten seconds opened the permit exchange")
- down(targeted);clock=clock+5000
+ assert(purchases==1,"release after three seconds opened the permit exchange")
+ down(targeted);clock=clock+1500
  over=false;targeted:onMouseMoveOutside(1,0)
- over=true;clock=clock+10000;targeted:update()
+ over=true;clock=clock+3000;targeted:update()
  assert(not w.motionTab.visible,"leaving the button failed to cancel the timer")
  targeted:onMouseUpOutside(0,0);held=false
 
@@ -525,21 +558,31 @@ do
  end
  for id in pairs(signatureWeapons.byId)do weaponBefore[id]=economy.weaponProgress(actor,id).acquired==true end
  local permits=economy.balance(actor,"outfit")
- down(outfit);clock=clock+9999;outfit:update()
- assert(not economy.outfitOwned(actor,"not-yet-owned"),"recording unlock started before ten seconds")
+ down(outfit);clock=clock+2999;outfit:update()
+ assert(not economy.outfitOwned(actor,"not-yet-owned"),"recording unlock started before three seconds")
  clock=clock+1;outfit:update()
  for key in pairs(characterBefore)do assert(economy.characterUnlocked(actor,key)) end
  for id in pairs(outfitBefore)do assert(economy.outfitOwned(actor,id)) end
  for id in pairs(weaponBefore)do assert(economy.weaponProgress(actor,id).acquired) end
- clock=clock+10000;outfit:update()
+ clock=clock+3000;outfit:update()
  assert(economy.outfitOwned(actor,"not-yet-owned"),"one hold toggled recording twice")
  up(outfit);assert(purchases==2 and not w.motionTab.visible)
- down(outfit);clock=clock+10000;up(outfit)
+ down(outfit);clock=clock+3000;up(outfit)
  for key,owned in pairs(characterBefore)do assert(economy.characterUnlocked(actor,key)==owned) end
  for id,owned in pairs(outfitBefore)do assert(economy.outfitOwned(actor,id)==owned) end
  for id,owned in pairs(weaponBefore)do assert((economy.weaponProgress(actor,id).acquired==true)==owned) end
  assert(not economy.outfitOwned(actor,"not-yet-owned") and economy.balance(actor,"outfit")==permits)
  assert(purchases==2,"recording holds opened the permit exchange")
+ local credits=plus(w,3)
+ local balance=economy.balance(actor,"credits")
+ local oldSay=actor.Say
+ actor.Say=function()end
+ down(credits);clock=clock+2999;credits:update()
+ assert(economy.balance(actor,"credits")==balance,"credits granted before three seconds")
+ clock=clock+1;credits:update()
+ assert(economy.balance(actor,"credits")==balance+50000,"credits were not granted at three seconds")
+ up(credits);assert(purchases==2,"credit hold opened the exchange")
+ actor.Say=oldSay
  local railWindow={content=UI:new(0,0,300,340),fullHeight=700,widgets={},browseId="one",tab="skins",
   updateWear=function()end,previewEntry=function(self,e)self.browsed=e end}
  local outfits={{id="one",meta={}},{id="two",meta={},outfitLocked=true,outfitPool={}},{id="three",meta={}}}
@@ -551,7 +594,7 @@ do
  assert(rail.index==3 and rail.slideFrom>1 and rail.slideFrom<2,"interrupted scroll snapped to the old target")
  clock=clock+200;rail:onMouseDown(150,160);rail:onMouseMove(90,0);rail:onMouseUp(240,160)
  assert(rail.index==2 and rail.slideFrom>2 and rail.slideFrom<3,"drag did not settle from the pointer position")
- down(targeted);clock=clock+10000;targeted:update();up(targeted)
+ down(targeted);clock=clock+3000;targeted:update();up(targeted)
  assert(w.motionTab.visible)
  GFL2RoomWindow.closeAll()
  w=GFL2RoomWindow.open(actor,actions)

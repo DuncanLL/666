@@ -1,0 +1,186 @@
+{
+  "pmx_sha256": "f2a800c48ca2b0313662c1fa3e2ad3d0b514de45de7ffc284be0f18dc097f380",
+  "label": "罗蕾莱 / 暮色絮语",
+  "controls": {
+    "format": 1,
+    "groups": [
+      {
+        "id": "coat",
+        "label": "针织外套",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "穿着外套",
+            "morphs": {
+              "92": 0
+            }
+          },
+          {
+            "id": "off",
+            "label": "脱下外套",
+            "morphs": {
+              "92": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "head",
+        "label": "头饰",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p2",
+            "label": "P2 无附加头饰",
+            "morphs": {
+              "94": 1,
+              "95": 0
+            }
+          },
+          {
+            "id": "p1",
+            "label": "P1 蕾丝发箍",
+            "morphs": {
+              "94": 0,
+              "95": 0
+            }
+          },
+          {
+            "id": "p3",
+            "label": "P3 侧边发夹",
+            "morphs": {
+              "94": 0,
+              "95": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "top",
+        "label": "内搭睡衣",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p2",
+            "label": "P2 黑蕾丝睡裙",
+            "morphs": {
+              "97": 1,
+              "98": 0
+            }
+          },
+          {
+            "id": "p1",
+            "label": "P1 纯白睡裙",
+            "morphs": {
+              "97": 0,
+              "98": 0
+            }
+          },
+          {
+            "id": "p3",
+            "label": "P3 绯粉围裙",
+            "morphs": {
+              "97": 0,
+              "98": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "stockings",
+        "label": "腿部丝袜",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p2",
+            "label": "P2 黑丝",
+            "morphs": {
+              "100": 1,
+              "101": 0
+            }
+          },
+          {
+            "id": "p1",
+            "label": "P1 裸腿",
+            "morphs": {
+              "100": 0,
+              "101": 0
+            }
+          },
+          {
+            "id": "p3",
+            "label": "P3 白粉丝",
+            "morphs": {
+              "100": 0,
+              "101": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "shoes",
+        "label": "拖鞋",
+        "default": "p2",
+        "options": [
+          {
+            "id": "p2",
+            "label": "P2 黑色拖鞋",
+            "morphs": {
+              "103": 0,
+              "104": 1,
+              "105": 0
+            }
+          },
+          {
+            "id": "p1",
+            "label": "P1 白坡跟拖鞋",
+            "morphs": {
+              "103": 0,
+              "104": 0,
+              "105": 0
+            }
+          },
+          {
+            "id": "p3",
+            "label": "P3 粉白兔拖鞋",
+            "morphs": {
+              "103": 0,
+              "104": 0,
+              "105": 1
+            }
+          },
+          {
+            "id": "off",
+            "label": "赤脚",
+            "morphs": {
+              "103": 1,
+              "104": 0,
+              "105": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "choker",
+        "label": "铃铛项圈",
+        "default": "on",
+        "options": [
+          {
+            "id": "on",
+            "label": "显示",
+            "materials": [
+              26
+            ]
+          },
+          {
+            "id": "off",
+            "label": "隐藏",
+            "materials": []
+          }
+        ]
+      }
+    ],
+    "rules": []
+  }
+}

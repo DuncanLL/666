@@ -1,0 +1,106 @@
+{
+  "models": {
+    "pmx-dc209b2768a8242a": {
+      "character": "罗蕾莱",
+      "skin": "默认",
+      "officialSkin": "最高出价",
+      "isDefault": true,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-dc209b2768a8242a.png",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_LoreleySSR.png",
+      "groups": {},
+      "primaryCategories": [],
+      "partImages": {}
+    },
+    "pmx-f2a800c48ca2b031": {
+      "character": "罗蕾莱",
+      "skin": "暮色絮语",
+      "officialSkin": "暮色絮语",
+      "isDefault": false,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-f2a800c48ca2b031.png",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_LoreleySSR01.png",
+      "groups": {
+        "coat": {
+          "label": "针织外套",
+          "display": "针织外套",
+          "options": [
+            "穿着外套",
+            "脱下外套"
+          ]
+        },
+        "head": {
+          "label": "头饰",
+          "display": "头饰",
+          "options": [
+            "P2 无附加头饰",
+            "P1 蕾丝发箍",
+            "P3 侧边发夹"
+          ]
+        },
+        "top": {
+          "label": "内搭睡衣",
+          "display": "内搭睡衣",
+          "options": [
+            "P2 黑蕾丝睡裙",
+            "P1 纯白睡裙",
+            "P3 绯粉围裙"
+          ]
+        },
+        "stockings": {
+          "label": "腿部丝袜",
+          "display": "腿部丝袜",
+          "options": [
+            "P2 黑丝",
+            "P1 裸腿",
+            "P3 白粉丝"
+          ]
+        },
+        "shoes": {
+          "label": "拖鞋",
+          "display": "拖鞋",
+          "options": [
+            "P2 黑色拖鞋",
+            "P1 白坡跟拖鞋",
+            "P3 粉白兔拖鞋",
+            "赤脚"
+          ]
+        },
+        "choker": {
+          "label": "铃铛项圈",
+          "display": "铃铛项圈",
+          "options": [
+            "显示",
+            "隐藏"
+          ]
+        }
+      },
+      "primaryCategories": [
+        "针织外套",
+        "头饰",
+        "内搭睡衣",
+        "腿部丝袜",
+        "拖鞋",
+        "铃铛项圈"
+      ],
+      "partImages": {
+        "头饰": {
+          "P1 蕾丝发箍": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P1_Head.png",
+          "P3 侧边发夹": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P3_Head.png"
+        },
+        "内搭睡衣": {
+          "P2 黑蕾丝睡裙": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P2_Cloth.png",
+          "P1 纯白睡裙": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P1_Cloth.png",
+          "P3 绯粉围裙": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P3_Cloth.png"
+        },
+        "腿部丝袜": {
+          "P2 黑丝": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P2_Body.png",
+          "P1 裸腿": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P1_Body.png",
+          "P3 白粉丝": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P3_Body.png"
+        },
+        "铃铛项圈": {
+          "显示": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_LoreleySSR01_P2_Head.png"
+        }
+      }
+    }
+  },
+  "labels": {}
+}
