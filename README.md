@@ -1,9 +1,9 @@
 # 僵毁少女前线
 
-Project Zomboid B42.22 的少前2角色 MOD。核心内部 ID 为 `GFL2Exilium`，随包提供 Native、Somber 和 Eclipse 人物渲染支持，当前维护基线使用 Steam 创意工坊提供的 Project Viewpoint 0.1.7。
+Project Zomboid B42.22 的少前2角色 MOD。核心内部 ID 为 `GFL2Exilium`，公开框架随包分发 Native 和 Somber 人物光影。Eclipse 保留在维护构建中。当前维护基线使用 Steam 创意工坊提供的 Project Viewpoint 0.1.7。
 
-- [框架工坊项目](https://steamcommunity.com/sharedfiles/filedetails/?id=3838709437)
-- [24 个角色包的订阅合集](https://steamcommunity.com/sharedfiles/filedetails/?id=3841234557)
+- [框架工坊项目](https://steamcommunity.com/sharedfiles/filedetails/?id=3842318650)
+- [25 个角色包与框架的订阅合集](https://steamcommunity.com/sharedfiles/filedetails/?id=3841234557)
 - [版本记录](CHANGELOG.md)
 - [维护手册](docs/maintenance/README.md) · [源码导航](docs/README.md) · [光影发布检查](docs/render-release-standard.md)
 - [从 PMX 标定、原材质接入到 Native / Eclipse 合包的实作流程](docs/maintenance/pmx-import-workflow.md)

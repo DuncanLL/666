@@ -12,6 +12,7 @@
 
 - 专武界面使用原游 `Img_Weapon_Bg` 及其磨砂图，贴图缺失时回退到整备室背景。
 - 核对 25 个角色包的线上内容和 72 个模型登记，复测专武领取、弹匣和誓约涂装。框架已更新至未列出的工坊条目，见[发布复核记录](provenance/releases/0.7.22-workshop-unlisted.json)。
+- 新框架条目、25 个角色包与订阅合集均已公开。角色包的工坊依赖切换到了新框架，内部 MOD ID 为 `GFL2Exilium`。见[正式发布记录](provenance/releases/0.7.22-workshop-public.json)。
 
 ## 0.7.21 · 罗蕾莱角色与专武草稿（2026-11-19）
 
