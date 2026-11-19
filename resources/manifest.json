@@ -7142,7 +7142,7 @@
         },
         "42/mod.info": {
           "bytes": 138,
-          "sha256": "9e956a815ad4bde9b912e347fb3f6a01f37adda8d7260bbd11eb60ca54e1ac68"
+          "sha256": "80ae4535f4ddf1f6da780eec202e064f1c03532c1a9d767148ece478cdc1f01d"
         },
         "42/poster.png": {
           "bytes": 239847,
@@ -7301,8 +7301,8 @@
           "sha256": "506ed3feeecb08e3a1981bba9e7779587b7ee9fe76781ede44c623e0d0d7733e"
         },
         "42/media/gfl2_pmx/models/pmx-020f2e8bdc65bc5b/Textures/c_QiuhuaSSR01_slg_hair_d.png": {
-          "bytes": 16805212,
-          "sha256": "081af425483e13330faf91277435e35fbf6f7fd4813c04f930b79a5253d1d829"
+          "bytes": 3382876,
+          "sha256": "7c14ae2385e4da6bb5a57ab47b842707e10d0abdab1f42bf02989f879c94a8f6"
         },
         "42/media/gfl2_pmx/models/pmx-020f2e8bdc65bc5b/Textures/c_Qiuhua_eyeblend.png": {
           "bytes": 36608,
@@ -7313,8 +7313,8 @@
           "sha256": "4d246a6e02614b54ae73fcea6485dcae208c2ec8dea819efec1e146009d2690e"
         },
         "42/media/gfl2_pmx/models/pmx-020f2e8bdc65bc5b/Textures/c_Qiuhua_face_d.png": {
-          "bytes": 4214931,
-          "sha256": "676b28da8f5dfaed60c131fe4e7619191824cdc42871c38fa4e8a1fbd0edca84"
+          "bytes": 632196,
+          "sha256": "272d8cb3038fa4bab50f478c273e20f21f9106ae2e122881a77b70cf057f19d7"
         },
         "42/media/gfl2_pmx/models/pmx-020f2e8bdc65bc5b/Textures/extra.png": {
           "bytes": 385280,
@@ -7409,8 +7409,8 @@
           "sha256": "11cfb9fba4b6982dab36241b2cbb7e2b8b3619cc9b201f491a14d3ce2cfd5d41"
         },
         "42/media/gfl2_pmx/models/pmx-d373f73abd68a3d0/Textures/c_QiuhuaSSR01_slg_hair_d.png": {
-          "bytes": 16805212,
-          "sha256": "081af425483e13330faf91277435e35fbf6f7fd4813c04f930b79a5253d1d829"
+          "bytes": 3382876,
+          "sha256": "7c14ae2385e4da6bb5a57ab47b842707e10d0abdab1f42bf02989f879c94a8f6"
         },
         "42/media/gfl2_pmx/models/pmx-d373f73abd68a3d0/Textures/c_Qiuhua_eyeblend.png": {
           "bytes": 36608,
@@ -7421,8 +7421,8 @@
           "sha256": "4d246a6e02614b54ae73fcea6485dcae208c2ec8dea819efec1e146009d2690e"
         },
         "42/media/gfl2_pmx/models/pmx-d373f73abd68a3d0/Textures/c_Qiuhua_face_d.png": {
-          "bytes": 4214931,
-          "sha256": "676b28da8f5dfaed60c131fe4e7619191824cdc42871c38fa4e8a1fbd0edca84"
+          "bytes": 632196,
+          "sha256": "272d8cb3038fa4bab50f478c273e20f21f9106ae2e122881a77b70cf057f19d7"
         },
         "42/media/gfl2_pmx/models/pmx-d373f73abd68a3d0/Textures/extra.png": {
           "bytes": 406242,
@@ -7481,8 +7481,8 @@
           "sha256": "bb4864a235e18aeec07ec4b13a1f9bb98c1ad79a32e199e17baa9a60dec08ef5"
         },
         "42/media/gfl2_pmx/models/pmx-e348ab0b30d7e83a/Textures/c_QiuhuaSSR01_slg_hair_d.png": {
-          "bytes": 16805212,
-          "sha256": "081af425483e13330faf91277435e35fbf6f7fd4813c04f930b79a5253d1d829"
+          "bytes": 3382876,
+          "sha256": "7c14ae2385e4da6bb5a57ab47b842707e10d0abdab1f42bf02989f879c94a8f6"
         },
         "42/media/gfl2_pmx/models/pmx-e348ab0b30d7e83a/Textures/c_QiuhuaSSR01_slg_weapon_d.png": {
           "bytes": 6355178,
@@ -7497,8 +7497,8 @@
           "sha256": "4d246a6e02614b54ae73fcea6485dcae208c2ec8dea819efec1e146009d2690e"
         },
         "42/media/gfl2_pmx/models/pmx-e348ab0b30d7e83a/Textures/c_Qiuhua_face_d.png": {
-          "bytes": 4214931,
-          "sha256": "676b28da8f5dfaed60c131fe4e7619191824cdc42871c38fa4e8a1fbd0edca84"
+          "bytes": 632196,
+          "sha256": "272d8cb3038fa4bab50f478c273e20f21f9106ae2e122881a77b70cf057f19d7"
         },
         "42/media/gfl2_pmx/models/pmx-e348ab0b30d7e83a/Textures/extra.png": {
           "bytes": 385280,
@@ -7585,8 +7585,8 @@
           "sha256": "bb4864a235e18aeec07ec4b13a1f9bb98c1ad79a32e199e17baa9a60dec08ef5"
         },
         "42/media/gfl2_pmx/models/pmx-e4fe174c77f90d6c/Textures/c_QiuhuaSSR01_slg_hair_d.png": {
-          "bytes": 16805212,
-          "sha256": "081af425483e13330faf91277435e35fbf6f7fd4813c04f930b79a5253d1d829"
+          "bytes": 3382876,
+          "sha256": "7c14ae2385e4da6bb5a57ab47b842707e10d0abdab1f42bf02989f879c94a8f6"
         },
         "42/media/gfl2_pmx/models/pmx-e4fe174c77f90d6c/Textures/c_QiuhuaSSR01_slg_weapon_d.png": {
           "bytes": 6355178,
@@ -7601,8 +7601,8 @@
           "sha256": "4d246a6e02614b54ae73fcea6485dcae208c2ec8dea819efec1e146009d2690e"
         },
         "42/media/gfl2_pmx/models/pmx-e4fe174c77f90d6c/Textures/c_Qiuhua_face_d.png": {
-          "bytes": 4214931,
-          "sha256": "676b28da8f5dfaed60c131fe4e7619191824cdc42871c38fa4e8a1fbd0edca84"
+          "bytes": 632196,
+          "sha256": "272d8cb3038fa4bab50f478c273e20f21f9106ae2e122881a77b70cf057f19d7"
         },
         "42/media/gfl2_pmx/models/pmx-e4fe174c77f90d6c/Textures/extra.png": {
           "bytes": 385280,
@@ -8673,12 +8673,12 @@
           "sha256": "b96be4eaac994f1284864ed57473631923aa4e5557b7cd3bc6ee548abe9429fb"
         },
         "42/media/gfl2_pmx/models/pmx-0af216265749a22d/Textures/c_Leva_slg_face_d.png": {
-          "bytes": 4214504,
-          "sha256": "7b7619138694626cb90976085859ee0e4f19119a7d6a7ddfccdde7252771b637"
+          "bytes": 611591,
+          "sha256": "eac448fe67df36d89d1b479b8cde2791aeb27b62a404ddd2bbc858ba24ccb666"
         },
         "42/media/gfl2_pmx/models/pmx-0af216265749a22d/Textures/c_Leva_slg_hair_d.png": {
-          "bytes": 16809912,
-          "sha256": "49714815a7e074ec221113a39ab712ffe7c09b56ba98c1fe3ad59c03337e29f8"
+          "bytes": 2310515,
+          "sha256": "09573d7cc0e54b9c6aafcc1e846599e6aab78104f2cf9a65f010be05647c88b5"
         },
         "42/media/gfl2_pmx/models/pmx-0af216265749a22d/Textures/extra.png": {
           "bytes": 406242,
@@ -8721,12 +8721,12 @@
           "sha256": "3c5c4bf4e1fb15c911b580c1bb9b118f7a69963149ef7b90bc18fe44c98d069e"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/c_LevaSSR0103_slg_body1_da.png": {
-          "bytes": 5266079,
-          "sha256": "467401d21f0c9d6b40f11a5bb7f18ae237bf9551e4cb56ee964fa52f626ce116"
+          "bytes": 5205576,
+          "sha256": "10b97c7e46853e4b93d748acee49cba5ce9d09d685e555f8fae6419507cbe9ec"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/c_LevaSSR0103_slg_cloth1_d.png": {
-          "bytes": 4609892,
-          "sha256": "8b2a92aa5ae4007ab5410b8ed2d4777785b7fa5eea1ac99ef73ef86b7ab647e9"
+          "bytes": 4550595,
+          "sha256": "55df8d0891ee844e8cff278daa01b0b559c9662fd31324656588f6b9ca9eee2e"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/c_LevaSSR0103_slg_cloth2_d.png": {
           "bytes": 3627796,
@@ -8765,12 +8765,12 @@
           "sha256": "b96be4eaac994f1284864ed57473631923aa4e5557b7cd3bc6ee548abe9429fb"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/c_Leva_slg_face_d.png": {
-          "bytes": 4214504,
-          "sha256": "7b7619138694626cb90976085859ee0e4f19119a7d6a7ddfccdde7252771b637"
+          "bytes": 611591,
+          "sha256": "eac448fe67df36d89d1b479b8cde2791aeb27b62a404ddd2bbc858ba24ccb666"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/c_Leva_slg_hair_d.png": {
-          "bytes": 16809912,
-          "sha256": "49714815a7e074ec221113a39ab712ffe7c09b56ba98c1fe3ad59c03337e29f8"
+          "bytes": 2310515,
+          "sha256": "09573d7cc0e54b9c6aafcc1e846599e6aab78104f2cf9a65f010be05647c88b5"
         },
         "42/media/gfl2_pmx/models/pmx-1c1dd0698118e114/Textures/extra.png": {
           "bytes": 406242,
@@ -8865,12 +8865,12 @@
           "sha256": "b96be4eaac994f1284864ed57473631923aa4e5557b7cd3bc6ee548abe9429fb"
         },
         "42/media/gfl2_pmx/models/pmx-abe3eaaaa9d04264/Textures/c_Leva_slg_face_d.png": {
-          "bytes": 4214504,
-          "sha256": "7b7619138694626cb90976085859ee0e4f19119a7d6a7ddfccdde7252771b637"
+          "bytes": 611591,
+          "sha256": "eac448fe67df36d89d1b479b8cde2791aeb27b62a404ddd2bbc858ba24ccb666"
         },
         "42/media/gfl2_pmx/models/pmx-abe3eaaaa9d04264/Textures/c_Leva_slg_hair_d.png": {
-          "bytes": 16809912,
-          "sha256": "49714815a7e074ec221113a39ab712ffe7c09b56ba98c1fe3ad59c03337e29f8"
+          "bytes": 2310515,
+          "sha256": "09573d7cc0e54b9c6aafcc1e846599e6aab78104f2cf9a65f010be05647c88b5"
         },
         "42/media/gfl2_pmx/models/pmx-abe3eaaaa9d04264/Textures/extra.png": {
           "bytes": 385280,
@@ -8961,12 +8961,12 @@
           "sha256": "b96be4eaac994f1284864ed57473631923aa4e5557b7cd3bc6ee548abe9429fb"
         },
         "42/media/gfl2_pmx/models/swimsuit/Textures/c_Leva_slg_face_d.png": {
-          "bytes": 4214504,
-          "sha256": "7b7619138694626cb90976085859ee0e4f19119a7d6a7ddfccdde7252771b637"
+          "bytes": 611591,
+          "sha256": "eac448fe67df36d89d1b479b8cde2791aeb27b62a404ddd2bbc858ba24ccb666"
         },
         "42/media/gfl2_pmx/models/swimsuit/Textures/c_Leva_slg_hair_d.png": {
-          "bytes": 16809912,
-          "sha256": "49714815a7e074ec221113a39ab712ffe7c09b56ba98c1fe3ad59c03337e29f8"
+          "bytes": 2310515,
+          "sha256": "09573d7cc0e54b9c6aafcc1e846599e6aab78104f2cf9a65f010be05647c88b5"
         },
         "42/media/gfl2_pmx/models/swimsuit/Textures/extra.png": {
           "bytes": 406242,
@@ -9686,7 +9686,7 @@
         },
         "42/mod.info": {
           "bytes": 129,
-          "sha256": "cce9e23e2f8f277ee9df8ad077c44cc0f24cae59799caf728ad5111eb388ae03"
+          "sha256": "6c355816c9787b342e36300153c50a542b0c461d6914aff958cdf9d9fc9cfad8"
         },
         "42/media/lua/client/ZZ_GFL2PmxLaiyaVoice.lua": {
           "bytes": 422,
@@ -9849,12 +9849,12 @@
           "sha256": "c7e29d209a5a8d9a31b5ffdbe33ab390ba9b28d4909a9bf07bbd3fb5ceed544a"
         },
         "42/media/gfl2_pmx/models/pmx-7834ce1969baa199/Textures/c_Leva_slg_face_d.png": {
-          "bytes": 4214504,
-          "sha256": "7b7619138694626cb90976085859ee0e4f19119a7d6a7ddfccdde7252771b637"
+          "bytes": 611591,
+          "sha256": "eac448fe67df36d89d1b479b8cde2791aeb27b62a404ddd2bbc858ba24ccb666"
         },
         "42/media/gfl2_pmx/models/pmx-7834ce1969baa199/Textures/c_Leva_slg_hair_d.png": {
-          "bytes": 16809912,
-          "sha256": "49714815a7e074ec221113a39ab712ffe7c09b56ba98c1fe3ad59c03337e29f8"
+          "bytes": 2310515,
+          "sha256": "09573d7cc0e54b9c6aafcc1e846599e6aab78104f2cf9a65f010be05647c88b5"
         },
         "42/media/gfl2_pmx/models/pmx-7834ce1969baa199/Textures/extra.png": {
           "bytes": 385280,
@@ -11877,8 +11877,8 @@
           "sha256": "d1977bac8efbe7fbddd3cf48a40842e4725c8783fc6d9d42fec3c5ec6bddbead"
         },
         "42/media/gfl2_pmx/models/pmx-b0dd2e3cfd1ab80c/Textures/d840733bceaa285398ee.png": {
-          "bytes": 5586084,
-          "sha256": "d840733bceaa285398ee7679a8007a954730da05ac4669ea407e025963142a4f"
+          "bytes": 5434616,
+          "sha256": "14be3b83c03a99c0e61de167a23ab0ef5aa54b0115f9017e50954f499c548372"
         },
         "42/media/gfl2_pmx/models/pmx-b0dd2e3cfd1ab80c/Textures/e9e3b7da1c0e0e8661e7.png": {
           "bytes": 1149403,
@@ -12658,7 +12658,7 @@
         },
         "42/mod.info": {
           "bytes": 145,
-          "sha256": "bf8defadcfa3964859ea62926454365ce6f54e5c7aad16dc6ec16025dc3904d6"
+          "sha256": "dc96145afcc497f6c0419094338481148513c2f2518b7f3ee04158a0e6cf3bfe"
         },
         "42/media/models_X/GFL2/ConfessionCompassSkin4334625.x": {
           "bytes": 2704280,
@@ -14421,8 +14421,8 @@
           "sha256": "c4615012c555dadf3cc209239d4214bee024f3591c0fa0bd696cf695f930b483"
         },
         "42/media/gfl2_pmx/models/pmx-4cdf23692c8709a0/Textures/c_NikketaSSR01_slg_cloth1_da.png": {
-          "bytes": 4429815,
-          "sha256": "60d7df55505b14a362080bfc263ee97d4105884d13b5e57fff67d518e2b894e9"
+          "bytes": 4405395,
+          "sha256": "616eb72280e3b072ca28b6f7e203a647679740d48a18b52244f6c4a01c6988d2"
         },
         "42/media/gfl2_pmx/models/pmx-4cdf23692c8709a0/Textures/c_NikketaSSR01_slg_cloth2_d.png": {
           "bytes": 2715401,
@@ -14441,8 +14441,8 @@
           "sha256": "45cbf7e92f8fc3996c2bfab857989ead513008051bd371879a1366d7756b4777"
         },
         "42/media/gfl2_pmx/models/pmx-4cdf23692c8709a0/Textures/c_Nikketa_slg_hair_d.png": {
-          "bytes": 16799053,
-          "sha256": "80b43217d60a2533c8861377142f08623d3240e50f3855faf4d80e7568b4d630"
+          "bytes": 1815337,
+          "sha256": "a5189d7fa4d54572472aa64587908f65c813d76330683557645b46b596eeef80"
         },
         "42/media/gfl2_pmx/models/pmx-4cdf23692c8709a0/Textures/extra.png": {
           "bytes": 385280,
@@ -14545,8 +14545,8 @@
           "sha256": "45cbf7e92f8fc3996c2bfab857989ead513008051bd371879a1366d7756b4777"
         },
         "42/media/gfl2_pmx/models/pmx-78cbbc06c7da39dc/Textures/c_Nikketa_slg_hair_d.png": {
-          "bytes": 16799053,
-          "sha256": "80b43217d60a2533c8861377142f08623d3240e50f3855faf4d80e7568b4d630"
+          "bytes": 1815337,
+          "sha256": "a5189d7fa4d54572472aa64587908f65c813d76330683557645b46b596eeef80"
         },
         "42/media/gfl2_pmx/models/pmx-78cbbc06c7da39dc/Textures/extra.png": {
           "bytes": 385280,
@@ -14681,8 +14681,8 @@
           "sha256": "45cbf7e92f8fc3996c2bfab857989ead513008051bd371879a1366d7756b4777"
         },
         "42/media/gfl2_pmx/models/pmx-ea3eb50ef5b32295/Textures/c_Nikketa_slg_hair_d.png": {
-          "bytes": 16799053,
-          "sha256": "80b43217d60a2533c8861377142f08623d3240e50f3855faf4d80e7568b4d630"
+          "bytes": 1815337,
+          "sha256": "a5189d7fa4d54572472aa64587908f65c813d76330683557645b46b596eeef80"
         },
         "42/media/gfl2_pmx/models/pmx-ea3eb50ef5b32295/Textures/c_nikketassr0102_slg_cloth4_da.png": {
           "bytes": 2481,
@@ -14929,8 +14929,8 @@
           "sha256": "45cbf7e92f8fc3996c2bfab857989ead513008051bd371879a1366d7756b4777"
         },
         "42/media/gfl2_pmx/models/pmx-f5b2807685b18a60/Textures/c_Nikketa_slg_hair_d.png": {
-          "bytes": 16799053,
-          "sha256": "80b43217d60a2533c8861377142f08623d3240e50f3855faf4d80e7568b4d630"
+          "bytes": 1815337,
+          "sha256": "a5189d7fa4d54572472aa64587908f65c813d76330683557645b46b596eeef80"
         },
         "42/media/gfl2_pmx/models/pmx-f5b2807685b18a60/Textures/extra.png": {
           "bytes": 406242,
@@ -15746,7 +15746,7 @@
         },
         "42/mod.info": {
           "bytes": 134,
-          "sha256": "baaa3d87f1bc5ef94fd00648ed5cd6e049b616ff18b944b3910223b90afeb822"
+          "sha256": "4f48cdb571c8a6c02b3fe22a7aa41c5273a40b0601b0747460e930565f0557fd"
         },
         "42/media/lua/client/ZZ_GFL2PmxNikketaVoice.lua": {
           "bytes": 126463,
@@ -15810,7 +15810,7 @@
         },
         "42/mod.info": {
           "bytes": 135,
-          "sha256": "b639140c7b770c103833eb60e1aaaa08c291be41e0a9b2e4678d5134976454cf"
+          "sha256": "1e4c4679c4d7954d5a263dcd2d11089f7c01c8241476fa7816a522d6aeaa130a"
         },
         "42/poster.png": {
           "bytes": 250299,
@@ -16549,12 +16549,12 @@
           "sha256": "c08a368b80f6e80c6428b824b2e72c866fcf7d3ba027ff022977a7dda830e657"
         },
         "42/media/gfl2_pmx/models/pmx-23b0b754d23c6fb7/Textures/c_FlorenceSSR01_slg_cloth1_da.png": {
-          "bytes": 7610764,
-          "sha256": "9a24c790d811e44f5db931c84bd457745af2e30ee92c0c0bda8a24e4de7b844f"
+          "bytes": 7446512,
+          "sha256": "9c020d0236355a8a5f6b5de3343196a8c25d9e2dcf54a31ffcca621cf6a25516"
         },
         "42/media/gfl2_pmx/models/pmx-23b0b754d23c6fb7/Textures/c_FlorenceSSR01_slg_cloth2_da.png": {
-          "bytes": 4311233,
-          "sha256": "83312753eff71d2c475cf1249fea6bfb1059e6e42cbc907242093e30c054a29b"
+          "bytes": 4199223,
+          "sha256": "2ecf00954df56c3f7a21f0402c8325494b9821f3b2f1539d3bf74230ed245dd3"
         },
         "42/media/gfl2_pmx/models/pmx-23b0b754d23c6fb7/Textures/c_FlorenceSSR01_slg_weapon_d.png": {
           "bytes": 327177,
@@ -16573,8 +16573,8 @@
           "sha256": "85b4b3646c4b50bb69874d26c61d687fed721b35ddb7994a1bacc8f4ce440b93"
         },
         "42/media/gfl2_pmx/models/pmx-23b0b754d23c6fb7/Textures/c_Florence_slg_hair_d.png": {
-          "bytes": 16806628,
-          "sha256": "389244b0eb74ce0f1b1417302c99d5a6fc010faaae75282ee90b79da0eb5fc03"
+          "bytes": 2033467,
+          "sha256": "553eddd368d24c2cad6d7fbc5327c3faa6584f9b97d02743278e6c268935193f"
         },
         "42/media/gfl2_pmx/models/pmx-23b0b754d23c6fb7/Textures/extra.png": {
           "bytes": 385280,
@@ -16769,8 +16769,8 @@
           "sha256": "67a510fd6d72c4b7f2e7c4d858fcbbe33d12fe4ee33ebf23376cfec12b0cebe4"
         },
         "42/media/gfl2_pmx/models/pmx-b6889756cf6c0d5e/Textures/c_FlorenceSSR0101_slg_cloth_da.png": {
-          "bytes": 5934634,
-          "sha256": "5511405b1580ffd6256347d3e2e19f47e67f378338a5225890a9e4de38f10476"
+          "bytes": 5833714,
+          "sha256": "24e6c9337f5b80e0a232bbe177caed614f6b2426af2f0093b694eec831c159df"
         },
         "42/media/gfl2_pmx/models/pmx-b6889756cf6c0d5e/Textures/c_FlorenceSSR01_slg_hair_d.png": {
           "bytes": 2157248,
@@ -17869,8 +17869,8 @@
           "sha256": "6c7025718aa674a4518f848736072ee3a5546b8bddbd297238f945d2931248fb"
         },
         "42/media/gfl2_pmx/models/pmx-020abca186c52e7b/Textures/c_AlvaSSR01_slg_cloth2_d.png": {
-          "bytes": 4421913,
-          "sha256": "422b4e926bfccfdcec440facb731622c4f1bccd5e16024526a26e318a45eddd2"
+          "bytes": 4410332,
+          "sha256": "985f27f9bda8e2f2b3172efaad112aafc00d1035ac41654ff8827fc22eaaa300"
         },
         "42/media/gfl2_pmx/models/pmx-020abca186c52e7b/Textures/c_AlvaSSR01_slg_eye_d.png": {
           "bytes": 122208,
@@ -18029,12 +18029,12 @@
           "sha256": "5c2183b00bf6678bfa155f59404c66c9befa113a69a89453f3e1cd36d298a583"
         },
         "42/media/gfl2_pmx/models/pmx-94483c23f678afe3/Textures/c_AlvaSSR0101_slg_cloth1_d.png": {
-          "bytes": 5987560,
-          "sha256": "0299a11222a15d9f0662bff9992774e5227007e0db91fee3ac511bff3ca92c42"
+          "bytes": 5767431,
+          "sha256": "38f3da5c2456e7fe5a0ea8201e9342f1262ab3e2e14e5ff7350d098a323a2981"
         },
         "42/media/gfl2_pmx/models/pmx-94483c23f678afe3/Textures/c_AlvaSSR0101_slg_cloth2_da.png": {
-          "bytes": 6161509,
-          "sha256": "1c521f24428db5d2a473b922db264c82461d91b9bc244911b2e153d923466ee5"
+          "bytes": 6096440,
+          "sha256": "3461435f80f619c76d06d33548a2c87794e18a9264cfa5e5ae537c9384b5f26d"
         },
         "42/media/gfl2_pmx/models/pmx-94483c23f678afe3/Textures/c_AlvaSSR0101_slg_hair_d.png": {
           "bytes": 2337098,
@@ -18842,7 +18842,7 @@
         },
         "42/mod.info": {
           "bytes": 128,
-          "sha256": "a4aaa9482c12dd0cae15519b79eddd4e8bf6c4811275c4c625278e92ce485c01"
+          "sha256": "988dda550b1b86730d59477fcb162f118264ae93aad9eb8f26cb17064c214a4d"
         },
         "42/media/lua/client/ZZ_GFL2PmxAlvaVoice.lua": {
           "bytes": 84784,
@@ -20449,8 +20449,8 @@
           "sha256": "8b5526e31e1ce98f18028437e80e610d45259b51da1e8d05b51e131da10d504c"
         },
         "42/media/gfl2_pmx/models/pmx-7c5ea1f673f69f12/Textures/c_CentaureissiSSR0101_slg_cloth1_da.png": {
-          "bytes": 6409682,
-          "sha256": "22d7926484acc3f4aa3d0d6ce0d4d95878bf7d509b6389e3c0804e50fac78dbb"
+          "bytes": 6313681,
+          "sha256": "6730ccbff2ec960b2ba999c77544b07b1d53c15cab6d8db9a2e4abe589b88b2b"
         },
         "42/media/gfl2_pmx/models/pmx-7c5ea1f673f69f12/Textures/c_CentaureissiSSR0101_slg_cloth2_da.png": {
           "bytes": 248747,
@@ -21458,7 +21458,7 @@
         },
         "42/mod.info": {
           "bytes": 150,
-          "sha256": "348156d07dadfd2b8d6a2c362b144d110f5e60baa45fcc4f87a19ea3b2cb9c54"
+          "sha256": "1a3df18dd3e0870f2acdaf029cbb0719a7ed619e2a1d2a1e18ccca488a37972a"
         },
         "42/media/lua/client/ZZ_GFL2PmxCentaureissiVoice.lua": {
           "bytes": 119464,
@@ -21729,8 +21729,8 @@
           "sha256": "9b3427d06f703513a30a49c58f86eb171895ec0d556448f3dc3146c3ce509eea"
         },
         "42/media/gfl2_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_hair_d.png": {
-          "bytes": 16799110,
-          "sha256": "39e7de7117940184d1c0807f7eccfa4189712b5a952db6b007ee128bc229eb21"
+          "bytes": 1513742,
+          "sha256": "b35e56e2ed43ca78cac53e7f59cc36a9227b1e7a5b7b3ab8ef660ad6736e9ded"
         },
         "42/media/gfl2_pmx/models/pmx-33aa225b75767fcb/Textures/c_DaiyanSSR0103_slg_shanzi_d.png": {
           "bytes": 988694,
@@ -21757,8 +21757,8 @@
           "sha256": "b2817a41d8ed4af869f50ae06d5f9cad300acb30aa28f32596c75ede5a360749"
         },
         "42/media/gfl2_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_cloth1_n.png": {
-          "bytes": 7234339,
-          "sha256": "8b2fecd63ff98c7a473ed249103ad0bc4db9cd2fb46611cb42e69f539601dda8"
+          "bytes": 7205940,
+          "sha256": "862d854c0f9845cd5537fc13de095eb774bd905d7d17c27977ff99e5a1050678"
         },
         "42/media/gfl2_pmx/models/pmx-33aa225b75767fcb/Textures/normalmap/c_DaiyanSSR0103_slg_cloth2_n.png": {
           "bytes": 5518386,
@@ -22658,7 +22658,7 @@
         },
         "42/mod.info": {
           "bytes": 138,
-          "sha256": "0efcb558f7a8def39fa7497d37689d13681a8d8ba2cc3d7962f04efe2dfafbb8"
+          "sha256": "2b7776489c0c05dd2d899a7fc9a1c959f41f0b88668e47a1ae922eba71d74c56"
         },
         "42/media/lua/client/ZZ_GFL2PmxDaiyanVoice.lua": {
           "bytes": 123569,
@@ -25065,8 +25065,8 @@
           "sha256": "f845fa81fc876a31f8f16c0c48345daf66771fed8b66fba3a3a7a6c2d40eae62"
         },
         "42/media/gfl2_pmx/models/pmx-8a28434eee27a5ce/Textures/c_ClukaySSR0104_slg_cloth3_dt_da.png": {
-          "bytes": 9541184,
-          "sha256": "ad8ffabe465c8dbdaf8871819e41a26e4867dbb4ea821a8becdc05b91472b820"
+          "bytes": 8842329,
+          "sha256": "f6e0a93a25da74c87e1ccf8f3d9ce61348a37e08d48904e68314baa4055c6b8d"
         },
         "42/media/gfl2_pmx/models/pmx-8a28434eee27a5ce/Textures/c_ClukaySSR0104_slg_cloth4_da.png": {
           "bytes": 1795422,
@@ -26422,7 +26422,7 @@
         },
         "42/mod.info": {
           "bytes": 141,
-          "sha256": "80e2c11dda5079ba17295717f50356c35e5931bb54385073bb20fd28431bd05c"
+          "sha256": "20a6ad203177233eabefc68187304e48c223e1db707e00a2e69b84a74b722bab"
         },
         "42/media/lua/client/ZZ_GFL2PmxKlukaiVoice.lua": {
           "bytes": 113648,
@@ -26625,8 +26625,8 @@
           "sha256": "b61321fe8c81d98b392c8d1df6790b523dc89cf5a7bc2ef0e12046563c238a32"
         },
         "42/media/gfl2_pmx/models/pmx-74fa40dba7e013d6/Textures/少前丝质纹理.png": {
-          "bytes": 7075022,
-          "sha256": "1798185207f292a75167f14c871bc81d4649bbd40bfdd14570522a17f46e5a9f"
+          "bytes": 6212094,
+          "sha256": "477ec00c25daa234e77f1f44abfde181815c617243b507f870ee58670b4b1f89"
         },
         "42/media/gfl2_rendering/data/00f2df92c38880b705d1be41d7300f2deee6c8d85da9bfc53598d888fea55a59.bin": {
           "bytes": 87408,
@@ -27289,8 +27289,8 @@
           "sha256": "44664387f28dcc0ca135864dd53617d43dea7d44ba77b423dcaacfa97fcaf37f"
         },
         "42/media/gfl2_pmx/models/pmx-06925f50fb5cb612/Textures/c_OTs14SSR0101_slg_cloth3_da.png": {
-          "bytes": 7352767,
-          "sha256": "fff61f181190ec2417610ab847ef4cfb319c252de0e87df30f0e39811c8f82b4"
+          "bytes": 6948921,
+          "sha256": "cec4ee1c8b05dc5711d9e6c3a5555a3c5af1b25401e14b66832579df51694fd6"
         },
         "42/media/gfl2_pmx/models/pmx-06925f50fb5cb612/Textures/c_OTs14SSR0101_slg_hair_d.png": {
           "bytes": 2511058,
@@ -28302,7 +28302,7 @@
         },
         "42/mod.info": {
           "bytes": 137,
-          "sha256": "b361942d0c3b3b62c92d184a2c51dba6bf1ed92b525a11607d0759a1b56cf8a7"
+          "sha256": "8e89ac36284b77593a149c44b67baec8d440f87d2078e19e29138dd41a4effe3"
         },
         "42/media/lua/client/ZZ_GFL2PmxOTs14Voice.lua": {
           "bytes": 105343,
@@ -28362,7 +28362,7 @@
         },
         "42/mod.info": {
           "bytes": 135,
-          "sha256": "22ca9c61ed1e6e4f2d477b1aecbff7e9316837d3321617e42d9aa9485330b63e"
+          "sha256": "11b9b626e79dd66beeecbc64ad46a132523b98de37c6e55e5ddee30dd626e150"
         },
         "42/poster.png": {
           "bytes": 245076,
@@ -28933,8 +28933,8 @@
           "sha256": "212418661904a4f793e125418cf55233d87a4e2e902fb5b82d47d1dc8cc13c79"
         },
         "42/media/gfl2_pmx/models/pmx-225af1a054faefb0/Textures/c_Springfield_face_d.png": {
-          "bytes": 4214672,
-          "sha256": "1ec6ed2add0fabce7b03825b80f5e445469a1d90ec9f1e34c16b72f0faa301f7"
+          "bytes": 608466,
+          "sha256": "4f9a1de74412738c993f581ab1d00c88a1459c0b1c869e5d317a603ebe98f045"
         },
         "42/media/gfl2_pmx/models/pmx-225af1a054faefb0/Textures/extra.png": {
           "bytes": 406242,
@@ -28993,24 +28993,24 @@
           "sha256": "212418661904a4f793e125418cf55233d87a4e2e902fb5b82d47d1dc8cc13c79"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/c_Springfield_face_d.png": {
-          "bytes": 4214672,
-          "sha256": "1ec6ed2add0fabce7b03825b80f5e445469a1d90ec9f1e34c16b72f0faa301f7"
+          "bytes": 608466,
+          "sha256": "4f9a1de74412738c993f581ab1d00c88a1459c0b1c869e5d317a603ebe98f045"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/c_Springfield_hair_d.png": {
-          "bytes": 16801992,
-          "sha256": "f898cecbaaf55f7e29ca83d4fcef8c92cb6d15e1239f826786a3c9083a270e15"
+          "bytes": 2740171,
+          "sha256": "6f67f71da467aa6a072a83ea145c897162a326ad249d515d7e79a4083cb4820f"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/extra.png": {
           "bytes": 406242,
           "sha256": "998c8acc5b1596e76331a7e3805356ba345fd8884b0a7085c1eb29bcc01d56ba"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/normalmap/c_SpringfieldSSR0102_slg_cloth1_n.png": {
-          "bytes": 7171974,
-          "sha256": "7c1b30787a442f1ed1304a99883ba4e27efd5bd1f27c0411958936881872f75c"
+          "bytes": 7102207,
+          "sha256": "065f42d344c3d3e706ddc7cc98edbe5ccfc1cfbe27de1360761431e21dea252f"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/normalmap/c_springfieldssr0102_slg_cloth1_rmo_08_27_2025.png": {
-          "bytes": 4916627,
-          "sha256": "b44fa8ebdb1c42876de24f2e2579e02f0aa6715147af26b35202ee8726138692"
+          "bytes": 4877197,
+          "sha256": "82b4539d3349c6f1b4037d1f10eed7c5a8c56961c7eb2154c4ed73cdc0d863a5"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/normalmap/c_SpringfieldSSR0102_slg_cloth2_n.png": {
           "bytes": 876774,
@@ -29021,8 +29021,8 @@
           "sha256": "57040bf25e91861c5c06e292663b2c8eb1848f1ee6902fb18538ff0ae329f535"
         },
         "42/media/gfl2_pmx/models/pmx-62b44285b57a48e9/Textures/normalmap/c_Springfield_hair_spc.png": {
-          "bytes": 16803712,
-          "sha256": "53c769cf2de2151e8a9d91ec2e9c905758c9360ba890db7bc6577f8eaec54f8d"
+          "bytes": 268097,
+          "sha256": "36e2ae97c53605f3036dcdb33c9010735bb5e32b0d30456f48072b047bc9112f"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/spa/eyes.png": {
           "bytes": 13427,
@@ -29049,12 +29049,12 @@
           "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/c_SpringfieldSSR01_slg_cloth1_d.png": {
-          "bytes": 4049919,
-          "sha256": "5ba4ef4a52be359cb307b412665a27ff24f5ca0c6f165b489ed16ff91ca4277d"
+          "bytes": 4035656,
+          "sha256": "3cb4deb6fa7d989f914a71f90d5003b219ecb3c28c6715a3485673a0da9b7442"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/c_SpringfieldSSR01_slg_cloth2_d.png": {
-          "bytes": 5639506,
-          "sha256": "cf3b98d0722f1fec4ac8f3a9927ec1a143dd2d24ad8f0453ad6957e0ddf2ee95"
+          "bytes": 5522428,
+          "sha256": "42489a7c677e32b2e77509364a3f872d39b562241f8800ecc6d343cd3583f96f"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/c_SpringfieldSSR01_slg_Sword_d.png": {
           "bytes": 3520353,
@@ -29069,12 +29069,12 @@
           "sha256": "212418661904a4f793e125418cf55233d87a4e2e902fb5b82d47d1dc8cc13c79"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/c_Springfield_face_d.png": {
-          "bytes": 4214672,
-          "sha256": "1ec6ed2add0fabce7b03825b80f5e445469a1d90ec9f1e34c16b72f0faa301f7"
+          "bytes": 608466,
+          "sha256": "4f9a1de74412738c993f581ab1d00c88a1459c0b1c869e5d317a603ebe98f045"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/c_Springfield_hair_d.png": {
-          "bytes": 16801992,
-          "sha256": "f898cecbaaf55f7e29ca83d4fcef8c92cb6d15e1239f826786a3c9083a270e15"
+          "bytes": 2740171,
+          "sha256": "6f67f71da467aa6a072a83ea145c897162a326ad249d515d7e79a4083cb4820f"
         },
         "42/media/gfl2_pmx/models/pmx-a030b24c0272893f/Textures/extra.png": {
           "bytes": 385280,
@@ -29169,8 +29169,8 @@
           "sha256": "212418661904a4f793e125418cf55233d87a4e2e902fb5b82d47d1dc8cc13c79"
         },
         "42/media/gfl2_pmx/models/pmx-cc787cf2d032366b/Textures/c_Springfield_face_d.png": {
-          "bytes": 4214672,
-          "sha256": "1ec6ed2add0fabce7b03825b80f5e445469a1d90ec9f1e34c16b72f0faa301f7"
+          "bytes": 608466,
+          "sha256": "4f9a1de74412738c993f581ab1d00c88a1459c0b1c869e5d317a603ebe98f045"
         },
         "42/media/gfl2_pmx/models/pmx-cc787cf2d032366b/Textures/extra.png": {
           "bytes": 385280,
@@ -30417,8 +30417,8 @@
           "sha256": "7e9fe09df734c1adfe12a5243b2373496dcd5a2ea0cc5b629db203a9c94d19b8"
         },
         "42/media/gfl2_pmx/models/pmx-4019c9450e0e318d/Textures/c_SuomiSSR01_slg_hair_d.png": {
-          "bytes": 16798812,
-          "sha256": "b0b804e85e885c3392e30fcfe230c4d77f7e412700190a3fc15c5658e59f69d1"
+          "bytes": 1742479,
+          "sha256": "1d6c70fe18b7cdf5ade0499f12d03656248fb9f421026d605621de19f260679e"
         },
         "42/media/gfl2_pmx/models/pmx-4019c9450e0e318d/Textures/c_VepleySSR01_slg_plush_dt.png": {
           "bytes": 256424,
@@ -30501,8 +30501,8 @@
           "sha256": "a4d9d08b888793a11f39163c5e5dd2eca247ab7fdb2f65c9504cf06408a3c845"
         },
         "42/media/gfl2_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR0101_slg_hair_d.png": {
-          "bytes": 16798597,
-          "sha256": "e740a1b509d0499d4e7587d3b95d545aec19db4aa75df93841c4ed9be3bd92e5"
+          "bytes": 2593309,
+          "sha256": "7490d657e3c2b1b9e76a964e2617beb0756118e3201178951a44577edd0fc7b7"
         },
         "42/media/gfl2_pmx/models/pmx-43ef6f5967a37c87/Textures/c_SuomiSSR01_eye_d.png": {
           "bytes": 547387,
@@ -30673,8 +30673,8 @@
           "sha256": "292333674c44fdbc2cb7d10055b03acf2b1040ac674ae34f24fe2e071903c635"
         },
         "42/media/gfl2_pmx/models/pmx-cb19e5961c38af86/Textures/c_SuomiSSR01_slg_hair_d.png": {
-          "bytes": 16798812,
-          "sha256": "b0b804e85e885c3392e30fcfe230c4d77f7e412700190a3fc15c5658e59f69d1"
+          "bytes": 1742479,
+          "sha256": "1d6c70fe18b7cdf5ade0499f12d03656248fb9f421026d605621de19f260679e"
         },
         "42/media/gfl2_pmx/models/pmx-cb19e5961c38af86/Textures/c_somissr0102_slg_cloth4_da.png": {
           "bytes": 351602,
@@ -30790,7 +30790,7 @@
         },
         "42/mod.info": {
           "bytes": 137,
-          "sha256": "4df88dfae98f1352c6c4d6d8fc861b92251ad7f537d13d33486789fe385bba41"
+          "sha256": "c0e86f7fafbe7a7e0b889d2d73623164ae15910a095849555aea40fa19b47b00"
         },
         "42/media/lua/client/ZZ_GFL2PmxSuomiVoice.lua": {
           "bytes": 65015,
@@ -31558,7 +31558,7 @@
         },
         "42/mod.info": {
           "bytes": 129,
-          "sha256": "d436e156a436b610bc013a2397fac54067910d3d1c1972bab01209ea5294d63e"
+          "sha256": "43d9b845b8b3a4c638d9dcb1dc435caf1f643d56bd256dcbfd88b78fe509fb75"
         },
         "42/poster.png": {
           "bytes": 251379,
@@ -32173,8 +32173,8 @@
           "sha256": "5ba8373ebe4ff0187ae2fc52e5c265d4064faa80105f5733bcbd75fafe6dc63c"
         },
         "42/media/gfl2_pmx/models/pmx-f6ac57de07aff8b0/Textures/c_LennaSSR01_slg_cloth1_d.png": {
-          "bytes": 5237431,
-          "sha256": "51c7cafb4a658591543b49eb9ad395fe42936fb3ac7397ada1431131a9b69a5d"
+          "bytes": 5224970,
+          "sha256": "f69131b1a5f64b09092c3cd4941a61d57d1a16e7a291b5c7795e30d76a835d17"
         },
         "42/media/gfl2_pmx/models/pmx-f6ac57de07aff8b0/Textures/c_LennaSSR01_slg_cloth2_d.png": {
           "bytes": 2491161,
@@ -33018,7 +33018,7 @@
         },
         "42/mod.info": {
           "bytes": 133,
-          "sha256": "76099235b83fa7088d26dc6c6d47eea05a169d970d695d28b709dddf2486eda6"
+          "sha256": "8578d747becbf75de9fad9da360a371e1592d880ec61bbc77eb31adc1cc68033"
         },
         "42/poster.png": {
           "bytes": 214840,
@@ -33397,12 +33397,12 @@
           "sha256": "1484fb2c8f4b3bcf0fc5a7f7d0e4e26c27c9dbf38af8f1089e8566c1a9a11df0"
         },
         "42/media/gfl2_pmx/models/pmx-1303e831f7fc913d/Textures/c_VectorSSR01_slg_cloth1_d.png": {
-          "bytes": 4751298,
-          "sha256": "eb63a1bfbbf2ed0ab09e167a29550fc6d34c26b891092e844050edfb38c532f3"
+          "bytes": 4726964,
+          "sha256": "334807c5baeb7647c2fb7c0db67828fc154fc0d6217e2754888492cbfc237b8c"
         },
         "42/media/gfl2_pmx/models/pmx-1303e831f7fc913d/Textures/c_VectorSSR01_slg_cloth2_d.png": {
-          "bytes": 5651525,
-          "sha256": "97d7262952496007d1e7ea5ff340c98bceb25ab96f31bd32aad3c14b04ce0830"
+          "bytes": 5411958,
+          "sha256": "ba25f745bb2364ecdb2b418b1d1f6935002f209885f18ecc6ec8282b164bf688"
         },
         "42/media/gfl2_pmx/models/pmx-1303e831f7fc913d/Textures/c_VectorSSR01_slg_weapon_d.png": {
           "bytes": 5341587,
@@ -33417,8 +33417,8 @@
           "sha256": "72c0b38f272eb86040e076dcda99ea3866af5e63d1cc9cd54ec60af44015932b"
         },
         "42/media/gfl2_pmx/models/pmx-1303e831f7fc913d/Textures/c_Vector_slg_face_d.png": {
-          "bytes": 4214427,
-          "sha256": "0825bc81c02492c3f404b52164aa3e8143c5e0d3ef665190841679165462bff6"
+          "bytes": 629590,
+          "sha256": "dfebd9336a6a714ee1fee7ed73544bffa84636c563d5cb0e14461c2eba01680d"
         },
         "42/media/gfl2_pmx/models/pmx-1303e831f7fc913d/Textures/c_Vector_slg_hair_d.png": {
           "bytes": 1891419,
@@ -33513,12 +33513,12 @@
           "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
         },
         "42/media/gfl2_pmx/models/pmx-4f5d642f97fc5a9d/Textures/c_VectorSSR01_slg_cloth1_d.png": {
-          "bytes": 4751298,
-          "sha256": "eb63a1bfbbf2ed0ab09e167a29550fc6d34c26b891092e844050edfb38c532f3"
+          "bytes": 4726964,
+          "sha256": "334807c5baeb7647c2fb7c0db67828fc154fc0d6217e2754888492cbfc237b8c"
         },
         "42/media/gfl2_pmx/models/pmx-4f5d642f97fc5a9d/Textures/c_VectorSSR01_slg_cloth2_d.png": {
-          "bytes": 5651525,
-          "sha256": "97d7262952496007d1e7ea5ff340c98bceb25ab96f31bd32aad3c14b04ce0830"
+          "bytes": 5411958,
+          "sha256": "ba25f745bb2364ecdb2b418b1d1f6935002f209885f18ecc6ec8282b164bf688"
         },
         "42/media/gfl2_pmx/models/pmx-4f5d642f97fc5a9d/Textures/c_VectorSSR01_slg_weapon_d.png": {
           "bytes": 5341587,
@@ -33533,8 +33533,8 @@
           "sha256": "72c0b38f272eb86040e076dcda99ea3866af5e63d1cc9cd54ec60af44015932b"
         },
         "42/media/gfl2_pmx/models/pmx-4f5d642f97fc5a9d/Textures/c_Vector_slg_face_d.png": {
-          "bytes": 4214427,
-          "sha256": "0825bc81c02492c3f404b52164aa3e8143c5e0d3ef665190841679165462bff6"
+          "bytes": 629590,
+          "sha256": "dfebd9336a6a714ee1fee7ed73544bffa84636c563d5cb0e14461c2eba01680d"
         },
         "42/media/gfl2_pmx/models/pmx-4f5d642f97fc5a9d/Textures/c_Vector_slg_hair_d.png": {
           "bytes": 1891419,
@@ -33629,8 +33629,8 @@
           "sha256": "72c0b38f272eb86040e076dcda99ea3866af5e63d1cc9cd54ec60af44015932b"
         },
         "42/media/gfl2_pmx/models/pmx-ba77d8beccf4a49b/Textures/c_Vector_slg_face_d.png": {
-          "bytes": 4214427,
-          "sha256": "0825bc81c02492c3f404b52164aa3e8143c5e0d3ef665190841679165462bff6"
+          "bytes": 629590,
+          "sha256": "dfebd9336a6a714ee1fee7ed73544bffa84636c563d5cb0e14461c2eba01680d"
         },
         "42/media/gfl2_pmx/models/pmx-ba77d8beccf4a49b/Textures/c_Vector_slg_hair_d.png": {
           "bytes": 1891419,
@@ -34446,7 +34446,7 @@
         },
         "42/mod.info": {
           "bytes": 135,
-          "sha256": "dae6c826f677a65e706a1c05d32df79751d1b6ccbc4121d5e22a41301842b350"
+          "sha256": "cc043a79f29da276966743eee259bbb8d781a89185be952883c7dd792d89ebc2"
         },
         "42/poster.png": {
           "bytes": 210945,
@@ -35077,8 +35077,8 @@
           "sha256": "77bea7968bc259e98485d55d06e772dbb5b44ca4c6a6210473ffe234172e8007"
         },
         "42/media/gfl2_pmx/models/pmx-81a5c871affb4465/Textures/c_PhaetusaSSR0101_slg_cloth2_da.png": {
-          "bytes": 5571518,
-          "sha256": "a56fc8f7c09683f07b7b65b4af9347a17d5d1daa1dd5800994cddcd8e961480d"
+          "bytes": 5454699,
+          "sha256": "fd06c4f0dd262e6f75e0b39c0242eb3601af59d072e8e542d40c274d97464be5"
         },
         "42/media/gfl2_pmx/models/pmx-81a5c871affb4465/Textures/c_PhaetusaSSR0101_slg_cloth2_n.png": {
           "bytes": 4449178,
@@ -38166,7 +38166,7 @@
         },
         "42/mod.info": {
           "bytes": 137,
-          "sha256": "88478be5f7fbfde56b2d14ab01bb625b76946ad5890c0f0c2708d539b93b916e"
+          "sha256": "40c7fcf36d0c22c00a9a21b37179e78281b99785bfd98271f565bf34a7c36a18"
         },
         "42/poster.png": {
           "bytes": 218969,
@@ -38465,8 +38465,8 @@
           "sha256": "d0573fc3c104f4c8f686c0d65bc5779ca204a47f457d80711e48d76caabfa256"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/c_YooHeeSSR01_slg_cloth2_d.png": {
-          "bytes": 4524492,
-          "sha256": "390e53dfdb81d76a26448cfd4ed514a89438d4f4e28f80c428259525f724557a"
+          "bytes": 4467303,
+          "sha256": "f4e272fea8c0741087f2d4b3b88394d116ebc69d7a9273d5362e5e0bddb6ba0c"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/c_YooHee_slg_eyeblend.png": {
           "bytes": 36337,
@@ -38481,8 +38481,8 @@
           "sha256": "6432f8d4cf360da1bd03801dfc7c3e50923e9c96755a7fb363c65f5eeb05d539"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/c_YooHee_slg_hair_d.png": {
-          "bytes": 17019181,
-          "sha256": "2f3a946952656d281c46c9547630a5c6711825661b239e5a4b57697d9915d18c"
+          "bytes": 2393280,
+          "sha256": "6a9172ce5348ec44e732421854a9ce5a9dbff7b1633e5dda3950a72b78617a65"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/extra.png": {
           "bytes": 385280,
@@ -38501,8 +38501,8 @@
           "sha256": "2e167b31cc81a5e225aa5b536b45390a7876250c574dee3afe1b5eef09402b3b"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/normalmap/c_YooHeeSSR01_slg_cloth1_n.png": {
-          "bytes": 7081236,
-          "sha256": "2f4fd8703eb63d3180199f9e8f6cc197ae5063f09cb527a5fe897f4a989ee7a5"
+          "bytes": 7049576,
+          "sha256": "4be8d97c8c710d62d9387918aecda61b1b0a5e03c8bd4885e5c4b6d03a7b75ed"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/normalmap/c_yooheessr01_slg_cloth1_rmo_01_17_2025.png": {
           "bytes": 4281131,
@@ -38513,8 +38513,8 @@
           "sha256": "e65da44550e78d702dba4ee40c80bade5ed3e9144b0ff299a910d302d33340cf"
         },
         "42/media/gfl2_pmx/models/pmx-2689b8bef5ca9503/Textures/normalmap/c_yooheessr01_slg_cloth2_rmo_01_17_2025.png": {
-          "bytes": 6203330,
-          "sha256": "174dede2407ae00a360f69b55ef328da91961056846b3be43b51c27873c3ef65"
+          "bytes": 6152749,
+          "sha256": "1086a1e98583a530f146f5a79f07657e8fdae7856dd3a8d0ca06a3577f7c4938"
         },
         "42/media/gfl2_pmx/models/pmx-9de435d3627c8e6b/spa/eyes.png": {
           "bytes": 13427,
@@ -40782,7 +40782,7 @@
         },
         "42/mod.info": {
           "bytes": 135,
-          "sha256": "782b5ef9f7f9bd22dbd1790e1b65506bb2bb9cb59741f561fcdb0a9869c9e8da"
+          "sha256": "f8f7a73618f261da443bcaf7cb2dc94ed36f23e31e74f70acc50c0f909aa98f0"
         },
         "42/poster.png": {
           "bytes": 167830,
@@ -40889,8 +40889,8 @@
           "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
         },
         "42/media/gfl2_pmx/models/pmx-0b80022fae2dbb04/Textures/c_MacqiatoSSR0101_hair_d.png": {
-          "bytes": 16801046,
-          "sha256": "076591edfd62e4ab4c1b53fb266ad14deb37f715493d2bb351c0d04a93613a22"
+          "bytes": 1757111,
+          "sha256": "66bfd10669268d34f9a2d8eca5be8759cbf7e71f4c391c6cbd0bdac86da0079a"
         },
         "42/media/gfl2_pmx/models/pmx-0b80022fae2dbb04/Textures/c_MacqiatoSSR01_slg_cloth1_d.png": {
           "bytes": 2997509,
@@ -40973,8 +40973,8 @@
           "sha256": "22b5f43152eda7f01a113077443259ef3812e881f8f9015780e171495f91ee4b"
         },
         "42/media/gfl2_pmx/models/pmx-5efe7392a2315a89/Textures/c_MacqiatoSSR0103_slg_P1_cloth_d.png": {
-          "bytes": 6376232,
-          "sha256": "492e5761c20b5350e7eaecd0f974ee1eb819bafb65aa98a06fb8bdaee8c9af41"
+          "bytes": 6219782,
+          "sha256": "8c4c2f78d121b6c428954a1410f65292a614260e88f2a30d3d1170bd58b900b3"
         },
         "42/media/gfl2_pmx/models/pmx-5efe7392a2315a89/Textures/c_MacqiatoSSR0103_slg_P1_cloth_n.png": {
           "bytes": 7882979,
@@ -41129,8 +41129,8 @@
           "sha256": "1be44e48dce2158d62e565323d3faaff81832420940ffe5a67727ee27346cdbb"
         },
         "42/media/gfl2_pmx/models/pmx-79e7c6a0e60e6f61/Textures/c_MacqiatoSSR0102_hair_d.png": {
-          "bytes": 16804781,
-          "sha256": "0de0d2094cecb0867f9e8d32961e923aff13ba401c62c089c5e5f0498f564021"
+          "bytes": 2075193,
+          "sha256": "7594d71047c42263c26ab49db4e4764a8506f553af282f4227f850792fb7fbe6"
         },
         "42/media/gfl2_pmx/models/pmx-79e7c6a0e60e6f61/Textures/c_MacqiatoSSR0102_slg_cloth02_da.png": {
           "bytes": 5043311,
@@ -41225,12 +41225,12 @@
           "sha256": "9fe37fc06fa7329559a4662a0f7681880dc9879b06ce2eee3c7901da425bf4dc"
         },
         "42/media/gfl2_pmx/models/pmx-e524539529b6d56a/Textures/c_MacqiatoSSR0101_hair_d.png": {
-          "bytes": 16801046,
-          "sha256": "076591edfd62e4ab4c1b53fb266ad14deb37f715493d2bb351c0d04a93613a22"
+          "bytes": 1757111,
+          "sha256": "66bfd10669268d34f9a2d8eca5be8759cbf7e71f4c391c6cbd0bdac86da0079a"
         },
         "42/media/gfl2_pmx/models/pmx-e524539529b6d56a/Textures/c_MacqiatoSSR0101_hair_spc.png": {
-          "bytes": 16798565,
-          "sha256": "f8c86567793c0fee2cbcf8a6814aa5d8c1e07561000ca9e831d8e311bec45ab4"
+          "bytes": 478184,
+          "sha256": "7a81d3f378d7e4078715db129187616dd2f68ea512771f5625bff76b35cb9a76"
         },
         "42/media/gfl2_pmx/models/pmx-e524539529b6d56a/Textures/c_macqiatossr0101_slg_cloth1_da.png": {
           "bytes": 2641176,
@@ -43109,8 +43109,8 @@
           "sha256": "6f2258bec456f1d7feafe58318caa324650b99e97e9a4392f389fafa83234b5e"
         },
         "42/media/gfl2_pmx/models/pmx-dc209b2768a8242a/Textures/c_LoreleySSR01_slg_cloth2_da.png": {
-          "bytes": 8251510,
-          "sha256": "80884372c43b800107f68f5b4b78e3341533e24e174aaf8a2d948bd004940dda"
+          "bytes": 7810799,
+          "sha256": "b6da441414836d72bc3887dfa89961746a8e0726b0fbb193037bb25cb3286f09"
         },
         "42/media/gfl2_pmx/models/pmx-dc209b2768a8242a/Textures/c_LoreleySSR01_slg_cloth3_d.png": {
           "bytes": 2794207,
@@ -43197,8 +43197,8 @@
           "sha256": "3930c287bfaea71e952ceb88604b2e7ec391b61dd94605ed397fdb0cb28f6c9d"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_cloth1_da.png": {
-          "bytes": 6482418,
-          "sha256": "54c63dc7af89f8b9d5058d7f5a5e7b64b8ccc3be1f0a8cc18afedba07abe87a6"
+          "bytes": 6354904,
+          "sha256": "0c4307f0f78567e153aabcc1b456abbd529320257573643b12c225721d7b91dd"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_cloth2_d.png": {
           "bytes": 220829,
@@ -43213,8 +43213,8 @@
           "sha256": "ebdb2830dcae7d018ab450aa8af9ddd4a8d92915b3792b5a1c4124a58326f881"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_p1_cloth1_da.png": {
-          "bytes": 4707913,
-          "sha256": "42d44c68701c93c00c6daa2533a1414d2d1b8d34d15c92b0276cb2152d9800c5"
+          "bytes": 4675845,
+          "sha256": "accb3b05cd06f235303ed02df47bc6cfa71d2c3b6a23a4611c73e9bda77ffc1a"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_p1_cloth2_da.png": {
           "bytes": 4993,
@@ -43237,8 +43237,8 @@
           "sha256": "fc466a06858f4d6f135fed1d4a82b6194c9a0dca20d3fbcbcd2735f2157b0ad7"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_p2_cloth1_da.png": {
-          "bytes": 4972081,
-          "sha256": "5346c7abc15cdb9c6dae5054d235e49dc574b50423717e5e4561eb2671e05926"
+          "bytes": 4182696,
+          "sha256": "9b3fe8e44eedcc451992d4d647ba81f987f3f89417ef484989ce9add1281144f"
         },
         "42/media/gfl2_pmx/models/pmx-f2a800c48ca2b031/Textures/c_LoreleySSR0101_slg_P2_head_d.png": {
           "bytes": 128619,
