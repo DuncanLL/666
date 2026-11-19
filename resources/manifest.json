@@ -1108,8 +1108,8 @@
       "sha256": "f89c08ca1ab5d7a02906cee1126c9f42f8fa33f814db96d9afab53e5d5f1e789"
     },
     "42/media/gfl2_pmx/licenses/NOTICE.txt": {
-      "bytes": 1464,
-      "sha256": "4acd2b2ae09e05651156f21a07e80c6300e123670afa54c881e08c00834c8115"
+      "sha256": "a6cf5280006869a07743e03c53e2ae2cd1286e094f78ec7baa82d684e0652c66",
+      "bytes": 698
     },
     "42/media/gfl2_pmx/licenses/RUST-DEPENDENCIES.json": {
       "bytes": 25567,

@@ -65,8 +65,8 @@
     3619862853,
     3809306528
   ],
-  "framework_manifest": "8126244118113134627",
-  "framework_bytes": 279326642,
+  "framework_manifest": "5536721269003457522",
+  "framework_bytes": 279325876,
   "screenshots": 9,
   "rolled_forward_role_dependencies": 25,
   "all_visibility": {
@@ -108,7 +108,7 @@
   ],
   "app_id": 108600,
   "internal_mod_id": "GFL2Exilium",
-  "verified_shanghai": "2026-11-19T16:03:55+08:00",
+  "verified_shanghai": "2026-11-19T16:09:34+08:00",
   "anonymous_public_readback": 27,
   "framework_gallery_and_cover_byte_verified": true,
   "framework_description_sha256": "775ea4a94cf901f05bf0a895a08b0996a4d84292211e6ebac0ab26f67ec7c083",
@@ -120,5 +120,14 @@
   "pinned_game_version": "PZ B42.22",
   "framework_jar_sha256": "b131631700d431b3e8be8bdcf259c2f6926132479145a21d0200df2bdd59e41c",
   "native_and_somber_startup_components_verified": true,
-  "new_frame_in_game_verified_only_in_components": true
+  "new_frame_in_game_verified_only_in_components": true,
+  "notice_cleanup": {
+    "previous_manifest": "8126244118113134627",
+    "previous_bytes": 279326642,
+    "paths": [
+      "42/media/gfl2_pmx/licenses/NOTICE.txt"
+    ],
+    "notice_sha256": "a6cf5280006869a07743e03c53e2ae2cd1286e094f78ec7baa82d684e0652c66",
+    "verified_runtime_jars_unchanged": true
+  }
 }
