@@ -3200,15 +3200,20 @@ end
 function W.open(player,actions)
     if not GFL2ReadyRoom then player:Say(getText("ContextMenu_GFL2Character_JavaUnavailable"));return end
     local index=player:getPlayerNum()
+    local sw,sh=getCore():getScreenWidth(),getCore():getScreenHeight()
     local window=W.instances[index]
-    if window and window.player==player then
+    if window and window.player==player and not window.closed and window:getIsVisible() then
+        if window.folded then window:toggleRoomFold() end
+        local targetH=window.roomPage=="motions" and window.motionPanelHeight or window.fullHeight or window.height
+        window:setX(clamp(window:getX(),0,math.max(0,sw-window.width)))
+        window:setY(clamp(window:getY(),0,math.max(0,sh-targetH)))
+        window:setVisible(true)
         window:bringToTop()
         return window
     end
     if window then window:close() end
     data=loadData()
     loadRoomText()
-    local sw,sh=getCore():getScreenWidth(),getCore():getScreenHeight()
     local width=math.min(1510,sw-48);local height=math.min(880,sh-62)
     window=ISCollapsableWindow.new(W,math.floor((sw-width)/2),math.floor((sh-height)/2),width,height)
     window.title=getText("ContextMenu_GFL2Character_Menu")
