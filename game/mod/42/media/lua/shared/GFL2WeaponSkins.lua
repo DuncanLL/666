@@ -6,6 +6,7 @@ local options = {
     ["GFL2.CauseAndEffect"] = { { id="4337415", model="GFL2.CauseAndEffectSkin4337415", detached=false } },
     ["GFL2.Chernobog"] = { { id="4334615", model="GFL2.ChernobogSkin4334615", detached=true } },
     ["GFL2.ConfessionCompass"] = { { id="4334625", model="GFL2.ConfessionCompassSkin4334625", detached=true } },
+    ["GFL2.Daydream"] = { { id="4334065", model="GFL2.DaydreamSkin4334065", detached=false } },
     ["GFL2.GaiaTerminus"] = { { id="4336675", model="GFL2.GaiaTerminusSkin4336675", detached=false } },
     ["GFL2.GuardianSilverwing"] = { { id="4333225", model="GFL2.GuardianSilverwingSkin4333225", detached=true } },
     ["GFL2.HeavyStrings"] = { { id="4334075", model="GFL2.HeavyStringsSkin4334075", detached=true } },

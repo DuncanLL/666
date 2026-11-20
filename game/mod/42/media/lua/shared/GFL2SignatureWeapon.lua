@@ -284,6 +284,18 @@ local weapons = {{
     previewCenterZ = -0.0042202114,
     previewZoom = 11.68,
 }, {
+    id = "GFL2.Daydream",
+    mod = "GFL2Mechty",
+    character = "GFL2Mechty",
+    name = "ContextMenu_GFL2_Daydream",
+    description = "ContextMenu_GFL2_DaydreamDescription",
+    icon = "media/textures/Item_GFL2Daydream.png",
+    card = "media/ui/GFL2/DaydreamCard.png",
+    previewCenterY = 0.071009,
+    previewCenterZ = 0.037367,
+    previewZoom = 17,
+    startsWithMagazine = true,
+}, {
     id = "GFL2.TidalNocturne",
     mod = "GFL2Loreley",
     character = "GFL2Loreley",

@@ -27,7 +27,8 @@
       "GFL2.UnspokenCalling": "未言使命",
       "GFL2.BansheesWhisper": "报丧轻语",
       "GFL2.SparklingCenterstage": "流光花火",
-      "GFL2.TidalNocturne": "潮涌夜曲"
+      "GFL2.TidalNocturne": "潮涌夜曲",
+      "GFL2.Daydream": "白日梦"
     },
     "skins": {
       "4334325": "涂装·雪境狼灵",
@@ -54,7 +55,8 @@
       "4334095": "涂装·重金属鉴赏家",
       "4332085": "涂装·光耀的玫瑰园",
       "4334195": "涂装·韵律节拍",
-      "4333455": "涂装·片刻囚徒"
+      "4333455": "涂装·片刻囚徒",
+      "4334065": "涂装·饱饱的懒觉"
     }
   },
   "text": {
@@ -778,6 +780,14 @@
       "isDefault": false,
       "portrait": "media/ui/GFL2ReadyRoom/round-pmx-f2a800c48ca2b031.png",
       "pack": "GFL2Loreley"
+    },
+    "pmx-4cc23c77ded8ee9b": {
+      "character": "米什缇",
+      "skin": "默认",
+      "officialSkin": "梦境战争",
+      "isDefault": true,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-4cc23c77ded8ee9b.png",
+      "pack": "GFL2Mechty"
     }
   },
   "labels": {
@@ -2924,7 +2934,8 @@
     "pmx-40dbcd572c1fb3f8",
     "pmx-7d46f9b7159f3332",
     "pmx-dc209b2768a8242a",
-    "pmx-f2a800c48ca2b031"
+    "pmx-f2a800c48ca2b031",
+    "pmx-4cc23c77ded8ee9b"
   ],
   "skinDescriptions": {
     "pmx-abe3eaaaa9d04264": [
@@ -3307,6 +3318,10 @@
     "pmx-dc209b2768a8242a": [
       "罗蕾莱的常见着装，优雅的礼服，将她的璀璨夺目",
       "衬托得更进一步，足以让她胜任一切场合。"
+    ],
+    "pmx-4cc23c77ded8ee9b": [
+      "米什缇的常见着装。将这件能够遮风挡雨的大衣一",
+      "裹，就是一个不错的睡袋……"
     ]
   },
   "roomLabels": {
@@ -7209,6 +7224,66 @@
       "path": "media/ui/GFL2ReadyRoom/label-loreley-2092c889e74b.png",
       "width": 239,
       "height": 40
+    },
+    "米什缇": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-50470cb0cfda.png",
+      "width": 112,
+      "height": 39
+    },
+    "梦境战争": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-143e0872c537.png",
+      "width": 148,
+      "height": 39
+    },
+    "范围输出 / 酸蚀支援": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-5f4dc5e9c959.png",
+      "width": 329,
+      "height": 40
+    },
+    "除了打游戏、看漫画，无论做什么都懒洋洋的人": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-f199d5b5688e.png",
+      "width": 760,
+      "height": 40
+    },
+    "形，拥有在任何地方任何状态下安然入睡的绝技。": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-2867e5dff847.png",
+      "width": 796,
+      "height": 41
+    },
+    "看似将躺平发挥到极致的她，在危机时刻也会显露": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-c3e496137cd0.png",
+      "width": 796,
+      "height": 41
+    },
+    "出可靠的一面——但本人觉得最好还是不要有“危": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-525568f08ed2.png",
+      "width": 802,
+      "height": 40
+    },
+    "急时刻”比较好啦……": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-2cb09bb091bb.png",
+      "width": 350,
+      "height": 40
+    },
+    "米什缇的常见着装。将这件能够遮风挡雨的大衣一": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-8fe2294216be.png",
+      "width": 796,
+      "height": 40
+    },
+    "裹，就是一个不错的睡袋……": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-bdece401b3a1.png",
+      "width": 458,
+      "height": 40
+    },
+    "白日梦": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-bb6d19abba12.png",
+      "width": 112,
+      "height": 39
+    },
+    "涂装·饱饱的懒觉": {
+      "path": "media/ui/GFL2ReadyRoom/label-mechty-be979e28c17d.png",
+      "width": 265,
+      "height": 40
     }
   },
   "roomBlinkLabels": [
@@ -7595,6 +7670,17 @@
         0.1607843137254902
       ],
       "tags": "复合输出 / 召唤 / 复合增益"
+    },
+    "米什缇": {
+      "pool": "GFL2Mechty",
+      "banner": "media/ui/GFL2ReadyRoom/recruitment/mechty.png",
+      "element": "酸蚀",
+      "color": [
+        0.529,
+        0.698,
+        0.275
+      ],
+      "tags": "范围输出 / 酸蚀支援"
     }
   },
   "roomDefaultSkinNames": {
@@ -7843,6 +7929,13 @@
       "如果您想知道更多的话，就应该亲自来找我。我会",
       "一点一滴，毫无保留地……将我的一切告诉您",
       "哦。”"
+    ],
+    "米什缇": [
+      "除了打游戏、看漫画，无论做什么都懒洋洋的人",
+      "形，拥有在任何地方任何状态下安然入睡的绝技。",
+      "看似将躺平发挥到极致的她，在危机时刻也会显露",
+      "出可靠的一面——但本人觉得最好还是不要有“危",
+      "急时刻”比较好啦……"
     ]
   },
   "roomWorkshopItems": {
@@ -7936,7 +8029,8 @@
     "玛绮朵": "pmx-0b80022fae2dbb04",
     "秋桦": "pmx-e4fe174c77f90d6c",
     "索普": "pmx-40dbcd572c1fb3f8",
-    "罗蕾莱": "pmx-dc209b2768a8242a"
+    "罗蕾莱": "pmx-dc209b2768a8242a",
+    "米什缇": "pmx-4cc23c77ded8ee9b"
   },
   "weaponBackground": "media/ui/GFL2ReadyRoom/weapon-bg.png",
   "weaponFrostBackground": "media/ui/GFL2ReadyRoom/weapon-frost-bg.png"

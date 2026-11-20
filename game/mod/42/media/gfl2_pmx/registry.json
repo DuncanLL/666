@@ -123,6 +123,9 @@
     "GFL2Loreley": [
       "pmx-dc209b2768a8242a",
       "pmx-f2a800c48ca2b031"
+    ],
+    "GFL2Mechty": [
+      "pmx-4cc23c77ded8ee9b"
     ]
   },
   "pack_mod_ids": {
@@ -150,6 +153,7 @@
     "GFL2Macqiato": "GFL2Macqiato",
     "GFL2Qiuhua": "GFL2Qiuhua",
     "GFL2Soppo": "GFL2Soppo",
-    "GFL2Loreley": "GFL2Loreley"
+    "GFL2Loreley": "GFL2Loreley",
+    "GFL2Mechty": "GFL2Mechty"
   }
 }

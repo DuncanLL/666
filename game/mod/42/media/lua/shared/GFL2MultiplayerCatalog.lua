@@ -42,6 +42,7 @@ return {
     ["pmx-5efe7392a2315a89"] = { mod = "GFL2Macqiato", character = "GFL2Macqiato", outfitDraw = false, price = 1200 },
     ["pmx-79e7c6a0e60e6f61"] = { mod = "GFL2Macqiato", character = "GFL2Macqiato", outfitDraw = false, price = 1080 },
     ["pmx-e524539529b6d56a"] = { mod = "GFL2Macqiato", character = "GFL2Macqiato", outfitDraw = false, price = 0 },
+    ["pmx-4cc23c77ded8ee9b"] = { mod = "GFL2Mechty", character = "GFL2Mechty", outfitDraw = false, price = 0 },
     ["pmx-4cdf23692c8709a0"] = { mod = "GFL2Nikketa", character = "Nikketa", outfitDraw = false, price = 0 },
     ["pmx-78cbbc06c7da39dc"] = { mod = "GFL2Nikketa", character = "Nikketa", outfitDraw = false, price = 840 },
     ["pmx-ea3eb50ef5b32295"] = { mod = "GFL2Nikketa", character = "Nikketa", outfitDraw = false, price = 840 },
