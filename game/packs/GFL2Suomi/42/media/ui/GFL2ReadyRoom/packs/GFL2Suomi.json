@@ -41,7 +41,11 @@
         "外套"
       ],
       "officialSkin": "灵海游光",
-      "partImages": {},
+      "partImages": {
+        "外套": {
+          "显示": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SuomiSSR01_P1_Coat.png"
+        }
+      },
       "isDefault": false
     },
     "pmx-cb19e5961c38af86": {

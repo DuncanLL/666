@@ -11,7 +11,6 @@ uniform sampler2D gf2TransferLut;
 uniform float gf2TransferExposure;
 uniform int gf2TransferOn;
 uniform float gf2TransferStrength;
-uniform sampler2D gf2TransferOwnership;
 layout(rgba16f,binding=3)uniform image2D gf2TransferColour;
 vec3 originalDisplayInput(vec3 rgb){
     vec3 p=clamp(log2(max(rgb,vec3(0.0))*5.555556+0.047996)*0.0735+0.386036,0.0,1.0)*31.0;
@@ -46,15 +45,13 @@ void main(){
         normal.xy=encodeOct(decodeOct(original.xy)*vec3(-1,1,-1));
         imageStore(nativeNormals,pixel,normal);
     }
-    // MRT1 was initialized with z=w=0 outside the actual original-character draws.
-    // Apply once after all original colour/stencil phases, never to shadow factors or the background.
-    if(gf2TransferOn!=0){
-        bool ownsOpaque=abs(texelFetch(gf2TransferOwnership,pixel,0).a-31.0/255.0)<0.5/255.0;
-        if(ownsOpaque&&(abs(original.z)>.0001||abs(original.w)>.0001)){
-            vec4 colour=imageLoad(gf2TransferColour,pixel);
-            float exposure=max(gf2TransferExposure,1e-8);
-            if(max(colour.r,max(colour.g,colour.b))>1e-8)colour.rgb=mix(colour.rgb,originalDisplayInput(colour.rgb*exposure)/exposure,clamp(gf2TransferStrength,0.0,1.0));
-            imageStore(gf2TransferColour,pixel,colour);
-        }
+    vec4 colour=imageLoad(gf2TransferColour,pixel);
+    float coverage=clamp(1.0-colour.a,0.0,1.0);
+    // The original passes have finished. Somber reads coverage in W and the normal tag in Z.
+    if(original.w!=coverage)imageStore(originalNormals,pixel,vec4(original.xyz,coverage));
+    if(gf2TransferOn!=0 && coverage>0.0 && max(colour.r,max(colour.g,colour.b))>1e-8){
+        float exposure=max(gf2TransferExposure,1e-8);
+        colour.rgb=mix(colour.rgb,originalDisplayInput(colour.rgb*exposure)/exposure,coverage*clamp(gf2TransferStrength,0.0,1.0));
+        imageStore(gf2TransferColour,pixel,colour);
     }
 }

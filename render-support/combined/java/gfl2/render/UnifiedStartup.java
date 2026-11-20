@@ -1,8 +1,10 @@
 package gfl2.render;
 
 import java.lang.instrument.Instrumentation;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
+import viewpoint.platform.Gfl2InstalledPackMenu;
 
 /** Entry points wired by the single-MOD packager. */
 public final class UnifiedStartup {
@@ -24,11 +26,12 @@ public final class UnifiedStartup {
         try {
             VerifiedViewpoint.verify();
             Instrumentation agent = Main.instrumentation();
-            Main.installPacks();
+            Path folder=Main.installPacks();
             var early = new HashSet<>(RuntimeHooks.EXPECTED.keySet());
             early.remove(MODEL_PASS);
             // VP may read and compile a saved Eclipse pack before the first model pass.
             new RuntimeHooks(early).install(agent);
+            Gfl2InstalledPackMenu.installed(folder);
             pending = agent;
             started = true;
         } catch (Exception | LinkageError failure) {
@@ -47,6 +50,9 @@ public final class UnifiedStartup {
         try {
             // ZombieBuddy has now composed the character's ModelPass advice.
             new RuntimeHooks(Set.of(MODEL_PASS)).install(agent);
+            // ModelPass dispatch can load ModelBlend while ZombieBuddy is transforming another class.
+            // Reapply its registered held-item advice before the first blended draw.
+            agent.retransformClasses(Class.forName("viewpoint.render.ModelBlend", false, UnifiedStartup.class.getClassLoader()));
             System.out.println("[GFL2] Bundled shader integration ready");
         } catch (Exception | LinkageError failure) {
             System.err.println("[GFL2] Bundled ModelPass integration: " + failure);

@@ -107,6 +107,12 @@ public final class WorldPoseRetargeter {
         palette.position(bone*64);return result.set(palette).translate(positions[bone * 3], positions[bone * 3 + 1], positions[bone * 3 + 2]);
     }
 
+    public synchronized Vector3f jointMidpoint(int left, int right) {
+        readPalette();
+        Vector3f a = joint(left).getTranslation(new Vector3f());
+        return a.add(joint(right).getTranslation(new Vector3f())).mul(.5f);
+    }
+
     private void applyBody(float[] sourceWorld, boolean needsFinalPalette) {
         if (sourceWorld.length != sourceRestInverse.length * 16)
             throw new IllegalArgumentException("Source skeleton changed");

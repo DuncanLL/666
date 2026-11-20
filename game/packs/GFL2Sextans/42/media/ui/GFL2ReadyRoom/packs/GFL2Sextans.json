@@ -106,7 +106,23 @@
         "鞋袜",
         "外裙"
       ],
-      "partImages": {}
+      "partImages": {
+        "头饰": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P1_Head.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P2_Head.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P3_Head.png"
+        },
+        "上衣": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P1_Cloth.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P2_Cloth.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P3_Cloth.png"
+        },
+        "下衣": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P1_Body.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P2_Body.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SextansSSR01_P3_Body.png"
+        }
+      }
     }
   },
   "labels": {}

@@ -8,3 +8,11 @@
 *.json text eol=lf
 *.md text eol=lf
 
+# These files are read as raw bytes when the managed shader ZIPs are built.
+render-support/native-pack/** text eol=lf
+render-support/native-pack/pack.properties text eol=crlf
+render-support/native-pack/shaders/gf2/native_indirect.glsl text eol=crlf
+render-support/somber/shaders/gf2/somber_actor_display.glsl text eol=crlf
+render-support/somber/shaders/gf2/native_cube.comp -text whitespace=cr-at-eol
+render-support/somber/shaders/gf2/native_reflection_sky.glsl -text whitespace=cr-at-eol
+

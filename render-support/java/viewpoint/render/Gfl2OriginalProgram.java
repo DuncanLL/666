@@ -151,6 +151,23 @@ public final class Gfl2OriginalProgram implements AutoCloseable {
     private static int blend(int value){return switch(value){case 0->GL11.GL_ZERO;case 1->GL11.GL_ONE;case 2->GL11.GL_DST_COLOR;case 3->GL11.GL_SRC_COLOR;case 4->GL11.GL_ONE_MINUS_DST_COLOR;case 5->GL11.GL_SRC_ALPHA;case 6->GL11.GL_ONE_MINUS_SRC_COLOR;case 7->GL11.GL_DST_ALPHA;case 8->GL11.GL_ONE_MINUS_DST_ALPHA;case 9->GL11.GL_SRC_ALPHA_SATURATE;case 10->GL11.GL_ONE_MINUS_SRC_ALPHA;default->throw new IllegalArgumentException("GF2 blend factor "+value);};}
     private static int equation(int value){return switch(value){case 0->GL14.GL_FUNC_ADD;case 1->GL14.GL_FUNC_SUBTRACT;case 2->GL14.GL_FUNC_REVERSE_SUBTRACT;case 3->GL14.GL_MIN;case 4->GL14.GL_MAX;default->throw new IllegalArgumentException("GF2 blend op "+value);};}
 
+    /** Private HDR alpha stores how much of the original world is still visible.
+     * The host HDR has RGB only, so its initial blit supplies alpha = 1. */
+    static void nativeColourState(JSONObject state){
+        state(state);
+        JSONObject rt=state.getJSONObject("rtBlend0");
+        int mask=number(rt,"colMask"),src=blend(number(rt,"srcBlend")),dst=blend(number(rt,"destBlend"));
+        int transmission=GL11.GL_ONE;
+        if((mask&14)==14){
+            if(src==GL11.GL_ONE && dst==GL11.GL_ZERO)transmission=GL11.GL_ZERO;
+            else if(dst==GL11.GL_ONE_MINUS_SRC_ALPHA)transmission=dst;
+        }
+        GL30.glColorMaski(0,(mask&8)!=0,(mask&4)!=0,(mask&2)!=0,true);
+        GL30.glEnablei(GL11.GL_BLEND,0);
+        GL40.glBlendFuncSeparatei(0,src,dst,GL11.GL_ZERO,transmission);
+        GL40.glBlendEquationSeparatei(0,equation(number(rt,"blendOp")),GL14.GL_FUNC_ADD);
+    }
+
     /** Original ShaderLab state. Caller owns FBO, front winding and restoration. */
     public static void state(JSONObject s){
         int depth=number(s,"zTest");if(depth==0)GL11.glDisable(GL11.GL_DEPTH_TEST);else {GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(compare(depth));}

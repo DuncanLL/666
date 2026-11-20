@@ -145,7 +145,6 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         if(width==w&&height==h)return;if(colour!=0)GL11.glDeleteTextures(colour);width=w;height=h;target.ensure(w,h);target.ensureOriginalOutputs(true);
         colour=GL45.glCreateTextures(GL11.GL_TEXTURE_2D);GL45.glTextureStorage2D(colour,1,GL30.GL_RGBA16F,w,h);GL45.glTextureParameteri(colour,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL45.glTextureParameteri(colour,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);
     }
-    private static boolean writesDepth(JSONObject pass){Object value=pass.getJSONObject("state").get("zWrite");return value instanceof Number n?n.doubleValue()!=0:((JSONObject)value).getDouble("value")!=0;}
     private static AutoCloseable modelBindings(ModelPass models){
         models.begin();
         return models::end;
@@ -181,7 +180,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
                     String root=actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),input.get("unity_WorldToObject")):locals.computeIfAbsent(root,r->local(builder,r,draws,draw,input,false,identity));
                     Gfl2OriginalProgram program=nativePrograms.source(draw.material,"ShadowCaster");program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),nativeShadow,environment.shadowSampler));
                     program.nativeInputs(local.inverse,local.inverseNormal,actor.model.getInt("attribute_records"));program.nativeFrame(placement,local.inverse,eye,new float[2],false);GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,attributes);
-                    JSONObject state=materials.state(draw.material,"ShadowCaster",false).put("offsetFactor",factor).put("offsetUnits",units);GL11.glDrawBuffer(GL11.GL_NONE);if(drawNative(frame,models,program,state,draw.index)!=1)throw new IllegalStateException("Native source caster was not submitted");shadowDraws++;
+                    JSONObject state=materials.state(draw.material,"ShadowCaster",false).put("offsetFactor",factor).put("offsetUnits",units);GL11.glDrawBuffer(GL11.GL_NONE);if(drawNative(frame,models,program,state,draw.index,false)!=1)throw new IllegalStateException("Native source caster was not submitted");shadowDraws++;
                 }
             }shadowViews++;
             if(casterQueryActive){GL15.glEndQuery(GL33.GL_ANY_SAMPLES_PASSED);casterQueryActive=false;visibleCasterViews+=GL15.glGetQueryObjecti(casterQuery,GL15.GL_QUERY_RESULT);}
@@ -203,14 +202,14 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
                 Map<String,float[]> input=new LinkedHashMap<>(packet.values());var shadow=environment.shadow(Arrays.copyOfRange(draws.values,first*68+24,first*68+27),eye);
                 input.put("_MainLightWorldToShadow",shadow.sourceMatrices());input.put("_MainLightShadowParams",new float[]{shadow.enabled()?1:0,1,0,0});input.put("_MainLightShadowmapSize",new float[]{1f/shadow.size(),1f/shadow.size(),shadow.size(),shadow.size()});input.put("_CascadeDepthBiasArray",new float[4]);input.put("_CascadeNormalBiasArray",new float[4]);
                 Map<String,Local> locals=new HashMap<>();int attributes=materials.attributeTexture(actor.model);
-                for(Draw draw:actor.draws){JSONObject pass=materials.optionalPass(draw.material,"GFCharForward");if(pass==null||!writesDepth(pass))continue;
+                for(Draw draw:actor.draws){JSONObject pass=materials.optionalPass(draw.material,"GFCharForward");if(pass==null||!Gfl2PackMaterials.writesDepth(pass))continue;
                     String root=actor.model.getJSONObject("renderer_frames").getJSONObject("materials").optString(Integer.toString(draw.material),null);
                     Local local=root==null?new Local(input,input.get("unity_WorldToObject"),normal(matrix(input.get("unity_ObjectToWorld"))),packet.previousInverse()):locals.computeIfAbsent(root,r->local(builder,r,draws,draw,input,history,identity));
                     Gfl2OriginalProgram program=nativePrograms.early(draw.material);characterControls(program,draw.material);program.registers(registers(program,draw.material,root,local.values,identity,true));program.textures(materials.textureBindings(program,draw.material,environment.earlyReflection(),shadow.texture(),environment.shadowSampler));
                     program.nativeInputs(local.inverse,local.inverseNormal,actor.model.getInt("attribute_records"));program.nativeFrame(history?old.placement:placement,local.previousInverse,history?old.eye:eye,new float[2],history);
                     GlProgram gl=program.nativeProgram();gl.use();gl.set("gf2NativePlainViewProjection",frame.plainViewProjection);gl.set("gf2NativePreviousViewProjection",history?frame.previousViewProjection:frame.plainViewProjection);gl.set("gf2NativePreviousSourceToWorld",new Matrix4f().set(local.values.get("unity_MatrixPreviousM")));
                     GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,attributes);GL20.glDrawBuffers(new int[]{GL30.GL_COLOR_ATTACHMENT0,GL30.GL_COLOR_ATTACHMENT1,GL30.GL_COLOR_ATTACHMENT2,GL30.GL_COLOR_ATTACHMENT3});
-                    int issued=drawNative(frame,models,program,materials.state(draw.material,"GFCharForward",true),draw.index);if(issued!=1)throw new IllegalStateException("Native early source job absent");earlyDraws++;
+                    int issued=drawNative(frame,models,program,materials.state(draw.material,"GFCharForward",true),draw.index,false);if(issued!=1)throw new IllegalStateException("Native early source job absent");earlyDraws++;
                 }
             }
             target.writeBackDepth(nativeTargets.gbufferFbo);earlyFrames++;
@@ -268,7 +267,6 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         motionBridge.use();motionBridge.setInt("initializeNormals",initialize?1:0);
         boolean colourTransfer=!initialize&&display!=null&&display.prepare(frame,motionBridge);
         motionBridge.setInt("gf2TransferOn",colourTransfer?1:0);
-        motionBridge.sampler("gf2TransferOwnership",5);GL13.glActiveTexture(GL13.GL_TEXTURE0+5);GL11.glBindTexture(GL11.GL_TEXTURE_2D,nativeTargets.albedo);GL33.glBindSampler(5,0);
         GL42.glBindImageTexture(3,colour,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);GL11.glBindTexture(GL11.GL_TEXTURE_2D,target.sourceMotion());GL33.glBindSampler(0,0);
         GL42.glBindImageTexture(0,nativeTargets.velocity,0,false,0,GL15.GL_READ_WRITE,GL30.GL_RGBA16F);
@@ -313,7 +311,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         GL13.glActiveTexture(GL13.GL_TEXTURE0+126);GL11.glBindTexture(GL11.GL_TEXTURE_2D,ready.attributes);
         ready.lights.bind(program.nativeProgram(),frame);environment.bindIndirect(program.nativeProgram(),frame);
         if(nativePrograms.mainConsumer(program.fragmentHash))environment.bindMain(program.nativeProgram(),frame);
-        GL20.glDrawBuffers(program.sourceOutputs());int issued=drawNative(frame,models,program,materials.state(draw.material,stage,false),draw.index);if(issued!=1)throw new IllegalStateException("Source job not issued by Native batches: "+stage+" / "+draw.index+" = "+issued);
+        GL20.glDrawBuffers(program.sourceOutputs());int issued=drawNative(frame,models,program,materials.state(draw.material,stage,false),draw.index,true);if(issued!=1)throw new IllegalStateException("Source job not issued by Native batches: "+stage+" / "+draw.index+" = "+issued);
         stageDraws.merge(stage,1,Integer::sum);lastDraws++;
     }
     private Local local(Gfl2FrameInputs builder,String root,ModelDraws draws,Draw draw,Map<String,float[]> input,boolean history,int identity){
@@ -368,7 +366,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
         gl.set("gf2CharacterEnhancement",settings==null?0:settings.surfaceDetail(),settings==null?0:settings.skinGloss(),materials.surfaceWeight(material));
         if(gl.has("gf2CharacterOutlineWidth"))gl.set("gf2CharacterOutlineWidth",settings==null?1:settings.outlineWidth());
     }
-    private int drawNative(FrameContext frame,ModelPass models,Gfl2OriginalProgram program,JSONObject state,int selected)throws Exception{
+    private int drawNative(FrameContext frame,ModelPass models,Gfl2OriginalProgram program,JSONObject state,int selected,boolean trackCoverage)throws Exception{
         GlProgram gl=program.nativeProgram();gl.use();gl.setInt("uShadowPalette",0);gl.setInt("uIrisEntity",-1);gl.setInt("uIrisUntinted",0);gl.set("uIrisEye",frame.eyeX,frame.eyeY,frame.eyeZ);
         gl.set("gf2NativeMotionViewport",(float)frame.width,(float)frame.height);
         for(int i=0;i<RELIEF_NAMES.length;i++){
@@ -376,7 +374,7 @@ public final class Gfl2NativeSourceRenderer implements AutoCloseable {
             switch(name){case "uReliefGrid"->gl.set(name,values[0],values[1],values[2],values[3]);case "uReliefCamera","uReliefFlowCells"->gl.set(name,values[0],values[1]);default->gl.set(name,values[0]);}
         }
         // Preserve the stock batch path, but visit only the already-selected draw.
-        singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){program.state(state);}public void texture(int unit,int draw){}});
+        singleDraw[0]=selected;return models.batches.draw(singleDraw,1,i->i==selected,new ModelBatches.State(){public void set(int draw){if(trackCoverage)Gfl2OriginalProgram.nativeColourState(state);else Gfl2OriginalProgram.state(state);}public void texture(int unit,int draw){}});
     }
     public String evidence(){return new JSONObject().put("frames",frames).put("early_frames",earlyFrames).put("early_draws",earlyDraws).put("actors",lastActors).put("original_stage_draws",lastDraws).put("stages",stageDraws).put("stage_order",stageOrder).put("actor_lighting_buffers",actorLighting.size()).put("native_programs",nativePrograms.count()).put("native_additional_light_inputs",nativeLightCount).put("native_local_selected_slots",localLights==null?0:localLights.kinds.length).put("native_local_kinds",localLights==null?new int[0]:localLights.kinds).put("native_local_indices",localLights==null?new int[0]:localLights.indices).put("native_local_fragment_consumers",nativePrograms.localConsumers()).put("native_indirect_fragment_consumers",nativePrograms.indirectConsumers()).put("native_actor_light",actorEngineLight).put("unsupported_car_beams",unsupportedCarBeams).put("shadow_views",shadowViews).put("shadow_draws",shadowDraws).put("visible_caster_views",visibleCasterViews).put("caster_query_is_fixture_only",casterQuery!=0).put("geometry_witness",geometryWitness).put("source_data_identity",data.identity).put("native_environment",environment.evidence()).put("original_display_transfer",display==null?JSONObject.NULL:display.evidence()).put("native_reflection_cube",environment.cube).put("native_main_shadow_consumers",nativePrograms.mainConsumers()).put("native_legacy_shadow_samplers",nativePrograms.legacySunSamplers()).put("scope","Native opaque depth/velocity retained; original source colour/stencil/shadow, Native cloud and actor ambient connected. Shared display transform and current-scene reflection are connected. Point/muzzle/spot services and actual Native bounce/flash-bounce feed source lighting. Actual six-direction room radiance is connected. Transparent/dynamic reflection coverage, conditional original effects, full authored motion and gameplay acceptance remain incomplete").toString();}
     @Override public void close()throws Exception{Gfl2NativeSourceScope.forget(motionBridge,(GlProgram)Gfl2NativeEnvironment.field(target,"copy"));for(Gfl2RegisterBank b:banks.values())b.close();for(int buffer:actorLighting.values())GL15.glDeleteBuffers(buffer);actorLighting.clear();if(display!=null)display.close();nativePrograms.close();materials.close();environment.close();motionBridge.delete();target.close();if(colour!=0)GL11.glDeleteTextures(colour);if(casterQuery!=0)GL15.glDeleteQueries(casterQuery);}

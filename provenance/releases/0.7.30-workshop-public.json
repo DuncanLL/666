@@ -1,0 +1,40 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_UPDATE_VERIFIED",
+  "version": "0.7.30",
+  "framework": 3842318650,
+  "previous_framework_manifest": "8594520790929779928",
+  "framework_manifest": "1122673227346328110",
+  "framework_jar_sha256": "68d99e43a8248f8b701cf4d8c2f512e6340c70a4d2b4bdf543021b3a6c3be361",
+  "framework_bytes": 279339120,
+  "changelog": "0.7.30 修复角色坐椅子和床沿时悬空的问题。框架按模型的实际坐姿接触高度校准，坐下和起身时平滑过渡。",
+  "visibility": "public",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-20T02:02:59+08:00",
+  "role_packages_updated": 0,
+  "calibration": "shared posed hip surface compared to stock seated body",
+  "outfits_checked": 72,
+  "character_packs_in_geometry_check": 25,
+  "original_gap_range_in_model_units": [
+    0.04744841510720513,
+    0.08650957400269768
+  ],
+  "corrected_max_gap_in_model_units": 0.00038252378173134205,
+  "actual_model_session_placement_cases": 33,
+  "offscreen_contacts": [
+    "Native chair",
+    "Somber bed edge"
+  ],
+  "packaged_startup_cases": [
+    "fresh",
+    "late-host"
+  ],
+  "held_item_regression_cases": 33,
+  "driver_scope": "LIMITED_HARDWARE_VALIDATION",
+  "gameplay_tested_by_agent": false,
+  "user_confirmed_fix": false
+}

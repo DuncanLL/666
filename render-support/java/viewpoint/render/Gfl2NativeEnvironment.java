@@ -11,6 +11,7 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
     public int buffer,cube,shadowSampler;
     private GlProgram pack,reflection,prefilter;
     private Gfl2NativeRoomProbe roomProbe;
+    private boolean roomProbeUnavailable;
     private GlProgram lighting;
     public final float[] direction=new float[3],level=new float[3],sunColor=new float[3];
     public float strength;
@@ -66,8 +67,15 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
     }
     public void reflection(FrameContext frame,float[] center,float skyShare,int actor)throws Exception{
         cube=reflectionCubes.computeIfAbsent(actor,k->reflectionCubes.isEmpty()&&cube!=0?cube:environmentCube());
-        boolean room=frame.pipeline.reflections;
-        if(room){if(roomProbe==null)roomProbe=new Gfl2NativeRoomProbe();roomProbe.capture(frame,center);roomProbe.illuminate(frame,center);}
+        boolean room=frame.pipeline.reflections&&!roomProbeUnavailable&&Gfl2NativePackSelection.reflectionProbeEnabled();
+        if(room&&roomProbe==null){
+            try{roomProbe=new Gfl2NativeRoomProbe();}
+            catch(Gfl2NativeRoomProbe.Unavailable unsupported){
+                roomProbeUnavailable=true;room=false;
+                System.err.println("[GFL2 Native] Room reflection probe unavailable for this shader configuration; using screen and sky reflections: "+unsupported.getMessage());
+            }
+        }
+        if(room){roomProbe.capture(frame,center);roomProbe.illuminate(frame,center);}
         Targets targets=(Targets)world("targets");reflection.use();frame.camera(reflection);FrameUniforms.apply(reflection,frame);
         reflection.set("gf2ProbeViewProjection",frame.viewProjection);
         reflection.set("gf2ProbePosition",center[0],center[1],center[2]);reflection.set("gf2ProbeSkyShare",skyShare);
@@ -88,7 +96,7 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
     public void retainActors(Set<Integer> alive){
         for(var it=reflectionCubes.entrySet().iterator();it.hasNext();){var entry=it.next();if(!alive.contains(entry.getKey())){if(cube==entry.getValue())cube=0;GL11.glDeleteTextures(entry.getValue());it.remove();}}
     }
-    public org.json.JSONObject evidence(){return new org.json.JSONObject().put("main_direction",direction).put("main_colour",sunColor).put("native_sky_level",level).put("main_strength",strength).put("actor_engine_light",lastEngine==null?org.json.JSONObject.NULL:lastEngine).put("reflection_updates",reflectionUpdates).put("actor_reflection_cubes",reflectionCubes.size()).put("room_probe_captures",roomProbe==null?0:roomProbe.captures()).put("room_probe_bytes",roomProbe==null?0:roomProbe.bytes()).put("reflection_scope","Actual six-direction available Native scene geometry and selected Native lighting, plus current visible scene and Native sky. Transparent transmission, unloaded geometry, dynamic character/vehicle coverage and real-game cost still need validation.");}
+    public org.json.JSONObject evidence(){return new org.json.JSONObject().put("main_direction",direction).put("main_colour",sunColor).put("native_sky_level",level).put("main_strength",strength).put("actor_engine_light",lastEngine==null?org.json.JSONObject.NULL:lastEngine).put("reflection_updates",reflectionUpdates).put("actor_reflection_cubes",reflectionCubes.size()).put("room_probe_fallback",roomProbeUnavailable).put("room_probe_captures",roomProbe==null?0:roomProbe.captures()).put("room_probe_bytes",roomProbe==null?0:roomProbe.bytes()).put("reflection_scope","Actual six-direction available Native scene geometry and selected Native lighting, plus current visible scene and Native sky. Transparent transmission, unloaded geometry, dynamic character/vehicle coverage and real-game cost still need validation.");}
     public record Shadow(int texture,int size,float[] sourceMatrices,boolean enabled){}
     public void prepareDepth(FrameContext frame)throws Exception{
         direction[0]=frame.scene.sunX;direction[1]=frame.scene.sunY;direction[2]=frame.scene.sunZ;strength=frame.sun?frame.scene.sunStrength:0;
@@ -112,8 +120,11 @@ public final class Gfl2NativeEnvironment implements AutoCloseable {
     }
     public void bindIndirect(GlProgram program,FrameContext frame)throws Exception{
         if(!program.has("gf2NativeIndirectOn"))return;
-        program.use();program.setInt("gf2NativeIndirectOn",WorldRenderer.off(2)?0:1);program.sampler("gf2NativeNormals",10);
-        FrameUniforms.apply(program,frame);Targets targets=(Targets)world("targets");GL13.glActiveTexture(GL13.GL_TEXTURE0+10);GL11.glBindTexture(GL11.GL_TEXTURE_2D,targets.normal);GL33.glBindSampler(10,0);
+        program.use();program.setInt("gf2NativeIndirectOn",WorldRenderer.off(2)?0:1);
+        FrameUniforms.apply(program,frame);
+        if(program.has("gf2NativeNormals")){
+            program.sampler("gf2NativeNormals",10);Targets targets=(Targets)world("targets");GL13.glActiveTexture(GL13.GL_TEXTURE0+10);GL11.glBindTexture(GL11.GL_TEXTURE_2D,targets.normal);GL33.glBindSampler(10,0);
+        }
     }
     public void actorLight(float[] engine){
         if(engine.length!=4)throw new IllegalArgumentException("Native actor light record differs");for(int i=0;i<4;i++)if(!Float.isFinite(engine[i])||i<3&&engine[i]<0)throw new IllegalArgumentException("Invalid Native actor light");if(engine[3]<-.0625f||engine[3]>1)throw new IllegalArgumentException("Invalid Native actor sky share");

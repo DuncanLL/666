@@ -1,0 +1,21 @@
+{
+  "status": "STEAM_PUBLIC_LORELEY_VOICE_UPDATE_VERIFIED",
+  "workshop_id": 3842261104,
+  "version": "0.7.3",
+  "public_manifest": "4172724243364724010",
+  "previous_public_manifest": "929835426417539290",
+  "content_bytes": 304526532,
+  "updated_shanghai": "2026-11-20T01:10:20+08:00",
+  "changelog": "",
+  "voice_files": 173,
+  "models": [
+    "pmx-dc209b2768a8242a",
+    "pmx-f2a800c48ca2b031"
+  ],
+  "workbook_sha256": "d537889f158f755be19c9c73eae08b2340aa38aa24d5c4dbd5a7a626caa1fb3d",
+  "adapter_sha256": "6a422b3680a4e799bea30e83da78694e24e086780a21db26458112aa96b2551e",
+  "public_readback": true,
+  "subscriptions_byte_verified": true,
+  "game_script_parser_and_lua_routing_fixture_verified": true,
+  "tested_live_game": false
+}

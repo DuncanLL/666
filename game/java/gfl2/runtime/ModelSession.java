@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import zombie.characters.IsoPlayer;
+import zombie.characters.IsoGameCharacter;
 import zombie.core.opengl.RenderThread;
 import zombie.core.skinnedmodel.animation.AnimationPlayer;
 import zombie.core.skinnedmodel.model.SkinningData;
@@ -50,6 +51,11 @@ final class ModelSession {
     private float[] sourcePose;
     private GripAdjustment gripAdjustment;
     private boolean preserveAimWeapon;
+    private FurnitureSeat furnitureSeat;
+    private float furnitureDrop;
+
+    float furnitureDrop() { return furnitureDrop; }
+    float furnitureBlend() { return furnitureSeat == null ? 0 : furnitureSeat.blend; }
     private int[] sourceIndices;
     private SkinningData sourceSkin;
     private final boolean[] required;
@@ -139,7 +145,11 @@ final class ModelSession {
         preserveAimWeapon=holding&&firstPerson&&EfzAimCompatibility.keepsWeapon(player.getIsoGameCharacter());
         gripAdjustment=preserveAimWeapon&&adjustment!=null?adjustment.wristsOnly():adjustment;
         // Fit both PMX palms to the posed source hands in the same head frame as the sight.
-        boolean useGpu=!viewpoint&&gpu!=null&&!gpuDisabled;
+        IsoGameCharacter owner=player.getIsoGameCharacter();
+        boolean onFurniture=owner!=null && owner.isSittingOnFurniture() && owner.getSitOnFurnitureObject()!=null
+                && owner.getVehicle()==null && !model.motionActive();
+        if(onFurniture && furnitureSeat==null)furnitureSeat=new FurnitureSeat(profile);
+        boolean useGpu=!viewpoint&&gpu!=null&&!gpuDisabled&&!(onFurniture&&furnitureSeat.needsMeasurement());
         if(useGpu)model.applyPose(poseForModel,holding?grip:null,seconds,-1,-1,gripAdjustment);
         else model.apply(poseForModel,holding?grip:null,seconds,firstPerson?sourceHead:-1,firstPerson?targetHead:-1,gripAdjustment);
         if(materials==null||appearanceRevision!=model.appearance().revision()||materials.epoch()!=imageEpoch) {
@@ -157,6 +167,8 @@ final class ModelSession {
             if(!model.skinCompletedPose())throw new IllegalStateException("GPU pose fallback failed",failure);
         }
         if(next==null)next=cpuFrame(finalMaterials,viewpoint);
+        furnitureDrop=onFurniture ? furnitureSeat.offset(api,model,profile,scale,sourcePose,next,
+            owner.getVariableBoolean("SitOnFurnitureStarted"),owner.isFemale()) : 0;
         fullFrame=hideHead?new PmxDrawMesh.FrameData(next.positions(),next.normals(),model.appearance().readMaterials(false)):next;
         long cpuNanos=System.nanoTime()-wallNanos,wallGap=lastWallNanos==0?0:wallNanos-lastWallNanos;
         if((cpuNanos>50_000_000L||wallGap>100_000_000L)&&(lastSlowFrame==Long.MIN_VALUE||frame-lastSlowFrame>=300)){

@@ -15,9 +15,11 @@ vec3 characterColour(vec3 colour) {
 '''
 
 NATIVE = {
-    'native_indirect.glsl': ('void gf2NativeInitIndirect', '''
-void gf2NativeInitIndirect(vec3 position) {
-    vec3 normal = texelFetch(gf2NativeNormals, ivec2(gl_FragCoord.xy), 0).xyz;
+    'native_indirect.glsl': ('vec3 gf2NativeOpaqueNormal', '''
+vec3 gf2NativeOpaqueNormal() {
+    return gNormalUnpack(texelFetch(gf2NativeNormals, ivec2(gl_FragCoord.xy), 0)).xyz;
+}
+void gf2NativeInitIndirect(vec3 position, vec3 normal) {
     float upward = dot(normal, normal) > 0.01 ? normalize(normal).y : 0.0;
     float hemisphere = smoothstep(-0.55, 0.35, upward);
     gf2NativeBouncedIrradiance = vec3(gf2NativeIndirectOn == 0 ? 1.0 : mix(0.72, 1.10, hemisphere));
@@ -102,14 +104,13 @@ void main() {
         vec2 xy = normal.xy * 2.0 - 1.0;
         imageStore(nativeNormals, pixel, vec4(normalize(vec3(xy, 1.0)), 1.0));
     }
-    if (gf2TransferOn != 0 && (abs(normal.z) + abs(normal.w)) > 0.0001) {
-        float ownership = texelFetch(gf2TransferOwnership, pixel, 0).a;
-        if (abs(ownership - 31.0 / 255.0) < 0.5 / 255.0) {
-            vec4 surface = imageLoad(gf2TransferColour, pixel);
-            float exposure = max(gf2TransferExposure, 0.001);
-            surface.rgb = characterColour(surface.rgb * exposure) / exposure;
-            imageStore(gf2TransferColour, pixel, surface);
-        }
+    vec4 surface = imageLoad(gf2TransferColour, pixel);
+    float coverage = clamp(1.0 - surface.a, 0.0, 1.0);
+    if (normal.w != coverage) imageStore(originalNormals, pixel, vec4(normal.xyz, coverage));
+    if (gf2TransferOn != 0 && coverage > 0.0) {
+        float exposure = max(gf2TransferExposure, 0.001);
+        surface.rgb = mix(surface.rgb, characterColour(surface.rgb * exposure) / exposure, coverage * gf2TransferStrength);
+        imageStore(gf2TransferColour, pixel, surface);
     }
 }
 '''),

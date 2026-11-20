@@ -30,11 +30,13 @@ public final class VanillaWorld {
         final ModelSession.Snapshot snapshot;
         final ModelInstance body;
         final Hand primary,secondary;
+        final float furnitureDrop;
         final IdentityHashMap<ModelInstanceRenderData,Matrix4f> heldTransforms=new IdentityHashMap<>();
         boolean painted;
 
         Draw(ModelSession session,ModelSession.Snapshot snapshot,ModelInstance body,Hand primary,Hand secondary) {
             this.session=session;this.snapshot=snapshot;this.body=body;this.primary=primary;this.secondary=secondary;
+            furnitureDrop=session.furnitureDrop();
         }
 
         Hand hand(ModelInstanceRenderData part) {
@@ -88,7 +90,7 @@ public final class VanillaWorld {
             if(!selected.ready)return;
             ModelSession.Snapshot snapshot=selected.snapshot();
             if(snapshot==null)return;
-            Matrix4f targetBody=bodyData==null?null:placement(bodyData,selected.scale);
+            Matrix4f targetBody=bodyData==null?null:placement(bodyData,selected.scale,selected.furnitureDrop());
             Hand primary=hand(selected,slot,actor.primaryHandModel,primaryData,1,mainItem==null?"":mainItem.getType(),inverseBody,targetBody);
             Hand secondary=hand(selected,slot,actor.secondaryHandModel,secondaryData,0,offItem==null?"":offItem.getType(),inverseBody,targetBody);
             QUEUED.put(slot,new Draw(selected,snapshot,body,primary,secondary));
@@ -148,7 +150,7 @@ public final class VanillaWorld {
             shader.getShaderProgram().setValue("ModelViewProjection",
                     new Matrix4f(core.projectionMatrixStack.peek()).mul(core.modelViewMatrixStack.peek()));
             shader.startCharacter(slot,data);
-            shader.setTransformMatrix(placement(data,draw.session.scale),false);
+            shader.setTransformMatrix(placement(data,draw.session.scale,draw.furnitureDrop),false);
             shader.setScale(slot.finalScale);
             shader.setHueShift(0);
             shader.setTint(1,1,1);
@@ -173,8 +175,8 @@ public final class VanillaWorld {
         }
     }
 
-    private static Matrix4f placement(ModelInstanceRenderData data,float scale) {
+    private static Matrix4f placement(ModelInstanceRenderData data,float scale,float furnitureDrop) {
         // Shader.startCharacter uploads xfrm with transpose=true.
-        return new Matrix4f(data.xfrm).transpose().scale(1/scale,1/scale,-1/scale);
+        return new Matrix4f(data.xfrm).transpose().translate(0,-furnitureDrop,0).scale(1/scale,1/scale,-1/scale);
     }
 }

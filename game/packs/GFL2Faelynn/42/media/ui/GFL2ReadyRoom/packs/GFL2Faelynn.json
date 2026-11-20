@@ -98,7 +98,9 @@
         },
         "下装": {
           "原始": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P1_Hip.png",
-          "下着p3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png"
+          "下着p3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P3_Hip.png",
+          "下着p2-1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Hip.png",
+          "下着p2-2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_FaelynnSSR01_P2_Hip.png"
         }
       },
       "isDefault": false

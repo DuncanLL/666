@@ -66,9 +66,7 @@ public final class Bridge {
             ViewpointModel backend=session.viewpointModel;
             PmxDrawMesh prepared=backend==null?null:backend.prepared;if(prepared==null)return;
             if(body<0)return;
-            Matrix4f targetPlacement=new Matrix4f(sourcePlacement).scale(1,1,-1).scale(1/session.scale);
-            if(slot.inVehicle)targetPlacement=session.vehicleSeatPlacement(sourcePlacement,targetPlacement);
-            else if(firstPerson)targetPlacement=session.firstPersonHeadPlacement(sourcePlacement,targetPlacement);
+            Matrix4f targetPlacement=bodyPlacement(session,sourcePlacement,slot.inVehicle,firstPerson);
             draw=new Frozen(session,prepared,data,draws,first,originalEnd);
             backend.retainHeldFrames(data,draw.previous,draw.older);
             Frozen command=draw;
@@ -101,6 +99,17 @@ public final class Bridge {
     static Matrix4f heldSource(ModelInstanceRenderData part,Matrix4f inverseBody) {
         // The game slot contains the bone and script mounts before Viewpoint's render placement.
         return part==null||inverseBody==null?null:new Matrix4f(inverseBody).mul(new Matrix4f(part.xfrm).transpose());
+    }
+    static Matrix4f bodyPlacement(ModelSession session, Matrix4f source, boolean inVehicle, boolean firstPerson) {
+        Matrix4f target=new Matrix4f(source).scale(1,1,-1).scale(1/session.scale);
+        if(inVehicle)return session.vehicleSeatPlacement(source,target);
+        if(firstPerson)target=session.firstPersonHeadPlacement(source,target);
+        float drop=session.furnitureDrop();
+        if(drop>0) {
+            if(firstPerson)target.m31(Math.fma(session.furnitureBlend(),source.m31()-target.m31(),target.m31()));
+            target.translate(0,-drop*session.scale,0);
+        }
+        return target;
     }
     public static void prepare(SceneData scene) {
         prepare(scene,1);

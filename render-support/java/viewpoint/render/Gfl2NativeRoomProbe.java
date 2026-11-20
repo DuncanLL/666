@@ -21,17 +21,20 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
     private int captures,meshes;
     private static final float[][] FORWARD={{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}},UP={{0,-1,0},{0,-1,0},{0,0,1},{0,0,-1},{0,-1,0},{0,-1,0}};
     private record Varying(String qualifier,String type,String name){}
+    static final class Unavailable extends IllegalArgumentException {
+        Unavailable(String reason){super(reason);}
+    }
 
     public Gfl2NativeRoomProbe()throws Exception{
         try{
-            if(GL11.glGetInteger(GL40.GL_MAX_GEOMETRY_SHADER_INVOCATIONS)<6)throw new IllegalStateException("Native six-direction geometry capture is unavailable");
+            if(GL11.glGetInteger(GL40.GL_MAX_GEOMETRY_SHADER_INVOCATIONS)<6)throw new Unavailable("Native six-direction geometry capture is unavailable");
             String vertex=Gfl2NativePackSelection.expanded("mesh.vert").replaceFirst("#version\\s+\\d+","#version 430");
             String fragment=Gfl2NativePackSelection.expanded("gbuffer.frag").replaceFirst("#version\\s+\\d+","#version 430");
             List<Varying> varyings=new ArrayList<>();Matcher declarations=Pattern.compile("(?m)^(flat\\s+)?out\\s+(float|int|vec[234])\\s+(v\\w+)\\s*;").matcher(vertex);
             while(declarations.find())varyings.add(new Varying(declarations.group(1)==null?"":declarations.group(1),declarations.group(2),declarations.group(3)));
-            if(varyings.size()!=12||varyings.stream().noneMatch(v->v.name.equals("vPos"))||varyings.stream().noneMatch(v->v.name.equals("vDistance")))throw new IllegalArgumentException("Native mesh varying contract changed");
+            if(varyings.size()!=12||varyings.stream().noneMatch(v->v.name.equals("vPos"))||varyings.stream().noneMatch(v->v.name.equals("vDistance")))throw new Unavailable("Native mesh varying contract changed");
             String hidden="gl_Position = vec4(2.0, 2.0, 2.0, 1.0);",entry="MeshVertex v = meshVertex(uEye);";
-            if(!vertex.contains(hidden)||!vertex.contains(entry))throw new IllegalArgumentException("Native mesh visibility contract changed");
+            if(!vertex.contains(hidden)||!vertex.contains(entry))throw new Unavailable("Native mesh visibility contract changed");
             vertex=vertex.replace("void main()","flat out int gf2ProbeHidden;\nvoid main()").replace(entry,"gf2ProbeHidden=0;\n"+entry).replace(hidden,"gf2ProbeHidden=1;"+hidden);
             StringBuilder gs=new StringBuilder("#version 430\nlayout(triangles,invocations=6)in;layout(triangle_strip,max_vertices=3)out;uniform mat4 gf2ProbeViewProjection[6];flat in int gf2ProbeHidden[];\n");
             for(Varying v:varyings){
@@ -44,7 +47,7 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
             for(Varying v:varyings)gs.append(v.name).append('=').append(v.name.equals("vDistance")?"gl_Position.w":"gf2ProbeIn_"+v.name+"[i]").append(";\n");
             gs.append("EmitVertex();}EndPrimitive();}");
             geometry=GlProgram.fromSources("GF2 Native room geometry",new GlProgram.Sources(vertex,null,null,gs.toString(),fragment),Map.of(),Map.of(),List.of());
-            if(geometry.id()==0)throw new IllegalStateException(GlProgram.lastError());
+            if(geometry.id()==0)throw new Unavailable("Native room geometry did not link: "+GlProgram.lastError());
             Object surfaces=Gfl2NativeEnvironment.world("surfaces");GlProgram nativeGeometry=(GlProgram)Gfl2NativeEnvironment.field(surfaces,"gbuffer");geometryInputs=new Inputs(nativeGeometry,geometry);
             lighting=(GlProgram)Gfl2NativeEnvironment.field(surfaces,"light");
             lightInputs=new Gfl2ProbeProjection(lighting);
@@ -59,7 +62,7 @@ public final class Gfl2NativeRoomProbe implements AutoCloseable {
             for(int texture:new int[]{neutralOcclusion,emptyReflection}){GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);GL45.glTextureParameteri(texture,GL11.GL_TEXTURE_MAG_FILTER,GL11.GL_NEAREST);}
             framebuffer=GL45.glCreateFramebuffers();for(int i=0;i<3;i++)GL45.glNamedFramebufferTexture(framebuffer,GL30.GL_COLOR_ATTACHMENT0+i,new int[]{albedo,normal,engine}[i],0);GL45.glNamedFramebufferTexture(framebuffer,GL30.GL_DEPTH_STENCIL_ATTACHMENT,depth,0);
             GL45.glNamedFramebufferDrawBuffers(framebuffer,new int[]{GL30.GL_COLOR_ATTACHMENT0,GL30.GL_COLOR_ATTACHMENT1,GL30.GL_COLOR_ATTACHMENT2});
-            if(GL45.glCheckNamedFramebufferStatus(framebuffer,GL30.GL_FRAMEBUFFER)!=GL30.GL_FRAMEBUFFER_COMPLETE)throw new IllegalStateException("Native layered room GBuffer is incomplete");
+            if(GL45.glCheckNamedFramebufferStatus(framebuffer,GL30.GL_FRAMEBUFFER)!=GL30.GL_FRAMEBUFFER_COMPLETE)throw new Unavailable("Native layered room GBuffer is incomplete");
         }catch(Exception e){close();throw e;}
     }
     private static int cube(int format){

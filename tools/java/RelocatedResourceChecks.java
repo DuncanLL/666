@@ -4,9 +4,21 @@ import java.util.*;
 import org.json.*;
 import zombie.ZomboidFileSystem;
 import viewpoint.render.Gfl2PackData;
+import viewpoint.render.Gfl2NativeRuntime;
 
 /** Real resource reader with only relocated Workshop-style media registered; no author fallback. */
 public final class RelocatedResourceChecks {
+    static JSONObject awaitCatalog() throws InterruptedException {
+        long deadline = System.nanoTime() + 10_000_000_000L;
+        while (System.nanoTime() < deadline) {
+            Gfl2NativeRuntime.prepareData();
+            JSONObject state = new JSONObject(Gfl2NativeRuntime.lifecycle());
+            if (!state.getBoolean("catalog_loading")) return state;
+            Thread.sleep(5);
+        }
+        throw new AssertionError("Catalog worker did not complete");
+    }
+
     static void checkCatalogIsolation(viewpoint.iris.SourceFiles source, Path fixture) throws Exception {
         var fs = ZomboidFileSystem.instance;
         String key = "media/gfl2_rendering/characters.json";
@@ -65,10 +77,18 @@ public final class RelocatedResourceChecks {
         String catalog="media/gfl2_rendering/characters.json",goodCatalog=ZomboidFileSystem.instance.activeFileMap.get(catalog);Path legacy=out.resolveSibling("legacy-sampler-catalog-test.json");JSONObject legacyData=new JSONObject(Files.readString(Path.of(goodCatalog)));legacyData.getJSONObject("characters").getJSONArray("programs").getJSONObject(0).getJSONArray("programs").getJSONObject(0).remove("samplers");Files.writeString(legacy,legacyData.toString());ZomboidFileSystem.instance.activeFileMap.put(catalog,legacy.toString());try{new Gfl2PackData(source);throw new AssertionError("Old sampler catalog accepted");}catch(IllegalArgumentException expected){rejected++;}finally{ZomboidFileSystem.instance.activeFileMap.put(catalog,goodCatalog);}Path bad=out.resolveSibling("unsupported-catalog-test.json");JSONObject changed=new JSONObject(Files.readString(Path.of(goodCatalog)));changed.put("format",99);Files.writeString(bad,changed.toString());ZomboidFileSystem.instance.activeFileMap.put(catalog,bad.toString());try{new Gfl2PackData(source);throw new AssertionError("Unknown catalog accepted");}catch(IllegalArgumentException expected){rejected++;}finally{ZomboidFileSystem.instance.activeFileMap.put(catalog,goodCatalog);}
         ZomboidFileSystem.instance.activeFileMap.clear();try{new Gfl2PackData(source);throw new AssertionError("Disabled character MOD fell back to author data");}catch(java.io.IOException expected){rejected++;}
         viewpoint.platform.Gfl2NativePackSelection.use(pack.toString());Field drawn=viewpoint.platform.ShaderPacks.class.getDeclaredField("drawn");drawn.setAccessible(true);drawn.set(null,viewpoint.platform.ShaderPacks.active());
-        viewpoint.render.Gfl2NativeRuntime.prepareData();
-        JSONObject missing=new JSONObject(viewpoint.render.Gfl2NativeRuntime.lifecycle());
+        var nativePack=viewpoint.platform.ShaderPacks.active();
+        JSONObject missing=awaitCatalog();
         if(missing.getBoolean("data_active")||missing.getBoolean("renderer_active"))throw new AssertionError("Missing initial MOD resources claimed Native draws");
-        ZomboidFileSystem.instance.activeFileMap.putAll(enabled);viewpoint.render.Gfl2NativeRuntime.prepareData();JSONObject lifecycle=new JSONObject(viewpoint.render.Gfl2NativeRuntime.lifecycle());if(!lifecycle.getBoolean("data_active"))throw new AssertionError("Failed initial resource load remained cached for the same selected pack");viewpoint.render.Gfl2NativeRuntime.close();
+        ZomboidFileSystem.instance.activeFileMap.putAll(enabled);
+        if(!awaitCatalog().getBoolean("data_active"))throw new AssertionError("Failed initial resource load remained cached for the same selected pack");
+        Gfl2NativeRuntime.close();
+        Gfl2NativeRuntime.prepareData();
+        viewpoint.platform.ShaderPacks.useBuiltIn("default");drawn.set(null,viewpoint.platform.ShaderPacks.active());
+        if(awaitCatalog().getBoolean("data_active"))throw new AssertionError("A superseded worker claimed stock Viewpoint draws");
+        drawn.set(null,nativePack);
+        if(!awaitCatalog().getBoolean("data_active"))throw new AssertionError("Re-entering Native after a canceled load did not recover");
+        Gfl2NativeRuntime.close();
         if(rejected!=5)throw new AssertionError("Fault coverage");JSONObject result=new JSONObject().put("status","RELOCATED_RESOURCE_RESOLUTION_AND_INTEGRITY_CHECKS_PASS").put("registered_media",media.toString()).put("resources_read_and_sha_checked",data.paths().size()).put("resource_bytes",bytes).put("negative_cases_rejected",rejected).put("same_selected_pack_recovers_when_resources_arrive",true).put("author_config_used",false).put("game_started",false).put("scope","Real ZomboidFileSystem.getString and GF2 reader with Workshop-style relative entries at Unicode/space paths; entry registration is test setup, not actual Steam subscription/game cold start.");Files.writeString(out,result.toString(2));System.out.println(result.toString());
     }
 }

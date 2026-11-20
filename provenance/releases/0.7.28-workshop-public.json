@@ -1,0 +1,23 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_UPDATE_VERIFIED",
+  "version": "0.7.28",
+  "framework": 3842318650,
+  "previous_framework_manifest": "3770386388137432609",
+  "framework_manifest": "7584921895518342634",
+  "framework_jar_sha256": "883ebee27d085054e2fa25252d6f4f07cb754b679faf9bbbc5abb71bdd890cd9",
+  "framework_bytes": 279335041,
+  "changelog": "",
+  "visibility": "public",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-19T21:58:25+08:00",
+  "role_packages_updated": 0,
+  "garment_occlusion_verified_offscreen": true,
+  "driver_scope": "LIMITED_HARDWARE_VALIDATION",
+  "gameplay_tested_by_agent": false,
+  "user_confirmed_fix": true
+}

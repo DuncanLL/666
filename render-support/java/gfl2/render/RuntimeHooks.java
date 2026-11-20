@@ -3,13 +3,15 @@ import java.lang.instrument.*;
 import java.security.ProtectionDomain;
 import java.util.*;
 import net.bytebuddy.jar.asm.*;
+import viewpoint.platform.Gfl2InstalledPackMenu;
 /** One installer for the verified host method-body integrations. */
 public final class RuntimeHooks implements ClassFileTransformer {
     static final String R="viewpoint/render/";
     private static final String SOURCE_INPUTS="gfl2/motion/PmxOriginalInputs";
     private static final String MODEL_BATCHES=R+"ModelBatches";
+    private static final String GRAPHICS="viewpoint/platform/Graphics";
     private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"gfl2/motion/PmxShading",2,
-        SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1,MODEL_BATCHES,1);
+        SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1,MODEL_BATCHES,1,GRAPHICS,1);
     private static final String IRIS_SOURCE = "viewpoint/iris/PackSource";
     private static final String NATIVE_SOURCE = "viewpoint/platform/ShaderPack$1";
     public static final Map<String,Integer> EXPECTED;
@@ -75,6 +77,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
     }
     private static byte[] rewriteNative(String type,byte[] raw){
         if(type.equals(MODEL_BATCHES))return replayFilter(raw);
+        if(type.equals(GRAPHICS))return refreshShaderMenu(raw);
         if(type.equals("viewpoint/platform/PackOption")){
             ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);int[] hits={0};
             reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
@@ -90,6 +93,28 @@ public final class RuntimeHooks implements ClassFileTransformer {
         ClassReader reader=new ClassReader(raw);ClassWriter writer=new ClassWriter(reader,0);int[] hits={0};
         reader.accept(new ClassVisitor(Opcodes.ASM9,writer){public MethodVisitor visitMethod(int access,String name,String desc,String sig,String[] ex){return new MethodVisitor(Opcodes.ASM9,super.visitMethod(access,name,desc,sig,ex)){public void visitLdcInsn(Object value){if("viewpoint.render.Gf2SourceHost".equals(value)){super.visitLdcInsn("viewpoint.render.Gfl2SourceHost");hits[0]++;}else super.visitLdcInsn(value);}};}},0);
         if(hits[0]!=1)throw new IllegalStateException("Character source-host entry changed: "+hits[0]);return writer.toByteArray();
+    }
+    private static byte[] refreshShaderMenu(byte[] raw){
+        ClassReader reader=new ClassReader(raw);
+        ClassWriter writer=new ClassWriter(reader,0);
+        int[] hits={0};
+        reader.accept(new ClassVisitor(Opcodes.ASM9,writer){
+            @Override public MethodVisitor visitMethod(int access,String name,String desc,String signature,String[] exceptions){
+                MethodVisitor base=super.visitMethod(access,name,desc,signature,exceptions);
+                if(!name.equals("update")||!desc.equals("()V"))return base;
+                return new MethodVisitor(Opcodes.ASM9,base){
+                    @Override public void visitInsn(int opcode){
+                        if(opcode==Opcodes.RETURN){
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC,Type.getInternalName(Gfl2InstalledPackMenu.class),"refresh","()V",false);
+                            hits[0]++;
+                        }
+                        super.visitInsn(opcode);
+                    }
+                };
+            }
+        },0);
+        if(hits[0]!=1)throw new IllegalStateException("Viewpoint shader menu update changed: "+hits[0]);
+        return writer.toByteArray();
     }
     private static byte[] replayFilter(byte[] raw){
         String filter="L"+MODEL_BATCHES+"$Filter;";

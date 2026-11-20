@@ -17,7 +17,7 @@
     "native_light.comp": ["share", "skyPart", "scale", "isotropic", "constant", "dx", "dy", "dz", "diagonal"],
     "native_local.glsl": ["slot", "colour", "kind", "dist", "energy", "att", "edge", "beam"],
     "native_main.glsl": ["visibility"],
-    "native_motion.comp": ["originalDisplayInput", "decodeOct", "encodeOct", "layer", "pixel", "ownsOpaque", "exposure"],
+    "native_motion.comp": ["originalDisplayInput", "decodeOct", "encodeOct", "layer", "pixel", "coverage", "exposure"],
     "native_prefilter.comp": ["sampleH", "side", "phi", "axis", "weights"]
   },
   "eclipse_motion_local_symbols": ["at", "actorMotion"],

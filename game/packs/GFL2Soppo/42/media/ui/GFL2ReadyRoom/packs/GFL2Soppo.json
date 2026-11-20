@@ -78,7 +78,11 @@
         "耳机",
         "墨镜"
       ],
-      "partImages": {}
+      "partImages": {
+        "墨镜": {
+          "显示": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_SoppoSSR01_P1_Head.png"
+        }
+      }
     }
   },
   "labels": {}

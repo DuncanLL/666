@@ -118,6 +118,7 @@ public final class Gfl2PackMaterials implements AutoCloseable {
     public int uploadedMaterialCount(){return materialBuffers.size();}
     public int materialCount(){return materials.length;}
 
+    static boolean writesDepth(JSONObject pass){Object value=pass.getJSONObject("state").get("zWrite");return value instanceof Number n?n.doubleValue()!=0:((JSONObject)value).getDouble("value")!=0;}
     public JSONObject optionalPass(int id,String name){
         return materialPasses.computeIfAbsent(id,key->{
             Map<String,JSONObject> result=new HashMap<>();

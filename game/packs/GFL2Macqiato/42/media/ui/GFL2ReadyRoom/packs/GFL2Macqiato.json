@@ -90,7 +90,23 @@
         "鞋子",
         "眼睛"
       ],
-      "partImages": {}
+      "partImages": {
+        "头饰": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P1_Head.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P2_Head.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P3_Head.png"
+        },
+        "浴巾": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P1_Cloth.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P2_Cloth.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P3_Cloth.png"
+        },
+        "下衣": {
+          "P1": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P1_Body.png",
+          "P2": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P2_Body.png",
+          "P3": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_MacqiatoSSR03_P3_Body.png"
+        }
+      }
     },
     "pmx-0b80022fae2dbb04": {
       "character": "玛绮朵",

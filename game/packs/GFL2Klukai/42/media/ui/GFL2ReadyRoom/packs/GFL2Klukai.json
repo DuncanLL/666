@@ -336,7 +336,23 @@
         "耳机",
         "鞋袜"
       ],
-      "partImages": {}
+      "partImages": {
+        "裙装": {
+          "原样": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P1_Hip.png",
+          "样式二": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P2_Hip.png",
+          "样式三": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P3_Hip.png"
+        },
+        "上衣": {
+          "原样": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P1_Cloth.png",
+          "样式二": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P2_Cloth.png",
+          "样式三": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P3_Cloth.png"
+        },
+        "鞋袜": {
+          "样式一": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P1_Body.png",
+          "样式二": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P2_Body.png",
+          "样式三": "media/ui/GFL2ReadyRoom/official/Item_ClothesMod_ClukaySSR05_P3_Body.png"
+        }
+      }
     }
   },
   "labels": {}

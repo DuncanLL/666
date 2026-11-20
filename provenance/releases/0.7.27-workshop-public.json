@@ -1,0 +1,22 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_UPDATE_VERIFIED",
+  "version": "0.7.27",
+  "framework": 3842318650,
+  "previous_framework_manifest": "3770386388137432609",
+  "framework_manifest": "7745158014540124797",
+  "framework_jar_sha256": "b5507cd1644577b4ce110eaffde3b01956afcd28bc3265501d8c38b6c8e48fdd",
+  "framework_bytes": 279334766,
+  "changelog": "0.7.27 修复 Native-GFL2 和 Somber-GFL2 的衣物遮挡问题。修正翡图萨丝袜、克莱妲（AK-12）披风上显出后方衣带、人物或车辆轮廓的现象。",
+  "visibility": "public",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-19T20:57:22+08:00",
+  "role_packages_updated": 0,
+  "garment_occlusion_verified_offscreen": true,
+  "driver_scope": "LIMITED_HARDWARE_VALIDATION",
+  "gameplay_tested": false
+}

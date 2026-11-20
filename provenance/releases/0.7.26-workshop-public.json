@@ -1,0 +1,23 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_UPDATE_VERIFIED",
+  "version": "0.7.26",
+  "framework": 3842318650,
+  "previous_framework_manifest": "224324834575653935",
+  "framework_manifest": "3770386388137432609",
+  "framework_jar_sha256": "7816b631f63131786a019cd37f858527280a1a0c5123d7d6c1637212813a7030",
+  "framework_bytes": 279334664,
+  "changelog": "修复部分光影扩展改变着色器接口时，开启反射探针会导致 Viewpoint 停止绘制的问题。遇到不兼容时，人物反光自动回退到屏幕和天空取样。\n首次允许框架 JAR 后，同一次运行即可在 Viewpoint 菜单选择 Native 和 Somber。\n优化首次换装的贴图处理，并将人物渲染目录移到后台加载，减少切换光影时的停顿。",
+  "visibility": "public",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "page_metadata_verified": true,
+  "collection_and_role_items_verified": 26,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-19T18:06:43+08:00",
+  "role_packages_updated": 0,
+  "probe_fallback_verified_offscreen": true,
+  "driver_scope": "LIMITED_HARDWARE_VALIDATION",
+  "gameplay_tested": false
+}

@@ -3,6 +3,7 @@ package gfl2.render;
 import java.lang.instrument.Instrumentation;
 import java.io.InputStream;
 import java.nio.file.*;
+import viewpoint.platform.Gfl2InstalledPackMenu;
 
 /** Single approved MOD entry for the bundled shader packs. */
 public final class Main {
@@ -11,9 +12,10 @@ public final class Main {
         if(hooks!=null)return;
         VerifiedViewpoint.verify();
         Instrumentation agent=instrumentation();
-        installPacks();
+        Path folder=installPacks();
         RuntimeHooks next=new RuntimeHooks();
         next.install(agent);
+        Gfl2InstalledPackMenu.installed(folder);
         hooks=next;
         System.out.println("[GFL2] Bundled shader integration ready. Select the pack in Viewpoint.");
     }
@@ -27,12 +29,13 @@ public final class Main {
         return agent;
     }
 
-    static void installPacks()throws Exception{
+    static Path installPacks()throws Exception{
         Path user=Path.of(zombie.ZomboidFileSystem.instance.getCacheDir());
         Files.createDirectories(user);
         install(user,"Native",false);
         if (!EclipseHooks.EXPECTED.isEmpty()) install(user,"Eclipse",true);
         install(user,"Somber",false);
+        return user.resolve("viewpoint-shaderpacks");
     }
 
     private static void install(Path user,String backend,boolean eclipse)throws Exception{

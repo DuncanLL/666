@@ -42,7 +42,7 @@ def character_post(host):
                           'uniform float uInkScale;\nuniform bool gf2HasCoverage;\nuniform sampler2D gf2OriginalNormals;')
     source = replace_once(source, 'void main() {', '#include "gf2/somber_actor_display.glsl"\nvoid main() {')
     source = replace_once(source, 'float ink = 0.0;', '''float ink = 0.0;
-  bool gf2Actor = false;
+  float gf2ActorCoverage = 0.0;
   bool gf2SourceSurface = false;
   if (gf2HasCoverage) {
     ivec2 dims = textureSize(gf2OriginalNormals, 0);
@@ -50,10 +50,9 @@ def character_post(host):
     vec2 tags = texelFetch(gf2OriginalNormals, pixel, 0).zw;
     // Source normal tags also cover visible materials drawn after the opaque pass.
     gf2SourceSurface = abs(tags.x - 0.498) < 0.0003 || abs(tags.x - 0.499) < 0.0003;
-    gf2Actor = any(greaterThan(abs(tags), vec2(0.0001))) &&
-        abs(texelFetch(uAlbedo, pixel, 0).a - 31.0/255.0) < 0.5/255.0;
+    gf2ActorCoverage = tags.y;
   }
-  float gf2Coverage = gf2Actor ? 1.0 - layered : 0.0;
+  float gf2Coverage = gf2ActorCoverage * (1.0 - layered);
   float gf2InkCoverage = gf2SourceSurface ? 1.0 - layered : gf2Coverage;''')
     source = replace_once(source, 'if (!share) ink = inkAt(vUv, OPTION_INK_WIDTH) * OPTION_INK_STRENGTH;',
                           'if (!share && gf2InkCoverage < 1.0) ink = inkAt(vUv, OPTION_INK_WIDTH) * OPTION_INK_STRENGTH * (1.0-gf2InkCoverage);')

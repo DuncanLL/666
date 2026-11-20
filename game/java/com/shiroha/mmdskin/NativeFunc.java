@@ -38,6 +38,8 @@ public final class NativeFunc {
     public native int GetSubMeshVertexCount(long model, long index);
     public native void CopyDataToByteBuffer(ByteBuffer buffer, long pointer, long bytes);
     public native void InitGpuSkinningData(long model);
+    public native int CopyBoneIndicesToBuffer(long model, ByteBuffer buffer, int vertices);
+    public native int CopyBoneWeightsToBuffer(long model, ByteBuffer buffer, int vertices);
     public native int CopySkinningMatricesToBuffer(long model, ByteBuffer buffer);
     public native int SetBoneAdditiveTransformBatch(long model, int[] indices, float[] qps);
     public native void ClearBoneAdditiveTransforms(long model);

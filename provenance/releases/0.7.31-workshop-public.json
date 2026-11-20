@@ -1,0 +1,193 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_AND_ROLE_UPDATE_VERIFIED",
+  "version": "0.7.31",
+  "framework": 3842318650,
+  "previous_framework_manifest": "1122673227346328110",
+  "framework_manifest": "4827216878143723390",
+  "framework_bytes": 279339282,
+  "framework_jar_sha256": "68d99e43a8248f8b701cf4d8c2f512e6340c70a4d2b4bdf543021b3a6c3be361",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "visibility": "public",
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-20T02:39:14+08:00",
+  "role_packages_updated": 24,
+  "changelog": "修复专武背负时底部快捷栏内的图标尺寸和摆放，保留整备室高清原图。",
+  "regression": {
+    "game": "42.22.2",
+    "entry_points": [
+      "ISAttachItemHotbar.perform",
+      "ISHotbar.reloadIcons",
+      "ISHotbar.render",
+      "GFL2RoomWindow.requestWeaponDraw"
+    ],
+    "stock_control": 1,
+    "issue_before": 24,
+    "issue_after": 0,
+    "signature_weapons": 25,
+    "reward_cases": 50,
+    "overflow": 0,
+    "slots": [
+      "Back",
+      "HolsterRight"
+    ],
+    "png_decode": {
+      "decoder": "zombie.core.textures.ImageData",
+      "files": 49,
+      "inventory": 25,
+      "high_res": 24
+    },
+    "item_ids_and_icon_names_preserved": true,
+    "gameplay_tested_by_agent": false,
+    "user_confirmed_fix": false
+  },
+  "roles": {
+    "GFL2Phaetusa": {
+      "item": 3838763020,
+      "version": "0.7.6",
+      "manifest": "4023543715133605062",
+      "workshop_bytes": 518581881
+    },
+    "GFL2Koleda": {
+      "item": 3838710666,
+      "version": "0.7.1",
+      "manifest": "7065644311119940668",
+      "workshop_bytes": 229779874
+    },
+    "GFL2Alva": {
+      "item": 3837425337,
+      "version": "0.7.3",
+      "manifest": "229177969548278008",
+      "workshop_bytes": 262452257
+    },
+    "GFL2Klukai": {
+      "item": 3838712165,
+      "version": "0.7.5",
+      "manifest": "3133357604674954945",
+      "workshop_bytes": 797759727
+    },
+    "GFL2Suomi": {
+      "item": 3838712796,
+      "version": "0.7.4",
+      "manifest": "8291563875626315091",
+      "workshop_bytes": 280896621
+    },
+    "GFL2Cheyanne": {
+      "item": 3838710368,
+      "version": "0.7.4",
+      "manifest": "3297013359267703820",
+      "workshop_bytes": 231107163
+    },
+    "GFL2Soppo": {
+      "item": 3841178627,
+      "version": "0.7.3",
+      "manifest": "8652229157521855714",
+      "workshop_bytes": 255112238
+    },
+    "GFL2Cecilia": {
+      "item": 3838711420,
+      "version": "0.7.2",
+      "manifest": "1092394579836356414",
+      "workshop_bytes": 217746975
+    },
+    "GFL2Centaureissi": {
+      "item": 3838711556,
+      "version": "0.7.4",
+      "manifest": "7858889668952366422",
+      "workshop_bytes": 247550313
+    },
+    "GFL2Yohee": {
+      "item": 3838763788,
+      "version": "0.7.4",
+      "manifest": "5998617672707956788",
+      "workshop_bytes": 322346060
+    },
+    "GFL2Asteria": {
+      "item": 3838710555,
+      "version": "0.7.4",
+      "manifest": "1848037278801288659",
+      "workshop_bytes": 344379675
+    },
+    "GFL2Daiyan": {
+      "item": 3838711736,
+      "version": "0.7.4",
+      "manifest": "7501136883785182747",
+      "workshop_bytes": 297831173
+    },
+    "GFL2OTs14": {
+      "item": 3838712515,
+      "version": "0.7.4",
+      "manifest": "6058325497698743990",
+      "workshop_bytes": 263510160
+    },
+    "GFL2Faelynn": {
+      "item": 3838711981,
+      "version": "0.7.4",
+      "manifest": "4511579589222060459",
+      "workshop_bytes": 320435640
+    },
+    "GFL2Laiya": {
+      "item": 3838710183,
+      "version": "0.7.3",
+      "manifest": "6713023422747908507",
+      "workshop_bytes": 402466898
+    },
+    "GFL2Lenna": {
+      "item": 3838762352,
+      "version": "0.7.4",
+      "manifest": "6355007086572359559",
+      "workshop_bytes": 431079256
+    },
+    "GFL2Vector": {
+      "item": 3838763611,
+      "version": "0.7.3",
+      "manifest": "9198729440412843419",
+      "workshop_bytes": 427848199
+    },
+    "GFL2Springfield": {
+      "item": 3838712707,
+      "version": "0.7.4",
+      "manifest": "1709216227328961958",
+      "workshop_bytes": 453830672
+    },
+    "GFL2Macqiato": {
+      "item": 3838762751,
+      "version": "0.7.11",
+      "manifest": "3973406008958130125",
+      "workshop_bytes": 516518480
+    },
+    "GFL2Nikketa": {
+      "item": 3838710868,
+      "version": "0.7.4",
+      "manifest": "8508728150337490520",
+      "workshop_bytes": 448113387
+    },
+    "GFL2Qiuhua": {
+      "item": 3838935753,
+      "version": "0.7.4",
+      "manifest": "4685011664978332947",
+      "workshop_bytes": 463274033
+    },
+    "GFL2Destroyer": {
+      "item": 3838762173,
+      "version": "0.7.2",
+      "manifest": "6652998324422136537",
+      "workshop_bytes": 315184495
+    },
+    "GFL2Sextans": {
+      "item": 3838763377,
+      "version": "0.7.3",
+      "manifest": "3304354288976154343",
+      "workshop_bytes": 337826932
+    },
+    "GFL2Loreley": {
+      "item": 3842261104,
+      "version": "0.7.4",
+      "manifest": "3060718654316844461",
+      "workshop_bytes": 304528842
+    }
+  }
+}

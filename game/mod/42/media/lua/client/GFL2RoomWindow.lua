@@ -900,8 +900,10 @@ function W:requestWeaponDraw(count)
         if status=="short" then self.drawNotice=tr("RoomDrawShort");return end
         if not results then return end
         self.drawNotice=nil
+        local portrait=signatureWeapon.icon:gsub("^media/textures/Item_", "media/ui/GFL2/WeaponIcons/")
+        if not image(portrait) then portrait=signatureWeapon.icon end
         self.drawAnimation={started=getTimestampMs()+140,results=results,won=status=="unlocked",
-            weapon=true,rewardName=getText(signatureWeapon.name),portrait=signatureWeapon.icon,misses=previousMisses,button=count==1 and 1 or 2}
+            weapon=true,rewardName=getText(signatureWeapon.name),portrait=portrait,misses=previousMisses,button=count==1 and 1 or 2}
         self:layoutOverview()
     end)
 end

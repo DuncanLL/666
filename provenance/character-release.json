@@ -1,13 +1,13 @@
 {
-  "version": "0.7.16",
+  "version": "0.7.31",
   "game": "42.22.2",
-  "runtime_sha256": "073999821e1adba48edb9f29f35aee1a82cd0030766dddc5969148e79ab13012",
-  "native_version": "GFL2-MMD-1/skeleton-eval1-softbody1",
-  "native_bundle": "c8d94309ed1fccbd6d532a657bd5f918f3f06a5ab4f45ee3a0bf159d3c66abc2",
+  "runtime_sha256": "53d3a67c85e12e502e64d8fed5e5eeaf8826572040c476a37a7a1d4b6a61b4b4",
+  "native_version": "GFL2-MMD-1/skeleton-eval2-softbody1",
+  "native_bundle": "068a73a434b1ba92e9e31f52493c5c1f0fe98a8791fb8327ef00f5d17ce4679c",
   "native_hashes": {
     "GFL2ChestSoftBody.dll": "922c1c7a0900887d20dc732f2b10a570ba9682efb7926734e4e80d6e8d4a5f78",
     "GFL2GripOzz.dll": "ab279ef253c69f7adfa470490a85a435a448a91024c899e3f5ecd2d44a40b39d",
-    "GFL2MmdEngine.dll": "51935a8ad85438f9bf873073229fecc4f7890c12cb1fa6eaaac1b2f7a82e6940",
+    "GFL2MmdEngine.dll": "4a0dfb9440ca7c96592869fdb327661b80b782895b8e4c583107edecad250a59",
     "libgcc_s_seh-1.dll": "368488a9089e3d89b32a3609816fa40dd02fa4cdf480a2bc86e19c7bebdc8bda",
     "libstdc++-6.dll": "ba2f2acaa48011aff3f14a9806cc69db1e78c12c9a87ad3f7f88b965fce7fb1d",
     "libwinpthread-1.dll": "1b801c9280f6cad8cb2a026bfa48be8c4bea07a0dc78a820d1591f900ee76f0b"
@@ -18,5 +18,5 @@
     "970165ef8f226cd9c2b4eed51935e88dad2148d4ce99f26e8556d011a6c98eec.bin": "9caf75fdde005735de65ade6627de36a9c0c19a112e895fa1860d74bae2a31fe",
     "ba8172885eb50332c1d1f2c988eea2c9e8522990065b493e3a30ff7951e489cd.bin": "5180d3888f209b1c4e7dfb033911a07c27b2630f54a30cdab8fb72e75bb96a33"
   },
-  "scope": "Bare character runtime for the verified local release. Render support is assembled separately."
+  "scope": "Bare character JAR used by Workshop framework 0.7.31. The unified Steam JAR fingerprint is recorded in releases/0.7.31-workshop-public.json."
 }

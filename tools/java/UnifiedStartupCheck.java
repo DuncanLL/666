@@ -40,6 +40,26 @@ public final class UnifiedStartupCheck {
             .invoke(null, ctor.newInstance(), new Object[0]);
     }
 
+    private static void checkHeldPresentation() throws Exception {
+        var draws = new viewpoint.render.ModelDraws();
+        var pending = gfl2.runtime.Bridge.class.getDeclaredField("preparedDraws");
+        pending.setAccessible(true);
+        Object previous = pending.get(null);
+        try {
+            pending.set(null, draws);
+            Class<?> type = Class.forName("viewpoint.render.ModelBlend");
+            var create = type.getDeclaredConstructor();
+            create.setAccessible(true);
+            var draw = type.getDeclaredMethod("drawn", draws.getClass(), long.class, float.class, float.class,
+                float.class, float.class, float.class, float.class, float.class, float.class, float.class, float.class);
+            draw.setAccessible(true);
+            draw.invoke(create.newInstance(), draws, 1L, 0f, 0f, 0f, .5f, Float.NaN, 0f, 0f, 0f, .1f, .2f);
+            require(pending.get(null) == null, "The normal blended draw skipped the held-item presentation hook");
+        } finally {
+            pending.set(null, previous);
+        }
+    }
+
     private static List<String> drawOrder(Instrumentation agent) throws Exception {
         List<String> order = new ArrayList<>();
         ClassFileTransformer observer = new ClassFileTransformer() {
@@ -196,10 +216,11 @@ public final class UnifiedStartupCheck {
             require(viewpoint.platform.IrisPacks.active()==null, "GFL2 selected an optical pack");
             prepare();
             require(drawOrder(agent).equals(ORDER), "First model preparation has incorrect draw advice: "+drawOrder(agent));
+            checkHeldPresentation();
             prepare();
             require(drawOrder(agent).equals(ORDER), "Model preparation applied duplicate advice");
             report.put("native_available_before_first_draw",true).put("eclipse_available_before_first_draw",hasEclipse)
-                .put("native_callback_order",ORDER);
+                .put("native_callback_order",ORDER).put("held_presentation_hook",true);
         }
         require(Files.readString(selection).equals(chosen) && Arrays.equals(Files.readAllBytes(custom),new byte[]{7,8,9}),
             "Player shader selection or custom pack was modified");

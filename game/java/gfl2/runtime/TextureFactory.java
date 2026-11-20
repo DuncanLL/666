@@ -2,6 +2,7 @@ package gfl2.runtime;
 import gfl2.motion.PmxShading;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,10 +44,25 @@ final class TextureFactory implements AutoCloseable {
         ByteBuffer output=MemoryUtil.memAlloc(pixels.rgba.length);
         TextureID id=null;
         try {
-            for(int y=pixels.height-1;y>=0;y--)for(int x=0;x<pixels.width;x++)for(int k=0;k<4;k++) {
-                float sample=Byte.toUnsignedInt(pixels.rgba[(y*pixels.width+x)*4+k])/255f;
+            int[] lookup=new int[4*256];
+            boolean identity=true;
+            for(int k=0;k<4;k++)for(int b=0;b<256;b++) {
+                float sample=b/255f;
                 float value=Math.clamp(sample*material[at+4+k]+material[at+8+k],0,1)*material[at+k];
-                output.put((byte)Math.round(Math.clamp(value,0,1)*255));
+                int result=Math.round(Math.clamp(value,0,1)*255);
+                lookup[k*256+b]=result<<((3-k)*8);
+                identity&=result==b;
+            }
+            int stride=pixels.width*4;
+            byte[] raw=pixels.rgba;
+            if(identity){
+                for(int y=pixels.height-1;y>=0;y--)output.put(raw,y*stride,stride);
+            }else{
+                output.order(ByteOrder.BIG_ENDIAN);
+                for(int y=pixels.height-1;y>=0;y--)for(int p=y*stride,tail=p+stride;p<tail;p+=4){
+                    output.putInt(lookup[raw[p]&255] | lookup[256+(raw[p+1]&255)]
+                        | lookup[512+(raw[p+2]&255)] | lookup[768+(raw[p+3]&255)]);
+                }
             }
             output.flip();
             id=new TextureID(pixels.width,pixels.height,0,GL11.GL_RGBA,GL11.GL_RGBA8);id.bindalways();

@@ -1,0 +1,32 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_UPDATE_VERIFIED",
+  "version": "0.7.29",
+  "framework": 3842318650,
+  "previous_framework_manifest": "7584921895518342634",
+  "framework_manifest": "8594520790929779928",
+  "framework_jar_sha256": "cbddcc4d776303d7aec0a36cbcddec7e21f6e04d3022089dfa9c12fadaee3078",
+  "framework_bytes": 279335105,
+  "changelog": "0.7.29 修复 Viewpoint 正常加载时可能漏挂持物同步的问题，让第一人称开镜、转动视角及暂停时的枪和附件跟随当前人物握持姿态。",
+  "visibility": "public",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-20T01:25:03+08:00",
+  "role_packages_updated": 0,
+  "verified_gameplay_jar_delta": [
+    "gfl2/render/UnifiedStartup.class"
+  ],
+  "packaged_startup_cases": [
+    "fresh",
+    "late-host"
+  ],
+  "springfield_ads_controlled_draw_cases": 33,
+  "max_before_palm_error": 0.220915,
+  "max_after_palm_error": 1.3e-07,
+  "driver_scope": "LIMITED_HARDWARE_VALIDATION",
+  "gameplay_tested_by_agent": false,
+  "user_confirmed_fix": false
+}

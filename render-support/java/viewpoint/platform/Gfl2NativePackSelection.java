@@ -11,6 +11,10 @@ public final class Gfl2NativePackSelection {
     private static int contrastIndex,saturationIndex,vibranceIndex,exposureIndex,strengthIndex,detailIndex,glossIndex,outlineIndex;
     private static boolean filmic, somberPost;
     public static boolean somberActorPost(){return somberPost && displayPack == ShaderPacks.drawn();}
+    public static boolean reflectionProbeEnabled(){
+        ShaderPacks.Active pack=ShaderPacks.drawn();
+        return pack!=null&&pack.defines.contains("#define OPTION_CHARACTER_REFLECTION_PROBE 1\n");
+    }
     private static final java.util.regex.Pattern FILMIC=java.util.regex.Pattern.compile("(?m)^#define\\s+OPTION_TONE_CURVE\\s+0\\s*$");
     /** Native already keeps numeric options on the CPU. Never read the GPU option UBO per frame. */
     public static DisplaySettings displaySettings(){

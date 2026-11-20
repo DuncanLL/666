@@ -76,7 +76,7 @@ public final class Gfl2NativeSourcePrograms implements AutoCloseable {
         String varyings=(text.contains("in vec3 vPos;")?"":"in vec3 vPos;\n")+(text.contains("in vec3 gf2NativeWorldNormal;")?"":"in vec3 gf2NativeWorldNormal;\n");
         return text.substring(0,main)+"\n"+varyings+service+"\n#line 1\n"+text.substring(main);
     }
-    private String indirectLighting(String fragment,String hash){
+    private String indirectLighting(String fragment,String hash,boolean hasOpaquePrepass){
         Map<String,int[]> fields=new HashMap<>();
         for(Object b:data.manifest.getJSONObject("consumed").getJSONObject(hash).getJSONArray("buffers"))for(Object f:((JSONObject)b).getJSONArray("fields")){
             JSONObject field=(JSONObject)f;String name=field.getString("name");if(!List.of("unity_SHAr","unity_SHAg","unity_SHAb").contains(name))continue;
@@ -92,13 +92,20 @@ public final class Gfl2NativeSourcePrograms implements AutoCloseable {
         if(indirectService==null)indirectService=Gfl2NativePackSelection.expanded("gf2/native_indirect.glsl").replaceFirst("#version[^\\n]*\\n","");
         int main=fragment.indexOf("void main()");if(main<0||main!=fragment.lastIndexOf("void main()"))throw new IllegalArgumentException("Native indirect source main changed");
         String varying=fragment.contains("in vec3 vPos;")?"":"in vec3 vPos;\n";
+        // Late cloth can cover a different mesh from the one in the world's normal buffer.
+        String normal="gf2NativeOpaqueNormal()";
+        if(!hasOpaquePrepass){
+            if(!fragment.contains("in vec3 gf2NativeWorldNormal;"))varying+="in vec3 gf2NativeWorldNormal;\n";
+            normal="gf2NativeWorldNormal*vec3(-1,1,-1)";
+        }
         fragment=fragment.substring(0,main)+varying+indirectService+"\n"+fragment.substring(main).replace("void main()","void gf2NativeIndirectSource()");
-        indirectConsumers.add(hash);return fragment+"\nvoid main(){gf2NativeInitIndirect(vPos);gf2NativeIndirectSource();}\n";
+        indirectConsumers.add(hash);return fragment+"\nvoid main(){gf2NativeInitIndirect(vPos,"+normal+");gf2NativeIndirectSource();}\n";
     }
     public Gfl2OriginalProgram source(int material,String pass)throws java.io.IOException{
-        var pair=pair(material,pass);String vs=pair.get("progVertex"),fs=pair.get("progFragment"),key=vs+":"+fs+":source";Gfl2OriginalProgram program=programs.get(key);if(program!=null)return program;
+        boolean hasOpaquePrepass=pass.equals("GFCharForward")&&Gfl2PackMaterials.writesDepth(materials.optionalPass(material,pass));
+        var pair=pair(material,pass);String vs=pair.get("progVertex"),fs=pair.get("progFragment"),key=vs+":"+fs+(hasOpaquePrepass?":source-prepass":":source");Gfl2OriginalProgram program=programs.get(key);if(program!=null)return program;
         JSONObject library=data.manifest.getJSONObject("glsl");String original=text(library.getJSONObject(fs));reviewNormal(original,fs);var motion=Gfl2NativeMotionBridge.inspect(original,fs);
-        String fragment=Gfl2NativeMotionBridge.adapt(indirectLighting(localLighting(mainLighting(original,fs),fs),fs),motion);
+        String fragment=Gfl2NativeMotionBridge.adapt(indirectLighting(localLighting(mainLighting(original,fs),fs),fs,hasOpaquePrepass),motion);
         program=new Gfl2OriginalProgram(vertexUV1(text(library.getJSONObject(vs))),fragment,vs,fs);
         if(program.nativeProgram().has("gf2NativeSunVisibility")){program.close();throw new IllegalArgumentException("Unbridged Native source shadow consumer: "+fs);}
         programs.put(key,program);return program;

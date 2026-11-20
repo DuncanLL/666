@@ -26,10 +26,34 @@ public final class Gfl2PackData {
     private record Model(JSONObject description,int lastRootBone){}
     private final Map<Long,Model> models=new LinkedHashMap<>();
 
+    record CatalogInputs(String location,List<String> modIds,Map<String,String> modDirs) {
+        static CatalogInputs capture() {
+            var fs=ZomboidFileSystem.instance;
+            List<String> ids=List.copyOf(fs.getModIDs());
+            Map<String,String> dirs=new HashMap<>();
+            for(String id:ids){
+                String dir=fs.getModDir(id);
+                if(dir!=null)dirs.put(id,dir);
+            }
+            return new CatalogInputs(fs.getString(CATALOG_PATH),ids,Map.copyOf(dirs));
+        }
+
+        boolean current() {
+            var fs=ZomboidFileSystem.instance;
+            return location.equals(fs.getString(CATALOG_PATH))&&modIds.equals(fs.getModIDs());
+        }
+    }
+
     public Gfl2PackData(PackSource source)throws IOException {this((viewpoint.iris.SourceFiles)source);}
     public Gfl2PackData(viewpoint.iris.SourceFiles source)throws IOException {
-        this.source=source instanceof PackSource packed?packed:null;
-        manifest=readManifest(source);
+        this(source instanceof PackSource packed?packed:null,readManifest(source.read("gf2/manifest.json"),null));
+    }
+    Gfl2PackData(String bootstrap,CatalogInputs inputs)throws IOException {
+        this(null,readManifest(bootstrap,inputs));
+    }
+    private Gfl2PackData(PackSource source,JSONObject manifest)throws IOException {
+        this.source=source;
+        this.manifest=manifest;
         int format=manifest.getInt("format");
         if((format!=1&&format!=2&&format!=3&&format!=EXTERNAL_MOD_RESOURCE_FORMAT)||!"gf2-original-eclipse".equals(manifest.getString("pipeline")))
             throw new IllegalArgumentException("Unsupported GF2 source input contract");
@@ -67,13 +91,14 @@ public final class Gfl2PackData {
         }
     }
 
-    private static JSONObject readManifest(viewpoint.iris.SourceFiles source)throws IOException{
-        String text=source.read("gf2/manifest.json");JSONObject root=new JSONObject(text);
+    private static JSONObject readManifest(String text,CatalogInputs inputs)throws IOException{
+        JSONObject root=new JSONObject(text);
         if(root.getInt("format")!=EXTERNAL_CHARACTER_CATALOG_FORMAT)return root;
         if(!"gf2-original-eclipse".equals(root.getString("pipeline")))throw new IllegalArgumentException("Unknown renderer bootstrap");
         JSONObject entry=root.getJSONObject("character_catalog");String relative=CATALOG_PATH;
         if(entry.getInt("format")!=1||!relative.equals(entry.getString("path"))||entry.length()!=2)throw new IllegalArgumentException("Unsupported character catalog location/schema");
-        Path file=Path.of(ZomboidFileSystem.instance.getString(relative));
+        CatalogInputs catalogInputs=inputs==null?CatalogInputs.capture():inputs;
+        Path file=Path.of(catalogInputs.location);
         if(!file.isAbsolute()||!Files.isRegularFile(file))throw new IOException("GF2 character catalog missing; enable/update its character MOD: "+relative);
         byte[] raw=Files.readAllBytes(file);JSONObject catalog=new JSONObject(new String(raw,StandardCharsets.UTF_8));
         if(catalog.getInt("format")!=1||!"gf2-character-catalog".equals(catalog.getString("pipeline")))throw new IllegalArgumentException("Unsupported MOD character catalog");
@@ -87,9 +112,11 @@ public final class Gfl2PackData {
             CatalogMerge merge = new CatalogMerge(fields);
             if(packs!=null)for(String mod:packs.keySet().stream().sorted().toList()){
                 String modId=modIds==null?mod:modIds.getString(mod);
-                if(!mod.matches("[A-Za-z0-9_-]+")||!ZomboidFileSystem.instance.getModIDs().contains(modId))continue;
+                if(!mod.matches("[A-Za-z0-9_-]+")||!catalogInputs.modIds.contains(modId))continue;
                 try{
-                    Path modRoot=Path.of(ZomboidFileSystem.instance.getModDir(modId)).toAbsolutePath();
+                    String modDir=catalogInputs.modDirs.get(modId);
+                    if(modDir==null)throw new IOException("Character MOD directory missing: "+modId);
+                    Path modRoot=Path.of(modDir).toAbsolutePath();
                     String relativePack="media/gfl2_rendering/packs/"+mod+".json";
                     Path fragment=modRoot.resolve(relativePack);
                     if(!Files.isRegularFile(fragment))fragment=modRoot.resolve("42").resolve(relativePack);
