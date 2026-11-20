@@ -122,7 +122,10 @@ public final class Bridge {
             Frozen frame=part.frame;
             if(frame.preparedSerial!=serial){
                 frame.upload(serial,phase,scene.cameraCut);
-                if(frame.held!=null&&frame.timing!=null)preparedHeld.add(frame);
+                if(!frame.session.failed&&!frame.session.retired){
+                    DrawAccess.excludeArms(draws,frame.first,frame.originalEnd,frame.customEnd,frame.keepExternalArms);
+                    if(frame.held!=null&&frame.timing!=null)preparedHeld.add(frame);
+                }
             }
             if(!frame.session.failed&&!frame.session.retired&&frame.boundTextures!=null)
                 DrawAccess.texture(draws,n,frame.boundTextures[part.material]);
@@ -165,10 +168,12 @@ public final class Bridge {
         ArrayList<HeldDraw> held;
         PmxPresentation.Timing timing;
         final int first,originalEnd;int customEnd;
+        final boolean keepExternalArms;
         final int[] originalFlags,originalMotion;final float[] originalRecords;
         long preparedSerial=Long.MIN_VALUE,headerSerial=Long.MIN_VALUE;ModelDraws headerDraws;float[] renderedHeader;
         Frozen(ModelSession session,PmxDrawMesh mesh,PmxDrawMesh.FrameData data,ModelDraws draws,int first,int end) {
             this.session=session;this.mesh=mesh;this.data=data;this.draws=draws;this.first=first;originalEnd=end;customEnd=end;materials=session.materials;
+            keepExternalArms=session!=null&&!session.retargetsAttachment(1);
             previous=session.previousFrozen;older=session.olderFrozen;
             if(previous==null){low=high=null;}
             else {

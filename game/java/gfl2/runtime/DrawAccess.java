@@ -24,8 +24,15 @@ final class DrawAccess {
     private static final Field POSE_BONES=optionalField("poseBones");
     private static final Field[] MOTION_FIELDS={optionalField("previous"),optionalField("shadowPrevious"),POSE_BONES,optionalField("lastDraw")};
     private static final Field RIDERS=optionalField("riders"),RIDER_ON=RIDERS==null?null:field(RIDERS.getType(),"on"),RIDER_BONES=RIDERS==null?null:field(RIDERS.getType(),"bones");
+    private static final Field ARMS=optionalField("arms"),
+        ARMS_FIRST=ARMS==null?null:optionalField(ARMS.getType(),"first"),
+        ARMS_COUNT=ARMS==null?null:optionalField(ARMS.getType(),"count"),
+        ARMS_HELD_COUNT=ARMS==null?null:optionalField(ARMS.getType(),"heldCount");
     private static Field optionalField(String name) {
-        try {Field f=ModelDraws.class.getDeclaredField(name);f.setAccessible(true);return f;}
+        return optionalField(ModelDraws.class,name);
+    }
+    private static Field optionalField(Class<?> type,String name) {
+        try {Field f=type.getDeclaredField(name);f.setAccessible(true);return f;}
         catch(NoSuchFieldException e){return null;}
     }
     private static Field field(Class<?> type,String name) {
@@ -51,6 +58,24 @@ final class DrawAccess {
         // Carry the rigid item with its PMX body, never with the hidden vanilla hand bone.
         if(RIDERS!=null){Object riders=get(RIDERS,draws);((int[])get(RIDER_ON,riders))[n]=parent;((int[])get(RIDER_BONES,riders))[n]=-1;}
         if(!continuous)flags(draws,n,draws.flags(n)&~ModelDraws.MOTION);
+    }
+    static void excludeArms(ModelDraws draws,int first,int originalEnd,int customEnd,boolean keepHeld) {
+        // Viewpoint's ArmsCapture runs after ModelCapture and includes our PMX submeshes and held items.
+        // ArmsTurn cannot rotate CPU-skinned PMX arms and would overwrite our PMX shading palette slots.
+        if(ARMS==null||ARMS_FIRST==null||ARMS_COUNT==null||ARMS_HELD_COUNT==null)return;
+        Object arms=get(ARMS,draws);
+        if(arms==null)return;
+        try {
+            int armsFirst=ARMS_FIRST.getInt(arms),armsCount=ARMS_COUNT.getInt(arms);
+            if(armsFirst<0||armsCount<=0||armsFirst>=customEnd||armsFirst+armsCount<=first)return;
+            if(!keepHeld) {
+                ARMS_FIRST.setInt(arms,-1);
+                ARMS_HELD_COUNT.setInt(arms,0);
+            } else {
+                int limit=Math.max(0,originalEnd-armsFirst);
+                if(armsCount>limit)ARMS_COUNT.setInt(arms,limit);
+            }
+        } catch(IllegalAccessException e) { throw new IllegalStateException(e); }
     }
     static void header(ModelDraws draws,int n,float[] header) {
         int palette=(int)values(draws)[n*68+52];float[] values=(float[])get(PALETTES,draws);
