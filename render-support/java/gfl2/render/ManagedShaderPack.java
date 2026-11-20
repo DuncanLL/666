@@ -22,6 +22,15 @@ public final class ManagedShaderPack {
             catch(NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
         }
     }
+    private static void moveSafely(Path from,Path to,boolean replace)throws IOException{
+        try{
+            if(replace)Files.move(from,to,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.ATOMIC_MOVE);
+            else Files.move(from,to,StandardCopyOption.ATOMIC_MOVE);
+        }catch(AtomicMoveNotSupportedException | AccessDeniedException fallback){
+            if(replace)Files.move(from,to,StandardCopyOption.REPLACE_EXISTING);
+            else Files.move(from,to);
+        }
+    }
     public static Result install(Path source,Path userRoot)throws IOException{
         return install(source,userRoot,ECLIPSE+".zip","managed-shader.properties");
     }
@@ -69,10 +78,10 @@ public final class ManagedShaderPack {
         if(Files.exists(target)){
             backup=state.resolve("native-before-"+UUID.randomUUID());
             if(!target.normalize().startsWith(folder)||!backup.normalize().startsWith(state))throw new IOException("Native update target is outside its root");
-            Files.move(target,backup,StandardCopyOption.ATOMIC_MOVE);
+            moveSafely(target,backup,false);
         }
-        try{Files.move(staging,target,StandardCopyOption.ATOMIC_MOVE);}
-        catch(IOException failure){if(backup!=null&&!Files.exists(target))Files.move(backup,target,StandardCopyOption.ATOMIC_MOVE);throw failure;}
+        try{moveSafely(staging,target,false);}
+        catch(IOException failure){if(backup!=null&&!Files.exists(target))moveSafely(backup,target,false);throw failure;}
         return new Result(target,"INSTALLED",wanted);
     }
     private static Result install(Path source,Path userRoot,String filename,String stateName)throws IOException{

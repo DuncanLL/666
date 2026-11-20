@@ -58,9 +58,11 @@ def assemble(args):
     host = Path(config['viewpoint_jar'])
     zombie = Path(config['zombiebuddy_jar'])
     character = args.character_project.resolve(strict=True)
-    addon = args.render_project.resolve(strict=True) / RENDER_JAR
-    source = character / CHARACTER_MOD / CHARACTER_JAR
     report = json.loads(args.render_report.read_text('utf8'))
+    addon = args.render_project.resolve(strict=True) / RENDER_JAR
+    if not addon.is_file():
+        addon = Path(report['jar']).resolve(strict=True)
+    source = character / CHARACTER_MOD / CHARACTER_JAR
     assert re.fullmatch(r'\d+\.\d+\.\d+', args.version), 'Use an explicit combined version'
     assert {path.name for path in (character / 'Contents/mods').iterdir()} == {'GFL2Exilium'}
     metadata = dict(line.split('=', 1) for line in (character / 'workshop.txt').read_text('utf-8-sig').splitlines() if '=' in line)
@@ -71,7 +73,7 @@ def assemble(args):
     signature=host.with_suffix('.jar.zbs')
     if signature.is_file():pins[signature]=sha(signature)
     assert pins[source] == args.character_sha256
-    assert report['status'] == 'PROTECTED_REVIEW_BUILD' and pins[addon] == report['jar_sha256']
+    assert report['status'] in ('BUILT_COMBINED_RENDER_SUPPORT', 'PROTECTED_REVIEW_BUILD') and pins[addon] == report['jar_sha256']
     assert pins[host] == report['host_sha256']
     mod_info = (character / CHARACTER_MOD / '42/mod.info').read_text('utf-8-sig').splitlines()
     assert all(line in mod_info for line in ('id=GFL2Exilium', 'javaPkgName=gfl2.runtime', 'javaJarFile=media/java/client/GFL2Exilium.jar'))

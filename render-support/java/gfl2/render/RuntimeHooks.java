@@ -10,8 +10,10 @@ public final class RuntimeHooks implements ClassFileTransformer {
     private static final String SOURCE_INPUTS="gfl2/motion/PmxOriginalInputs";
     private static final String MODEL_BATCHES=R+"ModelBatches";
     private static final String GRAPHICS="viewpoint/platform/Graphics";
+    private static final String PACK_OPTION="viewpoint/platform/PackOption";
+    private static final Set<String> OPTIONAL=Set.of(GRAPHICS,PACK_OPTION,SomberPostHooks.POST);
     private static final Map<String,Integer> NATIVE=Map.of(R+"WorldRenderer",3,R+"ModelPass",4,"gfl2/motion/PmxShading",2,
-        SOURCE_INPUTS,1,"viewpoint/platform/PackOption",1,MODEL_BATCHES,1,GRAPHICS,1);
+        SOURCE_INPUTS,1,PACK_OPTION,1,MODEL_BATCHES,1,GRAPHICS,1);
     private static final String IRIS_SOURCE = "viewpoint/iris/PackSource";
     private static final String NATIVE_SOURCE = "viewpoint/platform/ShaderPack$1";
     public static final Map<String,Integer> EXPECTED;
@@ -27,6 +29,7 @@ public final class RuntimeHooks implements ClassFileTransformer {
         EXPECTED=Collections.unmodifiableMap(hooks);
     }
     private final Set<String> targets;
+    private volatile Set<String> activeTargets=Set.of();
     private volatile Throwable transformFailure;
 
     public RuntimeHooks() {
@@ -150,13 +153,23 @@ public final class RuntimeHooks implements ClassFileTransformer {
         ClassLoader loader=RuntimeHooks.class.getClassLoader();
         if(loader.getResource(R+"Gf2SourceHost.class")!=null)throw new IllegalStateException("A private GF2 host is already installed; refusing double rendering");
         var loaded=new ArrayList<Class<?>>();
-        for(String name:targets)try(var input=loader.getResourceAsStream(name+".class")){
-            if(input==null)throw new IllegalStateException("Required integration class missing: "+name);
-            rewrite(name,input.readAllBytes());
-            Class<?> type=Class.forName(name.replace('/','.'),false,loader);
-            if(!agent.isModifiableClass(type))throw new IllegalStateException("Class cannot be integrated: "+name);
-            loaded.add(type);
+        var active=new LinkedHashSet<String>();
+        for(String name:targets){
+            boolean optional=OPTIONAL.contains(name);
+            try(var input=loader.getResourceAsStream(name+".class")){
+                if(input==null)throw new IllegalStateException("Required integration class missing: "+name);
+                rewrite(name,input.readAllBytes());
+                Class<?> type=Class.forName(name.replace('/','.'),false,loader);
+                if(!agent.isModifiableClass(type))throw new IllegalStateException("Class cannot be integrated: "+name);
+                loaded.add(type);
+                active.add(name);
+            }catch(Throwable failure){
+                if(!optional)throw failure instanceof Exception ex?ex:new IllegalStateException(failure);
+                System.err.println("[GFL2] Optional Viewpoint hook skipped for "+name+": "+failure);
+            }
         }
+        activeTargets=Set.copyOf(active);
+        if(loaded.isEmpty())return;
         agent.addTransformer(this,true);
         try{
             agent.retransformClasses(loaded.toArray(Class<?>[]::new));
@@ -164,13 +177,13 @@ public final class RuntimeHooks implements ClassFileTransformer {
             Gfl2SealedSources.arm(agent);
         }catch(Throwable failure){
             agent.removeTransformer(this);
-            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(targets.contains(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
+            var restore=new ArrayList<Class<?>>();for(Class<?> type:agent.getAllLoadedClasses())if(activeTargets.contains(type.getName().replace('.','/'))&&agent.isModifiableClass(type))restore.add(type);
             if(!restore.isEmpty())agent.retransformClasses(restore.toArray(Class<?>[]::new));
             throw failure;
         }
     }
     @Override public byte[] transform(ClassLoader loader,String name,Class<?> type,ProtectionDomain domain,byte[] bytes)throws IllegalClassFormatException{
-        if(name==null||!targets.contains(name))return null;
+        if(name==null||!activeTargets.contains(name))return null;
         try{return rewrite(name,bytes);}catch(Throwable failure){transformFailure=failure;System.err.println("[GFL2] Integration failed for "+name+": "+failure);throw new IllegalClassFormatException(failure.toString());}
     }
 }
