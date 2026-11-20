@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "mod": "GFL2Mechty",
+  "models": [
+    {
+      "id": "pmx-4cc23c77ded8ee9b",
+      "label": "米什缇 / 梦境战争",
+      "model": "models/pmx-4cc23c77ded8ee9b/model.pmx",
+      "profile": "models/pmx-4cc23c77ded8ee9b/profile.json"
+    }
+  ]
+}

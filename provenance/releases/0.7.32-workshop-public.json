@@ -1,0 +1,186 @@
+{
+  "status": "STEAM_PUBLIC_FRAMEWORK_AND_ROLE_UPDATE_VERIFIED",
+  "version": "0.7.32",
+  "framework": 3842318650,
+  "previous_framework_manifest": "4827216878143723390",
+  "framework_manifest": "2495116003321778708",
+  "framework_bytes": 279442840,
+  "framework_jar_sha256": "dfb7fb07e8feda53353dd6eecb16665e137116c5fcc3afbe0e18312a3339554a",
+  "framework_prerequisites": [
+    3619862853,
+    3809306528
+  ],
+  "new_role": {
+    "pack": "GFL2Mechty",
+    "item": 3842869667,
+    "preview_url": "https://images.steamusercontent.com/ugc/10505180544340276799/B94CA7DBCBB6945C780D697493CA306A2C9FF51A/"
+  },
+  "collection": 3841234557,
+  "collection_children_count": 27,
+  "collection_has_mechty": true,
+  "visibility": "public",
+  "page_metadata_verified": true,
+  "anonymous_api_readback": true,
+  "updated_shanghai": "2026-11-20T20:03:24+08:00",
+  "role_packages_updated": 25,
+  "role_package_created": 1,
+  "changelog": "v0.7.32\n- 新增角色米什缇（G11）及专武「白日梦」支持\n- 放大专武抽取界面展示比例，统一全专武卡图样式与朝向\n- 平衡调整全部 26 把专武伤害、射程、穿透与射速\n- 修复第三人称持枪随镜头乱转及光照异常（Viewpoint 0.1.7）\n- 修复坐姿等第三方动作下锁骨异常扭转耸肩\n- 优化整备室：已解锁角色置顶、恢复按钮更醒目、握持校准新增站立/瞄准切换、VMD 新增文件夹浏览与收藏置顶\n- 补齐整备室未订阅角色一键跳转工坊链接",
+  "roles": {
+    "GFL2Laiya": {
+      "item": 3838710183,
+      "version": "0.7.4",
+      "manifest": "9011801794614716192",
+      "workshop_bytes": 402466909
+    },
+    "GFL2Cheyanne": {
+      "item": 3838710368,
+      "version": "0.7.5",
+      "manifest": "4272753943624535011",
+      "workshop_bytes": 231107163
+    },
+    "GFL2Asteria": {
+      "item": 3838710555,
+      "version": "0.7.5",
+      "manifest": "2592403368769849844",
+      "workshop_bytes": 344379681
+    },
+    "GFL2Koleda": {
+      "item": 3838710666,
+      "version": "0.7.2",
+      "manifest": "8669650113682790111",
+      "workshop_bytes": 229779884
+    },
+    "GFL2Nikketa": {
+      "item": 3838710868,
+      "version": "0.7.5",
+      "manifest": "7423691527431235253",
+      "workshop_bytes": 448113399
+    },
+    "GFL2Florence": {
+      "item": 3838711148,
+      "version": "0.7.3",
+      "manifest": "2447609588194414742",
+      "workshop_bytes": 425357859
+    },
+    "GFL2Alva": {
+      "item": 3837425337,
+      "version": "0.7.4",
+      "manifest": "6407476503780956319",
+      "workshop_bytes": 262452266
+    },
+    "GFL2Cecilia": {
+      "item": 3838711420,
+      "version": "0.7.3",
+      "manifest": "5675328559097963197",
+      "workshop_bytes": 217746980
+    },
+    "GFL2Centaureissi": {
+      "item": 3838711556,
+      "version": "0.7.5",
+      "manifest": "8741328724775086452",
+      "workshop_bytes": 247550317
+    },
+    "GFL2Daiyan": {
+      "item": 3838711736,
+      "version": "0.7.5",
+      "manifest": "4095614451974654306",
+      "workshop_bytes": 297831177
+    },
+    "GFL2Faelynn": {
+      "item": 3838711981,
+      "version": "0.7.5",
+      "manifest": "4055179151597704509",
+      "workshop_bytes": 320435647
+    },
+    "GFL2Klukai": {
+      "item": 3838712165,
+      "version": "0.7.6",
+      "manifest": "6925548196970816926",
+      "workshop_bytes": 797759730
+    },
+    "GFL2OTs14": {
+      "item": 3838712515,
+      "version": "0.7.5",
+      "manifest": "9073008230852009704",
+      "workshop_bytes": 263604655
+    },
+    "GFL2Springfield": {
+      "item": 3838712707,
+      "version": "0.7.5",
+      "manifest": "182208019711449298",
+      "workshop_bytes": 453830680
+    },
+    "GFL2Suomi": {
+      "item": 3838712796,
+      "version": "0.7.5",
+      "manifest": "1626823165928428020",
+      "workshop_bytes": 280896622
+    },
+    "GFL2Destroyer": {
+      "item": 3838762173,
+      "version": "0.7.3",
+      "manifest": "35526523952108183",
+      "workshop_bytes": 315184508
+    },
+    "GFL2Lenna": {
+      "item": 3838762352,
+      "version": "0.7.5",
+      "manifest": "7132230318885111941",
+      "workshop_bytes": 431079265
+    },
+    "GFL2Macqiato": {
+      "item": 3838762751,
+      "version": "0.7.12",
+      "manifest": "2042248089100156247",
+      "workshop_bytes": 516518489
+    },
+    "GFL2Phaetusa": {
+      "item": 3838763020,
+      "version": "0.7.7",
+      "manifest": "2613977603078347041",
+      "workshop_bytes": 518581890
+    },
+    "GFL2Sextans": {
+      "item": 3838763377,
+      "version": "0.7.4",
+      "manifest": "5129060134397566693",
+      "workshop_bytes": 337826971
+    },
+    "GFL2Vector": {
+      "item": 3838763611,
+      "version": "0.7.4",
+      "manifest": "2842149618537326739",
+      "workshop_bytes": 427848208
+    },
+    "GFL2Yohee": {
+      "item": 3838763788,
+      "version": "0.7.5",
+      "manifest": "5586242538731245492",
+      "workshop_bytes": 322346066
+    },
+    "GFL2Qiuhua": {
+      "item": 3838935753,
+      "version": "0.7.5",
+      "manifest": "6417098526905793794",
+      "workshop_bytes": 463274033
+    },
+    "GFL2Soppo": {
+      "item": 3841178627,
+      "version": "0.7.4",
+      "manifest": "8125952363178110011",
+      "workshop_bytes": 255112243
+    },
+    "GFL2Loreley": {
+      "item": 3842261104,
+      "version": "0.7.5",
+      "manifest": "3845917933843356554",
+      "workshop_bytes": 304528843
+    },
+    "GFL2Mechty": {
+      "item": 3842869667,
+      "version": "0.7.1",
+      "manifest": "5236233390845084446",
+      "workshop_bytes": 168504752
+    }
+  }
+}

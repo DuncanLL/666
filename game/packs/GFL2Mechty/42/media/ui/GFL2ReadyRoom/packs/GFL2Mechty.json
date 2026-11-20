@@ -1,0 +1,14 @@
+{
+  "models": {
+    "pmx-4cc23c77ded8ee9b": {
+      "character": "米什缇",
+      "skin": "默认",
+      "officialSkin": "梦境战争",
+      "isDefault": true,
+      "portrait": "media/ui/GFL2ReadyRoom/round-pmx-4cc23c77ded8ee9b.png",
+      "pack": "GFL2Mechty",
+      "card": "media/ui/GFL2ReadyRoom/official/Img_ChrSkinPic_MishtySSR.png"
+    }
+  },
+  "labels": {}
+}
