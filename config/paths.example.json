@@ -5,6 +5,8 @@
   "zombiebuddy_jar": "D:/path/to/ZombieBuddy/libs/ZombieBuddy.jar",
   "ecj_jar": "D:/private-tools/ecj-4.38.jar",
   "reference_jar": "D:/current-GFL2Exilium/42/media/java/client/GFL2Exilium.jar",
+  "workshop_targets": ["D:/public-author/Workshop/GFL2Exilium"],
+  "game_install_roots": ["D:/active-PZ-user-directory/mods/GFL2Exilium"],
   "asset_root": "D:/current-GFL2Exilium",
   "render_support_asset_root": "D:/prepared-original-render-resources",
   "native_source": "D:/verified-native-libraries",

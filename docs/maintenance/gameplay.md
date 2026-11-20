@@ -1,6 +1,6 @@
 # 游戏中的动作、持物和物理
 
-本文对应 Git 主分支的 0.7.15 维护基线。游戏控制角色的动作状态、移动、碰撞与伤害。框架读取游戏完成的骨骼姿态，用授权的模型会话画出少前2人物。游戏仍负责决定走、跑、蹲、翻越、攻击或开车用哪组动画以及怎样混合。
+当前发布基线见[维护首页](README.md)。游戏控制角色的动作状态、移动、碰撞与伤害。框架读取游戏完成的骨骼姿态，用授权的模型会话画出少前2人物。游戏仍负责决定走、跑、蹲、翻越、攻击或开车用哪组动画以及怎样混合。
 
 ## 从游戏角色到模型会话
 
@@ -49,6 +49,8 @@ flowchart LR
 
 ## 持物位置为什么要分捕获和插值
 
+0.7.29 修复了启动顺序对最终持物位置的影响。ZombieBuddy 转换其他宿主类时，`ModelBlend` 可能已被连带加载，已经登记的 `RenderPatch.HeldItems` 因此跳过了首次挂接。整合入口现在在首次模型准备时对该类重新应用一次已登记的转换。排查开镜时手和枪分离，要从正常包启动并调用 Viewpoint 实际使用的 `ModelBlend.drawn` 重载，确认握持回调消费了本次准备的数据。ADS 的准星误差只覆盖其自身的瞄准计算。[启动检查](../../tools/java/UnifiedStartupCheck.java)
+
 以 0.7.14 的 [持物发布记录](../../provenance/releases/0.7.14-held-slot-attachment.json) 为准。
 
 - 游戏 `ModelInstanceRenderData.xfrm` 包含手部槽位和物品脚本的附件位置。捕获时以身体矩阵的逆乘物品矩阵，得到进入 Viewpoint 放置变换之前的物品局部位置。[Bridge.heldSource](../../game/java/gfl2/runtime/Bridge.java)
@@ -57,6 +59,8 @@ flowchart LR
 - [PmxPresentation.timing](../../game/java/gfl2/runtime/PmxPresentation.java) 使用宿主 phase 选择两份快照。常规 phase 在前帧与当前帧间采样，负 phase 在更早帧与前帧间采样。手部网格和持物局部矩阵共用相同端点与权重。宿主 `ModelBlend.drawn` 后，再将持物局部矩阵乘实际用于绘制的人物根。这样检查枪先动或手先动时，可以先对齐共同时间采样，再讨论握持参数。[RenderPatch](../../game/java/gfl2/runtime/RenderPatch.java)
 
 ## 身体、衣物和胸部物理
+
+家具坐姿在 [FurnitureSeat](../../game/java/gfl2/runtime/FurnitureSeat.java) 中校准。PZ 的 `ModelSlotRenderData` 已经按家具和方向提供座面高度，框架在这个放置矩阵上追加角色自身的垂直修正。采样取双侧大腿及其骨盆附近的高权重顶点，用髋部下方接触区的低百分位高度与原版坐姿比较。坐稳后会话缓存测量值，坐下、起身期间用两条大腿的倾角平滑调整。原版绘制和 Viewpoint 使用同一修正值，持物使用同一个人物根。回归分别检查椅子、床沿、坐地及车内。
 
 - PMX 刚体和关节由 [MMDPhysics](../../native/mmd-engine/src/physics/mmd_physics.rs) 读入 Bullet。现行配置是 60 Hz 固定步长、单次调用最多 5 个子步。运行时用最终骨骼姿态同步随骨刚体，按角色位移变化施加惯性，再把动态刚体结果合并回骨骼。随后计算子骨和网格。[物理配置](../../native/mmd-engine/src/physics/config.rs) · [外部姿态合并](../../native/mmd-engine/src/external_input.rs)
 - 身体物理总开关控制现装模型的次级物理。胸部模型还要有与 PMX SHA、顶点数和骨骼数对应的局部绑定数据，并满足自己的开关。JAR 内置资源和模型目录的 `chest.bin` 都有各自加载入口。现行胸部运行时使用 Jolt 局部体积、跟随和输入惯性，设定值由代码统一给出，旧存档中可能有滑条数据，当前求解值以统一预设为准。[PmxModel](../../game/java/gfl2/motion/PmxModel.java) · [ChestSoftBody](../../game/java/gfl2/motion/ChestSoftBody.java) · [胸部惯性](../../game/java/gfl2/motion/JoltChestMotion.java)

@@ -5,7 +5,9 @@
 ## 构建当前分发输入
 
 1. 填齐 [paths.example.json](../../config/paths.example.json) 对应的 `.local/paths.json`。准备游戏、官方 VP JAR 及同版签名、ZombieBuddy、ECJ、当前人物参考 JAR、已核对的原生库及人物外置资源。Native 构建还读取 `render_support_asset_root` 下的显示资源，Eclipse 构建需要 `eclipse_support_reference_jar`。用来源清单的摘要逐项比对：普通下载的 Eclipse ZIP 不能代替指定基线 JAR。[Native 核心指纹](../../provenance/native-runtime.json) · [外置资源](../../resources/manifest.json) · [Eclipse 来源](../../provenance/eclipse-outline.json)
-2. 按下列顺序从新检出构建。普通构建使用已验过的本机原生库。需要改 Rust/Bullet 或 Ozz 时，从 [build_native.py](../../tools/build_native.py) 的工具链和候选输出入手，再向 `build.py --native-candidate` 提供对应报告。精确复核旧发行核心才使用 `--compare-baseline` 或指纹匹配的 `--release-reference`。
+如果刚接手时只取得 Steam 合包，可从已验过指纹的 `GFL2Exilium.jar` 中提取 `gfl2/runtime/native/windows-x64/` 的 DLL 到独立的 `native_source` 目录，并将 `gfl2/runtime/chest/` 的数据放入其 `chest/` 子目录。逐个核对 `provenance/native-runtime.json` 后即可走普通源码构建。仅做独立人物参考的逐类对照才需要裸 JAR。
+
+2. 按下列顺序从新检出构建。普通构建使用已验过的本机原生库。需要改 Rust/Bullet 或 Ozz 时，从 [build_native.py](../../tools/build_native.py) 的工具链和候选输出入手，再向 `build.py --native-candidate` 提供对应报告。复核当前已发布的人物源码时，从[独立人物参考记录](../../provenance/character-release.json)取得对应的裸 JAR 指纹，使用 `build.py --release-reference <该裸 JAR>`。普通 Steam 合包额外包含渲染类及启动接线。
 
 ```powershell
 $steps = 'build.py', 'build_render_support.py', 'build_combined_render_support.py'
@@ -26,10 +28,10 @@ foreach ($step in $steps) {
 
 ## 生成可验证的候选
 
-**进入这一步以前有三份额外输入。** 人物候选依赖 `asset_root` 与资源清单匹配。制作受保护的合并渲染 JAR 需要[规则中锁定版本和 SHA 的 ProGuard](../../render-support/release-protection.json)、原独立渲染项目的 `workshop.txt` 与 `preview.png`，以及含本次核心与对应全部角色包的本地 Workshop 目录。这个目录用来整理有效程序／资源目录。用新的输出名并保存各步骤的 build.json。示例中 `$shaderMetadata`、`$proguardZip`、`$roleWorkshop` 指向这些本机来源，`$version` 是本次明确选择的框架版本（例 `0.7.16`）。
+**进入这一步以前有三份额外输入。** 人物候选依赖 `asset_root` 与资源清单匹配。制作受保护的合并渲染 JAR 需要[规则中锁定版本和 SHA 的 ProGuard](../../render-support/release-protection.json)、原独立渲染项目的 `workshop.txt` 与 `preview.png`，以及含本次核心与对应全部角色包的本地 Workshop 目录。这个目录用来整理有效程序／资源目录。用新的输出名并保存各步骤的 build.json。示例中 `$shaderMetadata`、`$proguardZip`、`$roleWorkshop` 指向这些本机来源，`$version` 从本次 `game/mod/42/mod.info` 的 `modversion` 读取。
 
 ```powershell
-$version = '0.7.16'
+$version = ((Get-Content 'game/mod/42/mod.info') -match '^modversion=') -replace '^modversion=', ''
 & $py -m pip install Pillow==11.3.0
 if ($LASTEXITCODE -ne 0) { throw 'Packaging image dependency missing' }
 $character = 'build/workflow-inputs/character/GFL2Exilium'
@@ -50,7 +52,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Unified startup check failed' }
 if ($LASTEXITCODE -ne 0) { throw 'Role pack registration check failed' }
 ```
 
-`package_gfl2_unified.py` 检查人物 JAR、保护报告、宿主及两个后端输入的对应关系，输出必须是仓库 `build/` 下面新的 `Workshop/GFL2Exilium`。测试用的普通人物候选可能只有本地预览图及临时元数据；正式项目身份和封面按既有作者目录另行核对。保护阶段的私有映射、种子与研究资料留在本机。联包验证包括正常加载与宿主晚到，角色包验证覆盖停用、启用、旧分片的部分匹配与清场。两项均为受控检查。[保护与封装](../../tools/protect_render_release.py) · [人物与双后端合包](../../tools/package_gfl2_unified.py) · [组件启动](../../tools/check_gfl2_unified.py) · [角色包回读](../../tools/check_character_pack_runtime.py)
+`package_gfl2_unified.py` 检查人物 JAR、保护报告、宿主及两个后端输入的对应关系，输出必须是仓库 `build/` 下面新的 `Workshop/GFL2Exilium`。普通人物候选默认使用临时元数据。正式候选请把现行公开作者项目的 `workshop.txt` 和 `preview.png` 复制到本次独立人物候选根目录后再合包，并核对最终 `build.json` 的 `workshop_id` 为 `3842318650`。保护阶段的私有映射、种子与研究资料留在本机。联包验证包括正常加载与宿主晚到，角色包验证覆盖停用、启用、旧分片的部分匹配与清场。两项均为受控检查。[保护与封装](../../tools/protect_render_release.py) · [人物与双后端合包](../../tools/package_gfl2_unified.py) · [组件启动](../../tools/check_gfl2_unified.py) · [角色包回读](../../tools/check_character_pack_runtime.py)
 
 ## 实际画面与故障定位
 
@@ -74,7 +76,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Eclipse source shader stage link failed' }
 | 开 TAA 时人物大小不对，或换显卡黑屏 | 比较早期／最终 clip-space、render scale、抖动与宿主保留采样槽。读第一条驱动错误，如 varying 冲突或 GLSL 关键字 | 留驱动、宿主 JAR 和 pack SHA、include/宏展开后的 VS/FS（需要时含几何／细分阶段）及链接日志。 |
 | 回归只在切人物、切包、暂停后出现 | 检查 model/session、旧 IrisPrograms/IrisTargets、Native 帧所有权、上一帧姿态和资源退役 | 记录进入、退出、再进入，分别看 GPU 内存、Java/原生资源计数与实际帧耗。 |
 
-在实际宿主上分别检查 Native 和 Eclipse 的默认设置、打开参数页后的运行时 UBO、切走再切回。至少对照正面、侧面、背面，白天、夜间、室内和手电，再运动一段看上一帧位置及阴影。原游参考拍摄要锁定衣装、表情、机位、光照和曝光。更改了公共人物路径还要看老角色。驱动编译以实际 host 展开的 GLSL 为准；可用 [check_original_stage_links.py](../../tools/check_original_stage_links.py) 检查有对应外置原资料的阶段组合。最终用 [check_render_release.py](../../tools/check_render_release.py) 对当前构建和证据 JSON 逐项核验，三厂公开兼容声明需要 `--public` 的条件。[发布标准](../render-release-standard.md) · [曾由玩家日志定位的案例](rendering.md)
+在实际宿主上分别检查 Native 和 Somber 的默认设置，维护 Eclipse 时追加对应检查，再核对各后端打开参数页后的运行时 UBO、切走再切回。至少对照正面、侧面、背面，白天、夜间、室内和手电，再运动一段看上一帧位置及阴影。原游参考拍摄要锁定衣装、表情、机位、光照和曝光。更改了公共人物路径还要看老角色。驱动编译以实际 host 展开的 GLSL 为准；可用 [check_original_stage_links.py](../../tools/check_original_stage_links.py) 检查有对应外置原资料的阶段组合。最终用 [check_render_release.py](../../tools/check_render_release.py) 对当前构建和证据 JSON 逐项核验，三厂公开兼容声明需要 `--public` 的条件。[发布标准](../render-release-standard.md) · [曾由玩家日志定位的案例](rendering.md)
 
 ## 给下一位接手者的交付记录
 

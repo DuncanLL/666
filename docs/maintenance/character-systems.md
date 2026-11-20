@@ -21,7 +21,7 @@
 | 手动表情 | 玩家预设与正在穿戴的造型分开记。表情输入按现用模型的表情名称和权重核对。联机整备室会合并滑条修改，角色切换前把仍在等待的修改提交一次。 |
 | 读档、恢复和换装 | [Main.settingsFor](../../game/java/gfl2/runtime/Main.java) 将保存的外观同当前 profile 整合。有 `previous_material_slots` 且旧数组长度吻合时才迁移旧显隐、颜色、透明度、贴图和双面标记。当前衣装的规则表重新从 profile 绑定。新槽位补用当前默认值。 |
 | 物理按钮 | 界面根据当前模型实际能力显示。保存的是身体物理总开关及相应的局部开关。更换造型不会凭旧的菜单项生成该 PMX 缺少的软体资料。 |
-| VMD | 默认隐藏。0.7.15 在整备室本机资源区长按「定向许可」约 10 秒切换入口，作用在当前玩家会话。松手、移开和出现其它条件会取消长按，触发成功后消耗这次点击。 |
+| VMD | 默认隐藏。在整备室资源栏长按专访许可的加号 3 秒切换入口，作用在当前玩家会话。松手或移开会取消，触发成功后消耗这次点击。时长与另外两个资源加号共用 `GFL2RoomWindow.lua` 中的 `resourceHoldMs`。 |
 
 动作读取优先走预览页提供的库入口。自定义文件库是游戏缓存目录中的 `GFL2Exilium/Motions`，内置动作在核心 `media/gfl2_pmx/motions`。选择额外目录时，播放检查是否属于登记的文件或目录，校验文件类型和文件归属。动作命令有 `play`、`pause`、`speed`、`seek`、`restart`、`stop`、`physics` 和 `reset`。进度条带动作修订号，拖到新位置会重置物理历史，旧的拖动不会作用到另一段动作。速度范围为 0 到 1。暂停时动作与物理的推进时间为零，设为 0 倍速时只停动画时间。播放时把动画交给 VMD 层并启用该层需要的腿部 IK 与 morph。停止时释放动作句柄、恢复 PZ 姿态路径、恢复之前的常规物理开关。[VMD 解析](../../game/java/gfl2/motion/VmdInput.java) · [控制层](../../game/java/gfl2/motion/PmxModel.java) · [0.7.15 入口记录](../../provenance/releases/0.7.15-vmd-entry-toggle.json)
 
@@ -38,6 +38,8 @@
 | 读档兼容和平衡 | [SignatureWeaponRangeMigration](../../game/java/gfl2/runtime/SignatureWeaponRangeMigration.java) 在游戏装载武器时识别旧值，保留配件带来的变化。[CovenantWeaponTextures](../../game/java/gfl2/runtime/CovenantWeaponTextures.java) 给指定枪皮图集保留原分辨率。[GFL2AutomaticCadence](../../game/mod/42/media/lua/shared/GFL2AutomaticCadence.lua) 仅在 SWMG 启用时注册游戏内自动射速，并在相应的 RealAuto 路径处理额外反冲延迟。 |
 
 专武摆放由[游戏中的持物链](gameplay.md#持物位置为什么要分捕获和插值)负责。交易状态和画面里的枪模型有各自入口，出现“枪在背包里，画面外形不对”时分别核对物品类型、涂装 ID、模型引用和绘制矩阵。
+
+专武脚本的 `Icon` 对应角色包的 `media/textures/Item_<图标名>.png`。B42.22 的快捷栏按贴图尺寸绘制，物品图标使用 32×32 透明画布，武器等比缩小并居中。保留已有物品的图标名，旧存档也能读到新图。整备室抽取结果优先读取同包的 `media/ui/GFL2/WeaponIcons/<图标名>.png` 高清原图，旧包可回退到物品图标。复查时将长枪挂到背部、手枪挂到枪套，同时查看底部栏位和专武抽取结果。
 
 ## 联机握手、外观发布与回退
 

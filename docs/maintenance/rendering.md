@@ -4,7 +4,7 @@
 
 ## 从安装到当前帧
 
-1. 合包的[光影入口](../../render-support/combined/java/gfl2/render/Main.java) 核对只有一份接入入口，并验证官方宿主 JAR。经 ZombieBuddy 正常授权取得运行时挂接能力，再安装包内的三份光影和公共钩子。宿主文件继续由 Steam 提供。版本名相同而 JAR 二进制不同，也可能无法通过校验。
+1. 合包的[启动入口](../../render-support/combined/java/gfl2/render/UnifiedStartup.java) 等待 Viewpoint，核对只有一份渲染接入和指定的官方宿主 JAR。经 ZombieBuddy 授权后，[安装器](../../render-support/combined/java/gfl2/render/Main.java) 展开正式包内的 Native、Somber，再挂接宿主。即使显示版本相同，重新打包的 Viewpoint JAR 也会触发指纹检查。
 2. [ManagedShaderPack](../../render-support/java/gfl2/render/ManagedShaderPack.java) 用 `viewpoint-shaderpacks` 存放包，写入 `gfl2-rendering` 的管理状态，根据已有包的身份与指纹处理更新、备份或保留。对前代受管包有选择迁移逻辑。查“更新后仍用旧包”时同时读实际选项、管理指纹和实际绘制的 pack。
 3. 三套光影共用人物会话提供的资料。普通 PZ 或别的 Viewpoint 包仍沿其自身绘制通道。启用了定义少前2渲染协议的包时，角色的专属着色接管相应图元。程序的判断条件是当前绘制的包和实际角色材质身份。
 4. 捕获层提供位置、法线、材料显隐、各源材质的图元和上一帧资料。Viewpoint 的表现层在同一帧按宿主 phase 采样骨骼关联数据和顶点。这里应以 [PmxPresentation](../../game/java/gfl2/runtime/PmxPresentation.java) 和 [Bridge](../../game/java/gfl2/runtime/Bridge.java) 为准，别把绘制次数当作物理已经推进的次数。
@@ -20,6 +20,19 @@ Somber 使用 Native 人物后端。角色包提供一份 PMX 和一份原材质
 [人物覆盖范围](../../render-support/java/viewpoint/render/Gfl2SomberCoverage.java) 读取当前帧少前2实际绘制的法线目标。普通 VP 模型也使用材质编号 31，必须同时核对少前2输出标记。每次后处理结束时恢复纹理单元与采样器。Somber 反射探针使用本包的天空入口与六向房间采样。主光方向、颜色和强度来自 VP 当前帧。
 
 框架首次启动会将 `META-INF/gfl2/rendering/somber.zip` 展开到 `viewpoint-shaderpacks/Somber-GFL2`，在 VP 图形设置中显示为 **Somber GFL 2**。它和 Native 使用相同的逐文件指纹、受管更新和用户编辑保护。用 `tools/check_gfl2_unified.py` 检查空目录、延迟加载 VP、旧版升级及重复启动。实绘回归覆盖质量与性能预设、实时设置、来回切包、普通模型与少前2角色同屏、白天及室内夜景。记录设备、实际 JAR 和光影 SHA。
+
+## 两个光影目录都没有生成
+
+0.7.31 有两位工坊用户反馈缺包，其中一位说明菜单和目录均为空，另一位重新订阅后仍然缺包。另一次玩家实机日志记录了两包安装成功并被 VP 列出。两位反馈者的当次日志尚未取得，发生比例和各自原因待查。
+
+| 在问题当次的 `console.txt` 里找 | 如何判断 |
+|---|---|
+| `[GFL2 Native] INSTALLED`、`[GFL2 Somber] CURRENT` 等安装记录 | 跟随每行末尾的实际缓存路径检查两个子目录及各自的 `pack.properties`。自定义 `-cachedir` 会改变位置。两个描述符都在而菜单缺项时，再查 VP 的 `shader packs:` 和 `left out`。 |
+| `[ZB] Excluded` 与 `modId=GFL2Exilium` | 对照同一轮的 Java 模组加载列表、框架与 VP 路径、授权结果。ZombieBuddy 按 JAR 指纹保存决定，重新订阅同一份 JAR 后仍可沿用先前的拒绝。 |
+| `[GFL2] Bundled light startup` | 读异常全文。官方 VP 指纹不符会在创建两个目录前退出。文件创建异常则按日志中的具体目标路径核对。 |
+| `USER_FILE_PRESERVED` | 安装器已找到同名对象并保留了它。核对该路径是否为空、是否缺描述符。需要恢复时先把用户目录移到光影目录之外备份，再重启。 |
+
+本版使用正式 ZombieBuddy 2.3.4 的 Java 加载入口、Steam 订阅副本和独立用户目录进行组件复核。两种加载顺序、同一会话后启用框架或 VP、中文及空格库路径均生成两包。已保存的拒绝、未启用 VP、宿主归档指纹不符和状态路径占用均可导致两个子目录都未创建。取得新日志时先对应到具体阶段，再决定修哪处。
 
 ## 一套人物怎样进入三套光影
 

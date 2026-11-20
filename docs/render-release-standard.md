@@ -29,7 +29,7 @@ python tools/check_release_leaks.py "<工坊目录>" "<首次安装的光影目�
 
 封装构建也可以向 `tools/protect_render_release.py` 传 `--leak-reference` 和 `--shared-reference`。有命中时该次构建报错，报告留在构建的 `private/`。
 
-封装构建传入 `--catalog-workshop <Workshop 根目录>`，让构建器收集本次发行的框架和人物模块。RC4 复用正式版人物模块时，可同时传入正式版和 RC4 的 Workshop 根目录。Native 主光固定接入在此阶段生成，宿主仍在运行时展开当前光影的主光服务。新增使用新片元程序的人物包须重新生成对应框架的封装。人物目录里的材质来源和转换说明由发布打包工具裁掉，制作端保留完整数据。
+封装构建传入 `--catalog-workshop <Workshop 根目录>`，让构建器收集本次发行的框架和人物模块。正式版使用 25 个角色包对应的当次制作输入。Native 主光固定接入在此阶段生成，宿主仍在运行时展开当前光影的主光服务。新增使用新片元程序的人物包须重新生成对应框架的封装。人物目录里的材质来源和转换说明由发布打包工具裁掉，制作端保留完整数据。
 
 普通构建、组件启动和候选目录保持原入口。`check_render_support.py`只代表启动/资源发现，其报告明确标注不能据此认定跨显卡兼容。
 
@@ -47,7 +47,7 @@ python tools/package_render_support.py --output <新工坊项目目录> --metada
 
 `--public`要求三家驱动证据齐全才通过。没有此标志的目录是候选，不能把候选目录生成成功当作跨显卡发布验收。上传仍由用户决定，工具不会自动上传。
 
-证据 JSON 用 `format=1` 和 `backend=native` 或 `backend=eclipse`，缺省为 Native。包含当前 `jar_sha256`、`shader_sha256`、`character_jar_sha256`、`catalog_sha256`，以及 `startup_report`、`reference_reports[]`、`driver_reports[]`、`changed_models[]`、`integration_reports[]`。路径可相对于证据文件。检查器核对报告与当前源码、产物、角色核心、目录、宿主和编译器的指纹，并核对 GL 错误和新增人物契约。使用实际启动、编译和驱动输出，测试夹具的伪造反例仅供单元测试。
+证据 JSON 使用 `format=1`，后端标识取 `native`、`somber` 或 `eclipse`，缺省为 Native。包含当前 `jar_sha256`、`shader_sha256`、`character_jar_sha256`、`catalog_sha256`，以及 `startup_report`、`reference_reports[]`、`driver_reports[]`、`changed_models[]`、`integration_reports[]`。路径可相对于证据文件。检查器核对报告与当前源码、产物、角色核心、目录、宿主和编译器的指纹，并核对 GL 错误和新增人物契约。使用实际启动、编译和驱动输出，测试夹具的伪造反例仅供单元测试。
 
 合包的两份证据都填 `distribution=combined`。它们共用合包 JAR 指纹和启动报告，分别填写各自的内嵌光影指纹、参考编译和驱动报告。合包另用 `backend=somber` 记录 Somber 的光影指纹、参考编译和实际驱动结果。打包时通过 `--somber-evidence` 传入。
 

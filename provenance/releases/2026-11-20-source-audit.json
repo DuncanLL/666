@@ -1,0 +1,39 @@
+{
+  "scope": "Read-only source and subscription audit after Workshop release; no Steam submission.",
+  "version": "0.7.31",
+  "framework": 3842318650,
+  "framework_manifest": "4827216878143723390",
+  "anonymous_public_items_verified": 26,
+  "character_packs_verified": 25,
+  "registered_models": 72,
+  "resource_fingerprints_verified": 11524,
+  "bare_character_reference_sha256": "53d3a67c85e12e502e64d8fed5e5eeaf8826572040c476a37a7a1d4b6a61b4b4",
+  "character_classes_compared": 113,
+  "normal_character_build_entries_equal_reference": true,
+  "rebuilt_unprotected_native_somber_jar_sha256": "f6b2987b62657c4182caa3f6f46113769902053b4a1806a1fa779ffe20ebfe59",
+  "reused_release_protected_renderer_sha256": "627e9194e2865b98c26f8938ee3e5154477fd7e9c31df6f167b346074b3bc509",
+  "reassembled_framework_jar_sha256": "68d99e43a8248f8b701cf4d8c2f512e6340c70a4d2b4bdf543021b3a6c3be361",
+  "host_jar_sha256": "8d0d5a73227d3ba0724cab076f621435ebaed8ed2c73bfaf7d32a90b0a249e1f",
+  "loader_jar_sha256": "eb79b9876332010733a8e0d7ce4fe0377846059a9e28859029e2a0fb449f6cf2",
+  "packaged_startup_cases": [
+    "fresh",
+    "late-host"
+  ],
+  "components_checked": [
+    "ready_room_workshop",
+    "room_economy",
+    "multiplayer_catalog",
+    "multiplayer_lua",
+    "packaged_native_init",
+    "enabled_character_pack_registration"
+  ],
+  "gameplay_tested_in_this_audit": false,
+  "peer_multiplayer_tested_in_this_audit": false,
+  "new_steam_upload": false,
+  "ready_room_locales_checked": [
+    "CN",
+    "EN",
+    "JP",
+    "KO"
+  ]
+}

@@ -1,5 +1,6 @@
 # Local paths, toolchains, credentials and generated output stay on this computer.
 /.local/
+/.codex-attachments/
 /build/
 /dist/
 /.venv/

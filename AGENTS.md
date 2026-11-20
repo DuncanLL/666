@@ -21,5 +21,5 @@
 - 用户已在2026-11-06认可新胸部物理的游戏效果，认为体感开销可接受，并指定后续丰满角色继续用此公共系统；这不等于测得 FPS 成本或证明所有角色无需识别权重。
 - 静态检查、组件验证、安装、游戏实测与用户认可分别报告。历史切人物原生崩溃、真实多人和订阅冷启动未确认通过，不得写成已修或已测。
 - 人物渲染/发光眼/菜单/材质或VP适配变更须按 `docs/render-release-standard.md` 检查新旧标识符、实际宿主展开后的OpenGL GLSL阶段编译链接、格式/预算与分发；AMD单机通过不能替代NVIDIA/Intel。发布检查用 `tools/check_render_release.py`，正式跨三家声明要求 `--public` 通过；缺硬件仅能明确交付有限验证候选，不能虚报PASS。
-- 当前基准构建对照：`python tools/build.py --compare-baseline`。功能改动后的普通构建不要求字节等同旧版；按改动验证实际影响。
+- 当前人物源码与发布输入的对照用 `python tools/build.py --release-reference <已核对的独立人物JAR>` 和 `provenance/character-release.json`。`--compare-baseline` 只在本机 reference_jar 指向对应的独立人物 JAR 时使用。Steam 合包已接入光影启动钩子，其指纹见对应版本的公开工坊回执。
 - 工坊候选：`python tools/package_workshop.py`；组件检查：`python tools/check_runtime.py`。工具不会自动上传工坊或替换现装 MOD。
