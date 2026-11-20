@@ -1,6 +1,7 @@
 package gfl2.runtime;
 
 import gfl2.motion.PmxDrawMesh;
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -196,6 +197,146 @@ public class ReadyRoomPreview {
             }
         }catch(Exception e){Main.error(e);}
         return (KahluaTable)lua(new JSONArray(entries));
+    }
+    public static KahluaTable motionPaths() {
+        var out=new JSONArray();
+        try {
+            synchronized(motionPathsLock){
+                for(Path p:savedMotionPaths())out.put(p.toString());
+            }
+        }catch(Exception e){Main.error(e);}
+        return (KahluaTable)lua(out);
+    }
+    private static int countDirectVmd(Path dir) {
+        if(dir==null||!Files.isDirectory(dir))return 0;
+        int count=0;
+        try(var stream=Files.newDirectoryStream(dir)){
+            int seen=0;
+            for(Path p:stream){
+                if(++seen>4000)break;
+                if(motionFile(p))count++;
+            }
+        }catch(Exception ignored){}
+        return count;
+    }
+    private static boolean isSkippableDir(Path p) {
+        Path namePath=p.getFileName();
+        if(namePath==null)return true;
+        String name=namePath.toString();
+        if(name.isEmpty()||name.startsWith(".")||name.startsWith("$"))return true;
+        if(name.equalsIgnoreCase("System Volume Information")||name.equalsIgnoreCase("Config.Msi")
+            ||name.equalsIgnoreCase("Recovery")||name.equalsIgnoreCase("PerfLogs"))return true;
+        try{if(Files.isHidden(p))return true;}catch(Exception ignored){}
+        return false;
+    }
+    private static JSONObject dirEntry(String name,String key,String kind,Path path,LinkedHashSet<Path> saved,Path defLib) {
+        var o=new JSONObject();
+        o.put("name",name);
+        if(key!=null)o.put("key",key);
+        o.put("kind",kind);
+        o.put("path",path.toString());
+        o.put("vmdCount",countDirectVmd(path));
+        o.put("added",saved.contains(path)||path.equals(defLib));
+        return o;
+    }
+    public static KahluaTable browseMotionDirectory(String value) {
+        var result=new JSONObject();
+        try {
+            Path defLib=Files.createDirectories(library());
+            LinkedHashSet<Path> saved;
+            synchronized(motionPathsLock){saved=savedMotionPaths();}
+            String raw=value==null?"":value.strip();
+            var dirs=new JSONArray();
+            if(raw.isEmpty()){
+                result.put("root",true);
+                result.put("path","");
+                result.put("parent","");
+                result.put("vmdCount",0);
+                result.put("added",false);
+                dirs.put(dirEntry(defLib.getFileName().toString(),"MotionFolderDefault","quick",defLib,saved,defLib));
+                String homeStr=System.getProperty("user.home","");
+                if(!homeStr.isBlank()){
+                    Path home=Path.of(homeStr).toAbsolutePath().normalize();
+                    String[][] shortcuts={{"Desktop","MotionFolderDesktop"},{"Downloads","MotionFolderDownloads"},{"Documents","MotionFolderDocuments"}};
+                    for(String[] sc:shortcuts){
+                        Path sub=home.resolve(sc[0]);
+                        if(Files.isDirectory(sub))dirs.put(dirEntry(sc[0],sc[1],"quick",sub,saved,defLib));
+                    }
+                }
+                File[] roots=File.listRoots();
+                if(roots!=null){
+                    for(File r:roots){
+                        Path rp=r.toPath().toAbsolutePath().normalize();
+                        if(Files.isDirectory(rp))dirs.put(dirEntry(rp.toString(),null,"drive",rp,saved,defLib));
+                    }
+                }
+                result.put("dirs",dirs);
+                return (KahluaTable)lua(result);
+            }
+            Path dir=localMotionPath(raw);
+            if(!Files.isDirectory(dir))throw new MotionInput("MotionDirectory");
+            result.put("root",false);
+            result.put("path",dir.toString());
+            result.put("parent",dir.getParent()!=null?dir.getParent().toString():"");
+            result.put("vmdCount",countDirectVmd(dir));
+            result.put("added",saved.contains(dir)||dir.equals(defLib));
+            var subs=new java.util.ArrayList<Path>();
+            try(var stream=Files.newDirectoryStream(dir)){
+                for(Path p:stream){
+                    if(Files.isDirectory(p,LinkOption.NOFOLLOW_LINKS)&&!isSkippableDir(p))subs.add(p);
+                }
+            }catch(IOException ignored){}
+            subs.sort(Comparator.comparing(p->p.getFileName().toString(),String.CASE_INSENSITIVE_ORDER));
+            int limit=Math.min(subs.size(),400);
+            for(int i=0;i<limit;i++){
+                Path sub=subs.get(i);
+                dirs.put(dirEntry(sub.getFileName().toString(),null,"dir",sub,saved,defLib));
+            }
+            result.put("dirs",dirs);
+        }catch(Exception e){result.put("error",motionError(e,"MotionDirectory"));}
+        return (KahluaTable)lua(result);
+    }
+    private static LinkedHashSet<String> savedMotionFavorites() throws IOException {
+        Path index=library().resolve("favorites.json");
+        var favs=new LinkedHashSet<String>();
+        if(Files.exists(index)){
+            var data=new JSONArray(Files.readString(index));
+            for(int i=0;i<data.length();i++){
+                String s=data.optString(i,"");
+                if(!s.isBlank())favs.add(s);
+            }
+        }
+        return favs;
+    }
+    private static void saveMotionFavorites(LinkedHashSet<String> favs) throws IOException {
+        Path dir=Files.createDirectories(library());
+        Path staged=Files.createTempFile(dir,"favorites-",".tmp");
+        try {
+            var data=new JSONArray();
+            favs.forEach(data::put);
+            Files.writeString(staged,data.toString(2));
+            Files.move(staged,dir.resolve("favorites.json"),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+        }finally{Files.deleteIfExists(staged);}
+    }
+    public static KahluaTable motionFavorites() {
+        var out=new JSONArray();
+        try {
+            synchronized(motionPathsLock){
+                for(String s:savedMotionFavorites())out.put(s);
+            }
+        }catch(Exception e){Main.error(e);}
+        return (KahluaTable)lua(out);
+    }
+    public static boolean setMotionFavorite(String key,boolean favorite) {
+        if(key==null||key.isBlank())return false;
+        try {
+            synchronized(motionPathsLock){
+                var favs=savedMotionFavorites();
+                boolean changed=favorite?favs.add(key):favs.remove(key);
+                if(changed)saveMotionFavorites(favs);
+            }
+            return true;
+        }catch(Exception e){Main.error(e);return false;}
     }
     static boolean motionAllowed(IsoPlayer actor) {
         return !actor.isDead()&&actor.getVehicle()==null&&!actor.isPlayerMoving()&&!actor.isAiming()&&!actor.isAttackStarted();

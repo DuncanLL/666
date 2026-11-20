@@ -3,6 +3,7 @@ require "ISUI/ISScrollingListBox"
 require "ISUI/ISComboBox"
 require "ISUI/ISButton"
 require "ISUI/ISTextBox"
+require "ISUI/ISTextEntryBox"
 require "Vehicles/ISUI/ISUI3DScene"
 require "RadioCom/ISUIRadio/ISSliderPanel"
 local loadData=require "GFL2RoomData"
@@ -77,6 +78,17 @@ end
 local function chevron(p,x,y,direction,size,alpha)
     local glyph=image(art.."arrow-"..direction..".png")
     if glyph then p:drawTextureScaled(glyph,x-size/2,y-size/2,size,size,alpha,.95,.95,.95) end
+end
+local function drawStarIcon(p,cx,cy,size,filled,alpha)
+    local glyph=image(art..(filled and "star-on.png" or "star-off.png"))
+    if glyph then
+        if filled then p:drawTextureScaled(glyph,cx-size/2,cy-size/2,size,size,alpha,1,1,1)
+        else p:drawTextureScaled(glyph,cx-size/2,cy-size/2,size,size,alpha,.66,.78,.80) end
+        return
+    end
+    local r=math.floor(size/2)
+    if filled then p:drawRect(cx-r+2,cy-r+2,size-4,size-4,alpha,1,.78,.32)
+    else p:drawRectBorder(cx-r+2,cy-r+2,size-4,size-4,alpha,.66,.78,.80) end
 end
 local roomText,roleNames,outfitNames={},{},{}
 local biographies,outfitDescriptions,recruitmentText,descriptionCache={},{},{},{}
@@ -320,6 +332,29 @@ local function button(parent,x,y,w,title,target,callback)
         if s.roomTab then a=.35+s.roomHover*.36 end
         if s.roomLook=="bare" then a=s.roomHover*.26 end
         if s.roomLook=="quiet" then a=.18+s.roomHover*.30 end
+        if s.roomLook=="restore" then c={r=.235,g=.155,b=.135};a=enabled and .88 or .46 end
+        if s.roomLook=="gripMode" then
+            local ea=s.roomEnterAlpha or 1
+            local aiming=s.roomActive==true
+            local half=math.floor(s.width/2)
+            local mx=s.mouseOver and s:getMouseX() or -1
+            local overLeft=enabled and mx>=0 and mx<half
+            local overRight=enabled and mx>=half and mx<=s.width
+            s:drawRect(0,0,s.width,s.height,.94*ea,.082,.122,.142)
+            if not aiming then
+                s:drawRect(1,1,half-1,s.height-2,.96*ea,.155+(overLeft and .04 or 0),.335+(overLeft and .04 or 0),.345+(overLeft and .04 or 0))
+                s:drawRect(1,s.height-2,half-1,2,1*ea,.52,.86,.84)
+                if overRight then s:drawRect(half,1,s.width-half-1,s.height-2,.52*ea,.25,.20,.15) end
+            else
+                if overLeft then s:drawRect(1,1,half-1,s.height-2,.52*ea,.14,.25,.27) end
+                s:drawRect(half,1,s.width-half-1,s.height-2,.96*ea,.345+(overRight and .04 or 0),.215+(overRight and .03 or 0),.110+(overRight and .02 or 0))
+                s:drawRect(half,s.height-2,s.width-half-1,2,1*ea,1,.71,.38)
+            end
+            s:drawRect(half,5,1,s.height-10,.32*ea,.52,.68,.71)
+            s:drawRectBorder(0,0,s.width,s.height,(.58+s.roomHover*.28)*ea,aiming and .92 or .50,aiming and .66 or .74,aiming and .38 or .76)
+            if s.tooltip then s:updateTooltip() end
+            return
+        end
         if s.roomLook=="navigation" then c={r=.12,g=.17,b=.19};a=.85 end
         local primary=s.roomLook=="primary" or s.roomLook=="outfitPurchase" or s.roomLook=="drawTen"
         if primary and enabled then c={r=.15,g=.32,b=.31};a=.98 end
@@ -329,11 +364,17 @@ local function button(parent,x,y,w,title,target,callback)
         a=a*(s.roomEnterAlpha or 1)
         local r,g,b=c.r+glow,c.g+glow,c.b+glow
         s:drawRect(0,0,s.width,s.height,a,r,g,b)
-        if s.roomLook~="bare" and s.roomLook~="quiet" then
+        if s.roomLook=="restore" then
+            local ea=s.roomEnterAlpha or 1
+            s:drawRect(0,0,s.width,1,a*.30,.92,.70,.56)
+            s:drawRect(0,s.height-1,s.width,1,a*.62,.04,.025,.025)
+            s:drawRect(0,3,2,s.height-6,(enabled and .90 or .35)*ea,.95,.60,.34)
+            s:drawRectBorder(0,0,s.width,s.height,(enabled and (.46+s.roomHover*.40) or .22)*ea,.86,.54,.36)
+        elseif s.roomLook~="bare" and s.roomLook~="quiet" then
             s:drawRect(0,0,s.width,1,a*(s.pressed and .06 or .23),.72,.83,.83)
             s:drawRect(0,s.height-1,s.width,1,a*.57,.03,.05,.06)
         end
-        if s.roomHover>.01 then s:drawRectBorder(0,0,s.width,s.height,s.roomHover*.46,.58,.78,.78) end
+        if s.roomLook~="restore" and s.roomHover>.01 then s:drawRectBorder(0,0,s.width,s.height,s.roomHover*.46,.58,.78,.78) end
         if s.roomActive and s.roomTile~="chest" then s:drawRect(0,4,2,s.height-8,.92,.875,.620,0) end
         if s.tooltip then s:updateTooltip() end
     end
@@ -374,6 +415,22 @@ local function button(parent,x,y,w,title,target,callback)
         end
         if s.roomLook=="quiet" then
             textInSlot(s,s.roomTitle,s.width/2,(s.height-16)/2,16,s.width-16,.77,.83,.83,a*(s.roomEnterAlpha or 1),.5)
+            return
+        end
+        if s.roomLook=="restore" then
+            textInSlot(s,s.roomTitle,s.width/2+1,(s.height-16)/2,16,s.width-14,.97,.90,.82,a*(s.roomEnterAlpha or 1),.5)
+            return
+        end
+        if s.roomLook=="gripMode" then
+            local ea=a*(s.roomEnterAlpha or 1)
+            local aiming=s.roomActive==true
+            local half=math.floor(s.width/2)
+            local standTitle=getText("ContextMenu_GFL2_GripStanding")
+            local aimTitle=getText("ContextMenu_GFL2_GripAim")
+            textInSlot(s,standTitle,half/2,(s.height-18)/2,18,half-14,
+                not aiming and .97 or .72,not aiming and .98 or .81,not aiming and .97 or .83,ea,.5)
+            textInSlot(s,aimTitle,half+(s.width-half)/2,(s.height-18)/2,18,s.width-half-14,
+                aiming and 1 or .78,aiming and .94 or .82,aiming and .82 or .79,ea,.5)
             return
         end
         if s.roomWrappedTitle then
@@ -597,10 +654,19 @@ function W:createChildren()
     self.pageButton=button(self,0,0,136,tr("RoomPartSwitch"),self,function(w)w:setTab("parts")end)
     self.pageButton.roomLook="parts"
     self.gripButton=button(self,0,0,86,tr("GripCalibration"),self,function(w)w:setTab("grip")end)
-    self.gripAimButton=button(self,self.rightX,54,self.rightWidth,getText("ContextMenu_GFL2_GripAim"),self,function(w)
-        w.gripAiming=not w.gripAiming
-        w:refreshControls(true)
+    self.gripAimButton=button(self,self.rightX,52,self.rightWidth,getText("ContextMenu_GFL2_GripAim"),self,function(w,b)
+        local target=not w.gripAiming
+        if b and b.mouseOver then
+            local mx=b:getMouseX()
+            if mx>=0 and mx<=b.width then target=mx>=math.floor(b.width/2) end
+        end
+        if target~=w.gripAiming then
+            w.gripAiming=target
+            w:refreshControls(true)
+        end
     end)
+    self.gripAimButton:setHeight(34)
+    self.gripAimButton.roomLook="gripMode"
     self.gripAimButton:setVisible(false)
     self.expressionButton=button(self,0,0,86,tr("Expression"),self,function(w)w:setTab("expression")end)
     self:createExpressionFooter()
@@ -626,7 +692,7 @@ function W:createChildren()
     self.physicsResetButton:setTooltip(tr("PhysicsReset"))
     self.bodyPhysicsButton=button(self,0,0,86,tr("BodyPhysics"),self,self.toggleBodyPhysics)
     self.restoreButton=button(self,0,0,96,tr("Restore"),self,self.onRestore)
-    self.restoreButton.roomLook="quiet"
+    self.restoreButton.roomLook="restore"
     self.motionTab=button(self,0,0,86,tr("RoomMotion"),self,self.requestMotionPage)
     self.gripButton.roomTile="grip";self.expressionButton.roomTile="expression"
     self.motionTab.roomTile="play";self.bodyPhysicsButton.roomTile="chest"
@@ -1263,7 +1329,8 @@ function W:createMotionPage()
     list.doDrawItem=function(s,y,row,alt)
         local scroll=s:getYScroll()
         if y+row.height+scroll<=0 or y+scroll>=s.height then return y+row.height end
-        local hover=hoverAmount(row,s.mouseoverselected==row.index and s:isMouseOver() and not s:isMouseOverScrollBar())
+        local overRow=s.mouseoverselected==row.index and s:isMouseOver() and not s:isMouseOverScrollBar()
+        local hover=hoverAmount(row,overRow)
         if row.index==s.selected then
             s:drawRect(0,y,s.width-14,row.height-2,.93,.15+.04*hover,.19+.05*hover,.20+.05*hover)
             s:drawRect(0,y+4,2,row.height-10,1,1,.71,.38)
@@ -1271,9 +1338,24 @@ function W:createMotionPage()
             if alt then s:drawRect(0,y,s.width-14,row.height-2,.42,.055,.085,.105) end
             if hover>0 then s:drawRect(0,y,s.width-14,row.height-2,.76*hover,.18,.28,.30) end
         end
-        label(s,row.text,9,y+5,17,s.width-28)
-        label(s,row.source,9,y+24,13,s.width-28,.58,.70,.72)
+        local overStar=overRow and s:getMouseX()<=30
+        local starAlpha=row.favorite and 1 or (overStar and .95 or (.40+.35*hover))
+        drawStarIcon(s,15,y+math.floor((row.height-2)/2),overStar and 16 or 14,row.favorite==true,starAlpha)
+        label(s,row.text,31,y+5,17,s.width-48)
+        label(s,row.source,31,y+24,13,s.width-48,.58,.70,.72)
         return y+row.height
+    end
+    local motionListDown=list.onMouseDown
+    list.onMouseDown=function(s,x,y)
+        if not s:isMouseOverScrollBar() and x>=0 and x<=30 then
+            local rowIdx=s:rowAt(x,y)
+            local item=rowIdx and s.items[rowIdx]
+            if item and item.item then
+                self:toggleMotionFavorite(item.item)
+                return true
+            end
+        end
+        return motionListDown(s,x,y)
     end
     list:setOnMouseDownFunction(self,function(w,filename)w.motionSelected=filename;w.motionMessage=nil;w:refreshMotionControls()end)
     library:addChild(list);self.motionList=list
@@ -1396,58 +1478,305 @@ function W:createMotionTimeline(box,width)
     box:addChild(slider);self.motionSeek=slider
 end
 
+function W:loadMotionFavorites()
+    local favs={}
+    if GFL2ReadyRoom and GFL2ReadyRoom.motionFavorites then
+        local saved=GFL2ReadyRoom.motionFavorites()
+        for i=1,#saved do favs[saved[i]]=true end
+    else
+        local stored=self.player and self.player:getModData().GFL2MotionFavorites
+        if type(stored)=="table" then
+            for k,v in pairs(stored) do if v then favs[k]=true end end
+        end
+    end
+    self.motionFavorites=favs
+    return favs
+end
+
+function W:toggleMotionFavorite(file)
+    if not file or file=="" then return end
+    local favs=self.motionFavorites or self:loadMotionFavorites()
+    local nextState=not favs[file]
+    favs[file]=nextState or nil
+    if GFL2ReadyRoom and GFL2ReadyRoom.setMotionFavorite then
+        GFL2ReadyRoom.setMotionFavorite(file,nextState)
+    end
+    if self.player then
+        local md=self.player:getModData()
+        md.GFL2MotionFavorites=md.GFL2MotionFavorites or {}
+        md.GFL2MotionFavorites[file]=nextState or nil
+    end
+    roomSound("Select")
+    self:refreshMotionLibrary()
+end
+
 function W:refreshMotionLibrary()
     local files=GFL2ReadyRoom.motionLibrary()
+    local favs=self:loadMotionFavorites()
+    local ordered={}
+    for i=1,#files do if favs[files[i]] then ordered[#ordered+1]=files[i] end end
+    for i=1,#files do if not favs[files[i]] then ordered[#ordered+1]=files[i] end end
     self.motionList:clear()
     local selected=nil
-    for i=1,#files do
-        local file=files[i]
+    for i=1,#ordered do
+        local file=ordered[i]
         local row=self.motionList:addItem(motionDisplayName(file),file,
             isLocalMotion(file) and file or motionDisplayName(file))
         local kind=file:sub(1,7)=="sample:" and "MotionExample" or (isLocalMotion(file) and "MotionLocal" or "MotionFolder")
         row.source=tr(kind)
+        row.favorite=favs[file]==true
         if file==self.motionSelected then selected=i end
     end
-    self.motionList.selected=selected or (#files>0 and 1 or 0)
-    self.motionSelected=files[self.motionList.selected]
+    self.motionList.selected=selected or (#ordered>0 and 1 or 0)
+    self.motionSelected=ordered[self.motionList.selected]
     self.motionMessage=nil;self:refreshMotionControls()
 end
 
 function W:closeMotionPathDialog()
     if self.motionPathDialog then
-        if self.motionPathDialog:isVisible() then self.motionPathDialog:destroy() end
+        local dialog=self.motionPathDialog
         self.motionPathDialog=nil
+        if dialog.isOverlay then
+            self:removeChild(dialog)
+        elseif dialog:isVisible() then
+            dialog:destroy()
+        end
     end
 end
 
 function W:openMotionPathDialog(removing)
-    if self.motionPathDialog and self.motionPathDialog:isVisible() then return end
-    local width=math.min(610,self.width-32)
-    local x=self:getAbsoluteX()+math.floor((self.width-width)/2)
-    local y=self:getAbsoluteY()+math.floor((self.height-125)/2)
-    local selected=self.motionSelected
-    local initial=removing and isLocalMotion(selected) and selected:match("^(.*[/\\])[^/\\]+$") or ""
-    local title=tr(removing and "MotionRemovePathTitle" or "MotionPathTitle")
-    local dialog=ISTextBox:new(x,y,width,125,"",initial,self,function(w,b)
-        local box=w.motionPathDialog
-        box:showErrorMessage(false)
-        if b.internal=="OK" then
-            local path=box.entry:getText()
-            local error
-            if removing then error=GFL2ReadyRoom.removeMotionPath(path)
-            else error=GFL2ReadyRoom.addMotionPath(path).error end
-            if error and error~="" then box:showErrorMessage(true,error);return end
-            w:refreshMotionLibrary()
+    if self.motionPathDialog then return end
+    if not GFL2ReadyRoom or not GFL2ReadyRoom.browseMotionDirectory or not GFL2ReadyRoom.motionPaths then
+        local width=math.min(610,self.width-32)
+        local x=self:getAbsoluteX()+math.floor((self.width-width)/2)
+        local y=self:getAbsoluteY()+math.floor((self.height-125)/2)
+        local selected=self.motionSelected
+        local initial=removing and isLocalMotion(selected) and selected:match("^(.*[/\\])[^/\\]+$") or ""
+        local title=tr(removing and "MotionRemovePathTitle" or "MotionPathTitle")
+        local dialog=ISTextBox:new(x,y,width,125,"",initial,self,function(w,b)
+            local box=w.motionPathDialog
+            box:showErrorMessage(false)
+            if b.internal=="OK" then
+                local path=box.entry:getText()
+                local error
+                if removing then error=GFL2ReadyRoom.removeMotionPath(path)
+                else error=GFL2ReadyRoom.addMotionPath(path).error end
+                if error and error~="" then box:showErrorMessage(true,error);return end
+                w:refreshMotionLibrary()
+            end
+            w.motionPathDialog=nil
+        end,self.player:getPlayerNum())
+        local drawDialog=dialog.prerender
+        dialog.prerender=function(box)
+            drawDialog(box)
+            label(box,title,12,4,18,box.width-24)
         end
-        w.motionPathDialog=nil
-    end,self.player:getPlayerNum())
-    local drawDialog=dialog.prerender
-    dialog.prerender=function(box)
-        drawDialog(box)
-        label(box,title,12,4,18,box.width-24)
+        self.motionPathDialog=dialog
+        dialog:initialise();dialog:addToUIManager();dialog.entry:focus()
+        return
     end
-    self.motionPathDialog=dialog
-    dialog:initialise();dialog:addToUIManager();dialog.entry:focus()
+
+    local overlay=ISPanel:new(0,0,self.width,self.height)
+    overlay:initialise();overlay.background=false;overlay.isOverlay=true
+    overlay.prerender=function(p)p:drawRect(0,0,p.width,p.height,.74,.035,.055,.065)end
+    overlay.onMouseDown=function()return true end
+    overlay.onMouseUp=overlay.onMouseDown;overlay.onMouseWheel=overlay.onMouseDown
+
+    local cardW=math.min(526,self.width-24)
+    local cardH=math.min(416,self.height-28)
+    local card=ISPanel:new(math.floor((self.width-cardW)/2),math.floor((self.height-cardH)/2),cardW,cardH)
+    card:initialise();card.background=false;overlay:addChild(card)
+
+    local state={removing=removing==true,currentPath="",parentPath="",vmdCount=0,added=false,errorMsg=nil}
+    local title=tr(removing and "MotionFolderManageTitle" or "MotionFolderPickerTitle")
+    card.prerender=function(p)
+        surface(p,0,0,p.width,p.height,.98)
+        p:drawRect(0,0,p.width,2,.92,.50,.76,.76)
+        label(p,title,14,10,21,p.width-58,.96,.97,.95)
+        p:drawRect(12,38,p.width-24,1,.26,.50,.66,.68)
+        if state.errorMsg and state.errorMsg~="" then
+            label(p,state.errorMsg,14,p.height-66,15,p.width-28,1,.64,.38)
+        end
+    end
+    local closeBtn=button(card,cardW-40,7,28,"X",self,function(w)w:closeMotionPathDialog()end)
+    closeBtn:setHeight(26)
+
+    local listTop=removing and 48 or 112
+    local listH=cardH-listTop-(removing and 48 or 72)
+    local folderList=ISScrollingListBox:new(12,listTop,cardW-24,listH)
+    folderList:initialise();folderList.itemheight=34
+    folderList.backgroundColor={r=.04,g=.065,b=.078,a=.86}
+    folderList.borderColor={r=.38,g=.52,b=.56,a=.42}
+    card:addChild(folderList)
+
+    local pathEntry,upBtn,addBtn
+    local function formatCount(n)
+        local fmt=tr("MotionFolderVmdCount")
+        local ok,res=pcall(string.format,fmt,n)
+        return ok and res or (tostring(n).." VMD")
+    end
+
+    local function loadManageList()
+        folderList:clear()
+        local paths=GFL2ReadyRoom.motionPaths()
+        for i=1,#paths do
+            local p=paths[i]
+            folderList:addItem(p,{path=p,kind="saved"})
+        end
+        if #paths==0 then
+            state.errorMsg=tr("MotionFolderNoneAdded")
+        else
+            state.errorMsg=nil
+        end
+    end
+
+    local function browseTo(targetPath)
+        local res=GFL2ReadyRoom.browseMotionDirectory(targetPath or "")
+        if res and res.error and res.error~="" then
+            state.errorMsg=res.error
+            return
+        end
+        state.errorMsg=nil
+        state.currentPath=res.path or ""
+        state.parentPath=res.parent or ""
+        state.root=res.root==true
+        state.vmdCount=res.vmdCount or 0
+        state.added=res.added==true
+        if pathEntry then pathEntry:setText(state.currentPath) end
+        if upBtn then upBtn:setEnable(not state.root) end
+        if addBtn then
+            local canAdd=not state.root and state.currentPath~="" and not state.added
+            addBtn:setEnable(canAdd)
+            if state.added and not state.root then
+                addBtn.roomTitle=tr("MotionFolderAdded")
+            elseif state.vmdCount>0 then
+                addBtn.roomTitle=tr("MotionFolderAddCurrent").." ("..formatCount(state.vmdCount)..")"
+            else
+                addBtn.roomTitle=tr("MotionFolderAddCurrent")
+            end
+        end
+        folderList:clear()
+        local dirs=res.dirs or {}
+        for i=1,#dirs do
+            local d=dirs[i]
+            local display=d.key and tr(d.key) or d.name
+            folderList:addItem(display,d)
+        end
+        folderList:setYScroll(0)
+        if #dirs==0 then
+            state.errorMsg=tr("MotionFolderEmpty")
+        end
+    end
+
+    folderList.doDrawItem=function(s,y,row,alt)
+        local scroll=s:getYScroll()
+        if y+row.height+scroll<=0 or y+scroll>=s.height then return y+row.height end
+        local over=s.mouseoverselected==row.index and s:isMouseOver() and not s:isMouseOverScrollBar()
+        local hover=hoverAmount(row,over)
+        if alt then s:drawRect(0,y,s.width-14,row.height-2,.36,.055,.085,.102) end
+        if hover>0 then s:drawRect(0,y,s.width-14,row.height-2,.72*hover,.16,.27,.30) end
+        local item=row.item
+        if state.removing then
+            local btnW=58
+            local btnX=s.width-16-btnW
+            textInSlot(s,item.path,10,y+4,row.height-10,btnX-18,.90,.93,.93,1)
+            local overBtn=over and s:getMouseX()>=btnX and s:getMouseX()<=btnX+btnW
+            s:drawRect(btnX,y+4,btnW,row.height-10,overBtn and .95 or .78,.36,.16,.14)
+            s:drawRectBorder(btnX,y+4,btnW,row.height-10,.70,.88,.48,.38)
+            textInSlot(s,tr("MotionFolderRemove"),btnX+btnW/2,y+4,row.height-10,btnW-6,.97,.90,.86,1,.5)
+        else
+            local badgeW=0
+            local rightX=s.width-20
+            if item.added then
+                local tag=tr("MotionFolderAdded")
+                local w=58
+                s:drawRect(rightX-w,y+6,w,row.height-14,.84,.13,.31,.30)
+                s:drawRectBorder(rightX-w,y+6,w,row.height-14,.65,.48,.82,.78)
+                textInSlot(s,tag,rightX-w/2,y+6,row.height-14,w-4,.86,.97,.94,1,.5)
+                rightX=rightX-w-6;badgeW=badgeW+w+6
+            end
+            if (item.vmdCount or 0)>0 then
+                local tag=formatCount(item.vmdCount)
+                local w=74
+                s:drawRect(rightX-w,y+6,w,row.height-14,.86,.32,.22,.11)
+                s:drawRectBorder(rightX-w,y+6,w,row.height-14,.72,1,.71,.38)
+                textInSlot(s,tag,rightX-w/2,y+6,row.height-14,w-4,1,.92,.76,1,.5)
+                rightX=rightX-w-6;badgeW=badgeW+w+6
+            end
+            local tagColor=item.kind=="quick" and {1,.82,.48} or item.kind=="drive" and {.60,.86,.88} or {.91,.94,.93}
+            s:drawRect(10,y+11,6,10,.85,tagColor[1],tagColor[2],tagColor[3])
+            textInSlot(s,row.text,24,y+4,row.height-10,s.width-48-badgeW,tagColor[1],tagColor[2],tagColor[3],1)
+        end
+        return y+row.height
+    end
+
+    local folderDown=folderList.onMouseDown
+    folderList.onMouseDown=function(s,x,y)
+        if s:isMouseOverScrollBar() then return folderDown(s,x,y) end
+        local idx=s:rowAt(x,y)
+        local row=idx and s.items[idx]
+        if row and row.item then
+            if state.removing then
+                local btnW=58;local btnX=s.width-16-btnW
+                if x>=btnX and x<=btnX+btnW then
+                    local err=GFL2ReadyRoom.removeMotionPath(row.item.path)
+                    if err and err~="" then state.errorMsg=err
+                    else
+                        roomSound("Select")
+                        self:refreshMotionLibrary()
+                        loadManageList()
+                    end
+                    return true
+                end
+            else
+                roomSound("Select")
+                browseTo(row.item.path)
+                return true
+            end
+        end
+        return folderDown(s,x,y)
+    end
+
+    if removing then
+        local closeBottom=button(card,cardW-116,cardH-38,104,tr("RoomExchangeCancel"),self,function(w)w:closeMotionPathDialog()end)
+        closeBottom:setHeight(28)
+        loadManageList()
+    else
+        local quickBtn=button(card,12,46,92,tr("MotionFolderQuick"),self,function()browseTo("")end)
+        quickBtn:setHeight(26)
+        upBtn=button(card,110,46,72,tr("MotionFolderUp"),self,function()browseTo(state.parentPath)end)
+        upBtn:setHeight(26)
+        local goW=58
+        if ISTextEntryBox then
+            pathEntry=ISTextEntryBox:new("",12,78,cardW-24-goW-6,26)
+            pathEntry:initialise();pathEntry:instantiate()
+            card:addChild(pathEntry)
+        end
+        local goBtn=button(card,cardW-12-goW,78,goW,tr("MotionFolderGo"),self,function()
+            if pathEntry then browseTo(pathEntry:getText()) end
+        end)
+        goBtn:setHeight(26)
+
+        local cancelBtn=button(card,12,cardH-38,96,tr("RoomExchangeCancel"),self,function(w)w:closeMotionPathDialog()end)
+        cancelBtn:setHeight(28)
+        addBtn=button(card,116,cardH-38,cardW-128,tr("MotionFolderAddCurrent"),self,function(w)
+            local target=state.currentPath
+            if (not target or target=="") and pathEntry then target=pathEntry:getText() end
+            local res=GFL2ReadyRoom.addMotionPath(target or "")
+            if res and res.error and res.error~="" then
+                state.errorMsg=res.error
+                return
+            end
+            w:refreshMotionLibrary()
+            w:closeMotionPathDialog()
+        end)
+        addBtn:setHeight(28);addBtn.roomLook="primary"
+        browseTo("")
+    end
+
+    self.motionPathDialog=overlay
+    self:addChild(overlay)
+    overlay:bringToTop()
 end
 
 function W:onAddMotionPath()
@@ -1530,6 +1859,7 @@ function W:roomVisibility()
 end
 
 function W:back()
+    if self.motionPathDialog then self:closeMotionPathDialog();return end
     if self.workshopPrompt then self:closeWorkshopPrompt();return end
     if self.exchange then self:closeExchange();return end
     if self.drawAnimation then return end
@@ -1761,10 +2091,10 @@ function W:layoutOverview()
     local split=restore and not stacked
     rowY=rowY+4
     self.physicsResetButton:setX(x+12);self.physicsResetButton:setY(rowY)
-    self.physicsResetButton:setWidth(split and half or inner);self.physicsResetButton:setHeight(28)
-    self.restoreButton:setX(split and x+18+half or x+12);self.restoreButton:setY(stacked and rowY+30 or rowY)
-    self.restoreButton:setWidth(split and inner-half-6 or inner);self.restoreButton:setHeight(28)
-    self.biographyPanel:setY(rowY+(stacked and 66 or 36))
+    self.physicsResetButton:setWidth(split and half or inner);self.physicsResetButton:setHeight(30)
+    self.restoreButton:setX(split and x+18+half or x+12);self.restoreButton:setY(stacked and rowY+34 or rowY)
+    self.restoreButton:setWidth(split and inner-half-6 or inner);self.restoreButton:setHeight(30)
+    self.biographyPanel:setY(rowY+(stacked and 72 or 38))
     local secondary=math.floor((width-6)*.43)
     local splitFooter=available and (overview or skins)
     self.wearButton:setX(splitFooter and x+secondary+6 or x);self.wearButton:setY(math.floor(self.height*.919))
@@ -2120,7 +2450,8 @@ function W:refresh()
         end
     end
     for _,id in ipairs(optional)do add(id,available[id],data.models[id])end
-    for _,character in ipairs(self.characters)do
+    for index,character in ipairs(self.characters)do
+        character.catalogOrder=index
         local base=character.baseSkin
         table.sort(character.skins,function(a,b)
             if (a==base)~=(b==base) then return a==base end
@@ -2133,6 +2464,12 @@ function W:refresh()
             if self.drawAnimation and self.drawAnimation.outfit==skin.id then skin.outfitLocked=true end
         end
     end
+    table.sort(self.characters,function(a,b)
+        local ta=a.locked and 2 or (a.unlockRequired and 1 or 0)
+        local tb=b.locked and 2 or (b.unlockRequired and 1 or 0)
+        if ta~=tb then return ta<tb end
+        return a.catalogOrder<b.catalogOrder
+    end)
     if not self.byCharacter[self.character] then self.character=equippedCharacter or (self.characters[1] and self.characters[1].name) end
     local character=self.byCharacter[self.character]
     local entry=character and (character.baseSkin or character.skins[1])

@@ -211,7 +211,22 @@
     "RoomWorkshopOpen": "前往角色工坊",
     "RoomWorkshopConfirm": "打开角色模组页面？",
     "RoomWorkshopDestination": "Steam 创意工坊",
-    "RoomWorkshopAccept": "确定打开"
+    "RoomWorkshopAccept": "确定打开",
+    "MotionFolderPickerTitle": "选择动作文件夹",
+    "MotionFolderManageTitle": "已添加的动作文件夹",
+    "MotionFolderQuick": "快捷位置",
+    "MotionFolderUp": "上一级",
+    "MotionFolderGo": "前往",
+    "MotionFolderAddCurrent": "添加当前文件夹",
+    "MotionFolderAdded": "已添加",
+    "MotionFolderRemove": "移除",
+    "MotionFolderEmpty": "该目录下没有子文件夹",
+    "MotionFolderNoneAdded": "尚未添加外部动作文件夹",
+    "MotionFolderDefault": "默认动作目录",
+    "MotionFolderDesktop": "桌面",
+    "MotionFolderDownloads": "下载",
+    "MotionFolderDocuments": "文档",
+    "MotionFolderVmdCount": "%d 个 VMD"
   },
   "models": {
     "pmx-abe3eaaaa9d04264": {
