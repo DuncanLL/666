@@ -4,13 +4,14 @@ local RateOfFire = require "WeaponSystems/Utils/RateOfFire"
 local Stats = require "WeaponSystems/Utils/StatsFactory"
 
 local automaticRPM = {
-    ["GFL2.AlvaAN94"] = 600,
+    ["GFL2.AlvaAN94"] = 650,
     ["GFL2.BansheesWhisper"] = 1100,
     ["GFL2.Capitoline"] = 700,
     ["GFL2.Chernobog"] = 700,
     ["GFL2.ConfessionCompass"] = 800, -- M4A1 reference for the fictional AR-15 variant.
+    ["GFL2.Daydream"] = 900,
     ["GFL2.HeavyStrings"] = 650,
-    ["GFL2.Lowenjunges"] = 600,
+    ["GFL2.Lowenjunges"] = 650,
     ["GFL2.MaidsRules"] = 750,
     ["GFL2.SavageBeast"] = 850,
     ["GFL2.Schlitzohr"] = 600,
