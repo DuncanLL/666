@@ -31,6 +31,7 @@ public final class PmxModel implements AutoCloseable {
 
     private static final class Profile {
         int format, bones, source_root, target_root, source_motion;
+        int source_spine1=-1, source_l_clavicle=-1, source_l_upper_arm=-1, source_r_clavicle=-1, source_r_upper_arm=-1;
         long vertices;
         String pmx_sha256;
         int[] source_ids, target_ids, parents, source_arms, target_arms;
@@ -55,7 +56,16 @@ public final class PmxModel implements AutoCloseable {
             source_ids=ints(j,"source_ids"); target_ids=ints(j,"target_ids"); parents=ints(j,"parents");
             source_motion=-1;
             JSONArray names=j.getJSONArray("source_bone_names");
-            for(int i=0;i<names.length();i++)if("Bip01_Pelvis".equals(names.getString(i))){source_motion=i;break;}
+            for(int i=0;i<names.length();i++){
+                switch(names.getString(i)){
+                    case "Bip01_Pelvis" -> source_motion=i;
+                    case "Bip01_Spine1" -> source_spine1=i;
+                    case "Bip01_L_Clavicle" -> source_l_clavicle=i;
+                    case "Bip01_L_UpperArm" -> source_l_upper_arm=i;
+                    case "Bip01_R_Clavicle" -> source_r_clavicle=i;
+                    case "Bip01_R_UpperArm" -> source_r_upper_arm=i;
+                }
+            }
             if(source_motion<0)throw new IllegalArgumentException("Source skeleton is missing Bip01_Pelvis");
             source_arms=ints(j,"source_arms"); target_arms=ints(j,"target_arms");
             palm_source_hands=ints(j,"palm_source_hands"); palm_source_knuckles=ints(j,"palm_source_knuckles");
@@ -137,6 +147,8 @@ public final class PmxModel implements AutoCloseable {
             WorldPoseRetargeter core = new WorldPoseRetargeter(api, handle, p.source_ids, p.target_ids,
                 p.parents, p.initial_positions, p.source_reference, p.neutral_qps, p.unit_scale,
                 p.source_root, p.target_root, p.source_motion);
+            core.configureClavicleTwistGuard(p.source_spine1, p.source_l_clavicle, p.source_l_upper_arm,
+                p.source_r_clavicle, p.source_r_upper_arm);
             if (p.palm_ready) core.calibratePalms(p.palm_source_hands, p.palm_source_knuckles,
                 p.palm_target_hands, p.palm_target_knuckles);
             core.apply(p.source_bend); core.calibrateGripAxes(p.target_arms);

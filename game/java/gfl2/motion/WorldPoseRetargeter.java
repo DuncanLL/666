@@ -31,6 +31,12 @@ public final class WorldPoseRetargeter {
     private int evaluations;
     private final Matrix4f poseMatrix=new Matrix4f(), deltaMatrix=new Matrix4f(), parentMatrix=new Matrix4f();
     private final Quaternionf localRotation=new Quaternionf(), parentRotation=new Quaternionf();
+    private static final float CLAVICLE_TWIST_KEEP=(float)Math.toRadians(35);
+    private static final float CLAVICLE_TWIST_CLEAR=(float)Math.toRadians(60);
+    private int clavicleSpine=-1, leftClavicle=-1, rightClavicle=-1;
+    private final Vector3f leftClavicleAxis=new Vector3f(1,0,0), rightClavicleAxis=new Vector3f(-1,0,0);
+    private final Quaternionf spineDelta=new Quaternionf(), clavDelta=new Quaternionf(),
+        clavRel=new Quaternionf(), clavTwist=new Quaternionf(), clavSwing=new Quaternionf();
     private final ModelPhysics physics;
     private ForwardFingerPose fingerPreview;
     private float fingerPreviewWeight;
@@ -113,6 +119,53 @@ public final class WorldPoseRetargeter {
         return a.add(joint(right).getTranslation(new Vector3f())).mul(.5f);
     }
 
+    public synchronized void configureClavicleTwistGuard(int spine, int left, int leftChild, int right, int rightChild) {
+        int limit = sourceReference.length;
+        clavicleSpine = spine >= 0 && spine < limit ? spine : -1;
+        leftClavicle = setClavicleAxis(left, leftChild, limit, leftClavicleAxis);
+        rightClavicle = setClavicleAxis(right, rightChild, limit, rightClavicleAxis);
+    }
+
+    private int setClavicleAxis(int clavicle, int child, int limit, Vector3f dest) {
+        if (clavicle < 0 || clavicle >= limit || child < 0 || child >= limit) return -1;
+        Vector3f start = sourceReference[clavicle].getTranslation(new Vector3f());
+        Vector3f end = sourceReference[child].getTranslation(new Vector3f());
+        end.sub(start);
+        if (end.lengthSquared() < 1e-10f) return -1;
+        dest.set(end).normalize();
+        return clavicle;
+    }
+
+    /** Strip non-physiological axial bone-roll offsets (>35 deg, e.g. Blender FBX exports) on clavicles
+     *  while preserving genuine swing direction and keeping all vanilla animations bit-identical. */
+    private boolean buildClavicleDelta(float[] sourceWorld, int source, Vector3f axis) {
+        poseMatrix.set(sourceWorld, clavicleSpine * 16).setTranslation(0, 0, 0).mul(sourceRestInverse[clavicleSpine])
+            .getUnnormalizedRotation(spineDelta).normalize();
+        poseMatrix.set(sourceWorld, source * 16).setTranslation(0, 0, 0).mul(sourceRestInverse[source])
+            .getUnnormalizedRotation(clavDelta).normalize();
+        clavRel.set(spineDelta).conjugate().mul(clavDelta).normalize();
+        if (clavRel.w < 0f) clavRel.set(-clavRel.x, -clavRel.y, -clavRel.z, -clavRel.w);
+        float dot = clavRel.x * axis.x + clavRel.y * axis.y + clavRel.z * axis.z;
+        clavTwist.set(axis.x * dot, axis.y * dot, axis.z * dot, clavRel.w);
+        float lenSq = clavTwist.lengthSquared();
+        if (lenSq < 1e-10f) return false;
+        clavTwist.normalize();
+        float angle = 2f * (float) Math.acos(Math.min(1f, clavTwist.w));
+        if (angle <= CLAVICLE_TWIST_KEEP) return false;
+        float t = Math.min(1f, (angle - CLAVICLE_TWIST_KEEP) / (CLAVICLE_TWIST_CLEAR - CLAVICLE_TWIST_KEEP));
+        float keep = 1f - t * t * (3f - 2f * t);
+        clavTwist.conjugate();
+        clavSwing.set(clavRel).mul(clavTwist).normalize();
+        if (keep > 0f) {
+            clavTwist.conjugate();
+            clavRel.identity().slerp(clavTwist, keep);
+            clavSwing.mul(clavRel).normalize();
+        }
+        clavRel.set(spineDelta).mul(clavSwing).normalize();
+        deltaMatrix.set(basis).mul(poseMatrix.rotation(clavRel)).mul(basis);
+        return true;
+    }
+
     private void applyBody(float[] sourceWorld, boolean needsFinalPalette) {
         if (sourceWorld.length != sourceRestInverse.length * 16)
             throw new IllegalArgumentException("Source skeleton changed");
@@ -126,8 +179,14 @@ public final class WorldPoseRetargeter {
             int level = levels[order[cursor]];
             while (cursor < order.length && levels[order[cursor]] == level) {
                 int index = order[cursor++], target = targetBones[index], source = sourceBones[index];
-                Matrix4f delta = deltaMatrix.set(basis).mul(poseMatrix.set(sourceWorld,source*16).setTranslation(0, 0, 0))
-                    .mul(sourceRestInverse[source]).mul(basis);
+                Matrix4f delta;
+                if (clavicleSpine >= 0 && (source == leftClavicle || source == rightClavicle)
+                        && buildClavicleDelta(sourceWorld, source, source == leftClavicle ? leftClavicleAxis : rightClavicleAxis)) {
+                    delta = deltaMatrix;
+                } else {
+                    delta = deltaMatrix.set(basis).mul(poseMatrix.set(sourceWorld,source*16).setTranslation(0, 0, 0))
+                        .mul(sourceRestInverse[source]).mul(basis);
+                }
                 Quaternionf rotation = delta.getUnnormalizedRotation(localRotation).normalize();
                 Matrix4f desired = poseMatrix.rotation(rotation).mul(targetReference[index]);
                 Quaternionf parent = parents[target] < 0 ? parentRotation.identity() :
