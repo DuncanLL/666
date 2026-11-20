@@ -1925,8 +1925,6 @@ function W:layoutWeaponDescription(weapon)
     local width=math.floor(self.fullWidth*.32)+24
     local top=self:titleBarHeight()+12
     if self.weaponSkinPanel:getIsVisible() then top=self.weaponSkinPanel.y+self.weaponSkinPanel.height+8 end
-    local scene=self.weaponPreview
-    if x+width+8>scene.x then top=math.max(top,scene.y+scene.height+8) end
     local bottom=self.fullHeight-14
     local textWidth=width-24
     local lines=describe(getText(weapon.description),textWidth)
@@ -1946,12 +1944,12 @@ function W:createWeaponPreview(signatureWeapon)
         self.weaponPreview:onMouseUp()
         self:removeChild(self.weaponPreview)
     end
-    local side=math.floor(self.fullWidth*.035)+math.max(160,math.floor(self.fullWidth*.205))+8
-    local top=self:titleBarHeight()+8
-    local bottom=self.drawButtons[1].y-100
-    -- UI3DScene projects to viewport width, so keep a square for long weapons during rotation.
-    local size=math.min(self.fullWidth-2*side,bottom-top)
-    local scene=ISUI3DScene:new(math.floor((self.fullWidth-size)/2),top,size,size)
+    local top=self:titleBarHeight()+4
+    local bottom=self.drawButtons[1].y-64
+    -- Use a wide upper-center showcase stage so signature weapons fill the screen clearly.
+    local height=math.max(240,bottom-top)
+    local width=math.min(math.floor(self.fullWidth*.92),math.floor(height*1.98))
+    local scene=ISUI3DScene:new(math.floor((self.fullWidth-width)/2),top,width,height)
     scene.background=false
     scene:initialise()
     scene:instantiate()
@@ -1965,8 +1963,8 @@ function W:createWeaponPreview(signatureWeapon)
     scene:setView("UserDefined")
     java:fromLua3("setViewRotation",-82+tilt,0,90)
     java:fromLua1("setDrawGrid",false)
-    local maxZoom=math.floor(signatureWeapon.previewZoom or 14)
-    local zoom=maxZoom
+    local zoom=math.floor(signatureWeapon.previewZoom or 14)
+    local maxZoom=math.min(20,math.max(zoom+3,18))
     java:fromLua1("setMaxZoom",maxZoom)
     java:fromLua1("setZoom",zoom)
     java:fromLua2("createModel",id,model)
@@ -2001,6 +1999,12 @@ function W:createWeaponPreview(signatureWeapon)
     end
     scene.onMouseUpOutside=scene.onMouseUp
     self:addChild(scene)
+    if self.content then self.content:bringToTop() end
+    if self.weaponSkinPanel then self.weaponSkinPanel:bringToTop() end
+    if self.weaponSkinButton then self.weaponSkinButton:bringToTop() end
+    if self.magazineClaimButton then self.magazineClaimButton:bringToTop() end
+    if self.weaponClaimButton then self.weaponClaimButton:bringToTop() end
+    for _,b in ipairs(self.drawButtons or {}) do b:bringToTop() end
     scene.weaponId=id
     scene.skinModel=model
     self.weaponPreview=scene

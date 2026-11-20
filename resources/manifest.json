@@ -18303,6 +18303,10 @@
         "42/media/ui/GFL2/IasoSkin4331295.png": {
           "bytes": 117751,
           "sha256": "e9f90c10e5861bbdb370743d41df01d61ebba38fc75e7d55029e40f609ce9306"
+        },
+        "42/media/ui/GFL2/WeaponIcons/GFL2Iaso.png": {
+          "bytes": 38339,
+          "sha256": "f07120e4a31527e5380629e316294f2f55edf5aff9b03ee65082732ff795fb82"
         }
       }
     },
@@ -27833,12 +27837,12 @@
           "sha256": "a2ca56e7c313591c6dbb0edb3f6d1eb6a02bd4894735b4636b31d54c7745e24a"
         },
         "42/media/textures/Item_GFL2Capitoline.png": {
-          "bytes": 1197,
-          "sha256": "271c98c46441139e7ac82cb2be47e7495f96ff2df4ee455a90281458bb3715ed"
+          "bytes": 2524,
+          "sha256": "86821720de2b5eda148281fc9a7e1ab7088bde329282f080561c779891fcc774"
         },
         "42/media/ui/GFL2/CapitolineCard.png": {
-          "bytes": 92069,
-          "sha256": "cc0b180568ba279c3da7ff0115d253f30b884bb3550c97f61d3676de8bd264b0"
+          "bytes": 120207,
+          "sha256": "7a75e52e84073956cd21e8b9113fbce932505ad5aae73c3739b8115260a94026"
         },
         "42/icon.png": {
           "bytes": 73793,
@@ -29113,8 +29117,8 @@
           "sha256": "cdd16d62fbeb7f99d0be27a40a7b6c43357bb2d2225e0c433304141f131100c7"
         },
         "42/media/ui/GFL2/WeaponIcons/GFL2Capitoline.png": {
-          "bytes": 8690,
-          "sha256": "206c5b838a75bc80e31245b4af3d83853e859c8b1aa21dc642a856e83e7b0102"
+          "bytes": 73717,
+          "sha256": "6843271df55a869c6bfb9ca5df41f36b22f916b0b5000d6c4bcea44819e4c601"
         }
       }
     },

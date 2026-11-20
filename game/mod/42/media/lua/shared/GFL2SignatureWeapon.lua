@@ -8,6 +8,7 @@ local weapons = {{
     card = "media/ui/GFL2/CauseAndEffectCard.png",
     cardBounds = {39,203,944,116},
     previewCenterY = 0.24829225,
+    previewZoom = 15,
 }, {
     id = "GFL2.Chernobog",
     mod = "GFL2Koleda",
@@ -19,7 +20,7 @@ local weapons = {{
     cardBounds = {44,122,933,331},
     previewCenterY = 0.16670209,
     previewCenterZ = 0.0068845125,
-    previewZoom = 15,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.AlvaAN94",
@@ -32,7 +33,7 @@ local weapons = {{
     cardBounds = {47,131,897,307},
     previewCenterY = 0.16817626,
     previewCenterZ = 0.039588132,
-    previewZoom = 15,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Scylla",
@@ -44,7 +45,7 @@ local weapons = {{
     card = "media/ui/GFL2/ScyllaCard.png",
     previewCenterY = 0.15029038,
     previewCenterZ = 0.017063277,
-    previewZoom = 16.11,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.UnspokenCalling",
@@ -56,7 +57,7 @@ local weapons = {{
     card = "media/ui/GFL2/UnspokenCallingCard.png",
     previewCenterY = 0.096236318,
     previewCenterZ = -0.0087635611,
-    previewZoom = 16.73,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.NightRoaming",
@@ -68,7 +69,7 @@ local weapons = {{
     card = "media/ui/GFL2/NightRoamingCard.png",
     previewCenterY = 0.28140145,
     previewCenterZ = 0.022345308,
-    previewZoom = 11.45,
+    previewZoom = 13,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Skyhowl",
@@ -80,7 +81,7 @@ local weapons = {{
     card = "media/ui/GFL2/SkyhowlCard.png",
     previewCenterY = 0.14042264,
     previewCenterZ = 0.006056078,
-    previewZoom = 16.69,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Snotra",
@@ -104,7 +105,7 @@ local weapons = {{
     card = "media/ui/GFL2/MaidsRulesCard.png",
     previewCenterY = 0.18767505,
     previewCenterZ = 0.021299842,
-    previewZoom = 14.03,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.SparklingCenterstage",
@@ -116,7 +117,7 @@ local weapons = {{
     card = "media/ui/GFL2/SparklingCenterstageCard.png",
     previewCenterY = 0.14237998,
     previewCenterZ = 0.0096723983,
-    previewZoom = 16.73,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.ConfessionCompass",
@@ -128,7 +129,7 @@ local weapons = {{
     card = "media/ui/GFL2/ConfessionCompassCard.png",
     previewCenterY = 0.18758164,
     previewCenterZ = 0.012857762,
-    previewZoom = 13.51,
+    previewZoom = 15,
     startsWithMagazine = true,
 }, {
     id = "GFL2.HeavyStrings",
@@ -150,10 +151,9 @@ local weapons = {{
     description = "ContextMenu_GFL2_CapitolineDescription",
     icon = "media/textures/Item_GFL2Capitoline.png",
     card = "media/ui/GFL2/CapitolineCard.png",
-    cardBounds = {150,21,701,328},
     previewCenterY = 0.051000013,
     previewCenterZ = 0.007081763,
-    previewZoom = 17,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.SavageBeast",
@@ -165,7 +165,7 @@ local weapons = {{
     card = "media/ui/GFL2/SavageBeastCard.png",
     previewCenterY = 0.22271764,
     previewCenterZ = 0.01376928,
-    previewZoom = 13.01,
+    previewZoom = 15,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Schlitzohr",
@@ -177,7 +177,7 @@ local weapons = {{
     card = "media/ui/GFL2/SchlitzohrCard.png",
     previewCenterY = 0.16445352,
     previewCenterZ = -0.0024051744,
-    previewZoom = 15.28,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Lowenjunges",
@@ -213,7 +213,7 @@ local weapons = {{
     card = "media/ui/GFL2/RadianceCard.png",
     previewCenterY = 0.23107328,
     previewCenterZ = 0.006611228,
-    previewZoom = 10.55,
+    previewZoom = 14,
 }, {
     id = "GFL2.BittersweetCaramel",
     mod = "GFL2Macqiato",
@@ -224,7 +224,7 @@ local weapons = {{
     card = "media/ui/GFL2/BittersweetCaramelCard.png",
     previewCenterY = 0.18121194,
     previewCenterZ = 0.031933966,
-    previewZoom = 11.82,
+    previewZoom = 15,
     startsWithMagazine = true,
 }, {
     id = "GFL2.GuardianSilverwing",
@@ -236,7 +236,7 @@ local weapons = {{
     card = "media/ui/GFL2/GuardianSilverwingCard.png",
     previewCenterY = 0.16886603,
     previewCenterZ = 0.024772913,
-    previewZoom = 13.21,
+    previewZoom = 15,
     startsWithMagazine = true,
 }, {
     id = "GFL2.Trailblazer",
@@ -248,7 +248,7 @@ local weapons = {{
     card = "media/ui/GFL2/TrailblazerCard.png",
     previewCenterY = 0.12929947,
     previewCenterZ = 0.015572686,
-    previewZoom = 17,
+    previewZoom = 16,
 }, {
     id = "GFL2.GaiaTerminus",
     mod = "GFL2Destroyer",
@@ -259,7 +259,7 @@ local weapons = {{
     card = "media/ui/GFL2/GaiaTerminusCard.png",
     previewCenterY = 0.20225553,
     previewCenterZ = 0.034709379,
-    previewZoom = 13.37,
+    previewZoom = 15,
 }, {
     id = "GFL2.Iaso",
     mod = "GFL2Florence",
@@ -270,7 +270,7 @@ local weapons = {{
     card = "media/ui/GFL2/IasoCard.png",
     previewCenterY = 0.102375,
     previewCenterZ = -7.7325554e-05,
-    previewZoom = 17,
+    previewZoom = 20,
     startsWithMagazine = true,
 }, {
     id = "GFL2.TwilightRose",
@@ -282,7 +282,7 @@ local weapons = {{
     card = "media/ui/GFL2/TwilightRoseCard.png",
     previewCenterY = 0.2022906,
     previewCenterZ = -0.0042202114,
-    previewZoom = 11.68,
+    previewZoom = 15,
 }, {
     id = "GFL2.Daydream",
     mod = "GFL2Mechty",
@@ -293,7 +293,7 @@ local weapons = {{
     card = "media/ui/GFL2/DaydreamCard.png",
     previewCenterY = 0.071009,
     previewCenterZ = 0.037367,
-    previewZoom = 17,
+    previewZoom = 16,
     startsWithMagazine = true,
 }, {
     id = "GFL2.TidalNocturne",

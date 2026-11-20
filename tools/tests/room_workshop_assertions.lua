@@ -147,12 +147,12 @@ do
     roomData.weaponBackground,roomData.weaponFrostBackground=weaponBg,weaponFrost
     w.tab,w.drawTextureScaled,info.drawTextureScaled,getTexture=tab,oldDraw,oldContentDraw,oldTexture
    end
-   assert(scene.fixtureModel==weapon.id and scene.viewPitch==-82 and info.visible and scene.width==scene.height)
-   assert(math.abs(scene.x+scene.width/2-w.width/2)<=.5 and scene.y==w:titleBarHeight()+8)
-   local side=math.floor(w.fullWidth*.035)+math.max(160,math.floor(w.fullWidth*.205))+8
-   assert(scene.width==math.min(w.fullWidth-2*side,w.drawButtons[1].y-100-scene.y))
-   assert(info.x+info.width<=scene.x or info.y>=scene.y+scene.height)
-   assert(scene.y>=w:titleBarHeight() and scene.y+scene.height<=w.drawButtons[1].y-99)
+   assert(scene.fixtureModel==weapon.id and scene.viewPitch==-82 and info.visible)
+   assert(math.abs(scene.x+scene.width/2-w.width/2)<=.5 and scene.y==w:titleBarHeight()+4)
+   local expectedHeight=math.max(240,w.drawButtons[1].y-64-scene.y)
+   local expectedWidth=math.min(math.floor(w.fullWidth*.92),math.floor(expectedHeight*1.98))
+   assert(scene.height==expectedHeight and scene.width==expectedWidth)
+   assert(scene.y>=w:titleBarHeight() and scene.y+scene.height<=w.drawButtons[1].y-64)
    assert(info.y>=w:titleBarHeight() and info.y+info.height<=w.height and info:getScrollHeight()>=info.height)
    local limit=scene.setMaxZoom
    scene:onMouseWheel(-100);assert(scene.setZoom==limit)
@@ -166,7 +166,7 @@ do
    assert(painted~=scene and not scene.capture and painted.fixtureModel==skin.model)
    assert(painted.viewPitch==98);painted:onMouseDown();painted:onMouseMove(5,0);assert(painted.viewPitch==98)
    assert(w.weaponSkinPanel.visible and w.weaponSkinPanel.y+w.weaponSkinPanel.height<=info.y-8)
-   assert((painted.x>=info.x+info.width or info.y>=painted.y+painted.height) and painted.y+painted.height<=w.weaponClaimButton.y-8)
+   assert(painted.y+painted.height<=w.weaponClaimButton.y-64)
    economy.weaponProgress=originalProgress
    c.unlockRequired=wasLocked
    w:back();assert(not painted.visible and not painted.capture)
