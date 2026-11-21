@@ -93,5 +93,10 @@
     "ContextMenu_GFL2_TidalNocturne": "Tidal Nocturne",
     "ContextMenu_GFL2_TidalNocturneDescription": "A custom anti-materiel rifle tailored for Loreley, featuring an advanced reforged barrel and a next-generation suppressed muzzle brake. Built for extreme long-range precision with minimal report and muzzle flash, it lets her strike targets silently in the dead of night.",
     "ContextMenu_GFL2_Daydream": "Daydream",
-    "ContextMenu_GFL2_DaydreamDescription": "Mechty's high-performance assault rifle is based on the G11. It hits even harder than its predecessor, giving her the burst damage to shatter an enemy's daydream."
+    "ContextMenu_GFL2_DaydreamDescription": "Mechty's high-performance assault rifle is based on the G11. It hits even harder than its predecessor, giving her the burst damage to shatter an enemy's daydream.",
+    "ContextMenu_GFL2_CharacterSettingsTip": "Adjust character voice volume, chest physics, and cloth/hair physics",
+    "ContextMenu_GFL2_ClothHairPhysicsOn": "Cloth & hair physics enabled",
+    "ContextMenu_GFL2_ClothHairPhysicsOff": "Cloth & hair physics disabled (zero physics cost)",
+    "ContextMenu_GFL2_ChestPhysicsTip": "0 completely disables chest physics with zero cost; 100 is full default",
+    "ContextMenu_GFL2_VoiceVolumeTip": "Adjust character voice volume (50 is default, 0 mutes)"
 }

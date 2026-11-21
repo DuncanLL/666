@@ -93,5 +93,10 @@
     "ContextMenu_GFL2_TidalNocturne": "조수의 녹턴",
     "ContextMenu_GFL2_TidalNocturneDescription": "로렐라이를 위해 맞춤 제작된 특수 대물 저격소총. 첨단 공정으로 재주조된 총열과 차세대 저소음 제퇴기를 통합해 극한의 장거리 정밀도를 유지하면서도 총성과 총구 화염을 최소화하여 어둠 속에서 소리 없이 목표를 명중시킨다.",
     "ContextMenu_GFL2_Daydream": "백일몽",
-    "ContextMenu_GFL2_DaydreamDescription": "미슈티에게 지급된 고성능 돌격소총. G11을 바탕으로 위력을 높였으며, 미슈티의 순간 화력으로 적의 백일몽을 깨뜨린다."
+    "ContextMenu_GFL2_DaydreamDescription": "미슈티에게 지급된 고성능 돌격소총. G11을 바탕으로 위력을 높였으며, 미슈티의 순간 화력으로 적의 백일몽을 깨뜨린다.",
+    "ContextMenu_GFL2_CharacterSettingsTip": "캐릭터 음성 볼륨, 흉부 물리, 의상/머리카락 물리를 조정합니다",
+    "ContextMenu_GFL2_ClothHairPhysicsOn": "의상 및 머리카락 물리가 켜져 있습니다",
+    "ContextMenu_GFL2_ClothHairPhysicsOff": "의상 및 머리카락 물리가 꺼져 있습니다 (성능 미점유)",
+    "ContextMenu_GFL2_ChestPhysicsTip": "0이면 완전히 꺼져 성능을 점유하지 않으며, 100은 기본 효과입니다",
+    "ContextMenu_GFL2_VoiceVolumeTip": "캐릭터 음성 볼륨을 조정합니다 (50 기본값, 0 음소거)"
 }

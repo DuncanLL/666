@@ -5,8 +5,35 @@ require "ISUI/ISEmoteRadialMenu"
 require "ISUI/ISDPadWheels"
 local wrapCaption=require "GFL2Voice/CaptionLayout"
 if GFL2VoiceEngine then return GFL2VoiceEngine end
-GFL2VoiceEngine={version="2.3.0-voice-catalogs",instances={},order={}}
+GFL2VoiceEngine={version="2.3.0-voice-catalogs",instances={},order={},volumeLevel=50}
 local M=GFL2VoiceEngine
+local DEFAULT_VOICE_VOLUME=50
+local function clampVoiceVolume(value)
+    local n=tonumber(value)
+    if not n then return DEFAULT_VOICE_VOLUME end
+    return math.max(0,math.min(100,math.floor(n+0.5)))
+end
+function M.getVolume(player)
+    local saved=player and player:getModData().GFL2CharacterRuntime
+    if type(saved)=="table" and saved.voiceVolume~=nil then
+        return clampVoiceVolume(saved.voiceVolume)
+    end
+    return clampVoiceVolume(M.volumeLevel)
+end
+function M.setVolume(player,value)
+    local level=clampVoiceVolume(value)
+    M.volumeLevel=level
+    if player then
+        local md=player:getModData()
+        local saved=md.GFL2CharacterRuntime
+        if type(saved)~="table" then saved={};md.GFL2CharacterRuntime=saved end
+        saved.voiceVolume=level
+        for _,voice in ipairs(M.order) do
+            if voice.applyVolume then voice.applyVolume(player,level) end
+        end
+    end
+    return level
+end
 local silentPlayer,silentState,silentSavePending=nil,nil,false
 local silentStates=setmetatable({}, {__mode="k"})
 function M.install(profile)
@@ -96,6 +123,8 @@ end
 local function play(player,state,candidate,now,allowAsleep,alreadyEligible)
     if not belongs(player) or active~=player or player:isDead() then return false end
     if player:isAsleep() and not allowAsleep then return false end
+    local volume=M.getVolume(player)
+    if volume<=0 then return false end
     if not alreadyEligible then candidate=Core.propose(state,candidate,now,cfg) end
     if not candidate then return false end
     local clip=profile.resolve(player,candidate.cue)
@@ -110,6 +139,8 @@ local function play(player,state,candidate,now,allowAsleep,alreadyEligible)
         end
         return false
     end
+    local emitter=player:getEmitter()
+    if emitter and emitter.setVolume then emitter:setVolume(handle,volume/50.0) end
     state.handle=handle
     state.startedAt=now
     state.currentKind=candidate.kind
@@ -253,6 +284,17 @@ function V.getDiagnostics()
 end
 
 function V.isActive(player) return active==player and belongs(player) end
+function V.applyVolume(player,level)
+    if active~=player then return end
+    local state=states[player]
+    if not state or not state.handle then return end
+    if level<=0 then
+        stopOwned(player,state)
+    else
+        local emitter=player:getEmitter()
+        if emitter and emitter.setVolume then emitter:setVolume(state.handle,level/50.0) end
+    end
+end
 function V.beforeSave() Native.beforeSave(states);savePending=true end
 function V.afterSave() Native.afterSave(states);savePending=false end
 function V.deactivate()

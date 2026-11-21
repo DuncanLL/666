@@ -154,7 +154,7 @@ public class Main {
                 }
                 nativeRuntime();next=new ModelSession(api,grip,request.entry());
                 next.applySettings(settingsFor(next,request.settings()),false);
-                if(request.remote())next.model.setPhysicsEnabled(false);
+                if(request.remote()){next.model.setPhysicsEnabled(false);next.model.setChestPhysicsEnabled(false);}
                 stage(actor,next);
             } catch(Throwable e){if(next!=null)next.retire();switchFailures.add(actor);error(e);}
             refreshPoseOwners();
@@ -215,7 +215,7 @@ public class Main {
     public static synchronized String resetModelPhysics(IsoGameCharacter actor) {
         try {
             ModelSession s=required(actor);
-            if (!s.model.physicsEnabled()) return UiNotices.text("PhysicsDisabled");
+            if (!s.model.physicsEnabled() && !(s.model.hasChestPhysics() && s.model.chestStrength() > 0)) return UiNotices.text("PhysicsDisabled");
             s.model.resetPhysics();return "";
         } catch(Throwable e) {error(e);return lastError;}
     }
@@ -224,6 +224,16 @@ public class Main {
     }
     public static synchronized boolean chestPhysicsEnabled(IsoGameCharacter actor) {
         ModelSession s=active.get(actor);return s!=null&&s.model.chestPhysicsEnabled();
+    }
+    public static synchronized int chestStrength(IsoGameCharacter actor) {
+        ModelSession s=active.get(actor);return s!=null?s.model.chestStrength():0;
+    }
+    public static synchronized String setChestStrength(IsoGameCharacter actor,int strength) {
+        try {
+            ModelSession s=required(actor);
+            if(!s.model.hasChestPhysics())return UiNotices.text("ChestUnavailable");
+            s.model.setChestStrength(strength);return "";
+        }catch(Throwable e){error(e);return lastError;}
     }
     public static synchronized String setChestPhysicsEnabled(IsoGameCharacter actor,boolean enabled) {
         try {

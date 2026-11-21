@@ -5,6 +5,7 @@ local multiplayer = require "GFL2MultiplayerClient"
 local started = false
 local awaiting = {}
 local expressionEdits = {}
+local voiceSaveEdits = {}
 
 local function problem(player, message)
     if message and message ~= "" then
@@ -25,6 +26,7 @@ end
 
 local function remember(player,quiet)
     expressionEdits[player]=nil
+    voiceSaveEdits[player]=nil
     local previous=player:getModData()[key]
     local profiles=previous and previous.profiles or {}
     local saved = {
@@ -32,6 +34,7 @@ local function remember(player,quiet)
         appearance = GFL2CharacterRuntime.appearanceJson(player),
         settings = GFL2CharacterRuntime.settingsJson(player),
         profiles = profiles,
+        voiceVolume = previous and previous.voiceVolume,
     }
     profiles[saved.model]=saved.settings
     player:getModData()[key] = saved
@@ -59,8 +62,15 @@ local function enable(player, index)
 end
 
 Events.OnTick.Add(function()
+    local now=getTimestampMs()
     for player,deadline in pairs(expressionEdits) do
-        if getTimestampMs()>=deadline then flushExpression(player) end
+        if now>=deadline then flushExpression(player) end
+    end
+    for player,deadline in pairs(voiceSaveEdits) do
+        if now>=deadline then
+            voiceSaveEdits[player]=nil
+            economy.saveLocal(player)
+        end
     end
     for player in pairs(awaiting) do
         if GFL2CharacterRuntime.hasModelFailure(player) then
@@ -107,12 +117,47 @@ local function setBodyPhysics(player,enabled)
     return true
 end
 
+local function setChestStrength(player,strength,immediate)
+    local clamped=math.max(0,math.min(100,math.floor((tonumber(strength) or 100)+0.5)))
+    if problem(player,GFL2CharacterRuntime.setChestStrength(player,clamped)) then return false end
+    if immediate then remember(player,true)
+    else expressionEdits[player]=getTimestampMs()+250 end
+    return true
+end
+
+local function getVoiceVolume(player)
+    if GFL2VoiceEngine and GFL2VoiceEngine.getVolume then return GFL2VoiceEngine.getVolume(player) end
+    local saved=player and player:getModData()[key]
+    if type(saved)=="table" and saved.voiceVolume~=nil then return math.max(0,math.min(100,math.floor((tonumber(saved.voiceVolume) or 50)+0.5))) end
+    return 50
+end
+
+local function setVoiceVolume(player,volume,immediate)
+    local clamped=math.max(0,math.min(100,math.floor((tonumber(volume) or 50)+0.5)))
+    if GFL2VoiceEngine and GFL2VoiceEngine.setVolume then
+        clamped=GFL2VoiceEngine.setVolume(player,clamped)
+    elseif player then
+        local md=player:getModData()
+        local saved=md[key]
+        if type(saved)~="table" then saved={};md[key]=saved end
+        saved.voiceVolume=clamped
+    end
+    if immediate then
+        voiceSaveEdits[player]=nil
+        economy.saveLocal(player)
+    else
+        voiceSaveEdits[player]=getTimestampMs()+250
+    end
+    return clamped
+end
+
 local function clearAppearance(player)
     expressionEdits[player]=nil
+    voiceSaveEdits[player]=nil
     awaiting[player]=nil
     GFL2CharacterRuntime.disable(player)
     local saved=player:getModData()[key]
-    player:getModData()[key] = saved and {profiles=saved.profiles} or nil
+    player:getModData()[key] = saved and {profiles=saved.profiles,voiceVolume=saved.voiceVolume} or nil
     economy.saveLocal(player)
     voiceChanged(player)
 end
@@ -148,6 +193,7 @@ end
 
 local function open(player)
     window.open(player,{enable=enable,choice=choice,preset=preset,reload=reload,disable=disable,material=material,reset=reset,refresh=refresh,physicsReset=resetPhysics,bodyPhysics=setBodyPhysics,
+        chestStrength=setChestStrength,getVoiceVolume=getVoiceVolume,setVoiceVolume=setVoiceVolume,
         expressionRemember=function(p)remember(p,true)end,
         expressionEdited=function(p)expressionEdits[p]=getTimestampMs()+250 end})
 end

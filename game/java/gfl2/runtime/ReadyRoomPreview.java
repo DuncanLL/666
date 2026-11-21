@@ -548,7 +548,7 @@ public class ReadyRoomPreview {
         BrowseState state=browsePreviews.remove(actor);
         if(state!=null){state.discardRequest();state.present(null,false);}
     }
-    private record PreviewProgram(int id,int vp,int turn,int image,int locked) {
+    private record PreviewProgram(int id,int vp,int turn,int image,int locked,int studio,int mode,int eye,int floorY,int heightSpan,int effectAlpha) {
         // LWJGL keeps these capabilities with their GL context. The context owns the program.
         private static final WeakHashMap<GLCapabilities,PreviewProgram> programs=new WeakHashMap<>();
 
@@ -565,25 +565,75 @@ public class ReadyRoomPreview {
             int vertex=shader(GL20.GL_VERTEX_SHADER,"""
                 #version 330
                 layout(location=0) in vec3 position;layout(location=1) in vec3 normal;layout(location=2) in vec2 texcoord;
-                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;
-                void main(){gl_Position=vp*turn*vec4(position,1);n=mat3(turn)*normal;uv=texcoord;}
+                uniform mat4 vp;uniform mat4 turn;out vec3 n;out vec2 uv;out vec3 wPos;
+                void main(){vec4 wp=turn*vec4(position,1.);gl_Position=vp*wp;wPos=wp.xyz;n=mat3(turn)*normal;uv=texcoord;}
                 """);
             int fragment=0,program=0;
             try {
                 fragment=shader(GL20.GL_FRAGMENT_SHADER,"""
                     #version 330
-                    in vec3 n;in vec2 uv;uniform sampler2D image;uniform bool locked;out vec4 color;
-                    void main(){vec4 c=texture(image,uv);if(c.a<.05)discard;
-                    float light=.76+.24*max(dot(normalize(n),normalize(vec3(.35,.8,-.6))),0.);
-                    if(locked){
-                        float l=dot(c.rgb,vec3(.2126,.7152,.0722));
-                        color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
-                    }else color=vec4(c.rgb*light,c.a);}
+                    in vec3 n;in vec2 uv;in vec3 wPos;
+                    uniform sampler2D image;uniform bool locked;uniform bool studio;uniform int mode;
+                    uniform vec3 eye;uniform float floorY;uniform float heightSpan;uniform float effectAlpha;
+                    out vec4 color;
+                    void main(){
+                        if(mode==2){
+                            float dWide=dot(uv*vec2(1.,1.1),uv*vec2(1.,1.1));if(dWide>=1.)discard;
+                            vec2 fL=(uv-vec2(-.38,0.))/vec2(.44,.58);
+                            vec2 fR=(uv-vec2(.38,0.))/vec2(.44,.58);
+                            float feet=max(exp(-dot(fL,fL)*3.8),exp(-dot(fR,fR)*3.8))*.48;
+                            float pool=exp(-dWide*3.2)*.24+pow(1.-dWide,2.)*.16;
+                            color=vec4(.02,.035,.045,clamp(feet+pool,0.,.65)*effectAlpha);
+                            return;
+                        }
+                        vec4 c=texture(image,uv);if(c.a<.05)discard;
+                        if(mode==1){
+                            if(wPos.y>floorY+.002)discard;
+                            float below=max(0.,floorY-wPos.y)/heightSpan;
+                            float fade=pow(max(0.,1.-below/.36),2.)*.32*effectAlpha;
+                            if(fade<.004)discard;
+                            vec3 rc=mix(c.rgb*.66,vec3(.16,.26,.29),.34);
+                            color=vec4(rc,c.a*fade);
+                            return;
+                        }
+                        vec3 N=normalize(n);if(!gl_FrontFacing)N=-N;
+                        if(locked){
+                            float light=.76+.24*max(dot(N,normalize(vec3(.35,.8,.6))),0.);
+                            float l=dot(c.rgb,vec3(.2126,.7152,.0722));
+                            color=vec4(mix(vec3(.08,.16,.18),vec3(.57,.75,.76),l)*light,c.a*.47);
+                            return;
+                        }
+                        if(!studio){
+                            float light=.76+.24*max(dot(N,normalize(vec3(.35,.8,.6))),0.);
+                            color=vec4(c.rgb*light,c.a);
+                            return;
+                        }
+                        vec3 V=normalize(eye-wPos);
+                        float h=clamp((wPos.y-floorY)/heightSpan,0.,1.);
+                        float hemi=N.y*.5+.5;
+                        vec3 ambient=mix(vec3(.64,.65,.67),vec3(.80,.81,.82),hemi);
+                        float wrapKey=clamp((dot(N,normalize(vec3(.48,.52,.70)))+.45)/1.45,0.,1.);
+                        vec3 keyLight=vec3(.22,.195,.165)*wrapKey;
+                        float fresnel=pow(1.-max(dot(N,V),0.),3.4);
+                        float rimSide=smoothstep(.12,.82,dot(N,normalize(vec3(.88,.18,-.44))));
+                        vec3 rimWindow=vec3(.30,.24,.16)*fresnel*rimSide;
+                        float leftSide=smoothstep(.15,.85,dot(N,normalize(vec3(-.88,-.20,.20))));
+                        float lowerMask=1.-smoothstep(.12,.72,h);
+                        vec3 rimAmber=vec3(.22,.13,.05)*fresnel*leftSide*lowerMask;
+                        float groundAO=mix(.82,1.,smoothstep(0.,.13,h));
+                        vec3 lit=c.rgb*(ambient+keyLight)*groundAO+(c.rgb*.35+vec3(.65))*(rimWindow+rimAmber);
+                        lit=lit/(1.+max(lit-.94,0.)*.50);
+                        color=vec4(lit,c.a);
+                    }
                     """);
                 program=GL20.glCreateProgram();GL20.glAttachShader(program,vertex);GL20.glAttachShader(program,fragment);GL20.glLinkProgram(program);
                 if(GL20.glGetProgrami(program,GL20.GL_LINK_STATUS)==0)throw new IllegalStateException(GL20.glGetProgramInfoLog(program));
-                return new PreviewProgram(program,GL20.glGetUniformLocation(program,"vp"),GL20.glGetUniformLocation(program,"turn"),
-                    GL20.glGetUniformLocation(program,"image"),GL20.glGetUniformLocation(program,"locked"));
+                return new PreviewProgram(program,
+                    GL20.glGetUniformLocation(program,"vp"),GL20.glGetUniformLocation(program,"turn"),
+                    GL20.glGetUniformLocation(program,"image"),GL20.glGetUniformLocation(program,"locked"),
+                    GL20.glGetUniformLocation(program,"studio"),GL20.glGetUniformLocation(program,"mode"),
+                    GL20.glGetUniformLocation(program,"eye"),GL20.glGetUniformLocation(program,"floorY"),
+                    GL20.glGetUniformLocation(program,"heightSpan"),GL20.glGetUniformLocation(program,"effectAlpha"));
             } catch(RuntimeException|Error failure) {
                 if(program!=0)GL20.glDeleteProgram(program);
                 throw failure;
@@ -596,8 +646,8 @@ public class ReadyRoomPreview {
         final float[] uv;
         final int[] indices,materials,firsts,counts;
         final ByteBuffer upload;
-        final float centerX,centerY,centerZ,span,faceY;
-        int vao,vbo,ibo,uvBuffer,itemVao;
+        final float centerX,centerY,centerZ,span,faceY,minY,heightSpan;
+        int vao,vbo,ibo,uvBuffer,itemVao,shadowVao,shadowVbo;
         boolean closed,failed,gpuLayout;
         private PmxDrawMesh.FrameData uploaded;
         Mesh(ModelSession s,PmxDrawMesh.FrameData frame) {
@@ -611,11 +661,12 @@ public class ReadyRoomPreview {
             for(int i=0;i<indices.length;i++)indices[i]=size==1?Byte.toUnsignedInt(bytes.get(i)):size==2?Short.toUnsignedInt(bytes.getShort(i*2)):bytes.getInt(i*4);
             int parts=Math.toIntExact(s.api.GetSubMeshCount(s.model.handle()));materials=new int[parts];firsts=new int[parts];counts=new int[parts];
             for(int i=0;i<parts;i++){materials[i]=s.api.GetSubMeshMaterialID(s.model.handle(),i);firsts[i]=s.api.GetSubMeshBeginIndex(s.model.handle(),i);counts[i]=s.api.GetSubMeshVertexCount(s.model.handle(),i);}
-            float[] p=frame.positions();float minX=Float.POSITIVE_INFINITY,minY=minX,minZ=minX,maxX=-minX,maxY=-minX,maxZ=-minX;
-            for(int i=0;i<p.length;i+=3){minX=Math.min(minX,p[i]);maxX=Math.max(maxX,p[i]);minY=Math.min(minY,p[i+1]);maxY=Math.max(maxY,p[i+1]);minZ=Math.min(minZ,p[i+2]);maxZ=Math.max(maxZ,p[i+2]);}
-            centerX=(minX+maxX)/2;centerY=(minY+maxY)/2;centerZ=(minZ+maxZ)/2;
-            span=Math.max(1,maxY-minY)*1.20f;
-            float head=maxY-(maxY-minY)*.115f;
+            float[] p=frame.positions();float minX=Float.POSITIVE_INFINITY,loY=minX,minZ=minX,maxX=-minX,maxY=-minX,maxZ=-minX;
+            for(int i=0;i<p.length;i+=3){minX=Math.min(minX,p[i]);maxX=Math.max(maxX,p[i]);loY=Math.min(loY,p[i+1]);maxY=Math.max(maxY,p[i+1]);minZ=Math.min(minZ,p[i+2]);maxZ=Math.max(maxZ,p[i+2]);}
+            centerX=(minX+maxX)/2;centerY=(loY+maxY)/2;centerZ=(minZ+maxZ)/2;
+            minY=loY;heightSpan=Math.max(1e-3f,maxY-loY);
+            span=Math.max(1,maxY-loY)*1.20f;
+            float head=maxY-(maxY-loY)*.115f;
             if(s.targetHead>=0) {
                 JSONArray bones=new JSONArray(s.api.GetBoneMetadata(s.model.handle()));
                 JSONObject bone=bones.optJSONObject(s.targetHead);
@@ -664,38 +715,99 @@ public class ReadyRoomPreview {
         void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView)throws Exception {
             paint(frame,state,width,height,yaw,zoom,pan,focus,locked,gripView,0);
         }
-        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch)throws Exception {
-            bindGeometry(frame);
-            float extent=span/Math.clamp(zoom,.62f,4.2f),aspect=(float)width/height;
-            float cameraY=centerY+(faceY-centerY)*Math.clamp(focus,0,1)+span*Math.clamp(pan,-.8f,.8f);
-            float cameraX=centerX,cameraZ=centerZ;
-            if(gripView!=null){
-                var point=gripView.center();
-                cameraX=point.x;cameraY=point.y;cameraZ=point.z;
-                extent=span*Math.max(.72f,.90f/aspect)/Math.clamp(zoom,.62f,4.2f);
+        private void paintShadowQuad(PreviewProgram program,Matrix4f turn,float alpha) {
+            if(shadowVao==0){
+                shadowVao=GL30.glGenVertexArrays();GL30.glBindVertexArray(shadowVao);
+                shadowVbo=GL15.glGenBuffers();GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER,shadowVbo);
+                float rx=heightSpan*.24f,rz=heightSpan*.18f,y=minY+.001f;
+                float[] quad={
+                    centerX-rx,y,centerZ-rz, 0,1,0, -1,-1,
+                    centerX+rx,y,centerZ-rz, 0,1,0,  1,-1,
+                    centerX+rx,y,centerZ+rz, 0,1,0,  1, 1,
+                    centerX-rx,y,centerZ-rz, 0,1,0, -1,-1,
+                    centerX+rx,y,centerZ+rz, 0,1,0,  1, 1,
+                    centerX-rx,y,centerZ+rz, 0,1,0, -1, 1,
+                };
+                GL15.glBufferData(GL15.GL_ARRAY_BUFFER,quad,GL15.GL_STATIC_DRAW);
+                for(int i=0;i<3;i++){GL20.glEnableVertexAttribArray(i);GL20.glVertexAttribPointer(i,i==2?2:3,GL11.GL_FLOAT,false,32,i==0?0L:i==1?12L:24L);}
+            } else {
+                GL30.glBindVertexArray(shadowVao);
             }
-            Matrix4f vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
-                .lookAt(cameraX,cameraY,cameraZ+span*3,cameraX,cameraY,cameraZ,0,1,0);
-            Matrix4f turn=new Matrix4f().translate(cameraX,cameraY,cameraZ).rotateX(pitch).rotateY(yaw).translate(-cameraX,-cameraY,-cameraZ);
-            PreviewProgram program=PreviewProgram.current();
-            GL20.glUseProgram(program.id());GL20.glUniformMatrix4fv(program.vp(),false,vp.get(new float[16]));
-            GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));GL20.glUniform1i(program.image(),0);
-            GL20.glUniform1i(program.locked(),locked?1:0);
-            Texture[] textures=session.preparePlainMaterials(state);
-            GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
-            GL11.glEnable(GL11.GL_BLEND);GL14.glBlendEquation(GL14.GL_FUNC_ADD);GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_ONE,GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));
+            GL20.glUniform1i(program.mode(),2);
+            GL20.glUniform1f(program.effectAlpha(),alpha);
+            GL11.glDepthMask(false);
+            GL11.glDrawArrays(GL11.GL_TRIANGLES,0,6);
+            GL11.glDepthMask(true);
+        }
+        private void drawSubMeshes(PmxDrawMesh.FrameData frame,Texture[] textures) {
             for(int i=0;i<materials.length;i++){
                 int material=materials[i];if(frame.materials()[material*12+3]<=0)continue;
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D,textures[material].getID());
                 GL11.glDrawElements(GL11.GL_TRIANGLES,counts[i],GL11.GL_UNSIGNED_INT,(long)firsts[i]*4);
             }
+        }
+        void paint(PmxDrawMesh.FrameData frame,ModelSession.Materials state,int width,int height,float yaw,float zoom,float pan,float focus,boolean locked,GripRoomPreview.View gripView,float pitch)throws Exception {
+            bindGeometry(frame);
+            float clampedZoom=Math.clamp(zoom,.62f,4.2f);
+            float extent=span/clampedZoom,aspect=(float)width/height;
+            float cameraY=centerY+(faceY-centerY)*Math.clamp(focus,0,1)+span*Math.clamp(pan,-.8f,.8f);
+            float cameraX=centerX,cameraZ=centerZ;
+            boolean studio=gripView==null;
+            Matrix4f vp;
+            float eyeZ;
+            if(!studio){
+                var point=gripView.center();
+                cameraX=point.x;cameraY=point.y;cameraZ=point.z;
+                extent=span*Math.max(.72f,.90f/aspect)/clampedZoom;
+                eyeZ=cameraZ+span*3;
+                vp=new Matrix4f().ortho(-extent*aspect/2,extent*aspect/2,-extent/2,extent/2,.1f,span*8)
+                    .lookAt(cameraX,cameraY,eyeZ,cameraX,cameraY,cameraZ,0,1,0);
+            } else {
+                float fov=(float)Math.toRadians(28.0);
+                float dist=(extent*.5f)/(float)Math.tan(fov*.5f);
+                float near=Math.max(.05f,dist*.1f),far=dist+span*4.5f;
+                eyeZ=cameraZ+dist;
+                vp=new Matrix4f().perspective(fov,aspect,near,far)
+                    .lookAt(cameraX,cameraY,eyeZ,cameraX,cameraY,cameraZ,0,1,0);
+            }
+            Matrix4f turn=new Matrix4f().translate(cameraX,cameraY,cameraZ).rotateX(pitch).rotateY(yaw).translate(-cameraX,-cameraY,-cameraZ);
+            PreviewProgram program=PreviewProgram.current();
+            GL20.glUseProgram(program.id());
+            GL20.glUniformMatrix4fv(program.vp(),false,vp.get(new float[16]));
+            GL20.glUniform1i(program.image(),0);
+            GL20.glUniform1i(program.locked(),locked?1:0);
+            GL20.glUniform1i(program.studio(),studio?1:0);
+            GL20.glUniform3f(program.eye(),cameraX,cameraY,eyeZ);
+            GL20.glUniform1f(program.floorY(),minY);
+            GL20.glUniform1f(program.heightSpan(),heightSpan);
+            Texture[] textures=session.preparePlainMaterials(state);
+            GL13.glActiveTexture(GL13.GL_TEXTURE0);GL33.glBindSampler(0,0);GL11.glDisable(GL11.GL_CULL_FACE);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);GL11.glDepthFunc(GL11.GL_LEQUAL);GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_BLEND);GL14.glBlendEquation(GL14.GL_FUNC_ADD);GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA,GL11.GL_ONE,GL11.GL_ONE_MINUS_SRC_ALPHA);
+            float floorAlpha=studio?Math.clamp((2.2f-clampedZoom)/.8f,0f,1f):0f;
+            if(floorAlpha>.01f){
+                if(!locked){
+                    Matrix4f reflect=new Matrix4f().translate(0,2f*minY,0).scale(1f,-1f,1f).mul(turn);
+                    GL20.glUniformMatrix4fv(program.turn(),false,reflect.get(new float[16]));
+                    GL20.glUniform1i(program.mode(),1);
+                    GL20.glUniform1f(program.effectAlpha(),floorAlpha);
+                    drawSubMeshes(frame,textures);
+                    GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+                }
+                paintShadowQuad(program,turn,locked?floorAlpha*.55f:floorAlpha);
+                GL30.glBindVertexArray(vao);
+            }
+            GL20.glUniformMatrix4fv(program.turn(),false,turn.get(new float[16]));
+            GL20.glUniform1i(program.mode(),0);
+            GL20.glUniform1f(program.effectAlpha(),1f);
+            drawSubMeshes(frame,textures);
             if(gripView!=null&&!gripView.parts().isEmpty()){
                 if(itemVao==0)itemVao=GL30.glGenVertexArrays();
                 GripRoomPreview.paintItems(gripView.parts(),itemVao,program.turn(),turn);
             }
         }
-        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(itemVao!=0)GL30.glDeleteVertexArrays(itemVao);}
+        @Override public void close(){if(closed)return;closed=true;uploaded=null;if(uvBuffer!=0)GL15.glDeleteBuffers(uvBuffer);if(vbo!=0)GL15.glDeleteBuffers(vbo);if(ibo!=0)GL15.glDeleteBuffers(ibo);if(vao!=0)GL30.glDeleteVertexArrays(vao);if(itemVao!=0)GL30.glDeleteVertexArrays(itemVao);if(shadowVbo!=0)GL15.glDeleteBuffers(shadowVbo);if(shadowVao!=0)GL30.glDeleteVertexArrays(shadowVao);}
     }
     static final class Draw extends TextureDraw.GenericDrawer {
         final Mesh mesh;final PmxDrawMesh.FrameData frame;final ModelSession.Materials materials;

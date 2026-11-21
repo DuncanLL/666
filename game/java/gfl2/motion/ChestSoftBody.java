@@ -40,6 +40,7 @@ public final class ChestSoftBody implements AutoCloseable {
     private final MemorySegment impulseVector;
     private final JoltChestMotion motion=new JoltChestMotion();
     private float appliedSignature=-1, appliedStrain;
+    private float strength=(float)DEFAULT[3];
     private float sideX, sideZ;
     private int[] gpuSpans,gpuRows;
     private boolean reset=true,enabled=true,failed,closed;
@@ -143,17 +144,22 @@ public final class ChestSoftBody implements AutoCloseable {
             region.swingWeights[i]=skin*skin*(3-2*skin)*edge*edge*(3-2*edge);
         }
     }
-    float strength(){return (float)DEFAULT[3];}
+    float strength(){return enabled?strength:0f;}
+    public void setStrength(float value){
+        float clamped=Float.isFinite(value)?Math.clamp(value,0f,100f):(float)DEFAULT[3];
+        if((strength<=0f)!=(clamped<=0f))reset=true;
+        strength=clamped;
+    }
     public JSONObject settings(){
         JSONObject result=new JSONObject();
-        for(int i=0;i<KEYS.length;i++)result.put(KEYS[i],DEFAULT[i]);
+        for(int i=0;i<KEYS.length;i++)result.put(KEYS[i],i==3?(double)strength:DEFAULT[i]);
         return result;
     }
     private static float stiffness(double softness){return (float)Math.clamp(.75-.67*softness/100,.08,.75);}
     public void enabled(boolean value){if(enabled!=value){enabled=value;reset=true;}}
     public void reset(){reset=true;failed=false;error="";}
     public void evaluate(float seconds) {
-        if(!enabled||failed||closed||DEFAULT[3]==0)return;
+        if(!enabled||failed||closed||strength<=0f)return;
         try{
             palette.clear();if(api.CopySkinningMatricesToBuffer(model,palette)!=palette.capacity()/64)throw new IllegalStateException("Incomplete chest palette");
             for(int r=0;r<regions.length;r++)for(int i=0;i<16;i++){
@@ -231,16 +237,16 @@ public final class ChestSoftBody implements AutoCloseable {
         points[i+2]=z+cosine*pz+sine*sideX*py+projection*sideZ;
     }
     public void deform(float[] positions,float[] normals) {
-        if(!enabled||failed||closed||reset||DEFAULT[3]==0)return;
-        float strength=(float)(DEFAULT[3]/100);
+        if(!enabled||failed||closed||reset||strength<=0f)return;
+        float scaleStrength=strength/100f;
         for(Region region:regions)for(int i=0;i<region.count;i++) {
-            float weight=region.weights[i]*strength;int dst=region.ids[i]*3;
+            float weight=region.weights[i]*scaleStrength;int dst=region.ids[i]*3;
             for(int k=0;k<3;k++) {
                 float p=region.positions.getAtIndex(JAVA_FLOAT,i*3L+k),n=region.normals.getAtIndex(JAVA_FLOAT,i*3L+k);
                 if(!Float.isFinite(p)||!Float.isFinite(n))throw new IllegalStateException("Non-finite chest mesh");
                 positions[dst+k]+=weight*p/scale;normals[dst+k]+=weight*n;
             }
-            float angle=region.angle*region.swingWeights[i]*strength;
+            float angle=region.angle*region.swingWeights[i]*scaleStrength;
             if(Math.abs(angle)>1e-5f){
                 float cosine=(float)Math.cos(angle),sine=(float)Math.sin(angle);
                 float[] pivot=region.movingPivot;
@@ -254,7 +260,7 @@ public final class ChestSoftBody implements AutoCloseable {
     record GpuOffsets(int[] spans,float[] rows,float axisX,float axisZ) {}
 
     GpuOffsets gpuOffsets(int vertices) {
-        if(!enabled||failed||closed||reset||DEFAULT[3]==0)return null;
+        if(!enabled||failed||closed||reset||strength<=0f)return null;
         if(gpuSpans==null) {
             gpuSpans=new int[vertices+1];
             for(Region region:regions)for(int id:region.ids)gpuSpans[id+1]++;
@@ -264,15 +270,15 @@ public final class ChestSoftBody implements AutoCloseable {
             for(Region region:regions)for(int id:region.ids)gpuRows[source++]=next[id]++;
         }
         float[] rows=new float[gpuRows.length*12];
-        float strength=(float)(DEFAULT[3]/100);int source=0;
+        float scaleStrength=strength/100f;int source=0;
         for(Region region:regions)for(int i=0;i<region.count;i++) {
-            int at=gpuRows[source++]*12;float weight=region.weights[i]*strength;
+            int at=gpuRows[source++]*12;float weight=region.weights[i]*scaleStrength;
             for(int k=0;k<3;k++) {
                 rows[at+k]=weight*region.positions.getAtIndex(JAVA_FLOAT,i*3L+k)/scale;
                 rows[at+4+k]=weight*region.normals.getAtIndex(JAVA_FLOAT,i*3L+k);
                 rows[at+8+k]=region.movingPivot[k];
             }
-            rows[at+3]=region.angle*region.swingWeights[i]*strength;
+            rows[at+3]=region.angle*region.swingWeights[i]*scaleStrength;
         }
         return new GpuOffsets(gpuSpans,rows,sideX,sideZ);
     }

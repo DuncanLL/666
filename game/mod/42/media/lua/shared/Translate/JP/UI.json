@@ -682,5 +682,16 @@
     "UI_GFL2_WeaponSkin_4337415": "時空を越える者",
     "UI_GFL2_WeaponSkin_4337535": "蝕刻の印",
     "UI_GFL2_Wear": "着用",
-    "UI_GFL2_Wearing": "着用中"
+    "UI_GFL2_Wearing": "着用中",
+    "UI_GFL2_CharacterSettings": "キャラ設定",
+    "UI_GFL2_SettingsAudio": "ボイス設定",
+    "UI_GFL2_VoiceVolume": "キャラボイス音量",
+    "UI_GFL2_VoiceMuted": "ミュート",
+    "UI_GFL2_SettingsPhysics": "物理演算",
+    "UI_GFL2_ChestPhysics": "胸部物理",
+    "UI_GFL2_ChestOff": "オフ",
+    "UI_GFL2_ClothHairPhysics": "衣装・髪物理",
+    "UI_GFL2_SettingsOn": "オン",
+    "UI_GFL2_SettingsOff": "オフ",
+    "UI_GFL2_SettingsReset": "デフォルトに戻す"
 }

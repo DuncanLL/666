@@ -22,6 +22,7 @@ public final class PmxModel implements AutoCloseable {
     private final ModelAppearance appearance;
     private final ChestSoftBody chest;
     private boolean chestPhysicsEnabled=true;
+    private float chestStrength=100f;
     private boolean closed;
     private long lastRetargetNanos,lastChestNanos;
     private long motion,motionRevision;
@@ -192,7 +193,7 @@ public final class PmxModel implements AutoCloseable {
         }
         else {core.apply(finalSourcePose,seconds);result=new WorldPoseRetargeter.GripResult[0];}
         long solved=System.nanoTime();lastRetargetNanos=solved-started;
-        if(chest!=null){chest.enabled(chestPhysicsEnabled&&core.physicsEnabled());chest.evaluate(seconds);}
+        if(chest!=null){chest.setStrength(chestStrength);chest.enabled(chestPhysicsEnabled&&chestStrength>0f);chest.evaluate(seconds);}
         lastChestNanos=System.nanoTime()-solved;
         return result;
     }
@@ -282,10 +283,11 @@ public final class PmxModel implements AutoCloseable {
         }
         JSONObject state=settings.getJSONObject("appearance"),controls=settings.optJSONObject("appearance_controls");
         ModelAppearance.Prepared prepared=appearance.prepare(state.toString(),controls==null?Wardrobe.empty():controls.toString());
-        // Older saves contain slider values. Only the optional switch is read now.
         JSONObject chestSettings=settings.optJSONObject("chest_physics");
         JSONObject physics=settings.optJSONObject("physics");
         boolean nextChest=chestSettings==null?chestPhysicsEnabled:chestSettings.optBoolean("enabled",chestPhysicsEnabled);
+        float nextChestStrength=chestSettings==null?chestStrength:
+            (!nextChest?0f:(float)Math.clamp(chestSettings.optDouble("strength",chestStrength>0f?chestStrength:100.0),0.0,100.0));
         boolean nextPhysics=physics==null?core.physicsEnabled():physics.optBoolean("enabled",false),oldPhysics=core.physicsEnabled();
         try{
             core.setPhysicsEnabled(nextPhysics);
@@ -295,17 +297,15 @@ public final class PmxModel implements AutoCloseable {
             throw e;
         }
         if(physics!=null&&motion!=0)motionRestorePhysics=nextPhysics;
-        setChestPhysicsEnabled(nextChest);
+        setChestStrength(nextChestStrength);
         if(tuning!=null){profile.weapon_tuning.clear();profile.weapon_tuning.putAll(next);}
     }
     public synchronized void setPhysicsEnabled(boolean enabled) {
         core.setPhysicsEnabled(enabled);
-        if(chest!=null)chest.enabled(chestPhysicsEnabled&&enabled);
     }
     public synchronized boolean physicsEnabled() { return core.physicsEnabled(); }
     public synchronized boolean bodyPhysicsEnabled(){return motion!=0?motionRestorePhysics:physicsEnabled();}
     public synchronized void setBodyPhysicsEnabled(boolean enabled){
-        if(enabled)setChestPhysicsEnabled(true);
         setPhysicsEnabled(enabled);
         if(motion!=0)motionRestorePhysics=physicsEnabled();
     }
@@ -314,13 +314,22 @@ public final class PmxModel implements AutoCloseable {
         if(chest!=null)chest.reset();
     }
     public synchronized boolean hasChestPhysics(){return chest!=null&&chest.available();}
-    public synchronized boolean chestPhysicsEnabled(){return hasChestPhysics()&&chestPhysicsEnabled;}
-    public synchronized void setChestPhysicsEnabled(boolean enabled){
-        if(chestPhysicsEnabled!=enabled&&chest!=null)chest.reset();
+    public synchronized boolean chestPhysicsEnabled(){return hasChestPhysics()&&chestPhysicsEnabled&&chestStrength>0f;}
+    public synchronized int chestStrength(){return hasChestPhysics()&&chestPhysicsEnabled?Math.round(chestStrength):0;}
+    public synchronized void setChestStrength(float value){
+        float clamped=Float.isFinite(value)?Math.clamp(value,0f,100f):100f;
+        boolean enabled=clamped>0f;
+        if((chestPhysicsEnabled!=enabled||(chestStrength<=0f)!=!enabled)&&chest!=null)chest.reset();
+        chestStrength=clamped;
         chestPhysicsEnabled=enabled;
-        if(chest!=null)chest.enabled(enabled&&core.physicsEnabled());
+        if(chest!=null){chest.setStrength(clamped);chest.enabled(enabled);}
     }
-    public synchronized JSONObject chestSettings(){return chest==null?null:chest.settings().put("enabled",chestPhysicsEnabled);}
+    public synchronized void setChestPhysicsEnabled(boolean enabled){
+        setChestStrength(enabled?(chestStrength>0f?chestStrength:100f):0f);
+    }
+    public synchronized JSONObject chestSettings(){
+        return chest==null?null:chest.settings().put("strength",chestPhysicsEnabled?Math.round(chestStrength):0).put("enabled",chestPhysicsEnabled&&chestStrength>0f);
+    }
     public synchronized String chestError(){return chest==null?"":chest.error();}
     public synchronized void deformChest(float[] positions,float[] normals){if(chest!=null)chest.deform(positions,normals);}
 

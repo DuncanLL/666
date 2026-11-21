@@ -682,5 +682,16 @@
     "UI_GFL2_WeaponSkin_4337415": "시공을 건너는 이",
     "UI_GFL2_WeaponSkin_4337535": "새겨진 흔적",
     "UI_GFL2_Wear": "착용",
-    "UI_GFL2_Wearing": "착용 중"
+    "UI_GFL2_Wearing": "착용 중",
+    "UI_GFL2_CharacterSettings": "캐릭터 설정",
+    "UI_GFL2_SettingsAudio": "음성 설정",
+    "UI_GFL2_VoiceVolume": "캐릭터 음성 볼륨",
+    "UI_GFL2_VoiceMuted": "음소거",
+    "UI_GFL2_SettingsPhysics": "물리 시뮬레이션",
+    "UI_GFL2_ChestPhysics": "흉부 물리",
+    "UI_GFL2_ChestOff": "꺼짐",
+    "UI_GFL2_ClothHairPhysics": "의상 및 머리카락 물리",
+    "UI_GFL2_SettingsOn": "켜짐",
+    "UI_GFL2_SettingsOff": "꺼짐",
+    "UI_GFL2_SettingsReset": "기본값 복원"
 }

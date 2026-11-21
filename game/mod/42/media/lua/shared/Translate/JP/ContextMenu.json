@@ -93,5 +93,10 @@
     "ContextMenu_GFL2_TidalNocturne": "潮騒のノクターン",
     "ContextMenu_GFL2_TidalNocturneDescription": "ローレライ専用にカスタマイズされた対物ライフル。先進技術で再鍛造された銃身と次世代の静音マズルブレーキを備え、極めて高い遠距離精度を保ちながら銃声とマズルフラッシュを最小限に抑え、闇夜から静かに標的を撃ち抜く。",
     "ContextMenu_GFL2_Daydream": "白昼夢",
-    "ContextMenu_GFL2_DaydreamDescription": "ミシュティに支給された高性能アサルトライフル。G11をベースに威力を高め、彼女の瞬間火力で敵の白昼夢を打ち砕く。"
+    "ContextMenu_GFL2_DaydreamDescription": "ミシュティに支給された高性能アサルトライフル。G11をベースに威力を高め、彼女の瞬間火力で敵の白昼夢を打ち砕く。",
+    "ContextMenu_GFL2_CharacterSettingsTip": "ボイス音量・胸部物理・衣装/髪物理を調整",
+    "ContextMenu_GFL2_ClothHairPhysicsOn": "衣装・髪物理がオンになっています",
+    "ContextMenu_GFL2_ClothHairPhysicsOff": "衣装・髪物理がオフになっています（負荷なし）",
+    "ContextMenu_GFL2_ChestPhysicsTip": "0で完全オフ（負荷なし）、100で標準効果",
+    "ContextMenu_GFL2_VoiceVolumeTip": "キャラボイスの音量を調整（50が標準、0でミュート）"
 }

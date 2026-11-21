@@ -93,5 +93,10 @@
     "ContextMenu_GFL2_TidalNocturne": "潮涌夜曲",
     "ContextMenu_GFL2_TidalNocturneDescription": "为罗蕾莱所定制的特装型号反器材步枪，枪管采用先进工艺重铸，并整合了新一代高效微声制退器。这套改造使其在具备极致远程精度的同时，开火时的声响和枪口焰被降至最低，能够在黑夜中，悄无声息地一举击中目标。",
     "ContextMenu_GFL2_Daydream": "白日梦",
-    "ContextMenu_GFL2_DaydreamDescription": "米什缇被配给的高性能突击步枪，以无壳弹步枪11为原型，将威力进一步提升，配合上米什缇的高爆发，致力于击碎每一个敌人的白日梦。"
+    "ContextMenu_GFL2_DaydreamDescription": "米什缇被配给的高性能突击步枪，以无壳弹步枪11为原型，将威力进一步提升，配合上米什缇的高爆发，致力于击碎每一个敌人的白日梦。",
+    "ContextMenu_GFL2_CharacterSettingsTip": "调整角色语音音量、胸部物理与衣服/头发物理",
+    "ContextMenu_GFL2_ClothHairPhysicsOn": "衣服与头发物理已开启",
+    "ContextMenu_GFL2_ClothHairPhysicsOff": "衣服与头发物理已关闭（不占用物理性能）",
+    "ContextMenu_GFL2_ChestPhysicsTip": "0 为彻底关闭且不占用性能，100 为默认完整效果",
+    "ContextMenu_GFL2_VoiceVolumeTip": "调整角色语音音量（50 为默认音量，0 为静音）"
 }

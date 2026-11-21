@@ -375,7 +375,7 @@ local function button(parent,x,y,w,title,target,callback)
             s:drawRect(0,s.height-1,s.width,1,a*.57,.03,.05,.06)
         end
         if s.roomLook~="restore" and s.roomHover>.01 then s:drawRectBorder(0,0,s.width,s.height,s.roomHover*.46,.58,.78,.78) end
-        if s.roomActive and s.roomTile~="chest" then s:drawRect(0,4,2,s.height-8,.92,.875,.620,0) end
+        if s.roomActive and s.roomTile~="chest" and s.roomLook~="settingsToggle" then s:drawRect(0,4,2,s.height-8,.92,.875,.620,0) end
         if s.tooltip then s:updateTooltip() end
     end
     b.render=function(s)
@@ -388,6 +388,20 @@ local function button(parent,x,y,w,title,target,callback)
         if s.roomFold then
             local arrow=image(art..(s.parent.folded and "down" or "up")..".png")
             if arrow then s:drawTextureScaled(arrow,(s.width-16)/2,(s.height-10)/2,16,10,a,.83,.85,.84) end
+            return
+        end
+        if s.roomLook=="settingsToggle" then
+            local press=s.pressed and enabled and 1 or 0
+            local cy=math.floor(s.height/2)+press
+            local ea=a*(s.roomEnterAlpha or 1)
+            local stateText=tr(s.roomActive and "SettingsOn" or "SettingsOff")
+            textInSlot(s,s.roomTitle,12,cy-10,20,s.width-114,.92,.95,.94,ea,nil,UIFont.Small)
+            textInSlot(s,stateText,s.width-50,cy-9,18,54,
+                s.roomActive and .62 or .70,s.roomActive and .90 or .74,s.roomActive and .86 or .75,ea,1,UIFont.Small)
+            local x=s.width-44
+            s:drawRect(x,cy-7,32,14,1,.14,s.roomActive and .36 or .19,s.roomActive and .34 or .20)
+            s:drawRectBorder(x,cy-7,32,14,s.roomActive and .88 or .50,.47,.69,.68)
+            s:drawRect(x+(s.roomActive and 18 or 3),cy-5,11,10,1,s.roomActive and .76 or .44,s.roomActive and .91 or .52,s.roomActive and .86 or .53)
             return
         end
         if s.roomTile then
@@ -690,12 +704,13 @@ function W:createChildren()
     self.physicsResetButton=button(self,0,0,86,tr("RoomPhysicsShort"),self,self.requestPhysicsReset)
     self.physicsResetButton.roomLook="quiet"
     self.physicsResetButton:setTooltip(tr("PhysicsReset"))
-    self.bodyPhysicsButton=button(self,0,0,86,tr("BodyPhysics"),self,self.toggleBodyPhysics)
+    self.settingsButton=button(self,0,0,86,tr("CharacterSettings"),self,function(w)w:setTab("settings")end)
+    self.settingsButton:setTooltip(getText("ContextMenu_GFL2_CharacterSettingsTip"))
     self.restoreButton=button(self,0,0,96,tr("Restore"),self,self.onRestore)
     self.restoreButton.roomLook="restore"
     self.motionTab=button(self,0,0,86,tr("RoomMotion"),self,self.requestMotionPage)
     self.gripButton.roomTile="grip";self.expressionButton.roomTile="expression"
-    self.motionTab.roomTile="play";self.bodyPhysicsButton.roomTile="chest"
+    self.motionTab.roomTile="play";self.settingsButton.roomTile="settings"
     self.foldButton=button(self,self.width-53,7,34,"",self,function(w)w:toggleRoomFold()end)
     self.foldButton.roomFold=true;self.foldButton.roomLook="bare"
     self.foldButton:setTooltip(tr("RoomFold"))
@@ -1848,7 +1863,7 @@ function W:roomVisibility()
     self.gripAimButton:setVisible(false)
     self:refreshExpressionSlots(false)
     for _,widget in ipairs({self.sidebar,self.rosterToggle,self.content,self.pageButton,self.gripButton,
-        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.bodyPhysicsButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
+        self.expressionButton,self.skinButton,self.wearButton,self.physicsResetButton,self.settingsButton,self.restoreButton,self.motionTab,self.workshopButton,self.weaponCard,self.weaponClaimButton,self.magazineClaimButton,self.weaponSkinButton,self.weaponSkinPanel}) do
         widget:setVisible(false)
     end
     self.motionLibraryBox:setVisible(motions);self.motionBox:setVisible(motions)
@@ -2073,18 +2088,14 @@ function W:layoutOverview()
         b:setEnable(not self.drawAnimation and not not (outfitDraw or characterDraw or weaponDraw))
     end
     local x,y,width=self.overviewX,self.overviewY,self.overviewWidth
-    local physicsAvailable=available and overview and self:canEditCurrent()
     local inner=width-24
     local rowY=y+54
-    for _,b in ipairs({self.gripButton,self.expressionButton,self.motionTab,self.bodyPhysicsButton}) do
-        local listed=(b~=self.motionTab or motionEntryVisible(self)) and (b~=self.bodyPhysicsButton or physicsAvailable)
+    for _,b in ipairs({self.gripButton,self.expressionButton,self.motionTab,self.settingsButton}) do
+        local listed=(b~=self.motionTab or motionEntryVisible(self))
         b:setVisible(not not (listed and available and overview))
         b:setX(x+12);b:setY(rowY);b:setWidth(inner);b:setHeight(35)
         if listed then rowY=rowY+37 end
     end
-    local physicsOn=physicsAvailable and GFL2CharacterRuntime.modelPhysicsEnabled(self.player)
-    self.bodyPhysicsButton.roomActive=not not physicsOn
-    self.bodyPhysicsButton:setTooltip(getText(physicsOn and "ContextMenu_GFL2_BodyPhysicsOn" or "ContextMenu_GFL2_BodyPhysicsOff"))
     local restore=available and overview and GFL2CharacterRuntime.isEnabled(self.player)
     self.physicsResetButton:setVisible(available and overview)
     self.restoreButton:setVisible(restore)
@@ -2379,7 +2390,7 @@ function W:updateWear()
     self.wearButton:setEnable(self.browsed~=nil and not wearing and (not locked or skins) and not pendingUnlock and not self.waiting)
     local available=self.browsed~=nil and not locked and not pendingUnlock
     for _,button in ipairs({self.pageButton,self.physicsResetButton,
-        self.gripButton,self.expressionButton,self.motionTab}) do button:setEnable(available) end
+        self.gripButton,self.expressionButton,self.motionTab,self.settingsButton}) do button:setEnable(available) end
 end
 function W:previewEntry(entry)
     local id=entry and entry.id
@@ -2535,7 +2546,7 @@ function W:beginTabMotion(direction)
     local rows={}
     for _,widget in ipairs(self.widgets)do rows[widget]=widget.y end
     if self.tab=="overview" then
-        for _,widget in ipairs({self.gripButton,self.expressionButton,self.bodyPhysicsButton,self.physicsResetButton,self.motionTab,self.restoreButton})do
+        for _,widget in ipairs({self.gripButton,self.expressionButton,self.settingsButton,self.physicsResetButton,self.motionTab,self.restoreButton})do
             if widget:getIsVisible() then rows[widget]=widget.y end
         end
     end
@@ -2616,6 +2627,100 @@ function W:drawGroups(ordered,y,width)
     end
     return y
 end
+function W:addSettingsSection(title,y,width)
+    local p=ISPanel:new(0,y,width,26);p:initialise();p.background=false
+    p.prerender=function(s)
+        s:drawRect(0,6,3,13,.90,.53,.79,.76)
+        label(s,title,9,2,18,s.width-12,.88,.94,.93)
+        s:drawRect(0,24,s.width,1,.24,.58,.74,.74)
+    end
+    self.content:addChild(p);table.insert(self.widgets,p)
+    return y+34
+end
+
+function W:buildSettingsTab(y,width,editable)
+    y=self:addSettingsSection(tr("SettingsAudio"),y,width)
+    local voiceVal=self.actions.getVoiceVolume and self.actions.getVoiceVolume(self.player) or 50
+    self:addLabel(tr("VoiceVolume"),y,18,width-76)
+    local voiceSlider=ISSliderPanel:new(5,y+25,width-10,20,self,function(w,value)
+        if w.actions.setVoiceVolume then w.actions.setVoiceVolume(w.player,value,false) end
+    end)
+    voiceSlider:initialise();voiceSlider:instantiate();voiceSlider:setDoButtons(false)
+    voiceSlider:setValues(0,100,1,10,true);voiceSlider:setCurrentValue(voiceVal,true)
+    voiceSlider:setTooltip(getText("ContextMenu_GFL2_VoiceVolumeTip"))
+    local renderVoice=voiceSlider.render
+    voiceSlider.render=function(s)
+        renderVoice(s)
+        local v=math.floor(s.currentValue+.5)
+        local txt=v<=0 and tr("VoiceMuted") or tostring(v)
+        local r,g,b=v<=0 and .96 or .81,v<=0 and .74 or .90,v<=0 and .44 or .92
+        textInSlot(s,txt,s.width,-22,18,68,r,g,b,1,1)
+    end
+    voiceSlider.roomSlider=true;self.content:addChild(voiceSlider);table.insert(self.widgets,voiceSlider)
+    y=y+60
+
+    y=self:addSettingsSection(tr("SettingsPhysics"),y,width)
+    if not editable then
+        self:addLabel(self:toolMessage(),y,17,width);y=y+36
+    else
+        local hasChest=GFL2CharacterRuntime.hasChestPhysics and GFL2CharacterRuntime.hasChestPhysics(self.player)
+        if hasChest then
+            local chestVal=GFL2CharacterRuntime.chestStrength and GFL2CharacterRuntime.chestStrength(self.player) or 100
+            self:addLabel(tr("ChestPhysics"),y,18,width-76)
+            local chestSlider=ISSliderPanel:new(5,y+25,width-10,20,self,function(w,value)
+                if w.actions.chestStrength then w.actions.chestStrength(w.player,value,false) end
+            end)
+            chestSlider:initialise();chestSlider:instantiate();chestSlider:setDoButtons(false)
+            chestSlider:setValues(0,100,1,10,true);chestSlider:setCurrentValue(chestVal,true)
+            chestSlider:setTooltip(getText("ContextMenu_GFL2_ChestPhysicsTip"))
+            local renderChest=chestSlider.render
+            chestSlider.render=function(s)
+                renderChest(s)
+                local v=math.floor(s.currentValue+.5)
+                local txt=v<=0 and tr("ChestOff") or string.format("%d%%",v)
+                local r,g,b=v<=0 and .96 or .81,v<=0 and .74 or .90,v<=0 and .44 or .92
+                textInSlot(s,txt,s.width,-22,18,68,r,g,b,1,1)
+            end
+            chestSlider.roomSlider=true;self.content:addChild(chestSlider);table.insert(self.widgets,chestSlider)
+            y=y+58
+        else
+            self:addLabel(tr("ChestPhysics"),y,18,width);y=y+26
+            self:addLabel(tr("RoomChestUnavailable"),y,15,width);y=y+28
+        end
+
+        local physicsOn=GFL2CharacterRuntime.modelPhysicsEnabled(self.player)
+        local clothBtn=button(self.content,0,y,width,tr("ClothHairPhysics"),self,function(w,btn)
+            local nextOn=not GFL2CharacterRuntime.modelPhysicsEnabled(w.player)
+            if w.actions.bodyPhysics(w.player,nextOn) then
+                btn.roomActive=nextOn
+                btn:setTooltip(getText(nextOn and "ContextMenu_GFL2_ClothHairPhysicsOn" or "ContextMenu_GFL2_ClothHairPhysicsOff"))
+            end
+        end)
+        clothBtn:setHeight(38)
+        clothBtn.roomLook="settingsToggle"
+        clothBtn.roomActive=not not physicsOn
+        clothBtn:setTooltip(getText(physicsOn and "ContextMenu_GFL2_ClothHairPhysicsOn" or "ContextMenu_GFL2_ClothHairPhysicsOff"))
+        table.insert(self.widgets,clothBtn)
+        y=y+54
+    end
+
+    local resetBtn=button(self.content,0,y,width,tr("SettingsReset"),self,function(w)
+        if w.actions.setVoiceVolume then w.actions.setVoiceVolume(w.player,50,true) end
+        if w:canEditCurrent() then
+            if GFL2CharacterRuntime.hasChestPhysics and GFL2CharacterRuntime.hasChestPhysics(w.player) and w.actions.chestStrength then
+                w.actions.chestStrength(w.player,100,true)
+            end
+            if not GFL2CharacterRuntime.modelPhysicsEnabled(w.player) then
+                w.actions.bodyPhysics(w.player,true)
+            end
+        end
+        w:refreshControls(true)
+    end)
+    resetBtn:setHeight(34);resetBtn.roomLook="quiet"
+    table.insert(self.widgets,resetBtn)
+    return y+42
+end
+
 function W:refreshControls(keepScroll)
     self:endTabMotion()
     if self.folded or self.foldStart then return end
@@ -2641,6 +2746,8 @@ function W:refreshControls(keepScroll)
         local character=self.byCharacter[self.character]
         if character and not character.locked then self:carousel(character) end
         y=self.content.height
+    elseif self.tab=="settings" then
+        y=self:buildSettingsTab(y,width,editable)
     elseif not editable then
         self:addLabel(self:toolMessage(),8);y=44
     else
@@ -2756,7 +2863,7 @@ function W:refreshControls(keepScroll)
             table.insert(self.widgets,reset);table.insert(self.widgets,reload);y=y+38
         end
     end
-    if self.tab=="grip" or self.tab=="expression" or self.tab=="parts" then
+    if self.tab=="grip" or self.tab=="expression" or self.tab=="parts" or self.tab=="settings" then
         for _,widget in ipairs(self.widgets) do widget:setX(widget.x+12) end
         y=y+8
         self.content:setHeight(math.min(self.content.height,y))
@@ -2975,8 +3082,16 @@ function W:prerender()
         self:drawTextureScaled(background,(w-bw)/2,(h-bh)/2,bw,bh,1,1,1,1)
         self:clearStencilRect()
     end
+    if self.tab=="weaponDraw" and self.weaponPreview and self.weaponPreview:getIsVisible() then
+        local stage=image("media/ui/GFL2ReadyRoom/weapon-stage.png")
+        if stage then
+            local wp=self.weaponPreview
+            local pulse=.90+.10*math.sin(getTimestampMs()*.0018)
+            self:drawTextureScaled(stage,wp.x,wp.y,wp.width,wp.height,pulse,1,1,1)
+        end
+    end
     surface(self,0,0,self.width,header,.67)
-    local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",grip="GripCalibration",expression="Expression"}
+    local titles={skins="RoomOutfits",outfitDraw="RoomOutfitProcurement",parts="RoomPartSwitch",grip="GripCalibration",expression="Expression",settings="CharacterSettings"}
     local page=titles[self.tab]
     if self.tab=="weaponDraw" then label(self,getText("ContextMenu_GFL2_WeaponPool"),76,14,23,self.width-180)
     elseif page then label(self,tr(page),76,14,23,self.width-180)

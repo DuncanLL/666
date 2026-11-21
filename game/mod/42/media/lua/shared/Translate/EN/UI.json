@@ -682,5 +682,16 @@
     "UI_GFL2_WeaponSkin_4337415": "Across Time And Space",
     "UI_GFL2_WeaponSkin_4337535": "Graven Mark",
     "UI_GFL2_Wear": "Equip",
-    "UI_GFL2_Wearing": "Equipped"
+    "UI_GFL2_Wearing": "Equipped",
+    "UI_GFL2_CharacterSettings": "Character Settings",
+    "UI_GFL2_SettingsAudio": "Audio",
+    "UI_GFL2_VoiceVolume": "Character Voice Volume",
+    "UI_GFL2_VoiceMuted": "Muted",
+    "UI_GFL2_SettingsPhysics": "Physics Simulation",
+    "UI_GFL2_ChestPhysics": "Chest Physics",
+    "UI_GFL2_ChestOff": "Off",
+    "UI_GFL2_ClothHairPhysics": "Cloth & Hair Physics",
+    "UI_GFL2_SettingsOn": "On",
+    "UI_GFL2_SettingsOff": "Off",
+    "UI_GFL2_SettingsReset": "Reset Defaults"
 }

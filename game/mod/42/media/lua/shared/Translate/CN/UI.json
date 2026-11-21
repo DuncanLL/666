@@ -532,5 +532,16 @@
     "UI_GFL2_WeaponSkin_4337415": "涂装·跨越时空之人",
     "UI_GFL2_WeaponSkin_4337535": "涂装·蚀刻印记",
     "UI_GFL2_Wear": "穿着",
-    "UI_GFL2_Wearing": "当前穿着"
+    "UI_GFL2_Wearing": "当前穿着",
+    "UI_GFL2_CharacterSettings": "人物设置",
+    "UI_GFL2_SettingsAudio": "语音设置",
+    "UI_GFL2_VoiceVolume": "角色语音音量",
+    "UI_GFL2_VoiceMuted": "静音",
+    "UI_GFL2_SettingsPhysics": "物理模拟",
+    "UI_GFL2_ChestPhysics": "胸部物理",
+    "UI_GFL2_ChestOff": "已关闭",
+    "UI_GFL2_ClothHairPhysics": "衣服与头发物理",
+    "UI_GFL2_SettingsOn": "已开启",
+    "UI_GFL2_SettingsOff": "已关闭",
+    "UI_GFL2_SettingsReset": "恢复默认设置"
 }
